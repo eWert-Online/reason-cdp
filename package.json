@@ -1,0 +1,39 @@
+{
+  "name": "reason-cdp",
+  "version": "0.0.883894",
+  "description": "CDP for ReasonML",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eWert-Online/reason-cdp"
+  },
+  "author": {
+    "name": "Torben Ewert",
+    "email": "torben@ewert-online.com"
+  },
+  "bugs": {
+    "url": "https://github.com/eWert-Online/reason-cdp/issues"
+  },
+  "keywords": [
+    "ocaml",
+    "reason",
+    "reasonml"
+  ],
+  "esy": {
+    "build": "dune build -p reason-cdp",
+    "buildDev": "dune build --promote-install-files --root . --only-package reason-cdp"
+  },
+  "scripts": {
+    "generate": "esy x reason-cdp"
+  },
+  "dependencies": {
+    "@opam/ppx_yojson_conv": "v0.14.0",
+    "@opam/yojson": "1.7.0"
+  },
+  "devDependencies": {
+    "@opam/reason": ">= 3.6.0 < 4.0.0",
+    "@opam/dune": "< 3.0.0",
+    "@opam/ocaml-lsp-server": "1.5.0",
+    "ocaml": "4.12.0"
+  }
+}

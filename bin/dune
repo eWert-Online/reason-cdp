@@ -1,0 +1,7 @@
+(executable
+ (name Main)
+ (modules Main)
+ (public_name reason-cdp)
+ (flags
+  (:standard -w +A-42-44-48-66-40 -warn-error +A-3-44-66-40))
+)
