@@ -15,7 +15,7 @@ let rec map_type = typ => {
     typ |> Yojson.Basic.Util.member("type") |> Yojson.Basic.Util.to_string;
 
   switch (prim) {
-  | "integer" => "int"
+  | "integer" => "float"
   | "number" => "float"
   | "boolean" => "bool"
   | "any" => "string"
@@ -139,7 +139,7 @@ and map_object = typ => {
     |> Option.map(String.concat("\n"));
 
   switch (properties) {
-  | None => "{. }"
+  | None => "list((string, string))"
   | Some(p) => "{" ++ p ++ "}"
   };
 };
@@ -168,7 +168,10 @@ let get_type = typ => {
 
   (
     String.concat("\n", [id ++ ": {", content, "}"]),
-    String.concat("\n", [id ++ ": {", content, "} = " ++ id]),
+    String.concat(
+      "\n",
+      [id ++ ": {", content, "} = ", "{ " ++ content ++ " }"],
+    ),
   );
 };
 
