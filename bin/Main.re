@@ -103,19 +103,36 @@ and map_object = typ => {
              |> Yojson.Basic.Util.member("type")
              |> Yojson.Basic.Util.to_string_option;
 
-           switch (prim, reference) {
-           | (None, None) =>
-             failwith(
-               "Unexpected object property value: neither type nor $ref is present",
-             )
-           | (Some(_), Some(_)) =>
-             failwith(
-               "Unexpected object property value: both type and $ref present",
-             )
-           | (Some(_prim), None) =>
-             name ++ ": " ++ map_type(prop) ++ ", /* " ++ description ++ " */"
-           | (None, Some(_reference)) =>
-             name ++ ": " ++ map_ref(prop) ++ ", /* " ++ description ++ " */"
+           let optional =
+             prop
+             |> Yojson.Basic.Util.member("optional")
+             |> Yojson.Basic.Util.to_bool_option
+             |> Option.value(~default=false);
+
+           let typ =
+             switch (prim, reference) {
+             | (None, None) =>
+               failwith(
+                 "Unexpected object property value: neither type nor $ref is present",
+               )
+             | (Some(_), Some(_)) =>
+               failwith(
+                 "Unexpected object property value: both type and $ref present",
+               )
+             | (Some(_prim), None) => map_type(prop)
+             | (None, Some(_reference)) => map_ref(prop)
+             };
+
+           if (optional) {
+             "[@yojson.option]"
+             ++ name
+             ++ ": option("
+             ++ typ
+             ++ "), /* "
+             ++ description
+             ++ " */";
+           } else {
+             name ++ ": " ++ typ ++ ", /* " ++ description ++ " */";
            };
          }),
        )
