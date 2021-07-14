@@ -1,7 +1,6 @@
 (library
  (name cdp)
- (flags
-  (:standard -w +A-42-48-66-40 -warn-error +A-3-44-66-40))
+ (flags (:standard))
  (libraries yojson)
  (preprocess
   (pps ppx_yojson_conv)))

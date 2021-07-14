@@ -24,7 +24,8 @@
     "buildDev": "dune build --promote-install-files --root . --only-package reason-cdp"
   },
   "scripts": {
-    "generate": "esy x reason-cdp"
+    "c": "rm ./lib/CDP.re",
+    "gen": "esy x cdp ./bin/protocol.json ./lib"
   },
   "dependencies": {
     "@opam/cmdliner": "1.0.4",
