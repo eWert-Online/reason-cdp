@@ -80,10 +80,10 @@ and map_object = typ => {
              |> Yojson.Basic.Util.to_string
              |> (
                fun
-               | "type" => "type_"
-               | "object" => "object_"
-               | "end" => "end_"
-               | "exception" => "exception_"
+               | "type" => "[@key \"type\"] type_"
+               | "object" => "[@key \"object\"] object_"
+               | "end" => "[@key \"end\"] end_"
+               | "exception" => "[@key \"exception\"] exception_"
                | t => t
              );
 

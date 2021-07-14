@@ -24,6 +24,7 @@ module rec Accessibility: {
       /* A single source for a computed AX property. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: AXValueSourceType.t, /* What type of source this is. */
         value: AXValue.t, /* The value of this property source. */
         attribute: string, /* The name of the relevant attribute, if any. */
@@ -56,6 +57,7 @@ module rec Accessibility: {
       /* A single computed AX property. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: AXValueType.t, /* The type of this value. */
         value: string, /* The computed value of this property. */
         relatedNodes: array(AXRelatedNode.t), /* One or more related nodes, if applicable. */
@@ -115,6 +117,7 @@ module rec Accessibility: {
       /* A single source for a computed AX property. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: AXValueSourceType.t, /* What type of source this is. */
         value: AXValue.t, /* The value of this property source. */
         attribute: string, /* The name of the relevant attribute, if any. */
@@ -147,6 +150,7 @@ module rec Accessibility: {
       /* A single computed AX property. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: AXValueType.t, /* The type of this value. */
         value: string, /* The computed value of this property. */
         relatedNodes: array(AXRelatedNode.t), /* One or more related nodes, if applicable. */
@@ -204,6 +208,7 @@ module rec Accessibility: {
       /* A single source for a computed AX property. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: AXValueSourceType.t, /* What type of source this is. */
         value: AXValue.t, /* The value of this property source. */
         attribute: string, /* The name of the relevant attribute, if any. */
@@ -236,6 +241,7 @@ module rec Accessibility: {
       /* A single computed AX property. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: AXValueType.t, /* The type of this value. */
         value: string, /* The computed value of this property. */
         relatedNodes: array(AXRelatedNode.t), /* One or more related nodes, if applicable. */
@@ -283,6 +289,7 @@ and Animation: {
         playbackRate: float, /* `Animation`'s playback rate. */
         startTime: float, /* `Animation`'s start time. */
         currentTime: float, /* `Animation`'s current time. */
+        [@key "type"]
         type_: string, /* Animation type of `Animation`. */
         source: AnimationEffect.t, /* `Animation`'s source animation node. */
         cssId: string /* A unique ID for `Animation` representing the sources that triggered this CSS
@@ -335,6 +342,7 @@ animation/transition. */,
         playbackRate: float, /* `Animation`'s playback rate. */
         startTime: float, /* `Animation`'s start time. */
         currentTime: float, /* `Animation`'s current time. */
+        [@key "type"]
         type_: string, /* Animation type of `Animation`. */
         source: AnimationEffect.t, /* `Animation`'s source animation node. */
         cssId: string /* A unique ID for `Animation` representing the sources that triggered this CSS
@@ -385,6 +393,7 @@ animation/transition. */,
         playbackRate: float, /* `Animation`'s playback rate. */
         startTime: float, /* `Animation`'s start time. */
         currentTime: float, /* `Animation`'s current time. */
+        [@key "type"]
         type_: string, /* Animation type of `Animation`. */
         source: AnimationEffect.t, /* `Animation`'s source animation node. */
         cssId: string /* A unique ID for `Animation` representing the sources that triggered this CSS
@@ -433,6 +442,7 @@ and ApplicationCache: {
       type t = {
         url: string, /* Resource url. */
         size: int, /* Resource size. */
+        [@key "type"]
         type_: string /* Resource type. */,
       };
     }
@@ -465,6 +475,7 @@ and ApplicationCache: {
       type t = {
         url: string, /* Resource url. */
         size: int, /* Resource size. */
+        [@key "type"]
         type_: string /* Resource type. */,
       };
     }
@@ -495,6 +506,7 @@ and ApplicationCache: {
       type t = {
         url: string, /* Resource url. */
         size: int, /* Resource size. */
+        [@key "type"]
         type_: string /* Resource type. */,
       };
     } = ApplicationCacheResource
@@ -678,6 +690,7 @@ Does not always exist (e.g. for unsafe form submission urls). */
       type t = {
         sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
         isWarning: bool, /* No description provided */
+        [@key "type"]
         type_: SharedArrayBufferIssueType.t /* No description provided */,
       };
     }
@@ -949,6 +962,7 @@ Does not always exist (e.g. for unsafe form submission urls). */
       type t = {
         sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
         isWarning: bool, /* No description provided */
+        [@key "type"]
         type_: SharedArrayBufferIssueType.t /* No description provided */,
       };
     }
@@ -1218,6 +1232,7 @@ Does not always exist (e.g. for unsafe form submission urls). */
       type t = {
         sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
         isWarning: bool, /* No description provided */
+        [@key "type"]
         type_: SharedArrayBufferIssueType.t /* No description provided */,
       };
     } = SharedArrayBufferIssueDetails
@@ -2696,6 +2711,7 @@ and Debugger: {
       type t = {
         scriptId: Runtime.Types.ScriptId.t, /* No description provided */
         start: ScriptPosition.t, /* No description provided */
+        [@key "end"]
         end_: ScriptPosition.t /* No description provided */,
       };
     }
@@ -2717,7 +2733,9 @@ and Debugger: {
       /* Scope description. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Scope type. */
+        [@key "object"]
         object_: Runtime.Types.RemoteObject.t, /* Object representing the scope. For `global` and `with` scopes it represents the actual
 object; for the rest of the scopes, it is artificial transient object enumerating scope
 variables as its properties. */
@@ -2741,6 +2759,7 @@ variables as its properties. */
         scriptId: Runtime.Types.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
         lineNumber: int, /* Line number in the script (0-based). */
         columnNumber: int, /* Column number in the script (0-based). */
+        [@key "type"]
         type_: string /* No description provided */,
       };
     }
@@ -2753,6 +2772,7 @@ variables as its properties. */
       /* Debug symbols available for a wasm script. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Type of the debug symbols. */
         externalURL: string /* URL of the external symbol source. */,
       };
@@ -2793,6 +2813,7 @@ variables as its properties. */
       type t = {
         scriptId: Runtime.Types.ScriptId.t, /* No description provided */
         start: ScriptPosition.t, /* No description provided */
+        [@key "end"]
         end_: ScriptPosition.t /* No description provided */,
       };
     }
@@ -2814,7 +2835,9 @@ variables as its properties. */
       /* Scope description. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Scope type. */
+        [@key "object"]
         object_: Runtime.Types.RemoteObject.t, /* Object representing the scope. For `global` and `with` scopes it represents the actual
 object; for the rest of the scopes, it is artificial transient object enumerating scope
 variables as its properties. */
@@ -2838,6 +2861,7 @@ variables as its properties. */
         scriptId: Runtime.Types.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
         lineNumber: int, /* Line number in the script (0-based). */
         columnNumber: int, /* Column number in the script (0-based). */
+        [@key "type"]
         type_: string /* No description provided */,
       };
     }
@@ -2850,6 +2874,7 @@ variables as its properties. */
       /* Debug symbols available for a wasm script. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Type of the debug symbols. */
         externalURL: string /* URL of the external symbol source. */,
       };
@@ -2888,6 +2913,7 @@ variables as its properties. */
       type t = {
         scriptId: Runtime.Types.ScriptId.t, /* No description provided */
         start: ScriptPosition.t, /* No description provided */
+        [@key "end"]
         end_: ScriptPosition.t /* No description provided */,
       };
     } = LocationRange
@@ -2909,7 +2935,9 @@ variables as its properties. */
       /* Scope description. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Scope type. */
+        [@key "object"]
         object_: Runtime.Types.RemoteObject.t, /* Object representing the scope. For `global` and `with` scopes it represents the actual
 object; for the rest of the scopes, it is artificial transient object enumerating scope
 variables as its properties. */
@@ -2933,6 +2961,7 @@ variables as its properties. */
         scriptId: Runtime.Types.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
         lineNumber: int, /* Line number in the script (0-based). */
         columnNumber: int, /* Column number in the script (0-based). */
+        [@key "type"]
         type_: string /* No description provided */,
       };
     } = BreakLocation
@@ -2945,6 +2974,7 @@ variables as its properties. */
       /* Debug symbols available for a wasm script. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Type of the debug symbols. */
         externalURL: string /* URL of the external symbol source. */,
       };
@@ -3365,6 +3395,7 @@ and DOMDebugger: {
       /* Object event listener. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* `EventListener`'s type. */
         useCapture: bool, /* `EventListener`'s useCapture. */
         passive: bool, /* `EventListener`'s passive flag. */
@@ -3394,6 +3425,7 @@ and DOMDebugger: {
       /* Object event listener. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* `EventListener`'s type. */
         useCapture: bool, /* `EventListener`'s useCapture. */
         passive: bool, /* `EventListener`'s passive flag. */
@@ -3421,6 +3453,7 @@ and DOMDebugger: {
       /* Object event listener. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* `EventListener`'s type. */
         useCapture: bool, /* `EventListener`'s useCapture. */
         passive: bool, /* `EventListener`'s passive flag. */
@@ -4156,6 +4189,7 @@ and Emulation: {
       /* Screen orientation. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Orientation type. */
         angle: int /* Orientation angle. */,
       };
@@ -4222,6 +4256,7 @@ A display feature that only splits content will have a 0 mask_length. */,
       /* Screen orientation. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Orientation type. */
         angle: int /* Orientation angle. */,
       };
@@ -4286,6 +4321,7 @@ A display feature that only splits content will have a 0 mask_length. */,
       /* Screen orientation. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Orientation type. */
         angle: int /* Orientation angle. */,
       };
@@ -4548,6 +4584,7 @@ requires the version number to be 'unsigned long long') */
       /* Key. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Key type. */
         number: float, /* Number value. */
         string, /* String value. */
@@ -4578,6 +4615,7 @@ requires the version number to be 'unsigned long long') */
       /* Key path. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Key path type. */
         string, /* String value. */
         array: array(string) /* Array value. */,
@@ -4620,6 +4658,7 @@ requires the version number to be 'unsigned long long') */
       /* Key. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Key type. */
         number: float, /* Number value. */
         string, /* String value. */
@@ -4650,6 +4689,7 @@ requires the version number to be 'unsigned long long') */
       /* Key path. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Key path type. */
         string, /* String value. */
         array: array(string) /* Array value. */,
@@ -4690,6 +4730,7 @@ requires the version number to be 'unsigned long long') */
       /* Key. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Key type. */
         number: float, /* Number value. */
         string, /* String value. */
@@ -4720,6 +4761,7 @@ requires the version number to be 'unsigned long long') */
       /* Key path. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Key path type. */
         string, /* String value. */
         array: array(string) /* Array value. */,
@@ -4912,6 +4954,7 @@ and LayerTree: {
       [@deriving yojson]
       type t = {
         rect: DOM.Types.Rect.t, /* Rectangle itself. */
+        [@key "type"]
         type_: string /* Reason for rectangle to force scrolling on the main thread */,
       };
     }
@@ -4980,6 +5023,7 @@ transform/scrolling purposes only. */
       [@deriving yojson]
       type t = {
         rect: DOM.Types.Rect.t, /* Rectangle itself. */
+        [@key "type"]
         type_: string /* Reason for rectangle to force scrolling on the main thread */,
       };
     }
@@ -5046,6 +5090,7 @@ transform/scrolling purposes only. */
       [@deriving yojson]
       type t = {
         rect: DOM.Types.Rect.t, /* Rectangle itself. */
+        [@key "type"]
         type_: string /* Reason for rectangle to force scrolling on the main thread */,
       };
     } = ScrollRect
@@ -5472,6 +5517,7 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
          are specified in third_party/blink/renderer/core/fetch/trust_token.idl. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: TrustTokenOperationType.t, /* No description provided */
         refreshPolicy: string, /* Only set for "token-redemption" type and determine whether
 to request a fresh SRR or use a still valid cached SRR. */
@@ -5546,6 +5592,7 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       [@deriving yojson]
       type t = {
         url: string, /* Resource URL. This is the url of the original network request. */
+        [@key "type"]
         type_: ResourceType.t, /* Type of this resource. */
         response: Response.t, /* Cached response data. */
         bodySize: float /* Cached response body size. */,
@@ -5555,6 +5602,7 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       /* Information about the request initiator. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Type of this initiator. */
         stack: Runtime.Types.StackTrace.t, /* Initiator JavaScript stack trace, set for Script only. */
         url: string, /* Initiator URL, set for Parser type or for Script type (when script is importing module) or for SignedExchange type. */
@@ -6001,6 +6049,7 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
          are specified in third_party/blink/renderer/core/fetch/trust_token.idl. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: TrustTokenOperationType.t, /* No description provided */
         refreshPolicy: string, /* Only set for "token-redemption" type and determine whether
 to request a fresh SRR or use a still valid cached SRR. */
@@ -6075,6 +6124,7 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       [@deriving yojson]
       type t = {
         url: string, /* Resource URL. This is the url of the original network request. */
+        [@key "type"]
         type_: ResourceType.t, /* Type of this resource. */
         response: Response.t, /* Cached response data. */
         bodySize: float /* Cached response body size. */,
@@ -6084,6 +6134,7 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       /* Information about the request initiator. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Type of this initiator. */
         stack: Runtime.Types.StackTrace.t, /* Initiator JavaScript stack trace, set for Script only. */
         url: string, /* Initiator URL, set for Parser type or for Script type (when script is importing module) or for SignedExchange type. */
@@ -6528,6 +6579,7 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
          are specified in third_party/blink/renderer/core/fetch/trust_token.idl. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: TrustTokenOperationType.t, /* No description provided */
         refreshPolicy: string, /* Only set for "token-redemption" type and determine whether
 to request a fresh SRR or use a still valid cached SRR. */
@@ -6602,6 +6654,7 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       [@deriving yojson]
       type t = {
         url: string, /* Resource URL. This is the url of the original network request. */
+        [@key "type"]
         type_: ResourceType.t, /* Type of this resource. */
         response: Response.t, /* Cached response data. */
         bodySize: float /* Cached response body size. */,
@@ -6611,6 +6664,7 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       /* Information about the request initiator. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Type of this initiator. */
         stack: Runtime.Types.StackTrace.t, /* Initiator JavaScript stack trace, set for Script only. */
         url: string, /* Initiator URL, set for Parser type or for Script type (when script is importing module) or for SignedExchange type. */
@@ -7475,6 +7529,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@deriving yojson]
       type t = {
         url: string, /* Resource URL. */
+        [@key "type"]
         type_: Network.Types.ResourceType.t, /* Type of this resource. */
         mimeType: string, /* Resource mimeType as determined by the browser. */
         lastModified: Network.Types.TimeSinceEpoch.t, /* last-modified timestamp as reported by server. */
@@ -7787,6 +7842,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@deriving yojson]
       type t = {
         url: string, /* Resource URL. */
+        [@key "type"]
         type_: Network.Types.ResourceType.t, /* Type of this resource. */
         mimeType: string, /* Resource mimeType as determined by the browser. */
         lastModified: Network.Types.TimeSinceEpoch.t, /* last-modified timestamp as reported by server. */
@@ -8097,6 +8153,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@deriving yojson]
       type t = {
         url: string, /* Resource URL. */
+        [@key "type"]
         type_: Network.Types.ResourceType.t, /* Type of this resource. */
         mimeType: string, /* Resource mimeType as determined by the browser. */
         lastModified: Network.Types.TimeSinceEpoch.t, /* last-modified timestamp as reported by server. */
@@ -8349,6 +8406,7 @@ and PerformanceTimeline: {
       [@deriving yojson]
       type t = {
         frameId: Page.Types.FrameId.t, /* Identifies the frame that this event is related to. Empty for non-frame targets. */
+        [@key "type"]
         type_: string, /* The event type, as specified in https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype
 This determines which of the optional "details" fiedls is present. */
         name: string, /* Name may be empty depending on the type. */
@@ -8397,6 +8455,7 @@ This determines which of the optional "details" fiedls is present. */
       [@deriving yojson]
       type t = {
         frameId: Page.Types.FrameId.t, /* Identifies the frame that this event is related to. Empty for non-frame targets. */
+        [@key "type"]
         type_: string, /* The event type, as specified in https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype
 This determines which of the optional "details" fiedls is present. */
         name: string, /* Name may be empty depending on the type. */
@@ -8443,6 +8502,7 @@ This determines which of the optional "details" fiedls is present. */
       [@deriving yojson]
       type t = {
         frameId: Page.Types.FrameId.t, /* Identifies the frame that this event is related to. Empty for non-frame targets. */
+        [@key "type"]
         type_: string, /* The event type, as specified in https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype
 This determines which of the optional "details" fiedls is present. */
         name: string, /* Name may be empty depending on the type. */
@@ -8787,6 +8847,7 @@ and Runtime: {
       /* Mirror object referencing original JavaScript object. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Object type. */
         subtype: string, /* Object subtype hint. Specified for `object` type values only.
 NOTE: If you change anything here, make sure to also update
@@ -8816,6 +8877,7 @@ The result value is json ML array. */,
       /* Object containing abbreviated remote object value. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Object type. */
         subtype: string, /* Object subtype hint. Specified for `object` type values only. */
         description: string, /* String representation of the object. */
@@ -8829,6 +8891,7 @@ The result value is json ML array. */,
       [@deriving yojson]
       type t = {
         name: string, /* Property name. */
+        [@key "type"]
         type_: string, /* Object type. Accessor means that the property itself is an accessor property. */
         value: string, /* User-friendly property value string. */
         valuePreview: ObjectPreview.t, /* Nested value preview. */
@@ -8924,6 +8987,7 @@ performs a cross-process navigation. */
         scriptId: ScriptId.t, /* Script ID of the exception location. */
         url: string, /* URL of the exception location, to be used when the script was not reported. */
         stackTrace: StackTrace.t, /* JavaScript stack trace if available. */
+        [@key "exception"]
         exception_: RemoteObject.t, /* Exception object if available. */
         executionContextId: ExecutionContextId.t /* Identifier of the context where exception happened. */,
       };
@@ -8997,6 +9061,7 @@ initiated the async call. */
       /* Mirror object referencing original JavaScript object. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Object type. */
         subtype: string, /* Object subtype hint. Specified for `object` type values only.
 NOTE: If you change anything here, make sure to also update
@@ -9026,6 +9091,7 @@ The result value is json ML array. */,
       /* Object containing abbreviated remote object value. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Object type. */
         subtype: string, /* Object subtype hint. Specified for `object` type values only. */
         description: string, /* String representation of the object. */
@@ -9039,6 +9105,7 @@ The result value is json ML array. */,
       [@deriving yojson]
       type t = {
         name: string, /* Property name. */
+        [@key "type"]
         type_: string, /* Object type. Accessor means that the property itself is an accessor property. */
         value: string, /* User-friendly property value string. */
         valuePreview: ObjectPreview.t, /* Nested value preview. */
@@ -9134,6 +9201,7 @@ performs a cross-process navigation. */
         scriptId: ScriptId.t, /* Script ID of the exception location. */
         url: string, /* URL of the exception location, to be used when the script was not reported. */
         stackTrace: StackTrace.t, /* JavaScript stack trace if available. */
+        [@key "exception"]
         exception_: RemoteObject.t, /* Exception object if available. */
         executionContextId: ExecutionContextId.t /* Identifier of the context where exception happened. */,
       };
@@ -9205,6 +9273,7 @@ initiated the async call. */
       /* Mirror object referencing original JavaScript object. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Object type. */
         subtype: string, /* Object subtype hint. Specified for `object` type values only.
 NOTE: If you change anything here, make sure to also update
@@ -9234,6 +9303,7 @@ The result value is json ML array. */,
       /* Object containing abbreviated remote object value. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Object type. */
         subtype: string, /* Object subtype hint. Specified for `object` type values only. */
         description: string, /* String representation of the object. */
@@ -9247,6 +9317,7 @@ The result value is json ML array. */,
       [@deriving yojson]
       type t = {
         name: string, /* Property name. */
+        [@key "type"]
         type_: string, /* Object type. Accessor means that the property itself is an accessor property. */
         value: string, /* User-friendly property value string. */
         valuePreview: ObjectPreview.t, /* Nested value preview. */
@@ -9342,6 +9413,7 @@ performs a cross-process navigation. */
         scriptId: ScriptId.t, /* Script ID of the exception location. */
         url: string, /* URL of the exception location, to be used when the script was not reported. */
         stackTrace: StackTrace.t, /* JavaScript stack trace if available. */
+        [@key "exception"]
         exception_: RemoteObject.t, /* Exception object if available. */
         executionContextId: ExecutionContextId.t /* Identifier of the context where exception happened. */,
       };
@@ -10042,6 +10114,7 @@ and SystemInfo: {
       /* Represents process info. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Specifies process type. */
         id: int, /* Specifies process id. */
         cpuTime: float /* Specifies cumulative CPU usage in seconds across all threads of the
@@ -10134,6 +10207,7 @@ process since the process start. */,
       /* Represents process info. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Specifies process type. */
         id: int, /* Specifies process id. */
         cpuTime: float /* Specifies cumulative CPU usage in seconds across all threads of the
@@ -10224,6 +10298,7 @@ process since the process start. */,
       /* Represents process info. */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* Specifies process type. */
         id: int, /* Specifies process id. */
         cpuTime: float /* Specifies cumulative CPU usage in seconds across all threads of the
@@ -10249,6 +10324,7 @@ and Target: {
       [@deriving yojson]
       type t = {
         targetId: TargetID.t, /* No description provided */
+        [@key "type"]
         type_: string, /* No description provided */
         title: string, /* No description provided */
         url: string, /* No description provided */
@@ -10285,6 +10361,7 @@ and Target: {
       [@deriving yojson]
       type t = {
         targetId: TargetID.t, /* No description provided */
+        [@key "type"]
         type_: string, /* No description provided */
         title: string, /* No description provided */
         url: string, /* No description provided */
@@ -10319,6 +10396,7 @@ and Target: {
       [@deriving yojson]
       type t = {
         targetId: TargetID.t, /* No description provided */
+        [@key "type"]
         type_: string, /* No description provided */
         title: string, /* No description provided */
         url: string, /* No description provided */
@@ -11198,6 +11276,7 @@ the error log level into the PlayerError type. */
       /* Corresponds to kMediaError */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* No description provided */
         errorCode: string /* When this switches to using media::Status instead of PipelineStatus
 we can remove "errorCode" and replace it with the fields from
@@ -11256,6 +11335,7 @@ the error log level into the PlayerError type. */
       /* Corresponds to kMediaError */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* No description provided */
         errorCode: string /* When this switches to using media::Status instead of PipelineStatus
 we can remove "errorCode" and replace it with the fields from
@@ -11312,6 +11392,7 @@ the error log level into the PlayerError type. */
       /* Corresponds to kMediaError */
       [@deriving yojson]
       type t = {
+        [@key "type"]
         type_: string, /* No description provided */
         errorCode: string /* When this switches to using media::Status instead of PipelineStatus
 we can remove "errorCode" and replace it with the fields from
