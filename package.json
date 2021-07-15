@@ -25,7 +25,8 @@
   },
   "scripts": {
     "c": "rm ./lib/CDP.re",
-    "gen": "esy x cdp ./bin/protocol.json ./lib"
+    "gen": "esy x cdp ./bin/protocol.json ./lib",
+    "fmt": "esy refmt --in-place ./lib/CDP.re"
   },
   "dependencies": {
     "@opam/cmdliner": "1.0.4",
