@@ -139,7 +139,7 @@ and map_object = typ => {
     |> Option.map(String.concat("\n"));
 
   switch (properties) {
-  | None => "list((string, string))"
+  | None => "assoc"
   | Some(p) => "{" ++ p ++ "}"
   };
 };
@@ -187,7 +187,25 @@ let main = (path, output) => {
   FileUtil.touch(path);
 
   let out_channel = open_out_bin(path);
-  let write = output_string(out_channel);
+  let write = s => output_string(out_channel, s ++ "\n");
+
+  write(
+    {ct|
+      type assoc = list((string, string));
+      let assoc_of_yojson =
+        fun
+        | `Assoc(l) => {
+            l |> List.map(((key, value)) => (key, string_of_yojson(value)));
+          }
+        | _ => [];
+
+      let yojson_of_assoc = assoc => {
+        `Assoc(
+          assoc |> List.map(((key, value)) => (key, yojson_of_string(value))),
+        );
+      };
+    |ct},
+  );
 
   List.iteri(
     (i, domain) => {

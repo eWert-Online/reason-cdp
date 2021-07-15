@@ -1,3 +1,17 @@
+type assoc = list((string, string));
+let assoc_of_yojson =
+  fun
+  | `Assoc(l) => {
+      l |> List.map(((key, value)) => (key, string_of_yojson(value)));
+    }
+  | _ => [];
+
+let yojson_of_assoc = assoc => {
+  `Assoc(
+    assoc |> List.map(((key, value)) => (key, yojson_of_string(value))),
+  );
+};
+
 module rec Accessibility: {
   module Types: {
     module rec AXNodeId: {
@@ -7842,7 +7856,7 @@ and Network: {
     and Headers: {
       /* Request / response headers as keys / values of JSON object. */
       [@deriving yojson]
-      type t = list((string, string));
+      type t = assoc;
     }
     and ConnectionType: {
       /* The underlying connection technology that the browser is supposedly using. */
@@ -8448,7 +8462,7 @@ backslash. Omitting is equivalent to `"*"`. */
     and Headers: {
       /* Request / response headers as keys / values of JSON object. */
       [@deriving yojson]
-      type t = list((string, string));
+      type t = assoc;
     }
     and ConnectionType: {
       /* The underlying connection technology that the browser is supposedly using. */
@@ -9080,11 +9094,11 @@ backslash. Omitting is equivalent to `"*"`. */
     and Headers: {
       /* Request / response headers as keys / values of JSON object. */
       [@deriving yojson]
-      type t = list((string, string));
+      type t = assoc;
     } = {
       /* Request / response headers as keys / values of JSON object. */
       [@deriving yojson]
-      type t = list((string, string));
+      type t = assoc;
     }
     and ConnectionType: {
       /* The underlying connection technology that the browser is supposedly using. */
@@ -13186,7 +13200,7 @@ script evaluation should be performed. */
 multiple processes, so can be reliably used to identify specific context while backend
 performs a cross-process navigation. */
         [@yojson.option]
-        auxData: option(list((string, string))) /* Embedder-specific auxiliary data. */,
+        auxData: option(assoc) /* Embedder-specific auxiliary data. */,
       };
     }
     and ExceptionDetails: {
@@ -13439,7 +13453,7 @@ script evaluation should be performed. */
 multiple processes, so can be reliably used to identify specific context while backend
 performs a cross-process navigation. */
         [@yojson.option]
-        auxData: option(list((string, string))) /* Embedder-specific auxiliary data. */,
+        auxData: option(assoc) /* Embedder-specific auxiliary data. */,
       };
     }
     and ExceptionDetails: {
@@ -13841,7 +13855,7 @@ script evaluation should be performed. */
 multiple processes, so can be reliably used to identify specific context while backend
 performs a cross-process navigation. */
         [@yojson.option]
-        auxData: option(list((string, string))) /* Embedder-specific auxiliary data. */,
+        auxData: option(assoc) /* Embedder-specific auxiliary data. */,
       };
     } = {
       /* Description of an isolated world. */
@@ -13855,7 +13869,7 @@ script evaluation should be performed. */
 multiple processes, so can be reliably used to identify specific context while backend
 performs a cross-process navigation. */
         [@yojson.option]
-        auxData: option(list((string, string))) /* Embedder-specific auxiliary data. */,
+        auxData: option(assoc) /* Embedder-specific auxiliary data. */,
       };
     }
     and ExceptionDetails: {
@@ -14835,9 +14849,9 @@ and SystemInfo: {
       type t = {
         devices: array(GPUDevice.t), /* The graphics devices on the system. Element 0 is the primary GPU. */
         [@yojson.option]
-        auxAttributes: option(list((string, string))), /* An optional dictionary of additional GPU related attributes. */
+        auxAttributes: option(assoc), /* An optional dictionary of additional GPU related attributes. */
         [@yojson.option]
-        featureStatus: option(list((string, string))), /* An optional dictionary of graphics features and their status. */
+        featureStatus: option(assoc), /* An optional dictionary of graphics features and their status. */
         driverBugWorkarounds: array(string), /* An optional array of GPU driver bug workarounds. */
         videoDecoding: array(VideoDecodeAcceleratorCapability.t), /* Supported accelerated video decoding capabilities. */
         videoEncoding: array(VideoEncodeAcceleratorCapability.t), /* Supported accelerated video encoding capabilities. */
@@ -14932,9 +14946,9 @@ process since the process start. */,
       type t = {
         devices: array(GPUDevice.t), /* The graphics devices on the system. Element 0 is the primary GPU. */
         [@yojson.option]
-        auxAttributes: option(list((string, string))), /* An optional dictionary of additional GPU related attributes. */
+        auxAttributes: option(assoc), /* An optional dictionary of additional GPU related attributes. */
         [@yojson.option]
-        featureStatus: option(list((string, string))), /* An optional dictionary of graphics features and their status. */
+        featureStatus: option(assoc), /* An optional dictionary of graphics features and their status. */
         driverBugWorkarounds: array(string), /* An optional array of GPU driver bug workarounds. */
         videoDecoding: array(VideoDecodeAcceleratorCapability.t), /* Supported accelerated video decoding capabilities. */
         videoEncoding: array(VideoEncodeAcceleratorCapability.t), /* Supported accelerated video encoding capabilities. */
@@ -15088,9 +15102,9 @@ process since the process start. */,
       type t = {
         devices: array(GPUDevice.t), /* The graphics devices on the system. Element 0 is the primary GPU. */
         [@yojson.option]
-        auxAttributes: option(list((string, string))), /* An optional dictionary of additional GPU related attributes. */
+        auxAttributes: option(assoc), /* An optional dictionary of additional GPU related attributes. */
         [@yojson.option]
-        featureStatus: option(list((string, string))), /* An optional dictionary of graphics features and their status. */
+        featureStatus: option(assoc), /* An optional dictionary of graphics features and their status. */
         driverBugWorkarounds: array(string), /* An optional array of GPU driver bug workarounds. */
         videoDecoding: array(VideoDecodeAcceleratorCapability.t), /* Supported accelerated video decoding capabilities. */
         videoEncoding: array(VideoEncodeAcceleratorCapability.t), /* Supported accelerated video encoding capabilities. */
@@ -15102,9 +15116,9 @@ process since the process start. */,
       type t = {
         devices: array(GPUDevice.t), /* The graphics devices on the system. Element 0 is the primary GPU. */
         [@yojson.option]
-        auxAttributes: option(list((string, string))), /* An optional dictionary of additional GPU related attributes. */
+        auxAttributes: option(assoc), /* An optional dictionary of additional GPU related attributes. */
         [@yojson.option]
-        featureStatus: option(list((string, string))), /* An optional dictionary of graphics features and their status. */
+        featureStatus: option(assoc), /* An optional dictionary of graphics features and their status. */
         driverBugWorkarounds: array(string), /* An optional array of GPU driver bug workarounds. */
         videoDecoding: array(VideoDecodeAcceleratorCapability.t), /* Supported accelerated video decoding capabilities. */
         videoEncoding: array(VideoEncodeAcceleratorCapability.t), /* Supported accelerated video encoding capabilities. */
@@ -15292,7 +15306,7 @@ and Tracing: {
     module rec MemoryDumpConfig: {
       /* Configuration for memory dump. Used only when "memory-infra" category is enabled. */
       [@deriving yojson]
-      type t = list((string, string));
+      type t = assoc;
     }
     and TraceConfig: {
       /* No description provided */
@@ -15349,7 +15363,7 @@ and Tracing: {
     module rec MemoryDumpConfig: {
       /* Configuration for memory dump. Used only when "memory-infra" category is enabled. */
       [@deriving yojson]
-      type t = list((string, string));
+      type t = assoc;
     }
     and TraceConfig: {
       /* No description provided */
@@ -15404,11 +15418,11 @@ and Tracing: {
     module rec MemoryDumpConfig: {
       /* Configuration for memory dump. Used only when "memory-infra" category is enabled. */
       [@deriving yojson]
-      type t = list((string, string));
+      type t = assoc;
     } = {
       /* Configuration for memory dump. Used only when "memory-infra" category is enabled. */
       [@deriving yojson]
-      type t = list((string, string));
+      type t = assoc;
     }
     and TraceConfig: {
       /* No description provided */
