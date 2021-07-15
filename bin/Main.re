@@ -10,26 +10,29 @@ let get_file_contents = filename => {
   data;
 };
 
-let rec map_type = typ => {
+let rec map_type = (~key="type", ~in_types, typ) => {
   let prim =
-    typ |> Yojson.Basic.Util.member("type") |> Yojson.Basic.Util.to_string;
+    typ |> Yojson.Basic.Util.member(key) |> Yojson.Basic.Util.to_string;
 
   switch (prim) {
   | "integer" => "float"
   | "number" => "float"
   | "boolean" => "bool"
   | "any" => "string"
-  | "array" => map_array(typ)
-  | "object" => map_object(typ)
+  | "array" => map_array(typ, ~in_types)
+  | "object" => map_object(typ, ~in_types)
   | t => t
   };
 }
-and map_ref = typ => {
+and map_ref = (~force_external=false, typ) => {
   let r =
     typ |> Yojson.Basic.Util.member("$ref") |> Yojson.Basic.Util.to_string;
 
-  let is_exteral = String.contains(r, '.');
-  if (is_exteral) {
+  let has_path = String.contains(r, '.');
+
+  let is_exteral = force_external || has_path;
+
+  if (is_exteral && has_path) {
     let l = r |> String.split_on_char('.');
     let head = l |> List.hd;
     let r =
@@ -39,11 +42,13 @@ and map_ref = typ => {
       |> List.append([head])
       |> String.concat(".");
     r ++ ".t";
+  } else if (is_exteral) {
+    "Types." ++ r ++ ".t";
   } else {
     r ++ ".t";
   };
 }
-and map_array = typ => {
+and map_array = (typ, ~in_types) => {
   let prim =
     typ
     |> Yojson.Basic.Util.member("items")
@@ -62,15 +67,22 @@ and map_array = typ => {
   | (Some(_), Some(_)) =>
     failwith("Unexpected array value: both type and $ref present")
   | (Some(_prim), None) =>
-    "array(" ++ map_type(typ |> Yojson.Basic.Util.member("items")) ++ ")"
+    "array("
+    ++ map_type(typ |> Yojson.Basic.Util.member("items"), ~in_types)
+    ++ ")"
   | (None, Some(_reference)) =>
-    "array(" ++ map_ref(typ |> Yojson.Basic.Util.member("items")) ++ ")"
+    "array("
+    ++ map_ref(
+         typ |> Yojson.Basic.Util.member("items"),
+         ~force_external=!in_types,
+       )
+    ++ ")"
   };
 }
-and map_object = typ => {
+and map_object = (~key="properties", ~in_types, typ) => {
   let properties =
     typ
-    |> Yojson.Basic.Util.member("properties")
+    |> Yojson.Basic.Util.member(key)
     |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list)
     |> Option.map(
          List.map(prop => {
@@ -84,6 +96,7 @@ and map_object = typ => {
                | "object" => "[@key \"object\"] object_"
                | "end" => "[@key \"end\"] end_"
                | "exception" => "[@key \"exception\"] exception_"
+               | "done" => "[@key \"done\"] done_"
                | t => t
              );
 
@@ -119,8 +132,9 @@ and map_object = typ => {
                failwith(
                  "Unexpected object property value: both type and $ref present",
                )
-             | (Some(_prim), None) => map_type(prop)
-             | (None, Some(_reference)) => map_ref(prop)
+             | (Some(_prim), None) => map_type(prop, ~in_types)
+             | (None, Some(_reference)) =>
+               map_ref(prop, ~force_external=!in_types)
              };
 
            if (optional) {
@@ -154,7 +168,7 @@ let get_type = typ => {
     |> Yojson.Basic.Util.to_string_option
     |> Option.value(~default="No description provided");
 
-  let type_ = map_type(typ);
+  let type_ = map_type(typ, ~in_types=true);
 
   let content =
     String.concat(
@@ -175,6 +189,66 @@ let get_type = typ => {
   );
 };
 
+let get_event = event => {
+  let name =
+    event |> Yojson.Basic.Util.member("name") |> Yojson.Basic.Util.to_string;
+
+  let description =
+    event
+    |> Yojson.Basic.Util.member("description")
+    |> Yojson.Basic.Util.to_string_option
+    |> Option.value(~default="No description provided");
+
+  let parameters =
+    event
+    |> Yojson.Basic.Util.member("parameters")
+    |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list);
+
+  let module_name = name |> String.capitalize_ascii;
+
+  let result =
+    switch (parameters) {
+    | None => "empty"
+    | Some(_) => map_object(event, ~key="parameters", ~in_types=false)
+    };
+
+  let signature = [
+    "/* " ++ description ++ " */",
+    "module " ++ module_name ++ ": {",
+    "  [@deriving yojson]",
+    "  type result = " ++ result ++ ";",
+    "",
+    "  [@deriving yojson]",
+    "  type t = {",
+    "    method: string,",
+    "    params: result,",
+    "    sessionId: Target.Types.SessionID.t,",
+    "  };",
+    "",
+    "  let parse: string => t;",
+    "};",
+  ];
+
+  let content = [
+    "/* " ++ description ++ " */",
+    "module " ++ module_name ++ " = {",
+    "  [@deriving yojson]",
+    "  type result = " ++ result ++ ";",
+    "",
+    "  [@deriving yojson]",
+    "  type t = {",
+    "    method: string,",
+    "    params: result,",
+    "    sessionId: Target.Types.SessionID.t,",
+    "  };",
+    "",
+    "  let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;",
+    "};",
+  ];
+
+  (String.concat("\n", signature), String.concat("\n", content));
+};
+
 let main = (path, output) => {
   let protocol = get_file_contents(path) |> Yojson.Basic.from_string;
   let domains =
@@ -191,6 +265,9 @@ let main = (path, output) => {
 
   write(
     {ct|
+      [@deriving yojson]
+      type empty;
+
       type assoc = list((string, string));
       let assoc_of_yojson =
         fun
@@ -236,10 +313,28 @@ let main = (path, output) => {
             )
         );
 
+      let (events_s, events_b) =
+        domain
+        |> Yojson.Basic.Util.member("events")
+        |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list)
+        |> Option.map(List.map(get_event))
+        |> Option.map(t => {
+             let (s, b) = List.split(t);
+             (String.concat("\n", s), String.concat("\n", b));
+           })
+        |> (
+          fun
+          | None => ("", "")
+          | Some((s, b)) => (
+              "module Events: {" ++ s ++ "};",
+              "module Events = {" ++ b ++ "};",
+            )
+        );
+
       print_endline("Writing " ++ name);
 
-      let signature = String.concat("\n", [types_s]);
-      let body = String.concat("\n", [types_b]);
+      let signature = String.concat("\n", [types_s, events_s]);
+      let body = String.concat("\n", [types_b, events_b]);
 
       let module_definition =
         if (i == 0) {

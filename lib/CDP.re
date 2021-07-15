@@ -1,3 +1,6 @@
+[@deriving yojson]
+type empty;
+
 type assoc = list((string, string));
 let assoc_of_yojson =
   fun
@@ -512,6 +515,55 @@ animation/transition. */,
       };
     };
   };
+
+  module Events: {
+    /* Event for when an animation has been cancelled. */
+    module AnimationCanceled: {
+      [@deriving yojson]
+      type result = {
+        id: string /* Id of the animation that was cancelled. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Event for each animation that has been created. */
+    module AnimationCreated: {
+      [@deriving yojson]
+      type result = {id: string /* Id of the animation that was created. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Event for animation that has been started. */
+    module AnimationStarted: {
+      [@deriving yojson]
+      type result = {
+        animation: Types.Animation.t /* Animation that was started. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec Animation: {
@@ -675,6 +727,55 @@ animation/transition. */,
         offset: string, /* Keyframe's time offset. */
         easing: string /* `AnimationEffect`'s timing function. */,
       };
+    };
+  };
+
+  module Events = {
+    /* Event for when an animation has been cancelled. */
+    module AnimationCanceled = {
+      [@deriving yojson]
+      type result = {
+        id: string /* Id of the animation that was cancelled. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Event for each animation that has been created. */
+    module AnimationCreated = {
+      [@deriving yojson]
+      type result = {id: string /* Id of the animation that was created. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Event for animation that has been started. */
+    module AnimationStarted = {
+      [@deriving yojson]
+      type result = {
+        animation: Types.Animation.t /* Animation that was started. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -711,6 +812,41 @@ and ApplicationCache: {
       };
     };
   };
+
+  module Events: {
+    /* No description provided */
+    module ApplicationCacheStatusUpdated: {
+      [@deriving yojson]
+      type result = {
+        frameId: Page.Types.FrameId.t, /* Identifier of the frame containing document whose application cache updated status. */
+        manifestURL: string, /* Manifest URL. */
+        status: float /* Updated application cache status. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module NetworkStateUpdated: {
+      [@deriving yojson]
+      type result = {isNowOnline: bool /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec ApplicationCacheResource: {
@@ -800,6 +936,41 @@ and ApplicationCache: {
         manifestURL: string, /* Manifest URL. */
         status: float /* Application cache status. */,
       };
+    };
+  };
+
+  module Events = {
+    /* No description provided */
+    module ApplicationCacheStatusUpdated = {
+      [@deriving yojson]
+      type result = {
+        frameId: Page.Types.FrameId.t, /* Identifier of the frame containing document whose application cache updated status. */
+        manifestURL: string, /* Manifest URL. */
+        status: float /* Updated application cache status. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module NetworkStateUpdated = {
+      [@deriving yojson]
+      type result = {isNowOnline: bool /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -1116,6 +1287,25 @@ instead of "limited-quirks". */
       };
     };
   };
+
+  module Events: {
+    /* No description provided */
+    module IssueAdded: {
+      [@deriving yojson]
+      type result = {
+        issue: Types.InspectorIssue.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec AffectedCookie: {
@@ -2018,6 +2208,25 @@ instead of "limited-quirks". */
         code: InspectorIssueCode.t, /* No description provided */
         details: InspectorIssueDetails.t /* No description provided */,
       };
+    };
+  };
+
+  module Events = {
+    /* No description provided */
+    module IssueAdded = {
+      [@deriving yojson]
+      type result = {
+        issue: Types.InspectorIssue.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -2052,6 +2261,43 @@ and BackgroundService: {
       };
     };
   };
+
+  module Events: {
+    /* Called when the recording state for the service has been updated. */
+    module RecordingStateChanged: {
+      [@deriving yojson]
+      type result = {
+        isRecording: bool, /* No description provided */
+        service: Types.ServiceName.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Called with all existing backgroundServiceEvents when enabled, and all new
+       events afterwards if enabled and recording. */
+    module BackgroundServiceEventReceived: {
+      [@deriving yojson]
+      type result = {
+        backgroundServiceEvent: Types.BackgroundServiceEvent.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec ServiceName: {
@@ -2135,6 +2381,43 @@ and BackgroundService: {
         instanceId: string, /* An identifier that groups related events together. */
         eventMetadata: array(EventMetadata.t) /* A list of event-specific information. */,
       };
+    };
+  };
+
+  module Events = {
+    /* Called when the recording state for the service has been updated. */
+    module RecordingStateChanged = {
+      [@deriving yojson]
+      type result = {
+        isRecording: bool, /* No description provided */
+        service: Types.ServiceName.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Called with all existing backgroundServiceEvents when enabled, and all new
+       events afterwards if enabled and recording. */
+    module BackgroundServiceEventReceived = {
+      [@deriving yojson]
+      type result = {
+        backgroundServiceEvent: Types.BackgroundServiceEvent.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -2224,6 +2507,47 @@ Note that userVisibleOnly = true is the only currently supported type. */
       };
     };
   };
+
+  module Events: {
+    /* Fired when page is about to start a download. */
+    module DownloadWillBegin: {
+      [@deriving yojson]
+      type result = {
+        frameId: Page.Types.FrameId.t, /* Id of the frame that caused the download to begin. */
+        guid: string, /* Global unique identifier of the download. */
+        url: string, /* URL of the resource being downloaded. */
+        suggestedFilename: string /* Suggested file name of the resource (the actual name of the file saved on disk may differ). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when download makes progress. Last call has |done| == true. */
+    module DownloadProgress: {
+      [@deriving yojson]
+      type result = {
+        guid: string, /* Global unique identifier of the download. */
+        totalBytes: float, /* Total expected bytes to download. */
+        receivedBytes: float, /* Total bytes received. */
+        state: string /* Download status. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec BrowserContextID: {
@@ -2465,6 +2789,47 @@ Note that userVisibleOnly = true is the only currently supported type. */
         count: float, /* Total number of samples. */
         buckets: array(Bucket.t) /* Buckets. */,
       };
+    };
+  };
+
+  module Events = {
+    /* Fired when page is about to start a download. */
+    module DownloadWillBegin = {
+      [@deriving yojson]
+      type result = {
+        frameId: Page.Types.FrameId.t, /* Id of the frame that caused the download to begin. */
+        guid: string, /* Global unique identifier of the download. */
+        url: string, /* URL of the resource being downloaded. */
+        suggestedFilename: string /* Suggested file name of the resource (the actual name of the file saved on disk may differ). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when download makes progress. Last call has |done| == true. */
+    module DownloadProgress = {
+      [@deriving yojson]
+      type result = {
+        guid: string, /* Global unique identifier of the download. */
+        totalBytes: float, /* Total expected bytes to download. */
+        receivedBytes: float, /* Total bytes received. */
+        state: string /* Download status. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -2751,6 +3116,90 @@ stylesheet rules) this rule came from. */
       };
     };
   };
+
+  module Events: {
+    /* Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
+       web font */
+    module FontsUpdated: {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option]
+        font: option(Types.FontFace.t) /* The web font that has loaded. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fires whenever a MediaQuery result changes (for example, after a browser window has been
+       resized.) The current implementation considers only viewport-dependent media features. */
+    module MediaQueryResultChanged: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired whenever an active document stylesheet is added. */
+    module StyleSheetAdded: {
+      [@deriving yojson]
+      type result = {
+        header: Types.CSSStyleSheetHeader.t /* Added stylesheet metainfo. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired whenever a stylesheet is changed as a result of the client operation. */
+    module StyleSheetChanged: {
+      [@deriving yojson]
+      type result = {
+        styleSheetId: Types.StyleSheetId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired whenever an active document stylesheet is removed. */
+    module StyleSheetRemoved: {
+      [@deriving yojson]
+      type result = {
+        styleSheetId: Types.StyleSheetId.t /* Identifier of the removed stylesheet. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec StyleSheetId: {
@@ -3569,6 +4018,90 @@ stylesheet rules) this rule came from. */
         range: SourceRange.t, /* The range of the style text in the enclosing stylesheet. */
         text: string /* New style text. */,
       };
+    };
+  };
+
+  module Events = {
+    /* Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
+       web font */
+    module FontsUpdated = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option]
+        font: option(Types.FontFace.t) /* The web font that has loaded. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fires whenever a MediaQuery result changes (for example, after a browser window has been
+       resized.) The current implementation considers only viewport-dependent media features. */
+    module MediaQueryResultChanged = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired whenever an active document stylesheet is added. */
+    module StyleSheetAdded = {
+      [@deriving yojson]
+      type result = {
+        header: Types.CSSStyleSheetHeader.t /* Added stylesheet metainfo. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired whenever a stylesheet is changed as a result of the client operation. */
+    module StyleSheetChanged = {
+      [@deriving yojson]
+      type result = {
+        styleSheetId: Types.StyleSheetId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired whenever an active document stylesheet is removed. */
+    module StyleSheetRemoved = {
+      [@deriving yojson]
+      type result = {
+        styleSheetId: Types.StyleSheetId.t /* Identifier of the removed stylesheet. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -3780,6 +4313,41 @@ session on the sink. */,
       };
     };
   };
+
+  module Events: {
+    /* This is fired whenever the list of available sinks changes. A sink is a
+       device or a software surface that you can cast to. */
+    module SinksUpdated: {
+      [@deriving yojson]
+      type result = {
+        sinks: array(Types.Sink.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* This is fired whenever the outstanding issue/error message changes.
+       |issueMessage| is empty if there is no issue. */
+    module IssueUpdated: {
+      [@deriving yojson]
+      type result = {issueMessage: string /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec Sink: {
@@ -3814,6 +4382,41 @@ session on the sink. */,
         session: option(string) /* Text describing the current session. Present only if there is an active
 session on the sink. */,
       };
+    };
+  };
+
+  module Events = {
+    /* This is fired whenever the list of available sinks changes. A sink is a
+       device or a software surface that you can cast to. */
+    module SinksUpdated = {
+      [@deriving yojson]
+      type result = {
+        sinks: array(Types.Sink.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* This is fired whenever the outstanding issue/error message changes.
+       |issueMessage| is empty if there is no issue. */
+    module IssueUpdated = {
+      [@deriving yojson]
+      type result = {issueMessage: string /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -3835,6 +4438,25 @@ and Console: {
       };
     };
   };
+
+  module Events: {
+    /* Issued when new console message is added. */
+    module MessageAdded: {
+      [@deriving yojson]
+      type result = {
+        message: Types.ConsoleMessage.t /* Console message that has been added. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec ConsoleMessage: {
@@ -3881,6 +4503,25 @@ and Console: {
         [@yojson.option]
         column: option(float) /* Column number in the resource that generated this message (1-based). */,
       };
+    };
+  };
+
+  module Events = {
+    /* Issued when new console message is added. */
+    module MessageAdded = {
+      [@deriving yojson]
+      type result = {
+        message: Types.ConsoleMessage.t /* Console message that has been added. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -3994,6 +4635,154 @@ variables as its properties. */
       };
     };
   };
+
+  module Events: {
+    /* Fired when breakpoint is resolved to an actual script and location. */
+    module BreakpointResolved: {
+      [@deriving yojson]
+      type result = {
+        breakpointId: Types.BreakpointId.t, /* Breakpoint unique identifier. */
+        location: Types.Location.t /* Actual breakpoint location. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria. */
+    module Paused: {
+      [@deriving yojson]
+      type result = {
+        callFrames: array(Types.CallFrame.t), /* Call stack the virtual machine stopped on. */
+        reason: string, /* Pause reason. */
+        [@yojson.option]
+        data: option(assoc), /* Object containing break-specific auxiliary properties. */
+        [@yojson.option]
+        hitBreakpoints: option(array(string)), /* Hit breakpoints IDs */
+        [@yojson.option]
+        asyncStackTrace: option(Runtime.Types.StackTrace.t), /* Async stack trace, if any. */
+        [@yojson.option]
+        asyncStackTraceId: option(Runtime.Types.StackTraceId.t), /* Async stack trace, if any. */
+        [@yojson.option]
+        asyncCallStackTraceId: option(Runtime.Types.StackTraceId.t) /* Never present, will be removed. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when the virtual machine resumed execution. */
+    module Resumed: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when virtual machine fails to parse the script. */
+    module ScriptFailedToParse: {
+      [@deriving yojson]
+      type result = {
+        scriptId: Runtime.Types.ScriptId.t, /* Identifier of the script parsed. */
+        url: string, /* URL or name of the script parsed (if any). */
+        startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
+        startColumn: float, /* Column offset of the script within the resource with given URL. */
+        endLine: float, /* Last line of the script. */
+        endColumn: float, /* Length of the last line of the script. */
+        executionContextId: Runtime.Types.ExecutionContextId.t, /* Specifies script creation context. */
+        hash: string, /* Content hash of the script. */
+        [@yojson.option]
+        executionContextAuxData: option(assoc), /* Embedder-specific auxiliary data. */
+        [@yojson.option]
+        sourceMapURL: option(string), /* URL of source map associated with script (if any). */
+        [@yojson.option]
+        hasSourceURL: option(bool), /* True, if this script has sourceURL. */
+        [@yojson.option]
+        isModule: option(bool), /* True, if this script is ES6 module. */
+        [@yojson.option]
+        length: option(float), /* This script length. */
+        [@yojson.option]
+        stackTrace: option(Runtime.Types.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
+        [@yojson.option]
+        codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
+        [@yojson.option]
+        scriptLanguage: option(Debugger.Types.ScriptLanguage.t), /* The language of the script. */
+        [@yojson.option]
+        embedderName: option(string) /* The name the embedder supplied for this script. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when virtual machine parses script. This event is also fired for all known and uncollected
+       scripts upon enabling debugger. */
+    module ScriptParsed: {
+      [@deriving yojson]
+      type result = {
+        scriptId: Runtime.Types.ScriptId.t, /* Identifier of the script parsed. */
+        url: string, /* URL or name of the script parsed (if any). */
+        startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
+        startColumn: float, /* Column offset of the script within the resource with given URL. */
+        endLine: float, /* Last line of the script. */
+        endColumn: float, /* Length of the last line of the script. */
+        executionContextId: Runtime.Types.ExecutionContextId.t, /* Specifies script creation context. */
+        hash: string, /* Content hash of the script. */
+        [@yojson.option]
+        executionContextAuxData: option(assoc), /* Embedder-specific auxiliary data. */
+        [@yojson.option]
+        isLiveEdit: option(bool), /* True, if this script is generated as a result of the live edit operation. */
+        [@yojson.option]
+        sourceMapURL: option(string), /* URL of source map associated with script (if any). */
+        [@yojson.option]
+        hasSourceURL: option(bool), /* True, if this script has sourceURL. */
+        [@yojson.option]
+        isModule: option(bool), /* True, if this script is ES6 module. */
+        [@yojson.option]
+        length: option(float), /* This script length. */
+        [@yojson.option]
+        stackTrace: option(Runtime.Types.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
+        [@yojson.option]
+        codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
+        [@yojson.option]
+        scriptLanguage: option(Debugger.Types.ScriptLanguage.t), /* The language of the script. */
+        [@yojson.option]
+        debugSymbols: option(Debugger.Types.DebugSymbols.t), /* If the scriptLanguage is WebASsembly, the source of debug symbols for the module. */
+        [@yojson.option]
+        embedderName: option(string) /* The name the embedder supplied for this script. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec BreakpointId: {
@@ -4306,6 +5095,154 @@ variables as its properties. */
         [@yojson.option]
         externalURL: option(string) /* URL of the external symbol source. */,
       };
+    };
+  };
+
+  module Events = {
+    /* Fired when breakpoint is resolved to an actual script and location. */
+    module BreakpointResolved = {
+      [@deriving yojson]
+      type result = {
+        breakpointId: Types.BreakpointId.t, /* Breakpoint unique identifier. */
+        location: Types.Location.t /* Actual breakpoint location. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria. */
+    module Paused = {
+      [@deriving yojson]
+      type result = {
+        callFrames: array(Types.CallFrame.t), /* Call stack the virtual machine stopped on. */
+        reason: string, /* Pause reason. */
+        [@yojson.option]
+        data: option(assoc), /* Object containing break-specific auxiliary properties. */
+        [@yojson.option]
+        hitBreakpoints: option(array(string)), /* Hit breakpoints IDs */
+        [@yojson.option]
+        asyncStackTrace: option(Runtime.Types.StackTrace.t), /* Async stack trace, if any. */
+        [@yojson.option]
+        asyncStackTraceId: option(Runtime.Types.StackTraceId.t), /* Async stack trace, if any. */
+        [@yojson.option]
+        asyncCallStackTraceId: option(Runtime.Types.StackTraceId.t) /* Never present, will be removed. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when the virtual machine resumed execution. */
+    module Resumed = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when virtual machine fails to parse the script. */
+    module ScriptFailedToParse = {
+      [@deriving yojson]
+      type result = {
+        scriptId: Runtime.Types.ScriptId.t, /* Identifier of the script parsed. */
+        url: string, /* URL or name of the script parsed (if any). */
+        startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
+        startColumn: float, /* Column offset of the script within the resource with given URL. */
+        endLine: float, /* Last line of the script. */
+        endColumn: float, /* Length of the last line of the script. */
+        executionContextId: Runtime.Types.ExecutionContextId.t, /* Specifies script creation context. */
+        hash: string, /* Content hash of the script. */
+        [@yojson.option]
+        executionContextAuxData: option(assoc), /* Embedder-specific auxiliary data. */
+        [@yojson.option]
+        sourceMapURL: option(string), /* URL of source map associated with script (if any). */
+        [@yojson.option]
+        hasSourceURL: option(bool), /* True, if this script has sourceURL. */
+        [@yojson.option]
+        isModule: option(bool), /* True, if this script is ES6 module. */
+        [@yojson.option]
+        length: option(float), /* This script length. */
+        [@yojson.option]
+        stackTrace: option(Runtime.Types.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
+        [@yojson.option]
+        codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
+        [@yojson.option]
+        scriptLanguage: option(Debugger.Types.ScriptLanguage.t), /* The language of the script. */
+        [@yojson.option]
+        embedderName: option(string) /* The name the embedder supplied for this script. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when virtual machine parses script. This event is also fired for all known and uncollected
+       scripts upon enabling debugger. */
+    module ScriptParsed = {
+      [@deriving yojson]
+      type result = {
+        scriptId: Runtime.Types.ScriptId.t, /* Identifier of the script parsed. */
+        url: string, /* URL or name of the script parsed (if any). */
+        startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
+        startColumn: float, /* Column offset of the script within the resource with given URL. */
+        endLine: float, /* Last line of the script. */
+        endColumn: float, /* Length of the last line of the script. */
+        executionContextId: Runtime.Types.ExecutionContextId.t, /* Specifies script creation context. */
+        hash: string, /* Content hash of the script. */
+        [@yojson.option]
+        executionContextAuxData: option(assoc), /* Embedder-specific auxiliary data. */
+        [@yojson.option]
+        isLiveEdit: option(bool), /* True, if this script is generated as a result of the live edit operation. */
+        [@yojson.option]
+        sourceMapURL: option(string), /* URL of source map associated with script (if any). */
+        [@yojson.option]
+        hasSourceURL: option(bool), /* True, if this script has sourceURL. */
+        [@yojson.option]
+        isModule: option(bool), /* True, if this script is ES6 module. */
+        [@yojson.option]
+        length: option(float), /* This script length. */
+        [@yojson.option]
+        stackTrace: option(Runtime.Types.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
+        [@yojson.option]
+        codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
+        [@yojson.option]
+        scriptLanguage: option(Debugger.Types.ScriptLanguage.t), /* The language of the script. */
+        [@yojson.option]
+        debugSymbols: option(Debugger.Types.DebugSymbols.t), /* If the scriptLanguage is WebASsembly, the source of debug symbols for the module. */
+        [@yojson.option]
+        embedderName: option(string) /* The name the embedder supplied for this script. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -4467,6 +5404,246 @@ The property is always undefined now. */
       };
     };
   };
+
+  module Events: {
+    /* Fired when `Element`'s attribute is modified. */
+    module AttributeModified: {
+      [@deriving yojson]
+      type result = {
+        nodeId: Types.NodeId.t, /* Id of the node that has changed. */
+        name: string, /* Attribute name. */
+        value: string /* Attribute value. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when `Element`'s attribute is removed. */
+    module AttributeRemoved: {
+      [@deriving yojson]
+      type result = {
+        nodeId: Types.NodeId.t, /* Id of the node that has changed. */
+        name: string /* A ttribute name. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Mirrors `DOMCharacterDataModified` event. */
+    module CharacterDataModified: {
+      [@deriving yojson]
+      type result = {
+        nodeId: Types.NodeId.t, /* Id of the node that has changed. */
+        characterData: string /* New text value. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when `Container`'s child node count has changed. */
+    module ChildNodeCountUpdated: {
+      [@deriving yojson]
+      type result = {
+        nodeId: Types.NodeId.t, /* Id of the node that has changed. */
+        childNodeCount: float /* New node count. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Mirrors `DOMNodeInserted` event. */
+    module ChildNodeInserted: {
+      [@deriving yojson]
+      type result = {
+        parentNodeId: Types.NodeId.t, /* Id of the node that has changed. */
+        previousNodeId: Types.NodeId.t, /* If of the previous siblint. */
+        node: Types.Node.t /* Inserted node data. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Mirrors `DOMNodeRemoved` event. */
+    module ChildNodeRemoved: {
+      [@deriving yojson]
+      type result = {
+        parentNodeId: Types.NodeId.t, /* Parent id. */
+        nodeId: Types.NodeId.t /* Id of the node that has been removed. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Called when distribution is changed. */
+    module DistributedNodesUpdated: {
+      [@deriving yojson]
+      type result = {
+        insertionPointId: Types.NodeId.t, /* Insertion point where distributed nodes were updated. */
+        distributedNodes: array(Types.BackendNode.t) /* Distributed nodes for given insertion point. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when `Document` has been totally updated. Node ids are no longer valid. */
+    module DocumentUpdated: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when `Element`'s inline style is modified via a CSS property modification. */
+    module InlineStyleInvalidated: {
+      [@deriving yojson]
+      type result = {
+        nodeIds: array(Types.NodeId.t) /* Ids of the nodes for which the inline styles have been invalidated. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Called when a pseudo element is added to an element. */
+    module PseudoElementAdded: {
+      [@deriving yojson]
+      type result = {
+        parentId: Types.NodeId.t, /* Pseudo element's parent element id. */
+        pseudoElement: Types.Node.t /* The added pseudo element. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Called when a pseudo element is removed from an element. */
+    module PseudoElementRemoved: {
+      [@deriving yojson]
+      type result = {
+        parentId: Types.NodeId.t, /* Pseudo element's parent element id. */
+        pseudoElementId: Types.NodeId.t /* The removed pseudo element id. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when backend wants to provide client with the missing DOM structure. This happens upon
+       most of the calls requesting node ids. */
+    module SetChildNodes: {
+      [@deriving yojson]
+      type result = {
+        parentId: Types.NodeId.t, /* Parent node id to populate with children. */
+        nodes: array(Types.Node.t) /* Child nodes array. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Called when shadow root is popped from the element. */
+    module ShadowRootPopped: {
+      [@deriving yojson]
+      type result = {
+        hostId: Types.NodeId.t, /* Host element id. */
+        rootId: Types.NodeId.t /* Shadow root id. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Called when shadow root is pushed into the element. */
+    module ShadowRootPushed: {
+      [@deriving yojson]
+      type result = {
+        hostId: Types.NodeId.t, /* Host element id. */
+        root: Types.Node.t /* Shadow root. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec NodeId: {
@@ -4921,6 +6098,246 @@ The property is always undefined now. */
         name: string, /* Computed style property name. */
         value: string /* Computed style property value. */,
       };
+    };
+  };
+
+  module Events = {
+    /* Fired when `Element`'s attribute is modified. */
+    module AttributeModified = {
+      [@deriving yojson]
+      type result = {
+        nodeId: Types.NodeId.t, /* Id of the node that has changed. */
+        name: string, /* Attribute name. */
+        value: string /* Attribute value. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when `Element`'s attribute is removed. */
+    module AttributeRemoved = {
+      [@deriving yojson]
+      type result = {
+        nodeId: Types.NodeId.t, /* Id of the node that has changed. */
+        name: string /* A ttribute name. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Mirrors `DOMCharacterDataModified` event. */
+    module CharacterDataModified = {
+      [@deriving yojson]
+      type result = {
+        nodeId: Types.NodeId.t, /* Id of the node that has changed. */
+        characterData: string /* New text value. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when `Container`'s child node count has changed. */
+    module ChildNodeCountUpdated = {
+      [@deriving yojson]
+      type result = {
+        nodeId: Types.NodeId.t, /* Id of the node that has changed. */
+        childNodeCount: float /* New node count. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Mirrors `DOMNodeInserted` event. */
+    module ChildNodeInserted = {
+      [@deriving yojson]
+      type result = {
+        parentNodeId: Types.NodeId.t, /* Id of the node that has changed. */
+        previousNodeId: Types.NodeId.t, /* If of the previous siblint. */
+        node: Types.Node.t /* Inserted node data. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Mirrors `DOMNodeRemoved` event. */
+    module ChildNodeRemoved = {
+      [@deriving yojson]
+      type result = {
+        parentNodeId: Types.NodeId.t, /* Parent id. */
+        nodeId: Types.NodeId.t /* Id of the node that has been removed. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Called when distribution is changed. */
+    module DistributedNodesUpdated = {
+      [@deriving yojson]
+      type result = {
+        insertionPointId: Types.NodeId.t, /* Insertion point where distributed nodes were updated. */
+        distributedNodes: array(Types.BackendNode.t) /* Distributed nodes for given insertion point. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when `Document` has been totally updated. Node ids are no longer valid. */
+    module DocumentUpdated = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when `Element`'s inline style is modified via a CSS property modification. */
+    module InlineStyleInvalidated = {
+      [@deriving yojson]
+      type result = {
+        nodeIds: array(Types.NodeId.t) /* Ids of the nodes for which the inline styles have been invalidated. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Called when a pseudo element is added to an element. */
+    module PseudoElementAdded = {
+      [@deriving yojson]
+      type result = {
+        parentId: Types.NodeId.t, /* Pseudo element's parent element id. */
+        pseudoElement: Types.Node.t /* The added pseudo element. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Called when a pseudo element is removed from an element. */
+    module PseudoElementRemoved = {
+      [@deriving yojson]
+      type result = {
+        parentId: Types.NodeId.t, /* Pseudo element's parent element id. */
+        pseudoElementId: Types.NodeId.t /* The removed pseudo element id. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when backend wants to provide client with the missing DOM structure. This happens upon
+       most of the calls requesting node ids. */
+    module SetChildNodes = {
+      [@deriving yojson]
+      type result = {
+        parentId: Types.NodeId.t, /* Parent node id to populate with children. */
+        nodes: array(Types.Node.t) /* Child nodes array. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Called when shadow root is popped from the element. */
+    module ShadowRootPopped = {
+      [@deriving yojson]
+      type result = {
+        hostId: Types.NodeId.t, /* Host element id. */
+        rootId: Types.NodeId.t /* Shadow root id. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Called when shadow root is pushed into the element. */
+    module ShadowRootPushed = {
+      [@deriving yojson]
+      type result = {
+        hostId: Types.NodeId.t, /* Host element id. */
+        root: Types.Node.t /* Shadow root. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -6050,6 +7467,79 @@ and DOMStorage: {
       type t = array(string);
     };
   };
+
+  module Events: {
+    /* No description provided */
+    module DomStorageItemAdded: {
+      [@deriving yojson]
+      type result = {
+        storageId: Types.StorageId.t, /* No description provided */
+        key: string, /* No description provided */
+        newValue: string /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module DomStorageItemRemoved: {
+      [@deriving yojson]
+      type result = {
+        storageId: Types.StorageId.t, /* No description provided */
+        key: string /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module DomStorageItemUpdated: {
+      [@deriving yojson]
+      type result = {
+        storageId: Types.StorageId.t, /* No description provided */
+        key: string, /* No description provided */
+        oldValue: string, /* No description provided */
+        newValue: string /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module DomStorageItemsCleared: {
+      [@deriving yojson]
+      type result = {
+        storageId: Types.StorageId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec StorageId: {
@@ -6089,6 +7579,79 @@ and DOMStorage: {
       /* DOM Storage item. */
       [@deriving yojson]
       type t = array(string);
+    };
+  };
+
+  module Events = {
+    /* No description provided */
+    module DomStorageItemAdded = {
+      [@deriving yojson]
+      type result = {
+        storageId: Types.StorageId.t, /* No description provided */
+        key: string, /* No description provided */
+        newValue: string /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module DomStorageItemRemoved = {
+      [@deriving yojson]
+      type result = {
+        storageId: Types.StorageId.t, /* No description provided */
+        key: string /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module DomStorageItemUpdated = {
+      [@deriving yojson]
+      type result = {
+        storageId: Types.StorageId.t, /* No description provided */
+        key: string, /* No description provided */
+        oldValue: string, /* No description provided */
+        newValue: string /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module DomStorageItemsCleared = {
+      [@deriving yojson]
+      type result = {
+        storageId: Types.StorageId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -6118,6 +7681,25 @@ and Database: {
       };
     };
   };
+
+  module Events: {
+    /* No description provided */
+    module AddDatabase: {
+      [@deriving yojson]
+      type result = {
+        database: Types.Database.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec DatabaseId: {
@@ -6186,6 +7768,25 @@ and Database: {
         message: string, /* Error message. */
         code: float /* Error code. */,
       };
+    };
+  };
+
+  module Events = {
+    /* No description provided */
+    module AddDatabase = {
+      [@deriving yojson]
+      type result = {
+        database: Types.Database.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -6259,6 +7860,23 @@ A display feature that only splits content will have a 0 mask_length. */,
       type t = string;
     };
   };
+
+  module Events: {
+    /* Notification sent after the virtual time budget for the current VirtualTimePolicy has run out. */
+    module VirtualTimeBudgetExpired: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec ScreenOrientation: {
@@ -6452,6 +8070,23 @@ A display feature that only splits content will have a 0 mask_length. */,
       /* Enum of image types that can be disabled. */
       [@deriving yojson]
       type t = string;
+    };
+  };
+
+  module Events = {
+    /* Notification sent after the virtual time budget for the current VirtualTimePolicy has run out. */
+    module VirtualTimeBudgetExpired = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -6468,6 +8103,27 @@ and HeadlessExperimental: {
       };
     };
   };
+
+  module Events: {
+    /* Issued when the target starts or stops needing BeginFrames.
+       Deprecated. Issue beginFrame unconditionally instead and use result from
+       beginFrame to detect whether the frames were suppressed. */
+    module NeedsBeginFramesChanged: {
+      [@deriving yojson]
+      type result = {
+        needsBeginFrames: bool /* True if BeginFrames are needed, false otherwise. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec ScreenshotParams: {
@@ -6499,6 +8155,27 @@ and HeadlessExperimental: {
         [@yojson.option]
         quality: option(float) /* Compression quality from range [0..100] (jpeg only). */,
       };
+    };
+  };
+
+  module Events = {
+    /* Issued when the target starts or stops needing BeginFrames.
+       Deprecated. Issue beginFrame unconditionally instead and use result from
+       beginFrame to detect whether the frames were suppressed. */
+    module NeedsBeginFramesChanged = {
+      [@deriving yojson]
+      type result = {
+        needsBeginFrames: bool /* True if BeginFrames are needed, false otherwise. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -6538,6 +8215,94 @@ between startSampling and stopSampling. */,
       };
     };
   };
+
+  module Events: {
+    /* No description provided */
+    module AddHeapSnapshotChunk: {
+      [@deriving yojson]
+      type result = {chunk: string /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* If heap objects tracking has been started then backend may send update for one or more fragments */
+    module HeapStatsUpdate: {
+      [@deriving yojson]
+      type result = {
+        statsUpdate: array(float) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
+index, the second integer is a total count of objects for the fragment, the third integer is
+a total size of the objects for the fragment. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* If heap objects tracking has been started then backend regularly sends a current value for last
+       seen object id and corresponding timestamp. If the were changes in the heap since last event
+       then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event. */
+    module LastSeenObjectId: {
+      [@deriving yojson]
+      type result = {
+        lastSeenObjectId: float, /* No description provided */
+        timestamp: float /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module ReportHeapSnapshotProgress: {
+      [@deriving yojson]
+      type result = {
+        [@key "done"]
+        done_: float, /* No description provided */
+        total: float, /* No description provided */
+        [@yojson.option]
+        finished: option(bool) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module ResetProfiles: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec HeapSnapshotObjectId: {
@@ -6635,6 +8400,94 @@ between startSampling and stopSampling. */,
         head: SamplingHeapProfileNode.t, /* No description provided */
         samples: array(SamplingHeapProfileSample.t) /* No description provided */,
       };
+    };
+  };
+
+  module Events = {
+    /* No description provided */
+    module AddHeapSnapshotChunk = {
+      [@deriving yojson]
+      type result = {chunk: string /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* If heap objects tracking has been started then backend may send update for one or more fragments */
+    module HeapStatsUpdate = {
+      [@deriving yojson]
+      type result = {
+        statsUpdate: array(float) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
+index, the second integer is a total count of objects for the fragment, the third integer is
+a total size of the objects for the fragment. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* If heap objects tracking has been started then backend regularly sends a current value for last
+       seen object id and corresponding timestamp. If the were changes in the heap since last event
+       then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event. */
+    module LastSeenObjectId = {
+      [@deriving yojson]
+      type result = {
+        lastSeenObjectId: float, /* No description provided */
+        timestamp: float /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module ReportHeapSnapshotProgress = {
+      [@deriving yojson]
+      type result = {
+        [@key "done"]
+        done_: float, /* No description provided */
+        total: float, /* No description provided */
+        [@yojson.option]
+        finished: option(bool) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module ResetProfiles = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -7053,6 +8906,24 @@ text, HTML markup or any other data. */
       };
     };
   };
+
+  module Events: {
+    /* Emitted only when `Input.setInterceptDrags` is enabled. Use this data with `Input.dispatchDragEvent` to
+       restore normal drag and drop behavior. */
+    module DragIntercepted: {
+      [@deriving yojson]
+      type result = {data: Types.DragData.t /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec TouchPoint: {
@@ -7243,8 +9114,120 @@ text, HTML markup or any other data. */
       };
     };
   };
+
+  module Events = {
+    /* Emitted only when `Input.setInterceptDrags` is enabled. Use this data with `Input.dispatchDragEvent` to
+       restore normal drag and drop behavior. */
+    module DragIntercepted = {
+      [@deriving yojson]
+      type result = {data: Types.DragData.t /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+  };
 }
-and Inspector: {} = {}
+and Inspector: {
+  module Events: {
+    /* Fired when remote debugging connection is about to be terminated. Contains detach reason. */
+    module Detached: {
+      [@deriving yojson]
+      type result = {
+        reason: string /* The reason why connection has been terminated. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when debugging target has crashed */
+    module TargetCrashed: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when debugging target has reloaded after crash */
+    module TargetReloadedAfterCrash: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
+} = {
+  module Events = {
+    /* Fired when remote debugging connection is about to be terminated. Contains detach reason. */
+    module Detached = {
+      [@deriving yojson]
+      type result = {
+        reason: string /* The reason why connection has been terminated. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when debugging target has crashed */
+    module TargetCrashed = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when debugging target has reloaded after crash */
+    module TargetReloadedAfterCrash = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+  };
+}
 and LayerTree: {
   module Types: {
     module rec LayerId: {
@@ -7325,6 +9308,43 @@ transform/scrolling purposes only. */
       type t = array(float);
     };
   };
+
+  module Events: {
+    /* No description provided */
+    module LayerPainted: {
+      [@deriving yojson]
+      type result = {
+        layerId: Types.LayerId.t, /* The id of the painted layer. */
+        clip: DOM.Types.Rect.t /* Clip rectangle. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module LayerTreeDidChange: {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option]
+        layers: option(array(Types.Layer.t)) /* Layer tree, absent if not in the comspositing mode. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec LayerId: {
@@ -7551,6 +9571,43 @@ transform/scrolling purposes only. */
       /* Array of timings, one per paint step. */
       [@deriving yojson]
       type t = array(float);
+    };
+  };
+
+  module Events = {
+    /* No description provided */
+    module LayerPainted = {
+      [@deriving yojson]
+      type result = {
+        layerId: Types.LayerId.t, /* The id of the painted layer. */
+        clip: DOM.Types.Rect.t /* Clip rectangle. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module LayerTreeDidChange = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option]
+        layers: option(array(Types.Layer.t)) /* Layer tree, absent if not in the comspositing mode. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -7587,6 +9644,23 @@ and Log: {
       };
     };
   };
+
+  module Events: {
+    /* Issued when new message was logged. */
+    module EntryAdded: {
+      [@deriving yojson]
+      type result = {entry: Types.LogEntry.t /* The entry. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec LogEntry: {
@@ -7677,6 +9751,23 @@ and Log: {
         name: string, /* Violation type. */
         threshold: float /* Time threshold to trigger upon. */,
       };
+    };
+  };
+
+  module Events = {
+    /* Issued when new message was logged. */
+    module EntryAdded = {
+      [@deriving yojson]
+      type result = {entry: Types.LogEntry.t /* The entry. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -8422,6 +10513,504 @@ backslash. Omitting is equivalent to `"*"`. */
       };
     };
   };
+
+  module Events: {
+    /* Fired when data chunk was received over the network. */
+    module DataReceived: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        dataLength: float, /* Data chunk length. */
+        encodedDataLength: float /* Actual bytes received (might be less than dataLength for compressed encodings). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when EventSource message is received. */
+    module EventSourceMessageReceived: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        eventName: string, /* Message type. */
+        eventId: string, /* Message identifier. */
+        data: string /* Message content. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when HTTP request has failed to load. */
+    module LoadingFailed: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        [@key "type"]
+        type_: Types.ResourceType.t, /* Resource type. */
+        errorText: string, /* User friendly error message. */
+        [@yojson.option]
+        canceled: option(bool), /* True if loading was canceled. */
+        [@yojson.option]
+        blockedReason: option(Types.BlockedReason.t), /* The reason why loading was blocked, if any. */
+        [@yojson.option]
+        corsErrorStatus: option(Types.CorsErrorStatus.t) /* The reason why loading was blocked by CORS, if any. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when HTTP request has finished loading. */
+    module LoadingFinished: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        encodedDataLength: float, /* Total number of bytes received for this request. */
+        [@yojson.option]
+        shouldReportCorbBlocking: option(bool) /* Set when 1) response was blocked by Cross-Origin Read Blocking and also
+2) this needs to be reported to the DevTools console. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
+       mocked.
+       Deprecated, use Fetch.requestPaused instead. */
+    module RequestIntercepted: {
+      [@deriving yojson]
+      type result = {
+        interceptionId: Types.InterceptionId.t, /* Each request the page makes will have a unique id, however if any redirects are encountered
+while processing that fetch, they will be reported with the same id as the original fetch.
+Likewise if HTTP authentication is needed then the same fetch id will be used. */
+        request: Types.Request.t, /* No description provided */
+        frameId: Page.Types.FrameId.t, /* The id of the frame that initiated the request. */
+        resourceType: Types.ResourceType.t, /* How the requested resource will be used. */
+        isNavigationRequest: bool, /* Whether this is a navigation request, which can abort the navigation completely. */
+        [@yojson.option]
+        isDownload: option(bool), /* Set if the request is a navigation that will result in a download.
+Only present after response is received from the server (i.e. HeadersReceived stage). */
+        [@yojson.option]
+        redirectUrl: option(string), /* Redirect location, only sent if a redirect was intercepted. */
+        [@yojson.option]
+        authChallenge: option(Types.AuthChallenge.t), /* Details of the Authorization Challenge encountered. If this is set then
+continueInterceptedRequest must contain an authChallengeResponse. */
+        [@yojson.option]
+        responseErrorReason: option(Types.ErrorReason.t), /* Response error if intercepted at response stage or if redirect occurred while intercepting
+request. */
+        [@yojson.option]
+        responseStatusCode: option(float), /* Response code if intercepted at response stage or if redirect occurred while intercepting
+request or auth retry occurred. */
+        [@yojson.option]
+        responseHeaders: option(Types.Headers.t), /* Response headers if intercepted at the response stage or if redirect occurred while
+intercepting request or auth retry occurred. */
+        [@yojson.option]
+        requestId: option(Types.RequestId.t) /* If the intercepted request had a corresponding requestWillBeSent event fired for it, then
+this requestId will be the same as the requestId present in the requestWillBeSent event. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired if request ended up loading from cache. */
+    module RequestServedFromCache: {
+      [@deriving yojson]
+      type result = {requestId: Types.RequestId.t /* Request identifier. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when page is about to send HTTP request. */
+    module RequestWillBeSent: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        loaderId: Types.LoaderId.t, /* Loader identifier. Empty string if the request is fetched from worker. */
+        documentURL: string, /* URL of the document this request is loaded for. */
+        request: Types.Request.t, /* Request data. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        wallTime: Types.TimeSinceEpoch.t, /* Timestamp. */
+        initiator: Types.Initiator.t, /* Request initiator. */
+        [@yojson.option]
+        redirectResponse: option(Types.Response.t), /* Redirect response data. */
+        [@yojson.option] [@key "type"]
+        type_: option(Types.ResourceType.t), /* Type of this resource. */
+        [@yojson.option]
+        frameId: option(Page.Types.FrameId.t), /* Frame identifier. */
+        [@yojson.option]
+        hasUserGesture: option(bool) /* Whether the request is initiated by a user gesture. Defaults to false. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when resource loading priority is changed */
+    module ResourceChangedPriority: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        newPriority: Types.ResourcePriority.t, /* New priority */
+        timestamp: Types.MonotonicTime.t /* Timestamp. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when a signed exchange was received over the network */
+    module SignedExchangeReceived: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        info: Types.SignedExchangeInfo.t /* Information about the signed exchange response. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when HTTP response is available. */
+    module ResponseReceived: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        loaderId: Types.LoaderId.t, /* Loader identifier. Empty string if the request is fetched from worker. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        [@key "type"]
+        type_: Types.ResourceType.t, /* Resource type. */
+        response: Types.Response.t, /* Response data. */
+        [@yojson.option]
+        frameId: option(Page.Types.FrameId.t) /* Frame identifier. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when WebSocket is closed. */
+    module WebSocketClosed: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t /* Timestamp. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired upon WebSocket creation. */
+    module WebSocketCreated: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        url: string, /* WebSocket request URL. */
+        [@yojson.option]
+        initiator: option(Types.Initiator.t) /* Request initiator. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when WebSocket message error occurs. */
+    module WebSocketFrameError: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        errorMessage: string /* WebSocket error message. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when WebSocket message is received. */
+    module WebSocketFrameReceived: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        response: Types.WebSocketFrame.t /* WebSocket response data. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when WebSocket message is sent. */
+    module WebSocketFrameSent: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        response: Types.WebSocketFrame.t /* WebSocket response data. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when WebSocket handshake response becomes available. */
+    module WebSocketHandshakeResponseReceived: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        response: Types.WebSocketResponse.t /* WebSocket response data. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when WebSocket is about to initiate handshake. */
+    module WebSocketWillSendHandshakeRequest: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        wallTime: Types.TimeSinceEpoch.t, /* UTC Timestamp. */
+        request: Types.WebSocketRequest.t /* WebSocket request data. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired upon WebTransport creation. */
+    module WebTransportCreated: {
+      [@deriving yojson]
+      type result = {
+        transportId: Types.RequestId.t, /* WebTransport identifier. */
+        url: string, /* WebTransport request URL. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        [@yojson.option]
+        initiator: option(Types.Initiator.t) /* Request initiator. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when WebTransport handshake is finished. */
+    module WebTransportConnectionEstablished: {
+      [@deriving yojson]
+      type result = {
+        transportId: Types.RequestId.t, /* WebTransport identifier. */
+        timestamp: Types.MonotonicTime.t /* Timestamp. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when WebTransport is disposed. */
+    module WebTransportClosed: {
+      [@deriving yojson]
+      type result = {
+        transportId: Types.RequestId.t, /* WebTransport identifier. */
+        timestamp: Types.MonotonicTime.t /* Timestamp. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when additional information about a requestWillBeSent event is available from the
+       network stack. Not every requestWillBeSent event will have an additional
+       requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
+       or requestWillBeSentExtraInfo will be fired first for the same request. */
+    module RequestWillBeSentExtraInfo: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. Used to match this information to an existing requestWillBeSent event. */
+        associatedCookies: array(Types.BlockedCookieWithReason.t), /* A list of cookies potentially associated to the requested URL. This includes both cookies sent with
+the request and the ones not sent; the latter are distinguished by having blockedReason field set. */
+        headers: Types.Headers.t, /* Raw request headers as they will be sent over the wire. */
+        [@yojson.option]
+        clientSecurityState: option(Types.ClientSecurityState.t) /* The client security state set for the request. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when additional information about a responseReceived event is available from the network
+       stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
+       it, and responseReceivedExtraInfo may be fired before or after responseReceived. */
+    module ResponseReceivedExtraInfo: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. Used to match this information to another responseReceived event. */
+        blockedCookies: array(Types.BlockedSetCookieWithReason.t), /* A list of cookies which were not stored from the response along with the corresponding
+reasons for blocking. The cookies here may not be valid due to syntax errors, which
+are represented by the invalid cookie line string instead of a proper cookie. */
+        headers: Types.Headers.t, /* Raw response headers as they were received over the wire. */
+        resourceIPAddressSpace: Types.IPAddressSpace.t, /* The IP address space of the resource. The address space can only be determined once the transport
+established the connection, so we can't send it in `requestWillBeSentExtraInfo`. */
+        [@yojson.option]
+        headersText: option(string) /* Raw response header text as it was received over the wire. The raw text may not always be
+available, such as in the case of HTTP/2 or QUIC. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired exactly once for each Trust Token operation. Depending on
+       the type of the operation and whether the operation succeeded or
+       failed, the event is fired before the corresponding request was sent
+       or after the response was received. */
+    module TrustTokenOperationDone: {
+      [@deriving yojson]
+      type result = {
+        status: string, /* Detailed success or error status of the operation.
+'AlreadyExists' also signifies a successful operation, as the result
+of the operation already exists und thus, the operation was abort
+preemptively (e.g. a cache hit). */
+        [@key "type"]
+        type_: Types.TrustTokenOperationType.t, /* No description provided */
+        requestId: Types.RequestId.t, /* No description provided */
+        [@yojson.option]
+        topLevelOrigin: option(string), /* Top level origin. The context in which the operation was attempted. */
+        [@yojson.option]
+        issuerOrigin: option(string), /* Origin of the issuer in case of a "Issuance" or "Redemption" operation. */
+        [@yojson.option]
+        issuedTokenCount: option(float) /* The number of obtained Trust Tokens on a successful "Issuance" operation. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec ResourceType: {
@@ -10176,6 +12765,504 @@ backslash. Omitting is equivalent to `"*"`. */
         disableCache: bool, /* No description provided */
         includeCredentials: bool /* No description provided */,
       };
+    };
+  };
+
+  module Events = {
+    /* Fired when data chunk was received over the network. */
+    module DataReceived = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        dataLength: float, /* Data chunk length. */
+        encodedDataLength: float /* Actual bytes received (might be less than dataLength for compressed encodings). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when EventSource message is received. */
+    module EventSourceMessageReceived = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        eventName: string, /* Message type. */
+        eventId: string, /* Message identifier. */
+        data: string /* Message content. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when HTTP request has failed to load. */
+    module LoadingFailed = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        [@key "type"]
+        type_: Types.ResourceType.t, /* Resource type. */
+        errorText: string, /* User friendly error message. */
+        [@yojson.option]
+        canceled: option(bool), /* True if loading was canceled. */
+        [@yojson.option]
+        blockedReason: option(Types.BlockedReason.t), /* The reason why loading was blocked, if any. */
+        [@yojson.option]
+        corsErrorStatus: option(Types.CorsErrorStatus.t) /* The reason why loading was blocked by CORS, if any. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when HTTP request has finished loading. */
+    module LoadingFinished = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        encodedDataLength: float, /* Total number of bytes received for this request. */
+        [@yojson.option]
+        shouldReportCorbBlocking: option(bool) /* Set when 1) response was blocked by Cross-Origin Read Blocking and also
+2) this needs to be reported to the DevTools console. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
+       mocked.
+       Deprecated, use Fetch.requestPaused instead. */
+    module RequestIntercepted = {
+      [@deriving yojson]
+      type result = {
+        interceptionId: Types.InterceptionId.t, /* Each request the page makes will have a unique id, however if any redirects are encountered
+while processing that fetch, they will be reported with the same id as the original fetch.
+Likewise if HTTP authentication is needed then the same fetch id will be used. */
+        request: Types.Request.t, /* No description provided */
+        frameId: Page.Types.FrameId.t, /* The id of the frame that initiated the request. */
+        resourceType: Types.ResourceType.t, /* How the requested resource will be used. */
+        isNavigationRequest: bool, /* Whether this is a navigation request, which can abort the navigation completely. */
+        [@yojson.option]
+        isDownload: option(bool), /* Set if the request is a navigation that will result in a download.
+Only present after response is received from the server (i.e. HeadersReceived stage). */
+        [@yojson.option]
+        redirectUrl: option(string), /* Redirect location, only sent if a redirect was intercepted. */
+        [@yojson.option]
+        authChallenge: option(Types.AuthChallenge.t), /* Details of the Authorization Challenge encountered. If this is set then
+continueInterceptedRequest must contain an authChallengeResponse. */
+        [@yojson.option]
+        responseErrorReason: option(Types.ErrorReason.t), /* Response error if intercepted at response stage or if redirect occurred while intercepting
+request. */
+        [@yojson.option]
+        responseStatusCode: option(float), /* Response code if intercepted at response stage or if redirect occurred while intercepting
+request or auth retry occurred. */
+        [@yojson.option]
+        responseHeaders: option(Types.Headers.t), /* Response headers if intercepted at the response stage or if redirect occurred while
+intercepting request or auth retry occurred. */
+        [@yojson.option]
+        requestId: option(Types.RequestId.t) /* If the intercepted request had a corresponding requestWillBeSent event fired for it, then
+this requestId will be the same as the requestId present in the requestWillBeSent event. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired if request ended up loading from cache. */
+    module RequestServedFromCache = {
+      [@deriving yojson]
+      type result = {requestId: Types.RequestId.t /* Request identifier. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when page is about to send HTTP request. */
+    module RequestWillBeSent = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        loaderId: Types.LoaderId.t, /* Loader identifier. Empty string if the request is fetched from worker. */
+        documentURL: string, /* URL of the document this request is loaded for. */
+        request: Types.Request.t, /* Request data. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        wallTime: Types.TimeSinceEpoch.t, /* Timestamp. */
+        initiator: Types.Initiator.t, /* Request initiator. */
+        [@yojson.option]
+        redirectResponse: option(Types.Response.t), /* Redirect response data. */
+        [@yojson.option] [@key "type"]
+        type_: option(Types.ResourceType.t), /* Type of this resource. */
+        [@yojson.option]
+        frameId: option(Page.Types.FrameId.t), /* Frame identifier. */
+        [@yojson.option]
+        hasUserGesture: option(bool) /* Whether the request is initiated by a user gesture. Defaults to false. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when resource loading priority is changed */
+    module ResourceChangedPriority = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        newPriority: Types.ResourcePriority.t, /* New priority */
+        timestamp: Types.MonotonicTime.t /* Timestamp. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when a signed exchange was received over the network */
+    module SignedExchangeReceived = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        info: Types.SignedExchangeInfo.t /* Information about the signed exchange response. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when HTTP response is available. */
+    module ResponseReceived = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        loaderId: Types.LoaderId.t, /* Loader identifier. Empty string if the request is fetched from worker. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        [@key "type"]
+        type_: Types.ResourceType.t, /* Resource type. */
+        response: Types.Response.t, /* Response data. */
+        [@yojson.option]
+        frameId: option(Page.Types.FrameId.t) /* Frame identifier. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when WebSocket is closed. */
+    module WebSocketClosed = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t /* Timestamp. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired upon WebSocket creation. */
+    module WebSocketCreated = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        url: string, /* WebSocket request URL. */
+        [@yojson.option]
+        initiator: option(Types.Initiator.t) /* Request initiator. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when WebSocket message error occurs. */
+    module WebSocketFrameError = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        errorMessage: string /* WebSocket error message. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when WebSocket message is received. */
+    module WebSocketFrameReceived = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        response: Types.WebSocketFrame.t /* WebSocket response data. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when WebSocket message is sent. */
+    module WebSocketFrameSent = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        response: Types.WebSocketFrame.t /* WebSocket response data. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when WebSocket handshake response becomes available. */
+    module WebSocketHandshakeResponseReceived = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        response: Types.WebSocketResponse.t /* WebSocket response data. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when WebSocket is about to initiate handshake. */
+    module WebSocketWillSendHandshakeRequest = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        wallTime: Types.TimeSinceEpoch.t, /* UTC Timestamp. */
+        request: Types.WebSocketRequest.t /* WebSocket request data. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired upon WebTransport creation. */
+    module WebTransportCreated = {
+      [@deriving yojson]
+      type result = {
+        transportId: Types.RequestId.t, /* WebTransport identifier. */
+        url: string, /* WebTransport request URL. */
+        timestamp: Types.MonotonicTime.t, /* Timestamp. */
+        [@yojson.option]
+        initiator: option(Types.Initiator.t) /* Request initiator. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when WebTransport handshake is finished. */
+    module WebTransportConnectionEstablished = {
+      [@deriving yojson]
+      type result = {
+        transportId: Types.RequestId.t, /* WebTransport identifier. */
+        timestamp: Types.MonotonicTime.t /* Timestamp. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when WebTransport is disposed. */
+    module WebTransportClosed = {
+      [@deriving yojson]
+      type result = {
+        transportId: Types.RequestId.t, /* WebTransport identifier. */
+        timestamp: Types.MonotonicTime.t /* Timestamp. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when additional information about a requestWillBeSent event is available from the
+       network stack. Not every requestWillBeSent event will have an additional
+       requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
+       or requestWillBeSentExtraInfo will be fired first for the same request. */
+    module RequestWillBeSentExtraInfo = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. Used to match this information to an existing requestWillBeSent event. */
+        associatedCookies: array(Types.BlockedCookieWithReason.t), /* A list of cookies potentially associated to the requested URL. This includes both cookies sent with
+the request and the ones not sent; the latter are distinguished by having blockedReason field set. */
+        headers: Types.Headers.t, /* Raw request headers as they will be sent over the wire. */
+        [@yojson.option]
+        clientSecurityState: option(Types.ClientSecurityState.t) /* The client security state set for the request. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when additional information about a responseReceived event is available from the network
+       stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
+       it, and responseReceivedExtraInfo may be fired before or after responseReceived. */
+    module ResponseReceivedExtraInfo = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Request identifier. Used to match this information to another responseReceived event. */
+        blockedCookies: array(Types.BlockedSetCookieWithReason.t), /* A list of cookies which were not stored from the response along with the corresponding
+reasons for blocking. The cookies here may not be valid due to syntax errors, which
+are represented by the invalid cookie line string instead of a proper cookie. */
+        headers: Types.Headers.t, /* Raw response headers as they were received over the wire. */
+        resourceIPAddressSpace: Types.IPAddressSpace.t, /* The IP address space of the resource. The address space can only be determined once the transport
+established the connection, so we can't send it in `requestWillBeSentExtraInfo`. */
+        [@yojson.option]
+        headersText: option(string) /* Raw response header text as it was received over the wire. The raw text may not always be
+available, such as in the case of HTTP/2 or QUIC. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired exactly once for each Trust Token operation. Depending on
+       the type of the operation and whether the operation succeeded or
+       failed, the event is fired before the corresponding request was sent
+       or after the response was received. */
+    module TrustTokenOperationDone = {
+      [@deriving yojson]
+      type result = {
+        status: string, /* Detailed success or error status of the operation.
+'AlreadyExists' also signifies a successful operation, as the result
+of the operation already exists und thus, the operation was abort
+preemptively (e.g. a cache hit). */
+        [@key "type"]
+        type_: Types.TrustTokenOperationType.t, /* No description provided */
+        requestId: Types.RequestId.t, /* No description provided */
+        [@yojson.option]
+        topLevelOrigin: option(string), /* Top level origin. The context in which the operation was attempted. */
+        [@yojson.option]
+        issuerOrigin: option(string), /* Origin of the issuer in case of a "Issuance" or "Redemption" operation. */
+        [@yojson.option]
+        issuedTokenCount: option(float) /* The number of obtained Trust Tokens on a successful "Issuance" operation. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -10396,6 +13483,72 @@ and Overlay: {
       type t = string;
     };
   };
+
+  module Events: {
+    /* Fired when the node should be inspected. This happens after call to `setInspectMode` or when
+       user manually inspects an element. */
+    module InspectNodeRequested: {
+      [@deriving yojson]
+      type result = {
+        backendNodeId: DOM.Types.BackendNodeId.t /* Id of the node to inspect. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when the node should be highlighted. This happens after call to `setInspectMode`. */
+    module NodeHighlightRequested: {
+      [@deriving yojson]
+      type result = {
+        nodeId: DOM.Types.NodeId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when user asks to capture screenshot of some area on the page. */
+    module ScreenshotRequested: {
+      [@deriving yojson]
+      type result = {
+        viewport: Page.Types.Viewport.t /* Viewport to capture, in device independent pixels (dip). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when user cancels the inspect mode. */
+    module InspectModeCanceled: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec SourceOrderConfig: {
@@ -11025,6 +14178,72 @@ and Overlay: {
       /* No description provided */
       [@deriving yojson]
       type t = string;
+    };
+  };
+
+  module Events = {
+    /* Fired when the node should be inspected. This happens after call to `setInspectMode` or when
+       user manually inspects an element. */
+    module InspectNodeRequested = {
+      [@deriving yojson]
+      type result = {
+        backendNodeId: DOM.Types.BackendNodeId.t /* Id of the node to inspect. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when the node should be highlighted. This happens after call to `setInspectMode`. */
+    module NodeHighlightRequested = {
+      [@deriving yojson]
+      type result = {
+        nodeId: DOM.Types.NodeId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when user asks to capture screenshot of some area on the page. */
+    module ScreenshotRequested = {
+      [@deriving yojson]
+      type result = {
+        viewport: Page.Types.Viewport.t /* Viewport to capture, in device independent pixels (dip). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when user cancels the inspect mode. */
+    module InspectModeCanceled = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -11367,6 +14586,466 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       type t = string;
     };
   };
+
+  module Events: {
+    /* No description provided */
+    module DomContentEventFired: {
+      [@deriving yojson]
+      type result = {
+        timestamp: Network.Types.MonotonicTime.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Emitted only when `page.interceptFileChooser` is enabled. */
+    module FileChooserOpened: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame containing input node. */
+        backendNodeId: DOM.Types.BackendNodeId.t, /* Input node id. */
+        mode: string /* Input mode. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when frame has been attached to its parent. */
+    module FrameAttached: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame that has been attached. */
+        parentFrameId: Types.FrameId.t, /* Parent frame identifier. */
+        [@yojson.option]
+        stack: option(Runtime.Types.StackTrace.t) /* JavaScript stack trace of when frame was attached, only set if frame initiated from script. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when frame no longer has a scheduled navigation. */
+    module FrameClearedScheduledNavigation: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t /* Id of the frame that has cleared its scheduled navigation. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when frame has been detached from its parent. */
+    module FrameDetached: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame that has been detached. */
+        reason: string /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired once navigation of the frame has completed. Frame is now associated with the new loader. */
+    module FrameNavigated: {
+      [@deriving yojson]
+      type result = {
+        frame: Types.Frame.t, /* Frame object. */
+        [@key "type"]
+        type_: Types.NavigationType.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when opening document to write to. */
+    module DocumentOpened: {
+      [@deriving yojson]
+      type result = {frame: Types.Frame.t /* Frame object. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module FrameResized: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when a renderer-initiated navigation is requested.
+       Navigation may still be cancelled after the event is issued. */
+    module FrameRequestedNavigation: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame that is being navigated. */
+        reason: Types.ClientNavigationReason.t, /* The reason for the navigation. */
+        url: string, /* The destination URL for the requested navigation. */
+        disposition: Types.ClientNavigationDisposition.t /* The disposition for the navigation. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when frame schedules a potential navigation. */
+    module FrameScheduledNavigation: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame that has scheduled a navigation. */
+        delay: float, /* Delay (in seconds) until the navigation is scheduled to begin. The navigation is not
+guaranteed to start. */
+        reason: Types.ClientNavigationReason.t, /* The reason for the navigation. */
+        url: string /* The destination URL for the scheduled navigation. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when frame has started loading. */
+    module FrameStartedLoading: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t /* Id of the frame that has started loading. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when frame has stopped loading. */
+    module FrameStoppedLoading: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t /* Id of the frame that has stopped loading. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when page is about to start a download.
+       Deprecated. Use Browser.downloadWillBegin instead. */
+    module DownloadWillBegin: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame that caused download to begin. */
+        guid: string, /* Global unique identifier of the download. */
+        url: string, /* URL of the resource being downloaded. */
+        suggestedFilename: string /* Suggested file name of the resource (the actual name of the file saved on disk may differ). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when download makes progress. Last call has |done| == true.
+       Deprecated. Use Browser.downloadProgress instead. */
+    module DownloadProgress: {
+      [@deriving yojson]
+      type result = {
+        guid: string, /* Global unique identifier of the download. */
+        totalBytes: float, /* Total expected bytes to download. */
+        receivedBytes: float, /* Total bytes received. */
+        state: string /* Download status. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when interstitial page was hidden */
+    module InterstitialHidden: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when interstitial page was shown */
+    module InterstitialShown: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
+       closed. */
+    module JavascriptDialogClosed: {
+      [@deriving yojson]
+      type result = {
+        result: bool, /* Whether dialog was confirmed. */
+        userInput: string /* User input in case of prompt. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
+       open. */
+    module JavascriptDialogOpening: {
+      [@deriving yojson]
+      type result = {
+        url: string, /* Frame url. */
+        message: string, /* Message that will be displayed by the dialog. */
+        [@key "type"]
+        type_: Types.DialogType.t, /* Dialog type. */
+        hasBrowserHandler: bool, /* True iff browser is capable showing or acting on the given dialog. When browser has no
+dialog handler for given target, calling alert while Page domain is engaged will stall
+the page execution. Execution can be resumed via calling Page.handleJavaScriptDialog. */
+        [@yojson.option]
+        defaultPrompt: option(string) /* Default dialog prompt. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired for top level page lifecycle events such as navigation, load, paint, etc. */
+    module LifecycleEvent: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame. */
+        loaderId: Network.Types.LoaderId.t, /* Loader identifier. Empty string if the request is fetched from worker. */
+        name: string, /* No description provided */
+        timestamp: Network.Types.MonotonicTime.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired for failed bfcache history navigations if BackForwardCache feature is enabled. Do
+       not assume any ordering with the Page.frameNavigated event. This event is fired only for
+       main-frame history navigation where the document changes (non-same-document navigations),
+       when bfcache navigation fails. */
+    module BackForwardCacheNotUsed: {
+      [@deriving yojson]
+      type result = {
+        loaderId: Network.Types.LoaderId.t, /* The loader id for the associated navgation. */
+        frameId: Types.FrameId.t /* The frame id of the associated frame. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module LoadEventFired: {
+      [@deriving yojson]
+      type result = {
+        timestamp: Network.Types.MonotonicTime.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation. */
+    module NavigatedWithinDocument: {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame. */
+        url: string /* Frame's new url. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Compressed image data requested by the `startScreencast`. */
+    module ScreencastFrame: {
+      [@deriving yojson]
+      type result = {
+        data: string, /* Base64-encoded compressed image. (Encoded as a base64 string when passed over JSON) */
+        metadata: Types.ScreencastFrameMetadata.t, /* Screencast frame metadata. */
+        sessionId: float /* Frame number. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when the page with currently enabled screencast was shown or hidden `. */
+    module ScreencastVisibilityChanged: {
+      [@deriving yojson]
+      type result = {visible: bool /* True if the page is visible. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Fired when a new window is going to be opened, via window.open(), link click, form submission,
+       etc. */
+    module WindowOpen: {
+      [@deriving yojson]
+      type result = {
+        url: string, /* The URL for the new window. */
+        windowName: string, /* Window name. */
+        windowFeatures: array(string), /* An array of enabled window features. */
+        userGesture: bool /* Whether or not it was triggered by user gesture. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued for every compilation cache generated. Is only available
+       if Page.setGenerateCompilationCache is enabled. */
+    module CompilationCacheProduced: {
+      [@deriving yojson]
+      type result = {
+        url: string, /* No description provided */
+        data: string /* Base64-encoded data (Encoded as a base64 string when passed over JSON) */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec FrameId: {
@@ -12339,6 +16018,466 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       /* The type of a frameNavigated event. */
       [@deriving yojson]
       type t = string;
+    };
+  };
+
+  module Events = {
+    /* No description provided */
+    module DomContentEventFired = {
+      [@deriving yojson]
+      type result = {
+        timestamp: Network.Types.MonotonicTime.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Emitted only when `page.interceptFileChooser` is enabled. */
+    module FileChooserOpened = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame containing input node. */
+        backendNodeId: DOM.Types.BackendNodeId.t, /* Input node id. */
+        mode: string /* Input mode. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when frame has been attached to its parent. */
+    module FrameAttached = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame that has been attached. */
+        parentFrameId: Types.FrameId.t, /* Parent frame identifier. */
+        [@yojson.option]
+        stack: option(Runtime.Types.StackTrace.t) /* JavaScript stack trace of when frame was attached, only set if frame initiated from script. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when frame no longer has a scheduled navigation. */
+    module FrameClearedScheduledNavigation = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t /* Id of the frame that has cleared its scheduled navigation. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when frame has been detached from its parent. */
+    module FrameDetached = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame that has been detached. */
+        reason: string /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired once navigation of the frame has completed. Frame is now associated with the new loader. */
+    module FrameNavigated = {
+      [@deriving yojson]
+      type result = {
+        frame: Types.Frame.t, /* Frame object. */
+        [@key "type"]
+        type_: Types.NavigationType.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when opening document to write to. */
+    module DocumentOpened = {
+      [@deriving yojson]
+      type result = {frame: Types.Frame.t /* Frame object. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module FrameResized = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when a renderer-initiated navigation is requested.
+       Navigation may still be cancelled after the event is issued. */
+    module FrameRequestedNavigation = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame that is being navigated. */
+        reason: Types.ClientNavigationReason.t, /* The reason for the navigation. */
+        url: string, /* The destination URL for the requested navigation. */
+        disposition: Types.ClientNavigationDisposition.t /* The disposition for the navigation. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when frame schedules a potential navigation. */
+    module FrameScheduledNavigation = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame that has scheduled a navigation. */
+        delay: float, /* Delay (in seconds) until the navigation is scheduled to begin. The navigation is not
+guaranteed to start. */
+        reason: Types.ClientNavigationReason.t, /* The reason for the navigation. */
+        url: string /* The destination URL for the scheduled navigation. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when frame has started loading. */
+    module FrameStartedLoading = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t /* Id of the frame that has started loading. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when frame has stopped loading. */
+    module FrameStoppedLoading = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t /* Id of the frame that has stopped loading. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when page is about to start a download.
+       Deprecated. Use Browser.downloadWillBegin instead. */
+    module DownloadWillBegin = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame that caused download to begin. */
+        guid: string, /* Global unique identifier of the download. */
+        url: string, /* URL of the resource being downloaded. */
+        suggestedFilename: string /* Suggested file name of the resource (the actual name of the file saved on disk may differ). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when download makes progress. Last call has |done| == true.
+       Deprecated. Use Browser.downloadProgress instead. */
+    module DownloadProgress = {
+      [@deriving yojson]
+      type result = {
+        guid: string, /* Global unique identifier of the download. */
+        totalBytes: float, /* Total expected bytes to download. */
+        receivedBytes: float, /* Total bytes received. */
+        state: string /* Download status. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when interstitial page was hidden */
+    module InterstitialHidden = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when interstitial page was shown */
+    module InterstitialShown = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
+       closed. */
+    module JavascriptDialogClosed = {
+      [@deriving yojson]
+      type result = {
+        result: bool, /* Whether dialog was confirmed. */
+        userInput: string /* User input in case of prompt. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
+       open. */
+    module JavascriptDialogOpening = {
+      [@deriving yojson]
+      type result = {
+        url: string, /* Frame url. */
+        message: string, /* Message that will be displayed by the dialog. */
+        [@key "type"]
+        type_: Types.DialogType.t, /* Dialog type. */
+        hasBrowserHandler: bool, /* True iff browser is capable showing or acting on the given dialog. When browser has no
+dialog handler for given target, calling alert while Page domain is engaged will stall
+the page execution. Execution can be resumed via calling Page.handleJavaScriptDialog. */
+        [@yojson.option]
+        defaultPrompt: option(string) /* Default dialog prompt. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired for top level page lifecycle events such as navigation, load, paint, etc. */
+    module LifecycleEvent = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame. */
+        loaderId: Network.Types.LoaderId.t, /* Loader identifier. Empty string if the request is fetched from worker. */
+        name: string, /* No description provided */
+        timestamp: Network.Types.MonotonicTime.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired for failed bfcache history navigations if BackForwardCache feature is enabled. Do
+       not assume any ordering with the Page.frameNavigated event. This event is fired only for
+       main-frame history navigation where the document changes (non-same-document navigations),
+       when bfcache navigation fails. */
+    module BackForwardCacheNotUsed = {
+      [@deriving yojson]
+      type result = {
+        loaderId: Network.Types.LoaderId.t, /* The loader id for the associated navgation. */
+        frameId: Types.FrameId.t /* The frame id of the associated frame. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module LoadEventFired = {
+      [@deriving yojson]
+      type result = {
+        timestamp: Network.Types.MonotonicTime.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation. */
+    module NavigatedWithinDocument = {
+      [@deriving yojson]
+      type result = {
+        frameId: Types.FrameId.t, /* Id of the frame. */
+        url: string /* Frame's new url. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Compressed image data requested by the `startScreencast`. */
+    module ScreencastFrame = {
+      [@deriving yojson]
+      type result = {
+        data: string, /* Base64-encoded compressed image. (Encoded as a base64 string when passed over JSON) */
+        metadata: Types.ScreencastFrameMetadata.t, /* Screencast frame metadata. */
+        sessionId: float /* Frame number. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when the page with currently enabled screencast was shown or hidden `. */
+    module ScreencastVisibilityChanged = {
+      [@deriving yojson]
+      type result = {visible: bool /* True if the page is visible. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Fired when a new window is going to be opened, via window.open(), link click, form submission,
+       etc. */
+    module WindowOpen = {
+      [@deriving yojson]
+      type result = {
+        url: string, /* The URL for the new window. */
+        windowName: string, /* Window name. */
+        windowFeatures: array(string), /* An array of enabled window features. */
+        userGesture: bool /* Whether or not it was triggered by user gesture. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued for every compilation cache generated. Is only available
+       if Page.setGenerateCompilationCache is enabled. */
+    module CompilationCacheProduced = {
+      [@deriving yojson]
+      type result = {
+        url: string, /* No description provided */
+        data: string /* Base64-encoded data (Encoded as a base64 string when passed over JSON) */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -12353,6 +16492,26 @@ and Performance: {
       };
     };
   };
+
+  module Events: {
+    /* Current values of the metrics. */
+    module Metrics: {
+      [@deriving yojson]
+      type result = {
+        metrics: array(Types.Metric.t), /* Current values of the metrics. */
+        title: string /* Timestamp title. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec Metric: {
@@ -12378,6 +16537,26 @@ and Performance: {
         name: string, /* Metric name. */
         value: float /* Metric value. */,
       };
+    };
+  };
+
+  module Events = {
+    /* Current values of the metrics. */
+    module Metrics = {
+      [@deriving yojson]
+      type result = {
+        metrics: array(Types.Metric.t), /* Current values of the metrics. */
+        title: string /* Timestamp title. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -12437,6 +16616,25 @@ This determines which of the optional "details" fiedls is present. */
       };
     };
   };
+
+  module Events: {
+    /* Sent when a performance timeline event is added. See reportPerformanceTimeline method. */
+    module TimelineEventAdded: {
+      [@deriving yojson]
+      type result = {
+        event: Types.TimelineEvent.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec LargestContentfulPaint: {
@@ -12594,6 +16792,25 @@ This determines which of the optional "details" fiedls is present. */
         [@yojson.option]
         layoutShiftDetails: option(LayoutShift.t) /* No description provided */,
       };
+    };
+  };
+
+  module Events = {
+    /* Sent when a performance timeline event is added. See reportPerformanceTimeline method. */
+    module TimelineEventAdded = {
+      [@deriving yojson]
+      type result = {
+        event: Types.TimelineEvent.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -12707,6 +16924,69 @@ profile startTime. */,
       };
     };
   };
+
+  module Events: {
+    /* No description provided */
+    module ConsoleProfileFinished: {
+      [@deriving yojson]
+      type result = {
+        id: string, /* No description provided */
+        location: Debugger.Types.Location.t, /* Location of console.profileEnd(). */
+        profile: Types.Profile.t, /* No description provided */
+        [@yojson.option]
+        title: option(string) /* Profile title passed as an argument to console.profile(). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Sent when new profile recording is started using console.profile() call. */
+    module ConsoleProfileStarted: {
+      [@deriving yojson]
+      type result = {
+        id: string, /* No description provided */
+        location: Debugger.Types.Location.t, /* Location of console.profile(). */
+        [@yojson.option]
+        title: option(string) /* Profile title passed as an argument to console.profile(). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Reports coverage delta since the last poll (either from an event like this, or from
+       `takePreciseCoverage` for the current isolate. May only be sent if precise code
+       coverage has been started. This event can be trigged by the embedder to, for example,
+       trigger collection of coverage data immediatelly at a certain point in time. */
+    module PreciseCoverageDeltaUpdate: {
+      [@deriving yojson]
+      type result = {
+        timestamp: float, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
+        occassion: string, /* Identifier for distinguishing coverage events. */
+        result: array(Types.ScriptCoverage.t) /* Coverage data for the current isolate. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec ProfileNode: {
@@ -13019,6 +17299,69 @@ profile startTime. */,
         value: float, /* Counter value. */
         time: float /* Counter time in seconds. */,
       };
+    };
+  };
+
+  module Events = {
+    /* No description provided */
+    module ConsoleProfileFinished = {
+      [@deriving yojson]
+      type result = {
+        id: string, /* No description provided */
+        location: Debugger.Types.Location.t, /* Location of console.profileEnd(). */
+        profile: Types.Profile.t, /* No description provided */
+        [@yojson.option]
+        title: option(string) /* Profile title passed as an argument to console.profile(). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Sent when new profile recording is started using console.profile() call. */
+    module ConsoleProfileStarted = {
+      [@deriving yojson]
+      type result = {
+        id: string, /* No description provided */
+        location: Debugger.Types.Location.t, /* Location of console.profile(). */
+        [@yojson.option]
+        title: option(string) /* Profile title passed as an argument to console.profile(). */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Reports coverage delta since the last poll (either from an event like this, or from
+       `takePreciseCoverage` for the current isolate. May only be sent if precise code
+       coverage has been started. This event can be trigged by the embedder to, for example,
+       trigger collection of coverage data immediatelly at a certain point in time. */
+    module PreciseCoverageDeltaUpdate = {
+      [@deriving yojson]
+      type result = {
+        timestamp: float, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
+        occassion: string, /* Identifier for distinguishing coverage events. */
+        result: array(Types.ScriptCoverage.t) /* Coverage data for the current isolate. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -13275,6 +17618,154 @@ initiated the async call. */
       };
     };
   };
+
+  module Events: {
+    /* Notification is issued every time when binding is called. */
+    module BindingCalled: {
+      [@deriving yojson]
+      type result = {
+        name: string, /* No description provided */
+        payload: string, /* No description provided */
+        executionContextId: Types.ExecutionContextId.t /* Identifier of the context where the call was made. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when console API was called. */
+    module ConsoleAPICalled: {
+      [@deriving yojson]
+      type result = {
+        [@key "type"]
+        type_: string, /* Type of the call. */
+        args: array(Types.RemoteObject.t), /* Call arguments. */
+        executionContextId: Types.ExecutionContextId.t, /* Identifier of the context where the call was made. */
+        timestamp: Types.Timestamp.t, /* Call timestamp. */
+        [@yojson.option]
+        stackTrace: option(Types.StackTrace.t), /* Stack trace captured when the call was made. The async stack chain is automatically reported for
+the following call types: `assert`, `error`, `trace`, `warning`. For other types the async call
+chain can be retrieved using `Debugger.getStackTrace` and `stackTrace.parentId` field. */
+        [@yojson.option]
+        context: option(string) /* Console context descriptor for calls on non-default console context (not console.*):
+'anonymous#unique-logger-id' for call on unnamed context, 'name#unique-logger-id' for call
+on named context. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when unhandled exception was revoked. */
+    module ExceptionRevoked: {
+      [@deriving yojson]
+      type result = {
+        reason: string, /* Reason describing why exception was revoked. */
+        exceptionId: float /* The id of revoked exception, as reported in `exceptionThrown`. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when exception was thrown and unhandled. */
+    module ExceptionThrown: {
+      [@deriving yojson]
+      type result = {
+        timestamp: Types.Timestamp.t, /* Timestamp of the exception. */
+        exceptionDetails: Types.ExceptionDetails.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when new execution context is created. */
+    module ExecutionContextCreated: {
+      [@deriving yojson]
+      type result = {
+        context: Types.ExecutionContextDescription.t /* A newly created execution context. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when execution context is destroyed. */
+    module ExecutionContextDestroyed: {
+      [@deriving yojson]
+      type result = {
+        executionContextId: Types.ExecutionContextId.t /* Id of the destroyed context */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when all executionContexts were cleared in browser */
+    module ExecutionContextsCleared: {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when object should be inspected (for example, as a result of inspect() command line API
+       call). */
+    module InspectRequested: {
+      [@deriving yojson]
+      type result = {
+        [@key "object"]
+        object_: Types.RemoteObject.t, /* No description provided */
+        hints: assoc /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec ScriptId: {
@@ -14006,6 +18497,154 @@ initiated the async call. */
         [@yojson.option]
         debuggerId: option(UniqueDebuggerId.t) /* No description provided */,
       };
+    };
+  };
+
+  module Events = {
+    /* Notification is issued every time when binding is called. */
+    module BindingCalled = {
+      [@deriving yojson]
+      type result = {
+        name: string, /* No description provided */
+        payload: string, /* No description provided */
+        executionContextId: Types.ExecutionContextId.t /* Identifier of the context where the call was made. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when console API was called. */
+    module ConsoleAPICalled = {
+      [@deriving yojson]
+      type result = {
+        [@key "type"]
+        type_: string, /* Type of the call. */
+        args: array(Types.RemoteObject.t), /* Call arguments. */
+        executionContextId: Types.ExecutionContextId.t, /* Identifier of the context where the call was made. */
+        timestamp: Types.Timestamp.t, /* Call timestamp. */
+        [@yojson.option]
+        stackTrace: option(Types.StackTrace.t), /* Stack trace captured when the call was made. The async stack chain is automatically reported for
+the following call types: `assert`, `error`, `trace`, `warning`. For other types the async call
+chain can be retrieved using `Debugger.getStackTrace` and `stackTrace.parentId` field. */
+        [@yojson.option]
+        context: option(string) /* Console context descriptor for calls on non-default console context (not console.*):
+'anonymous#unique-logger-id' for call on unnamed context, 'name#unique-logger-id' for call
+on named context. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when unhandled exception was revoked. */
+    module ExceptionRevoked = {
+      [@deriving yojson]
+      type result = {
+        reason: string, /* Reason describing why exception was revoked. */
+        exceptionId: float /* The id of revoked exception, as reported in `exceptionThrown`. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when exception was thrown and unhandled. */
+    module ExceptionThrown = {
+      [@deriving yojson]
+      type result = {
+        timestamp: Types.Timestamp.t, /* Timestamp of the exception. */
+        exceptionDetails: Types.ExceptionDetails.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when new execution context is created. */
+    module ExecutionContextCreated = {
+      [@deriving yojson]
+      type result = {
+        context: Types.ExecutionContextDescription.t /* A newly created execution context. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when execution context is destroyed. */
+    module ExecutionContextDestroyed = {
+      [@deriving yojson]
+      type result = {
+        executionContextId: Types.ExecutionContextId.t /* Id of the destroyed context */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when all executionContexts were cleared in browser */
+    module ExecutionContextsCleared = {
+      [@deriving yojson]
+      type result = empty;
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when object should be inspected (for example, as a result of inspect() command line API
+       call). */
+    module InspectRequested = {
+      [@deriving yojson]
+      type result = {
+        [@key "object"]
+        object_: Types.RemoteObject.t, /* No description provided */
+        hints: assoc /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -14153,6 +18792,68 @@ and Security: {
       type t = string;
     };
   };
+
+  module Events: {
+    /* There is a certificate error. If overriding certificate errors is enabled, then it should be
+       handled with the `handleCertificateError` command. Note: this event does not fire if the
+       certificate error has been allowed internally. Only one client per target should override
+       certificate errors at the same time. */
+    module CertificateError: {
+      [@deriving yojson]
+      type result = {
+        eventId: float, /* The ID of the event. */
+        errorType: string, /* The type of the error. */
+        requestURL: string /* The url that was requested. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* The security state of the page changed. */
+    module VisibleSecurityStateChanged: {
+      [@deriving yojson]
+      type result = {
+        visibleSecurityState: Types.VisibleSecurityState.t /* Security state information about the page. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* The security state of the page changed. */
+    module SecurityStateChanged: {
+      [@deriving yojson]
+      type result = {
+        securityState: Types.SecurityState.t, /* Security state. */
+        schemeIsCryptographic: bool, /* True if the page was loaded over cryptographic transport such as HTTPS. */
+        explanations: array(Types.SecurityStateExplanation.t), /* List of explanations for the security state. If the overall security state is `insecure` or
+`warning`, at least one corresponding explanation should be included. */
+        insecureContentStatus: Types.InsecureContentStatus.t, /* Information about insecure content on the page. */
+        [@yojson.option]
+        summary: option(string) /* Overrides user-visible description of the state. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec CertificateId: {
@@ -14451,6 +19152,68 @@ and Security: {
          request and cancel will cancel the request. */
       [@deriving yojson]
       type t = string;
+    };
+  };
+
+  module Events = {
+    /* There is a certificate error. If overriding certificate errors is enabled, then it should be
+       handled with the `handleCertificateError` command. Note: this event does not fire if the
+       certificate error has been allowed internally. Only one client per target should override
+       certificate errors at the same time. */
+    module CertificateError = {
+      [@deriving yojson]
+      type result = {
+        eventId: float, /* The ID of the event. */
+        errorType: string, /* The type of the error. */
+        requestURL: string /* The url that was requested. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* The security state of the page changed. */
+    module VisibleSecurityStateChanged = {
+      [@deriving yojson]
+      type result = {
+        visibleSecurityState: Types.VisibleSecurityState.t /* Security state information about the page. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* The security state of the page changed. */
+    module SecurityStateChanged = {
+      [@deriving yojson]
+      type result = {
+        securityState: Types.SecurityState.t, /* Security state. */
+        schemeIsCryptographic: bool, /* True if the page was loaded over cryptographic transport such as HTTPS. */
+        explanations: array(Types.SecurityStateExplanation.t), /* List of explanations for the security state. If the overall security state is `insecure` or
+`warning`, at least one corresponding explanation should be included. */
+        insecureContentStatus: Types.InsecureContentStatus.t, /* Information about insecure content on the page. */
+        [@yojson.option]
+        summary: option(string) /* Overrides user-visible description of the state. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -14513,6 +19276,57 @@ For cached script it is the last time the cache entry was validated. */
       };
     };
   };
+
+  module Events: {
+    /* No description provided */
+    module WorkerErrorReported: {
+      [@deriving yojson]
+      type result = {
+        errorMessage: Types.ServiceWorkerErrorMessage.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module WorkerRegistrationUpdated: {
+      [@deriving yojson]
+      type result = {
+        registrations: array(Types.ServiceWorkerRegistration.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* No description provided */
+    module WorkerVersionUpdated: {
+      [@deriving yojson]
+      type result = {
+        versions: array(Types.ServiceWorkerVersion.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec RegistrationID: {
@@ -14677,6 +19491,57 @@ For cached script it is the last time the cache entry was validated. */
         lineNumber: float, /* No description provided */
         columnNumber: float /* No description provided */,
       };
+    };
+  };
+
+  module Events = {
+    /* No description provided */
+    module WorkerErrorReported = {
+      [@deriving yojson]
+      type result = {
+        errorMessage: Types.ServiceWorkerErrorMessage.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module WorkerRegistrationUpdated = {
+      [@deriving yojson]
+      type result = {
+        registrations: array(Types.ServiceWorkerRegistration.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* No description provided */
+    module WorkerVersionUpdated = {
+      [@deriving yojson]
+      type result = {
+        versions: array(Types.ServiceWorkerVersion.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -14705,6 +19570,72 @@ and Storage: {
       };
     };
   };
+
+  module Events: {
+    /* A cache's contents have been modified. */
+    module CacheStorageContentUpdated: {
+      [@deriving yojson]
+      type result = {
+        origin: string, /* Origin to update. */
+        cacheName: string /* Name of cache in origin. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* A cache has been added/deleted. */
+    module CacheStorageListUpdated: {
+      [@deriving yojson]
+      type result = {origin: string /* Origin to update. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* The origin's IndexedDB object store has been modified. */
+    module IndexedDBContentUpdated: {
+      [@deriving yojson]
+      type result = {
+        origin: string, /* Origin to update. */
+        databaseName: string, /* Database to update. */
+        objectStoreName: string /* ObjectStore to update. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* The origin's IndexedDB database list has been modified. */
+    module IndexedDBListUpdated: {
+      [@deriving yojson]
+      type result = {origin: string /* Origin to update. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec StorageType: {
@@ -14770,6 +19701,72 @@ and Storage: {
         issuerOrigin: string, /* No description provided */
         count: float /* No description provided */,
       };
+    };
+  };
+
+  module Events = {
+    /* A cache's contents have been modified. */
+    module CacheStorageContentUpdated = {
+      [@deriving yojson]
+      type result = {
+        origin: string, /* Origin to update. */
+        cacheName: string /* Name of cache in origin. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* A cache has been added/deleted. */
+    module CacheStorageListUpdated = {
+      [@deriving yojson]
+      type result = {origin: string /* Origin to update. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* The origin's IndexedDB object store has been modified. */
+    module IndexedDBContentUpdated = {
+      [@deriving yojson]
+      type result = {
+        origin: string, /* Origin to update. */
+        databaseName: string, /* Database to update. */
+        objectStoreName: string /* ObjectStore to update. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* The origin's IndexedDB database list has been modified. */
+    module IndexedDBListUpdated = {
+      [@deriving yojson]
+      type result = {origin: string /* Origin to update. */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -15188,6 +20185,133 @@ and Target: {
       };
     };
   };
+
+  module Events: {
+    /* Issued when attached to target because of auto-attach or `attachToTarget` command. */
+    module AttachedToTarget: {
+      [@deriving yojson]
+      type result = {
+        sessionId: Types.SessionID.t, /* Identifier assigned to the session used to send/receive messages. */
+        targetInfo: Types.TargetInfo.t, /* No description provided */
+        waitingForDebugger: bool /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when detached from target for any reason (including `detachFromTarget` command). Can be
+       issued multiple times per target if multiple sessions have been attached to it. */
+    module DetachedFromTarget: {
+      [@deriving yojson]
+      type result = {
+        sessionId: Types.SessionID.t, /* Detached session identifier. */
+        [@yojson.option]
+        targetId: option(Types.TargetID.t) /* Deprecated. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies about a new protocol message received from the session (as reported in
+       `attachedToTarget` event). */
+    module ReceivedMessageFromTarget: {
+      [@deriving yojson]
+      type result = {
+        sessionId: Types.SessionID.t, /* Identifier of a session which sends a message. */
+        message: string, /* No description provided */
+        [@yojson.option]
+        targetId: option(Types.TargetID.t) /* Deprecated. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when a possible inspection target is created. */
+    module TargetCreated: {
+      [@deriving yojson]
+      type result = {
+        targetInfo: Types.TargetInfo.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when a target is destroyed. */
+    module TargetDestroyed: {
+      [@deriving yojson]
+      type result = {
+        targetId: Types.TargetID.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when a target has crashed. */
+    module TargetCrashed: {
+      [@deriving yojson]
+      type result = {
+        targetId: Types.TargetID.t, /* No description provided */
+        status: string, /* Termination status type. */
+        errorCode: float /* Termination error code. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when some information about a target has changed. This only happens between
+       `targetCreated` and `targetDestroyed`. */
+    module TargetInfoChanged: {
+      [@deriving yojson]
+      type result = {
+        targetInfo: Types.TargetInfo.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec TargetID: {
@@ -15299,8 +20423,175 @@ and Target: {
       };
     };
   };
+
+  module Events = {
+    /* Issued when attached to target because of auto-attach or `attachToTarget` command. */
+    module AttachedToTarget = {
+      [@deriving yojson]
+      type result = {
+        sessionId: Types.SessionID.t, /* Identifier assigned to the session used to send/receive messages. */
+        targetInfo: Types.TargetInfo.t, /* No description provided */
+        waitingForDebugger: bool /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when detached from target for any reason (including `detachFromTarget` command). Can be
+       issued multiple times per target if multiple sessions have been attached to it. */
+    module DetachedFromTarget = {
+      [@deriving yojson]
+      type result = {
+        sessionId: Types.SessionID.t, /* Detached session identifier. */
+        [@yojson.option]
+        targetId: option(Types.TargetID.t) /* Deprecated. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies about a new protocol message received from the session (as reported in
+       `attachedToTarget` event). */
+    module ReceivedMessageFromTarget = {
+      [@deriving yojson]
+      type result = {
+        sessionId: Types.SessionID.t, /* Identifier of a session which sends a message. */
+        message: string, /* No description provided */
+        [@yojson.option]
+        targetId: option(Types.TargetID.t) /* Deprecated. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when a possible inspection target is created. */
+    module TargetCreated = {
+      [@deriving yojson]
+      type result = {
+        targetInfo: Types.TargetInfo.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when a target is destroyed. */
+    module TargetDestroyed = {
+      [@deriving yojson]
+      type result = {
+        targetId: Types.TargetID.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when a target has crashed. */
+    module TargetCrashed = {
+      [@deriving yojson]
+      type result = {
+        targetId: Types.TargetID.t, /* No description provided */
+        status: string, /* Termination status type. */
+        errorCode: float /* Termination error code. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when some information about a target has changed. This only happens between
+       `targetCreated` and `targetDestroyed`. */
+    module TargetInfoChanged = {
+      [@deriving yojson]
+      type result = {
+        targetInfo: Types.TargetInfo.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+  };
 }
-and Tethering: {} = {}
+and Tethering: {
+  module Events: {
+    /* Informs that port was successfully bound and got a specified connection id. */
+    module Accepted: {
+      [@deriving yojson]
+      type result = {
+        port: float, /* Port number that was successfully bound. */
+        connectionId: string /* Connection id to be used. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
+} = {
+  module Events = {
+    /* Informs that port was successfully bound and got a specified connection id. */
+    module Accepted = {
+      [@deriving yojson]
+      type result = {
+        port: float, /* Port number that was successfully bound. */
+        connectionId: string /* Connection id to be used. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+  };
+}
 and Tracing: {
   module Types: {
     module rec MemoryDumpConfig: {
@@ -15358,6 +20649,71 @@ and Tracing: {
       type t = string;
     };
   };
+
+  module Events: {
+    /* No description provided */
+    module BufferUsage: {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option]
+        percentFull: option(float), /* A number in range [0..1] that indicates the used size of event buffer as a fraction of its
+total size. */
+        [@yojson.option]
+        eventCount: option(float), /* An approximate number of events in the trace log. */
+        [@yojson.option]
+        value: option(float) /* A number in range [0..1] that indicates the used size of event buffer as a fraction of its
+total size. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Contains an bucket of collected trace events. When tracing is stopped collected events will be
+       send as a sequence of dataCollected events followed by tracingComplete event. */
+    module DataCollected: {
+      [@deriving yojson]
+      type result = {value: array(assoc) /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Signals that tracing is stopped and there is no trace buffers pending flush, all data were
+       delivered via dataCollected events. */
+    module TracingComplete: {
+      [@deriving yojson]
+      type result = {
+        dataLossOccurred: bool, /* Indicates whether some trace data is known to have been lost, e.g. because the trace ring
+buffer wrapped around. */
+        [@yojson.option]
+        stream: option(IO.Types.StreamHandle.t), /* A handle of the stream that holds resulting trace data. */
+        [@yojson.option]
+        traceFormat: option(Types.StreamFormat.t), /* Trace data format of returned stream. */
+        [@yojson.option]
+        streamCompression: option(Types.StreamCompression.t) /* Compression format of returned stream. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec MemoryDumpConfig: {
@@ -15516,6 +20872,71 @@ and Tracing: {
          specifies at least one non-Chrome data source; otherwise uses `chrome`. */
       [@deriving yojson]
       type t = string;
+    };
+  };
+
+  module Events = {
+    /* No description provided */
+    module BufferUsage = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option]
+        percentFull: option(float), /* A number in range [0..1] that indicates the used size of event buffer as a fraction of its
+total size. */
+        [@yojson.option]
+        eventCount: option(float), /* An approximate number of events in the trace log. */
+        [@yojson.option]
+        value: option(float) /* A number in range [0..1] that indicates the used size of event buffer as a fraction of its
+total size. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Contains an bucket of collected trace events. When tracing is stopped collected events will be
+       send as a sequence of dataCollected events followed by tracingComplete event. */
+    module DataCollected = {
+      [@deriving yojson]
+      type result = {value: array(assoc) /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Signals that tracing is stopped and there is no trace buffers pending flush, all data were
+       delivered via dataCollected events. */
+    module TracingComplete = {
+      [@deriving yojson]
+      type result = {
+        dataLossOccurred: bool, /* Indicates whether some trace data is known to have been lost, e.g. because the trace ring
+buffer wrapped around. */
+        [@yojson.option]
+        stream: option(IO.Types.StreamHandle.t), /* A handle of the stream that holds resulting trace data. */
+        [@yojson.option]
+        traceFormat: option(Types.StreamFormat.t), /* Trace data format of returned stream. */
+        [@yojson.option]
+        streamCompression: option(Types.StreamCompression.t) /* Compression format of returned stream. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -15581,6 +21002,65 @@ ProvideCredentials. */,
       };
     };
   };
+
+  module Events: {
+    /* Issued when the domain is enabled and the request URL matches the
+       specified filter. The request is paused until the client responds
+       with one of continueRequest, failRequest or fulfillRequest.
+       The stage of the request can be determined by presence of responseErrorReason
+       and responseStatusCode -- the request is at the response stage if either
+       of these fields is present and in the request stage otherwise. */
+    module RequestPaused: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Each request the page makes will have a unique id. */
+        request: Network.Types.Request.t, /* The details of the request. */
+        frameId: Page.Types.FrameId.t, /* The id of the frame that initiated the request. */
+        resourceType: Network.Types.ResourceType.t, /* How the requested resource will be used. */
+        [@yojson.option]
+        responseErrorReason: option(Network.Types.ErrorReason.t), /* Response error if intercepted at response stage. */
+        [@yojson.option]
+        responseStatusCode: option(float), /* Response code if intercepted at response stage. */
+        [@yojson.option]
+        responseHeaders: option(array(Types.HeaderEntry.t)), /* Response headers if intercepted at the response stage. */
+        [@yojson.option]
+        networkId: option(Types.RequestId.t) /* If the intercepted request had a corresponding Network.requestWillBeSent event fired for it,
+then this networkId will be the same as the requestId present in the requestWillBeSent event. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Issued when the domain is enabled with handleAuthRequests set to true.
+       The request is paused until client responds with continueWithAuth. */
+    module AuthRequired: {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Each request the page makes will have a unique id. */
+        request: Network.Types.Request.t, /* The details of the request. */
+        frameId: Page.Types.FrameId.t, /* The id of the frame that initiated the request. */
+        resourceType: Network.Types.ResourceType.t, /* How the requested resource will be used. */
+        authChallenge: Types.AuthChallenge.t /* Details of the Authorization Challenge encountered.
+If this is set, client should respond with continueRequest that
+contains AuthChallengeResponse. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec RequestId: {
@@ -15754,6 +21234,65 @@ ProvideCredentials. */
         password: option(string) /* The password to provide, possibly empty. Should only be set if response is
 ProvideCredentials. */,
       };
+    };
+  };
+
+  module Events = {
+    /* Issued when the domain is enabled and the request URL matches the
+       specified filter. The request is paused until the client responds
+       with one of continueRequest, failRequest or fulfillRequest.
+       The stage of the request can be determined by presence of responseErrorReason
+       and responseStatusCode -- the request is at the response stage if either
+       of these fields is present and in the request stage otherwise. */
+    module RequestPaused = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Each request the page makes will have a unique id. */
+        request: Network.Types.Request.t, /* The details of the request. */
+        frameId: Page.Types.FrameId.t, /* The id of the frame that initiated the request. */
+        resourceType: Network.Types.ResourceType.t, /* How the requested resource will be used. */
+        [@yojson.option]
+        responseErrorReason: option(Network.Types.ErrorReason.t), /* Response error if intercepted at response stage. */
+        [@yojson.option]
+        responseStatusCode: option(float), /* Response code if intercepted at response stage. */
+        [@yojson.option]
+        responseHeaders: option(array(Types.HeaderEntry.t)), /* Response headers if intercepted at the response stage. */
+        [@yojson.option]
+        networkId: option(Types.RequestId.t) /* If the intercepted request had a corresponding Network.requestWillBeSent event fired for it,
+then this networkId will be the same as the requestId present in the requestWillBeSent event. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Issued when the domain is enabled with handleAuthRequests set to true.
+       The request is paused until client responds with continueWithAuth. */
+    module AuthRequired = {
+      [@deriving yojson]
+      type result = {
+        requestId: Types.RequestId.t, /* Each request the page makes will have a unique id. */
+        request: Network.Types.Request.t, /* The details of the request. */
+        frameId: Page.Types.FrameId.t, /* The id of the frame that initiated the request. */
+        resourceType: Network.Types.ResourceType.t, /* How the requested resource will be used. */
+        authChallenge: Types.AuthChallenge.t /* Details of the Authorization Challenge encountered.
+If this is set, client should respond with continueRequest that
+contains AuthChallengeResponse. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -15862,6 +21401,237 @@ capacity and glitch may occur. */
       };
     };
   };
+
+  module Events: {
+    /* Notifies that a new BaseAudioContext has been created. */
+    module ContextCreated: {
+      [@deriving yojson]
+      type result = {
+        context: Types.BaseAudioContext.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that an existing BaseAudioContext will be destroyed. */
+    module ContextWillBeDestroyed: {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that existing BaseAudioContext has changed some properties (id stays the same).. */
+    module ContextChanged: {
+      [@deriving yojson]
+      type result = {
+        context: Types.BaseAudioContext.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that the construction of an AudioListener has finished. */
+    module AudioListenerCreated: {
+      [@deriving yojson]
+      type result = {
+        listener: Types.AudioListener.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that a new AudioListener has been created. */
+    module AudioListenerWillBeDestroyed: {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        listenerId: Types.GraphObjectId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that a new AudioNode has been created. */
+    module AudioNodeCreated: {
+      [@deriving yojson]
+      type result = {node: Types.AudioNode.t /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that an existing AudioNode has been destroyed. */
+    module AudioNodeWillBeDestroyed: {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        nodeId: Types.GraphObjectId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that a new AudioParam has been created. */
+    module AudioParamCreated: {
+      [@deriving yojson]
+      type result = {param: Types.AudioParam.t /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that an existing AudioParam has been destroyed. */
+    module AudioParamWillBeDestroyed: {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        nodeId: Types.GraphObjectId.t, /* No description provided */
+        paramId: Types.GraphObjectId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that two AudioNodes are connected. */
+    module NodesConnected: {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        sourceId: Types.GraphObjectId.t, /* No description provided */
+        destinationId: Types.GraphObjectId.t, /* No description provided */
+        [@yojson.option]
+        sourceOutputIndex: option(float), /* No description provided */
+        [@yojson.option]
+        destinationInputIndex: option(float) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that AudioNodes are disconnected. The destination can be null, and it means all the outgoing connections from the source are disconnected. */
+    module NodesDisconnected: {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        sourceId: Types.GraphObjectId.t, /* No description provided */
+        destinationId: Types.GraphObjectId.t, /* No description provided */
+        [@yojson.option]
+        sourceOutputIndex: option(float), /* No description provided */
+        [@yojson.option]
+        destinationInputIndex: option(float) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that an AudioNode is connected to an AudioParam. */
+    module NodeParamConnected: {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        sourceId: Types.GraphObjectId.t, /* No description provided */
+        destinationId: Types.GraphObjectId.t, /* No description provided */
+        [@yojson.option]
+        sourceOutputIndex: option(float) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Notifies that an AudioNode is disconnected to an AudioParam. */
+    module NodeParamDisconnected: {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        sourceId: Types.GraphObjectId.t, /* No description provided */
+        destinationId: Types.GraphObjectId.t, /* No description provided */
+        [@yojson.option]
+        sourceOutputIndex: option(float) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec GraphObjectId: {
@@ -16157,6 +21927,237 @@ capacity and glitch may occur. */
         minValue: float, /* No description provided */
         maxValue: float /* No description provided */,
       };
+    };
+  };
+
+  module Events = {
+    /* Notifies that a new BaseAudioContext has been created. */
+    module ContextCreated = {
+      [@deriving yojson]
+      type result = {
+        context: Types.BaseAudioContext.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that an existing BaseAudioContext will be destroyed. */
+    module ContextWillBeDestroyed = {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that existing BaseAudioContext has changed some properties (id stays the same).. */
+    module ContextChanged = {
+      [@deriving yojson]
+      type result = {
+        context: Types.BaseAudioContext.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that the construction of an AudioListener has finished. */
+    module AudioListenerCreated = {
+      [@deriving yojson]
+      type result = {
+        listener: Types.AudioListener.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that a new AudioListener has been created. */
+    module AudioListenerWillBeDestroyed = {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        listenerId: Types.GraphObjectId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that a new AudioNode has been created. */
+    module AudioNodeCreated = {
+      [@deriving yojson]
+      type result = {node: Types.AudioNode.t /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that an existing AudioNode has been destroyed. */
+    module AudioNodeWillBeDestroyed = {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        nodeId: Types.GraphObjectId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that a new AudioParam has been created. */
+    module AudioParamCreated = {
+      [@deriving yojson]
+      type result = {param: Types.AudioParam.t /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that an existing AudioParam has been destroyed. */
+    module AudioParamWillBeDestroyed = {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        nodeId: Types.GraphObjectId.t, /* No description provided */
+        paramId: Types.GraphObjectId.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that two AudioNodes are connected. */
+    module NodesConnected = {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        sourceId: Types.GraphObjectId.t, /* No description provided */
+        destinationId: Types.GraphObjectId.t, /* No description provided */
+        [@yojson.option]
+        sourceOutputIndex: option(float), /* No description provided */
+        [@yojson.option]
+        destinationInputIndex: option(float) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that AudioNodes are disconnected. The destination can be null, and it means all the outgoing connections from the source are disconnected. */
+    module NodesDisconnected = {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        sourceId: Types.GraphObjectId.t, /* No description provided */
+        destinationId: Types.GraphObjectId.t, /* No description provided */
+        [@yojson.option]
+        sourceOutputIndex: option(float), /* No description provided */
+        [@yojson.option]
+        destinationInputIndex: option(float) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that an AudioNode is connected to an AudioParam. */
+    module NodeParamConnected = {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        sourceId: Types.GraphObjectId.t, /* No description provided */
+        destinationId: Types.GraphObjectId.t, /* No description provided */
+        [@yojson.option]
+        sourceOutputIndex: option(float) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Notifies that an AudioNode is disconnected to an AudioParam. */
+    module NodeParamDisconnected = {
+      [@deriving yojson]
+      type result = {
+        contextId: Types.GraphObjectId.t, /* No description provided */
+        sourceId: Types.GraphObjectId.t, /* No description provided */
+        destinationId: Types.GraphObjectId.t, /* No description provided */
+        [@yojson.option]
+        sourceOutputIndex: option(float) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 }
@@ -16497,6 +22498,97 @@ use this instead. (crbug.com/1068454) */,
       };
     };
   };
+
+  module Events: {
+    /* This can be called multiple times, and can be used to set / override /
+       remove player properties. A null propValue indicates removal. */
+    module PlayerPropertiesChanged: {
+      [@deriving yojson]
+      type result = {
+        playerId: Types.PlayerId.t, /* No description provided */
+        properties: array(Types.PlayerProperty.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Send events as a list, allowing them to be batched on the browser for less
+       congestion. If batched, events must ALWAYS be in chronological order. */
+    module PlayerEventsAdded: {
+      [@deriving yojson]
+      type result = {
+        playerId: Types.PlayerId.t, /* No description provided */
+        events: array(Types.PlayerEvent.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Send a list of any messages that need to be delivered. */
+    module PlayerMessagesLogged: {
+      [@deriving yojson]
+      type result = {
+        playerId: Types.PlayerId.t, /* No description provided */
+        messages: array(Types.PlayerMessage.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Send a list of any errors that need to be delivered. */
+    module PlayerErrorsRaised: {
+      [@deriving yojson]
+      type result = {
+        playerId: Types.PlayerId.t, /* No description provided */
+        errors: array(Types.PlayerError.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+    /* Called whenever a player is created, or when a new agent joins and receives
+       a list of active players. If an agent is restored, it will receive the full
+       list of player ids and all events again. */
+    module PlayersCreated: {
+      [@deriving yojson]
+      type result = {
+        players: array(Types.PlayerId.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse: string => t;
+    };
+  };
 } = {
   module Types: {
     module rec PlayerId: {
@@ -16661,6 +22753,97 @@ a Status instance. This also seems like a duplicate of the error
 level enum - there is a todo bug to have that level removed and
 use this instead. (crbug.com/1068454) */,
       };
+    };
+  };
+
+  module Events = {
+    /* This can be called multiple times, and can be used to set / override /
+       remove player properties. A null propValue indicates removal. */
+    module PlayerPropertiesChanged = {
+      [@deriving yojson]
+      type result = {
+        playerId: Types.PlayerId.t, /* No description provided */
+        properties: array(Types.PlayerProperty.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Send events as a list, allowing them to be batched on the browser for less
+       congestion. If batched, events must ALWAYS be in chronological order. */
+    module PlayerEventsAdded = {
+      [@deriving yojson]
+      type result = {
+        playerId: Types.PlayerId.t, /* No description provided */
+        events: array(Types.PlayerEvent.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Send a list of any messages that need to be delivered. */
+    module PlayerMessagesLogged = {
+      [@deriving yojson]
+      type result = {
+        playerId: Types.PlayerId.t, /* No description provided */
+        messages: array(Types.PlayerMessage.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Send a list of any errors that need to be delivered. */
+    module PlayerErrorsRaised = {
+      [@deriving yojson]
+      type result = {
+        playerId: Types.PlayerId.t, /* No description provided */
+        errors: array(Types.PlayerError.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+    };
+    /* Called whenever a player is created, or when a new agent joins and receives
+       a list of active players. If an agent is restored, it will receive the full
+       list of player ids and all events again. */
+    module PlayersCreated = {
+      [@deriving yojson]
+      type result = {
+        players: array(Types.PlayerId.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        method: string,
+        params: result,
+        sessionId: Target.Types.SessionID.t,
+      };
+
+      let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
     };
   };
 };
