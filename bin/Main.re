@@ -189,7 +189,7 @@ let get_type = typ => {
   );
 };
 
-let get_event = event => {
+let get_event = (~domain, event) => {
   let name =
     event |> Yojson.Basic.Util.member("name") |> Yojson.Basic.Util.to_string;
 
@@ -206,6 +206,8 @@ let get_event = event => {
 
   let module_name = name |> String.capitalize_ascii;
 
+  let key = domain ++ "." ++ name;
+
   let result =
     switch (parameters) {
     | None => "empty"
@@ -215,6 +217,8 @@ let get_event = event => {
   let signature = [
     "/* " ++ description ++ " */",
     "module " ++ module_name ++ ": {",
+    "  let get_method_name: unit => string;",
+    "",
     "  [@deriving yojson]",
     "  type result = " ++ result ++ ";",
     "",
@@ -232,6 +236,8 @@ let get_event = event => {
   let content = [
     "/* " ++ description ++ " */",
     "module " ++ module_name ++ " = {",
+    "  let get_method_name = () => \"" ++ key ++ "\";",
+    "",
     "  [@deriving yojson]",
     "  type result = " ++ result ++ ";",
     "",
@@ -317,7 +323,7 @@ let main = (path, output) => {
         domain
         |> Yojson.Basic.Util.member("events")
         |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list)
-        |> Option.map(List.map(get_event))
+        |> Option.map(List.map(get_event(~domain=name)))
         |> Option.map(t => {
              let (s, b) = List.split(t);
              (String.concat("\n", s), String.concat("\n", b));
@@ -333,8 +339,8 @@ let main = (path, output) => {
 
       print_endline("Writing " ++ name);
 
-      let signature = String.concat("\n", [types_s, events_s]);
-      let body = String.concat("\n", [types_b, events_b]);
+      let signature = String.concat("\n\n", [types_s, events_s]);
+      let body = String.concat("\n\n", [types_b, events_b]);
 
       let module_definition =
         if (i == 0) {

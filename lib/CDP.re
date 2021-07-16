@@ -519,6 +519,8 @@ animation/transition. */,
   module Events: {
     /* Event for when an animation has been cancelled. */
     module AnimationCanceled: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         id: string /* Id of the animation that was cancelled. */,
@@ -535,6 +537,8 @@ animation/transition. */,
     };
     /* Event for each animation that has been created. */
     module AnimationCreated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {id: string /* Id of the animation that was created. */};
 
@@ -549,6 +553,8 @@ animation/transition. */,
     };
     /* Event for animation that has been started. */
     module AnimationStarted: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         animation: Types.Animation.t /* Animation that was started. */,
@@ -733,6 +739,8 @@ animation/transition. */,
   module Events = {
     /* Event for when an animation has been cancelled. */
     module AnimationCanceled = {
+      let get_method_name = () => "Animation.animationCanceled";
+
       [@deriving yojson]
       type result = {
         id: string /* Id of the animation that was cancelled. */,
@@ -749,6 +757,8 @@ animation/transition. */,
     };
     /* Event for each animation that has been created. */
     module AnimationCreated = {
+      let get_method_name = () => "Animation.animationCreated";
+
       [@deriving yojson]
       type result = {id: string /* Id of the animation that was created. */};
 
@@ -763,6 +773,8 @@ animation/transition. */,
     };
     /* Event for animation that has been started. */
     module AnimationStarted = {
+      let get_method_name = () => "Animation.animationStarted";
+
       [@deriving yojson]
       type result = {
         animation: Types.Animation.t /* Animation that was started. */,
@@ -816,6 +828,8 @@ and ApplicationCache: {
   module Events: {
     /* No description provided */
     module ApplicationCacheStatusUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Page.Types.FrameId.t, /* Identifier of the frame containing document whose application cache updated status. */
@@ -834,6 +848,8 @@ and ApplicationCache: {
     };
     /* No description provided */
     module NetworkStateUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {isNowOnline: bool /* No description provided */};
 
@@ -942,6 +958,8 @@ and ApplicationCache: {
   module Events = {
     /* No description provided */
     module ApplicationCacheStatusUpdated = {
+      let get_method_name = () => "ApplicationCache.applicationCacheStatusUpdated";
+
       [@deriving yojson]
       type result = {
         frameId: Page.Types.FrameId.t, /* Identifier of the frame containing document whose application cache updated status. */
@@ -960,6 +978,8 @@ and ApplicationCache: {
     };
     /* No description provided */
     module NetworkStateUpdated = {
+      let get_method_name = () => "ApplicationCache.networkStateUpdated";
+
       [@deriving yojson]
       type result = {isNowOnline: bool /* No description provided */};
 
@@ -1291,6 +1311,8 @@ instead of "limited-quirks". */
   module Events: {
     /* No description provided */
     module IssueAdded: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         issue: Types.InspectorIssue.t /* No description provided */,
@@ -2214,6 +2236,8 @@ instead of "limited-quirks". */
   module Events = {
     /* No description provided */
     module IssueAdded = {
+      let get_method_name = () => "Audits.issueAdded";
+
       [@deriving yojson]
       type result = {
         issue: Types.InspectorIssue.t /* No description provided */,
@@ -2265,6 +2289,8 @@ and BackgroundService: {
   module Events: {
     /* Called when the recording state for the service has been updated. */
     module RecordingStateChanged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         isRecording: bool, /* No description provided */
@@ -2283,6 +2309,8 @@ and BackgroundService: {
     /* Called with all existing backgroundServiceEvents when enabled, and all new
        events afterwards if enabled and recording. */
     module BackgroundServiceEventReceived: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         backgroundServiceEvent: Types.BackgroundServiceEvent.t /* No description provided */,
@@ -2387,6 +2415,8 @@ and BackgroundService: {
   module Events = {
     /* Called when the recording state for the service has been updated. */
     module RecordingStateChanged = {
+      let get_method_name = () => "BackgroundService.recordingStateChanged";
+
       [@deriving yojson]
       type result = {
         isRecording: bool, /* No description provided */
@@ -2405,6 +2435,8 @@ and BackgroundService: {
     /* Called with all existing backgroundServiceEvents when enabled, and all new
        events afterwards if enabled and recording. */
     module BackgroundServiceEventReceived = {
+      let get_method_name = () => "BackgroundService.backgroundServiceEventReceived";
+
       [@deriving yojson]
       type result = {
         backgroundServiceEvent: Types.BackgroundServiceEvent.t /* No description provided */,
@@ -2511,6 +2543,8 @@ Note that userVisibleOnly = true is the only currently supported type. */
   module Events: {
     /* Fired when page is about to start a download. */
     module DownloadWillBegin: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Page.Types.FrameId.t, /* Id of the frame that caused the download to begin. */
@@ -2530,6 +2564,8 @@ Note that userVisibleOnly = true is the only currently supported type. */
     };
     /* Fired when download makes progress. Last call has |done| == true. */
     module DownloadProgress: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         guid: string, /* Global unique identifier of the download. */
@@ -2795,6 +2831,8 @@ Note that userVisibleOnly = true is the only currently supported type. */
   module Events = {
     /* Fired when page is about to start a download. */
     module DownloadWillBegin = {
+      let get_method_name = () => "Browser.downloadWillBegin";
+
       [@deriving yojson]
       type result = {
         frameId: Page.Types.FrameId.t, /* Id of the frame that caused the download to begin. */
@@ -2814,6 +2852,8 @@ Note that userVisibleOnly = true is the only currently supported type. */
     };
     /* Fired when download makes progress. Last call has |done| == true. */
     module DownloadProgress = {
+      let get_method_name = () => "Browser.downloadProgress";
+
       [@deriving yojson]
       type result = {
         guid: string, /* Global unique identifier of the download. */
@@ -3121,6 +3161,8 @@ stylesheet rules) this rule came from. */
     /* Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
        web font */
     module FontsUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         [@yojson.option]
@@ -3139,6 +3181,8 @@ stylesheet rules) this rule came from. */
     /* Fires whenever a MediaQuery result changes (for example, after a browser window has been
        resized.) The current implementation considers only viewport-dependent media features. */
     module MediaQueryResultChanged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -3153,6 +3197,8 @@ stylesheet rules) this rule came from. */
     };
     /* Fired whenever an active document stylesheet is added. */
     module StyleSheetAdded: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         header: Types.CSSStyleSheetHeader.t /* Added stylesheet metainfo. */,
@@ -3169,6 +3215,8 @@ stylesheet rules) this rule came from. */
     };
     /* Fired whenever a stylesheet is changed as a result of the client operation. */
     module StyleSheetChanged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         styleSheetId: Types.StyleSheetId.t /* No description provided */,
@@ -3185,6 +3233,8 @@ stylesheet rules) this rule came from. */
     };
     /* Fired whenever an active document stylesheet is removed. */
     module StyleSheetRemoved: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         styleSheetId: Types.StyleSheetId.t /* Identifier of the removed stylesheet. */,
@@ -4025,6 +4075,8 @@ stylesheet rules) this rule came from. */
     /* Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
        web font */
     module FontsUpdated = {
+      let get_method_name = () => "CSS.fontsUpdated";
+
       [@deriving yojson]
       type result = {
         [@yojson.option]
@@ -4043,6 +4095,8 @@ stylesheet rules) this rule came from. */
     /* Fires whenever a MediaQuery result changes (for example, after a browser window has been
        resized.) The current implementation considers only viewport-dependent media features. */
     module MediaQueryResultChanged = {
+      let get_method_name = () => "CSS.mediaQueryResultChanged";
+
       [@deriving yojson]
       type result = empty;
 
@@ -4057,6 +4111,8 @@ stylesheet rules) this rule came from. */
     };
     /* Fired whenever an active document stylesheet is added. */
     module StyleSheetAdded = {
+      let get_method_name = () => "CSS.styleSheetAdded";
+
       [@deriving yojson]
       type result = {
         header: Types.CSSStyleSheetHeader.t /* Added stylesheet metainfo. */,
@@ -4073,6 +4129,8 @@ stylesheet rules) this rule came from. */
     };
     /* Fired whenever a stylesheet is changed as a result of the client operation. */
     module StyleSheetChanged = {
+      let get_method_name = () => "CSS.styleSheetChanged";
+
       [@deriving yojson]
       type result = {
         styleSheetId: Types.StyleSheetId.t /* No description provided */,
@@ -4089,6 +4147,8 @@ stylesheet rules) this rule came from. */
     };
     /* Fired whenever an active document stylesheet is removed. */
     module StyleSheetRemoved = {
+      let get_method_name = () => "CSS.styleSheetRemoved";
+
       [@deriving yojson]
       type result = {
         styleSheetId: Types.StyleSheetId.t /* Identifier of the removed stylesheet. */,
@@ -4318,6 +4378,8 @@ session on the sink. */,
     /* This is fired whenever the list of available sinks changes. A sink is a
        device or a software surface that you can cast to. */
     module SinksUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         sinks: array(Types.Sink.t) /* No description provided */,
@@ -4335,6 +4397,8 @@ session on the sink. */,
     /* This is fired whenever the outstanding issue/error message changes.
        |issueMessage| is empty if there is no issue. */
     module IssueUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {issueMessage: string /* No description provided */};
 
@@ -4389,6 +4453,8 @@ session on the sink. */,
     /* This is fired whenever the list of available sinks changes. A sink is a
        device or a software surface that you can cast to. */
     module SinksUpdated = {
+      let get_method_name = () => "Cast.sinksUpdated";
+
       [@deriving yojson]
       type result = {
         sinks: array(Types.Sink.t) /* No description provided */,
@@ -4406,6 +4472,8 @@ session on the sink. */,
     /* This is fired whenever the outstanding issue/error message changes.
        |issueMessage| is empty if there is no issue. */
     module IssueUpdated = {
+      let get_method_name = () => "Cast.issueUpdated";
+
       [@deriving yojson]
       type result = {issueMessage: string /* No description provided */};
 
@@ -4442,6 +4510,8 @@ and Console: {
   module Events: {
     /* Issued when new console message is added. */
     module MessageAdded: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         message: Types.ConsoleMessage.t /* Console message that has been added. */,
@@ -4509,6 +4579,8 @@ and Console: {
   module Events = {
     /* Issued when new console message is added. */
     module MessageAdded = {
+      let get_method_name = () => "Console.messageAdded";
+
       [@deriving yojson]
       type result = {
         message: Types.ConsoleMessage.t /* Console message that has been added. */,
@@ -4639,6 +4711,8 @@ variables as its properties. */
   module Events: {
     /* Fired when breakpoint is resolved to an actual script and location. */
     module BreakpointResolved: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         breakpointId: Types.BreakpointId.t, /* Breakpoint unique identifier. */
@@ -4656,6 +4730,8 @@ variables as its properties. */
     };
     /* Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria. */
     module Paused: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         callFrames: array(Types.CallFrame.t), /* Call stack the virtual machine stopped on. */
@@ -4683,6 +4759,8 @@ variables as its properties. */
     };
     /* Fired when the virtual machine resumed execution. */
     module Resumed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -4697,6 +4775,8 @@ variables as its properties. */
     };
     /* Fired when virtual machine fails to parse the script. */
     module ScriptFailedToParse: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         scriptId: Runtime.Types.ScriptId.t, /* Identifier of the script parsed. */
@@ -4739,6 +4819,8 @@ variables as its properties. */
     /* Fired when virtual machine parses script. This event is also fired for all known and uncollected
        scripts upon enabling debugger. */
     module ScriptParsed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         scriptId: Runtime.Types.ScriptId.t, /* Identifier of the script parsed. */
@@ -5101,6 +5183,8 @@ variables as its properties. */
   module Events = {
     /* Fired when breakpoint is resolved to an actual script and location. */
     module BreakpointResolved = {
+      let get_method_name = () => "Debugger.breakpointResolved";
+
       [@deriving yojson]
       type result = {
         breakpointId: Types.BreakpointId.t, /* Breakpoint unique identifier. */
@@ -5118,6 +5202,8 @@ variables as its properties. */
     };
     /* Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria. */
     module Paused = {
+      let get_method_name = () => "Debugger.paused";
+
       [@deriving yojson]
       type result = {
         callFrames: array(Types.CallFrame.t), /* Call stack the virtual machine stopped on. */
@@ -5145,6 +5231,8 @@ variables as its properties. */
     };
     /* Fired when the virtual machine resumed execution. */
     module Resumed = {
+      let get_method_name = () => "Debugger.resumed";
+
       [@deriving yojson]
       type result = empty;
 
@@ -5159,6 +5247,8 @@ variables as its properties. */
     };
     /* Fired when virtual machine fails to parse the script. */
     module ScriptFailedToParse = {
+      let get_method_name = () => "Debugger.scriptFailedToParse";
+
       [@deriving yojson]
       type result = {
         scriptId: Runtime.Types.ScriptId.t, /* Identifier of the script parsed. */
@@ -5201,6 +5291,8 @@ variables as its properties. */
     /* Fired when virtual machine parses script. This event is also fired for all known and uncollected
        scripts upon enabling debugger. */
     module ScriptParsed = {
+      let get_method_name = () => "Debugger.scriptParsed";
+
       [@deriving yojson]
       type result = {
         scriptId: Runtime.Types.ScriptId.t, /* Identifier of the script parsed. */
@@ -5408,6 +5500,8 @@ The property is always undefined now. */
   module Events: {
     /* Fired when `Element`'s attribute is modified. */
     module AttributeModified: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         nodeId: Types.NodeId.t, /* Id of the node that has changed. */
@@ -5426,6 +5520,8 @@ The property is always undefined now. */
     };
     /* Fired when `Element`'s attribute is removed. */
     module AttributeRemoved: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         nodeId: Types.NodeId.t, /* Id of the node that has changed. */
@@ -5443,6 +5539,8 @@ The property is always undefined now. */
     };
     /* Mirrors `DOMCharacterDataModified` event. */
     module CharacterDataModified: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         nodeId: Types.NodeId.t, /* Id of the node that has changed. */
@@ -5460,6 +5558,8 @@ The property is always undefined now. */
     };
     /* Fired when `Container`'s child node count has changed. */
     module ChildNodeCountUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         nodeId: Types.NodeId.t, /* Id of the node that has changed. */
@@ -5477,6 +5577,8 @@ The property is always undefined now. */
     };
     /* Mirrors `DOMNodeInserted` event. */
     module ChildNodeInserted: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         parentNodeId: Types.NodeId.t, /* Id of the node that has changed. */
@@ -5495,6 +5597,8 @@ The property is always undefined now. */
     };
     /* Mirrors `DOMNodeRemoved` event. */
     module ChildNodeRemoved: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         parentNodeId: Types.NodeId.t, /* Parent id. */
@@ -5512,6 +5616,8 @@ The property is always undefined now. */
     };
     /* Called when distribution is changed. */
     module DistributedNodesUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         insertionPointId: Types.NodeId.t, /* Insertion point where distributed nodes were updated. */
@@ -5529,6 +5635,8 @@ The property is always undefined now. */
     };
     /* Fired when `Document` has been totally updated. Node ids are no longer valid. */
     module DocumentUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -5543,6 +5651,8 @@ The property is always undefined now. */
     };
     /* Fired when `Element`'s inline style is modified via a CSS property modification. */
     module InlineStyleInvalidated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         nodeIds: array(Types.NodeId.t) /* Ids of the nodes for which the inline styles have been invalidated. */,
@@ -5559,6 +5669,8 @@ The property is always undefined now. */
     };
     /* Called when a pseudo element is added to an element. */
     module PseudoElementAdded: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         parentId: Types.NodeId.t, /* Pseudo element's parent element id. */
@@ -5576,6 +5688,8 @@ The property is always undefined now. */
     };
     /* Called when a pseudo element is removed from an element. */
     module PseudoElementRemoved: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         parentId: Types.NodeId.t, /* Pseudo element's parent element id. */
@@ -5594,6 +5708,8 @@ The property is always undefined now. */
     /* Fired when backend wants to provide client with the missing DOM structure. This happens upon
        most of the calls requesting node ids. */
     module SetChildNodes: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         parentId: Types.NodeId.t, /* Parent node id to populate with children. */
@@ -5611,6 +5727,8 @@ The property is always undefined now. */
     };
     /* Called when shadow root is popped from the element. */
     module ShadowRootPopped: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         hostId: Types.NodeId.t, /* Host element id. */
@@ -5628,6 +5746,8 @@ The property is always undefined now. */
     };
     /* Called when shadow root is pushed into the element. */
     module ShadowRootPushed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         hostId: Types.NodeId.t, /* Host element id. */
@@ -6104,6 +6224,8 @@ The property is always undefined now. */
   module Events = {
     /* Fired when `Element`'s attribute is modified. */
     module AttributeModified = {
+      let get_method_name = () => "DOM.attributeModified";
+
       [@deriving yojson]
       type result = {
         nodeId: Types.NodeId.t, /* Id of the node that has changed. */
@@ -6122,6 +6244,8 @@ The property is always undefined now. */
     };
     /* Fired when `Element`'s attribute is removed. */
     module AttributeRemoved = {
+      let get_method_name = () => "DOM.attributeRemoved";
+
       [@deriving yojson]
       type result = {
         nodeId: Types.NodeId.t, /* Id of the node that has changed. */
@@ -6139,6 +6263,8 @@ The property is always undefined now. */
     };
     /* Mirrors `DOMCharacterDataModified` event. */
     module CharacterDataModified = {
+      let get_method_name = () => "DOM.characterDataModified";
+
       [@deriving yojson]
       type result = {
         nodeId: Types.NodeId.t, /* Id of the node that has changed. */
@@ -6156,6 +6282,8 @@ The property is always undefined now. */
     };
     /* Fired when `Container`'s child node count has changed. */
     module ChildNodeCountUpdated = {
+      let get_method_name = () => "DOM.childNodeCountUpdated";
+
       [@deriving yojson]
       type result = {
         nodeId: Types.NodeId.t, /* Id of the node that has changed. */
@@ -6173,6 +6301,8 @@ The property is always undefined now. */
     };
     /* Mirrors `DOMNodeInserted` event. */
     module ChildNodeInserted = {
+      let get_method_name = () => "DOM.childNodeInserted";
+
       [@deriving yojson]
       type result = {
         parentNodeId: Types.NodeId.t, /* Id of the node that has changed. */
@@ -6191,6 +6321,8 @@ The property is always undefined now. */
     };
     /* Mirrors `DOMNodeRemoved` event. */
     module ChildNodeRemoved = {
+      let get_method_name = () => "DOM.childNodeRemoved";
+
       [@deriving yojson]
       type result = {
         parentNodeId: Types.NodeId.t, /* Parent id. */
@@ -6208,6 +6340,8 @@ The property is always undefined now. */
     };
     /* Called when distribution is changed. */
     module DistributedNodesUpdated = {
+      let get_method_name = () => "DOM.distributedNodesUpdated";
+
       [@deriving yojson]
       type result = {
         insertionPointId: Types.NodeId.t, /* Insertion point where distributed nodes were updated. */
@@ -6225,6 +6359,8 @@ The property is always undefined now. */
     };
     /* Fired when `Document` has been totally updated. Node ids are no longer valid. */
     module DocumentUpdated = {
+      let get_method_name = () => "DOM.documentUpdated";
+
       [@deriving yojson]
       type result = empty;
 
@@ -6239,6 +6375,8 @@ The property is always undefined now. */
     };
     /* Fired when `Element`'s inline style is modified via a CSS property modification. */
     module InlineStyleInvalidated = {
+      let get_method_name = () => "DOM.inlineStyleInvalidated";
+
       [@deriving yojson]
       type result = {
         nodeIds: array(Types.NodeId.t) /* Ids of the nodes for which the inline styles have been invalidated. */,
@@ -6255,6 +6393,8 @@ The property is always undefined now. */
     };
     /* Called when a pseudo element is added to an element. */
     module PseudoElementAdded = {
+      let get_method_name = () => "DOM.pseudoElementAdded";
+
       [@deriving yojson]
       type result = {
         parentId: Types.NodeId.t, /* Pseudo element's parent element id. */
@@ -6272,6 +6412,8 @@ The property is always undefined now. */
     };
     /* Called when a pseudo element is removed from an element. */
     module PseudoElementRemoved = {
+      let get_method_name = () => "DOM.pseudoElementRemoved";
+
       [@deriving yojson]
       type result = {
         parentId: Types.NodeId.t, /* Pseudo element's parent element id. */
@@ -6290,6 +6432,8 @@ The property is always undefined now. */
     /* Fired when backend wants to provide client with the missing DOM structure. This happens upon
        most of the calls requesting node ids. */
     module SetChildNodes = {
+      let get_method_name = () => "DOM.setChildNodes";
+
       [@deriving yojson]
       type result = {
         parentId: Types.NodeId.t, /* Parent node id to populate with children. */
@@ -6307,6 +6451,8 @@ The property is always undefined now. */
     };
     /* Called when shadow root is popped from the element. */
     module ShadowRootPopped = {
+      let get_method_name = () => "DOM.shadowRootPopped";
+
       [@deriving yojson]
       type result = {
         hostId: Types.NodeId.t, /* Host element id. */
@@ -6324,6 +6470,8 @@ The property is always undefined now. */
     };
     /* Called when shadow root is pushed into the element. */
     module ShadowRootPushed = {
+      let get_method_name = () => "DOM.shadowRootPushed";
+
       [@deriving yojson]
       type result = {
         hostId: Types.NodeId.t, /* Host element id. */
@@ -7471,6 +7619,8 @@ and DOMStorage: {
   module Events: {
     /* No description provided */
     module DomStorageItemAdded: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         storageId: Types.StorageId.t, /* No description provided */
@@ -7489,6 +7639,8 @@ and DOMStorage: {
     };
     /* No description provided */
     module DomStorageItemRemoved: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         storageId: Types.StorageId.t, /* No description provided */
@@ -7506,6 +7658,8 @@ and DOMStorage: {
     };
     /* No description provided */
     module DomStorageItemUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         storageId: Types.StorageId.t, /* No description provided */
@@ -7525,6 +7679,8 @@ and DOMStorage: {
     };
     /* No description provided */
     module DomStorageItemsCleared: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         storageId: Types.StorageId.t /* No description provided */,
@@ -7585,6 +7741,8 @@ and DOMStorage: {
   module Events = {
     /* No description provided */
     module DomStorageItemAdded = {
+      let get_method_name = () => "DOMStorage.domStorageItemAdded";
+
       [@deriving yojson]
       type result = {
         storageId: Types.StorageId.t, /* No description provided */
@@ -7603,6 +7761,8 @@ and DOMStorage: {
     };
     /* No description provided */
     module DomStorageItemRemoved = {
+      let get_method_name = () => "DOMStorage.domStorageItemRemoved";
+
       [@deriving yojson]
       type result = {
         storageId: Types.StorageId.t, /* No description provided */
@@ -7620,6 +7780,8 @@ and DOMStorage: {
     };
     /* No description provided */
     module DomStorageItemUpdated = {
+      let get_method_name = () => "DOMStorage.domStorageItemUpdated";
+
       [@deriving yojson]
       type result = {
         storageId: Types.StorageId.t, /* No description provided */
@@ -7639,6 +7801,8 @@ and DOMStorage: {
     };
     /* No description provided */
     module DomStorageItemsCleared = {
+      let get_method_name = () => "DOMStorage.domStorageItemsCleared";
+
       [@deriving yojson]
       type result = {
         storageId: Types.StorageId.t /* No description provided */,
@@ -7685,6 +7849,8 @@ and Database: {
   module Events: {
     /* No description provided */
     module AddDatabase: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         database: Types.Database.t /* No description provided */,
@@ -7774,6 +7940,8 @@ and Database: {
   module Events = {
     /* No description provided */
     module AddDatabase = {
+      let get_method_name = () => "Database.addDatabase";
+
       [@deriving yojson]
       type result = {
         database: Types.Database.t /* No description provided */,
@@ -7864,6 +8032,8 @@ A display feature that only splits content will have a 0 mask_length. */,
   module Events: {
     /* Notification sent after the virtual time budget for the current VirtualTimePolicy has run out. */
     module VirtualTimeBudgetExpired: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -8076,6 +8246,8 @@ A display feature that only splits content will have a 0 mask_length. */,
   module Events = {
     /* Notification sent after the virtual time budget for the current VirtualTimePolicy has run out. */
     module VirtualTimeBudgetExpired = {
+      let get_method_name = () => "Emulation.virtualTimeBudgetExpired";
+
       [@deriving yojson]
       type result = empty;
 
@@ -8109,6 +8281,8 @@ and HeadlessExperimental: {
        Deprecated. Issue beginFrame unconditionally instead and use result from
        beginFrame to detect whether the frames were suppressed. */
     module NeedsBeginFramesChanged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         needsBeginFrames: bool /* True if BeginFrames are needed, false otherwise. */,
@@ -8163,6 +8337,8 @@ and HeadlessExperimental: {
        Deprecated. Issue beginFrame unconditionally instead and use result from
        beginFrame to detect whether the frames were suppressed. */
     module NeedsBeginFramesChanged = {
+      let get_method_name = () => "HeadlessExperimental.needsBeginFramesChanged";
+
       [@deriving yojson]
       type result = {
         needsBeginFrames: bool /* True if BeginFrames are needed, false otherwise. */,
@@ -8219,6 +8395,8 @@ between startSampling and stopSampling. */,
   module Events: {
     /* No description provided */
     module AddHeapSnapshotChunk: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {chunk: string /* No description provided */};
 
@@ -8233,6 +8411,8 @@ between startSampling and stopSampling. */,
     };
     /* If heap objects tracking has been started then backend may send update for one or more fragments */
     module HeapStatsUpdate: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         statsUpdate: array(float) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
@@ -8253,6 +8433,8 @@ a total size of the objects for the fragment. */,
        seen object id and corresponding timestamp. If the were changes in the heap since last event
        then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event. */
     module LastSeenObjectId: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         lastSeenObjectId: float, /* No description provided */
@@ -8270,6 +8452,8 @@ a total size of the objects for the fragment. */,
     };
     /* No description provided */
     module ReportHeapSnapshotProgress: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         [@key "done"]
@@ -8290,6 +8474,8 @@ a total size of the objects for the fragment. */,
     };
     /* No description provided */
     module ResetProfiles: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -8406,6 +8592,8 @@ between startSampling and stopSampling. */,
   module Events = {
     /* No description provided */
     module AddHeapSnapshotChunk = {
+      let get_method_name = () => "HeapProfiler.addHeapSnapshotChunk";
+
       [@deriving yojson]
       type result = {chunk: string /* No description provided */};
 
@@ -8420,6 +8608,8 @@ between startSampling and stopSampling. */,
     };
     /* If heap objects tracking has been started then backend may send update for one or more fragments */
     module HeapStatsUpdate = {
+      let get_method_name = () => "HeapProfiler.heapStatsUpdate";
+
       [@deriving yojson]
       type result = {
         statsUpdate: array(float) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
@@ -8440,6 +8630,8 @@ a total size of the objects for the fragment. */,
        seen object id and corresponding timestamp. If the were changes in the heap since last event
        then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event. */
     module LastSeenObjectId = {
+      let get_method_name = () => "HeapProfiler.lastSeenObjectId";
+
       [@deriving yojson]
       type result = {
         lastSeenObjectId: float, /* No description provided */
@@ -8457,6 +8649,8 @@ a total size of the objects for the fragment. */,
     };
     /* No description provided */
     module ReportHeapSnapshotProgress = {
+      let get_method_name = () => "HeapProfiler.reportHeapSnapshotProgress";
+
       [@deriving yojson]
       type result = {
         [@key "done"]
@@ -8477,6 +8671,8 @@ a total size of the objects for the fragment. */,
     };
     /* No description provided */
     module ResetProfiles = {
+      let get_method_name = () => "HeapProfiler.resetProfiles";
+
       [@deriving yojson]
       type result = empty;
 
@@ -8911,6 +9107,8 @@ text, HTML markup or any other data. */
     /* Emitted only when `Input.setInterceptDrags` is enabled. Use this data with `Input.dispatchDragEvent` to
        restore normal drag and drop behavior. */
     module DragIntercepted: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {data: Types.DragData.t /* No description provided */};
 
@@ -9119,6 +9317,8 @@ text, HTML markup or any other data. */
     /* Emitted only when `Input.setInterceptDrags` is enabled. Use this data with `Input.dispatchDragEvent` to
        restore normal drag and drop behavior. */
     module DragIntercepted = {
+      let get_method_name = () => "Input.dragIntercepted";
+
       [@deriving yojson]
       type result = {data: Types.DragData.t /* No description provided */};
 
@@ -9137,6 +9337,8 @@ and Inspector: {
   module Events: {
     /* Fired when remote debugging connection is about to be terminated. Contains detach reason. */
     module Detached: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         reason: string /* The reason why connection has been terminated. */,
@@ -9153,6 +9355,8 @@ and Inspector: {
     };
     /* Fired when debugging target has crashed */
     module TargetCrashed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -9167,6 +9371,8 @@ and Inspector: {
     };
     /* Fired when debugging target has reloaded after crash */
     module TargetReloadedAfterCrash: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -9184,6 +9390,8 @@ and Inspector: {
   module Events = {
     /* Fired when remote debugging connection is about to be terminated. Contains detach reason. */
     module Detached = {
+      let get_method_name = () => "Inspector.detached";
+
       [@deriving yojson]
       type result = {
         reason: string /* The reason why connection has been terminated. */,
@@ -9200,6 +9408,8 @@ and Inspector: {
     };
     /* Fired when debugging target has crashed */
     module TargetCrashed = {
+      let get_method_name = () => "Inspector.targetCrashed";
+
       [@deriving yojson]
       type result = empty;
 
@@ -9214,6 +9424,8 @@ and Inspector: {
     };
     /* Fired when debugging target has reloaded after crash */
     module TargetReloadedAfterCrash = {
+      let get_method_name = () => "Inspector.targetReloadedAfterCrash";
+
       [@deriving yojson]
       type result = empty;
 
@@ -9312,6 +9524,8 @@ transform/scrolling purposes only. */
   module Events: {
     /* No description provided */
     module LayerPainted: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         layerId: Types.LayerId.t, /* The id of the painted layer. */
@@ -9329,6 +9543,8 @@ transform/scrolling purposes only. */
     };
     /* No description provided */
     module LayerTreeDidChange: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         [@yojson.option]
@@ -9577,6 +9793,8 @@ transform/scrolling purposes only. */
   module Events = {
     /* No description provided */
     module LayerPainted = {
+      let get_method_name = () => "LayerTree.layerPainted";
+
       [@deriving yojson]
       type result = {
         layerId: Types.LayerId.t, /* The id of the painted layer. */
@@ -9594,6 +9812,8 @@ transform/scrolling purposes only. */
     };
     /* No description provided */
     module LayerTreeDidChange = {
+      let get_method_name = () => "LayerTree.layerTreeDidChange";
+
       [@deriving yojson]
       type result = {
         [@yojson.option]
@@ -9648,6 +9868,8 @@ and Log: {
   module Events: {
     /* Issued when new message was logged. */
     module EntryAdded: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {entry: Types.LogEntry.t /* The entry. */};
 
@@ -9757,6 +9979,8 @@ and Log: {
   module Events = {
     /* Issued when new message was logged. */
     module EntryAdded = {
+      let get_method_name = () => "Log.entryAdded";
+
       [@deriving yojson]
       type result = {entry: Types.LogEntry.t /* The entry. */};
 
@@ -10517,6 +10741,8 @@ backslash. Omitting is equivalent to `"*"`. */
   module Events: {
     /* Fired when data chunk was received over the network. */
     module DataReceived: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10536,6 +10762,8 @@ backslash. Omitting is equivalent to `"*"`. */
     };
     /* Fired when EventSource message is received. */
     module EventSourceMessageReceived: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10556,6 +10784,8 @@ backslash. Omitting is equivalent to `"*"`. */
     };
     /* Fired when HTTP request has failed to load. */
     module LoadingFailed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10582,6 +10812,8 @@ backslash. Omitting is equivalent to `"*"`. */
     };
     /* Fired when HTTP request has finished loading. */
     module LoadingFinished: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10605,6 +10837,8 @@ backslash. Omitting is equivalent to `"*"`. */
        mocked.
        Deprecated, use Fetch.requestPaused instead. */
     module RequestIntercepted: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         interceptionId: Types.InterceptionId.t, /* Each request the page makes will have a unique id, however if any redirects are encountered
@@ -10647,6 +10881,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired if request ended up loading from cache. */
     module RequestServedFromCache: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {requestId: Types.RequestId.t /* Request identifier. */};
 
@@ -10661,6 +10897,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when page is about to send HTTP request. */
     module RequestWillBeSent: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10691,6 +10929,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when resource loading priority is changed */
     module ResourceChangedPriority: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10709,6 +10949,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when a signed exchange was received over the network */
     module SignedExchangeReceived: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10726,6 +10968,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when HTTP response is available. */
     module ResponseReceived: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10749,6 +10993,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket is closed. */
     module WebSocketClosed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10766,6 +11012,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired upon WebSocket creation. */
     module WebSocketCreated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10785,6 +11033,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket message error occurs. */
     module WebSocketFrameError: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10803,6 +11053,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket message is received. */
     module WebSocketFrameReceived: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10821,6 +11073,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket message is sent. */
     module WebSocketFrameSent: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10839,6 +11093,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket handshake response becomes available. */
     module WebSocketHandshakeResponseReceived: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10857,6 +11113,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket is about to initiate handshake. */
     module WebSocketWillSendHandshakeRequest: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -10876,6 +11134,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired upon WebTransport creation. */
     module WebTransportCreated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         transportId: Types.RequestId.t, /* WebTransport identifier. */
@@ -10896,6 +11156,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebTransport handshake is finished. */
     module WebTransportConnectionEstablished: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         transportId: Types.RequestId.t, /* WebTransport identifier. */
@@ -10913,6 +11175,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebTransport is disposed. */
     module WebTransportClosed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         transportId: Types.RequestId.t, /* WebTransport identifier. */
@@ -10933,6 +11197,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
        requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
        or requestWillBeSentExtraInfo will be fired first for the same request. */
     module RequestWillBeSentExtraInfo: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. Used to match this information to an existing requestWillBeSent event. */
@@ -10956,6 +11222,8 @@ the request and the ones not sent; the latter are distinguished by having blocke
        stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
        it, and responseReceivedExtraInfo may be fired before or after responseReceived. */
     module ResponseReceivedExtraInfo: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. Used to match this information to another responseReceived event. */
@@ -10984,6 +11252,8 @@ available, such as in the case of HTTP/2 or QUIC. */,
        failed, the event is fired before the corresponding request was sent
        or after the response was received. */
     module TrustTokenOperationDone: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         status: string, /* Detailed success or error status of the operation.
@@ -12771,6 +13041,8 @@ backslash. Omitting is equivalent to `"*"`. */
   module Events = {
     /* Fired when data chunk was received over the network. */
     module DataReceived = {
+      let get_method_name = () => "Network.dataReceived";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -12790,6 +13062,8 @@ backslash. Omitting is equivalent to `"*"`. */
     };
     /* Fired when EventSource message is received. */
     module EventSourceMessageReceived = {
+      let get_method_name = () => "Network.eventSourceMessageReceived";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -12810,6 +13084,8 @@ backslash. Omitting is equivalent to `"*"`. */
     };
     /* Fired when HTTP request has failed to load. */
     module LoadingFailed = {
+      let get_method_name = () => "Network.loadingFailed";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -12836,6 +13112,8 @@ backslash. Omitting is equivalent to `"*"`. */
     };
     /* Fired when HTTP request has finished loading. */
     module LoadingFinished = {
+      let get_method_name = () => "Network.loadingFinished";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -12859,6 +13137,8 @@ backslash. Omitting is equivalent to `"*"`. */
        mocked.
        Deprecated, use Fetch.requestPaused instead. */
     module RequestIntercepted = {
+      let get_method_name = () => "Network.requestIntercepted";
+
       [@deriving yojson]
       type result = {
         interceptionId: Types.InterceptionId.t, /* Each request the page makes will have a unique id, however if any redirects are encountered
@@ -12901,6 +13181,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired if request ended up loading from cache. */
     module RequestServedFromCache = {
+      let get_method_name = () => "Network.requestServedFromCache";
+
       [@deriving yojson]
       type result = {requestId: Types.RequestId.t /* Request identifier. */};
 
@@ -12915,6 +13197,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when page is about to send HTTP request. */
     module RequestWillBeSent = {
+      let get_method_name = () => "Network.requestWillBeSent";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -12945,6 +13229,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when resource loading priority is changed */
     module ResourceChangedPriority = {
+      let get_method_name = () => "Network.resourceChangedPriority";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -12963,6 +13249,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when a signed exchange was received over the network */
     module SignedExchangeReceived = {
+      let get_method_name = () => "Network.signedExchangeReceived";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -12980,6 +13268,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when HTTP response is available. */
     module ResponseReceived = {
+      let get_method_name = () => "Network.responseReceived";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -13003,6 +13293,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket is closed. */
     module WebSocketClosed = {
+      let get_method_name = () => "Network.webSocketClosed";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -13020,6 +13312,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired upon WebSocket creation. */
     module WebSocketCreated = {
+      let get_method_name = () => "Network.webSocketCreated";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -13039,6 +13333,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket message error occurs. */
     module WebSocketFrameError = {
+      let get_method_name = () => "Network.webSocketFrameError";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -13057,6 +13353,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket message is received. */
     module WebSocketFrameReceived = {
+      let get_method_name = () => "Network.webSocketFrameReceived";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -13075,6 +13373,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket message is sent. */
     module WebSocketFrameSent = {
+      let get_method_name = () => "Network.webSocketFrameSent";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -13093,6 +13393,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket handshake response becomes available. */
     module WebSocketHandshakeResponseReceived = {
+      let get_method_name = () => "Network.webSocketHandshakeResponseReceived";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -13111,6 +13413,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebSocket is about to initiate handshake. */
     module WebSocketWillSendHandshakeRequest = {
+      let get_method_name = () => "Network.webSocketWillSendHandshakeRequest";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. */
@@ -13130,6 +13434,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired upon WebTransport creation. */
     module WebTransportCreated = {
+      let get_method_name = () => "Network.webTransportCreated";
+
       [@deriving yojson]
       type result = {
         transportId: Types.RequestId.t, /* WebTransport identifier. */
@@ -13150,6 +13456,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebTransport handshake is finished. */
     module WebTransportConnectionEstablished = {
+      let get_method_name = () => "Network.webTransportConnectionEstablished";
+
       [@deriving yojson]
       type result = {
         transportId: Types.RequestId.t, /* WebTransport identifier. */
@@ -13167,6 +13475,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     };
     /* Fired when WebTransport is disposed. */
     module WebTransportClosed = {
+      let get_method_name = () => "Network.webTransportClosed";
+
       [@deriving yojson]
       type result = {
         transportId: Types.RequestId.t, /* WebTransport identifier. */
@@ -13187,6 +13497,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
        requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
        or requestWillBeSentExtraInfo will be fired first for the same request. */
     module RequestWillBeSentExtraInfo = {
+      let get_method_name = () => "Network.requestWillBeSentExtraInfo";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. Used to match this information to an existing requestWillBeSent event. */
@@ -13210,6 +13522,8 @@ the request and the ones not sent; the latter are distinguished by having blocke
        stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
        it, and responseReceivedExtraInfo may be fired before or after responseReceived. */
     module ResponseReceivedExtraInfo = {
+      let get_method_name = () => "Network.responseReceivedExtraInfo";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Request identifier. Used to match this information to another responseReceived event. */
@@ -13238,6 +13552,8 @@ available, such as in the case of HTTP/2 or QUIC. */,
        failed, the event is fired before the corresponding request was sent
        or after the response was received. */
     module TrustTokenOperationDone = {
+      let get_method_name = () => "Network.trustTokenOperationDone";
+
       [@deriving yojson]
       type result = {
         status: string, /* Detailed success or error status of the operation.
@@ -13488,6 +13804,8 @@ and Overlay: {
     /* Fired when the node should be inspected. This happens after call to `setInspectMode` or when
        user manually inspects an element. */
     module InspectNodeRequested: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         backendNodeId: DOM.Types.BackendNodeId.t /* Id of the node to inspect. */,
@@ -13504,6 +13822,8 @@ and Overlay: {
     };
     /* Fired when the node should be highlighted. This happens after call to `setInspectMode`. */
     module NodeHighlightRequested: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         nodeId: DOM.Types.NodeId.t /* No description provided */,
@@ -13520,6 +13840,8 @@ and Overlay: {
     };
     /* Fired when user asks to capture screenshot of some area on the page. */
     module ScreenshotRequested: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         viewport: Page.Types.Viewport.t /* Viewport to capture, in device independent pixels (dip). */,
@@ -13536,6 +13858,8 @@ and Overlay: {
     };
     /* Fired when user cancels the inspect mode. */
     module InspectModeCanceled: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -14185,6 +14509,8 @@ and Overlay: {
     /* Fired when the node should be inspected. This happens after call to `setInspectMode` or when
        user manually inspects an element. */
     module InspectNodeRequested = {
+      let get_method_name = () => "Overlay.inspectNodeRequested";
+
       [@deriving yojson]
       type result = {
         backendNodeId: DOM.Types.BackendNodeId.t /* Id of the node to inspect. */,
@@ -14201,6 +14527,8 @@ and Overlay: {
     };
     /* Fired when the node should be highlighted. This happens after call to `setInspectMode`. */
     module NodeHighlightRequested = {
+      let get_method_name = () => "Overlay.nodeHighlightRequested";
+
       [@deriving yojson]
       type result = {
         nodeId: DOM.Types.NodeId.t /* No description provided */,
@@ -14217,6 +14545,8 @@ and Overlay: {
     };
     /* Fired when user asks to capture screenshot of some area on the page. */
     module ScreenshotRequested = {
+      let get_method_name = () => "Overlay.screenshotRequested";
+
       [@deriving yojson]
       type result = {
         viewport: Page.Types.Viewport.t /* Viewport to capture, in device independent pixels (dip). */,
@@ -14233,6 +14563,8 @@ and Overlay: {
     };
     /* Fired when user cancels the inspect mode. */
     module InspectModeCanceled = {
+      let get_method_name = () => "Overlay.inspectModeCanceled";
+
       [@deriving yojson]
       type result = empty;
 
@@ -14590,6 +14922,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
   module Events: {
     /* No description provided */
     module DomContentEventFired: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         timestamp: Network.Types.MonotonicTime.t /* No description provided */,
@@ -14606,6 +14940,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Emitted only when `page.interceptFileChooser` is enabled. */
     module FileChooserOpened: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame containing input node. */
@@ -14624,6 +14960,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired when frame has been attached to its parent. */
     module FrameAttached: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame that has been attached. */
@@ -14643,6 +14981,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired when frame no longer has a scheduled navigation. */
     module FrameClearedScheduledNavigation: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t /* Id of the frame that has cleared its scheduled navigation. */,
@@ -14659,6 +14999,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired when frame has been detached from its parent. */
     module FrameDetached: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame that has been detached. */
@@ -14676,6 +15018,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired once navigation of the frame has completed. Frame is now associated with the new loader. */
     module FrameNavigated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frame: Types.Frame.t, /* Frame object. */
@@ -14694,6 +15038,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired when opening document to write to. */
     module DocumentOpened: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {frame: Types.Frame.t /* Frame object. */};
 
@@ -14708,6 +15054,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* No description provided */
     module FrameResized: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -14723,6 +15071,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     /* Fired when a renderer-initiated navigation is requested.
        Navigation may still be cancelled after the event is issued. */
     module FrameRequestedNavigation: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame that is being navigated. */
@@ -14742,6 +15092,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired when frame schedules a potential navigation. */
     module FrameScheduledNavigation: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame that has scheduled a navigation. */
@@ -14762,6 +15114,8 @@ guaranteed to start. */
     };
     /* Fired when frame has started loading. */
     module FrameStartedLoading: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t /* Id of the frame that has started loading. */,
@@ -14778,6 +15132,8 @@ guaranteed to start. */
     };
     /* Fired when frame has stopped loading. */
     module FrameStoppedLoading: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t /* Id of the frame that has stopped loading. */,
@@ -14795,6 +15151,8 @@ guaranteed to start. */
     /* Fired when page is about to start a download.
        Deprecated. Use Browser.downloadWillBegin instead. */
     module DownloadWillBegin: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame that caused download to begin. */
@@ -14815,6 +15173,8 @@ guaranteed to start. */
     /* Fired when download makes progress. Last call has |done| == true.
        Deprecated. Use Browser.downloadProgress instead. */
     module DownloadProgress: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         guid: string, /* Global unique identifier of the download. */
@@ -14834,6 +15194,8 @@ guaranteed to start. */
     };
     /* Fired when interstitial page was hidden */
     module InterstitialHidden: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -14848,6 +15210,8 @@ guaranteed to start. */
     };
     /* Fired when interstitial page was shown */
     module InterstitialShown: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -14863,6 +15227,8 @@ guaranteed to start. */
     /* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
        closed. */
     module JavascriptDialogClosed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         result: bool, /* Whether dialog was confirmed. */
@@ -14881,6 +15247,8 @@ guaranteed to start. */
     /* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
        open. */
     module JavascriptDialogOpening: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         url: string, /* Frame url. */
@@ -14905,6 +15273,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     };
     /* Fired for top level page lifecycle events such as navigation, load, paint, etc. */
     module LifecycleEvent: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame. */
@@ -14927,6 +15297,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
        main-frame history navigation where the document changes (non-same-document navigations),
        when bfcache navigation fails. */
     module BackForwardCacheNotUsed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         loaderId: Network.Types.LoaderId.t, /* The loader id for the associated navgation. */
@@ -14944,6 +15316,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     };
     /* No description provided */
     module LoadEventFired: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         timestamp: Network.Types.MonotonicTime.t /* No description provided */,
@@ -14960,6 +15334,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     };
     /* Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation. */
     module NavigatedWithinDocument: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame. */
@@ -14977,6 +15353,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     };
     /* Compressed image data requested by the `startScreencast`. */
     module ScreencastFrame: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         data: string, /* Base64-encoded compressed image. (Encoded as a base64 string when passed over JSON) */
@@ -14995,6 +15373,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     };
     /* Fired when the page with currently enabled screencast was shown or hidden `. */
     module ScreencastVisibilityChanged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {visible: bool /* True if the page is visible. */};
 
@@ -15010,6 +15390,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     /* Fired when a new window is going to be opened, via window.open(), link click, form submission,
        etc. */
     module WindowOpen: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         url: string, /* The URL for the new window. */
@@ -15030,6 +15412,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     /* Issued for every compilation cache generated. Is only available
        if Page.setGenerateCompilationCache is enabled. */
     module CompilationCacheProduced: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         url: string, /* No description provided */
@@ -16024,6 +16408,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
   module Events = {
     /* No description provided */
     module DomContentEventFired = {
+      let get_method_name = () => "Page.domContentEventFired";
+
       [@deriving yojson]
       type result = {
         timestamp: Network.Types.MonotonicTime.t /* No description provided */,
@@ -16040,6 +16426,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Emitted only when `page.interceptFileChooser` is enabled. */
     module FileChooserOpened = {
+      let get_method_name = () => "Page.fileChooserOpened";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame containing input node. */
@@ -16058,6 +16446,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired when frame has been attached to its parent. */
     module FrameAttached = {
+      let get_method_name = () => "Page.frameAttached";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame that has been attached. */
@@ -16077,6 +16467,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired when frame no longer has a scheduled navigation. */
     module FrameClearedScheduledNavigation = {
+      let get_method_name = () => "Page.frameClearedScheduledNavigation";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t /* Id of the frame that has cleared its scheduled navigation. */,
@@ -16093,6 +16485,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired when frame has been detached from its parent. */
     module FrameDetached = {
+      let get_method_name = () => "Page.frameDetached";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame that has been detached. */
@@ -16110,6 +16504,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired once navigation of the frame has completed. Frame is now associated with the new loader. */
     module FrameNavigated = {
+      let get_method_name = () => "Page.frameNavigated";
+
       [@deriving yojson]
       type result = {
         frame: Types.Frame.t, /* Frame object. */
@@ -16128,6 +16524,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired when opening document to write to. */
     module DocumentOpened = {
+      let get_method_name = () => "Page.documentOpened";
+
       [@deriving yojson]
       type result = {frame: Types.Frame.t /* Frame object. */};
 
@@ -16142,6 +16540,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* No description provided */
     module FrameResized = {
+      let get_method_name = () => "Page.frameResized";
+
       [@deriving yojson]
       type result = empty;
 
@@ -16157,6 +16557,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     /* Fired when a renderer-initiated navigation is requested.
        Navigation may still be cancelled after the event is issued. */
     module FrameRequestedNavigation = {
+      let get_method_name = () => "Page.frameRequestedNavigation";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame that is being navigated. */
@@ -16176,6 +16578,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     };
     /* Fired when frame schedules a potential navigation. */
     module FrameScheduledNavigation = {
+      let get_method_name = () => "Page.frameScheduledNavigation";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame that has scheduled a navigation. */
@@ -16196,6 +16600,8 @@ guaranteed to start. */
     };
     /* Fired when frame has started loading. */
     module FrameStartedLoading = {
+      let get_method_name = () => "Page.frameStartedLoading";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t /* Id of the frame that has started loading. */,
@@ -16212,6 +16618,8 @@ guaranteed to start. */
     };
     /* Fired when frame has stopped loading. */
     module FrameStoppedLoading = {
+      let get_method_name = () => "Page.frameStoppedLoading";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t /* Id of the frame that has stopped loading. */,
@@ -16229,6 +16637,8 @@ guaranteed to start. */
     /* Fired when page is about to start a download.
        Deprecated. Use Browser.downloadWillBegin instead. */
     module DownloadWillBegin = {
+      let get_method_name = () => "Page.downloadWillBegin";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame that caused download to begin. */
@@ -16249,6 +16659,8 @@ guaranteed to start. */
     /* Fired when download makes progress. Last call has |done| == true.
        Deprecated. Use Browser.downloadProgress instead. */
     module DownloadProgress = {
+      let get_method_name = () => "Page.downloadProgress";
+
       [@deriving yojson]
       type result = {
         guid: string, /* Global unique identifier of the download. */
@@ -16268,6 +16680,8 @@ guaranteed to start. */
     };
     /* Fired when interstitial page was hidden */
     module InterstitialHidden = {
+      let get_method_name = () => "Page.interstitialHidden";
+
       [@deriving yojson]
       type result = empty;
 
@@ -16282,6 +16696,8 @@ guaranteed to start. */
     };
     /* Fired when interstitial page was shown */
     module InterstitialShown = {
+      let get_method_name = () => "Page.interstitialShown";
+
       [@deriving yojson]
       type result = empty;
 
@@ -16297,6 +16713,8 @@ guaranteed to start. */
     /* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
        closed. */
     module JavascriptDialogClosed = {
+      let get_method_name = () => "Page.javascriptDialogClosed";
+
       [@deriving yojson]
       type result = {
         result: bool, /* Whether dialog was confirmed. */
@@ -16315,6 +16733,8 @@ guaranteed to start. */
     /* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
        open. */
     module JavascriptDialogOpening = {
+      let get_method_name = () => "Page.javascriptDialogOpening";
+
       [@deriving yojson]
       type result = {
         url: string, /* Frame url. */
@@ -16339,6 +16759,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     };
     /* Fired for top level page lifecycle events such as navigation, load, paint, etc. */
     module LifecycleEvent = {
+      let get_method_name = () => "Page.lifecycleEvent";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame. */
@@ -16361,6 +16783,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
        main-frame history navigation where the document changes (non-same-document navigations),
        when bfcache navigation fails. */
     module BackForwardCacheNotUsed = {
+      let get_method_name = () => "Page.backForwardCacheNotUsed";
+
       [@deriving yojson]
       type result = {
         loaderId: Network.Types.LoaderId.t, /* The loader id for the associated navgation. */
@@ -16378,6 +16802,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     };
     /* No description provided */
     module LoadEventFired = {
+      let get_method_name = () => "Page.loadEventFired";
+
       [@deriving yojson]
       type result = {
         timestamp: Network.Types.MonotonicTime.t /* No description provided */,
@@ -16394,6 +16820,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     };
     /* Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation. */
     module NavigatedWithinDocument = {
+      let get_method_name = () => "Page.navigatedWithinDocument";
+
       [@deriving yojson]
       type result = {
         frameId: Types.FrameId.t, /* Id of the frame. */
@@ -16411,6 +16839,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     };
     /* Compressed image data requested by the `startScreencast`. */
     module ScreencastFrame = {
+      let get_method_name = () => "Page.screencastFrame";
+
       [@deriving yojson]
       type result = {
         data: string, /* Base64-encoded compressed image. (Encoded as a base64 string when passed over JSON) */
@@ -16429,6 +16859,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     };
     /* Fired when the page with currently enabled screencast was shown or hidden `. */
     module ScreencastVisibilityChanged = {
+      let get_method_name = () => "Page.screencastVisibilityChanged";
+
       [@deriving yojson]
       type result = {visible: bool /* True if the page is visible. */};
 
@@ -16444,6 +16876,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     /* Fired when a new window is going to be opened, via window.open(), link click, form submission,
        etc. */
     module WindowOpen = {
+      let get_method_name = () => "Page.windowOpen";
+
       [@deriving yojson]
       type result = {
         url: string, /* The URL for the new window. */
@@ -16464,6 +16898,8 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     /* Issued for every compilation cache generated. Is only available
        if Page.setGenerateCompilationCache is enabled. */
     module CompilationCacheProduced = {
+      let get_method_name = () => "Page.compilationCacheProduced";
+
       [@deriving yojson]
       type result = {
         url: string, /* No description provided */
@@ -16496,6 +16932,8 @@ and Performance: {
   module Events: {
     /* Current values of the metrics. */
     module Metrics: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         metrics: array(Types.Metric.t), /* Current values of the metrics. */
@@ -16543,6 +16981,8 @@ and Performance: {
   module Events = {
     /* Current values of the metrics. */
     module Metrics = {
+      let get_method_name = () => "Performance.metrics";
+
       [@deriving yojson]
       type result = {
         metrics: array(Types.Metric.t), /* Current values of the metrics. */
@@ -16620,6 +17060,8 @@ This determines which of the optional "details" fiedls is present. */
   module Events: {
     /* Sent when a performance timeline event is added. See reportPerformanceTimeline method. */
     module TimelineEventAdded: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         event: Types.TimelineEvent.t /* No description provided */,
@@ -16798,6 +17240,8 @@ This determines which of the optional "details" fiedls is present. */
   module Events = {
     /* Sent when a performance timeline event is added. See reportPerformanceTimeline method. */
     module TimelineEventAdded = {
+      let get_method_name = () => "PerformanceTimeline.timelineEventAdded";
+
       [@deriving yojson]
       type result = {
         event: Types.TimelineEvent.t /* No description provided */,
@@ -16928,6 +17372,8 @@ profile startTime. */,
   module Events: {
     /* No description provided */
     module ConsoleProfileFinished: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         id: string, /* No description provided */
@@ -16948,6 +17394,8 @@ profile startTime. */,
     };
     /* Sent when new profile recording is started using console.profile() call. */
     module ConsoleProfileStarted: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         id: string, /* No description provided */
@@ -16970,6 +17418,8 @@ profile startTime. */,
        coverage has been started. This event can be trigged by the embedder to, for example,
        trigger collection of coverage data immediatelly at a certain point in time. */
     module PreciseCoverageDeltaUpdate: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         timestamp: float, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
@@ -17305,6 +17755,8 @@ profile startTime. */,
   module Events = {
     /* No description provided */
     module ConsoleProfileFinished = {
+      let get_method_name = () => "Profiler.consoleProfileFinished";
+
       [@deriving yojson]
       type result = {
         id: string, /* No description provided */
@@ -17325,6 +17777,8 @@ profile startTime. */,
     };
     /* Sent when new profile recording is started using console.profile() call. */
     module ConsoleProfileStarted = {
+      let get_method_name = () => "Profiler.consoleProfileStarted";
+
       [@deriving yojson]
       type result = {
         id: string, /* No description provided */
@@ -17347,6 +17801,8 @@ profile startTime. */,
        coverage has been started. This event can be trigged by the embedder to, for example,
        trigger collection of coverage data immediatelly at a certain point in time. */
     module PreciseCoverageDeltaUpdate = {
+      let get_method_name = () => "Profiler.preciseCoverageDeltaUpdate";
+
       [@deriving yojson]
       type result = {
         timestamp: float, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
@@ -17622,6 +18078,8 @@ initiated the async call. */
   module Events: {
     /* Notification is issued every time when binding is called. */
     module BindingCalled: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         name: string, /* No description provided */
@@ -17640,6 +18098,8 @@ initiated the async call. */
     };
     /* Issued when console API was called. */
     module ConsoleAPICalled: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         [@key "type"]
@@ -17668,6 +18128,8 @@ on named context. */,
     };
     /* Issued when unhandled exception was revoked. */
     module ExceptionRevoked: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         reason: string, /* Reason describing why exception was revoked. */
@@ -17685,6 +18147,8 @@ on named context. */,
     };
     /* Issued when exception was thrown and unhandled. */
     module ExceptionThrown: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         timestamp: Types.Timestamp.t, /* Timestamp of the exception. */
@@ -17702,6 +18166,8 @@ on named context. */,
     };
     /* Issued when new execution context is created. */
     module ExecutionContextCreated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         context: Types.ExecutionContextDescription.t /* A newly created execution context. */,
@@ -17718,6 +18184,8 @@ on named context. */,
     };
     /* Issued when execution context is destroyed. */
     module ExecutionContextDestroyed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         executionContextId: Types.ExecutionContextId.t /* Id of the destroyed context */,
@@ -17734,6 +18202,8 @@ on named context. */,
     };
     /* Issued when all executionContexts were cleared in browser */
     module ExecutionContextsCleared: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = empty;
 
@@ -17749,6 +18219,8 @@ on named context. */,
     /* Issued when object should be inspected (for example, as a result of inspect() command line API
        call). */
     module InspectRequested: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         [@key "object"]
@@ -18503,6 +18975,8 @@ initiated the async call. */
   module Events = {
     /* Notification is issued every time when binding is called. */
     module BindingCalled = {
+      let get_method_name = () => "Runtime.bindingCalled";
+
       [@deriving yojson]
       type result = {
         name: string, /* No description provided */
@@ -18521,6 +18995,8 @@ initiated the async call. */
     };
     /* Issued when console API was called. */
     module ConsoleAPICalled = {
+      let get_method_name = () => "Runtime.consoleAPICalled";
+
       [@deriving yojson]
       type result = {
         [@key "type"]
@@ -18549,6 +19025,8 @@ on named context. */,
     };
     /* Issued when unhandled exception was revoked. */
     module ExceptionRevoked = {
+      let get_method_name = () => "Runtime.exceptionRevoked";
+
       [@deriving yojson]
       type result = {
         reason: string, /* Reason describing why exception was revoked. */
@@ -18566,6 +19044,8 @@ on named context. */,
     };
     /* Issued when exception was thrown and unhandled. */
     module ExceptionThrown = {
+      let get_method_name = () => "Runtime.exceptionThrown";
+
       [@deriving yojson]
       type result = {
         timestamp: Types.Timestamp.t, /* Timestamp of the exception. */
@@ -18583,6 +19063,8 @@ on named context. */,
     };
     /* Issued when new execution context is created. */
     module ExecutionContextCreated = {
+      let get_method_name = () => "Runtime.executionContextCreated";
+
       [@deriving yojson]
       type result = {
         context: Types.ExecutionContextDescription.t /* A newly created execution context. */,
@@ -18599,6 +19081,8 @@ on named context. */,
     };
     /* Issued when execution context is destroyed. */
     module ExecutionContextDestroyed = {
+      let get_method_name = () => "Runtime.executionContextDestroyed";
+
       [@deriving yojson]
       type result = {
         executionContextId: Types.ExecutionContextId.t /* Id of the destroyed context */,
@@ -18615,6 +19099,8 @@ on named context. */,
     };
     /* Issued when all executionContexts were cleared in browser */
     module ExecutionContextsCleared = {
+      let get_method_name = () => "Runtime.executionContextsCleared";
+
       [@deriving yojson]
       type result = empty;
 
@@ -18630,6 +19116,8 @@ on named context. */,
     /* Issued when object should be inspected (for example, as a result of inspect() command line API
        call). */
     module InspectRequested = {
+      let get_method_name = () => "Runtime.inspectRequested";
+
       [@deriving yojson]
       type result = {
         [@key "object"]
@@ -18799,6 +19287,8 @@ and Security: {
        certificate error has been allowed internally. Only one client per target should override
        certificate errors at the same time. */
     module CertificateError: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         eventId: float, /* The ID of the event. */
@@ -18817,6 +19307,8 @@ and Security: {
     };
     /* The security state of the page changed. */
     module VisibleSecurityStateChanged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         visibleSecurityState: Types.VisibleSecurityState.t /* Security state information about the page. */,
@@ -18833,6 +19325,8 @@ and Security: {
     };
     /* The security state of the page changed. */
     module SecurityStateChanged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         securityState: Types.SecurityState.t, /* Security state. */
@@ -19161,6 +19655,8 @@ and Security: {
        certificate error has been allowed internally. Only one client per target should override
        certificate errors at the same time. */
     module CertificateError = {
+      let get_method_name = () => "Security.certificateError";
+
       [@deriving yojson]
       type result = {
         eventId: float, /* The ID of the event. */
@@ -19179,6 +19675,8 @@ and Security: {
     };
     /* The security state of the page changed. */
     module VisibleSecurityStateChanged = {
+      let get_method_name = () => "Security.visibleSecurityStateChanged";
+
       [@deriving yojson]
       type result = {
         visibleSecurityState: Types.VisibleSecurityState.t /* Security state information about the page. */,
@@ -19195,6 +19693,8 @@ and Security: {
     };
     /* The security state of the page changed. */
     module SecurityStateChanged = {
+      let get_method_name = () => "Security.securityStateChanged";
+
       [@deriving yojson]
       type result = {
         securityState: Types.SecurityState.t, /* Security state. */
@@ -19280,6 +19780,8 @@ For cached script it is the last time the cache entry was validated. */
   module Events: {
     /* No description provided */
     module WorkerErrorReported: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         errorMessage: Types.ServiceWorkerErrorMessage.t /* No description provided */,
@@ -19296,6 +19798,8 @@ For cached script it is the last time the cache entry was validated. */
     };
     /* No description provided */
     module WorkerRegistrationUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         registrations: array(Types.ServiceWorkerRegistration.t) /* No description provided */,
@@ -19312,6 +19816,8 @@ For cached script it is the last time the cache entry was validated. */
     };
     /* No description provided */
     module WorkerVersionUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         versions: array(Types.ServiceWorkerVersion.t) /* No description provided */,
@@ -19497,6 +20003,8 @@ For cached script it is the last time the cache entry was validated. */
   module Events = {
     /* No description provided */
     module WorkerErrorReported = {
+      let get_method_name = () => "ServiceWorker.workerErrorReported";
+
       [@deriving yojson]
       type result = {
         errorMessage: Types.ServiceWorkerErrorMessage.t /* No description provided */,
@@ -19513,6 +20021,8 @@ For cached script it is the last time the cache entry was validated. */
     };
     /* No description provided */
     module WorkerRegistrationUpdated = {
+      let get_method_name = () => "ServiceWorker.workerRegistrationUpdated";
+
       [@deriving yojson]
       type result = {
         registrations: array(Types.ServiceWorkerRegistration.t) /* No description provided */,
@@ -19529,6 +20039,8 @@ For cached script it is the last time the cache entry was validated. */
     };
     /* No description provided */
     module WorkerVersionUpdated = {
+      let get_method_name = () => "ServiceWorker.workerVersionUpdated";
+
       [@deriving yojson]
       type result = {
         versions: array(Types.ServiceWorkerVersion.t) /* No description provided */,
@@ -19574,6 +20086,8 @@ and Storage: {
   module Events: {
     /* A cache's contents have been modified. */
     module CacheStorageContentUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         origin: string, /* Origin to update. */
@@ -19591,6 +20105,8 @@ and Storage: {
     };
     /* A cache has been added/deleted. */
     module CacheStorageListUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {origin: string /* Origin to update. */};
 
@@ -19605,6 +20121,8 @@ and Storage: {
     };
     /* The origin's IndexedDB object store has been modified. */
     module IndexedDBContentUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         origin: string, /* Origin to update. */
@@ -19623,6 +20141,8 @@ and Storage: {
     };
     /* The origin's IndexedDB database list has been modified. */
     module IndexedDBListUpdated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {origin: string /* Origin to update. */};
 
@@ -19707,6 +20227,8 @@ and Storage: {
   module Events = {
     /* A cache's contents have been modified. */
     module CacheStorageContentUpdated = {
+      let get_method_name = () => "Storage.cacheStorageContentUpdated";
+
       [@deriving yojson]
       type result = {
         origin: string, /* Origin to update. */
@@ -19724,6 +20246,8 @@ and Storage: {
     };
     /* A cache has been added/deleted. */
     module CacheStorageListUpdated = {
+      let get_method_name = () => "Storage.cacheStorageListUpdated";
+
       [@deriving yojson]
       type result = {origin: string /* Origin to update. */};
 
@@ -19738,6 +20262,8 @@ and Storage: {
     };
     /* The origin's IndexedDB object store has been modified. */
     module IndexedDBContentUpdated = {
+      let get_method_name = () => "Storage.indexedDBContentUpdated";
+
       [@deriving yojson]
       type result = {
         origin: string, /* Origin to update. */
@@ -19756,6 +20282,8 @@ and Storage: {
     };
     /* The origin's IndexedDB database list has been modified. */
     module IndexedDBListUpdated = {
+      let get_method_name = () => "Storage.indexedDBListUpdated";
+
       [@deriving yojson]
       type result = {origin: string /* Origin to update. */};
 
@@ -20189,6 +20717,8 @@ and Target: {
   module Events: {
     /* Issued when attached to target because of auto-attach or `attachToTarget` command. */
     module AttachedToTarget: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         sessionId: Types.SessionID.t, /* Identifier assigned to the session used to send/receive messages. */
@@ -20208,6 +20738,8 @@ and Target: {
     /* Issued when detached from target for any reason (including `detachFromTarget` command). Can be
        issued multiple times per target if multiple sessions have been attached to it. */
     module DetachedFromTarget: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         sessionId: Types.SessionID.t, /* Detached session identifier. */
@@ -20227,6 +20759,8 @@ and Target: {
     /* Notifies about a new protocol message received from the session (as reported in
        `attachedToTarget` event). */
     module ReceivedMessageFromTarget: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         sessionId: Types.SessionID.t, /* Identifier of a session which sends a message. */
@@ -20246,6 +20780,8 @@ and Target: {
     };
     /* Issued when a possible inspection target is created. */
     module TargetCreated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         targetInfo: Types.TargetInfo.t /* No description provided */,
@@ -20262,6 +20798,8 @@ and Target: {
     };
     /* Issued when a target is destroyed. */
     module TargetDestroyed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         targetId: Types.TargetID.t /* No description provided */,
@@ -20278,6 +20816,8 @@ and Target: {
     };
     /* Issued when a target has crashed. */
     module TargetCrashed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         targetId: Types.TargetID.t, /* No description provided */
@@ -20297,6 +20837,8 @@ and Target: {
     /* Issued when some information about a target has changed. This only happens between
        `targetCreated` and `targetDestroyed`. */
     module TargetInfoChanged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         targetInfo: Types.TargetInfo.t /* No description provided */,
@@ -20427,6 +20969,8 @@ and Target: {
   module Events = {
     /* Issued when attached to target because of auto-attach or `attachToTarget` command. */
     module AttachedToTarget = {
+      let get_method_name = () => "Target.attachedToTarget";
+
       [@deriving yojson]
       type result = {
         sessionId: Types.SessionID.t, /* Identifier assigned to the session used to send/receive messages. */
@@ -20446,6 +20990,8 @@ and Target: {
     /* Issued when detached from target for any reason (including `detachFromTarget` command). Can be
        issued multiple times per target if multiple sessions have been attached to it. */
     module DetachedFromTarget = {
+      let get_method_name = () => "Target.detachedFromTarget";
+
       [@deriving yojson]
       type result = {
         sessionId: Types.SessionID.t, /* Detached session identifier. */
@@ -20465,6 +21011,8 @@ and Target: {
     /* Notifies about a new protocol message received from the session (as reported in
        `attachedToTarget` event). */
     module ReceivedMessageFromTarget = {
+      let get_method_name = () => "Target.receivedMessageFromTarget";
+
       [@deriving yojson]
       type result = {
         sessionId: Types.SessionID.t, /* Identifier of a session which sends a message. */
@@ -20484,6 +21032,8 @@ and Target: {
     };
     /* Issued when a possible inspection target is created. */
     module TargetCreated = {
+      let get_method_name = () => "Target.targetCreated";
+
       [@deriving yojson]
       type result = {
         targetInfo: Types.TargetInfo.t /* No description provided */,
@@ -20500,6 +21050,8 @@ and Target: {
     };
     /* Issued when a target is destroyed. */
     module TargetDestroyed = {
+      let get_method_name = () => "Target.targetDestroyed";
+
       [@deriving yojson]
       type result = {
         targetId: Types.TargetID.t /* No description provided */,
@@ -20516,6 +21068,8 @@ and Target: {
     };
     /* Issued when a target has crashed. */
     module TargetCrashed = {
+      let get_method_name = () => "Target.targetCrashed";
+
       [@deriving yojson]
       type result = {
         targetId: Types.TargetID.t, /* No description provided */
@@ -20535,6 +21089,8 @@ and Target: {
     /* Issued when some information about a target has changed. This only happens between
        `targetCreated` and `targetDestroyed`. */
     module TargetInfoChanged = {
+      let get_method_name = () => "Target.targetInfoChanged";
+
       [@deriving yojson]
       type result = {
         targetInfo: Types.TargetInfo.t /* No description provided */,
@@ -20555,6 +21111,8 @@ and Tethering: {
   module Events: {
     /* Informs that port was successfully bound and got a specified connection id. */
     module Accepted: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         port: float, /* Port number that was successfully bound. */
@@ -20575,6 +21133,8 @@ and Tethering: {
   module Events = {
     /* Informs that port was successfully bound and got a specified connection id. */
     module Accepted = {
+      let get_method_name = () => "Tethering.accepted";
+
       [@deriving yojson]
       type result = {
         port: float, /* Port number that was successfully bound. */
@@ -20653,6 +21213,8 @@ and Tracing: {
   module Events: {
     /* No description provided */
     module BufferUsage: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         [@yojson.option]
@@ -20677,6 +21239,8 @@ total size. */,
     /* Contains an bucket of collected trace events. When tracing is stopped collected events will be
        send as a sequence of dataCollected events followed by tracingComplete event. */
     module DataCollected: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {value: array(assoc) /* No description provided */};
 
@@ -20692,6 +21256,8 @@ total size. */,
     /* Signals that tracing is stopped and there is no trace buffers pending flush, all data were
        delivered via dataCollected events. */
     module TracingComplete: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         dataLossOccurred: bool, /* Indicates whether some trace data is known to have been lost, e.g. because the trace ring
@@ -20878,6 +21444,8 @@ buffer wrapped around. */
   module Events = {
     /* No description provided */
     module BufferUsage = {
+      let get_method_name = () => "Tracing.bufferUsage";
+
       [@deriving yojson]
       type result = {
         [@yojson.option]
@@ -20902,6 +21470,8 @@ total size. */,
     /* Contains an bucket of collected trace events. When tracing is stopped collected events will be
        send as a sequence of dataCollected events followed by tracingComplete event. */
     module DataCollected = {
+      let get_method_name = () => "Tracing.dataCollected";
+
       [@deriving yojson]
       type result = {value: array(assoc) /* No description provided */};
 
@@ -20917,6 +21487,8 @@ total size. */,
     /* Signals that tracing is stopped and there is no trace buffers pending flush, all data were
        delivered via dataCollected events. */
     module TracingComplete = {
+      let get_method_name = () => "Tracing.tracingComplete";
+
       [@deriving yojson]
       type result = {
         dataLossOccurred: bool, /* Indicates whether some trace data is known to have been lost, e.g. because the trace ring
@@ -21011,6 +21583,8 @@ ProvideCredentials. */,
        and responseStatusCode -- the request is at the response stage if either
        of these fields is present and in the request stage otherwise. */
     module RequestPaused: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Each request the page makes will have a unique id. */
@@ -21040,6 +21614,8 @@ then this networkId will be the same as the requestId present in the requestWill
     /* Issued when the domain is enabled with handleAuthRequests set to true.
        The request is paused until client responds with continueWithAuth. */
     module AuthRequired: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Each request the page makes will have a unique id. */
@@ -21245,6 +21821,8 @@ ProvideCredentials. */,
        and responseStatusCode -- the request is at the response stage if either
        of these fields is present and in the request stage otherwise. */
     module RequestPaused = {
+      let get_method_name = () => "Fetch.requestPaused";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Each request the page makes will have a unique id. */
@@ -21274,6 +21852,8 @@ then this networkId will be the same as the requestId present in the requestWill
     /* Issued when the domain is enabled with handleAuthRequests set to true.
        The request is paused until client responds with continueWithAuth. */
     module AuthRequired = {
+      let get_method_name = () => "Fetch.authRequired";
+
       [@deriving yojson]
       type result = {
         requestId: Types.RequestId.t, /* Each request the page makes will have a unique id. */
@@ -21405,6 +21985,8 @@ capacity and glitch may occur. */
   module Events: {
     /* Notifies that a new BaseAudioContext has been created. */
     module ContextCreated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         context: Types.BaseAudioContext.t /* No description provided */,
@@ -21421,6 +22003,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that an existing BaseAudioContext will be destroyed. */
     module ContextWillBeDestroyed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t /* No description provided */,
@@ -21437,6 +22021,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that existing BaseAudioContext has changed some properties (id stays the same).. */
     module ContextChanged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         context: Types.BaseAudioContext.t /* No description provided */,
@@ -21453,6 +22039,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that the construction of an AudioListener has finished. */
     module AudioListenerCreated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         listener: Types.AudioListener.t /* No description provided */,
@@ -21469,6 +22057,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that a new AudioListener has been created. */
     module AudioListenerWillBeDestroyed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -21486,6 +22076,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that a new AudioNode has been created. */
     module AudioNodeCreated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {node: Types.AudioNode.t /* No description provided */};
 
@@ -21500,6 +22092,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that an existing AudioNode has been destroyed. */
     module AudioNodeWillBeDestroyed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -21517,6 +22111,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that a new AudioParam has been created. */
     module AudioParamCreated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {param: Types.AudioParam.t /* No description provided */};
 
@@ -21531,6 +22127,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that an existing AudioParam has been destroyed. */
     module AudioParamWillBeDestroyed: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -21549,6 +22147,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that two AudioNodes are connected. */
     module NodesConnected: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -21571,6 +22171,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that AudioNodes are disconnected. The destination can be null, and it means all the outgoing connections from the source are disconnected. */
     module NodesDisconnected: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -21593,6 +22195,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that an AudioNode is connected to an AudioParam. */
     module NodeParamConnected: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -21613,6 +22217,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that an AudioNode is disconnected to an AudioParam. */
     module NodeParamDisconnected: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -21933,6 +22539,8 @@ capacity and glitch may occur. */
   module Events = {
     /* Notifies that a new BaseAudioContext has been created. */
     module ContextCreated = {
+      let get_method_name = () => "WebAudio.contextCreated";
+
       [@deriving yojson]
       type result = {
         context: Types.BaseAudioContext.t /* No description provided */,
@@ -21949,6 +22557,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that an existing BaseAudioContext will be destroyed. */
     module ContextWillBeDestroyed = {
+      let get_method_name = () => "WebAudio.contextWillBeDestroyed";
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t /* No description provided */,
@@ -21965,6 +22575,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that existing BaseAudioContext has changed some properties (id stays the same).. */
     module ContextChanged = {
+      let get_method_name = () => "WebAudio.contextChanged";
+
       [@deriving yojson]
       type result = {
         context: Types.BaseAudioContext.t /* No description provided */,
@@ -21981,6 +22593,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that the construction of an AudioListener has finished. */
     module AudioListenerCreated = {
+      let get_method_name = () => "WebAudio.audioListenerCreated";
+
       [@deriving yojson]
       type result = {
         listener: Types.AudioListener.t /* No description provided */,
@@ -21997,6 +22611,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that a new AudioListener has been created. */
     module AudioListenerWillBeDestroyed = {
+      let get_method_name = () => "WebAudio.audioListenerWillBeDestroyed";
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -22014,6 +22630,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that a new AudioNode has been created. */
     module AudioNodeCreated = {
+      let get_method_name = () => "WebAudio.audioNodeCreated";
+
       [@deriving yojson]
       type result = {node: Types.AudioNode.t /* No description provided */};
 
@@ -22028,6 +22646,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that an existing AudioNode has been destroyed. */
     module AudioNodeWillBeDestroyed = {
+      let get_method_name = () => "WebAudio.audioNodeWillBeDestroyed";
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -22045,6 +22665,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that a new AudioParam has been created. */
     module AudioParamCreated = {
+      let get_method_name = () => "WebAudio.audioParamCreated";
+
       [@deriving yojson]
       type result = {param: Types.AudioParam.t /* No description provided */};
 
@@ -22059,6 +22681,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that an existing AudioParam has been destroyed. */
     module AudioParamWillBeDestroyed = {
+      let get_method_name = () => "WebAudio.audioParamWillBeDestroyed";
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -22077,6 +22701,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that two AudioNodes are connected. */
     module NodesConnected = {
+      let get_method_name = () => "WebAudio.nodesConnected";
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -22099,6 +22725,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that AudioNodes are disconnected. The destination can be null, and it means all the outgoing connections from the source are disconnected. */
     module NodesDisconnected = {
+      let get_method_name = () => "WebAudio.nodesDisconnected";
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -22121,6 +22749,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that an AudioNode is connected to an AudioParam. */
     module NodeParamConnected = {
+      let get_method_name = () => "WebAudio.nodeParamConnected";
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -22141,6 +22771,8 @@ capacity and glitch may occur. */
     };
     /* Notifies that an AudioNode is disconnected to an AudioParam. */
     module NodeParamDisconnected = {
+      let get_method_name = () => "WebAudio.nodeParamDisconnected";
+
       [@deriving yojson]
       type result = {
         contextId: Types.GraphObjectId.t, /* No description provided */
@@ -22503,6 +23135,8 @@ use this instead. (crbug.com/1068454) */,
     /* This can be called multiple times, and can be used to set / override /
        remove player properties. A null propValue indicates removal. */
     module PlayerPropertiesChanged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         playerId: Types.PlayerId.t, /* No description provided */
@@ -22521,6 +23155,8 @@ use this instead. (crbug.com/1068454) */,
     /* Send events as a list, allowing them to be batched on the browser for less
        congestion. If batched, events must ALWAYS be in chronological order. */
     module PlayerEventsAdded: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         playerId: Types.PlayerId.t, /* No description provided */
@@ -22538,6 +23174,8 @@ use this instead. (crbug.com/1068454) */,
     };
     /* Send a list of any messages that need to be delivered. */
     module PlayerMessagesLogged: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         playerId: Types.PlayerId.t, /* No description provided */
@@ -22555,6 +23193,8 @@ use this instead. (crbug.com/1068454) */,
     };
     /* Send a list of any errors that need to be delivered. */
     module PlayerErrorsRaised: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         playerId: Types.PlayerId.t, /* No description provided */
@@ -22574,6 +23214,8 @@ use this instead. (crbug.com/1068454) */,
        a list of active players. If an agent is restored, it will receive the full
        list of player ids and all events again. */
     module PlayersCreated: {
+      let get_method_name: unit => string;
+
       [@deriving yojson]
       type result = {
         players: array(Types.PlayerId.t) /* No description provided */,
@@ -22760,6 +23402,8 @@ use this instead. (crbug.com/1068454) */,
     /* This can be called multiple times, and can be used to set / override /
        remove player properties. A null propValue indicates removal. */
     module PlayerPropertiesChanged = {
+      let get_method_name = () => "Media.playerPropertiesChanged";
+
       [@deriving yojson]
       type result = {
         playerId: Types.PlayerId.t, /* No description provided */
@@ -22778,6 +23422,8 @@ use this instead. (crbug.com/1068454) */,
     /* Send events as a list, allowing them to be batched on the browser for less
        congestion. If batched, events must ALWAYS be in chronological order. */
     module PlayerEventsAdded = {
+      let get_method_name = () => "Media.playerEventsAdded";
+
       [@deriving yojson]
       type result = {
         playerId: Types.PlayerId.t, /* No description provided */
@@ -22795,6 +23441,8 @@ use this instead. (crbug.com/1068454) */,
     };
     /* Send a list of any messages that need to be delivered. */
     module PlayerMessagesLogged = {
+      let get_method_name = () => "Media.playerMessagesLogged";
+
       [@deriving yojson]
       type result = {
         playerId: Types.PlayerId.t, /* No description provided */
@@ -22812,6 +23460,8 @@ use this instead. (crbug.com/1068454) */,
     };
     /* Send a list of any errors that need to be delivered. */
     module PlayerErrorsRaised = {
+      let get_method_name = () => "Media.playerErrorsRaised";
+
       [@deriving yojson]
       type result = {
         playerId: Types.PlayerId.t, /* No description provided */
@@ -22831,6 +23481,8 @@ use this instead. (crbug.com/1068454) */,
        a list of active players. If an agent is restored, it will receive the full
        list of player ids and all events again. */
     module PlayersCreated = {
+      let get_method_name = () => "Media.playersCreated";
+
       [@deriving yojson]
       type result = {
         players: array(Types.PlayerId.t) /* No description provided */,
