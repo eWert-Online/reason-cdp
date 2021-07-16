@@ -10,7 +10,8 @@ let get_file_contents = filename => {
   data;
 };
 
-let rec map_type = (~key="type", ~in_types, typ) => {
+let rec map_type =
+        (~key="type", ~additional_ref_path_segment="", ~in_types, typ) => {
   let prim =
     typ |> Yojson.Basic.Util.member(key) |> Yojson.Basic.Util.to_string;
 
@@ -19,36 +20,26 @@ let rec map_type = (~key="type", ~in_types, typ) => {
   | "number" => "float"
   | "boolean" => "bool"
   | "any" => "string"
-  | "array" => map_array(typ, ~in_types)
-  | "object" => map_object(typ, ~in_types)
+  | "array" => map_array(typ, ~in_types, ~additional_ref_path_segment)
+  | "object" => map_object(typ, ~in_types, ~additional_ref_path_segment)
   | t => t
   };
 }
-and map_ref = (~force_external=false, typ) => {
+and map_ref = (~in_types, ~additional_path_segment="", typ) => {
   let r =
     typ |> Yojson.Basic.Util.member("$ref") |> Yojson.Basic.Util.to_string;
 
   let has_path = String.contains(r, '.');
 
-  let is_exteral = force_external || has_path;
-
-  if (is_exteral && has_path) {
-    let l = r |> String.split_on_char('.');
-    let head = l |> List.hd;
-    let r =
-      l
-      |> List.tl
-      |> List.append(["Types"])
-      |> List.append([head])
-      |> String.concat(".");
-    r ++ ".t";
-  } else if (is_exteral) {
+  if (!in_types && has_path) {
     "Types." ++ r ++ ".t";
+  } else if (!in_types) {
+    "Types." ++ additional_path_segment ++ r ++ ".t";
   } else {
-    r ++ ".t";
+    additional_path_segment ++ r ++ ".t";
   };
 }
-and map_array = (typ, ~in_types) => {
+and map_array = (~additional_ref_path_segment="", typ, ~in_types) => {
   let prim =
     typ
     |> Yojson.Basic.Util.member("items")
@@ -68,18 +59,24 @@ and map_array = (typ, ~in_types) => {
     failwith("Unexpected array value: both type and $ref present")
   | (Some(_prim), None) =>
     "array("
-    ++ map_type(typ |> Yojson.Basic.Util.member("items"), ~in_types)
+    ++ map_type(
+         typ |> Yojson.Basic.Util.member("items"),
+         ~in_types,
+         ~additional_ref_path_segment,
+       )
     ++ ")"
   | (None, Some(_reference)) =>
     "array("
     ++ map_ref(
          typ |> Yojson.Basic.Util.member("items"),
-         ~force_external=!in_types,
+         ~in_types,
+         ~additional_path_segment=additional_ref_path_segment,
        )
     ++ ")"
   };
 }
-and map_object = (~key="properties", ~in_types, typ) => {
+and map_object =
+    (~key="properties", ~additional_ref_path_segment="", ~in_types, typ) => {
   let properties =
     typ
     |> Yojson.Basic.Util.member(key)
@@ -132,9 +129,14 @@ and map_object = (~key="properties", ~in_types, typ) => {
                failwith(
                  "Unexpected object property value: both type and $ref present",
                )
-             | (Some(_prim), None) => map_type(prop, ~in_types)
+             | (Some(_prim), None) =>
+               map_type(prop, ~in_types, ~additional_ref_path_segment)
              | (None, Some(_reference)) =>
-               map_ref(prop, ~force_external=!in_types)
+               map_ref(
+                 prop,
+                 ~in_types,
+                 ~additional_path_segment=additional_ref_path_segment,
+               )
              };
 
            if (optional) {
@@ -153,7 +155,7 @@ and map_object = (~key="properties", ~in_types, typ) => {
     |> Option.map(String.concat("\n"));
 
   switch (properties) {
-  | None => "assoc"
+  | None => in_types ? "assoc" : "Types.assoc"
   | Some(p) => "{" ++ p ++ "}"
   };
 };
@@ -210,33 +212,20 @@ let get_event = (~domain, event) => {
 
   let result =
     switch (parameters) {
-    | None => "empty"
-    | Some(_) => map_object(event, ~key="parameters", ~in_types=false)
+    | None => "Types.empty"
+    | Some(_) =>
+      map_object(
+        event,
+        ~key="parameters",
+        ~in_types=false,
+        ~additional_ref_path_segment=domain ++ ".",
+      )
     };
-
-  let signature = [
-    "/* " ++ description ++ " */",
-    "module " ++ module_name ++ ": {",
-    "  let get_method_name: unit => string;",
-    "",
-    "  [@deriving yojson]",
-    "  type result = " ++ result ++ ";",
-    "",
-    "  [@deriving yojson]",
-    "  type t = {",
-    "    method: string,",
-    "    params: result,",
-    "    sessionId: Target.Types.SessionID.t,",
-    "  };",
-    "",
-    "  let parse: string => t;",
-    "};",
-  ];
 
   let content = [
     "/* " ++ description ++ " */",
     "module " ++ module_name ++ " = {",
-    "  let get_method_name = () => \"" ++ key ++ "\";",
+    "  let name = \"" ++ key ++ "\";",
     "",
     "  [@deriving yojson]",
     "  type result = " ++ result ++ ";",
@@ -245,14 +234,89 @@ let get_event = (~domain, event) => {
     "  type t = {",
     "    method: string,",
     "    params: result,",
-    "    sessionId: Target.Types.SessionID.t,",
+    "    sessionId: Types.Target.SessionID.t,",
     "  };",
     "",
     "  let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;",
     "};",
   ];
 
-  (String.concat("\n", signature), String.concat("\n", content));
+  String.concat("\n", content);
+};
+
+let get_command = (~domain, command) => {
+  let name =
+    command |> Yojson.Basic.Util.member("name") |> Yojson.Basic.Util.to_string;
+
+  let description =
+    command
+    |> Yojson.Basic.Util.member("description")
+    |> Yojson.Basic.Util.to_string_option
+    |> Option.value(~default="No description provided");
+
+  let parameters =
+    command
+    |> Yojson.Basic.Util.member("parameters")
+    |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list);
+
+  let module_name = name |> String.capitalize_ascii;
+
+  let key = domain ++ "." ++ name;
+
+  let params =
+    switch (parameters) {
+    | None => "Types.empty"
+    | Some(_) =>
+      map_object(
+        command,
+        ~key="parameters",
+        ~in_types=false,
+        ~additional_ref_path_segment=domain ++ ".",
+      )
+    };
+
+  let result =
+    map_object(
+      command,
+      ~key="returns",
+      ~in_types=false,
+      ~additional_ref_path_segment=domain ++ ".",
+    );
+
+  let content = [
+    "/* " ++ description ++ " */",
+    "module " ++ module_name ++ " = {",
+    "  let name = \"" ++ key ++ "\";",
+    "",
+    "  [@deriving yojson]",
+    "  type params = " ++ params ++ ";",
+    "",
+    "  [@deriving yojson]",
+    "  type result = " ++ result ++ ";",
+    "",
+    "  [@deriving yojson]",
+    "  type request = {",
+    "    id: int,",
+    "    [@yojson.option]",
+    "    sessionId: option(Types.Target.SessionID.t),",
+    "    method: string,",
+    "    params,",
+    "  };",
+    "",
+    "  [@deriving yojson]",
+    "  type response = {",
+    "    id: int,",
+    "    [@yojson.option]",
+    "    sessionId: option(Types.Target.SessionID.t),",
+    "    result: result,",
+    "  };",
+    "",
+    "  let parse = response => response |> Yojson.Safe.from_string |> response_of_yojson;",
+    "",
+    "};",
+  ];
+
+  String.concat("\n", content);
 };
 
 let main = (path, output) => {
@@ -262,14 +326,24 @@ let main = (path, output) => {
     |> Yojson.Basic.Util.member("domains")
     |> Yojson.Basic.Util.to_list;
 
-  let path = Filename.concat(output, "CDP.re");
-  FileUtil.rm([path]);
-  FileUtil.touch(path);
+  let path_types = Filename.concat(output, "Types.re");
+  let path_events = Filename.concat(output, "Events.re");
+  let path_commands = Filename.concat(output, "Commands.re");
+  FileUtil.rm([path_types, path_events, path_commands]);
 
-  let out_channel = open_out_bin(path);
-  let write = s => output_string(out_channel, s ++ "\n");
+  FileUtil.touch(path_types);
+  let out_types = open_out_bin(path_types);
+  let write_types = s => output_string(out_types, s ++ "\n");
 
-  write(
+  FileUtil.touch(path_events);
+  let out_events = open_out_bin(path_events);
+  let write_events = s => output_string(out_events, s ++ "\n");
+
+  FileUtil.touch(path_commands);
+  let out_commands = open_out_bin(path_commands);
+  let write_commands = s => output_string(out_commands, s ++ "\n");
+
+  write_types(
     {ct|
       [@deriving yojson]
       type empty;
@@ -297,65 +371,50 @@ let main = (path, output) => {
         |> Yojson.Basic.Util.member("domain")
         |> Yojson.Basic.Util.to_string;
 
-      let (types_s, types_b) =
-        domain
-        |> Yojson.Basic.Util.member("types")
-        |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list)
-        |> Option.map(List.map(get_type))
-        |> Option.map(t => {
-             let (s, b) = List.split(t);
-             (String.concat("\n and ", s), String.concat("\n and ", b));
-           })
-        |> (
-          fun
-          | None => ("", "")
-          | Some((s, b)) => (
-              "module Types: { module rec " ++ s ++ "};",
-              "module Types: { module rec "
-              ++ s
-              ++ "} = { module rec "
-              ++ b
-              ++ " };",
-            )
-        );
+      print_endline("Writing Types: " ++ name);
 
-      let (events_s, events_b) =
-        domain
-        |> Yojson.Basic.Util.member("events")
-        |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list)
-        |> Option.map(List.map(get_event(~domain=name)))
-        |> Option.map(t => {
-             let (s, b) = List.split(t);
-             (String.concat("\n", s), String.concat("\n", b));
-           })
-        |> (
-          fun
-          | None => ("", "")
-          | Some((s, b)) => (
-              "module Events: {" ++ s ++ "};",
-              "module Events = {" ++ b ++ "};",
-            )
-        );
+      domain
+      |> Yojson.Basic.Util.member("types")
+      |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list)
+      |> Option.map(List.map(get_type))
+      |> Option.iter(t => {
+           let (s, b) = List.split(t);
+           let s = "module rec " ++ String.concat("\n and ", s);
+           let b = "module rec " ++ String.concat("\n and ", b);
+           if (i == 0) {
+             write_types(
+               "module rec " ++ name ++ ": {" ++ s ++ "} = {" ++ b ++ "}",
+             );
+           } else {
+             write_types(
+               " and " ++ name ++ ": {" ++ s ++ "} = {" ++ b ++ "}",
+             );
+           };
+         });
 
-      print_endline("Writing " ++ name);
+      print_endline("Writing Events: " ++ name);
 
-      let signature = String.concat("\n\n", [types_s, events_s]);
-      let body = String.concat("\n\n", [types_b, events_b]);
+      domain
+      |> Yojson.Basic.Util.member("events")
+      |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list)
+      |> Option.map(List.map(get_event(~domain=name)))
+      |> Option.iter(b => {
+           write_events(
+             "module " ++ name ++ " {" ++ String.concat("\n", b) ++ "};",
+           )
+         });
 
-      let module_definition =
-        if (i == 0) {
-          String.concat(
-            "\n",
-            ["module rec " ++ name ++ ": {", signature, "} = {", body, "}"],
-          );
-        } else {
-          String.concat(
-            "\n",
-            [" and " ++ name ++ ": {", signature, "} = {", body, "}"],
-          );
-        };
+      print_endline("Writing Commands: " ++ name);
 
-      write(module_definition);
+      domain
+      |> Yojson.Basic.Util.member("commands")
+      |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list)
+      |> Option.map(List.map(get_command(~domain=name)))
+      |> Option.iter(b => {
+           write_commands(
+             "module " ++ name ++ " {" ++ String.concat("\n", b) ++ "};",
+           )
+         });
     },
     domains,
   );

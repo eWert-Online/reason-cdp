@@ -24,9 +24,9 @@
     "buildDev": "dune build --promote-install-files --root . --only-package reason-cdp"
   },
   "scripts": {
-    "c": "rm ./lib/CDP.re",
+    "c": "rm ./lib/Types.re ./lib/Events.re ./lib/Commands.re",
     "gen": "esy x cdp ./bin/protocol.json ./lib",
-    "fmt": "esy refmt --in-place ./lib/CDP.re"
+    "fmt": "esy refmt --in-place ./lib/Types.re ./lib/Events.re ./lib/Commands.re"
   },
   "dependencies": {
     "@opam/cmdliner": "1.0.4",
