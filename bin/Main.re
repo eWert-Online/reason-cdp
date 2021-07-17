@@ -58,7 +58,7 @@ and map_array = (~additional_ref_path_segment="", typ, ~in_types) => {
   | (Some(_), Some(_)) =>
     failwith("Unexpected array value: both type and $ref present")
   | (Some(_prim), None) =>
-    "array("
+    "list("
     ++ map_type(
          typ |> Yojson.Basic.Util.member("items"),
          ~in_types,
@@ -66,7 +66,7 @@ and map_array = (~additional_ref_path_segment="", typ, ~in_types) => {
        )
     ++ ")"
   | (None, Some(_reference)) =>
-    "array("
+    "list("
     ++ map_ref(
          typ |> Yojson.Basic.Util.member("items"),
          ~in_types,
@@ -254,7 +254,7 @@ let get_command = (~domain, command) => {
     |> Yojson.Basic.Util.to_string_option
     |> Option.value(~default="No description provided");
 
-  let parameters =
+  let params =
     command
     |> Yojson.Basic.Util.member("parameters")
     |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list);
@@ -262,18 +262,6 @@ let get_command = (~domain, command) => {
   let module_name = name |> String.capitalize_ascii;
 
   let key = domain ++ "." ++ name;
-
-  let params =
-    switch (parameters) {
-    | None => "Types.empty"
-    | Some(_) =>
-      map_object(
-        command,
-        ~key="parameters",
-        ~in_types=false,
-        ~additional_ref_path_segment=domain ++ ".",
-      )
-    };
 
   let result =
     map_object(
@@ -284,36 +272,144 @@ let get_command = (~domain, command) => {
     );
 
   let content = [
-    "/* " ++ description ++ " */",
-    "module " ++ module_name ++ " = {",
-    "  let name = \"" ++ key ++ "\";",
-    "",
-    "  [@deriving yojson]",
-    "  type params = " ++ params ++ ";",
-    "",
-    "  [@deriving yojson]",
-    "  type result = " ++ result ++ ";",
-    "",
-    "  [@deriving yojson]",
-    "  type request = {",
-    "    id: int,",
-    "    [@yojson.option]",
-    "    sessionId: option(Types.Target.SessionID.t),",
-    "    method: string,",
-    "    params,",
-    "  };",
-    "",
-    "  [@deriving yojson]",
-    "  type response = {",
-    "    id: int,",
-    "    [@yojson.option]",
-    "    sessionId: option(Types.Target.SessionID.t),",
-    "    result: result,",
-    "  };",
-    "",
-    "  let parse = response => response |> Yojson.Safe.from_string |> response_of_yojson;",
-    "",
-    "};",
+    "/* " ++ description ++ " */                                              ",
+    "module " ++ module_name ++ " = {                                         ",
+    "                                                                         ",
+    "  module Response: {                                                     ",
+    "    type result = " ++ result ++ ";                                      ",
+    "                                                                         ",
+    "    type t = {                                                           ",
+    "      id: int,                                                           ",
+    "      sessionId: option(Types.Target.SessionID.t),                       ",
+    "      result: result,                                                    ",
+    "    };                                                                   ",
+    "                                                                         ",
+    "    let parse: string => t;                                              ",
+    "  } = {                                                                  ",
+    "    [@deriving yojson]                                                   ",
+    "    type result = " ++ result ++ ";                                      ",
+    "                                                                         ",
+    "    [@deriving yojson]                                                   ",
+    "    type t = {                                                           ",
+    "      id: int,                                                           ",
+    "      [@yojson.option]                                                   ",
+    "      sessionId: option(Types.Target.SessionID.t),                       ",
+    "      result: result,                                                    ",
+    "    };                                                                   ",
+    "                                                                         ",
+    "    let parse = response => {                                            ",
+    "      response |> Yojson.Safe.from_string |> t_of_yojson;                ",
+    "    };                                                                   ",
+    "  };                                                                     ",
+    "                                                                         ",
+    switch (params) {
+    | None => ""
+    | Some(_) =>
+      let args =
+        switch (params) {
+        | None => ""
+        | Some(params) =>
+          params
+          |> List.map(param => {
+               let name =
+                 param
+                 |> Yojson.Basic.Util.member("name")
+                 |> Yojson.Basic.Util.to_string
+                 |> (
+                   fun
+                   | "type" => "type_"
+                   | "object" => "object_"
+                   | "end" => "end_"
+                   | "exception" => "exception_"
+                   | "done" => "done_"
+                   | t => t
+                 );
+
+               let optional =
+                 param
+                 |> Yojson.Basic.Util.member("optional")
+                 |> Yojson.Basic.Util.to_bool_option
+                 |> Option.value(~default=false);
+
+               if (optional) {
+                 "~" ++ name ++ "=?,";
+               } else {
+                 "~" ++ name ++ ",";
+               };
+             })
+          |> String.concat("\n")
+        };
+      String.concat(
+        "",
+        [
+          "  module Params = {                                                ",
+          "    [@deriving yojson]                                             ",
+          "    type t =                                                       ",
+          map_object(
+            ~in_types=false,
+            ~key="parameters",
+            ~additional_ref_path_segment=domain ++ ".",
+            command,
+          ),
+          "                                                                   ",
+          "    let make = (" ++ args ++ " ()) => {                           ",
+          switch (params) {
+          | None => ""
+          | Some(params) =>
+            "{"
+            ++ (
+              params
+              |> List.map(param => {
+                   let name =
+                     param
+                     |> Yojson.Basic.Util.member("name")
+                     |> Yojson.Basic.Util.to_string
+                     |> (
+                       fun
+                       | "type" => "type_"
+                       | "object" => "object_"
+                       | "end" => "end_"
+                       | "exception" => "exception_"
+                       | "done" => "done_"
+                       | t => t
+                     );
+
+                   name ++ ": " ++ name;
+                 })
+              |> String.concat(",")
+            )
+            ++ "}"
+          },
+          "    };                                                             ",
+          "  };                                                               ",
+        ],
+      );
+    },
+    "                                                                         ",
+    "  module Request = {                                                     ",
+    "    [@deriving yojson]                                                   ",
+    "    type t = {                                                           ",
+    "      id: int,                                                           ",
+    "      [@yojson.option]                                                   ",
+    "      sessionId: option(Types.Target.SessionID.t),                       ",
+    "      method: string,                                                    ",
+    Option.is_some(params) ? "params: Params.t," : "",
+    "    };                                                                   ",
+    "                                                                         ",
+    "    let make = (                                                         ",
+    "      ~sessionId=?,                                                      ",
+    Option.is_some(params) ? "~params," : "",
+    "      id                                                                 ",
+    "    ) => {                                                               ",
+    "      ({                                                                 ",
+    "        id: id,                                                          ",
+    "        method: \"" ++ key ++ "\",                                       ",
+    "        sessionId,                                                       ",
+    Option.is_some(params) ? "params," : "",
+    "      }) |> yojson_of_t |> Yojson.Safe.to_string;                        ",
+    "    };                                                                   ",
+    "  };                                                                     ",
+    "};                                                                       ",
   ];
 
   String.concat("\n", content);

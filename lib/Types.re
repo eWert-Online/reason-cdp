@@ -88,9 +88,9 @@ module rec Accessibility: {
       [@yojson.option]
       value: option(string), /* The computed value of this property. */
       [@yojson.option]
-      relatedNodes: option(array(AXRelatedNode.t)), /* One or more related nodes, if applicable. */
+      relatedNodes: option(list(AXRelatedNode.t)), /* One or more related nodes, if applicable. */
       [@yojson.option]
-      sources: option(array(AXValueSource.t)) /* The sources which contributed to the computation of this property. */,
+      sources: option(list(AXValueSource.t)) /* The sources which contributed to the computation of this property. */,
     };
   }
   and AXPropertyName: {
@@ -110,7 +110,7 @@ module rec Accessibility: {
       nodeId: AXNodeId.t, /* Unique identifier for this node. */
       ignored: bool, /* Whether this node is ignored for accessibility */
       [@yojson.option]
-      ignoredReasons: option(array(AXProperty.t)), /* Collection of reasons why this node is hidden. */
+      ignoredReasons: option(list(AXProperty.t)), /* Collection of reasons why this node is hidden. */
       [@yojson.option]
       role: option(AXValue.t), /* This `Node`'s role, whether explicit or implicit. */
       [@yojson.option]
@@ -120,9 +120,9 @@ module rec Accessibility: {
       [@yojson.option]
       value: option(AXValue.t), /* The value for this `Node`. */
       [@yojson.option]
-      properties: option(array(AXProperty.t)), /* All other properties */
+      properties: option(list(AXProperty.t)), /* All other properties */
       [@yojson.option]
-      childIds: option(array(AXNodeId.t)), /* IDs for each of this node's child nodes. */
+      childIds: option(list(AXNodeId.t)), /* IDs for each of this node's child nodes. */
       [@yojson.option]
       backendDOMNodeId: option(DOM.BackendNodeId.t) /* The backend ID for the associated DOM node, if any. */,
     };
@@ -256,9 +256,9 @@ module rec Accessibility: {
       [@yojson.option]
       value: option(string), /* The computed value of this property. */
       [@yojson.option]
-      relatedNodes: option(array(AXRelatedNode.t)), /* One or more related nodes, if applicable. */
+      relatedNodes: option(list(AXRelatedNode.t)), /* One or more related nodes, if applicable. */
       [@yojson.option]
-      sources: option(array(AXValueSource.t)) /* The sources which contributed to the computation of this property. */,
+      sources: option(list(AXValueSource.t)) /* The sources which contributed to the computation of this property. */,
     };
   } = {
     /* A single computed AX property. */
@@ -269,9 +269,9 @@ module rec Accessibility: {
       [@yojson.option]
       value: option(string), /* The computed value of this property. */
       [@yojson.option]
-      relatedNodes: option(array(AXRelatedNode.t)), /* One or more related nodes, if applicable. */
+      relatedNodes: option(list(AXRelatedNode.t)), /* One or more related nodes, if applicable. */
       [@yojson.option]
-      sources: option(array(AXValueSource.t)) /* The sources which contributed to the computation of this property. */,
+      sources: option(list(AXValueSource.t)) /* The sources which contributed to the computation of this property. */,
     };
   }
   and AXPropertyName: {
@@ -300,7 +300,7 @@ module rec Accessibility: {
       nodeId: AXNodeId.t, /* Unique identifier for this node. */
       ignored: bool, /* Whether this node is ignored for accessibility */
       [@yojson.option]
-      ignoredReasons: option(array(AXProperty.t)), /* Collection of reasons why this node is hidden. */
+      ignoredReasons: option(list(AXProperty.t)), /* Collection of reasons why this node is hidden. */
       [@yojson.option]
       role: option(AXValue.t), /* This `Node`'s role, whether explicit or implicit. */
       [@yojson.option]
@@ -310,9 +310,9 @@ module rec Accessibility: {
       [@yojson.option]
       value: option(AXValue.t), /* The value for this `Node`. */
       [@yojson.option]
-      properties: option(array(AXProperty.t)), /* All other properties */
+      properties: option(list(AXProperty.t)), /* All other properties */
       [@yojson.option]
-      childIds: option(array(AXNodeId.t)), /* IDs for each of this node's child nodes. */
+      childIds: option(list(AXNodeId.t)), /* IDs for each of this node's child nodes. */
       [@yojson.option]
       backendDOMNodeId: option(DOM.BackendNodeId.t) /* The backend ID for the associated DOM node, if any. */,
     };
@@ -323,7 +323,7 @@ module rec Accessibility: {
       nodeId: AXNodeId.t, /* Unique identifier for this node. */
       ignored: bool, /* Whether this node is ignored for accessibility */
       [@yojson.option]
-      ignoredReasons: option(array(AXProperty.t)), /* Collection of reasons why this node is hidden. */
+      ignoredReasons: option(list(AXProperty.t)), /* Collection of reasons why this node is hidden. */
       [@yojson.option]
       role: option(AXValue.t), /* This `Node`'s role, whether explicit or implicit. */
       [@yojson.option]
@@ -333,9 +333,9 @@ module rec Accessibility: {
       [@yojson.option]
       value: option(AXValue.t), /* The value for this `Node`. */
       [@yojson.option]
-      properties: option(array(AXProperty.t)), /* All other properties */
+      properties: option(list(AXProperty.t)), /* All other properties */
       [@yojson.option]
-      childIds: option(array(AXNodeId.t)), /* IDs for each of this node's child nodes. */
+      childIds: option(list(AXNodeId.t)), /* IDs for each of this node's child nodes. */
       [@yojson.option]
       backendDOMNodeId: option(DOM.BackendNodeId.t) /* The backend ID for the associated DOM node, if any. */,
     };
@@ -386,7 +386,7 @@ animation/transition. */,
     type t = {
       [@yojson.option]
       name: option(string), /* CSS keyframed animation's name. */
-      keyframes: array(KeyframeStyle.t) /* List of animation keyframes. */,
+      keyframes: list(KeyframeStyle.t) /* List of animation keyframes. */,
     };
   }
   and KeyframeStyle: {
@@ -478,7 +478,7 @@ animation/transition. */,
     type t = {
       [@yojson.option]
       name: option(string), /* CSS keyframed animation's name. */
-      keyframes: array(KeyframeStyle.t) /* List of animation keyframes. */,
+      keyframes: list(KeyframeStyle.t) /* List of animation keyframes. */,
     };
   } = {
     /* Keyframes Rule */
@@ -486,7 +486,7 @@ animation/transition. */,
     type t = {
       [@yojson.option]
       name: option(string), /* CSS keyframed animation's name. */
-      keyframes: array(KeyframeStyle.t) /* List of animation keyframes. */,
+      keyframes: list(KeyframeStyle.t) /* List of animation keyframes. */,
     };
   }
   and KeyframeStyle: {
@@ -524,7 +524,7 @@ and ApplicationCache: {
       size: float, /* Application cache size. */
       creationTime: float, /* Application cache creation time. */
       updateTime: float, /* Application cache update time. */
-      resources: array(ApplicationCacheResource.t) /* Application cache resources. */,
+      resources: list(ApplicationCacheResource.t) /* Application cache resources. */,
     };
   }
   and FrameWithManifest: {
@@ -564,7 +564,7 @@ and ApplicationCache: {
       size: float, /* Application cache size. */
       creationTime: float, /* Application cache creation time. */
       updateTime: float, /* Application cache update time. */
-      resources: array(ApplicationCacheResource.t) /* Application cache resources. */,
+      resources: list(ApplicationCacheResource.t) /* Application cache resources. */,
     };
   } = {
     /* Detailed application cache information. */
@@ -574,7 +574,7 @@ and ApplicationCache: {
       size: float, /* Application cache size. */
       creationTime: float, /* Application cache creation time. */
       updateTime: float, /* Application cache update time. */
-      resources: array(ApplicationCacheResource.t) /* Application cache resources. */,
+      resources: list(ApplicationCacheResource.t) /* Application cache resources. */,
     };
   }
   and FrameWithManifest: {
@@ -641,8 +641,8 @@ and Audits: {
     [@deriving yojson]
     type t = {
       cookie: AffectedCookie.t, /* No description provided */
-      cookieWarningReasons: array(SameSiteCookieWarningReason.t), /* No description provided */
-      cookieExclusionReasons: array(SameSiteCookieExclusionReason.t), /* No description provided */
+      cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
+      cookieExclusionReasons: list(SameSiteCookieExclusionReason.t), /* No description provided */
       operation: SameSiteCookieOperation.t, /* Optionally identifies the site-for-cookies and the cookie url, which
 may be used by the front-end as additional context. */
       [@yojson.option]
@@ -981,8 +981,8 @@ instead of "limited-quirks". */
     [@deriving yojson]
     type t = {
       cookie: AffectedCookie.t, /* No description provided */
-      cookieWarningReasons: array(SameSiteCookieWarningReason.t), /* No description provided */
-      cookieExclusionReasons: array(SameSiteCookieExclusionReason.t), /* No description provided */
+      cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
+      cookieExclusionReasons: list(SameSiteCookieExclusionReason.t), /* No description provided */
       operation: SameSiteCookieOperation.t, /* Optionally identifies the site-for-cookies and the cookie url, which
 may be used by the front-end as additional context. */
       [@yojson.option]
@@ -999,8 +999,8 @@ may be used by the front-end as additional context. */
     [@deriving yojson]
     type t = {
       cookie: AffectedCookie.t, /* No description provided */
-      cookieWarningReasons: array(SameSiteCookieWarningReason.t), /* No description provided */
-      cookieExclusionReasons: array(SameSiteCookieExclusionReason.t), /* No description provided */
+      cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
+      cookieExclusionReasons: list(SameSiteCookieExclusionReason.t), /* No description provided */
       operation: SameSiteCookieOperation.t, /* Optionally identifies the site-for-cookies and the cookie url, which
 may be used by the front-end as additional context. */
       [@yojson.option]
@@ -1515,7 +1515,7 @@ and BackgroundService: {
       service: ServiceName.t, /* The Background Service this event belongs to. */
       eventName: string, /* A description of the event. */
       instanceId: string, /* An identifier that groups related events together. */
-      eventMetadata: array(EventMetadata.t) /* A list of event-specific information. */,
+      eventMetadata: list(EventMetadata.t) /* A list of event-specific information. */,
     };
   };
 } = {
@@ -1557,7 +1557,7 @@ and BackgroundService: {
       service: ServiceName.t, /* The Background Service this event belongs to. */
       eventName: string, /* A description of the event. */
       instanceId: string, /* An identifier that groups related events together. */
-      eventMetadata: array(EventMetadata.t) /* A list of event-specific information. */,
+      eventMetadata: list(EventMetadata.t) /* A list of event-specific information. */,
     };
   } = {
     /* No description provided */
@@ -1569,7 +1569,7 @@ and BackgroundService: {
       service: ServiceName.t, /* The Background Service this event belongs to. */
       eventName: string, /* A description of the event. */
       instanceId: string, /* An identifier that groups related events together. */
-      eventMetadata: array(EventMetadata.t) /* A list of event-specific information. */,
+      eventMetadata: list(EventMetadata.t) /* A list of event-specific information. */,
     };
   };
 }
@@ -1654,7 +1654,7 @@ Note that userVisibleOnly = true is the only currently supported type. */
       name: string, /* Name. */
       sum: float, /* Sum of sample values. */
       count: float, /* Total number of samples. */
-      buckets: array(Bucket.t) /* Buckets. */,
+      buckets: list(Bucket.t) /* Buckets. */,
     };
   };
 } = {
@@ -1802,7 +1802,7 @@ Note that userVisibleOnly = true is the only currently supported type. */
       name: string, /* Name. */
       sum: float, /* Sum of sample values. */
       count: float, /* Total number of samples. */
-      buckets: array(Bucket.t) /* Buckets. */,
+      buckets: list(Bucket.t) /* Buckets. */,
     };
   } = {
     /* Chrome histogram. */
@@ -1811,7 +1811,7 @@ Note that userVisibleOnly = true is the only currently supported type. */
       name: string, /* Name. */
       sum: float, /* Sum of sample values. */
       count: float, /* Total number of samples. */
-      buckets: array(Bucket.t) /* Buckets. */,
+      buckets: list(Bucket.t) /* Buckets. */,
     };
   };
 }
@@ -1833,7 +1833,7 @@ and CSS: {
     [@deriving yojson]
     type t = {
       pseudoType: DOM.PseudoType.t, /* Pseudo element type. */
-      matches: array(RuleMatch.t) /* Matches of CSS rules applicable to the pseudo style. */,
+      matches: list(RuleMatch.t) /* Matches of CSS rules applicable to the pseudo style. */,
     };
   }
   and InheritedStyleEntry: {
@@ -1842,7 +1842,7 @@ and CSS: {
     type t = {
       [@yojson.option]
       inlineStyle: option(CSSStyle.t), /* The ancestor node's inline style, if any, in the style inheritance chain. */
-      matchedCSSRules: array(RuleMatch.t) /* Matches of CSS rules matching the ancestor node in the style inheritance chain. */,
+      matchedCSSRules: list(RuleMatch.t) /* Matches of CSS rules matching the ancestor node in the style inheritance chain. */,
     };
   }
   and RuleMatch: {
@@ -1850,7 +1850,7 @@ and CSS: {
     [@deriving yojson]
     type t = {
       rule: CSSRule.t, /* CSS rule in the match. */
-      matchingSelectors: array(float) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
+      matchingSelectors: list(float) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
     };
   }
   and Value: {
@@ -1866,7 +1866,7 @@ and CSS: {
     /* Selector list data. */
     [@deriving yojson]
     type t = {
-      selectors: array(Value.t), /* Selectors in the list. */
+      selectors: list(Value.t), /* Selectors in the list. */
       text: string /* Rule selector text. */,
     };
   }
@@ -1911,7 +1911,7 @@ stylesheet rules) this rule came from. */
       origin: StyleSheetOrigin.t, /* Parent stylesheet's origin. */
       style: CSSStyle.t, /* Associated style declaration. */
       [@yojson.option]
-      media: option(array(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
+      media: option(list(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
 starting with the innermost one, going outwards. */,
     };
   }
@@ -1961,8 +1961,8 @@ stylesheet rules) this rule came from. */
       [@yojson.option]
       styleSheetId: option(StyleSheetId.t), /* The css style sheet identifier (absent for user agent stylesheet and user-specified
 stylesheet rules) this rule came from. */
-      cssProperties: array(CSSProperty.t), /* CSS properties in the style. */
-      shorthandEntries: array(ShorthandEntry.t), /* Computed values for all shorthands found in the style. */
+      cssProperties: list(CSSProperty.t), /* CSS properties in the style. */
+      shorthandEntries: list(ShorthandEntry.t), /* Computed values for all shorthands found in the style. */
       [@yojson.option]
       cssText: option(string), /* Style declaration text (if available). */
       [@yojson.option]
@@ -2006,14 +2006,14 @@ available). */
       [@yojson.option]
       styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
       [@yojson.option]
-      mediaList: option(array(MediaQuery.t)) /* Array of media queries. */,
+      mediaList: option(list(MediaQuery.t)) /* Array of media queries. */,
     };
   }
   and MediaQuery: {
     /* Media query descriptor. */
     [@deriving yojson]
     type t = {
-      expressions: array(MediaQueryExpression.t), /* Array of media query expressions. */
+      expressions: list(MediaQueryExpression.t), /* Array of media query expressions. */
       active: bool /* Whether the media query condition is satisfied. */,
     };
   }
@@ -2064,7 +2064,7 @@ available). */
       src: string, /* The src. */
       platformFontFamily: string, /* The resolved platform font family */
       [@yojson.option]
-      fontVariationAxes: option(array(FontVariationAxis.t)) /* Available variation settings (a.k.a. "axes"). */,
+      fontVariationAxes: option(list(FontVariationAxis.t)) /* Available variation settings (a.k.a. "axes"). */,
     };
   }
   and CSSKeyframesRule: {
@@ -2072,7 +2072,7 @@ available). */
     [@deriving yojson]
     type t = {
       animationName: Value.t, /* Animation name. */
-      keyframes: array(CSSKeyframeRule.t) /* List of keyframes. */,
+      keyframes: list(CSSKeyframeRule.t) /* List of keyframes. */,
     };
   }
   and CSSKeyframeRule: {
@@ -2124,14 +2124,14 @@ stylesheet rules) this rule came from. */
     [@deriving yojson]
     type t = {
       pseudoType: DOM.PseudoType.t, /* Pseudo element type. */
-      matches: array(RuleMatch.t) /* Matches of CSS rules applicable to the pseudo style. */,
+      matches: list(RuleMatch.t) /* Matches of CSS rules applicable to the pseudo style. */,
     };
   } = {
     /* CSS rule collection for a single pseudo style. */
     [@deriving yojson]
     type t = {
       pseudoType: DOM.PseudoType.t, /* Pseudo element type. */
-      matches: array(RuleMatch.t) /* Matches of CSS rules applicable to the pseudo style. */,
+      matches: list(RuleMatch.t) /* Matches of CSS rules applicable to the pseudo style. */,
     };
   }
   and InheritedStyleEntry: {
@@ -2140,7 +2140,7 @@ stylesheet rules) this rule came from. */
     type t = {
       [@yojson.option]
       inlineStyle: option(CSSStyle.t), /* The ancestor node's inline style, if any, in the style inheritance chain. */
-      matchedCSSRules: array(RuleMatch.t) /* Matches of CSS rules matching the ancestor node in the style inheritance chain. */,
+      matchedCSSRules: list(RuleMatch.t) /* Matches of CSS rules matching the ancestor node in the style inheritance chain. */,
     };
   } = {
     /* Inherited CSS rule collection from ancestor node. */
@@ -2148,7 +2148,7 @@ stylesheet rules) this rule came from. */
     type t = {
       [@yojson.option]
       inlineStyle: option(CSSStyle.t), /* The ancestor node's inline style, if any, in the style inheritance chain. */
-      matchedCSSRules: array(RuleMatch.t) /* Matches of CSS rules matching the ancestor node in the style inheritance chain. */,
+      matchedCSSRules: list(RuleMatch.t) /* Matches of CSS rules matching the ancestor node in the style inheritance chain. */,
     };
   }
   and RuleMatch: {
@@ -2156,14 +2156,14 @@ stylesheet rules) this rule came from. */
     [@deriving yojson]
     type t = {
       rule: CSSRule.t, /* CSS rule in the match. */
-      matchingSelectors: array(float) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
+      matchingSelectors: list(float) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
     };
   } = {
     /* Match data for a CSS rule. */
     [@deriving yojson]
     type t = {
       rule: CSSRule.t, /* CSS rule in the match. */
-      matchingSelectors: array(float) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
+      matchingSelectors: list(float) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
     };
   }
   and Value: {
@@ -2187,14 +2187,14 @@ stylesheet rules) this rule came from. */
     /* Selector list data. */
     [@deriving yojson]
     type t = {
-      selectors: array(Value.t), /* Selectors in the list. */
+      selectors: list(Value.t), /* Selectors in the list. */
       text: string /* Rule selector text. */,
     };
   } = {
     /* Selector list data. */
     [@deriving yojson]
     type t = {
-      selectors: array(Value.t), /* Selectors in the list. */
+      selectors: list(Value.t), /* Selectors in the list. */
       text: string /* Rule selector text. */,
     };
   }
@@ -2268,7 +2268,7 @@ stylesheet rules) this rule came from. */
       origin: StyleSheetOrigin.t, /* Parent stylesheet's origin. */
       style: CSSStyle.t, /* Associated style declaration. */
       [@yojson.option]
-      media: option(array(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
+      media: option(list(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
 starting with the innermost one, going outwards. */,
     };
   } = {
@@ -2282,7 +2282,7 @@ stylesheet rules) this rule came from. */
       origin: StyleSheetOrigin.t, /* Parent stylesheet's origin. */
       style: CSSStyle.t, /* Associated style declaration. */
       [@yojson.option]
-      media: option(array(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
+      media: option(list(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
 starting with the innermost one, going outwards. */,
     };
   }
@@ -2367,8 +2367,8 @@ stylesheet rules) this rule came from. */
       [@yojson.option]
       styleSheetId: option(StyleSheetId.t), /* The css style sheet identifier (absent for user agent stylesheet and user-specified
 stylesheet rules) this rule came from. */
-      cssProperties: array(CSSProperty.t), /* CSS properties in the style. */
-      shorthandEntries: array(ShorthandEntry.t), /* Computed values for all shorthands found in the style. */
+      cssProperties: list(CSSProperty.t), /* CSS properties in the style. */
+      shorthandEntries: list(ShorthandEntry.t), /* Computed values for all shorthands found in the style. */
       [@yojson.option]
       cssText: option(string), /* Style declaration text (if available). */
       [@yojson.option]
@@ -2381,8 +2381,8 @@ stylesheet rules) this rule came from. */
       [@yojson.option]
       styleSheetId: option(StyleSheetId.t), /* The css style sheet identifier (absent for user agent stylesheet and user-specified
 stylesheet rules) this rule came from. */
-      cssProperties: array(CSSProperty.t), /* CSS properties in the style. */
-      shorthandEntries: array(ShorthandEntry.t), /* Computed values for all shorthands found in the style. */
+      cssProperties: list(CSSProperty.t), /* CSS properties in the style. */
+      shorthandEntries: list(ShorthandEntry.t), /* Computed values for all shorthands found in the style. */
       [@yojson.option]
       cssText: option(string), /* Style declaration text (if available). */
       [@yojson.option]
@@ -2445,7 +2445,7 @@ available). */
       [@yojson.option]
       styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
       [@yojson.option]
-      mediaList: option(array(MediaQuery.t)) /* Array of media queries. */,
+      mediaList: option(list(MediaQuery.t)) /* Array of media queries. */,
     };
   } = {
     /* CSS media rule descriptor. */
@@ -2464,21 +2464,21 @@ available). */
       [@yojson.option]
       styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
       [@yojson.option]
-      mediaList: option(array(MediaQuery.t)) /* Array of media queries. */,
+      mediaList: option(list(MediaQuery.t)) /* Array of media queries. */,
     };
   }
   and MediaQuery: {
     /* Media query descriptor. */
     [@deriving yojson]
     type t = {
-      expressions: array(MediaQueryExpression.t), /* Array of media query expressions. */
+      expressions: list(MediaQueryExpression.t), /* Array of media query expressions. */
       active: bool /* Whether the media query condition is satisfied. */,
     };
   } = {
     /* Media query descriptor. */
     [@deriving yojson]
     type t = {
-      expressions: array(MediaQueryExpression.t), /* Array of media query expressions. */
+      expressions: list(MediaQueryExpression.t), /* Array of media query expressions. */
       active: bool /* Whether the media query condition is satisfied. */,
     };
   }
@@ -2559,7 +2559,7 @@ available). */
       src: string, /* The src. */
       platformFontFamily: string, /* The resolved platform font family */
       [@yojson.option]
-      fontVariationAxes: option(array(FontVariationAxis.t)) /* Available variation settings (a.k.a. "axes"). */,
+      fontVariationAxes: option(list(FontVariationAxis.t)) /* Available variation settings (a.k.a. "axes"). */,
     };
   } = {
     /* Properties of a web font: https://www.w3.org/TR/2008/REC-CSS2-20080411/fonts.html#font-descriptions
@@ -2575,7 +2575,7 @@ available). */
       src: string, /* The src. */
       platformFontFamily: string, /* The resolved platform font family */
       [@yojson.option]
-      fontVariationAxes: option(array(FontVariationAxis.t)) /* Available variation settings (a.k.a. "axes"). */,
+      fontVariationAxes: option(list(FontVariationAxis.t)) /* Available variation settings (a.k.a. "axes"). */,
     };
   }
   and CSSKeyframesRule: {
@@ -2583,14 +2583,14 @@ available). */
     [@deriving yojson]
     type t = {
       animationName: Value.t, /* Animation name. */
-      keyframes: array(CSSKeyframeRule.t) /* List of keyframes. */,
+      keyframes: list(CSSKeyframeRule.t) /* List of keyframes. */,
     };
   } = {
     /* CSS keyframes rule representation. */
     [@deriving yojson]
     type t = {
       animationName: Value.t, /* Animation name. */
-      keyframes: array(CSSKeyframeRule.t) /* List of keyframes. */,
+      keyframes: list(CSSKeyframeRule.t) /* List of keyframes. */,
     };
   }
   and CSSKeyframeRule: {
@@ -2651,12 +2651,12 @@ and CacheStorage: {
     type t = {
       requestURL: string, /* Request URL. */
       requestMethod: string, /* Request method. */
-      requestHeaders: array(Header.t), /* Request headers */
+      requestHeaders: list(Header.t), /* Request headers */
       responseTime: float, /* Number of seconds since epoch. */
       responseStatus: float, /* HTTP response status code. */
       responseStatusText: string, /* HTTP response status text. */
       responseType: CachedResponseType.t, /* HTTP response type */
-      responseHeaders: array(Header.t) /* Response headers */,
+      responseHeaders: list(Header.t) /* Response headers */,
     };
   }
   and Cache: {
@@ -2708,12 +2708,12 @@ and CacheStorage: {
     type t = {
       requestURL: string, /* Request URL. */
       requestMethod: string, /* Request method. */
-      requestHeaders: array(Header.t), /* Request headers */
+      requestHeaders: list(Header.t), /* Request headers */
       responseTime: float, /* Number of seconds since epoch. */
       responseStatus: float, /* HTTP response status code. */
       responseStatusText: string, /* HTTP response status text. */
       responseType: CachedResponseType.t, /* HTTP response type */
-      responseHeaders: array(Header.t) /* Response headers */,
+      responseHeaders: list(Header.t) /* Response headers */,
     };
   } = {
     /* Data entry. */
@@ -2721,12 +2721,12 @@ and CacheStorage: {
     type t = {
       requestURL: string, /* Request URL. */
       requestMethod: string, /* Request method. */
-      requestHeaders: array(Header.t), /* Request headers */
+      requestHeaders: list(Header.t), /* Request headers */
       responseTime: float, /* Number of seconds since epoch. */
       responseStatus: float, /* HTTP response status code. */
       responseStatusText: string, /* HTTP response status text. */
       responseType: CachedResponseType.t, /* HTTP response type */
-      responseHeaders: array(Header.t) /* Response headers */,
+      responseHeaders: list(Header.t) /* Response headers */,
     };
   }
   and Cache: {
@@ -2906,7 +2906,7 @@ and Debugger: {
       functionLocation: option(Location.t), /* Location in the source code. */
       location: Location.t, /* Location in the source code. */
       url: string, /* JavaScript script name or url. */
-      scopeChain: array(Scope.t), /* Scope chain for this call frame. */
+      scopeChain: list(Scope.t), /* Scope chain for this call frame. */
       this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
       [@yojson.option]
       returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
@@ -3047,7 +3047,7 @@ variables as its properties. */
       functionLocation: option(Location.t), /* Location in the source code. */
       location: Location.t, /* Location in the source code. */
       url: string, /* JavaScript script name or url. */
-      scopeChain: array(Scope.t), /* Scope chain for this call frame. */
+      scopeChain: list(Scope.t), /* Scope chain for this call frame. */
       this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
       [@yojson.option]
       returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
@@ -3062,7 +3062,7 @@ variables as its properties. */
       functionLocation: option(Location.t), /* Location in the source code. */
       location: Location.t, /* Location in the source code. */
       url: string, /* JavaScript script name or url. */
-      scopeChain: array(Scope.t), /* Scope chain for this call frame. */
+      scopeChain: list(Scope.t), /* Scope chain for this call frame. */
       this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
       [@yojson.option]
       returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
@@ -3224,9 +3224,9 @@ fire DOM events for nodes known to the client. */
       [@yojson.option]
       childNodeCount: option(float), /* Child count for `Container` nodes. */
       [@yojson.option]
-      children: option(array(Node.t)), /* Child nodes of this node when requested with children. */
+      children: option(list(Node.t)), /* Child nodes of this node when requested with children. */
       [@yojson.option]
-      attributes: option(array(string)), /* Attributes of the `Element` node in the form of flat array `[name1, value1, name2, value2]`. */
+      attributes: option(list(string)), /* Attributes of the `Element` node in the form of flat array `[name1, value1, name2, value2]`. */
       [@yojson.option]
       documentURL: option(string), /* Document URL that `Document` or `FrameOwner` node points to. */
       [@yojson.option]
@@ -3252,17 +3252,17 @@ fire DOM events for nodes known to the client. */
       [@yojson.option]
       contentDocument: option(Node.t), /* Content document for frame owner elements. */
       [@yojson.option]
-      shadowRoots: option(array(Node.t)), /* Shadow root list for given element host. */
+      shadowRoots: option(list(Node.t)), /* Shadow root list for given element host. */
       [@yojson.option]
       templateContent: option(Node.t), /* Content document fragment for template elements. */
       [@yojson.option]
-      pseudoElements: option(array(Node.t)), /* Pseudo elements associated with this node. */
+      pseudoElements: option(list(Node.t)), /* Pseudo elements associated with this node. */
       [@yojson.option]
       importedDocument: option(Node.t), /* Deprecated, as the HTML Imports API has been removed (crbug.com/937746).
 This property used to return the imported document for the HTMLImport links.
 The property is always undefined now. */
       [@yojson.option]
-      distributedNodes: option(array(BackendNode.t)), /* Distributed nodes for given insertion point. */
+      distributedNodes: option(list(BackendNode.t)), /* Distributed nodes for given insertion point. */
       [@yojson.option]
       isSVG: option(bool), /* Whether the node is SVG. */
       [@yojson.option]
@@ -3283,7 +3283,7 @@ The property is always undefined now. */
   and Quad: {
     /* An array of quad vertices, x immediately followed by y for each point, points clock-wise. */
     [@deriving yojson]
-    type t = array(float);
+    type t = list(float);
   }
   and BoxModel: {
     /* Box model. */
@@ -3304,8 +3304,8 @@ The property is always undefined now. */
     [@deriving yojson]
     type t = {
       bounds: Quad.t, /* Shape bounds */
-      shape: array(string), /* Shape coordinate details */
-      marginShape: array(string) /* Margin shape bounds */,
+      shape: list(string), /* Shape coordinate details */
+      marginShape: list(string) /* Margin shape bounds */,
     };
   }
   and Rect: {
@@ -3409,9 +3409,9 @@ fire DOM events for nodes known to the client. */
       [@yojson.option]
       childNodeCount: option(float), /* Child count for `Container` nodes. */
       [@yojson.option]
-      children: option(array(Node.t)), /* Child nodes of this node when requested with children. */
+      children: option(list(Node.t)), /* Child nodes of this node when requested with children. */
       [@yojson.option]
-      attributes: option(array(string)), /* Attributes of the `Element` node in the form of flat array `[name1, value1, name2, value2]`. */
+      attributes: option(list(string)), /* Attributes of the `Element` node in the form of flat array `[name1, value1, name2, value2]`. */
       [@yojson.option]
       documentURL: option(string), /* Document URL that `Document` or `FrameOwner` node points to. */
       [@yojson.option]
@@ -3437,17 +3437,17 @@ fire DOM events for nodes known to the client. */
       [@yojson.option]
       contentDocument: option(Node.t), /* Content document for frame owner elements. */
       [@yojson.option]
-      shadowRoots: option(array(Node.t)), /* Shadow root list for given element host. */
+      shadowRoots: option(list(Node.t)), /* Shadow root list for given element host. */
       [@yojson.option]
       templateContent: option(Node.t), /* Content document fragment for template elements. */
       [@yojson.option]
-      pseudoElements: option(array(Node.t)), /* Pseudo elements associated with this node. */
+      pseudoElements: option(list(Node.t)), /* Pseudo elements associated with this node. */
       [@yojson.option]
       importedDocument: option(Node.t), /* Deprecated, as the HTML Imports API has been removed (crbug.com/937746).
 This property used to return the imported document for the HTMLImport links.
 The property is always undefined now. */
       [@yojson.option]
-      distributedNodes: option(array(BackendNode.t)), /* Distributed nodes for given insertion point. */
+      distributedNodes: option(list(BackendNode.t)), /* Distributed nodes for given insertion point. */
       [@yojson.option]
       isSVG: option(bool), /* Whether the node is SVG. */
       [@yojson.option]
@@ -3471,9 +3471,9 @@ fire DOM events for nodes known to the client. */
       [@yojson.option]
       childNodeCount: option(float), /* Child count for `Container` nodes. */
       [@yojson.option]
-      children: option(array(Node.t)), /* Child nodes of this node when requested with children. */
+      children: option(list(Node.t)), /* Child nodes of this node when requested with children. */
       [@yojson.option]
-      attributes: option(array(string)), /* Attributes of the `Element` node in the form of flat array `[name1, value1, name2, value2]`. */
+      attributes: option(list(string)), /* Attributes of the `Element` node in the form of flat array `[name1, value1, name2, value2]`. */
       [@yojson.option]
       documentURL: option(string), /* Document URL that `Document` or `FrameOwner` node points to. */
       [@yojson.option]
@@ -3499,17 +3499,17 @@ fire DOM events for nodes known to the client. */
       [@yojson.option]
       contentDocument: option(Node.t), /* Content document for frame owner elements. */
       [@yojson.option]
-      shadowRoots: option(array(Node.t)), /* Shadow root list for given element host. */
+      shadowRoots: option(list(Node.t)), /* Shadow root list for given element host. */
       [@yojson.option]
       templateContent: option(Node.t), /* Content document fragment for template elements. */
       [@yojson.option]
-      pseudoElements: option(array(Node.t)), /* Pseudo elements associated with this node. */
+      pseudoElements: option(list(Node.t)), /* Pseudo elements associated with this node. */
       [@yojson.option]
       importedDocument: option(Node.t), /* Deprecated, as the HTML Imports API has been removed (crbug.com/937746).
 This property used to return the imported document for the HTMLImport links.
 The property is always undefined now. */
       [@yojson.option]
-      distributedNodes: option(array(BackendNode.t)), /* Distributed nodes for given insertion point. */
+      distributedNodes: option(list(BackendNode.t)), /* Distributed nodes for given insertion point. */
       [@yojson.option]
       isSVG: option(bool), /* Whether the node is SVG. */
       [@yojson.option]
@@ -3540,11 +3540,11 @@ The property is always undefined now. */
   and Quad: {
     /* An array of quad vertices, x immediately followed by y for each point, points clock-wise. */
     [@deriving yojson]
-    type t = array(float);
+    type t = list(float);
   } = {
     /* An array of quad vertices, x immediately followed by y for each point, points clock-wise. */
     [@deriving yojson]
-    type t = array(float);
+    type t = list(float);
   }
   and BoxModel: {
     /* Box model. */
@@ -3578,16 +3578,16 @@ The property is always undefined now. */
     [@deriving yojson]
     type t = {
       bounds: Quad.t, /* Shape bounds */
-      shape: array(string), /* Shape coordinate details */
-      marginShape: array(string) /* Margin shape bounds */,
+      shape: list(string), /* Shape coordinate details */
+      marginShape: list(string) /* Margin shape bounds */,
     };
   } = {
     /* CSS Shape Outside details. */
     [@deriving yojson]
     type t = {
       bounds: Quad.t, /* Shape bounds */
-      shape: array(string), /* Shape coordinate details */
-      marginShape: array(string) /* Margin shape bounds */,
+      shape: list(string), /* Shape coordinate details */
+      marginShape: list(string) /* Margin shape bounds */,
     };
   }
   and Rect: {
@@ -3733,12 +3733,12 @@ and DOMSnapshot: {
       optionSelected: option(bool), /* Only set for option elements, indicates if the element has been selected */
       backendNodeId: DOM.BackendNodeId.t, /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
       [@yojson.option]
-      childNodeIndexes: option(array(float)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
+      childNodeIndexes: option(list(float)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
 any. */
       [@yojson.option]
-      attributes: option(array(NameValue.t)), /* Attributes of an `Element` node. */
+      attributes: option(list(NameValue.t)), /* Attributes of an `Element` node. */
       [@yojson.option]
-      pseudoElementIndexes: option(array(float)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
+      pseudoElementIndexes: option(list(float)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option]
       layoutNodeIndex: option(float), /* The index of the node's related layout tree node in the `layoutTreeNodes` array returned by
@@ -3769,7 +3769,7 @@ any. */
 event listeners attached via JavaScript as well as anchor tags that naturally navigate when
 clicked. */
       [@yojson.option]
-      eventListeners: option(array(DOMDebugger.EventListener.t)), /* Details of the node's event listeners, if any. */
+      eventListeners: option(list(DOMDebugger.EventListener.t)), /* Details of the node's event listeners, if any. */
       [@yojson.option]
       currentSourceURL: option(string), /* The selected url for nodes with a srcset attribute. */
       [@yojson.option]
@@ -3801,7 +3801,7 @@ represented as a surrogate pair in UTF-16 have length 2. */,
       [@yojson.option]
       layoutText: option(string), /* Contents of the LayoutText, if any. */
       [@yojson.option]
-      inlineTextNodes: option(array(InlineTextBox.t)), /* The post-layout inline text nodes, if any. */
+      inlineTextNodes: option(list(InlineTextBox.t)), /* The post-layout inline text nodes, if any. */
       [@yojson.option]
       styleIndex: option(float), /* Index into the `computedStyles` array returned by `getSnapshot`. */
       [@yojson.option]
@@ -3816,7 +3816,7 @@ getSnapshot was true. */
     /* A subset of the full ComputedStyle as defined by the request whitelist. */
     [@deriving yojson]
     type t = {
-      properties: array(NameValue.t) /* Name/value pairs of computed style properties. */,
+      properties: list(NameValue.t) /* Name/value pairs of computed style properties. */,
     };
   }
   and NameValue: {
@@ -3835,33 +3835,33 @@ getSnapshot was true. */
   and ArrayOfStrings: {
     /* Index of the string in the strings table. */
     [@deriving yojson]
-    type t = array(StringIndex.t);
+    type t = list(StringIndex.t);
   }
   and RareStringData: {
     /* Data that is only present on rare nodes. */
     [@deriving yojson]
     type t = {
-      index: array(float), /* No description provided */
-      value: array(StringIndex.t) /* No description provided */,
+      index: list(float), /* No description provided */
+      value: list(StringIndex.t) /* No description provided */,
     };
   }
   and RareBooleanData: {
     /* No description provided */
     [@deriving yojson]
-    type t = {index: array(float) /* No description provided */};
+    type t = {index: list(float) /* No description provided */};
   }
   and RareIntegerData: {
     /* No description provided */
     [@deriving yojson]
     type t = {
-      index: array(float), /* No description provided */
-      value: array(float) /* No description provided */,
+      index: list(float), /* No description provided */
+      value: list(float) /* No description provided */,
     };
   }
   and Rectangle: {
     /* No description provided */
     [@deriving yojson]
-    type t = array(float);
+    type t = list(float);
   }
   and DocumentSnapshot: {
     /* Document snapshot. */
@@ -3893,17 +3893,17 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@yojson.option]
-      parentIndex: option(array(float)), /* Parent node index. */
+      parentIndex: option(list(float)), /* Parent node index. */
       [@yojson.option]
-      nodeType: option(array(float)), /* `Node`'s nodeType. */
+      nodeType: option(list(float)), /* `Node`'s nodeType. */
       [@yojson.option]
-      nodeName: option(array(StringIndex.t)), /* `Node`'s nodeName. */
+      nodeName: option(list(StringIndex.t)), /* `Node`'s nodeName. */
       [@yojson.option]
-      nodeValue: option(array(StringIndex.t)), /* `Node`'s nodeValue. */
+      nodeValue: option(list(StringIndex.t)), /* `Node`'s nodeValue. */
       [@yojson.option]
-      backendNodeId: option(array(DOM.BackendNodeId.t)), /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
+      backendNodeId: option(list(DOM.BackendNodeId.t)), /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
       [@yojson.option]
-      attributes: option(array(ArrayOfStrings.t)), /* Attributes of an `Element` node. Flatten name, value pairs. */
+      attributes: option(list(ArrayOfStrings.t)), /* Attributes of an `Element` node. Flatten name, value pairs. */
       [@yojson.option]
       textValue: option(RareStringData.t), /* Only set for textarea elements, contains the text value. */
       [@yojson.option]
@@ -3930,25 +3930,25 @@ clicked. */
     /* Table of details of an element in the DOM tree with a LayoutObject. */
     [@deriving yojson]
     type t = {
-      nodeIndex: array(float), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
-      styles: array(ArrayOfStrings.t), /* Array of indexes specifying computed style strings, filtered according to the `computedStyles` parameter passed to `captureSnapshot`. */
-      bounds: array(Rectangle.t), /* The absolute position bounding box. */
-      text: array(StringIndex.t), /* Contents of the LayoutText, if any. */
+      nodeIndex: list(float), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
+      styles: list(ArrayOfStrings.t), /* Array of indexes specifying computed style strings, filtered according to the `computedStyles` parameter passed to `captureSnapshot`. */
+      bounds: list(Rectangle.t), /* The absolute position bounding box. */
+      text: list(StringIndex.t), /* Contents of the LayoutText, if any. */
       stackingContexts: RareBooleanData.t, /* Stacking context information. */
       [@yojson.option]
-      paintOrders: option(array(float)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
+      paintOrders: option(list(float)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
 that are painted together will have the same index. Only provided if includePaintOrder in
 captureSnapshot was true. */
       [@yojson.option]
-      offsetRects: option(array(Rectangle.t)), /* The offset rect of nodes. Only available when includeDOMRects is set to true */
+      offsetRects: option(list(Rectangle.t)), /* The offset rect of nodes. Only available when includeDOMRects is set to true */
       [@yojson.option]
-      scrollRects: option(array(Rectangle.t)), /* The scroll rect of nodes. Only available when includeDOMRects is set to true */
+      scrollRects: option(list(Rectangle.t)), /* The scroll rect of nodes. Only available when includeDOMRects is set to true */
       [@yojson.option]
-      clientRects: option(array(Rectangle.t)), /* The client rect of nodes. Only available when includeDOMRects is set to true */
+      clientRects: option(list(Rectangle.t)), /* The client rect of nodes. Only available when includeDOMRects is set to true */
       [@yojson.option]
-      blendedBackgroundColors: option(array(StringIndex.t)), /* The list of background colors that are blended with colors of overlapping elements. */
+      blendedBackgroundColors: option(list(StringIndex.t)), /* The list of background colors that are blended with colors of overlapping elements. */
       [@yojson.option]
-      textColorOpacities: option(array(float)) /* The list of computed text opacities. */,
+      textColorOpacities: option(list(float)) /* The list of computed text opacities. */,
     };
   }
   and TextBoxSnapshot: {
@@ -3956,11 +3956,11 @@ captureSnapshot was true. */
        stable and may change between versions. */
     [@deriving yojson]
     type t = {
-      layoutIndex: array(float), /* Index of the layout tree node that owns this box collection. */
-      bounds: array(Rectangle.t), /* The absolute position bounding box. */
-      start: array(float), /* The starting index in characters, for this post layout textbox substring. Characters that
+      layoutIndex: list(float), /* Index of the layout tree node that owns this box collection. */
+      bounds: list(Rectangle.t), /* The absolute position bounding box. */
+      start: list(float), /* The starting index in characters, for this post layout textbox substring. Characters that
 would be represented as a surrogate pair in UTF-16 have length 2. */
-      length: array(float) /* The number of characters in this post layout textbox substring. Characters that would be
+      length: list(float) /* The number of characters in this post layout textbox substring. Characters that would be
 represented as a surrogate pair in UTF-16 have length 2. */,
     };
   };
@@ -3982,12 +3982,12 @@ represented as a surrogate pair in UTF-16 have length 2. */,
       optionSelected: option(bool), /* Only set for option elements, indicates if the element has been selected */
       backendNodeId: DOM.BackendNodeId.t, /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
       [@yojson.option]
-      childNodeIndexes: option(array(float)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
+      childNodeIndexes: option(list(float)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
 any. */
       [@yojson.option]
-      attributes: option(array(NameValue.t)), /* Attributes of an `Element` node. */
+      attributes: option(list(NameValue.t)), /* Attributes of an `Element` node. */
       [@yojson.option]
-      pseudoElementIndexes: option(array(float)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
+      pseudoElementIndexes: option(list(float)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option]
       layoutNodeIndex: option(float), /* The index of the node's related layout tree node in the `layoutTreeNodes` array returned by
@@ -4018,7 +4018,7 @@ any. */
 event listeners attached via JavaScript as well as anchor tags that naturally navigate when
 clicked. */
       [@yojson.option]
-      eventListeners: option(array(DOMDebugger.EventListener.t)), /* Details of the node's event listeners, if any. */
+      eventListeners: option(list(DOMDebugger.EventListener.t)), /* Details of the node's event listeners, if any. */
       [@yojson.option]
       currentSourceURL: option(string), /* The selected url for nodes with a srcset attribute. */
       [@yojson.option]
@@ -4045,12 +4045,12 @@ clicked. */
       optionSelected: option(bool), /* Only set for option elements, indicates if the element has been selected */
       backendNodeId: DOM.BackendNodeId.t, /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
       [@yojson.option]
-      childNodeIndexes: option(array(float)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
+      childNodeIndexes: option(list(float)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
 any. */
       [@yojson.option]
-      attributes: option(array(NameValue.t)), /* Attributes of an `Element` node. */
+      attributes: option(list(NameValue.t)), /* Attributes of an `Element` node. */
       [@yojson.option]
-      pseudoElementIndexes: option(array(float)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
+      pseudoElementIndexes: option(list(float)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option]
       layoutNodeIndex: option(float), /* The index of the node's related layout tree node in the `layoutTreeNodes` array returned by
@@ -4081,7 +4081,7 @@ any. */
 event listeners attached via JavaScript as well as anchor tags that naturally navigate when
 clicked. */
       [@yojson.option]
-      eventListeners: option(array(DOMDebugger.EventListener.t)), /* Details of the node's event listeners, if any. */
+      eventListeners: option(list(DOMDebugger.EventListener.t)), /* Details of the node's event listeners, if any. */
       [@yojson.option]
       currentSourceURL: option(string), /* The selected url for nodes with a srcset attribute. */
       [@yojson.option]
@@ -4124,7 +4124,7 @@ represented as a surrogate pair in UTF-16 have length 2. */,
       [@yojson.option]
       layoutText: option(string), /* Contents of the LayoutText, if any. */
       [@yojson.option]
-      inlineTextNodes: option(array(InlineTextBox.t)), /* The post-layout inline text nodes, if any. */
+      inlineTextNodes: option(list(InlineTextBox.t)), /* The post-layout inline text nodes, if any. */
       [@yojson.option]
       styleIndex: option(float), /* Index into the `computedStyles` array returned by `getSnapshot`. */
       [@yojson.option]
@@ -4143,7 +4143,7 @@ getSnapshot was true. */
       [@yojson.option]
       layoutText: option(string), /* Contents of the LayoutText, if any. */
       [@yojson.option]
-      inlineTextNodes: option(array(InlineTextBox.t)), /* The post-layout inline text nodes, if any. */
+      inlineTextNodes: option(list(InlineTextBox.t)), /* The post-layout inline text nodes, if any. */
       [@yojson.option]
       styleIndex: option(float), /* Index into the `computedStyles` array returned by `getSnapshot`. */
       [@yojson.option]
@@ -4158,13 +4158,13 @@ getSnapshot was true. */
     /* A subset of the full ComputedStyle as defined by the request whitelist. */
     [@deriving yojson]
     type t = {
-      properties: array(NameValue.t) /* Name/value pairs of computed style properties. */,
+      properties: list(NameValue.t) /* Name/value pairs of computed style properties. */,
     };
   } = {
     /* A subset of the full ComputedStyle as defined by the request whitelist. */
     [@deriving yojson]
     type t = {
-      properties: array(NameValue.t) /* Name/value pairs of computed style properties. */,
+      properties: list(NameValue.t) /* Name/value pairs of computed style properties. */,
     };
   }
   and NameValue: {
@@ -4194,59 +4194,59 @@ getSnapshot was true. */
   and ArrayOfStrings: {
     /* Index of the string in the strings table. */
     [@deriving yojson]
-    type t = array(StringIndex.t);
+    type t = list(StringIndex.t);
   } = {
     /* Index of the string in the strings table. */
     [@deriving yojson]
-    type t = array(StringIndex.t);
+    type t = list(StringIndex.t);
   }
   and RareStringData: {
     /* Data that is only present on rare nodes. */
     [@deriving yojson]
     type t = {
-      index: array(float), /* No description provided */
-      value: array(StringIndex.t) /* No description provided */,
+      index: list(float), /* No description provided */
+      value: list(StringIndex.t) /* No description provided */,
     };
   } = {
     /* Data that is only present on rare nodes. */
     [@deriving yojson]
     type t = {
-      index: array(float), /* No description provided */
-      value: array(StringIndex.t) /* No description provided */,
+      index: list(float), /* No description provided */
+      value: list(StringIndex.t) /* No description provided */,
     };
   }
   and RareBooleanData: {
     /* No description provided */
     [@deriving yojson]
-    type t = {index: array(float) /* No description provided */};
+    type t = {index: list(float) /* No description provided */};
   } = {
     /* No description provided */
     [@deriving yojson]
-    type t = {index: array(float) /* No description provided */};
+    type t = {index: list(float) /* No description provided */};
   }
   and RareIntegerData: {
     /* No description provided */
     [@deriving yojson]
     type t = {
-      index: array(float), /* No description provided */
-      value: array(float) /* No description provided */,
+      index: list(float), /* No description provided */
+      value: list(float) /* No description provided */,
     };
   } = {
     /* No description provided */
     [@deriving yojson]
     type t = {
-      index: array(float), /* No description provided */
-      value: array(float) /* No description provided */,
+      index: list(float), /* No description provided */
+      value: list(float) /* No description provided */,
     };
   }
   and Rectangle: {
     /* No description provided */
     [@deriving yojson]
-    type t = array(float);
+    type t = list(float);
   } = {
     /* No description provided */
     [@deriving yojson]
-    type t = array(float);
+    type t = list(float);
   }
   and DocumentSnapshot: {
     /* Document snapshot. */
@@ -4302,17 +4302,17 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@yojson.option]
-      parentIndex: option(array(float)), /* Parent node index. */
+      parentIndex: option(list(float)), /* Parent node index. */
       [@yojson.option]
-      nodeType: option(array(float)), /* `Node`'s nodeType. */
+      nodeType: option(list(float)), /* `Node`'s nodeType. */
       [@yojson.option]
-      nodeName: option(array(StringIndex.t)), /* `Node`'s nodeName. */
+      nodeName: option(list(StringIndex.t)), /* `Node`'s nodeName. */
       [@yojson.option]
-      nodeValue: option(array(StringIndex.t)), /* `Node`'s nodeValue. */
+      nodeValue: option(list(StringIndex.t)), /* `Node`'s nodeValue. */
       [@yojson.option]
-      backendNodeId: option(array(DOM.BackendNodeId.t)), /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
+      backendNodeId: option(list(DOM.BackendNodeId.t)), /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
       [@yojson.option]
-      attributes: option(array(ArrayOfStrings.t)), /* Attributes of an `Element` node. Flatten name, value pairs. */
+      attributes: option(list(ArrayOfStrings.t)), /* Attributes of an `Element` node. Flatten name, value pairs. */
       [@yojson.option]
       textValue: option(RareStringData.t), /* Only set for textarea elements, contains the text value. */
       [@yojson.option]
@@ -4339,17 +4339,17 @@ clicked. */
     [@deriving yojson]
     type t = {
       [@yojson.option]
-      parentIndex: option(array(float)), /* Parent node index. */
+      parentIndex: option(list(float)), /* Parent node index. */
       [@yojson.option]
-      nodeType: option(array(float)), /* `Node`'s nodeType. */
+      nodeType: option(list(float)), /* `Node`'s nodeType. */
       [@yojson.option]
-      nodeName: option(array(StringIndex.t)), /* `Node`'s nodeName. */
+      nodeName: option(list(StringIndex.t)), /* `Node`'s nodeName. */
       [@yojson.option]
-      nodeValue: option(array(StringIndex.t)), /* `Node`'s nodeValue. */
+      nodeValue: option(list(StringIndex.t)), /* `Node`'s nodeValue. */
       [@yojson.option]
-      backendNodeId: option(array(DOM.BackendNodeId.t)), /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
+      backendNodeId: option(list(DOM.BackendNodeId.t)), /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
       [@yojson.option]
-      attributes: option(array(ArrayOfStrings.t)), /* Attributes of an `Element` node. Flatten name, value pairs. */
+      attributes: option(list(ArrayOfStrings.t)), /* Attributes of an `Element` node. Flatten name, value pairs. */
       [@yojson.option]
       textValue: option(RareStringData.t), /* Only set for textarea elements, contains the text value. */
       [@yojson.option]
@@ -4376,49 +4376,49 @@ clicked. */
     /* Table of details of an element in the DOM tree with a LayoutObject. */
     [@deriving yojson]
     type t = {
-      nodeIndex: array(float), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
-      styles: array(ArrayOfStrings.t), /* Array of indexes specifying computed style strings, filtered according to the `computedStyles` parameter passed to `captureSnapshot`. */
-      bounds: array(Rectangle.t), /* The absolute position bounding box. */
-      text: array(StringIndex.t), /* Contents of the LayoutText, if any. */
+      nodeIndex: list(float), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
+      styles: list(ArrayOfStrings.t), /* Array of indexes specifying computed style strings, filtered according to the `computedStyles` parameter passed to `captureSnapshot`. */
+      bounds: list(Rectangle.t), /* The absolute position bounding box. */
+      text: list(StringIndex.t), /* Contents of the LayoutText, if any. */
       stackingContexts: RareBooleanData.t, /* Stacking context information. */
       [@yojson.option]
-      paintOrders: option(array(float)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
+      paintOrders: option(list(float)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
 that are painted together will have the same index. Only provided if includePaintOrder in
 captureSnapshot was true. */
       [@yojson.option]
-      offsetRects: option(array(Rectangle.t)), /* The offset rect of nodes. Only available when includeDOMRects is set to true */
+      offsetRects: option(list(Rectangle.t)), /* The offset rect of nodes. Only available when includeDOMRects is set to true */
       [@yojson.option]
-      scrollRects: option(array(Rectangle.t)), /* The scroll rect of nodes. Only available when includeDOMRects is set to true */
+      scrollRects: option(list(Rectangle.t)), /* The scroll rect of nodes. Only available when includeDOMRects is set to true */
       [@yojson.option]
-      clientRects: option(array(Rectangle.t)), /* The client rect of nodes. Only available when includeDOMRects is set to true */
+      clientRects: option(list(Rectangle.t)), /* The client rect of nodes. Only available when includeDOMRects is set to true */
       [@yojson.option]
-      blendedBackgroundColors: option(array(StringIndex.t)), /* The list of background colors that are blended with colors of overlapping elements. */
+      blendedBackgroundColors: option(list(StringIndex.t)), /* The list of background colors that are blended with colors of overlapping elements. */
       [@yojson.option]
-      textColorOpacities: option(array(float)) /* The list of computed text opacities. */,
+      textColorOpacities: option(list(float)) /* The list of computed text opacities. */,
     };
   } = {
     /* Table of details of an element in the DOM tree with a LayoutObject. */
     [@deriving yojson]
     type t = {
-      nodeIndex: array(float), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
-      styles: array(ArrayOfStrings.t), /* Array of indexes specifying computed style strings, filtered according to the `computedStyles` parameter passed to `captureSnapshot`. */
-      bounds: array(Rectangle.t), /* The absolute position bounding box. */
-      text: array(StringIndex.t), /* Contents of the LayoutText, if any. */
+      nodeIndex: list(float), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
+      styles: list(ArrayOfStrings.t), /* Array of indexes specifying computed style strings, filtered according to the `computedStyles` parameter passed to `captureSnapshot`. */
+      bounds: list(Rectangle.t), /* The absolute position bounding box. */
+      text: list(StringIndex.t), /* Contents of the LayoutText, if any. */
       stackingContexts: RareBooleanData.t, /* Stacking context information. */
       [@yojson.option]
-      paintOrders: option(array(float)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
+      paintOrders: option(list(float)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
 that are painted together will have the same index. Only provided if includePaintOrder in
 captureSnapshot was true. */
       [@yojson.option]
-      offsetRects: option(array(Rectangle.t)), /* The offset rect of nodes. Only available when includeDOMRects is set to true */
+      offsetRects: option(list(Rectangle.t)), /* The offset rect of nodes. Only available when includeDOMRects is set to true */
       [@yojson.option]
-      scrollRects: option(array(Rectangle.t)), /* The scroll rect of nodes. Only available when includeDOMRects is set to true */
+      scrollRects: option(list(Rectangle.t)), /* The scroll rect of nodes. Only available when includeDOMRects is set to true */
       [@yojson.option]
-      clientRects: option(array(Rectangle.t)), /* The client rect of nodes. Only available when includeDOMRects is set to true */
+      clientRects: option(list(Rectangle.t)), /* The client rect of nodes. Only available when includeDOMRects is set to true */
       [@yojson.option]
-      blendedBackgroundColors: option(array(StringIndex.t)), /* The list of background colors that are blended with colors of overlapping elements. */
+      blendedBackgroundColors: option(list(StringIndex.t)), /* The list of background colors that are blended with colors of overlapping elements. */
       [@yojson.option]
-      textColorOpacities: option(array(float)) /* The list of computed text opacities. */,
+      textColorOpacities: option(list(float)) /* The list of computed text opacities. */,
     };
   }
   and TextBoxSnapshot: {
@@ -4426,11 +4426,11 @@ captureSnapshot was true. */
        stable and may change between versions. */
     [@deriving yojson]
     type t = {
-      layoutIndex: array(float), /* Index of the layout tree node that owns this box collection. */
-      bounds: array(Rectangle.t), /* The absolute position bounding box. */
-      start: array(float), /* The starting index in characters, for this post layout textbox substring. Characters that
+      layoutIndex: list(float), /* Index of the layout tree node that owns this box collection. */
+      bounds: list(Rectangle.t), /* The absolute position bounding box. */
+      start: list(float), /* The starting index in characters, for this post layout textbox substring. Characters that
 would be represented as a surrogate pair in UTF-16 have length 2. */
-      length: array(float) /* The number of characters in this post layout textbox substring. Characters that would be
+      length: list(float) /* The number of characters in this post layout textbox substring. Characters that would be
 represented as a surrogate pair in UTF-16 have length 2. */,
     };
   } = {
@@ -4438,11 +4438,11 @@ represented as a surrogate pair in UTF-16 have length 2. */,
        stable and may change between versions. */
     [@deriving yojson]
     type t = {
-      layoutIndex: array(float), /* Index of the layout tree node that owns this box collection. */
-      bounds: array(Rectangle.t), /* The absolute position bounding box. */
-      start: array(float), /* The starting index in characters, for this post layout textbox substring. Characters that
+      layoutIndex: list(float), /* Index of the layout tree node that owns this box collection. */
+      bounds: list(Rectangle.t), /* The absolute position bounding box. */
+      start: list(float), /* The starting index in characters, for this post layout textbox substring. Characters that
 would be represented as a surrogate pair in UTF-16 have length 2. */
-      length: array(float) /* The number of characters in this post layout textbox substring. Characters that would be
+      length: list(float) /* The number of characters in this post layout textbox substring. Characters that would be
 represented as a surrogate pair in UTF-16 have length 2. */,
     };
   };
@@ -4459,7 +4459,7 @@ and DOMStorage: {
   and Item: {
     /* DOM Storage item. */
     [@deriving yojson]
-    type t = array(string);
+    type t = list(string);
   };
 } = {
   module rec StorageId: {
@@ -4480,11 +4480,11 @@ and DOMStorage: {
   and Item: {
     /* DOM Storage item. */
     [@deriving yojson]
-    type t = array(string);
+    type t = list(string);
   } = {
     /* DOM Storage item. */
     [@deriving yojson]
-    type t = array(string);
+    type t = list(string);
   };
 }
 and Database: {
@@ -4608,7 +4608,7 @@ A display feature that only splits content will have a 0 mask_length. */,
     [@deriving yojson]
     type t = {
       [@yojson.option]
-      brands: option(array(UserAgentBrandVersion.t)), /* No description provided */
+      brands: option(list(UserAgentBrandVersion.t)), /* No description provided */
       [@yojson.option]
       fullVersion: option(string), /* No description provided */
       platform: string, /* No description provided */
@@ -4715,7 +4715,7 @@ A display feature that only splits content will have a 0 mask_length. */,
     [@deriving yojson]
     type t = {
       [@yojson.option]
-      brands: option(array(UserAgentBrandVersion.t)), /* No description provided */
+      brands: option(list(UserAgentBrandVersion.t)), /* No description provided */
       [@yojson.option]
       fullVersion: option(string), /* No description provided */
       platform: string, /* No description provided */
@@ -4730,7 +4730,7 @@ A display feature that only splits content will have a 0 mask_length. */,
     [@deriving yojson]
     type t = {
       [@yojson.option]
-      brands: option(array(UserAgentBrandVersion.t)), /* No description provided */
+      brands: option(list(UserAgentBrandVersion.t)), /* No description provided */
       [@yojson.option]
       fullVersion: option(string), /* No description provided */
       platform: string, /* No description provided */
@@ -4795,7 +4795,7 @@ and HeapProfiler: {
       callFrame: Runtime.CallFrame.t, /* Function location. */
       selfSize: float, /* Allocations size in bytes for the node excluding children. */
       id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
-      children: array(SamplingHeapProfileNode.t) /* Child nodes. */,
+      children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
     };
   }
   and SamplingHeapProfileSample: {
@@ -4813,7 +4813,7 @@ between startSampling and stopSampling. */,
     [@deriving yojson]
     type t = {
       head: SamplingHeapProfileNode.t, /* No description provided */
-      samples: array(SamplingHeapProfileSample.t) /* No description provided */,
+      samples: list(SamplingHeapProfileSample.t) /* No description provided */,
     };
   };
 } = {
@@ -4833,7 +4833,7 @@ between startSampling and stopSampling. */,
       callFrame: Runtime.CallFrame.t, /* Function location. */
       selfSize: float, /* Allocations size in bytes for the node excluding children. */
       id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
-      children: array(SamplingHeapProfileNode.t) /* Child nodes. */,
+      children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
     };
   } = {
     /* Sampling Heap Profile node. Holds callsite information, allocation statistics and child nodes. */
@@ -4842,7 +4842,7 @@ between startSampling and stopSampling. */,
       callFrame: Runtime.CallFrame.t, /* Function location. */
       selfSize: float, /* Allocations size in bytes for the node excluding children. */
       id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
-      children: array(SamplingHeapProfileNode.t) /* Child nodes. */,
+      children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
     };
   }
   and SamplingHeapProfileSample: {
@@ -4869,14 +4869,14 @@ between startSampling and stopSampling. */,
     [@deriving yojson]
     type t = {
       head: SamplingHeapProfileNode.t, /* No description provided */
-      samples: array(SamplingHeapProfileSample.t) /* No description provided */,
+      samples: list(SamplingHeapProfileSample.t) /* No description provided */,
     };
   } = {
     /* Sampling profile. */
     [@deriving yojson]
     type t = {
       head: SamplingHeapProfileNode.t, /* No description provided */
-      samples: array(SamplingHeapProfileSample.t) /* No description provided */,
+      samples: list(SamplingHeapProfileSample.t) /* No description provided */,
     };
   };
 }
@@ -4908,7 +4908,7 @@ and IndexedDB: {
       name: string, /* Database name. */
       version: float, /* Database version (type is not 'integer', as the standard
 requires the version number to be 'unsigned long long') */
-      objectStores: array(ObjectStore.t) /* Object stores in this database. */,
+      objectStores: list(ObjectStore.t) /* Object stores in this database. */,
     };
   }
   and ObjectStore: {
@@ -4918,7 +4918,7 @@ requires the version number to be 'unsigned long long') */
       name: string, /* Object store name. */
       keyPath: KeyPath.t, /* Object store key path. */
       autoIncrement: bool, /* If true, object store has auto increment flag set. */
-      indexes: array(ObjectStoreIndex.t) /* Indexes in this object store. */,
+      indexes: list(ObjectStoreIndex.t) /* Indexes in this object store. */,
     };
   }
   and ObjectStoreIndex: {
@@ -4944,7 +4944,7 @@ requires the version number to be 'unsigned long long') */
       [@yojson.option]
       date: option(float), /* Date value. */
       [@yojson.option]
-      array: option(array(Key.t)) /* Array value. */,
+      array: option(list(Key.t)) /* Array value. */,
     };
   }
   and KeyRange: {
@@ -4977,7 +4977,7 @@ requires the version number to be 'unsigned long long') */
       [@yojson.option]
       string: option(string), /* String value. */
       [@yojson.option]
-      array: option(array(string)) /* Array value. */,
+      array: option(list(string)) /* Array value. */,
     };
   };
 } = {
@@ -4988,7 +4988,7 @@ requires the version number to be 'unsigned long long') */
       name: string, /* Database name. */
       version: float, /* Database version (type is not 'integer', as the standard
 requires the version number to be 'unsigned long long') */
-      objectStores: array(ObjectStore.t) /* Object stores in this database. */,
+      objectStores: list(ObjectStore.t) /* Object stores in this database. */,
     };
   } = {
     /* Database with an array of object stores. */
@@ -4997,7 +4997,7 @@ requires the version number to be 'unsigned long long') */
       name: string, /* Database name. */
       version: float, /* Database version (type is not 'integer', as the standard
 requires the version number to be 'unsigned long long') */
-      objectStores: array(ObjectStore.t) /* Object stores in this database. */,
+      objectStores: list(ObjectStore.t) /* Object stores in this database. */,
     };
   }
   and ObjectStore: {
@@ -5007,7 +5007,7 @@ requires the version number to be 'unsigned long long') */
       name: string, /* Object store name. */
       keyPath: KeyPath.t, /* Object store key path. */
       autoIncrement: bool, /* If true, object store has auto increment flag set. */
-      indexes: array(ObjectStoreIndex.t) /* Indexes in this object store. */,
+      indexes: list(ObjectStoreIndex.t) /* Indexes in this object store. */,
     };
   } = {
     /* Object store. */
@@ -5016,7 +5016,7 @@ requires the version number to be 'unsigned long long') */
       name: string, /* Object store name. */
       keyPath: KeyPath.t, /* Object store key path. */
       autoIncrement: bool, /* If true, object store has auto increment flag set. */
-      indexes: array(ObjectStoreIndex.t) /* Indexes in this object store. */,
+      indexes: list(ObjectStoreIndex.t) /* Indexes in this object store. */,
     };
   }
   and ObjectStoreIndex: {
@@ -5051,7 +5051,7 @@ requires the version number to be 'unsigned long long') */
       [@yojson.option]
       date: option(float), /* Date value. */
       [@yojson.option]
-      array: option(array(Key.t)) /* Array value. */,
+      array: option(list(Key.t)) /* Array value. */,
     };
   } = {
     /* Key. */
@@ -5066,7 +5066,7 @@ requires the version number to be 'unsigned long long') */
       [@yojson.option]
       date: option(float), /* Date value. */
       [@yojson.option]
-      array: option(array(Key.t)) /* Array value. */,
+      array: option(list(Key.t)) /* Array value. */,
     };
   }
   and KeyRange: {
@@ -5118,7 +5118,7 @@ requires the version number to be 'unsigned long long') */
       [@yojson.option]
       string: option(string), /* String value. */
       [@yojson.option]
-      array: option(array(string)) /* Array value. */,
+      array: option(list(string)) /* Array value. */,
     };
   } = {
     /* Key path. */
@@ -5129,7 +5129,7 @@ requires the version number to be 'unsigned long long') */
       [@yojson.option]
       string: option(string), /* String value. */
       [@yojson.option]
-      array: option(array(string)) /* Array value. */,
+      array: option(list(string)) /* Array value. */,
     };
   };
 }
@@ -5194,7 +5194,7 @@ text, HTML markup or any other data. */
     /* No description provided */
     [@deriving yojson]
     type t = {
-      items: array(DragDataItem.t), /* No description provided */
+      items: list(DragDataItem.t), /* No description provided */
       dragOperationsMask: float /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
     };
   };
@@ -5310,14 +5310,14 @@ text, HTML markup or any other data. */
     /* No description provided */
     [@deriving yojson]
     type t = {
-      items: array(DragDataItem.t), /* No description provided */
+      items: list(DragDataItem.t), /* No description provided */
       dragOperationsMask: float /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
     };
   } = {
     /* No description provided */
     [@deriving yojson]
     type t = {
-      items: array(DragDataItem.t), /* No description provided */
+      items: list(DragDataItem.t), /* No description provided */
       dragOperationsMask: float /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
     };
   };
@@ -5377,7 +5377,7 @@ and LayerTree: {
       width: float, /* Layer width. */
       height: float, /* Layer height. */
       [@yojson.option]
-      transform: option(array(float)), /* Transformation matrix for layer, default is identity matrix */
+      transform: option(list(float)), /* Transformation matrix for layer, default is identity matrix */
       [@yojson.option]
       anchorX: option(float), /* Transform anchor point X, absent if no transform specified */
       [@yojson.option]
@@ -5390,7 +5390,7 @@ transform/scrolling purposes only. */
       [@yojson.option]
       invisible: option(bool), /* Set if layer is not visible. */
       [@yojson.option]
-      scrollRects: option(array(ScrollRect.t)), /* Rectangles scrolling on main thread only. */
+      scrollRects: option(list(ScrollRect.t)), /* Rectangles scrolling on main thread only. */
       [@yojson.option]
       stickyPositionConstraint: option(StickyPositionConstraint.t) /* Sticky position constraint information */,
     };
@@ -5398,7 +5398,7 @@ transform/scrolling purposes only. */
   and PaintProfile: {
     /* Array of timings, one per paint step. */
     [@deriving yojson]
-    type t = array(float);
+    type t = list(float);
   };
 } = {
   module rec LayerId: {
@@ -5490,7 +5490,7 @@ transform/scrolling purposes only. */
       width: float, /* Layer width. */
       height: float, /* Layer height. */
       [@yojson.option]
-      transform: option(array(float)), /* Transformation matrix for layer, default is identity matrix */
+      transform: option(list(float)), /* Transformation matrix for layer, default is identity matrix */
       [@yojson.option]
       anchorX: option(float), /* Transform anchor point X, absent if no transform specified */
       [@yojson.option]
@@ -5503,7 +5503,7 @@ transform/scrolling purposes only. */
       [@yojson.option]
       invisible: option(bool), /* Set if layer is not visible. */
       [@yojson.option]
-      scrollRects: option(array(ScrollRect.t)), /* Rectangles scrolling on main thread only. */
+      scrollRects: option(list(ScrollRect.t)), /* Rectangles scrolling on main thread only. */
       [@yojson.option]
       stickyPositionConstraint: option(StickyPositionConstraint.t) /* Sticky position constraint information */,
     };
@@ -5521,7 +5521,7 @@ transform/scrolling purposes only. */
       width: float, /* Layer width. */
       height: float, /* Layer height. */
       [@yojson.option]
-      transform: option(array(float)), /* Transformation matrix for layer, default is identity matrix */
+      transform: option(list(float)), /* Transformation matrix for layer, default is identity matrix */
       [@yojson.option]
       anchorX: option(float), /* Transform anchor point X, absent if no transform specified */
       [@yojson.option]
@@ -5534,7 +5534,7 @@ transform/scrolling purposes only. */
       [@yojson.option]
       invisible: option(bool), /* Set if layer is not visible. */
       [@yojson.option]
-      scrollRects: option(array(ScrollRect.t)), /* Rectangles scrolling on main thread only. */
+      scrollRects: option(list(ScrollRect.t)), /* Rectangles scrolling on main thread only. */
       [@yojson.option]
       stickyPositionConstraint: option(StickyPositionConstraint.t) /* Sticky position constraint information */,
     };
@@ -5542,11 +5542,11 @@ transform/scrolling purposes only. */
   and PaintProfile: {
     /* Array of timings, one per paint step. */
     [@deriving yojson]
-    type t = array(float);
+    type t = list(float);
   } = {
     /* Array of timings, one per paint step. */
     [@deriving yojson]
-    type t = array(float);
+    type t = list(float);
   };
 }
 and Log: {
@@ -5569,7 +5569,7 @@ and Log: {
       [@yojson.option]
       workerId: option(string), /* Identifier of the worker associated with this entry. */
       [@yojson.option]
-      args: option(array(Runtime.RemoteObject.t)) /* Call arguments. */,
+      args: option(list(Runtime.RemoteObject.t)) /* Call arguments. */,
     };
   }
   and ViolationSetting: {
@@ -5600,7 +5600,7 @@ and Log: {
       [@yojson.option]
       workerId: option(string), /* Identifier of the worker associated with this entry. */
       [@yojson.option]
-      args: option(array(Runtime.RemoteObject.t)) /* Call arguments. */,
+      args: option(list(Runtime.RemoteObject.t)) /* Call arguments. */,
     };
   } = {
     /* Log entry. */
@@ -5621,7 +5621,7 @@ and Log: {
       [@yojson.option]
       workerId: option(string), /* Identifier of the worker associated with this entry. */
       [@yojson.option]
-      args: option(array(Runtime.RemoteObject.t)) /* Call arguments. */,
+      args: option(list(Runtime.RemoteObject.t)) /* Call arguments. */,
     };
   }
   and ViolationSetting: {
@@ -5652,15 +5652,15 @@ and Memory: {
     type t = {
       size: float, /* Size of the sampled allocation. */
       total: float, /* Total bytes attributed to this sample. */
-      stack: array(string) /* Execution stack at the point of allocation. */,
+      stack: list(string) /* Execution stack at the point of allocation. */,
     };
   }
   and SamplingProfile: {
     /* Array of heap profile samples. */
     [@deriving yojson]
     type t = {
-      samples: array(SamplingProfileNode.t), /* No description provided */
-      modules: array(Module.t) /* No description provided */,
+      samples: list(SamplingProfileNode.t), /* No description provided */
+      modules: list(Module.t) /* No description provided */,
     };
   }
   and Module: {
@@ -5690,7 +5690,7 @@ or hexadecimal (0x prefixed) string. */
     type t = {
       size: float, /* Size of the sampled allocation. */
       total: float, /* Total bytes attributed to this sample. */
-      stack: array(string) /* Execution stack at the point of allocation. */,
+      stack: list(string) /* Execution stack at the point of allocation. */,
     };
   } = {
     /* Heap profile sample. */
@@ -5698,22 +5698,22 @@ or hexadecimal (0x prefixed) string. */
     type t = {
       size: float, /* Size of the sampled allocation. */
       total: float, /* Total bytes attributed to this sample. */
-      stack: array(string) /* Execution stack at the point of allocation. */,
+      stack: list(string) /* Execution stack at the point of allocation. */,
     };
   }
   and SamplingProfile: {
     /* Array of heap profile samples. */
     [@deriving yojson]
     type t = {
-      samples: array(SamplingProfileNode.t), /* No description provided */
-      modules: array(Module.t) /* No description provided */,
+      samples: list(SamplingProfileNode.t), /* No description provided */
+      modules: list(Module.t) /* No description provided */,
     };
   } = {
     /* Array of heap profile samples. */
     [@deriving yojson]
     type t = {
-      samples: array(SamplingProfileNode.t), /* No description provided */
-      modules: array(Module.t) /* No description provided */,
+      samples: list(SamplingProfileNode.t), /* No description provided */
+      modules: list(Module.t) /* No description provided */,
     };
   }
   and Module: {
@@ -5855,7 +5855,7 @@ milliseconds relatively to this requestTime. */
       [@yojson.option]
       hasPostData: option(bool), /* True when the request has POST data. Note that postData might still be omitted when this flag is true when the data is too long. */
       [@yojson.option]
-      postDataEntries: option(array(PostDataEntry.t)), /* Request body elements. This will be converted from base64 to binary */
+      postDataEntries: option(list(PostDataEntry.t)), /* Request body elements. This will be converted from base64 to binary */
       [@yojson.option]
       mixedContentType: option(Security.MixedContentType.t), /* The mixed content type of the request. */
       initialPriority: ResourcePriority.t, /* Priority of the resource request at the time request is sent. */
@@ -5894,11 +5894,11 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
       mac: option(string), /* TLS MAC. Note that AEAD ciphers do not have separate MACs. */
       certificateId: Security.CertificateId.t, /* Certificate ID value. */
       subjectName: string, /* Certificate subject name. */
-      sanList: array(string), /* Subject Alternative Name (SAN) DNS names and IP addresses. */
+      sanList: list(string), /* Subject Alternative Name (SAN) DNS names and IP addresses. */
       issuer: string, /* Name of the issuing CA. */
       validFrom: TimeSinceEpoch.t, /* Certificate valid from date. */
       validTo: TimeSinceEpoch.t, /* Certificate valid to (expiration) date */
-      signedCertificateTimestampList: array(SignedCertificateTimestamp.t), /* List of signed certificate timestamps (SCTs). */
+      signedCertificateTimestampList: list(SignedCertificateTimestamp.t), /* List of signed certificate timestamps (SCTs). */
       certificateTransparencyCompliance: CertificateTransparencyCompliance.t /* Whether the request complied with Certificate Transparency policy */,
     };
   }
@@ -5941,7 +5941,7 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
       refreshPolicy: string, /* Only set for "token-redemption" type and determine whether
 to request a fresh SRR or use a still valid cached SRR. */
       [@yojson.option]
-      issuers: option(array(string)) /* Origins of issuers from whom to request tokens or redemption
+      issuers: option(list(string)) /* Origins of issuers from whom to request tokens or redemption
 records. */,
     };
   }
@@ -6093,7 +6093,7 @@ This is a temporary ability and it will be removed in the future. */,
     /* A cookie which was not stored from a response with the corresponding reason. */
     [@deriving yojson]
     type t = {
-      blockedReasons: array(SetCookieBlockedReason.t), /* The reason(s) this cookie was blocked. */
+      blockedReasons: list(SetCookieBlockedReason.t), /* The reason(s) this cookie was blocked. */
       cookieLine: string, /* The string representing this individual cookie as it would appear in the header.
 This is not the entire "cookie" or "set-cookie" header which could have multiple cookies. */
       [@yojson.option]
@@ -6106,7 +6106,7 @@ errors. */,
     /* A cookie with was not sent with a request with the corresponding reason. */
     [@deriving yojson]
     type t = {
-      blockedReasons: array(CookieBlockedReason.t), /* The reason(s) the cookie was blocked. */
+      blockedReasons: list(CookieBlockedReason.t), /* The reason(s) the cookie was blocked. */
       cookie: Cookie.t /* The cookie object representing the cookie which was not sent. */,
     };
   }
@@ -6204,7 +6204,7 @@ backslash. Omitting is equivalent to `"*"`. */
       date: float, /* Signed exchange signature date. */
       expires: float, /* Signed exchange signature expires. */
       [@yojson.option]
-      certificates: option(array(string)) /* The encoded certificates. */,
+      certificates: option(list(string)) /* The encoded certificates. */,
     };
   }
   and SignedExchangeHeader: {
@@ -6215,7 +6215,7 @@ backslash. Omitting is equivalent to `"*"`. */
       requestUrl: string, /* Signed exchange request URL. */
       responseCode: float, /* Signed exchange response code. */
       responseHeaders: Headers.t, /* Signed exchange response headers. */
-      signatures: array(SignedExchangeSignature.t), /* Signed exchange response signature. */
+      signatures: list(SignedExchangeSignature.t), /* Signed exchange response signature. */
       headerIntegrity: string /* Signed exchange header integrity hash in the form of "sha256-<base64-hash-value>". */,
     };
   }
@@ -6245,7 +6245,7 @@ backslash. Omitting is equivalent to `"*"`. */
       [@yojson.option]
       securityDetails: option(SecurityDetails.t), /* Security details for the signed exchange header. */
       [@yojson.option]
-      errors: option(array(SignedExchangeError.t)) /* Errors occurred while handling the signed exchagne. */,
+      errors: option(list(SignedExchangeError.t)) /* Errors occurred while handling the signed exchagne. */,
     };
   }
   and ContentEncoding: {
@@ -6546,7 +6546,7 @@ milliseconds relatively to this requestTime. */
       [@yojson.option]
       hasPostData: option(bool), /* True when the request has POST data. Note that postData might still be omitted when this flag is true when the data is too long. */
       [@yojson.option]
-      postDataEntries: option(array(PostDataEntry.t)), /* Request body elements. This will be converted from base64 to binary */
+      postDataEntries: option(list(PostDataEntry.t)), /* Request body elements. This will be converted from base64 to binary */
       [@yojson.option]
       mixedContentType: option(Security.MixedContentType.t), /* The mixed content type of the request. */
       initialPriority: ResourcePriority.t, /* Priority of the resource request at the time request is sent. */
@@ -6571,7 +6571,7 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
       [@yojson.option]
       hasPostData: option(bool), /* True when the request has POST data. Note that postData might still be omitted when this flag is true when the data is too long. */
       [@yojson.option]
-      postDataEntries: option(array(PostDataEntry.t)), /* Request body elements. This will be converted from base64 to binary */
+      postDataEntries: option(list(PostDataEntry.t)), /* Request body elements. This will be converted from base64 to binary */
       [@yojson.option]
       mixedContentType: option(Security.MixedContentType.t), /* The mixed content type of the request. */
       initialPriority: ResourcePriority.t, /* Priority of the resource request at the time request is sent. */
@@ -6623,11 +6623,11 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
       mac: option(string), /* TLS MAC. Note that AEAD ciphers do not have separate MACs. */
       certificateId: Security.CertificateId.t, /* Certificate ID value. */
       subjectName: string, /* Certificate subject name. */
-      sanList: array(string), /* Subject Alternative Name (SAN) DNS names and IP addresses. */
+      sanList: list(string), /* Subject Alternative Name (SAN) DNS names and IP addresses. */
       issuer: string, /* Name of the issuing CA. */
       validFrom: TimeSinceEpoch.t, /* Certificate valid from date. */
       validTo: TimeSinceEpoch.t, /* Certificate valid to (expiration) date */
-      signedCertificateTimestampList: array(SignedCertificateTimestamp.t), /* List of signed certificate timestamps (SCTs). */
+      signedCertificateTimestampList: list(SignedCertificateTimestamp.t), /* List of signed certificate timestamps (SCTs). */
       certificateTransparencyCompliance: CertificateTransparencyCompliance.t /* Whether the request complied with Certificate Transparency policy */,
     };
   } = {
@@ -6643,11 +6643,11 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
       mac: option(string), /* TLS MAC. Note that AEAD ciphers do not have separate MACs. */
       certificateId: Security.CertificateId.t, /* Certificate ID value. */
       subjectName: string, /* Certificate subject name. */
-      sanList: array(string), /* Subject Alternative Name (SAN) DNS names and IP addresses. */
+      sanList: list(string), /* Subject Alternative Name (SAN) DNS names and IP addresses. */
       issuer: string, /* Name of the issuing CA. */
       validFrom: TimeSinceEpoch.t, /* Certificate valid from date. */
       validTo: TimeSinceEpoch.t, /* Certificate valid to (expiration) date */
-      signedCertificateTimestampList: array(SignedCertificateTimestamp.t), /* List of signed certificate timestamps (SCTs). */
+      signedCertificateTimestampList: list(SignedCertificateTimestamp.t), /* List of signed certificate timestamps (SCTs). */
       certificateTransparencyCompliance: CertificateTransparencyCompliance.t /* Whether the request complied with Certificate Transparency policy */,
     };
   }
@@ -6713,7 +6713,7 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
       refreshPolicy: string, /* Only set for "token-redemption" type and determine whether
 to request a fresh SRR or use a still valid cached SRR. */
       [@yojson.option]
-      issuers: option(array(string)) /* Origins of issuers from whom to request tokens or redemption
+      issuers: option(list(string)) /* Origins of issuers from whom to request tokens or redemption
 records. */,
     };
   } = {
@@ -6727,7 +6727,7 @@ records. */,
       refreshPolicy: string, /* Only set for "token-redemption" type and determine whether
 to request a fresh SRR or use a still valid cached SRR. */
       [@yojson.option]
-      issuers: option(array(string)) /* Origins of issuers from whom to request tokens or redemption
+      issuers: option(list(string)) /* Origins of issuers from whom to request tokens or redemption
 records. */,
     };
   }
@@ -7013,7 +7013,7 @@ This is a temporary ability and it will be removed in the future. */,
     /* A cookie which was not stored from a response with the corresponding reason. */
     [@deriving yojson]
     type t = {
-      blockedReasons: array(SetCookieBlockedReason.t), /* The reason(s) this cookie was blocked. */
+      blockedReasons: list(SetCookieBlockedReason.t), /* The reason(s) this cookie was blocked. */
       cookieLine: string, /* The string representing this individual cookie as it would appear in the header.
 This is not the entire "cookie" or "set-cookie" header which could have multiple cookies. */
       [@yojson.option]
@@ -7025,7 +7025,7 @@ errors. */,
     /* A cookie which was not stored from a response with the corresponding reason. */
     [@deriving yojson]
     type t = {
-      blockedReasons: array(SetCookieBlockedReason.t), /* The reason(s) this cookie was blocked. */
+      blockedReasons: list(SetCookieBlockedReason.t), /* The reason(s) this cookie was blocked. */
       cookieLine: string, /* The string representing this individual cookie as it would appear in the header.
 This is not the entire "cookie" or "set-cookie" header which could have multiple cookies. */
       [@yojson.option]
@@ -7038,14 +7038,14 @@ errors. */,
     /* A cookie with was not sent with a request with the corresponding reason. */
     [@deriving yojson]
     type t = {
-      blockedReasons: array(CookieBlockedReason.t), /* The reason(s) the cookie was blocked. */
+      blockedReasons: list(CookieBlockedReason.t), /* The reason(s) the cookie was blocked. */
       cookie: Cookie.t /* The cookie object representing the cookie which was not sent. */,
     };
   } = {
     /* A cookie with was not sent with a request with the corresponding reason. */
     [@deriving yojson]
     type t = {
-      blockedReasons: array(CookieBlockedReason.t), /* The reason(s) the cookie was blocked. */
+      blockedReasons: list(CookieBlockedReason.t), /* The reason(s) the cookie was blocked. */
       cookie: Cookie.t /* The cookie object representing the cookie which was not sent. */,
     };
   }
@@ -7216,7 +7216,7 @@ backslash. Omitting is equivalent to `"*"`. */
       date: float, /* Signed exchange signature date. */
       expires: float, /* Signed exchange signature expires. */
       [@yojson.option]
-      certificates: option(array(string)) /* The encoded certificates. */,
+      certificates: option(list(string)) /* The encoded certificates. */,
     };
   } = {
     /* Information about a signed exchange signature.
@@ -7234,7 +7234,7 @@ backslash. Omitting is equivalent to `"*"`. */
       date: float, /* Signed exchange signature date. */
       expires: float, /* Signed exchange signature expires. */
       [@yojson.option]
-      certificates: option(array(string)) /* The encoded certificates. */,
+      certificates: option(list(string)) /* The encoded certificates. */,
     };
   }
   and SignedExchangeHeader: {
@@ -7245,7 +7245,7 @@ backslash. Omitting is equivalent to `"*"`. */
       requestUrl: string, /* Signed exchange request URL. */
       responseCode: float, /* Signed exchange response code. */
       responseHeaders: Headers.t, /* Signed exchange response headers. */
-      signatures: array(SignedExchangeSignature.t), /* Signed exchange response signature. */
+      signatures: list(SignedExchangeSignature.t), /* Signed exchange response signature. */
       headerIntegrity: string /* Signed exchange header integrity hash in the form of "sha256-<base64-hash-value>". */,
     };
   } = {
@@ -7256,7 +7256,7 @@ backslash. Omitting is equivalent to `"*"`. */
       requestUrl: string, /* Signed exchange request URL. */
       responseCode: float, /* Signed exchange response code. */
       responseHeaders: Headers.t, /* Signed exchange response headers. */
-      signatures: array(SignedExchangeSignature.t), /* Signed exchange response signature. */
+      signatures: list(SignedExchangeSignature.t), /* Signed exchange response signature. */
       headerIntegrity: string /* Signed exchange header integrity hash in the form of "sha256-<base64-hash-value>". */,
     };
   }
@@ -7300,7 +7300,7 @@ backslash. Omitting is equivalent to `"*"`. */
       [@yojson.option]
       securityDetails: option(SecurityDetails.t), /* Security details for the signed exchange header. */
       [@yojson.option]
-      errors: option(array(SignedExchangeError.t)) /* Errors occurred while handling the signed exchagne. */,
+      errors: option(list(SignedExchangeError.t)) /* Errors occurred while handling the signed exchagne. */,
     };
   } = {
     /* Information about a signed exchange response. */
@@ -7312,7 +7312,7 @@ backslash. Omitting is equivalent to `"*"`. */
       [@yojson.option]
       securityDetails: option(SecurityDetails.t), /* Security details for the signed exchange header. */
       [@yojson.option]
-      errors: option(array(SignedExchangeError.t)) /* Errors occurred while handling the signed exchagne. */,
+      errors: option(list(SignedExchangeError.t)) /* Errors occurred while handling the signed exchagne. */,
     };
   }
   and ContentEncoding: {
@@ -8223,7 +8223,7 @@ parsable. */
     type t = {
       trialName: string, /* No description provided */
       status: OriginTrialStatus.t, /* No description provided */
-      tokensWithStatus: array(OriginTrialTokenWithStatus.t) /* No description provided */,
+      tokensWithStatus: list(OriginTrialTokenWithStatus.t) /* No description provided */,
     };
   }
   and Frame: {
@@ -8251,9 +8251,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       adFrameType: option(AdFrameType.t), /* Indicates whether this frame was tagged as an ad. */
       secureContextType: SecureContextType.t, /* Indicates whether the main document is a secure context and explains why that is the case. */
       crossOriginIsolatedContextType: CrossOriginIsolatedContextType.t, /* Indicates whether this is a cross origin isolated context. */
-      gatedAPIFeatures: array(GatedAPIFeatures.t), /* Indicated which gated APIs / features are available. */
+      gatedAPIFeatures: list(GatedAPIFeatures.t), /* Indicated which gated APIs / features are available. */
       [@yojson.option]
-      originTrials: option(array(OriginTrial.t)) /* Frame document's origin trials with at least one token present. */,
+      originTrials: option(list(OriginTrial.t)) /* Frame document's origin trials with at least one token present. */,
     };
   }
   and FrameResource: {
@@ -8280,8 +8280,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     type t = {
       frame: Frame.t, /* Frame information for this tree item. */
       [@yojson.option]
-      childFrames: option(array(FrameResourceTree.t)), /* Child frames. */
-      resources: array(FrameResource.t) /* Information about frame resources. */,
+      childFrames: option(list(FrameResourceTree.t)), /* Child frames. */
+      resources: list(FrameResource.t) /* Information about frame resources. */,
     };
   }
   and FrameTree: {
@@ -8290,7 +8290,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     type t = {
       frame: Frame.t, /* Frame information for this tree item. */
       [@yojson.option]
-      childFrames: option(array(FrameTree.t)) /* Child frames. */,
+      childFrames: option(list(FrameTree.t)) /* Child frames. */,
     };
   }
   and ScriptIdentifier: {
@@ -8437,7 +8437,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       errorId: string, /* The error id (e.g. 'manifest-missing-suitable-icon'). */
-      errorArguments: array(InstallabilityErrorArgument.t) /* The list of error arguments (e.g. {name:'minimum-icon-size-in-pixels', value:'64'}). */,
+      errorArguments: list(InstallabilityErrorArgument.t) /* The list of error arguments (e.g. {name:'minimum-icon-size-in-pixels', value:'64'}). */,
     };
   }
   and ReferrerPolicy: {
@@ -8639,7 +8639,7 @@ parsable. */
     type t = {
       trialName: string, /* No description provided */
       status: OriginTrialStatus.t, /* No description provided */
-      tokensWithStatus: array(OriginTrialTokenWithStatus.t) /* No description provided */,
+      tokensWithStatus: list(OriginTrialTokenWithStatus.t) /* No description provided */,
     };
   } = {
     /* No description provided */
@@ -8647,7 +8647,7 @@ parsable. */
     type t = {
       trialName: string, /* No description provided */
       status: OriginTrialStatus.t, /* No description provided */
-      tokensWithStatus: array(OriginTrialTokenWithStatus.t) /* No description provided */,
+      tokensWithStatus: list(OriginTrialTokenWithStatus.t) /* No description provided */,
     };
   }
   and Frame: {
@@ -8675,9 +8675,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       adFrameType: option(AdFrameType.t), /* Indicates whether this frame was tagged as an ad. */
       secureContextType: SecureContextType.t, /* Indicates whether the main document is a secure context and explains why that is the case. */
       crossOriginIsolatedContextType: CrossOriginIsolatedContextType.t, /* Indicates whether this is a cross origin isolated context. */
-      gatedAPIFeatures: array(GatedAPIFeatures.t), /* Indicated which gated APIs / features are available. */
+      gatedAPIFeatures: list(GatedAPIFeatures.t), /* Indicated which gated APIs / features are available. */
       [@yojson.option]
-      originTrials: option(array(OriginTrial.t)) /* Frame document's origin trials with at least one token present. */,
+      originTrials: option(list(OriginTrial.t)) /* Frame document's origin trials with at least one token present. */,
     };
   } = {
     /* Information about the Frame on the page. */
@@ -8704,9 +8704,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       adFrameType: option(AdFrameType.t), /* Indicates whether this frame was tagged as an ad. */
       secureContextType: SecureContextType.t, /* Indicates whether the main document is a secure context and explains why that is the case. */
       crossOriginIsolatedContextType: CrossOriginIsolatedContextType.t, /* Indicates whether this is a cross origin isolated context. */
-      gatedAPIFeatures: array(GatedAPIFeatures.t), /* Indicated which gated APIs / features are available. */
+      gatedAPIFeatures: list(GatedAPIFeatures.t), /* Indicated which gated APIs / features are available. */
       [@yojson.option]
-      originTrials: option(array(OriginTrial.t)) /* Frame document's origin trials with at least one token present. */,
+      originTrials: option(list(OriginTrial.t)) /* Frame document's origin trials with at least one token present. */,
     };
   }
   and FrameResource: {
@@ -8750,8 +8750,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     type t = {
       frame: Frame.t, /* Frame information for this tree item. */
       [@yojson.option]
-      childFrames: option(array(FrameResourceTree.t)), /* Child frames. */
-      resources: array(FrameResource.t) /* Information about frame resources. */,
+      childFrames: option(list(FrameResourceTree.t)), /* Child frames. */
+      resources: list(FrameResource.t) /* Information about frame resources. */,
     };
   } = {
     /* Information about the Frame hierarchy along with their cached resources. */
@@ -8759,8 +8759,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     type t = {
       frame: Frame.t, /* Frame information for this tree item. */
       [@yojson.option]
-      childFrames: option(array(FrameResourceTree.t)), /* Child frames. */
-      resources: array(FrameResource.t) /* Information about frame resources. */,
+      childFrames: option(list(FrameResourceTree.t)), /* Child frames. */
+      resources: list(FrameResource.t) /* Information about frame resources. */,
     };
   }
   and FrameTree: {
@@ -8769,7 +8769,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     type t = {
       frame: Frame.t, /* Frame information for this tree item. */
       [@yojson.option]
-      childFrames: option(array(FrameTree.t)) /* Child frames. */,
+      childFrames: option(list(FrameTree.t)) /* Child frames. */,
     };
   } = {
     /* Information about the Frame hierarchy. */
@@ -8777,7 +8777,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     type t = {
       frame: Frame.t, /* Frame information for this tree item. */
       [@yojson.option]
-      childFrames: option(array(FrameTree.t)) /* Child frames. */,
+      childFrames: option(list(FrameTree.t)) /* Child frames. */,
     };
   }
   and ScriptIdentifier: {
@@ -9048,14 +9048,14 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       errorId: string, /* The error id (e.g. 'manifest-missing-suitable-icon'). */
-      errorArguments: array(InstallabilityErrorArgument.t) /* The list of error arguments (e.g. {name:'minimum-icon-size-in-pixels', value:'64'}). */,
+      errorArguments: list(InstallabilityErrorArgument.t) /* The list of error arguments (e.g. {name:'minimum-icon-size-in-pixels', value:'64'}). */,
     };
   } = {
     /* The installability error */
     [@deriving yojson]
     type t = {
       errorId: string, /* The error id (e.g. 'manifest-missing-suitable-icon'). */
-      errorArguments: array(InstallabilityErrorArgument.t) /* The list of error arguments (e.g. {name:'minimum-icon-size-in-pixels', value:'64'}). */,
+      errorArguments: list(InstallabilityErrorArgument.t) /* The list of error arguments (e.g. {name:'minimum-icon-size-in-pixels', value:'64'}). */,
     };
   }
   and ReferrerPolicy: {
@@ -9155,7 +9155,7 @@ and PerformanceTimeline: {
       value: float, /* Score increment produced by this event. */
       hadRecentInput: bool, /* No description provided */
       lastInputTime: Network.TimeSinceEpoch.t, /* No description provided */
-      sources: array(LayoutShiftAttribution.t) /* No description provided */,
+      sources: list(LayoutShiftAttribution.t) /* No description provided */,
     };
   }
   and TimelineEvent: {
@@ -9232,7 +9232,7 @@ This determines which of the optional "details" fiedls is present. */
       value: float, /* Score increment produced by this event. */
       hadRecentInput: bool, /* No description provided */
       lastInputTime: Network.TimeSinceEpoch.t, /* No description provided */
-      sources: array(LayoutShiftAttribution.t) /* No description provided */,
+      sources: list(LayoutShiftAttribution.t) /* No description provided */,
     };
   } = {
     /* See https://wicg.github.io/layout-instability/#sec-layout-shift and layout_shift.idl */
@@ -9241,7 +9241,7 @@ This determines which of the optional "details" fiedls is present. */
       value: float, /* Score increment produced by this event. */
       hadRecentInput: bool, /* No description provided */
       lastInputTime: Network.TimeSinceEpoch.t, /* No description provided */
-      sources: array(LayoutShiftAttribution.t) /* No description provided */,
+      sources: list(LayoutShiftAttribution.t) /* No description provided */,
     };
   }
   and TimelineEvent: {
@@ -9290,25 +9290,25 @@ and Profiler: {
       [@yojson.option]
       hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
       [@yojson.option]
-      children: option(array(float)), /* Child node ids. */
+      children: option(list(float)), /* Child node ids. */
       [@yojson.option]
       deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
 optimize. */
       [@yojson.option]
-      positionTicks: option(array(PositionTickInfo.t)) /* An array of source position ticks. */,
+      positionTicks: option(list(PositionTickInfo.t)) /* An array of source position ticks. */,
     };
   }
   and Profile: {
     /* Profile. */
     [@deriving yojson]
     type t = {
-      nodes: array(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
+      nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
       startTime: float, /* Profiling start timestamp in microseconds. */
       endTime: float, /* Profiling end timestamp in microseconds. */
       [@yojson.option]
-      samples: option(array(float)), /* Ids of samples top nodes. */
+      samples: option(list(float)), /* Ids of samples top nodes. */
       [@yojson.option]
-      timeDeltas: option(array(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
+      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
 profile startTime. */,
     };
   }
@@ -9334,7 +9334,7 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       functionName: string, /* JavaScript function name. */
-      ranges: array(CoverageRange.t), /* Source ranges inside the function with coverage data. */
+      ranges: list(CoverageRange.t), /* Source ranges inside the function with coverage data. */
       isBlockCoverage: bool /* Whether coverage data for this function has block granularity. */,
     };
   }
@@ -9344,7 +9344,7 @@ profile startTime. */,
     type t = {
       scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
       url: string, /* JavaScript script name or url. */
-      functions: array(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
+      functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
     };
   }
   and TypeObject: {
@@ -9359,7 +9359,7 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       offset: float, /* Source offset of the parameter or end of function for return values. */
-      types: array(TypeObject.t) /* The types for this parameter or return value. */,
+      types: list(TypeObject.t) /* The types for this parameter or return value. */,
     };
   }
   and ScriptTypeProfile: {
@@ -9368,7 +9368,7 @@ profile startTime. */,
     type t = {
       scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
       url: string, /* JavaScript script name or url. */
-      entries: array(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
+      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
     };
   }
   and CounterInfo: {
@@ -9398,12 +9398,12 @@ profile startTime. */,
       [@yojson.option]
       hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
       [@yojson.option]
-      children: option(array(float)), /* Child node ids. */
+      children: option(list(float)), /* Child node ids. */
       [@yojson.option]
       deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
 optimize. */
       [@yojson.option]
-      positionTicks: option(array(PositionTickInfo.t)) /* An array of source position ticks. */,
+      positionTicks: option(list(PositionTickInfo.t)) /* An array of source position ticks. */,
     };
   } = {
     /* Profile node. Holds callsite information, execution statistics and child nodes. */
@@ -9414,38 +9414,38 @@ optimize. */
       [@yojson.option]
       hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
       [@yojson.option]
-      children: option(array(float)), /* Child node ids. */
+      children: option(list(float)), /* Child node ids. */
       [@yojson.option]
       deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
 optimize. */
       [@yojson.option]
-      positionTicks: option(array(PositionTickInfo.t)) /* An array of source position ticks. */,
+      positionTicks: option(list(PositionTickInfo.t)) /* An array of source position ticks. */,
     };
   }
   and Profile: {
     /* Profile. */
     [@deriving yojson]
     type t = {
-      nodes: array(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
+      nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
       startTime: float, /* Profiling start timestamp in microseconds. */
       endTime: float, /* Profiling end timestamp in microseconds. */
       [@yojson.option]
-      samples: option(array(float)), /* Ids of samples top nodes. */
+      samples: option(list(float)), /* Ids of samples top nodes. */
       [@yojson.option]
-      timeDeltas: option(array(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
+      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
 profile startTime. */,
     };
   } = {
     /* Profile. */
     [@deriving yojson]
     type t = {
-      nodes: array(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
+      nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
       startTime: float, /* Profiling start timestamp in microseconds. */
       endTime: float, /* Profiling end timestamp in microseconds. */
       [@yojson.option]
-      samples: option(array(float)), /* Ids of samples top nodes. */
+      samples: option(list(float)), /* Ids of samples top nodes. */
       [@yojson.option]
-      timeDeltas: option(array(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
+      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
 profile startTime. */,
     };
   }
@@ -9486,7 +9486,7 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       functionName: string, /* JavaScript function name. */
-      ranges: array(CoverageRange.t), /* Source ranges inside the function with coverage data. */
+      ranges: list(CoverageRange.t), /* Source ranges inside the function with coverage data. */
       isBlockCoverage: bool /* Whether coverage data for this function has block granularity. */,
     };
   } = {
@@ -9494,7 +9494,7 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       functionName: string, /* JavaScript function name. */
-      ranges: array(CoverageRange.t), /* Source ranges inside the function with coverage data. */
+      ranges: list(CoverageRange.t), /* Source ranges inside the function with coverage data. */
       isBlockCoverage: bool /* Whether coverage data for this function has block granularity. */,
     };
   }
@@ -9504,7 +9504,7 @@ profile startTime. */,
     type t = {
       scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
       url: string, /* JavaScript script name or url. */
-      functions: array(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
+      functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
     };
   } = {
     /* Coverage data for a JavaScript script. */
@@ -9512,7 +9512,7 @@ profile startTime. */,
     type t = {
       scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
       url: string, /* JavaScript script name or url. */
-      functions: array(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
+      functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
     };
   }
   and TypeObject: {
@@ -9533,14 +9533,14 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       offset: float, /* Source offset of the parameter or end of function for return values. */
-      types: array(TypeObject.t) /* The types for this parameter or return value. */,
+      types: list(TypeObject.t) /* The types for this parameter or return value. */,
     };
   } = {
     /* Source offset and types for a parameter or return value. */
     [@deriving yojson]
     type t = {
       offset: float, /* Source offset of the parameter or end of function for return values. */
-      types: array(TypeObject.t) /* The types for this parameter or return value. */,
+      types: list(TypeObject.t) /* The types for this parameter or return value. */,
     };
   }
   and ScriptTypeProfile: {
@@ -9549,7 +9549,7 @@ profile startTime. */,
     type t = {
       scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
       url: string, /* JavaScript script name or url. */
-      entries: array(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
+      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
     };
   } = {
     /* Type profile data collected during runtime for a JavaScript script. */
@@ -9557,7 +9557,7 @@ profile startTime. */,
     type t = {
       scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
       url: string, /* JavaScript script name or url. */
-      entries: array(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
+      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
     };
   }
   and CounterInfo: {
@@ -9660,9 +9660,9 @@ The result value is json ML array. */,
       [@yojson.option]
       description: option(string), /* String representation of the object. */
       overflow: bool, /* True iff some of the properties or entries of the original object did not fit. */
-      properties: array(PropertyPreview.t), /* List of the properties. */
+      properties: list(PropertyPreview.t), /* List of the properties. */
       [@yojson.option]
-      entries: option(array(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
+      entries: option(list(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
     };
   }
   and PropertyPreview: {
@@ -9822,7 +9822,7 @@ performs a cross-process navigation. */
       [@yojson.option]
       description: option(string), /* String label of this stack trace. For async traces this may be a name of the function that
 initiated the async call. */
-      callFrames: array(CallFrame.t), /* JavaScript function name. */
+      callFrames: list(CallFrame.t), /* JavaScript function name. */
       [@yojson.option]
       parent: option(StackTrace.t), /* Asynchronous JavaScript stack trace that preceded this stack, if available. */
       [@yojson.option]
@@ -9961,9 +9961,9 @@ The result value is json ML array. */,
       [@yojson.option]
       description: option(string), /* String representation of the object. */
       overflow: bool, /* True iff some of the properties or entries of the original object did not fit. */
-      properties: array(PropertyPreview.t), /* List of the properties. */
+      properties: list(PropertyPreview.t), /* List of the properties. */
       [@yojson.option]
-      entries: option(array(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
+      entries: option(list(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
     };
   } = {
     /* Object containing abbreviated remote object value. */
@@ -9976,9 +9976,9 @@ The result value is json ML array. */,
       [@yojson.option]
       description: option(string), /* String representation of the object. */
       overflow: bool, /* True iff some of the properties or entries of the original object did not fit. */
-      properties: array(PropertyPreview.t), /* List of the properties. */
+      properties: list(PropertyPreview.t), /* List of the properties. */
       [@yojson.option]
-      entries: option(array(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
+      entries: option(list(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
     };
   }
   and PropertyPreview: {
@@ -10276,7 +10276,7 @@ performs a cross-process navigation. */
       [@yojson.option]
       description: option(string), /* String label of this stack trace. For async traces this may be a name of the function that
 initiated the async call. */
-      callFrames: array(CallFrame.t), /* JavaScript function name. */
+      callFrames: list(CallFrame.t), /* JavaScript function name. */
       [@yojson.option]
       parent: option(StackTrace.t), /* Asynchronous JavaScript stack trace that preceded this stack, if available. */
       [@yojson.option]
@@ -10289,7 +10289,7 @@ initiated the async call. */
       [@yojson.option]
       description: option(string), /* String label of this stack trace. For async traces this may be a name of the function that
 initiated the async call. */
-      callFrames: array(CallFrame.t), /* JavaScript function name. */
+      callFrames: list(CallFrame.t), /* JavaScript function name. */
       [@yojson.option]
       parent: option(StackTrace.t), /* Asynchronous JavaScript stack trace that preceded this stack, if available. */
       [@yojson.option]
@@ -10379,7 +10379,7 @@ and Security: {
       cipher: string, /* Cipher name. */
       [@yojson.option]
       mac: option(string), /* TLS MAC. Note that AEAD ciphers do not have separate MACs. */
-      certificate: array(string), /* Page certificate. */
+      certificate: list(string), /* Page certificate. */
       subjectName: string, /* Certificate subject name. */
       issuer: string, /* Name of the issuing CA. */
       validFrom: Network.TimeSinceEpoch.t, /* Certificate valid from date. */
@@ -10418,7 +10418,7 @@ and Security: {
       certificateSecurityState: option(CertificateSecurityState.t), /* Security state details about the page certificate. */
       [@yojson.option]
       safetyTipInfo: option(SafetyTipInfo.t), /* The type of Safety Tip triggered on the page. Note that this field will be set even if the Safety Tip UI was not actually shown. */
-      securityStateIssueIds: array(string) /* Array of security state issues ids. */,
+      securityStateIssueIds: list(string) /* Array of security state issues ids. */,
     };
   }
   and SecurityStateExplanation: {
@@ -10430,9 +10430,9 @@ and Security: {
       summary: string, /* Short phrase describing the type of factor. */
       description: string, /* Full text explanation of the factor. */
       mixedContentType: MixedContentType.t, /* The type of mixed content described by the explanation. */
-      certificate: array(string), /* Page certificate. */
+      certificate: list(string), /* Page certificate. */
       [@yojson.option]
-      recommendations: option(array(string)) /* Recommendations to fix any issues. */,
+      recommendations: option(list(string)) /* Recommendations to fix any issues. */,
     };
   }
   and InsecureContentStatus: {
@@ -10495,7 +10495,7 @@ and Security: {
       cipher: string, /* Cipher name. */
       [@yojson.option]
       mac: option(string), /* TLS MAC. Note that AEAD ciphers do not have separate MACs. */
-      certificate: array(string), /* Page certificate. */
+      certificate: list(string), /* Page certificate. */
       subjectName: string, /* Certificate subject name. */
       issuer: string, /* Name of the issuing CA. */
       validFrom: Network.TimeSinceEpoch.t, /* Certificate valid from date. */
@@ -10521,7 +10521,7 @@ and Security: {
       cipher: string, /* Cipher name. */
       [@yojson.option]
       mac: option(string), /* TLS MAC. Note that AEAD ciphers do not have separate MACs. */
-      certificate: array(string), /* Page certificate. */
+      certificate: list(string), /* Page certificate. */
       subjectName: string, /* Certificate subject name. */
       issuer: string, /* Name of the issuing CA. */
       validFrom: Network.TimeSinceEpoch.t, /* Certificate valid from date. */
@@ -10572,7 +10572,7 @@ and Security: {
       certificateSecurityState: option(CertificateSecurityState.t), /* Security state details about the page certificate. */
       [@yojson.option]
       safetyTipInfo: option(SafetyTipInfo.t), /* The type of Safety Tip triggered on the page. Note that this field will be set even if the Safety Tip UI was not actually shown. */
-      securityStateIssueIds: array(string) /* Array of security state issues ids. */,
+      securityStateIssueIds: list(string) /* Array of security state issues ids. */,
     };
   } = {
     /* Security state information about the page. */
@@ -10583,7 +10583,7 @@ and Security: {
       certificateSecurityState: option(CertificateSecurityState.t), /* Security state details about the page certificate. */
       [@yojson.option]
       safetyTipInfo: option(SafetyTipInfo.t), /* The type of Safety Tip triggered on the page. Note that this field will be set even if the Safety Tip UI was not actually shown. */
-      securityStateIssueIds: array(string) /* Array of security state issues ids. */,
+      securityStateIssueIds: list(string) /* Array of security state issues ids. */,
     };
   }
   and SecurityStateExplanation: {
@@ -10595,9 +10595,9 @@ and Security: {
       summary: string, /* Short phrase describing the type of factor. */
       description: string, /* Full text explanation of the factor. */
       mixedContentType: MixedContentType.t, /* The type of mixed content described by the explanation. */
-      certificate: array(string), /* Page certificate. */
+      certificate: list(string), /* Page certificate. */
       [@yojson.option]
-      recommendations: option(array(string)) /* Recommendations to fix any issues. */,
+      recommendations: option(list(string)) /* Recommendations to fix any issues. */,
     };
   } = {
     /* An explanation of an factor contributing to the security state. */
@@ -10608,9 +10608,9 @@ and Security: {
       summary: string, /* Short phrase describing the type of factor. */
       description: string, /* Full text explanation of the factor. */
       mixedContentType: MixedContentType.t, /* The type of mixed content described by the explanation. */
-      certificate: array(string), /* Page certificate. */
+      certificate: list(string), /* Page certificate. */
       [@yojson.option]
-      recommendations: option(array(string)) /* Recommendations to fix any issues. */,
+      recommendations: option(list(string)) /* Recommendations to fix any issues. */,
     };
   }
   and InsecureContentStatus: {
@@ -10690,7 +10690,7 @@ and ServiceWorker: {
       scriptResponseTime: option(float), /* The time at which the response headers of the main script were received from the server.
 For cached script it is the last time the cache entry was validated. */
       [@yojson.option]
-      controlledClients: option(array(Target.TargetID.t)), /* No description provided */
+      controlledClients: option(list(Target.TargetID.t)), /* No description provided */
       [@yojson.option]
       targetId: option(Target.TargetID.t) /* No description provided */,
     };
@@ -10767,7 +10767,7 @@ For cached script it is the last time the cache entry was validated. */
       scriptResponseTime: option(float), /* The time at which the response headers of the main script were received from the server.
 For cached script it is the last time the cache entry was validated. */
       [@yojson.option]
-      controlledClients: option(array(Target.TargetID.t)), /* No description provided */
+      controlledClients: option(list(Target.TargetID.t)), /* No description provided */
       [@yojson.option]
       targetId: option(Target.TargetID.t) /* No description provided */,
     };
@@ -10786,7 +10786,7 @@ For cached script it is the last time the cache entry was validated. */
       scriptResponseTime: option(float), /* The time at which the response headers of the main script were received from the server.
 For cached script it is the last time the cache entry was validated. */
       [@yojson.option]
-      controlledClients: option(array(Target.TargetID.t)), /* No description provided */
+      controlledClients: option(list(Target.TargetID.t)), /* No description provided */
       [@yojson.option]
       targetId: option(Target.TargetID.t) /* No description provided */,
     };
@@ -10947,22 +10947,22 @@ and SystemInfo: {
       imageType: ImageType.t, /* Image coded, e.g. Jpeg. */
       maxDimensions: Size.t, /* Maximum supported dimensions of the image in pixels. */
       minDimensions: Size.t, /* Minimum supported dimensions of the image in pixels. */
-      subsamplings: array(SubsamplingFormat.t) /* Optional array of supported subsampling formats, e.g. 4:2:0, if known. */,
+      subsamplings: list(SubsamplingFormat.t) /* Optional array of supported subsampling formats, e.g. 4:2:0, if known. */,
     };
   }
   and GPUInfo: {
     /* Provides information about the GPU(s) on the system. */
     [@deriving yojson]
     type t = {
-      devices: array(GPUDevice.t), /* The graphics devices on the system. Element 0 is the primary GPU. */
+      devices: list(GPUDevice.t), /* The graphics devices on the system. Element 0 is the primary GPU. */
       [@yojson.option]
       auxAttributes: option(assoc), /* An optional dictionary of additional GPU related attributes. */
       [@yojson.option]
       featureStatus: option(assoc), /* An optional dictionary of graphics features and their status. */
-      driverBugWorkarounds: array(string), /* An optional array of GPU driver bug workarounds. */
-      videoDecoding: array(VideoDecodeAcceleratorCapability.t), /* Supported accelerated video decoding capabilities. */
-      videoEncoding: array(VideoEncodeAcceleratorCapability.t), /* Supported accelerated video encoding capabilities. */
-      imageDecoding: array(ImageDecodeAcceleratorCapability.t) /* Supported accelerated image decoding capabilities. */,
+      driverBugWorkarounds: list(string), /* An optional array of GPU driver bug workarounds. */
+      videoDecoding: list(VideoDecodeAcceleratorCapability.t), /* Supported accelerated video decoding capabilities. */
+      videoEncoding: list(VideoEncodeAcceleratorCapability.t), /* Supported accelerated video encoding capabilities. */
+      imageDecoding: list(ImageDecodeAcceleratorCapability.t) /* Supported accelerated image decoding capabilities. */,
     };
   }
   and ProcessInfo: {
@@ -11093,7 +11093,7 @@ process since the process start. */,
       imageType: ImageType.t, /* Image coded, e.g. Jpeg. */
       maxDimensions: Size.t, /* Maximum supported dimensions of the image in pixels. */
       minDimensions: Size.t, /* Minimum supported dimensions of the image in pixels. */
-      subsamplings: array(SubsamplingFormat.t) /* Optional array of supported subsampling formats, e.g. 4:2:0, if known. */,
+      subsamplings: list(SubsamplingFormat.t) /* Optional array of supported subsampling formats, e.g. 4:2:0, if known. */,
     };
   } = {
     /* Describes a supported image decoding profile with its associated minimum and
@@ -11103,36 +11103,36 @@ process since the process start. */,
       imageType: ImageType.t, /* Image coded, e.g. Jpeg. */
       maxDimensions: Size.t, /* Maximum supported dimensions of the image in pixels. */
       minDimensions: Size.t, /* Minimum supported dimensions of the image in pixels. */
-      subsamplings: array(SubsamplingFormat.t) /* Optional array of supported subsampling formats, e.g. 4:2:0, if known. */,
+      subsamplings: list(SubsamplingFormat.t) /* Optional array of supported subsampling formats, e.g. 4:2:0, if known. */,
     };
   }
   and GPUInfo: {
     /* Provides information about the GPU(s) on the system. */
     [@deriving yojson]
     type t = {
-      devices: array(GPUDevice.t), /* The graphics devices on the system. Element 0 is the primary GPU. */
+      devices: list(GPUDevice.t), /* The graphics devices on the system. Element 0 is the primary GPU. */
       [@yojson.option]
       auxAttributes: option(assoc), /* An optional dictionary of additional GPU related attributes. */
       [@yojson.option]
       featureStatus: option(assoc), /* An optional dictionary of graphics features and their status. */
-      driverBugWorkarounds: array(string), /* An optional array of GPU driver bug workarounds. */
-      videoDecoding: array(VideoDecodeAcceleratorCapability.t), /* Supported accelerated video decoding capabilities. */
-      videoEncoding: array(VideoEncodeAcceleratorCapability.t), /* Supported accelerated video encoding capabilities. */
-      imageDecoding: array(ImageDecodeAcceleratorCapability.t) /* Supported accelerated image decoding capabilities. */,
+      driverBugWorkarounds: list(string), /* An optional array of GPU driver bug workarounds. */
+      videoDecoding: list(VideoDecodeAcceleratorCapability.t), /* Supported accelerated video decoding capabilities. */
+      videoEncoding: list(VideoEncodeAcceleratorCapability.t), /* Supported accelerated video encoding capabilities. */
+      imageDecoding: list(ImageDecodeAcceleratorCapability.t) /* Supported accelerated image decoding capabilities. */,
     };
   } = {
     /* Provides information about the GPU(s) on the system. */
     [@deriving yojson]
     type t = {
-      devices: array(GPUDevice.t), /* The graphics devices on the system. Element 0 is the primary GPU. */
+      devices: list(GPUDevice.t), /* The graphics devices on the system. Element 0 is the primary GPU. */
       [@yojson.option]
       auxAttributes: option(assoc), /* An optional dictionary of additional GPU related attributes. */
       [@yojson.option]
       featureStatus: option(assoc), /* An optional dictionary of graphics features and their status. */
-      driverBugWorkarounds: array(string), /* An optional array of GPU driver bug workarounds. */
-      videoDecoding: array(VideoDecodeAcceleratorCapability.t), /* Supported accelerated video decoding capabilities. */
-      videoEncoding: array(VideoEncodeAcceleratorCapability.t), /* Supported accelerated video encoding capabilities. */
-      imageDecoding: array(ImageDecodeAcceleratorCapability.t) /* Supported accelerated image decoding capabilities. */,
+      driverBugWorkarounds: list(string), /* An optional array of GPU driver bug workarounds. */
+      videoDecoding: list(VideoDecodeAcceleratorCapability.t), /* Supported accelerated video decoding capabilities. */
+      videoEncoding: list(VideoEncodeAcceleratorCapability.t), /* Supported accelerated video encoding capabilities. */
+      imageDecoding: list(ImageDecodeAcceleratorCapability.t) /* Supported accelerated image decoding capabilities. */,
     };
   }
   and ProcessInfo: {
@@ -11286,11 +11286,11 @@ and Tracing: {
       [@yojson.option]
       enableArgumentFilter: option(bool), /* Turns on argument filter. */
       [@yojson.option]
-      includedCategories: option(array(string)), /* Included category filters. */
+      includedCategories: option(list(string)), /* Included category filters. */
       [@yojson.option]
-      excludedCategories: option(array(string)), /* Excluded category filters. */
+      excludedCategories: option(list(string)), /* Excluded category filters. */
       [@yojson.option]
-      syntheticDelays: option(array(string)), /* Configuration to synthesize the delays in tracing. */
+      syntheticDelays: option(list(string)), /* Configuration to synthesize the delays in tracing. */
       [@yojson.option]
       memoryDumpConfig: option(MemoryDumpConfig.t) /* Configuration for memory dump triggers. Used only when "memory-infra" category is enabled. */,
     };
@@ -11345,11 +11345,11 @@ and Tracing: {
       [@yojson.option]
       enableArgumentFilter: option(bool), /* Turns on argument filter. */
       [@yojson.option]
-      includedCategories: option(array(string)), /* Included category filters. */
+      includedCategories: option(list(string)), /* Included category filters. */
       [@yojson.option]
-      excludedCategories: option(array(string)), /* Excluded category filters. */
+      excludedCategories: option(list(string)), /* Excluded category filters. */
       [@yojson.option]
-      syntheticDelays: option(array(string)), /* Configuration to synthesize the delays in tracing. */
+      syntheticDelays: option(list(string)), /* Configuration to synthesize the delays in tracing. */
       [@yojson.option]
       memoryDumpConfig: option(MemoryDumpConfig.t) /* Configuration for memory dump triggers. Used only when "memory-infra" category is enabled. */,
     };
@@ -11366,11 +11366,11 @@ and Tracing: {
       [@yojson.option]
       enableArgumentFilter: option(bool), /* Turns on argument filter. */
       [@yojson.option]
-      includedCategories: option(array(string)), /* Included category filters. */
+      includedCategories: option(list(string)), /* Included category filters. */
       [@yojson.option]
-      excludedCategories: option(array(string)), /* Excluded category filters. */
+      excludedCategories: option(list(string)), /* Excluded category filters. */
       [@yojson.option]
-      syntheticDelays: option(array(string)), /* Configuration to synthesize the delays in tracing. */
+      syntheticDelays: option(list(string)), /* Configuration to synthesize the delays in tracing. */
       [@yojson.option]
       memoryDumpConfig: option(MemoryDumpConfig.t) /* Configuration for memory dump triggers. Used only when "memory-infra" category is enabled. */,
     };

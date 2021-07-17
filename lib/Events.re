@@ -293,7 +293,7 @@ module Cast = {
 
     [@deriving yojson]
     type result = {
-      sinks: array(Types.Cast.Sink.t) /* No description provided */,
+      sinks: list(Types.Cast.Sink.t) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -369,12 +369,12 @@ module Debugger = {
 
     [@deriving yojson]
     type result = {
-      callFrames: array(Types.Debugger.CallFrame.t), /* Call stack the virtual machine stopped on. */
+      callFrames: list(Types.Debugger.CallFrame.t), /* Call stack the virtual machine stopped on. */
       reason: string, /* Pause reason. */
       [@yojson.option]
       data: option(Types.assoc), /* Object containing break-specific auxiliary properties. */
       [@yojson.option]
-      hitBreakpoints: option(array(string)), /* Hit breakpoints IDs */
+      hitBreakpoints: option(list(string)), /* Hit breakpoints IDs */
       [@yojson.option]
       asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
       [@yojson.option]
@@ -624,7 +624,7 @@ module DOM = {
     [@deriving yojson]
     type result = {
       insertionPointId: Types.DOM.NodeId.t, /* Insertion point where distributed nodes were updated. */
-      distributedNodes: array(Types.DOM.BackendNode.t) /* Distributed nodes for given insertion point. */,
+      distributedNodes: list(Types.DOM.BackendNode.t) /* Distributed nodes for given insertion point. */,
     };
 
     [@deriving yojson]
@@ -658,7 +658,7 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
-      nodeIds: array(Types.DOM.NodeId.t) /* Ids of the nodes for which the inline styles have been invalidated. */,
+      nodeIds: list(Types.DOM.NodeId.t) /* Ids of the nodes for which the inline styles have been invalidated. */,
     };
 
     [@deriving yojson]
@@ -716,7 +716,7 @@ module DOM = {
     [@deriving yojson]
     type result = {
       parentId: Types.DOM.NodeId.t, /* Parent node id to populate with children. */
-      nodes: array(Types.DOM.Node.t) /* Child nodes array. */,
+      nodes: list(Types.DOM.Node.t) /* Child nodes array. */,
     };
 
     [@deriving yojson]
@@ -930,7 +930,7 @@ module HeapProfiler = {
 
     [@deriving yojson]
     type result = {
-      statsUpdate: array(float) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
+      statsUpdate: list(float) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
 index, the second integer is a total count of objects for the fragment, the third integer is
 a total size of the objects for the fragment. */,
     };
@@ -1104,7 +1104,7 @@ module LayerTree = {
     [@deriving yojson]
     type result = {
       [@yojson.option]
-      layers: option(array(Types.LayerTree.Layer.t)) /* Layer tree, absent if not in the comspositing mode. */,
+      layers: option(list(Types.LayerTree.Layer.t)) /* Layer tree, absent if not in the comspositing mode. */,
     };
 
     [@deriving yojson]
@@ -1601,7 +1601,7 @@ this requestId will be the same as the requestId present in the requestWillBeSen
     [@deriving yojson]
     type result = {
       requestId: Types.Network.RequestId.t, /* Request identifier. Used to match this information to an existing requestWillBeSent event. */
-      associatedCookies: array(Types.Network.BlockedCookieWithReason.t), /* A list of cookies potentially associated to the requested URL. This includes both cookies sent with
+      associatedCookies: list(Types.Network.BlockedCookieWithReason.t), /* A list of cookies potentially associated to the requested URL. This includes both cookies sent with
 the request and the ones not sent; the latter are distinguished by having blockedReason field set. */
       headers: Types.Network.Headers.t, /* Raw request headers as they will be sent over the wire. */
       [@yojson.option]
@@ -1626,7 +1626,7 @@ the request and the ones not sent; the latter are distinguished by having blocke
     [@deriving yojson]
     type result = {
       requestId: Types.Network.RequestId.t, /* Request identifier. Used to match this information to another responseReceived event. */
-      blockedCookies: array(Types.Network.BlockedSetCookieWithReason.t), /* A list of cookies which were not stored from the response along with the corresponding
+      blockedCookies: list(Types.Network.BlockedSetCookieWithReason.t), /* A list of cookies which were not stored from the response along with the corresponding
 reasons for blocking. The cookies here may not be valid due to syntax errors, which
 are represented by the invalid cookie line string instead of a proper cookie. */
       headers: Types.Network.Headers.t, /* Raw response headers as they were received over the wire. */
@@ -2228,7 +2228,7 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     type result = {
       url: string, /* The URL for the new window. */
       windowName: string, /* Window name. */
-      windowFeatures: array(string), /* An array of enabled window features. */
+      windowFeatures: list(string), /* An array of enabled window features. */
       userGesture: bool /* Whether or not it was triggered by user gesture. */,
     };
 
@@ -2269,7 +2269,7 @@ module Performance = {
 
     [@deriving yojson]
     type result = {
-      metrics: array(Types.Performance.Metric.t), /* Current values of the metrics. */
+      metrics: list(Types.Performance.Metric.t), /* Current values of the metrics. */
       title: string /* Timestamp title. */,
     };
 
@@ -2358,7 +2358,7 @@ module Profiler = {
     type result = {
       timestamp: float, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
       occassion: string, /* Identifier for distinguishing coverage events. */
-      result: array(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
+      result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
     };
 
     [@deriving yojson]
@@ -2400,7 +2400,7 @@ module Runtime = {
     type result = {
       [@key "type"]
       type_: string, /* Type of the call. */
-      args: array(Types.Runtime.RemoteObject.t), /* Call arguments. */
+      args: list(Types.Runtime.RemoteObject.t), /* Call arguments. */
       executionContextId: Types.Runtime.ExecutionContextId.t, /* Identifier of the context where the call was made. */
       timestamp: Types.Runtime.Timestamp.t, /* Call timestamp. */
       [@yojson.option]
@@ -2584,7 +2584,7 @@ module Security = {
     type result = {
       securityState: Types.Security.SecurityState.t, /* Security state. */
       schemeIsCryptographic: bool, /* True if the page was loaded over cryptographic transport such as HTTPS. */
-      explanations: array(Types.Security.SecurityStateExplanation.t), /* List of explanations for the security state. If the overall security state is `insecure` or
+      explanations: list(Types.Security.SecurityStateExplanation.t), /* List of explanations for the security state. If the overall security state is `insecure` or
 `warning`, at least one corresponding explanation should be included. */
       insecureContentStatus: Types.Security.InsecureContentStatus.t, /* Information about insecure content on the page. */
       [@yojson.option]
@@ -2626,7 +2626,7 @@ module ServiceWorker = {
 
     [@deriving yojson]
     type result = {
-      registrations: array(Types.ServiceWorker.ServiceWorkerRegistration.t) /* No description provided */,
+      registrations: list(Types.ServiceWorker.ServiceWorkerRegistration.t) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -2644,7 +2644,7 @@ module ServiceWorker = {
 
     [@deriving yojson]
     type result = {
-      versions: array(Types.ServiceWorker.ServiceWorkerVersion.t) /* No description provided */,
+      versions: list(Types.ServiceWorker.ServiceWorkerVersion.t) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -2923,7 +2923,7 @@ total size. */,
     let name = "Tracing.dataCollected";
 
     [@deriving yojson]
-    type result = {value: array(Types.assoc) /* No description provided */};
+    type result = {value: list(Types.assoc) /* No description provided */};
 
     [@deriving yojson]
     type t = {
@@ -2982,7 +2982,7 @@ module Fetch = {
       [@yojson.option]
       responseStatusCode: option(float), /* Response code if intercepted at response stage. */
       [@yojson.option]
-      responseHeaders: option(array(Types.Fetch.HeaderEntry.t)), /* Response headers if intercepted at the response stage. */
+      responseHeaders: option(list(Types.Fetch.HeaderEntry.t)), /* Response headers if intercepted at the response stage. */
       [@yojson.option]
       networkId: option(Types.Fetch.RequestId.t) /* If the intercepted request had a corresponding Network.requestWillBeSent event fired for it,
 then this networkId will be the same as the requestId present in the requestWillBeSent event. */,
@@ -3292,7 +3292,7 @@ module Media = {
     [@deriving yojson]
     type result = {
       playerId: Types.Media.PlayerId.t, /* No description provided */
-      properties: array(Types.Media.PlayerProperty.t) /* No description provided */,
+      properties: list(Types.Media.PlayerProperty.t) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -3312,7 +3312,7 @@ module Media = {
     [@deriving yojson]
     type result = {
       playerId: Types.Media.PlayerId.t, /* No description provided */
-      events: array(Types.Media.PlayerEvent.t) /* No description provided */,
+      events: list(Types.Media.PlayerEvent.t) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -3331,7 +3331,7 @@ module Media = {
     [@deriving yojson]
     type result = {
       playerId: Types.Media.PlayerId.t, /* No description provided */
-      messages: array(Types.Media.PlayerMessage.t) /* No description provided */,
+      messages: list(Types.Media.PlayerMessage.t) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -3350,7 +3350,7 @@ module Media = {
     [@deriving yojson]
     type result = {
       playerId: Types.Media.PlayerId.t, /* No description provided */
-      errors: array(Types.Media.PlayerError.t) /* No description provided */,
+      errors: list(Types.Media.PlayerError.t) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -3370,7 +3370,7 @@ module Media = {
 
     [@deriving yojson]
     type result = {
-      players: array(Types.Media.PlayerId.t) /* No description provided */,
+      players: list(Types.Media.PlayerId.t) /* No description provided */,
     };
 
     [@deriving yojson]
