@@ -4587,2000 +4587,6 @@ module Cast = {
     };
   };
 };
-module Console = {
-  /* Does nothing. */
-  module ClearMessages = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Console.clearMessages", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Disables console domain, prevents further console messages from being reported to the client. */
-  module Disable = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Console.disable", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Enables console domain, sends the messages collected so far to the client by means of the
-     `messageAdded` notification. */
-  module Enable = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Console.enable", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-};
-module Debugger = {
-  /* Continues execution until specific location is reached. */
-  module ContinueToLocation = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        location: Types.Debugger.Location.t, /* Location to continue to. */
-        [@yojson.option]
-        targetCallFrames: option(string) /* No description provided */,
-      };
-      let make = (~location, ~targetCallFrames=?, ()) => {
-        {location, targetCallFrames};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.continueToLocation", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Disables debugger for given page. */
-  module Disable = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Debugger.disable", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Enables debugger for the given page. Clients should not assume that the debugging has been
-     enabled until the result for this command is received. */
-  module Enable = {
-    module Response: {
-      type result = {
-        debuggerId: Types.Runtime.UniqueDebuggerId.t /* Unique identifier of the debugger. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        debuggerId: Types.Runtime.UniqueDebuggerId.t /* Unique identifier of the debugger. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@yojson.option]
-        maxScriptsCacheSize: option(float) /* The maximum size in bytes of collected scripts (not referenced by other heap objects)
-the debugger can hold. Puts no limit if paramter is omitted. */,
-      };
-      let make = (~maxScriptsCacheSize=?, ()) => {
-        {maxScriptsCacheSize: maxScriptsCacheSize};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.enable", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Evaluates expression on a given call frame. */
-  module EvaluateOnCallFrame = {
-    module Response: {
-      type result = {
-        result: Types.Runtime.RemoteObject.t, /* Object wrapper for the evaluation result. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: Types.Runtime.RemoteObject.t, /* Object wrapper for the evaluation result. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        callFrameId: Types.Debugger.CallFrameId.t, /* Call frame identifier to evaluate on. */
-        expression: string, /* Expression to evaluate. */
-        [@yojson.option]
-        objectGroup: option(string), /* String object group name to put result into (allows rapid releasing resulting object handles
-using `releaseObjectGroup`). */
-        [@yojson.option]
-        includeCommandLineAPI: option(bool), /* Specifies whether command line API should be available to the evaluated expression, defaults
-to false. */
-        [@yojson.option]
-        silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
-execution. Overrides `setPauseOnException` state. */
-        [@yojson.option]
-        returnByValue: option(bool), /* Whether the result is expected to be a JSON object that should be sent by value. */
-        [@yojson.option]
-        generatePreview: option(bool), /* Whether preview should be generated for the result. */
-        [@yojson.option]
-        throwOnSideEffect: option(bool), /* Whether to throw an exception if side effect cannot be ruled out during evaluation. */
-        [@yojson.option]
-        timeout: option(Types.Runtime.TimeDelta.t) /* Terminate execution after timing out (number of milliseconds). */,
-      };
-      let make =
-          (
-            ~callFrameId,
-            ~expression,
-            ~objectGroup=?,
-            ~includeCommandLineAPI=?,
-            ~silent=?,
-            ~returnByValue=?,
-            ~generatePreview=?,
-            ~throwOnSideEffect=?,
-            ~timeout=?,
-            (),
-          ) => {
-        {
-          callFrameId,
-          expression,
-          objectGroup,
-          includeCommandLineAPI,
-          silent,
-          returnByValue,
-          generatePreview,
-          throwOnSideEffect,
-          timeout,
-        };
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.evaluateOnCallFrame", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Returns possible locations for breakpoint. scriptId in start and end range locations should be
-     the same. */
-  module GetPossibleBreakpoints = {
-    module Response: {
-      type result = {
-        locations: list(Types.Debugger.BreakLocation.t) /* List of the possible breakpoint locations. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        locations: list(Types.Debugger.BreakLocation.t) /* List of the possible breakpoint locations. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        start: Types.Debugger.Location.t, /* Start of range to search possible breakpoint locations in. */
-        [@yojson.option] [@key "end"]
-        end_: option(Types.Debugger.Location.t), /* End of range to search possible breakpoint locations in (excluding). When not specified, end
-of scripts is used as end of range. */
-        [@yojson.option]
-        restrictToFunction: option(bool) /* Only consider locations which are in the same (non-nested) function as start. */,
-      };
-      let make = (~start, ~end_=?, ~restrictToFunction=?, ()) => {
-        {start, end_, restrictToFunction};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.getPossibleBreakpoints", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Returns source for the script with given id. */
-  module GetScriptSource = {
-    module Response: {
-      type result = {
-        scriptSource: string, /* Script source (empty in case of Wasm bytecode). */
-        [@yojson.option]
-        bytecode: option(string) /* Wasm bytecode. (Encoded as a base64 string when passed over JSON) */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        scriptSource: string, /* Script source (empty in case of Wasm bytecode). */
-        [@yojson.option]
-        bytecode: option(string) /* Wasm bytecode. (Encoded as a base64 string when passed over JSON) */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        scriptId: Types.Runtime.ScriptId.t /* Id of the script to get source for. */,
-      };
-      let make = (~scriptId, ()) => {
-        {scriptId: scriptId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.getScriptSource", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* This command is deprecated. Use getScriptSource instead. */
-  module GetWasmBytecode = {
-    module Response: {
-      type result = {
-        bytecode: string /* Script source. (Encoded as a base64 string when passed over JSON) */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        bytecode: string /* Script source. (Encoded as a base64 string when passed over JSON) */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        scriptId: Types.Runtime.ScriptId.t /* Id of the Wasm script to get source for. */,
-      };
-      let make = (~scriptId, ()) => {
-        {scriptId: scriptId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.getWasmBytecode", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Returns stack trace with given `stackTraceId`. */
-  module GetStackTrace = {
-    module Response: {
-      type result = {
-        stackTrace: Types.Runtime.StackTrace.t /* No description provided */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        stackTrace: Types.Runtime.StackTrace.t /* No description provided */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        stackTraceId: Types.Runtime.StackTraceId.t /* No description provided */,
-      };
-      let make = (~stackTraceId, ()) => {
-        {stackTraceId: stackTraceId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.getStackTrace", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Stops on the next JavaScript statement. */
-  module Pause = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Debugger.pause", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module PauseOnAsyncCall = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        parentStackTraceId: Types.Runtime.StackTraceId.t /* Debugger will pause when async call with given stack trace is started. */,
-      };
-      let make = (~parentStackTraceId, ()) => {
-        {parentStackTraceId: parentStackTraceId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.pauseOnAsyncCall", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Removes JavaScript breakpoint. */
-  module RemoveBreakpoint = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        breakpointId: Types.Debugger.BreakpointId.t /* No description provided */,
-      };
-      let make = (~breakpointId, ()) => {
-        {breakpointId: breakpointId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.removeBreakpoint", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Restarts particular call frame from the beginning. */
-  module RestartFrame = {
-    module Response: {
-      type result = {
-        callFrames: list(Types.Debugger.CallFrame.t), /* New stack trace. */
-        [@yojson.option]
-        asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
-        [@yojson.option]
-        asyncStackTraceId: option(Types.Runtime.StackTraceId.t) /* Async stack trace, if any. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        callFrames: list(Types.Debugger.CallFrame.t), /* New stack trace. */
-        [@yojson.option]
-        asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
-        [@yojson.option]
-        asyncStackTraceId: option(Types.Runtime.StackTraceId.t) /* Async stack trace, if any. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        callFrameId: Types.Debugger.CallFrameId.t /* Call frame identifier to evaluate on. */,
-      };
-      let make = (~callFrameId, ()) => {
-        {callFrameId: callFrameId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.restartFrame", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Resumes JavaScript execution. */
-  module Resume = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@yojson.option]
-        terminateOnResume: option(bool) /* Set to true to terminate execution upon resuming execution. In contrast
-to Runtime.terminateExecution, this will allows to execute further
-JavaScript (i.e. via evaluation) until execution of the paused code
-is actually resumed, at which point termination is triggered.
-If execution is currently not paused, this parameter has no effect. */,
-      };
-      let make = (~terminateOnResume=?, ()) => {
-        {terminateOnResume: terminateOnResume};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.resume", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Searches for given string in script content. */
-  module SearchInContent = {
-    module Response: {
-      type result = {
-        result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        scriptId: Types.Runtime.ScriptId.t, /* Id of the script to search in. */
-        query: string, /* String to search for. */
-        [@yojson.option]
-        caseSensitive: option(bool), /* If true, search is case sensitive. */
-        [@yojson.option]
-        isRegex: option(bool) /* If true, treats string parameter as regex. */,
-      };
-      let make = (~scriptId, ~query, ~caseSensitive=?, ~isRegex=?, ()) => {
-        {scriptId, query, caseSensitive, isRegex};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.searchInContent", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Enables or disables async call stacks tracking. */
-  module SetAsyncCallStackDepth = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        maxDepth: float /* Maximum depth of async call stacks. Setting to `0` will effectively disable collecting async
-call stacks (default). */,
-      };
-      let make = (~maxDepth, ()) => {
-        {maxDepth: maxDepth};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setAsyncCallStackDepth", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Replace previous blackbox patterns with passed ones. Forces backend to skip stepping/pausing in
-     scripts with url matching one of the patterns. VM will try to leave blackboxed script by
-     performing 'step in' several times, finally resorting to 'step out' if unsuccessful. */
-  module SetBlackboxPatterns = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        patterns: list(string) /* Array of regexps that will be used to check script url for blackbox state. */,
-      };
-      let make = (~patterns, ()) => {
-        {patterns: patterns};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setBlackboxPatterns", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Makes backend skip steps in the script in blackboxed ranges. VM will try leave blacklisted
-     scripts by performing 'step in' several times, finally resorting to 'step out' if unsuccessful.
-     Positions array contains positions where blackbox state is changed. First interval isn't
-     blackboxed. Array should be sorted. */
-  module SetBlackboxedRanges = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        scriptId: Types.Runtime.ScriptId.t, /* Id of the script. */
-        positions: list(Types.Debugger.ScriptPosition.t) /* No description provided */,
-      };
-      let make = (~scriptId, ~positions, ()) => {
-        {scriptId, positions};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setBlackboxedRanges", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Sets JavaScript breakpoint at a given location. */
-  module SetBreakpoint = {
-    module Response: {
-      type result = {
-        breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
-        actualLocation: Types.Debugger.Location.t /* Location this breakpoint resolved into. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
-        actualLocation: Types.Debugger.Location.t /* Location this breakpoint resolved into. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        location: Types.Debugger.Location.t, /* Location to set breakpoint in. */
-        [@yojson.option]
-        condition: option(string) /* Expression to use as a breakpoint condition. When specified, debugger will only stop on the
-breakpoint if this expression evaluates to true. */,
-      };
-      let make = (~location, ~condition=?, ()) => {
-        {location, condition};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setBreakpoint", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Sets instrumentation breakpoint. */
-  module SetInstrumentationBreakpoint = {
-    module Response: {
-      type result = {
-        breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {instrumentation: string /* Instrumentation name. */};
-      let make = (~instrumentation, ()) => {
-        {instrumentation: instrumentation};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {
-          id,
-          method: "Debugger.setInstrumentationBreakpoint",
-          sessionId,
-          params,
-        }
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Sets JavaScript breakpoint at given location specified either by URL or URL regex. Once this
-     command is issued, all existing parsed scripts will have breakpoints resolved and returned in
-     `locations` property. Further matching script parsing will result in subsequent
-     `breakpointResolved` events issued. This logical breakpoint will survive page reloads. */
-  module SetBreakpointByUrl = {
-    module Response: {
-      type result = {
-        breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
-        locations: list(Types.Debugger.Location.t) /* List of the locations this breakpoint resolved into upon addition. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
-        locations: list(Types.Debugger.Location.t) /* List of the locations this breakpoint resolved into upon addition. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        lineNumber: float, /* Line number to set breakpoint at. */
-        [@yojson.option]
-        url: option(string), /* URL of the resources to set breakpoint on. */
-        [@yojson.option]
-        urlRegex: option(string), /* Regex pattern for the URLs of the resources to set breakpoints on. Either `url` or
-`urlRegex` must be specified. */
-        [@yojson.option]
-        scriptHash: option(string), /* Script hash of the resources to set breakpoint on. */
-        [@yojson.option]
-        columnNumber: option(float), /* Offset in the line to set breakpoint at. */
-        [@yojson.option]
-        condition: option(string) /* Expression to use as a breakpoint condition. When specified, debugger will only stop on the
-breakpoint if this expression evaluates to true. */,
-      };
-      let make =
-          (
-            ~lineNumber,
-            ~url=?,
-            ~urlRegex=?,
-            ~scriptHash=?,
-            ~columnNumber=?,
-            ~condition=?,
-            (),
-          ) => {
-        {lineNumber, url, urlRegex, scriptHash, columnNumber, condition};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setBreakpointByUrl", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Sets JavaScript breakpoint before each call to the given function.
-     If another function was created from the same source as a given one,
-     calling it will also trigger the breakpoint. */
-  module SetBreakpointOnFunctionCall = {
-    module Response: {
-      type result = {
-        breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        objectId: Types.Runtime.RemoteObjectId.t, /* Function object id. */
-        [@yojson.option]
-        condition: option(string) /* Expression to use as a breakpoint condition. When specified, debugger will
-stop on the breakpoint if this expression evaluates to true. */,
-      };
-      let make = (~objectId, ~condition=?, ()) => {
-        {objectId, condition};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {
-          id,
-          method: "Debugger.setBreakpointOnFunctionCall",
-          sessionId,
-          params,
-        }
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Activates / deactivates all breakpoints on the page. */
-  module SetBreakpointsActive = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {active: bool /* New value for breakpoints active state. */};
-      let make = (~active, ()) => {
-        {active: active};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setBreakpointsActive", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Defines pause on exceptions state. Can be set to stop on all exceptions, uncaught exceptions or
-     no exceptions. Initial pause on exceptions state is `none`. */
-  module SetPauseOnExceptions = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {state: string /* Pause on exceptions mode. */};
-      let make = (~state, ()) => {
-        {state: state};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setPauseOnExceptions", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Changes return value in top frame. Available only at return break position. */
-  module SetReturnValue = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        newValue: Types.Runtime.CallArgument.t /* New return value. */,
-      };
-      let make = (~newValue, ()) => {
-        {newValue: newValue};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setReturnValue", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Edits JavaScript source live. */
-  module SetScriptSource = {
-    module Response: {
-      type result = {
-        [@yojson.option]
-        callFrames: option(list(Types.Debugger.CallFrame.t)), /* New stack trace in case editing has happened while VM was stopped. */
-        [@yojson.option]
-        stackChanged: option(bool), /* Whether current call stack  was modified after applying the changes. */
-        [@yojson.option]
-        asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
-        [@yojson.option]
-        asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        [@yojson.option]
-        callFrames: option(list(Types.Debugger.CallFrame.t)), /* New stack trace in case editing has happened while VM was stopped. */
-        [@yojson.option]
-        stackChanged: option(bool), /* Whether current call stack  was modified after applying the changes. */
-        [@yojson.option]
-        asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
-        [@yojson.option]
-        asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        scriptId: Types.Runtime.ScriptId.t, /* Id of the script to edit. */
-        scriptSource: string, /* New content of the script. */
-        [@yojson.option]
-        dryRun: option(bool) /* If true the change will not actually be applied. Dry run may be used to get result
-description without actually modifying the code. */,
-      };
-      let make = (~scriptId, ~scriptSource, ~dryRun=?, ()) => {
-        {scriptId, scriptSource, dryRun};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setScriptSource", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Makes page not interrupt on any pauses (breakpoint, exception, dom exception etc). */
-  module SetSkipAllPauses = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {skip: bool /* New value for skip pauses state. */};
-      let make = (~skip, ()) => {
-        {skip: skip};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setSkipAllPauses", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Changes value of variable in a callframe. Object-based scopes are not supported and must be
-     mutated manually. */
-  module SetVariableValue = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        scopeNumber: float, /* 0-based number of scope as was listed in scope chain. Only 'local', 'closure' and 'catch'
-scope types are allowed. Other scopes could be manipulated manually. */
-        variableName: string, /* Variable name. */
-        newValue: Types.Runtime.CallArgument.t, /* New variable value. */
-        callFrameId: Types.Debugger.CallFrameId.t /* Id of callframe that holds variable. */,
-      };
-      let make = (~scopeNumber, ~variableName, ~newValue, ~callFrameId, ()) => {
-        {scopeNumber, variableName, newValue, callFrameId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.setVariableValue", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Steps into the function call. */
-  module StepInto = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@yojson.option]
-        breakOnAsyncCall: option(bool), /* Debugger will pause on the execution of the first async task which was scheduled
-before next pause. */
-        [@yojson.option]
-        skipList: option(list(Types.Debugger.LocationRange.t)) /* The skipList specifies location ranges that should be skipped on step into. */,
-      };
-      let make = (~breakOnAsyncCall=?, ~skipList=?, ()) => {
-        {breakOnAsyncCall, skipList};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.stepInto", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Steps out of the function call. */
-  module StepOut = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Debugger.stepOut", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Steps over the statement. */
-  module StepOver = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@yojson.option]
-        skipList: option(list(Types.Debugger.LocationRange.t)) /* The skipList specifies location ranges that should be skipped on step over. */,
-      };
-      let make = (~skipList=?, ()) => {
-        {skipList: skipList};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Debugger.stepOver", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-};
 module DOM = {
   /* Collects class names for the node with given id and all of it's child nodes. */
   module CollectClassNamesFromSubtree = {
@@ -12513,669 +10519,6 @@ during renderer initialization. In such a case, no screenshot data will be retur
 
       let make = (~sessionId=?, id) => {
         {id, method: "HeadlessExperimental.enable", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-};
-module HeapProfiler = {
-  /* Enables console to refer to the node with given id via $x (see Command Line API for more details
-     $x functions). */
-  module AddInspectedHeapObject = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        heapObjectId: Types.HeapProfiler.HeapSnapshotObjectId.t /* Heap snapshot object id to be accessible by means of $x command line API. */,
-      };
-      let make = (~heapObjectId, ()) => {
-        {heapObjectId: heapObjectId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "HeapProfiler.addInspectedHeapObject", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module CollectGarbage = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "HeapProfiler.collectGarbage", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module Disable = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "HeapProfiler.disable", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module Enable = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "HeapProfiler.enable", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module GetHeapObjectId = {
-    module Response: {
-      type result = {
-        heapSnapshotObjectId: Types.HeapProfiler.HeapSnapshotObjectId.t /* Id of the heap snapshot object corresponding to the passed remote object id. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        heapSnapshotObjectId: Types.HeapProfiler.HeapSnapshotObjectId.t /* Id of the heap snapshot object corresponding to the passed remote object id. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        objectId: Types.Runtime.RemoteObjectId.t /* Identifier of the object to get heap object id for. */,
-      };
-      let make = (~objectId, ()) => {
-        {objectId: objectId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "HeapProfiler.getHeapObjectId", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module GetObjectByHeapObjectId = {
-    module Response: {
-      type result = {
-        result: Types.Runtime.RemoteObject.t /* Evaluation result. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: Types.Runtime.RemoteObject.t /* Evaluation result. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        objectId: Types.HeapProfiler.HeapSnapshotObjectId.t, /* No description provided */
-        [@yojson.option]
-        objectGroup: option(string) /* Symbolic group name that can be used to release multiple objects. */,
-      };
-      let make = (~objectId, ~objectGroup=?, ()) => {
-        {objectId, objectGroup};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {
-          id,
-          method: "HeapProfiler.getObjectByHeapObjectId",
-          sessionId,
-          params,
-        }
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module GetSamplingProfile = {
-    module Response: {
-      type result = {
-        profile: Types.HeapProfiler.SamplingHeapProfile.t /* Return the sampling profile being collected. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        profile: Types.HeapProfiler.SamplingHeapProfile.t /* Return the sampling profile being collected. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "HeapProfiler.getSamplingProfile", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module StartSampling = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@yojson.option]
-        samplingInterval: option(float) /* Average sample interval in bytes. Poisson distribution is used for the intervals. The
-default value is 32768 bytes. */,
-      };
-      let make = (~samplingInterval=?, ()) => {
-        {samplingInterval: samplingInterval};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "HeapProfiler.startSampling", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module StartTrackingHeapObjects = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@yojson.option]
-        trackAllocations: option(bool) /* No description provided */,
-      };
-      let make = (~trackAllocations=?, ()) => {
-        {trackAllocations: trackAllocations};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {
-          id,
-          method: "HeapProfiler.startTrackingHeapObjects",
-          sessionId,
-          params,
-        }
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module StopSampling = {
-    module Response: {
-      type result = {
-        profile: Types.HeapProfiler.SamplingHeapProfile.t /* Recorded sampling heap profile. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        profile: Types.HeapProfiler.SamplingHeapProfile.t /* Recorded sampling heap profile. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "HeapProfiler.stopSampling", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module StopTrackingHeapObjects = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@yojson.option]
-        reportProgress: option(bool), /* If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken
-when the tracking is stopped. */
-        [@yojson.option]
-        treatGlobalObjectsAsRoots: option(bool) /* No description provided */,
-      };
-      let make = (~reportProgress=?, ~treatGlobalObjectsAsRoots=?, ()) => {
-        {reportProgress, treatGlobalObjectsAsRoots};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {
-          id,
-          method: "HeapProfiler.stopTrackingHeapObjects",
-          sessionId,
-          params,
-        }
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module TakeHeapSnapshot = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@yojson.option]
-        reportProgress: option(bool), /* If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken. */
-        [@yojson.option]
-        treatGlobalObjectsAsRoots: option(bool) /* If true, a raw snapshot without artifical roots will be generated */,
-      };
-      let make = (~reportProgress=?, ~treatGlobalObjectsAsRoots=?, ()) => {
-        {reportProgress, treatGlobalObjectsAsRoots};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "HeapProfiler.takeHeapSnapshot", sessionId, params}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };
@@ -23167,2376 +20510,6 @@ Note that not all types exposed to the web platform are currently supported. */,
     };
   };
 };
-module Profiler = {
-  /* No description provided */
-  module Disable = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.disable", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module Enable = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.enable", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Collect coverage data for the current isolate. The coverage data may be incomplete due to
-     garbage collection. */
-  module GetBestEffortCoverage = {
-    module Response: {
-      type result = {
-        result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.getBestEffortCoverage", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Changes CPU profiler sampling interval. Must be called before CPU profiles recording started. */
-  module SetSamplingInterval = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {interval: float /* New sampling interval in microseconds. */};
-      let make = (~interval, ()) => {
-        {interval: interval};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Profiler.setSamplingInterval", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module Start = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.start", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Enable precise code coverage. Coverage data for JavaScript executed before enabling precise code
-     coverage may be incomplete. Enabling prevents running optimized code and resets execution
-     counters. */
-  module StartPreciseCoverage = {
-    module Response: {
-      type result = {
-        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@yojson.option]
-        callCount: option(bool), /* Collect accurate call counts beyond simple 'covered' or 'not covered'. */
-        [@yojson.option]
-        detailed: option(bool), /* Collect block-based coverage. */
-        [@yojson.option]
-        allowTriggeredUpdates: option(bool) /* Allow the backend to send updates on its own initiative */,
-      };
-      let make = (~callCount=?, ~detailed=?, ~allowTriggeredUpdates=?, ()) => {
-        {callCount, detailed, allowTriggeredUpdates};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Profiler.startPreciseCoverage", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Enable type profile. */
-  module StartTypeProfile = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.startTypeProfile", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module Stop = {
-    module Response: {
-      type result = {
-        profile: Types.Profiler.Profile.t /* Recorded profile. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        profile: Types.Profiler.Profile.t /* Recorded profile. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.stop", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Disable precise code coverage. Disabling releases unnecessary execution count records and allows
-     executing optimized code. */
-  module StopPreciseCoverage = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.stopPreciseCoverage", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Disable type profile. Disabling releases type profile data collected so far. */
-  module StopTypeProfile = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.stopTypeProfile", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Collect coverage data for the current isolate, and resets execution counters. Precise code
-     coverage needs to have started. */
-  module TakePreciseCoverage = {
-    module Response: {
-      type result = {
-        result: list(Types.Profiler.ScriptCoverage.t), /* Coverage data for the current isolate. */
-        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: list(Types.Profiler.ScriptCoverage.t), /* Coverage data for the current isolate. */
-        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.takePreciseCoverage", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Collect type profile. */
-  module TakeTypeProfile = {
-    module Response: {
-      type result = {
-        result: list(Types.Profiler.ScriptTypeProfile.t) /* Type profile for all scripts since startTypeProfile() was turned on. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: list(Types.Profiler.ScriptTypeProfile.t) /* Type profile for all scripts since startTypeProfile() was turned on. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.takeTypeProfile", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Enable counters collection. */
-  module EnableCounters = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.enableCounters", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Disable counters collection. */
-  module DisableCounters = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.disableCounters", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Retrieve counters. */
-  module GetCounters = {
-    module Response: {
-      type result = {
-        result: list(Types.Profiler.CounterInfo.t) /* Collected counters information. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: list(Types.Profiler.CounterInfo.t) /* Collected counters information. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.getCounters", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Enable run time call stats collection. */
-  module EnableRuntimeCallStats = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.enableRuntimeCallStats", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Disable run time call stats collection. */
-  module DisableRuntimeCallStats = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.disableRuntimeCallStats", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Retrieve run time call stats. */
-  module GetRuntimeCallStats = {
-    module Response: {
-      type result = {
-        result: list(Types.Profiler.RuntimeCallCounterInfo.t) /* Collected runtime call counter information. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: list(Types.Profiler.RuntimeCallCounterInfo.t) /* Collected runtime call counter information. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.getRuntimeCallStats", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-};
-module Runtime = {
-  /* Add handler to promise with given promise object id. */
-  module AwaitPromise = {
-    module Response: {
-      type result = {
-        result: Types.Runtime.RemoteObject.t, /* Promise result. Will contain rejected value if promise was rejected. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if stack strace is available. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: Types.Runtime.RemoteObject.t, /* Promise result. Will contain rejected value if promise was rejected. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if stack strace is available. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        promiseObjectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the promise. */
-        [@yojson.option]
-        returnByValue: option(bool), /* Whether the result is expected to be a JSON object that should be sent by value. */
-        [@yojson.option]
-        generatePreview: option(bool) /* Whether preview should be generated for the result. */,
-      };
-      let make = (~promiseObjectId, ~returnByValue=?, ~generatePreview=?, ()) => {
-        {promiseObjectId, returnByValue, generatePreview};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.awaitPromise", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Calls function with given declaration on the given object. Object group of the result is
-     inherited from the target object. */
-  module CallFunctionOn = {
-    module Response: {
-      type result = {
-        result: Types.Runtime.RemoteObject.t, /* Call result. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: Types.Runtime.RemoteObject.t, /* Call result. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        functionDeclaration: string, /* Declaration of the function to call. */
-        [@yojson.option]
-        objectId: option(Types.Runtime.RemoteObjectId.t), /* Identifier of the object to call function on. Either objectId or executionContextId should
-be specified. */
-        [@yojson.option]
-        arguments: option(list(Types.Runtime.CallArgument.t)), /* Call arguments. All call arguments must belong to the same JavaScript world as the target
-object. */
-        [@yojson.option]
-        silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
-execution. Overrides `setPauseOnException` state. */
-        [@yojson.option]
-        returnByValue: option(bool), /* Whether the result is expected to be a JSON object which should be sent by value. */
-        [@yojson.option]
-        generatePreview: option(bool), /* Whether preview should be generated for the result. */
-        [@yojson.option]
-        userGesture: option(bool), /* Whether execution should be treated as initiated by user in the UI. */
-        [@yojson.option]
-        awaitPromise: option(bool), /* Whether execution should `await` for resulting value and return once awaited promise is
-resolved. */
-        [@yojson.option]
-        executionContextId: option(Types.Runtime.ExecutionContextId.t), /* Specifies execution context which global object will be used to call function on. Either
-executionContextId or objectId should be specified. */
-        [@yojson.option]
-        objectGroup: option(string) /* Symbolic group name that can be used to release multiple objects. If objectGroup is not
-specified and objectId is, objectGroup will be inherited from object. */,
-      };
-      let make =
-          (
-            ~functionDeclaration,
-            ~objectId=?,
-            ~arguments=?,
-            ~silent=?,
-            ~returnByValue=?,
-            ~generatePreview=?,
-            ~userGesture=?,
-            ~awaitPromise=?,
-            ~executionContextId=?,
-            ~objectGroup=?,
-            (),
-          ) => {
-        {
-          functionDeclaration,
-          objectId,
-          arguments,
-          silent,
-          returnByValue,
-          generatePreview,
-          userGesture,
-          awaitPromise,
-          executionContextId,
-          objectGroup,
-        };
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.callFunctionOn", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Compiles expression. */
-  module CompileScript = {
-    module Response: {
-      type result = {
-        [@yojson.option]
-        scriptId: option(Types.Runtime.ScriptId.t), /* Id of the script. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        [@yojson.option]
-        scriptId: option(Types.Runtime.ScriptId.t), /* Id of the script. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        expression: string, /* Expression to compile. */
-        sourceURL: string, /* Source url to be set for the script. */
-        persistScript: bool, /* Specifies whether the compiled script should be persisted. */
-        [@yojson.option]
-        executionContextId: option(Types.Runtime.ExecutionContextId.t) /* Specifies in which execution context to perform script run. If the parameter is omitted the
-evaluation will be performed in the context of the inspected page. */,
-      };
-      let make =
-          (~expression, ~sourceURL, ~persistScript, ~executionContextId=?, ()) => {
-        {expression, sourceURL, persistScript, executionContextId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.compileScript", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Disables reporting of execution contexts creation. */
-  module Disable = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Runtime.disable", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Discards collected exceptions and console API calls. */
-  module DiscardConsoleEntries = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Runtime.discardConsoleEntries", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Enables reporting of execution contexts creation by means of `executionContextCreated` event.
-     When the reporting gets enabled the event will be sent immediately for each existing execution
-     context. */
-  module Enable = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Runtime.enable", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Evaluates expression on global object. */
-  module Evaluate = {
-    module Response: {
-      type result = {
-        result: Types.Runtime.RemoteObject.t, /* Evaluation result. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: Types.Runtime.RemoteObject.t, /* Evaluation result. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        expression: string, /* Expression to evaluate. */
-        [@yojson.option]
-        objectGroup: option(string), /* Symbolic group name that can be used to release multiple objects. */
-        [@yojson.option]
-        includeCommandLineAPI: option(bool), /* Determines whether Command Line API should be available during the evaluation. */
-        [@yojson.option]
-        silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
-execution. Overrides `setPauseOnException` state. */
-        [@yojson.option]
-        contextId: option(Types.Runtime.ExecutionContextId.t), /* Specifies in which execution context to perform evaluation. If the parameter is omitted the
-evaluation will be performed in the context of the inspected page.
-This is mutually exclusive with `uniqueContextId`, which offers an
-alternative way to identify the execution context that is more reliable
-in a multi-process environment. */
-        [@yojson.option]
-        returnByValue: option(bool), /* Whether the result is expected to be a JSON object that should be sent by value. */
-        [@yojson.option]
-        generatePreview: option(bool), /* Whether preview should be generated for the result. */
-        [@yojson.option]
-        userGesture: option(bool), /* Whether execution should be treated as initiated by user in the UI. */
-        [@yojson.option]
-        awaitPromise: option(bool), /* Whether execution should `await` for resulting value and return once awaited promise is
-resolved. */
-        [@yojson.option]
-        throwOnSideEffect: option(bool), /* Whether to throw an exception if side effect cannot be ruled out during evaluation.
-This implies `disableBreaks` below. */
-        [@yojson.option]
-        timeout: option(Types.Runtime.TimeDelta.t), /* Terminate execution after timing out (number of milliseconds). */
-        [@yojson.option]
-        disableBreaks: option(bool), /* Disable breakpoints during execution. */
-        [@yojson.option]
-        replMode: option(bool), /* Setting this flag to true enables `let` re-declaration and top-level `await`.
-Note that `let` variables can only be re-declared if they originate from
-`replMode` themselves. */
-        [@yojson.option]
-        allowUnsafeEvalBlockedByCSP: option(bool), /* The Content Security Policy (CSP) for the target might block 'unsafe-eval'
-which includes eval(), Function(), setTimeout() and setInterval()
-when called with non-callable arguments. This flag bypasses CSP for this
-evaluation and allows unsafe-eval. Defaults to true. */
-        [@yojson.option]
-        uniqueContextId: option(string) /* An alternative way to specify the execution context to evaluate in.
-Compared to contextId that may be reused accross processes, this is guaranteed to be
-system-unique, so it can be used to prevent accidental evaluation of the expression
-in context different than intended (e.g. as a result of navigation accross process
-boundaries).
-This is mutually exclusive with `contextId`. */,
-      };
-      let make =
-          (
-            ~expression,
-            ~objectGroup=?,
-            ~includeCommandLineAPI=?,
-            ~silent=?,
-            ~contextId=?,
-            ~returnByValue=?,
-            ~generatePreview=?,
-            ~userGesture=?,
-            ~awaitPromise=?,
-            ~throwOnSideEffect=?,
-            ~timeout=?,
-            ~disableBreaks=?,
-            ~replMode=?,
-            ~allowUnsafeEvalBlockedByCSP=?,
-            ~uniqueContextId=?,
-            (),
-          ) => {
-        {
-          expression,
-          objectGroup,
-          includeCommandLineAPI,
-          silent,
-          contextId,
-          returnByValue,
-          generatePreview,
-          userGesture,
-          awaitPromise,
-          throwOnSideEffect,
-          timeout,
-          disableBreaks,
-          replMode,
-          allowUnsafeEvalBlockedByCSP,
-          uniqueContextId,
-        };
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.evaluate", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Returns the isolate id. */
-  module GetIsolateId = {
-    module Response: {
-      type result = {id: string /* The isolate id. */};
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {id: string /* The isolate id. */};
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Runtime.getIsolateId", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Returns the JavaScript heap usage.
-     It is the total usage of the corresponding isolate not scoped to a particular Runtime. */
-  module GetHeapUsage = {
-    module Response: {
-      type result = {
-        usedSize: float, /* Used heap size in bytes. */
-        totalSize: float /* Allocated heap size in bytes. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        usedSize: float, /* Used heap size in bytes. */
-        totalSize: float /* Allocated heap size in bytes. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Runtime.getHeapUsage", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Returns properties of a given object. Object group of the result is inherited from the target
-     object. */
-  module GetProperties = {
-    module Response: {
-      type result = {
-        result: list(Types.Runtime.PropertyDescriptor.t), /* Object properties. */
-        [@yojson.option]
-        internalProperties:
-          option(list(Types.Runtime.InternalPropertyDescriptor.t)), /* Internal object properties (only of the element itself). */
-        [@yojson.option]
-        privateProperties:
-          option(list(Types.Runtime.PrivatePropertyDescriptor.t)), /* Object private properties. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: list(Types.Runtime.PropertyDescriptor.t), /* Object properties. */
-        [@yojson.option]
-        internalProperties:
-          option(list(Types.Runtime.InternalPropertyDescriptor.t)), /* Internal object properties (only of the element itself). */
-        [@yojson.option]
-        privateProperties:
-          option(list(Types.Runtime.PrivatePropertyDescriptor.t)), /* Object private properties. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        objectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the object to return properties for. */
-        [@yojson.option]
-        ownProperties: option(bool), /* If true, returns properties belonging only to the element itself, not to its prototype
-chain. */
-        [@yojson.option]
-        accessorPropertiesOnly: option(bool), /* If true, returns accessor properties (with getter/setter) only; internal properties are not
-returned either. */
-        [@yojson.option]
-        generatePreview: option(bool) /* Whether preview should be generated for the results. */,
-      };
-      let make =
-          (
-            ~objectId,
-            ~ownProperties=?,
-            ~accessorPropertiesOnly=?,
-            ~generatePreview=?,
-            (),
-          ) => {
-        {objectId, ownProperties, accessorPropertiesOnly, generatePreview};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.getProperties", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Returns all let, const and class variables from global scope. */
-  module GlobalLexicalScopeNames = {
-    module Response: {
-      type result = {names: list(string) /* No description provided */};
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {names: list(string) /* No description provided */};
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@yojson.option]
-        executionContextId: option(Types.Runtime.ExecutionContextId.t) /* Specifies in which execution context to lookup global scope variables. */,
-      };
-      let make = (~executionContextId=?, ()) => {
-        {executionContextId: executionContextId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.globalLexicalScopeNames", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module QueryObjects = {
-    module Response: {
-      type result = {
-        objects: Types.Runtime.RemoteObject.t /* Array with objects. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        objects: Types.Runtime.RemoteObject.t /* Array with objects. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        prototypeObjectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the prototype to return objects for. */
-        [@yojson.option]
-        objectGroup: option(string) /* Symbolic group name that can be used to release the results. */,
-      };
-      let make = (~prototypeObjectId, ~objectGroup=?, ()) => {
-        {prototypeObjectId, objectGroup};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.queryObjects", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Releases remote object with given id. */
-  module ReleaseObject = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        objectId: Types.Runtime.RemoteObjectId.t /* Identifier of the object to release. */,
-      };
-      let make = (~objectId, ()) => {
-        {objectId: objectId};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.releaseObject", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Releases all remote objects that belong to a given group. */
-  module ReleaseObjectGroup = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {objectGroup: string /* Symbolic object group name. */};
-      let make = (~objectGroup, ()) => {
-        {objectGroup: objectGroup};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.releaseObjectGroup", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Tells inspected instance to run if it was waiting for debugger to attach. */
-  module RunIfWaitingForDebugger = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Runtime.runIfWaitingForDebugger", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Runs script with given id in a given context. */
-  module RunScript = {
-    module Response: {
-      type result = {
-        result: Types.Runtime.RemoteObject.t, /* Run result. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        result: Types.Runtime.RemoteObject.t, /* Run result. */
-        [@yojson.option]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        scriptId: Types.Runtime.ScriptId.t, /* Id of the script to run. */
-        [@yojson.option]
-        executionContextId: option(Types.Runtime.ExecutionContextId.t), /* Specifies in which execution context to perform script run. If the parameter is omitted the
-evaluation will be performed in the context of the inspected page. */
-        [@yojson.option]
-        objectGroup: option(string), /* Symbolic group name that can be used to release multiple objects. */
-        [@yojson.option]
-        silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
-execution. Overrides `setPauseOnException` state. */
-        [@yojson.option]
-        includeCommandLineAPI: option(bool), /* Determines whether Command Line API should be available during the evaluation. */
-        [@yojson.option]
-        returnByValue: option(bool), /* Whether the result is expected to be a JSON object which should be sent by value. */
-        [@yojson.option]
-        generatePreview: option(bool), /* Whether preview should be generated for the result. */
-        [@yojson.option]
-        awaitPromise: option(bool) /* Whether execution should `await` for resulting value and return once awaited promise is
-resolved. */,
-      };
-      let make =
-          (
-            ~scriptId,
-            ~executionContextId=?,
-            ~objectGroup=?,
-            ~silent=?,
-            ~includeCommandLineAPI=?,
-            ~returnByValue=?,
-            ~generatePreview=?,
-            ~awaitPromise=?,
-            (),
-          ) => {
-        {
-          scriptId,
-          executionContextId,
-          objectGroup,
-          silent,
-          includeCommandLineAPI,
-          returnByValue,
-          generatePreview,
-          awaitPromise,
-        };
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.runScript", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Enables or disables async call stacks tracking. */
-  module SetAsyncCallStackDepth = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        maxDepth: float /* Maximum depth of async call stacks. Setting to `0` will effectively disable collecting async
-call stacks (default). */,
-      };
-      let make = (~maxDepth, ()) => {
-        {maxDepth: maxDepth};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.setAsyncCallStackDepth", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module SetCustomObjectFormatterEnabled = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {enabled: bool /* No description provided */};
-      let make = (~enabled, ()) => {
-        {enabled: enabled};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {
-          id,
-          method: "Runtime.setCustomObjectFormatterEnabled",
-          sessionId,
-          params,
-        }
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* No description provided */
-  module SetMaxCallStackSizeToCapture = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {size: float /* No description provided */};
-      let make = (~size, ()) => {
-        {size: size};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {
-          id,
-          method: "Runtime.setMaxCallStackSizeToCapture",
-          sessionId,
-          params,
-        }
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Terminate current or next JavaScript execution.
-     Will cancel the termination when the outer-most script execution ends. */
-  module TerminateExecution = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Runtime.terminateExecution", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* If executionContextId is empty, adds binding with the given name on the
-     global objects of all inspected contexts, including those created later,
-     bindings survive reloads.
-     Binding function takes exactly one argument, this argument should be string,
-     in case of any other input, function throws an exception.
-     Each binding function call produces Runtime.bindingCalled notification. */
-  module AddBinding = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        name: string, /* No description provided */
-        [@yojson.option]
-        executionContextId: option(Types.Runtime.ExecutionContextId.t), /* If specified, the binding would only be exposed to the specified
-execution context. If omitted and `executionContextName` is not set,
-the binding is exposed to all execution contexts of the target.
-This parameter is mutually exclusive with `executionContextName`. */
-        [@yojson.option]
-        executionContextName: option(string) /* If specified, the binding is exposed to the executionContext with
-matching name, even for contexts created after the binding is added.
-See also `ExecutionContext.name` and `worldName` parameter to
-`Page.addScriptToEvaluateOnNewDocument`.
-This parameter is mutually exclusive with `executionContextId`. */,
-      };
-      let make = (~name, ~executionContextId=?, ~executionContextName=?, ()) => {
-        {name, executionContextId, executionContextName};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.addBinding", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* This method does not remove binding function from global object but
-     unsubscribes current runtime agent from Runtime.bindingCalled notifications. */
-  module RemoveBinding = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {name: string /* No description provided */};
-      let make = (~name, ()) => {
-        {name: name};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Runtime.removeBinding", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-};
-module Schema = {
-  /* Returns supported domains. */
-  module GetDomains = {
-    module Response: {
-      type result = {
-        domains: list(Types.Schema.Domain.t) /* List of supported domains. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        domains: list(Types.Schema.Domain.t) /* List of supported domains. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Schema.getDomains", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-};
 module Security = {
   /* Disables tracking security state changes. */
   module Disable = {
@@ -30070,6 +25043,5033 @@ module Media = {
 
       let make = (~sessionId=?, id) => {
         {id, method: "Media.disable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+};
+module Console = {
+  /* Does nothing. */
+  module ClearMessages = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Console.clearMessages", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Disables console domain, prevents further console messages from being reported to the client. */
+  module Disable = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Console.disable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Enables console domain, sends the messages collected so far to the client by means of the
+     `messageAdded` notification. */
+  module Enable = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Console.enable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+};
+module Debugger = {
+  /* Continues execution until specific location is reached. */
+  module ContinueToLocation = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        location: Types.Debugger.Location.t, /* Location to continue to. */
+        [@yojson.option]
+        targetCallFrames: option(string) /* No description provided */,
+      };
+      let make = (~location, ~targetCallFrames=?, ()) => {
+        {location, targetCallFrames};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.continueToLocation", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Disables debugger for given page. */
+  module Disable = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Debugger.disable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Enables debugger for the given page. Clients should not assume that the debugging has been
+     enabled until the result for this command is received. */
+  module Enable = {
+    module Response: {
+      type result = {
+        debuggerId: Types.Runtime.UniqueDebuggerId.t /* Unique identifier of the debugger. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        debuggerId: Types.Runtime.UniqueDebuggerId.t /* Unique identifier of the debugger. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option]
+        maxScriptsCacheSize: option(float) /* The maximum size in bytes of collected scripts (not referenced by other heap objects)
+the debugger can hold. Puts no limit if paramter is omitted. */,
+      };
+      let make = (~maxScriptsCacheSize=?, ()) => {
+        {maxScriptsCacheSize: maxScriptsCacheSize};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.enable", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Evaluates expression on a given call frame. */
+  module EvaluateOnCallFrame = {
+    module Response: {
+      type result = {
+        result: Types.Runtime.RemoteObject.t, /* Object wrapper for the evaluation result. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: Types.Runtime.RemoteObject.t, /* Object wrapper for the evaluation result. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        callFrameId: Types.Debugger.CallFrameId.t, /* Call frame identifier to evaluate on. */
+        expression: string, /* Expression to evaluate. */
+        [@yojson.option]
+        objectGroup: option(string), /* String object group name to put result into (allows rapid releasing resulting object handles
+using `releaseObjectGroup`). */
+        [@yojson.option]
+        includeCommandLineAPI: option(bool), /* Specifies whether command line API should be available to the evaluated expression, defaults
+to false. */
+        [@yojson.option]
+        silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
+execution. Overrides `setPauseOnException` state. */
+        [@yojson.option]
+        returnByValue: option(bool), /* Whether the result is expected to be a JSON object that should be sent by value. */
+        [@yojson.option]
+        generatePreview: option(bool), /* Whether preview should be generated for the result. */
+        [@yojson.option]
+        throwOnSideEffect: option(bool), /* Whether to throw an exception if side effect cannot be ruled out during evaluation. */
+        [@yojson.option]
+        timeout: option(Types.Runtime.TimeDelta.t) /* Terminate execution after timing out (number of milliseconds). */,
+      };
+      let make =
+          (
+            ~callFrameId,
+            ~expression,
+            ~objectGroup=?,
+            ~includeCommandLineAPI=?,
+            ~silent=?,
+            ~returnByValue=?,
+            ~generatePreview=?,
+            ~throwOnSideEffect=?,
+            ~timeout=?,
+            (),
+          ) => {
+        {
+          callFrameId,
+          expression,
+          objectGroup,
+          includeCommandLineAPI,
+          silent,
+          returnByValue,
+          generatePreview,
+          throwOnSideEffect,
+          timeout,
+        };
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.evaluateOnCallFrame", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns possible locations for breakpoint. scriptId in start and end range locations should be
+     the same. */
+  module GetPossibleBreakpoints = {
+    module Response: {
+      type result = {
+        locations: list(Types.Debugger.BreakLocation.t) /* List of the possible breakpoint locations. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        locations: list(Types.Debugger.BreakLocation.t) /* List of the possible breakpoint locations. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        start: Types.Debugger.Location.t, /* Start of range to search possible breakpoint locations in. */
+        [@yojson.option] [@key "end"]
+        end_: option(Types.Debugger.Location.t), /* End of range to search possible breakpoint locations in (excluding). When not specified, end
+of scripts is used as end of range. */
+        [@yojson.option]
+        restrictToFunction: option(bool) /* Only consider locations which are in the same (non-nested) function as start. */,
+      };
+      let make = (~start, ~end_=?, ~restrictToFunction=?, ()) => {
+        {start, end_, restrictToFunction};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.getPossibleBreakpoints", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns source for the script with given id. */
+  module GetScriptSource = {
+    module Response: {
+      type result = {
+        scriptSource: string, /* Script source (empty in case of Wasm bytecode). */
+        [@yojson.option]
+        bytecode: option(string) /* Wasm bytecode. (Encoded as a base64 string when passed over JSON) */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        scriptSource: string, /* Script source (empty in case of Wasm bytecode). */
+        [@yojson.option]
+        bytecode: option(string) /* Wasm bytecode. (Encoded as a base64 string when passed over JSON) */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        scriptId: Types.Runtime.ScriptId.t /* Id of the script to get source for. */,
+      };
+      let make = (~scriptId, ()) => {
+        {scriptId: scriptId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.getScriptSource", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* This command is deprecated. Use getScriptSource instead. */
+  module GetWasmBytecode = {
+    module Response: {
+      type result = {
+        bytecode: string /* Script source. (Encoded as a base64 string when passed over JSON) */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        bytecode: string /* Script source. (Encoded as a base64 string when passed over JSON) */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        scriptId: Types.Runtime.ScriptId.t /* Id of the Wasm script to get source for. */,
+      };
+      let make = (~scriptId, ()) => {
+        {scriptId: scriptId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.getWasmBytecode", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns stack trace with given `stackTraceId`. */
+  module GetStackTrace = {
+    module Response: {
+      type result = {
+        stackTrace: Types.Runtime.StackTrace.t /* No description provided */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        stackTrace: Types.Runtime.StackTrace.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        stackTraceId: Types.Runtime.StackTraceId.t /* No description provided */,
+      };
+      let make = (~stackTraceId, ()) => {
+        {stackTraceId: stackTraceId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.getStackTrace", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Stops on the next JavaScript statement. */
+  module Pause = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Debugger.pause", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module PauseOnAsyncCall = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        parentStackTraceId: Types.Runtime.StackTraceId.t /* Debugger will pause when async call with given stack trace is started. */,
+      };
+      let make = (~parentStackTraceId, ()) => {
+        {parentStackTraceId: parentStackTraceId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.pauseOnAsyncCall", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Removes JavaScript breakpoint. */
+  module RemoveBreakpoint = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        breakpointId: Types.Debugger.BreakpointId.t /* No description provided */,
+      };
+      let make = (~breakpointId, ()) => {
+        {breakpointId: breakpointId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.removeBreakpoint", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Restarts particular call frame from the beginning. */
+  module RestartFrame = {
+    module Response: {
+      type result = {
+        callFrames: list(Types.Debugger.CallFrame.t), /* New stack trace. */
+        [@yojson.option]
+        asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
+        [@yojson.option]
+        asyncStackTraceId: option(Types.Runtime.StackTraceId.t) /* Async stack trace, if any. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        callFrames: list(Types.Debugger.CallFrame.t), /* New stack trace. */
+        [@yojson.option]
+        asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
+        [@yojson.option]
+        asyncStackTraceId: option(Types.Runtime.StackTraceId.t) /* Async stack trace, if any. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        callFrameId: Types.Debugger.CallFrameId.t /* Call frame identifier to evaluate on. */,
+      };
+      let make = (~callFrameId, ()) => {
+        {callFrameId: callFrameId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.restartFrame", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Resumes JavaScript execution. */
+  module Resume = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option]
+        terminateOnResume: option(bool) /* Set to true to terminate execution upon resuming execution. In contrast
+to Runtime.terminateExecution, this will allows to execute further
+JavaScript (i.e. via evaluation) until execution of the paused code
+is actually resumed, at which point termination is triggered.
+If execution is currently not paused, this parameter has no effect. */,
+      };
+      let make = (~terminateOnResume=?, ()) => {
+        {terminateOnResume: terminateOnResume};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.resume", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Searches for given string in script content. */
+  module SearchInContent = {
+    module Response: {
+      type result = {
+        result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        scriptId: Types.Runtime.ScriptId.t, /* Id of the script to search in. */
+        query: string, /* String to search for. */
+        [@yojson.option]
+        caseSensitive: option(bool), /* If true, search is case sensitive. */
+        [@yojson.option]
+        isRegex: option(bool) /* If true, treats string parameter as regex. */,
+      };
+      let make = (~scriptId, ~query, ~caseSensitive=?, ~isRegex=?, ()) => {
+        {scriptId, query, caseSensitive, isRegex};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.searchInContent", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Enables or disables async call stacks tracking. */
+  module SetAsyncCallStackDepth = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        maxDepth: float /* Maximum depth of async call stacks. Setting to `0` will effectively disable collecting async
+call stacks (default). */,
+      };
+      let make = (~maxDepth, ()) => {
+        {maxDepth: maxDepth};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setAsyncCallStackDepth", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Replace previous blackbox patterns with passed ones. Forces backend to skip stepping/pausing in
+     scripts with url matching one of the patterns. VM will try to leave blackboxed script by
+     performing 'step in' several times, finally resorting to 'step out' if unsuccessful. */
+  module SetBlackboxPatterns = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        patterns: list(string) /* Array of regexps that will be used to check script url for blackbox state. */,
+      };
+      let make = (~patterns, ()) => {
+        {patterns: patterns};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setBlackboxPatterns", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Makes backend skip steps in the script in blackboxed ranges. VM will try leave blacklisted
+     scripts by performing 'step in' several times, finally resorting to 'step out' if unsuccessful.
+     Positions array contains positions where blackbox state is changed. First interval isn't
+     blackboxed. Array should be sorted. */
+  module SetBlackboxedRanges = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        scriptId: Types.Runtime.ScriptId.t, /* Id of the script. */
+        positions: list(Types.Debugger.ScriptPosition.t) /* No description provided */,
+      };
+      let make = (~scriptId, ~positions, ()) => {
+        {scriptId, positions};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setBlackboxedRanges", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Sets JavaScript breakpoint at a given location. */
+  module SetBreakpoint = {
+    module Response: {
+      type result = {
+        breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
+        actualLocation: Types.Debugger.Location.t /* Location this breakpoint resolved into. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
+        actualLocation: Types.Debugger.Location.t /* Location this breakpoint resolved into. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        location: Types.Debugger.Location.t, /* Location to set breakpoint in. */
+        [@yojson.option]
+        condition: option(string) /* Expression to use as a breakpoint condition. When specified, debugger will only stop on the
+breakpoint if this expression evaluates to true. */,
+      };
+      let make = (~location, ~condition=?, ()) => {
+        {location, condition};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setBreakpoint", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Sets instrumentation breakpoint. */
+  module SetInstrumentationBreakpoint = {
+    module Response: {
+      type result = {
+        breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {instrumentation: string /* Instrumentation name. */};
+      let make = (~instrumentation, ()) => {
+        {instrumentation: instrumentation};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "Debugger.setInstrumentationBreakpoint",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Sets JavaScript breakpoint at given location specified either by URL or URL regex. Once this
+     command is issued, all existing parsed scripts will have breakpoints resolved and returned in
+     `locations` property. Further matching script parsing will result in subsequent
+     `breakpointResolved` events issued. This logical breakpoint will survive page reloads. */
+  module SetBreakpointByUrl = {
+    module Response: {
+      type result = {
+        breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
+        locations: list(Types.Debugger.Location.t) /* List of the locations this breakpoint resolved into upon addition. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
+        locations: list(Types.Debugger.Location.t) /* List of the locations this breakpoint resolved into upon addition. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        lineNumber: float, /* Line number to set breakpoint at. */
+        [@yojson.option]
+        url: option(string), /* URL of the resources to set breakpoint on. */
+        [@yojson.option]
+        urlRegex: option(string), /* Regex pattern for the URLs of the resources to set breakpoints on. Either `url` or
+`urlRegex` must be specified. */
+        [@yojson.option]
+        scriptHash: option(string), /* Script hash of the resources to set breakpoint on. */
+        [@yojson.option]
+        columnNumber: option(float), /* Offset in the line to set breakpoint at. */
+        [@yojson.option]
+        condition: option(string) /* Expression to use as a breakpoint condition. When specified, debugger will only stop on the
+breakpoint if this expression evaluates to true. */,
+      };
+      let make =
+          (
+            ~lineNumber,
+            ~url=?,
+            ~urlRegex=?,
+            ~scriptHash=?,
+            ~columnNumber=?,
+            ~condition=?,
+            (),
+          ) => {
+        {lineNumber, url, urlRegex, scriptHash, columnNumber, condition};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setBreakpointByUrl", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Sets JavaScript breakpoint before each call to the given function.
+     If another function was created from the same source as a given one,
+     calling it will also trigger the breakpoint. */
+  module SetBreakpointOnFunctionCall = {
+    module Response: {
+      type result = {
+        breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        objectId: Types.Runtime.RemoteObjectId.t, /* Function object id. */
+        [@yojson.option]
+        condition: option(string) /* Expression to use as a breakpoint condition. When specified, debugger will
+stop on the breakpoint if this expression evaluates to true. */,
+      };
+      let make = (~objectId, ~condition=?, ()) => {
+        {objectId, condition};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "Debugger.setBreakpointOnFunctionCall",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Activates / deactivates all breakpoints on the page. */
+  module SetBreakpointsActive = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {active: bool /* New value for breakpoints active state. */};
+      let make = (~active, ()) => {
+        {active: active};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setBreakpointsActive", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Defines pause on exceptions state. Can be set to stop on all exceptions, uncaught exceptions or
+     no exceptions. Initial pause on exceptions state is `none`. */
+  module SetPauseOnExceptions = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {state: string /* Pause on exceptions mode. */};
+      let make = (~state, ()) => {
+        {state: state};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setPauseOnExceptions", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Changes return value in top frame. Available only at return break position. */
+  module SetReturnValue = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        newValue: Types.Runtime.CallArgument.t /* New return value. */,
+      };
+      let make = (~newValue, ()) => {
+        {newValue: newValue};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setReturnValue", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Edits JavaScript source live. */
+  module SetScriptSource = {
+    module Response: {
+      type result = {
+        [@yojson.option]
+        callFrames: option(list(Types.Debugger.CallFrame.t)), /* New stack trace in case editing has happened while VM was stopped. */
+        [@yojson.option]
+        stackChanged: option(bool), /* Whether current call stack  was modified after applying the changes. */
+        [@yojson.option]
+        asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
+        [@yojson.option]
+        asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option]
+        callFrames: option(list(Types.Debugger.CallFrame.t)), /* New stack trace in case editing has happened while VM was stopped. */
+        [@yojson.option]
+        stackChanged: option(bool), /* Whether current call stack  was modified after applying the changes. */
+        [@yojson.option]
+        asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
+        [@yojson.option]
+        asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        scriptId: Types.Runtime.ScriptId.t, /* Id of the script to edit. */
+        scriptSource: string, /* New content of the script. */
+        [@yojson.option]
+        dryRun: option(bool) /* If true the change will not actually be applied. Dry run may be used to get result
+description without actually modifying the code. */,
+      };
+      let make = (~scriptId, ~scriptSource, ~dryRun=?, ()) => {
+        {scriptId, scriptSource, dryRun};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setScriptSource", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Makes page not interrupt on any pauses (breakpoint, exception, dom exception etc). */
+  module SetSkipAllPauses = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {skip: bool /* New value for skip pauses state. */};
+      let make = (~skip, ()) => {
+        {skip: skip};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setSkipAllPauses", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Changes value of variable in a callframe. Object-based scopes are not supported and must be
+     mutated manually. */
+  module SetVariableValue = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        scopeNumber: float, /* 0-based number of scope as was listed in scope chain. Only 'local', 'closure' and 'catch'
+scope types are allowed. Other scopes could be manipulated manually. */
+        variableName: string, /* Variable name. */
+        newValue: Types.Runtime.CallArgument.t, /* New variable value. */
+        callFrameId: Types.Debugger.CallFrameId.t /* Id of callframe that holds variable. */,
+      };
+      let make = (~scopeNumber, ~variableName, ~newValue, ~callFrameId, ()) => {
+        {scopeNumber, variableName, newValue, callFrameId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.setVariableValue", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Steps into the function call. */
+  module StepInto = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option]
+        breakOnAsyncCall: option(bool), /* Debugger will pause on the execution of the first async task which was scheduled
+before next pause. */
+        [@yojson.option]
+        skipList: option(list(Types.Debugger.LocationRange.t)) /* The skipList specifies location ranges that should be skipped on step into. */,
+      };
+      let make = (~breakOnAsyncCall=?, ~skipList=?, ()) => {
+        {breakOnAsyncCall, skipList};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.stepInto", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Steps out of the function call. */
+  module StepOut = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Debugger.stepOut", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Steps over the statement. */
+  module StepOver = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option]
+        skipList: option(list(Types.Debugger.LocationRange.t)) /* The skipList specifies location ranges that should be skipped on step over. */,
+      };
+      let make = (~skipList=?, ()) => {
+        {skipList: skipList};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.stepOver", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+};
+module HeapProfiler = {
+  /* Enables console to refer to the node with given id via $x (see Command Line API for more details
+     $x functions). */
+  module AddInspectedHeapObject = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        heapObjectId: Types.HeapProfiler.HeapSnapshotObjectId.t /* Heap snapshot object id to be accessible by means of $x command line API. */,
+      };
+      let make = (~heapObjectId, ()) => {
+        {heapObjectId: heapObjectId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "HeapProfiler.addInspectedHeapObject", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module CollectGarbage = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "HeapProfiler.collectGarbage", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module Disable = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "HeapProfiler.disable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module Enable = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "HeapProfiler.enable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module GetHeapObjectId = {
+    module Response: {
+      type result = {
+        heapSnapshotObjectId: Types.HeapProfiler.HeapSnapshotObjectId.t /* Id of the heap snapshot object corresponding to the passed remote object id. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        heapSnapshotObjectId: Types.HeapProfiler.HeapSnapshotObjectId.t /* Id of the heap snapshot object corresponding to the passed remote object id. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        objectId: Types.Runtime.RemoteObjectId.t /* Identifier of the object to get heap object id for. */,
+      };
+      let make = (~objectId, ()) => {
+        {objectId: objectId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "HeapProfiler.getHeapObjectId", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module GetObjectByHeapObjectId = {
+    module Response: {
+      type result = {
+        result: Types.Runtime.RemoteObject.t /* Evaluation result. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: Types.Runtime.RemoteObject.t /* Evaluation result. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        objectId: Types.HeapProfiler.HeapSnapshotObjectId.t, /* No description provided */
+        [@yojson.option]
+        objectGroup: option(string) /* Symbolic group name that can be used to release multiple objects. */,
+      };
+      let make = (~objectId, ~objectGroup=?, ()) => {
+        {objectId, objectGroup};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "HeapProfiler.getObjectByHeapObjectId",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module GetSamplingProfile = {
+    module Response: {
+      type result = {
+        profile: Types.HeapProfiler.SamplingHeapProfile.t /* Return the sampling profile being collected. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        profile: Types.HeapProfiler.SamplingHeapProfile.t /* Return the sampling profile being collected. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "HeapProfiler.getSamplingProfile", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module StartSampling = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option]
+        samplingInterval: option(float) /* Average sample interval in bytes. Poisson distribution is used for the intervals. The
+default value is 32768 bytes. */,
+      };
+      let make = (~samplingInterval=?, ()) => {
+        {samplingInterval: samplingInterval};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "HeapProfiler.startSampling", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module StartTrackingHeapObjects = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option]
+        trackAllocations: option(bool) /* No description provided */,
+      };
+      let make = (~trackAllocations=?, ()) => {
+        {trackAllocations: trackAllocations};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "HeapProfiler.startTrackingHeapObjects",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module StopSampling = {
+    module Response: {
+      type result = {
+        profile: Types.HeapProfiler.SamplingHeapProfile.t /* Recorded sampling heap profile. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        profile: Types.HeapProfiler.SamplingHeapProfile.t /* Recorded sampling heap profile. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "HeapProfiler.stopSampling", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module StopTrackingHeapObjects = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option]
+        reportProgress: option(bool), /* If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken
+when the tracking is stopped. */
+        [@yojson.option]
+        treatGlobalObjectsAsRoots: option(bool) /* No description provided */,
+      };
+      let make = (~reportProgress=?, ~treatGlobalObjectsAsRoots=?, ()) => {
+        {reportProgress, treatGlobalObjectsAsRoots};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "HeapProfiler.stopTrackingHeapObjects",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module TakeHeapSnapshot = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option]
+        reportProgress: option(bool), /* If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken. */
+        [@yojson.option]
+        treatGlobalObjectsAsRoots: option(bool) /* If true, a raw snapshot without artifical roots will be generated */,
+      };
+      let make = (~reportProgress=?, ~treatGlobalObjectsAsRoots=?, ()) => {
+        {reportProgress, treatGlobalObjectsAsRoots};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "HeapProfiler.takeHeapSnapshot", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+};
+module Profiler = {
+  /* No description provided */
+  module Disable = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.disable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module Enable = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.enable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Collect coverage data for the current isolate. The coverage data may be incomplete due to
+     garbage collection. */
+  module GetBestEffortCoverage = {
+    module Response: {
+      type result = {
+        result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.getBestEffortCoverage", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Changes CPU profiler sampling interval. Must be called before CPU profiles recording started. */
+  module SetSamplingInterval = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {interval: float /* New sampling interval in microseconds. */};
+      let make = (~interval, ()) => {
+        {interval: interval};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Profiler.setSamplingInterval", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module Start = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.start", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Enable precise code coverage. Coverage data for JavaScript executed before enabling precise code
+     coverage may be incomplete. Enabling prevents running optimized code and resets execution
+     counters. */
+  module StartPreciseCoverage = {
+    module Response: {
+      type result = {
+        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option]
+        callCount: option(bool), /* Collect accurate call counts beyond simple 'covered' or 'not covered'. */
+        [@yojson.option]
+        detailed: option(bool), /* Collect block-based coverage. */
+        [@yojson.option]
+        allowTriggeredUpdates: option(bool) /* Allow the backend to send updates on its own initiative */,
+      };
+      let make = (~callCount=?, ~detailed=?, ~allowTriggeredUpdates=?, ()) => {
+        {callCount, detailed, allowTriggeredUpdates};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Profiler.startPreciseCoverage", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Enable type profile. */
+  module StartTypeProfile = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.startTypeProfile", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module Stop = {
+    module Response: {
+      type result = {
+        profile: Types.Profiler.Profile.t /* Recorded profile. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        profile: Types.Profiler.Profile.t /* Recorded profile. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.stop", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Disable precise code coverage. Disabling releases unnecessary execution count records and allows
+     executing optimized code. */
+  module StopPreciseCoverage = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.stopPreciseCoverage", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Disable type profile. Disabling releases type profile data collected so far. */
+  module StopTypeProfile = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.stopTypeProfile", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Collect coverage data for the current isolate, and resets execution counters. Precise code
+     coverage needs to have started. */
+  module TakePreciseCoverage = {
+    module Response: {
+      type result = {
+        result: list(Types.Profiler.ScriptCoverage.t), /* Coverage data for the current isolate. */
+        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: list(Types.Profiler.ScriptCoverage.t), /* Coverage data for the current isolate. */
+        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.takePreciseCoverage", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Collect type profile. */
+  module TakeTypeProfile = {
+    module Response: {
+      type result = {
+        result: list(Types.Profiler.ScriptTypeProfile.t) /* Type profile for all scripts since startTypeProfile() was turned on. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: list(Types.Profiler.ScriptTypeProfile.t) /* Type profile for all scripts since startTypeProfile() was turned on. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.takeTypeProfile", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Enable counters collection. */
+  module EnableCounters = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.enableCounters", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Disable counters collection. */
+  module DisableCounters = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.disableCounters", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Retrieve counters. */
+  module GetCounters = {
+    module Response: {
+      type result = {
+        result: list(Types.Profiler.CounterInfo.t) /* Collected counters information. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: list(Types.Profiler.CounterInfo.t) /* Collected counters information. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.getCounters", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Enable run time call stats collection. */
+  module EnableRuntimeCallStats = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.enableRuntimeCallStats", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Disable run time call stats collection. */
+  module DisableRuntimeCallStats = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.disableRuntimeCallStats", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Retrieve run time call stats. */
+  module GetRuntimeCallStats = {
+    module Response: {
+      type result = {
+        result: list(Types.Profiler.RuntimeCallCounterInfo.t) /* Collected runtime call counter information. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: list(Types.Profiler.RuntimeCallCounterInfo.t) /* Collected runtime call counter information. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Profiler.getRuntimeCallStats", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+};
+module Runtime = {
+  /* Add handler to promise with given promise object id. */
+  module AwaitPromise = {
+    module Response: {
+      type result = {
+        result: Types.Runtime.RemoteObject.t, /* Promise result. Will contain rejected value if promise was rejected. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if stack strace is available. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: Types.Runtime.RemoteObject.t, /* Promise result. Will contain rejected value if promise was rejected. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if stack strace is available. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        promiseObjectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the promise. */
+        [@yojson.option]
+        returnByValue: option(bool), /* Whether the result is expected to be a JSON object that should be sent by value. */
+        [@yojson.option]
+        generatePreview: option(bool) /* Whether preview should be generated for the result. */,
+      };
+      let make = (~promiseObjectId, ~returnByValue=?, ~generatePreview=?, ()) => {
+        {promiseObjectId, returnByValue, generatePreview};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.awaitPromise", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Calls function with given declaration on the given object. Object group of the result is
+     inherited from the target object. */
+  module CallFunctionOn = {
+    module Response: {
+      type result = {
+        result: Types.Runtime.RemoteObject.t, /* Call result. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: Types.Runtime.RemoteObject.t, /* Call result. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        functionDeclaration: string, /* Declaration of the function to call. */
+        [@yojson.option]
+        objectId: option(Types.Runtime.RemoteObjectId.t), /* Identifier of the object to call function on. Either objectId or executionContextId should
+be specified. */
+        [@yojson.option]
+        arguments: option(list(Types.Runtime.CallArgument.t)), /* Call arguments. All call arguments must belong to the same JavaScript world as the target
+object. */
+        [@yojson.option]
+        silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
+execution. Overrides `setPauseOnException` state. */
+        [@yojson.option]
+        returnByValue: option(bool), /* Whether the result is expected to be a JSON object which should be sent by value. */
+        [@yojson.option]
+        generatePreview: option(bool), /* Whether preview should be generated for the result. */
+        [@yojson.option]
+        userGesture: option(bool), /* Whether execution should be treated as initiated by user in the UI. */
+        [@yojson.option]
+        awaitPromise: option(bool), /* Whether execution should `await` for resulting value and return once awaited promise is
+resolved. */
+        [@yojson.option]
+        executionContextId: option(Types.Runtime.ExecutionContextId.t), /* Specifies execution context which global object will be used to call function on. Either
+executionContextId or objectId should be specified. */
+        [@yojson.option]
+        objectGroup: option(string) /* Symbolic group name that can be used to release multiple objects. If objectGroup is not
+specified and objectId is, objectGroup will be inherited from object. */,
+      };
+      let make =
+          (
+            ~functionDeclaration,
+            ~objectId=?,
+            ~arguments=?,
+            ~silent=?,
+            ~returnByValue=?,
+            ~generatePreview=?,
+            ~userGesture=?,
+            ~awaitPromise=?,
+            ~executionContextId=?,
+            ~objectGroup=?,
+            (),
+          ) => {
+        {
+          functionDeclaration,
+          objectId,
+          arguments,
+          silent,
+          returnByValue,
+          generatePreview,
+          userGesture,
+          awaitPromise,
+          executionContextId,
+          objectGroup,
+        };
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.callFunctionOn", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Compiles expression. */
+  module CompileScript = {
+    module Response: {
+      type result = {
+        [@yojson.option]
+        scriptId: option(Types.Runtime.ScriptId.t), /* Id of the script. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option]
+        scriptId: option(Types.Runtime.ScriptId.t), /* Id of the script. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        expression: string, /* Expression to compile. */
+        sourceURL: string, /* Source url to be set for the script. */
+        persistScript: bool, /* Specifies whether the compiled script should be persisted. */
+        [@yojson.option]
+        executionContextId: option(Types.Runtime.ExecutionContextId.t) /* Specifies in which execution context to perform script run. If the parameter is omitted the
+evaluation will be performed in the context of the inspected page. */,
+      };
+      let make =
+          (~expression, ~sourceURL, ~persistScript, ~executionContextId=?, ()) => {
+        {expression, sourceURL, persistScript, executionContextId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.compileScript", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Disables reporting of execution contexts creation. */
+  module Disable = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Runtime.disable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Discards collected exceptions and console API calls. */
+  module DiscardConsoleEntries = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Runtime.discardConsoleEntries", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Enables reporting of execution contexts creation by means of `executionContextCreated` event.
+     When the reporting gets enabled the event will be sent immediately for each existing execution
+     context. */
+  module Enable = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Runtime.enable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Evaluates expression on global object. */
+  module Evaluate = {
+    module Response: {
+      type result = {
+        result: Types.Runtime.RemoteObject.t, /* Evaluation result. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: Types.Runtime.RemoteObject.t, /* Evaluation result. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        expression: string, /* Expression to evaluate. */
+        [@yojson.option]
+        objectGroup: option(string), /* Symbolic group name that can be used to release multiple objects. */
+        [@yojson.option]
+        includeCommandLineAPI: option(bool), /* Determines whether Command Line API should be available during the evaluation. */
+        [@yojson.option]
+        silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
+execution. Overrides `setPauseOnException` state. */
+        [@yojson.option]
+        contextId: option(Types.Runtime.ExecutionContextId.t), /* Specifies in which execution context to perform evaluation. If the parameter is omitted the
+evaluation will be performed in the context of the inspected page.
+This is mutually exclusive with `uniqueContextId`, which offers an
+alternative way to identify the execution context that is more reliable
+in a multi-process environment. */
+        [@yojson.option]
+        returnByValue: option(bool), /* Whether the result is expected to be a JSON object that should be sent by value. */
+        [@yojson.option]
+        generatePreview: option(bool), /* Whether preview should be generated for the result. */
+        [@yojson.option]
+        userGesture: option(bool), /* Whether execution should be treated as initiated by user in the UI. */
+        [@yojson.option]
+        awaitPromise: option(bool), /* Whether execution should `await` for resulting value and return once awaited promise is
+resolved. */
+        [@yojson.option]
+        throwOnSideEffect: option(bool), /* Whether to throw an exception if side effect cannot be ruled out during evaluation.
+This implies `disableBreaks` below. */
+        [@yojson.option]
+        timeout: option(Types.Runtime.TimeDelta.t), /* Terminate execution after timing out (number of milliseconds). */
+        [@yojson.option]
+        disableBreaks: option(bool), /* Disable breakpoints during execution. */
+        [@yojson.option]
+        replMode: option(bool), /* Setting this flag to true enables `let` re-declaration and top-level `await`.
+Note that `let` variables can only be re-declared if they originate from
+`replMode` themselves. */
+        [@yojson.option]
+        allowUnsafeEvalBlockedByCSP: option(bool), /* The Content Security Policy (CSP) for the target might block 'unsafe-eval'
+which includes eval(), Function(), setTimeout() and setInterval()
+when called with non-callable arguments. This flag bypasses CSP for this
+evaluation and allows unsafe-eval. Defaults to true. */
+        [@yojson.option]
+        uniqueContextId: option(string) /* An alternative way to specify the execution context to evaluate in.
+Compared to contextId that may be reused accross processes, this is guaranteed to be
+system-unique, so it can be used to prevent accidental evaluation of the expression
+in context different than intended (e.g. as a result of navigation accross process
+boundaries).
+This is mutually exclusive with `contextId`. */,
+      };
+      let make =
+          (
+            ~expression,
+            ~objectGroup=?,
+            ~includeCommandLineAPI=?,
+            ~silent=?,
+            ~contextId=?,
+            ~returnByValue=?,
+            ~generatePreview=?,
+            ~userGesture=?,
+            ~awaitPromise=?,
+            ~throwOnSideEffect=?,
+            ~timeout=?,
+            ~disableBreaks=?,
+            ~replMode=?,
+            ~allowUnsafeEvalBlockedByCSP=?,
+            ~uniqueContextId=?,
+            (),
+          ) => {
+        {
+          expression,
+          objectGroup,
+          includeCommandLineAPI,
+          silent,
+          contextId,
+          returnByValue,
+          generatePreview,
+          userGesture,
+          awaitPromise,
+          throwOnSideEffect,
+          timeout,
+          disableBreaks,
+          replMode,
+          allowUnsafeEvalBlockedByCSP,
+          uniqueContextId,
+        };
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.evaluate", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns the isolate id. */
+  module GetIsolateId = {
+    module Response: {
+      type result = {id: string /* The isolate id. */};
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {id: string /* The isolate id. */};
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Runtime.getIsolateId", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns the JavaScript heap usage.
+     It is the total usage of the corresponding isolate not scoped to a particular Runtime. */
+  module GetHeapUsage = {
+    module Response: {
+      type result = {
+        usedSize: float, /* Used heap size in bytes. */
+        totalSize: float /* Allocated heap size in bytes. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        usedSize: float, /* Used heap size in bytes. */
+        totalSize: float /* Allocated heap size in bytes. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Runtime.getHeapUsage", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns properties of a given object. Object group of the result is inherited from the target
+     object. */
+  module GetProperties = {
+    module Response: {
+      type result = {
+        result: list(Types.Runtime.PropertyDescriptor.t), /* Object properties. */
+        [@yojson.option]
+        internalProperties:
+          option(list(Types.Runtime.InternalPropertyDescriptor.t)), /* Internal object properties (only of the element itself). */
+        [@yojson.option]
+        privateProperties:
+          option(list(Types.Runtime.PrivatePropertyDescriptor.t)), /* Object private properties. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: list(Types.Runtime.PropertyDescriptor.t), /* Object properties. */
+        [@yojson.option]
+        internalProperties:
+          option(list(Types.Runtime.InternalPropertyDescriptor.t)), /* Internal object properties (only of the element itself). */
+        [@yojson.option]
+        privateProperties:
+          option(list(Types.Runtime.PrivatePropertyDescriptor.t)), /* Object private properties. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        objectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the object to return properties for. */
+        [@yojson.option]
+        ownProperties: option(bool), /* If true, returns properties belonging only to the element itself, not to its prototype
+chain. */
+        [@yojson.option]
+        accessorPropertiesOnly: option(bool), /* If true, returns accessor properties (with getter/setter) only; internal properties are not
+returned either. */
+        [@yojson.option]
+        generatePreview: option(bool) /* Whether preview should be generated for the results. */,
+      };
+      let make =
+          (
+            ~objectId,
+            ~ownProperties=?,
+            ~accessorPropertiesOnly=?,
+            ~generatePreview=?,
+            (),
+          ) => {
+        {objectId, ownProperties, accessorPropertiesOnly, generatePreview};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.getProperties", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns all let, const and class variables from global scope. */
+  module GlobalLexicalScopeNames = {
+    module Response: {
+      type result = {names: list(string) /* No description provided */};
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {names: list(string) /* No description provided */};
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option]
+        executionContextId: option(Types.Runtime.ExecutionContextId.t) /* Specifies in which execution context to lookup global scope variables. */,
+      };
+      let make = (~executionContextId=?, ()) => {
+        {executionContextId: executionContextId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.globalLexicalScopeNames", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module QueryObjects = {
+    module Response: {
+      type result = {
+        objects: Types.Runtime.RemoteObject.t /* Array with objects. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        objects: Types.Runtime.RemoteObject.t /* Array with objects. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        prototypeObjectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the prototype to return objects for. */
+        [@yojson.option]
+        objectGroup: option(string) /* Symbolic group name that can be used to release the results. */,
+      };
+      let make = (~prototypeObjectId, ~objectGroup=?, ()) => {
+        {prototypeObjectId, objectGroup};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.queryObjects", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Releases remote object with given id. */
+  module ReleaseObject = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        objectId: Types.Runtime.RemoteObjectId.t /* Identifier of the object to release. */,
+      };
+      let make = (~objectId, ()) => {
+        {objectId: objectId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.releaseObject", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Releases all remote objects that belong to a given group. */
+  module ReleaseObjectGroup = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {objectGroup: string /* Symbolic object group name. */};
+      let make = (~objectGroup, ()) => {
+        {objectGroup: objectGroup};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.releaseObjectGroup", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Tells inspected instance to run if it was waiting for debugger to attach. */
+  module RunIfWaitingForDebugger = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Runtime.runIfWaitingForDebugger", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Runs script with given id in a given context. */
+  module RunScript = {
+    module Response: {
+      type result = {
+        result: Types.Runtime.RemoteObject.t, /* Run result. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        result: Types.Runtime.RemoteObject.t, /* Run result. */
+        [@yojson.option]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        scriptId: Types.Runtime.ScriptId.t, /* Id of the script to run. */
+        [@yojson.option]
+        executionContextId: option(Types.Runtime.ExecutionContextId.t), /* Specifies in which execution context to perform script run. If the parameter is omitted the
+evaluation will be performed in the context of the inspected page. */
+        [@yojson.option]
+        objectGroup: option(string), /* Symbolic group name that can be used to release multiple objects. */
+        [@yojson.option]
+        silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
+execution. Overrides `setPauseOnException` state. */
+        [@yojson.option]
+        includeCommandLineAPI: option(bool), /* Determines whether Command Line API should be available during the evaluation. */
+        [@yojson.option]
+        returnByValue: option(bool), /* Whether the result is expected to be a JSON object which should be sent by value. */
+        [@yojson.option]
+        generatePreview: option(bool), /* Whether preview should be generated for the result. */
+        [@yojson.option]
+        awaitPromise: option(bool) /* Whether execution should `await` for resulting value and return once awaited promise is
+resolved. */,
+      };
+      let make =
+          (
+            ~scriptId,
+            ~executionContextId=?,
+            ~objectGroup=?,
+            ~silent=?,
+            ~includeCommandLineAPI=?,
+            ~returnByValue=?,
+            ~generatePreview=?,
+            ~awaitPromise=?,
+            (),
+          ) => {
+        {
+          scriptId,
+          executionContextId,
+          objectGroup,
+          silent,
+          includeCommandLineAPI,
+          returnByValue,
+          generatePreview,
+          awaitPromise,
+        };
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.runScript", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Enables or disables async call stacks tracking. */
+  module SetAsyncCallStackDepth = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        maxDepth: float /* Maximum depth of async call stacks. Setting to `0` will effectively disable collecting async
+call stacks (default). */,
+      };
+      let make = (~maxDepth, ()) => {
+        {maxDepth: maxDepth};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.setAsyncCallStackDepth", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module SetCustomObjectFormatterEnabled = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {enabled: bool /* No description provided */};
+      let make = (~enabled, ()) => {
+        {enabled: enabled};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "Runtime.setCustomObjectFormatterEnabled",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* No description provided */
+  module SetMaxCallStackSizeToCapture = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {size: float /* No description provided */};
+      let make = (~size, ()) => {
+        {size: size};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "Runtime.setMaxCallStackSizeToCapture",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Terminate current or next JavaScript execution.
+     Will cancel the termination when the outer-most script execution ends. */
+  module TerminateExecution = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Runtime.terminateExecution", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* If executionContextId is empty, adds binding with the given name on the
+     global objects of all inspected contexts, including those created later,
+     bindings survive reloads.
+     Binding function takes exactly one argument, this argument should be string,
+     in case of any other input, function throws an exception.
+     Each binding function call produces Runtime.bindingCalled notification. */
+  module AddBinding = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        name: string, /* No description provided */
+        [@yojson.option]
+        executionContextId: option(Types.Runtime.ExecutionContextId.t), /* If specified, the binding would only be exposed to the specified
+execution context. If omitted and `executionContextName` is not set,
+the binding is exposed to all execution contexts of the target.
+This parameter is mutually exclusive with `executionContextName`. */
+        [@yojson.option]
+        executionContextName: option(string) /* If specified, the binding is exposed to the executionContext with
+matching name, even for contexts created after the binding is added.
+See also `ExecutionContext.name` and `worldName` parameter to
+`Page.addScriptToEvaluateOnNewDocument`.
+This parameter is mutually exclusive with `executionContextId`. */,
+      };
+      let make = (~name, ~executionContextId=?, ~executionContextName=?, ()) => {
+        {name, executionContextId, executionContextName};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.addBinding", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* This method does not remove binding function from global object but
+     unsubscribes current runtime agent from Runtime.bindingCalled notifications. */
+  module RemoveBinding = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {name: string /* No description provided */};
+      let make = (~name, ()) => {
+        {name: name};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.removeBinding", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+};
+module Schema = {
+  /* Returns supported domains. */
+  module GetDomains = {
+    module Response: {
+      type result = {
+        domains: list(Types.Schema.Domain.t) /* List of supported domains. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        domains: list(Types.Schema.Domain.t) /* List of supported domains. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Schema.getDomains", sessionId}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };

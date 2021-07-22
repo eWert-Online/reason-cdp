@@ -25,7 +25,7 @@
   },
   "scripts": {
     "c": "rm ./lib/Types.re ./lib/Events.re ./lib/Commands.re",
-    "gen": "esy x cdp ./bin/protocol.json ./lib",
+    "gen": "esy x cdp ./protocols/browser_protocol.json ./protocols/js_protocol.json ./lib",
     "fmt": "esy refmt --in-place ./lib/Types.re ./lib/Events.re ./lib/Commands.re"
   },
   "dependencies": {

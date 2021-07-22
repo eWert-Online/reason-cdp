@@ -2810,366 +2810,6 @@ session on the sink. */,
     };
   };
 }
-and Console: {
-  module rec ConsoleMessage: {
-    /* Console message. */
-    [@deriving yojson]
-    type t = {
-      source: string, /* Message source. */
-      level: string, /* Message severity. */
-      text: string, /* Message text. */
-      [@yojson.option]
-      url: option(string), /* URL of the message origin. */
-      [@yojson.option]
-      line: option(float), /* Line number in the resource that generated this message (1-based). */
-      [@yojson.option]
-      column: option(float) /* Column number in the resource that generated this message (1-based). */,
-    };
-  };
-} = {
-  module rec ConsoleMessage: {
-    /* Console message. */
-    [@deriving yojson]
-    type t = {
-      source: string, /* Message source. */
-      level: string, /* Message severity. */
-      text: string, /* Message text. */
-      [@yojson.option]
-      url: option(string), /* URL of the message origin. */
-      [@yojson.option]
-      line: option(float), /* Line number in the resource that generated this message (1-based). */
-      [@yojson.option]
-      column: option(float) /* Column number in the resource that generated this message (1-based). */,
-    };
-  } = {
-    /* Console message. */
-    [@deriving yojson]
-    type t = {
-      source: string, /* Message source. */
-      level: string, /* Message severity. */
-      text: string, /* Message text. */
-      [@yojson.option]
-      url: option(string), /* URL of the message origin. */
-      [@yojson.option]
-      line: option(float), /* Line number in the resource that generated this message (1-based). */
-      [@yojson.option]
-      column: option(float) /* Column number in the resource that generated this message (1-based). */,
-    };
-  };
-}
-and Debugger: {
-  module rec BreakpointId: {
-    /* Breakpoint identifier. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and CallFrameId: {
-    /* Call frame identifier. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and Location: {
-    /* Location in the source code. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
-      lineNumber: float, /* Line number in the script (0-based). */
-      [@yojson.option]
-      columnNumber: option(float) /* Column number in the script (0-based). */,
-    };
-  }
-  and ScriptPosition: {
-    /* Location in the source code. */
-    [@deriving yojson]
-    type t = {
-      lineNumber: float, /* No description provided */
-      columnNumber: float /* No description provided */,
-    };
-  }
-  and LocationRange: {
-    /* Location range within one script. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* No description provided */
-      start: ScriptPosition.t, /* No description provided */
-      [@key "end"]
-      end_: ScriptPosition.t /* No description provided */,
-    };
-  }
-  and CallFrame: {
-    /* JavaScript call frame. Array of call frames form the call stack. */
-    [@deriving yojson]
-    type t = {
-      callFrameId: CallFrameId.t, /* Call frame identifier. This identifier is only valid while the virtual machine is paused. */
-      functionName: string, /* Name of the JavaScript function called on this call frame. */
-      [@yojson.option]
-      functionLocation: option(Location.t), /* Location in the source code. */
-      location: Location.t, /* Location in the source code. */
-      url: string, /* JavaScript script name or url. */
-      scopeChain: list(Scope.t), /* Scope chain for this call frame. */
-      this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
-      [@yojson.option]
-      returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
-    };
-  }
-  and Scope: {
-    /* Scope description. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Scope type. */
-      [@key "object"]
-      object_: Runtime.RemoteObject.t, /* Object representing the scope. For `global` and `with` scopes it represents the actual
-object; for the rest of the scopes, it is artificial transient object enumerating scope
-variables as its properties. */
-      [@yojson.option]
-      name: option(string), /* No description provided */
-      [@yojson.option]
-      startLocation: option(Location.t), /* Location in the source code where scope starts */
-      [@yojson.option]
-      endLocation: option(Location.t) /* Location in the source code where scope ends */,
-    };
-  }
-  and SearchMatch: {
-    /* Search match for resource. */
-    [@deriving yojson]
-    type t = {
-      lineNumber: float, /* Line number in resource content. */
-      lineContent: string /* Line with match content. */,
-    };
-  }
-  and BreakLocation: {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
-      lineNumber: float, /* Line number in the script (0-based). */
-      [@yojson.option]
-      columnNumber: option(float), /* Column number in the script (0-based). */
-      [@yojson.option] [@key "type"]
-      type_: option(string) /* No description provided */,
-    };
-  }
-  and ScriptLanguage: {
-    /* Enum of possible script languages. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and DebugSymbols: {
-    /* Debug symbols available for a wasm script. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Type of the debug symbols. */
-      [@yojson.option]
-      externalURL: option(string) /* URL of the external symbol source. */,
-    };
-  };
-} = {
-  module rec BreakpointId: {
-    /* Breakpoint identifier. */
-    [@deriving yojson]
-    type t = string;
-  } = {
-    /* Breakpoint identifier. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and CallFrameId: {
-    /* Call frame identifier. */
-    [@deriving yojson]
-    type t = string;
-  } = {
-    /* Call frame identifier. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and Location: {
-    /* Location in the source code. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
-      lineNumber: float, /* Line number in the script (0-based). */
-      [@yojson.option]
-      columnNumber: option(float) /* Column number in the script (0-based). */,
-    };
-  } = {
-    /* Location in the source code. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
-      lineNumber: float, /* Line number in the script (0-based). */
-      [@yojson.option]
-      columnNumber: option(float) /* Column number in the script (0-based). */,
-    };
-  }
-  and ScriptPosition: {
-    /* Location in the source code. */
-    [@deriving yojson]
-    type t = {
-      lineNumber: float, /* No description provided */
-      columnNumber: float /* No description provided */,
-    };
-  } = {
-    /* Location in the source code. */
-    [@deriving yojson]
-    type t = {
-      lineNumber: float, /* No description provided */
-      columnNumber: float /* No description provided */,
-    };
-  }
-  and LocationRange: {
-    /* Location range within one script. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* No description provided */
-      start: ScriptPosition.t, /* No description provided */
-      [@key "end"]
-      end_: ScriptPosition.t /* No description provided */,
-    };
-  } = {
-    /* Location range within one script. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* No description provided */
-      start: ScriptPosition.t, /* No description provided */
-      [@key "end"]
-      end_: ScriptPosition.t /* No description provided */,
-    };
-  }
-  and CallFrame: {
-    /* JavaScript call frame. Array of call frames form the call stack. */
-    [@deriving yojson]
-    type t = {
-      callFrameId: CallFrameId.t, /* Call frame identifier. This identifier is only valid while the virtual machine is paused. */
-      functionName: string, /* Name of the JavaScript function called on this call frame. */
-      [@yojson.option]
-      functionLocation: option(Location.t), /* Location in the source code. */
-      location: Location.t, /* Location in the source code. */
-      url: string, /* JavaScript script name or url. */
-      scopeChain: list(Scope.t), /* Scope chain for this call frame. */
-      this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
-      [@yojson.option]
-      returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
-    };
-  } = {
-    /* JavaScript call frame. Array of call frames form the call stack. */
-    [@deriving yojson]
-    type t = {
-      callFrameId: CallFrameId.t, /* Call frame identifier. This identifier is only valid while the virtual machine is paused. */
-      functionName: string, /* Name of the JavaScript function called on this call frame. */
-      [@yojson.option]
-      functionLocation: option(Location.t), /* Location in the source code. */
-      location: Location.t, /* Location in the source code. */
-      url: string, /* JavaScript script name or url. */
-      scopeChain: list(Scope.t), /* Scope chain for this call frame. */
-      this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
-      [@yojson.option]
-      returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
-    };
-  }
-  and Scope: {
-    /* Scope description. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Scope type. */
-      [@key "object"]
-      object_: Runtime.RemoteObject.t, /* Object representing the scope. For `global` and `with` scopes it represents the actual
-object; for the rest of the scopes, it is artificial transient object enumerating scope
-variables as its properties. */
-      [@yojson.option]
-      name: option(string), /* No description provided */
-      [@yojson.option]
-      startLocation: option(Location.t), /* Location in the source code where scope starts */
-      [@yojson.option]
-      endLocation: option(Location.t) /* Location in the source code where scope ends */,
-    };
-  } = {
-    /* Scope description. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Scope type. */
-      [@key "object"]
-      object_: Runtime.RemoteObject.t, /* Object representing the scope. For `global` and `with` scopes it represents the actual
-object; for the rest of the scopes, it is artificial transient object enumerating scope
-variables as its properties. */
-      [@yojson.option]
-      name: option(string), /* No description provided */
-      [@yojson.option]
-      startLocation: option(Location.t), /* Location in the source code where scope starts */
-      [@yojson.option]
-      endLocation: option(Location.t) /* Location in the source code where scope ends */,
-    };
-  }
-  and SearchMatch: {
-    /* Search match for resource. */
-    [@deriving yojson]
-    type t = {
-      lineNumber: float, /* Line number in resource content. */
-      lineContent: string /* Line with match content. */,
-    };
-  } = {
-    /* Search match for resource. */
-    [@deriving yojson]
-    type t = {
-      lineNumber: float, /* Line number in resource content. */
-      lineContent: string /* Line with match content. */,
-    };
-  }
-  and BreakLocation: {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
-      lineNumber: float, /* Line number in the script (0-based). */
-      [@yojson.option]
-      columnNumber: option(float), /* Column number in the script (0-based). */
-      [@yojson.option] [@key "type"]
-      type_: option(string) /* No description provided */,
-    };
-  } = {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
-      lineNumber: float, /* Line number in the script (0-based). */
-      [@yojson.option]
-      columnNumber: option(float), /* Column number in the script (0-based). */
-      [@yojson.option] [@key "type"]
-      type_: option(string) /* No description provided */,
-    };
-  }
-  and ScriptLanguage: {
-    /* Enum of possible script languages. */
-    [@deriving yojson]
-    type t = string;
-  } = {
-    /* Enum of possible script languages. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and DebugSymbols: {
-    /* Debug symbols available for a wasm script. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Type of the debug symbols. */
-      [@yojson.option]
-      externalURL: option(string) /* URL of the external symbol source. */,
-    };
-  } = {
-    /* Debug symbols available for a wasm script. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Type of the debug symbols. */
-      [@yojson.option]
-      externalURL: option(string) /* URL of the external symbol source. */,
-    };
-  };
-}
 and DOM: {
   module rec NodeId: {
     /* Unique DOM node identifier. */
@@ -4779,104 +4419,6 @@ and HeadlessExperimental: {
       format: option(string), /* Image compression format (defaults to png). */
       [@yojson.option]
       quality: option(float) /* Compression quality from range [0..100] (jpeg only). */,
-    };
-  };
-}
-and HeapProfiler: {
-  module rec HeapSnapshotObjectId: {
-    /* Heap snapshot object id. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and SamplingHeapProfileNode: {
-    /* Sampling Heap Profile node. Holds callsite information, allocation statistics and child nodes. */
-    [@deriving yojson]
-    type t = {
-      callFrame: Runtime.CallFrame.t, /* Function location. */
-      selfSize: float, /* Allocations size in bytes for the node excluding children. */
-      id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
-      children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
-    };
-  }
-  and SamplingHeapProfileSample: {
-    /* A single sample from a sampling profile. */
-    [@deriving yojson]
-    type t = {
-      size: float, /* Allocation size in bytes attributed to the sample. */
-      nodeId: float, /* Id of the corresponding profile tree node. */
-      ordinal: float /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
-between startSampling and stopSampling. */,
-    };
-  }
-  and SamplingHeapProfile: {
-    /* Sampling profile. */
-    [@deriving yojson]
-    type t = {
-      head: SamplingHeapProfileNode.t, /* No description provided */
-      samples: list(SamplingHeapProfileSample.t) /* No description provided */,
-    };
-  };
-} = {
-  module rec HeapSnapshotObjectId: {
-    /* Heap snapshot object id. */
-    [@deriving yojson]
-    type t = string;
-  } = {
-    /* Heap snapshot object id. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and SamplingHeapProfileNode: {
-    /* Sampling Heap Profile node. Holds callsite information, allocation statistics and child nodes. */
-    [@deriving yojson]
-    type t = {
-      callFrame: Runtime.CallFrame.t, /* Function location. */
-      selfSize: float, /* Allocations size in bytes for the node excluding children. */
-      id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
-      children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
-    };
-  } = {
-    /* Sampling Heap Profile node. Holds callsite information, allocation statistics and child nodes. */
-    [@deriving yojson]
-    type t = {
-      callFrame: Runtime.CallFrame.t, /* Function location. */
-      selfSize: float, /* Allocations size in bytes for the node excluding children. */
-      id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
-      children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
-    };
-  }
-  and SamplingHeapProfileSample: {
-    /* A single sample from a sampling profile. */
-    [@deriving yojson]
-    type t = {
-      size: float, /* Allocation size in bytes attributed to the sample. */
-      nodeId: float, /* Id of the corresponding profile tree node. */
-      ordinal: float /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
-between startSampling and stopSampling. */,
-    };
-  } = {
-    /* A single sample from a sampling profile. */
-    [@deriving yojson]
-    type t = {
-      size: float, /* Allocation size in bytes attributed to the sample. */
-      nodeId: float, /* Id of the corresponding profile tree node. */
-      ordinal: float /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
-between startSampling and stopSampling. */,
-    };
-  }
-  and SamplingHeapProfile: {
-    /* Sampling profile. */
-    [@deriving yojson]
-    type t = {
-      head: SamplingHeapProfileNode.t, /* No description provided */
-      samples: list(SamplingHeapProfileSample.t) /* No description provided */,
-    };
-  } = {
-    /* Sampling profile. */
-    [@deriving yojson]
-    type t = {
-      head: SamplingHeapProfileNode.t, /* No description provided */
-      samples: list(SamplingHeapProfileSample.t) /* No description provided */,
     };
   };
 }
@@ -9280,1077 +8822,6 @@ This determines which of the optional "details" fiedls is present. */
     };
   };
 }
-and Profiler: {
-  module rec ProfileNode: {
-    /* Profile node. Holds callsite information, execution statistics and child nodes. */
-    [@deriving yojson]
-    type t = {
-      id: float, /* Unique id of the node. */
-      callFrame: Runtime.CallFrame.t, /* Function location. */
-      [@yojson.option]
-      hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
-      [@yojson.option]
-      children: option(list(float)), /* Child node ids. */
-      [@yojson.option]
-      deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
-optimize. */
-      [@yojson.option]
-      positionTicks: option(list(PositionTickInfo.t)) /* An array of source position ticks. */,
-    };
-  }
-  and Profile: {
-    /* Profile. */
-    [@deriving yojson]
-    type t = {
-      nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
-      startTime: float, /* Profiling start timestamp in microseconds. */
-      endTime: float, /* Profiling end timestamp in microseconds. */
-      [@yojson.option]
-      samples: option(list(float)), /* Ids of samples top nodes. */
-      [@yojson.option]
-      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
-profile startTime. */,
-    };
-  }
-  and PositionTickInfo: {
-    /* Specifies a number of samples attributed to a certain source position. */
-    [@deriving yojson]
-    type t = {
-      line: float, /* Source line number (1-based). */
-      ticks: float /* Number of samples attributed to the source line. */,
-    };
-  }
-  and CoverageRange: {
-    /* Coverage data for a source range. */
-    [@deriving yojson]
-    type t = {
-      startOffset: float, /* JavaScript script source offset for the range start. */
-      endOffset: float, /* JavaScript script source offset for the range end. */
-      count: float /* Collected execution count of the source range. */,
-    };
-  }
-  and FunctionCoverage: {
-    /* Coverage data for a JavaScript function. */
-    [@deriving yojson]
-    type t = {
-      functionName: string, /* JavaScript function name. */
-      ranges: list(CoverageRange.t), /* Source ranges inside the function with coverage data. */
-      isBlockCoverage: bool /* Whether coverage data for this function has block granularity. */,
-    };
-  }
-  and ScriptCoverage: {
-    /* Coverage data for a JavaScript script. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
-      url: string, /* JavaScript script name or url. */
-      functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
-    };
-  }
-  and TypeObject: {
-    /* Describes a type collected during runtime. */
-    [@deriving yojson]
-    type t = {
-      name: string /* Name of a type collected with type profiling. */,
-    };
-  }
-  and TypeProfileEntry: {
-    /* Source offset and types for a parameter or return value. */
-    [@deriving yojson]
-    type t = {
-      offset: float, /* Source offset of the parameter or end of function for return values. */
-      types: list(TypeObject.t) /* The types for this parameter or return value. */,
-    };
-  }
-  and ScriptTypeProfile: {
-    /* Type profile data collected during runtime for a JavaScript script. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
-      url: string, /* JavaScript script name or url. */
-      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
-    };
-  }
-  and CounterInfo: {
-    /* Collected counter information. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Counter name. */
-      value: float /* Counter value. */,
-    };
-  }
-  and RuntimeCallCounterInfo: {
-    /* Runtime call counter information. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Counter name. */
-      value: float, /* Counter value. */
-      time: float /* Counter time in seconds. */,
-    };
-  };
-} = {
-  module rec ProfileNode: {
-    /* Profile node. Holds callsite information, execution statistics and child nodes. */
-    [@deriving yojson]
-    type t = {
-      id: float, /* Unique id of the node. */
-      callFrame: Runtime.CallFrame.t, /* Function location. */
-      [@yojson.option]
-      hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
-      [@yojson.option]
-      children: option(list(float)), /* Child node ids. */
-      [@yojson.option]
-      deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
-optimize. */
-      [@yojson.option]
-      positionTicks: option(list(PositionTickInfo.t)) /* An array of source position ticks. */,
-    };
-  } = {
-    /* Profile node. Holds callsite information, execution statistics and child nodes. */
-    [@deriving yojson]
-    type t = {
-      id: float, /* Unique id of the node. */
-      callFrame: Runtime.CallFrame.t, /* Function location. */
-      [@yojson.option]
-      hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
-      [@yojson.option]
-      children: option(list(float)), /* Child node ids. */
-      [@yojson.option]
-      deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
-optimize. */
-      [@yojson.option]
-      positionTicks: option(list(PositionTickInfo.t)) /* An array of source position ticks. */,
-    };
-  }
-  and Profile: {
-    /* Profile. */
-    [@deriving yojson]
-    type t = {
-      nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
-      startTime: float, /* Profiling start timestamp in microseconds. */
-      endTime: float, /* Profiling end timestamp in microseconds. */
-      [@yojson.option]
-      samples: option(list(float)), /* Ids of samples top nodes. */
-      [@yojson.option]
-      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
-profile startTime. */,
-    };
-  } = {
-    /* Profile. */
-    [@deriving yojson]
-    type t = {
-      nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
-      startTime: float, /* Profiling start timestamp in microseconds. */
-      endTime: float, /* Profiling end timestamp in microseconds. */
-      [@yojson.option]
-      samples: option(list(float)), /* Ids of samples top nodes. */
-      [@yojson.option]
-      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
-profile startTime. */,
-    };
-  }
-  and PositionTickInfo: {
-    /* Specifies a number of samples attributed to a certain source position. */
-    [@deriving yojson]
-    type t = {
-      line: float, /* Source line number (1-based). */
-      ticks: float /* Number of samples attributed to the source line. */,
-    };
-  } = {
-    /* Specifies a number of samples attributed to a certain source position. */
-    [@deriving yojson]
-    type t = {
-      line: float, /* Source line number (1-based). */
-      ticks: float /* Number of samples attributed to the source line. */,
-    };
-  }
-  and CoverageRange: {
-    /* Coverage data for a source range. */
-    [@deriving yojson]
-    type t = {
-      startOffset: float, /* JavaScript script source offset for the range start. */
-      endOffset: float, /* JavaScript script source offset for the range end. */
-      count: float /* Collected execution count of the source range. */,
-    };
-  } = {
-    /* Coverage data for a source range. */
-    [@deriving yojson]
-    type t = {
-      startOffset: float, /* JavaScript script source offset for the range start. */
-      endOffset: float, /* JavaScript script source offset for the range end. */
-      count: float /* Collected execution count of the source range. */,
-    };
-  }
-  and FunctionCoverage: {
-    /* Coverage data for a JavaScript function. */
-    [@deriving yojson]
-    type t = {
-      functionName: string, /* JavaScript function name. */
-      ranges: list(CoverageRange.t), /* Source ranges inside the function with coverage data. */
-      isBlockCoverage: bool /* Whether coverage data for this function has block granularity. */,
-    };
-  } = {
-    /* Coverage data for a JavaScript function. */
-    [@deriving yojson]
-    type t = {
-      functionName: string, /* JavaScript function name. */
-      ranges: list(CoverageRange.t), /* Source ranges inside the function with coverage data. */
-      isBlockCoverage: bool /* Whether coverage data for this function has block granularity. */,
-    };
-  }
-  and ScriptCoverage: {
-    /* Coverage data for a JavaScript script. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
-      url: string, /* JavaScript script name or url. */
-      functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
-    };
-  } = {
-    /* Coverage data for a JavaScript script. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
-      url: string, /* JavaScript script name or url. */
-      functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
-    };
-  }
-  and TypeObject: {
-    /* Describes a type collected during runtime. */
-    [@deriving yojson]
-    type t = {
-      name: string /* Name of a type collected with type profiling. */,
-    };
-  } = {
-    /* Describes a type collected during runtime. */
-    [@deriving yojson]
-    type t = {
-      name: string /* Name of a type collected with type profiling. */,
-    };
-  }
-  and TypeProfileEntry: {
-    /* Source offset and types for a parameter or return value. */
-    [@deriving yojson]
-    type t = {
-      offset: float, /* Source offset of the parameter or end of function for return values. */
-      types: list(TypeObject.t) /* The types for this parameter or return value. */,
-    };
-  } = {
-    /* Source offset and types for a parameter or return value. */
-    [@deriving yojson]
-    type t = {
-      offset: float, /* Source offset of the parameter or end of function for return values. */
-      types: list(TypeObject.t) /* The types for this parameter or return value. */,
-    };
-  }
-  and ScriptTypeProfile: {
-    /* Type profile data collected during runtime for a JavaScript script. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
-      url: string, /* JavaScript script name or url. */
-      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
-    };
-  } = {
-    /* Type profile data collected during runtime for a JavaScript script. */
-    [@deriving yojson]
-    type t = {
-      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
-      url: string, /* JavaScript script name or url. */
-      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
-    };
-  }
-  and CounterInfo: {
-    /* Collected counter information. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Counter name. */
-      value: float /* Counter value. */,
-    };
-  } = {
-    /* Collected counter information. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Counter name. */
-      value: float /* Counter value. */,
-    };
-  }
-  and RuntimeCallCounterInfo: {
-    /* Runtime call counter information. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Counter name. */
-      value: float, /* Counter value. */
-      time: float /* Counter time in seconds. */,
-    };
-  } = {
-    /* Runtime call counter information. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Counter name. */
-      value: float, /* Counter value. */
-      time: float /* Counter time in seconds. */,
-    };
-  };
-}
-and Runtime: {
-  module rec ScriptId: {
-    /* Unique script identifier. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and RemoteObjectId: {
-    /* Unique object identifier. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and UnserializableValue: {
-    /* Primitive value which cannot be JSON-stringified. Includes values `-0`, `NaN`, `Infinity`,
-       `-Infinity`, and bigint literals. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and RemoteObject: {
-    /* Mirror object referencing original JavaScript object. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Object type. */
-      [@yojson.option]
-      subtype: option(string), /* Object subtype hint. Specified for `object` type values only.
-NOTE: If you change anything here, make sure to also update
-`subtype` in `ObjectPreview` and `PropertyPreview` below. */
-      [@yojson.option]
-      className: option(string), /* Object class (constructor) name. Specified for `object` type values only. */
-      [@yojson.option]
-      value: option(string), /* Remote object value in case of primitive values or JSON values (if it was requested). */
-      [@yojson.option]
-      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified does not have `value`, but gets this
-property. */
-      [@yojson.option]
-      description: option(string), /* String representation of the object. */
-      [@yojson.option]
-      objectId: option(RemoteObjectId.t), /* Unique object identifier (for non-primitive values). */
-      [@yojson.option]
-      preview: option(ObjectPreview.t), /* Preview containing abbreviated property values. Specified for `object` type values only. */
-      [@yojson.option]
-      customPreview: option(CustomPreview.t) /* No description provided */,
-    };
-  }
-  and CustomPreview: {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      header: string, /* The JSON-stringified result of formatter.header(object, config) call.
-It contains json ML array that represents RemoteObject. */
-      [@yojson.option]
-      bodyGetterId: option(RemoteObjectId.t) /* If formatter returns true as a result of formatter.hasBody call then bodyGetterId will
-contain RemoteObjectId for the function that returns result of formatter.body(object, config) call.
-The result value is json ML array. */,
-    };
-  }
-  and ObjectPreview: {
-    /* Object containing abbreviated remote object value. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Object type. */
-      [@yojson.option]
-      subtype: option(string), /* Object subtype hint. Specified for `object` type values only. */
-      [@yojson.option]
-      description: option(string), /* String representation of the object. */
-      overflow: bool, /* True iff some of the properties or entries of the original object did not fit. */
-      properties: list(PropertyPreview.t), /* List of the properties. */
-      [@yojson.option]
-      entries: option(list(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
-    };
-  }
-  and PropertyPreview: {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Property name. */
-      [@key "type"]
-      type_: string, /* Object type. Accessor means that the property itself is an accessor property. */
-      [@yojson.option]
-      value: option(string), /* User-friendly property value string. */
-      [@yojson.option]
-      valuePreview: option(ObjectPreview.t), /* Nested value preview. */
-      [@yojson.option]
-      subtype: option(string) /* Object subtype hint. Specified for `object` type values only. */,
-    };
-  }
-  and EntryPreview: {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      [@yojson.option]
-      key: option(ObjectPreview.t), /* Preview of the key. Specified for map-like collection entries. */
-      value: ObjectPreview.t /* Preview of the value. */,
-    };
-  }
-  and PropertyDescriptor: {
-    /* Object property descriptor. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Property name or symbol description. */
-      [@yojson.option]
-      value: option(RemoteObject.t), /* The value associated with the property. */
-      [@yojson.option]
-      writable: option(bool), /* True if the value associated with the property may be changed (data descriptors only). */
-      [@yojson.option]
-      get: option(RemoteObject.t), /* A function which serves as a getter for the property, or `undefined` if there is no getter
-(accessor descriptors only). */
-      [@yojson.option]
-      set: option(RemoteObject.t), /* A function which serves as a setter for the property, or `undefined` if there is no setter
-(accessor descriptors only). */
-      configurable: bool, /* True if the type of this property descriptor may be changed and if the property may be
-deleted from the corresponding object. */
-      enumerable: bool, /* True if this property shows up during enumeration of the properties on the corresponding
-object. */
-      [@yojson.option]
-      wasThrown: option(bool), /* True if the result was thrown during the evaluation. */
-      [@yojson.option]
-      isOwn: option(bool), /* True if the property is owned for the object. */
-      [@yojson.option]
-      symbol: option(RemoteObject.t) /* Property symbol object, if the property is of the `symbol` type. */,
-    };
-  }
-  and InternalPropertyDescriptor: {
-    /* Object internal property descriptor. This property isn't normally visible in JavaScript code. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Conventional property name. */
-      [@yojson.option]
-      value: option(RemoteObject.t) /* The value associated with the property. */,
-    };
-  }
-  and PrivatePropertyDescriptor: {
-    /* Object private field descriptor. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Private property name. */
-      [@yojson.option]
-      value: option(RemoteObject.t), /* The value associated with the private property. */
-      [@yojson.option]
-      get: option(RemoteObject.t), /* A function which serves as a getter for the private property,
-or `undefined` if there is no getter (accessor descriptors only). */
-      [@yojson.option]
-      set: option(RemoteObject.t) /* A function which serves as a setter for the private property,
-or `undefined` if there is no setter (accessor descriptors only). */,
-    };
-  }
-  and CallArgument: {
-    /* Represents function call argument. Either remote object id `objectId`, primitive `value`,
-       unserializable primitive value or neither of (for undefined) them should be specified. */
-    [@deriving yojson]
-    type t = {
-      [@yojson.option]
-      value: option(string), /* Primitive value or serializable javascript object. */
-      [@yojson.option]
-      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified. */
-      [@yojson.option]
-      objectId: option(RemoteObjectId.t) /* Remote object handle. */,
-    };
-  }
-  and ExecutionContextId: {
-    /* Id of an execution context. */
-    [@deriving yojson]
-    type t = float;
-  }
-  and ExecutionContextDescription: {
-    /* Description of an isolated world. */
-    [@deriving yojson]
-    type t = {
-      id: ExecutionContextId.t, /* Unique id of the execution context. It can be used to specify in which execution context
-script evaluation should be performed. */
-      origin: string, /* Execution context origin. */
-      name: string, /* Human readable name describing given context. */
-      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique accross
-multiple processes, so can be reliably used to identify specific context while backend
-performs a cross-process navigation. */
-      [@yojson.option]
-      auxData: option(assoc) /* Embedder-specific auxiliary data. */,
-    };
-  }
-  and ExceptionDetails: {
-    /* Detailed information about exception (or error) that was thrown during script compilation or
-       execution. */
-    [@deriving yojson]
-    type t = {
-      exceptionId: float, /* Exception id. */
-      text: string, /* Exception text, which should be used together with exception object when available. */
-      lineNumber: float, /* Line number of the exception location (0-based). */
-      columnNumber: float, /* Column number of the exception location (0-based). */
-      [@yojson.option]
-      scriptId: option(ScriptId.t), /* Script ID of the exception location. */
-      [@yojson.option]
-      url: option(string), /* URL of the exception location, to be used when the script was not reported. */
-      [@yojson.option]
-      stackTrace: option(StackTrace.t), /* JavaScript stack trace if available. */
-      [@yojson.option] [@key "exception"]
-      exception_: option(RemoteObject.t), /* Exception object if available. */
-      [@yojson.option]
-      executionContextId: option(ExecutionContextId.t) /* Identifier of the context where exception happened. */,
-    };
-  }
-  and Timestamp: {
-    /* Number of milliseconds since epoch. */
-    [@deriving yojson]
-    type t = float;
-  }
-  and TimeDelta: {
-    /* Number of milliseconds. */
-    [@deriving yojson]
-    type t = float;
-  }
-  and CallFrame: {
-    /* Stack entry for runtime errors and assertions. */
-    [@deriving yojson]
-    type t = {
-      functionName: string, /* JavaScript function name. */
-      scriptId: ScriptId.t, /* JavaScript script id. */
-      url: string, /* JavaScript script name or url. */
-      lineNumber: float, /* JavaScript script line number (0-based). */
-      columnNumber: float /* JavaScript script column number (0-based). */,
-    };
-  }
-  and StackTrace: {
-    /* Call frames for assertions or error messages. */
-    [@deriving yojson]
-    type t = {
-      [@yojson.option]
-      description: option(string), /* String label of this stack trace. For async traces this may be a name of the function that
-initiated the async call. */
-      callFrames: list(CallFrame.t), /* JavaScript function name. */
-      [@yojson.option]
-      parent: option(StackTrace.t), /* Asynchronous JavaScript stack trace that preceded this stack, if available. */
-      [@yojson.option]
-      parentId: option(StackTraceId.t) /* Asynchronous JavaScript stack trace that preceded this stack, if available. */,
-    };
-  }
-  and UniqueDebuggerId: {
-    /* Unique identifier of current debugger. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and StackTraceId: {
-    /* If `debuggerId` is set stack trace comes from another debugger and can be resolved there. This
-       allows to track cross-debugger calls. See `Runtime.StackTrace` and `Debugger.paused` for usages. */
-    [@deriving yojson]
-    type t = {
-      id: string, /* No description provided */
-      [@yojson.option]
-      debuggerId: option(UniqueDebuggerId.t) /* No description provided */,
-    };
-  };
-} = {
-  module rec ScriptId: {
-    /* Unique script identifier. */
-    [@deriving yojson]
-    type t = string;
-  } = {
-    /* Unique script identifier. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and RemoteObjectId: {
-    /* Unique object identifier. */
-    [@deriving yojson]
-    type t = string;
-  } = {
-    /* Unique object identifier. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and UnserializableValue: {
-    /* Primitive value which cannot be JSON-stringified. Includes values `-0`, `NaN`, `Infinity`,
-       `-Infinity`, and bigint literals. */
-    [@deriving yojson]
-    type t = string;
-  } = {
-    /* Primitive value which cannot be JSON-stringified. Includes values `-0`, `NaN`, `Infinity`,
-       `-Infinity`, and bigint literals. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and RemoteObject: {
-    /* Mirror object referencing original JavaScript object. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Object type. */
-      [@yojson.option]
-      subtype: option(string), /* Object subtype hint. Specified for `object` type values only.
-NOTE: If you change anything here, make sure to also update
-`subtype` in `ObjectPreview` and `PropertyPreview` below. */
-      [@yojson.option]
-      className: option(string), /* Object class (constructor) name. Specified for `object` type values only. */
-      [@yojson.option]
-      value: option(string), /* Remote object value in case of primitive values or JSON values (if it was requested). */
-      [@yojson.option]
-      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified does not have `value`, but gets this
-property. */
-      [@yojson.option]
-      description: option(string), /* String representation of the object. */
-      [@yojson.option]
-      objectId: option(RemoteObjectId.t), /* Unique object identifier (for non-primitive values). */
-      [@yojson.option]
-      preview: option(ObjectPreview.t), /* Preview containing abbreviated property values. Specified for `object` type values only. */
-      [@yojson.option]
-      customPreview: option(CustomPreview.t) /* No description provided */,
-    };
-  } = {
-    /* Mirror object referencing original JavaScript object. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Object type. */
-      [@yojson.option]
-      subtype: option(string), /* Object subtype hint. Specified for `object` type values only.
-NOTE: If you change anything here, make sure to also update
-`subtype` in `ObjectPreview` and `PropertyPreview` below. */
-      [@yojson.option]
-      className: option(string), /* Object class (constructor) name. Specified for `object` type values only. */
-      [@yojson.option]
-      value: option(string), /* Remote object value in case of primitive values or JSON values (if it was requested). */
-      [@yojson.option]
-      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified does not have `value`, but gets this
-property. */
-      [@yojson.option]
-      description: option(string), /* String representation of the object. */
-      [@yojson.option]
-      objectId: option(RemoteObjectId.t), /* Unique object identifier (for non-primitive values). */
-      [@yojson.option]
-      preview: option(ObjectPreview.t), /* Preview containing abbreviated property values. Specified for `object` type values only. */
-      [@yojson.option]
-      customPreview: option(CustomPreview.t) /* No description provided */,
-    };
-  }
-  and CustomPreview: {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      header: string, /* The JSON-stringified result of formatter.header(object, config) call.
-It contains json ML array that represents RemoteObject. */
-      [@yojson.option]
-      bodyGetterId: option(RemoteObjectId.t) /* If formatter returns true as a result of formatter.hasBody call then bodyGetterId will
-contain RemoteObjectId for the function that returns result of formatter.body(object, config) call.
-The result value is json ML array. */,
-    };
-  } = {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      header: string, /* The JSON-stringified result of formatter.header(object, config) call.
-It contains json ML array that represents RemoteObject. */
-      [@yojson.option]
-      bodyGetterId: option(RemoteObjectId.t) /* If formatter returns true as a result of formatter.hasBody call then bodyGetterId will
-contain RemoteObjectId for the function that returns result of formatter.body(object, config) call.
-The result value is json ML array. */,
-    };
-  }
-  and ObjectPreview: {
-    /* Object containing abbreviated remote object value. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Object type. */
-      [@yojson.option]
-      subtype: option(string), /* Object subtype hint. Specified for `object` type values only. */
-      [@yojson.option]
-      description: option(string), /* String representation of the object. */
-      overflow: bool, /* True iff some of the properties or entries of the original object did not fit. */
-      properties: list(PropertyPreview.t), /* List of the properties. */
-      [@yojson.option]
-      entries: option(list(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
-    };
-  } = {
-    /* Object containing abbreviated remote object value. */
-    [@deriving yojson]
-    type t = {
-      [@key "type"]
-      type_: string, /* Object type. */
-      [@yojson.option]
-      subtype: option(string), /* Object subtype hint. Specified for `object` type values only. */
-      [@yojson.option]
-      description: option(string), /* String representation of the object. */
-      overflow: bool, /* True iff some of the properties or entries of the original object did not fit. */
-      properties: list(PropertyPreview.t), /* List of the properties. */
-      [@yojson.option]
-      entries: option(list(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
-    };
-  }
-  and PropertyPreview: {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Property name. */
-      [@key "type"]
-      type_: string, /* Object type. Accessor means that the property itself is an accessor property. */
-      [@yojson.option]
-      value: option(string), /* User-friendly property value string. */
-      [@yojson.option]
-      valuePreview: option(ObjectPreview.t), /* Nested value preview. */
-      [@yojson.option]
-      subtype: option(string) /* Object subtype hint. Specified for `object` type values only. */,
-    };
-  } = {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Property name. */
-      [@key "type"]
-      type_: string, /* Object type. Accessor means that the property itself is an accessor property. */
-      [@yojson.option]
-      value: option(string), /* User-friendly property value string. */
-      [@yojson.option]
-      valuePreview: option(ObjectPreview.t), /* Nested value preview. */
-      [@yojson.option]
-      subtype: option(string) /* Object subtype hint. Specified for `object` type values only. */,
-    };
-  }
-  and EntryPreview: {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      [@yojson.option]
-      key: option(ObjectPreview.t), /* Preview of the key. Specified for map-like collection entries. */
-      value: ObjectPreview.t /* Preview of the value. */,
-    };
-  } = {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      [@yojson.option]
-      key: option(ObjectPreview.t), /* Preview of the key. Specified for map-like collection entries. */
-      value: ObjectPreview.t /* Preview of the value. */,
-    };
-  }
-  and PropertyDescriptor: {
-    /* Object property descriptor. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Property name or symbol description. */
-      [@yojson.option]
-      value: option(RemoteObject.t), /* The value associated with the property. */
-      [@yojson.option]
-      writable: option(bool), /* True if the value associated with the property may be changed (data descriptors only). */
-      [@yojson.option]
-      get: option(RemoteObject.t), /* A function which serves as a getter for the property, or `undefined` if there is no getter
-(accessor descriptors only). */
-      [@yojson.option]
-      set: option(RemoteObject.t), /* A function which serves as a setter for the property, or `undefined` if there is no setter
-(accessor descriptors only). */
-      configurable: bool, /* True if the type of this property descriptor may be changed and if the property may be
-deleted from the corresponding object. */
-      enumerable: bool, /* True if this property shows up during enumeration of the properties on the corresponding
-object. */
-      [@yojson.option]
-      wasThrown: option(bool), /* True if the result was thrown during the evaluation. */
-      [@yojson.option]
-      isOwn: option(bool), /* True if the property is owned for the object. */
-      [@yojson.option]
-      symbol: option(RemoteObject.t) /* Property symbol object, if the property is of the `symbol` type. */,
-    };
-  } = {
-    /* Object property descriptor. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Property name or symbol description. */
-      [@yojson.option]
-      value: option(RemoteObject.t), /* The value associated with the property. */
-      [@yojson.option]
-      writable: option(bool), /* True if the value associated with the property may be changed (data descriptors only). */
-      [@yojson.option]
-      get: option(RemoteObject.t), /* A function which serves as a getter for the property, or `undefined` if there is no getter
-(accessor descriptors only). */
-      [@yojson.option]
-      set: option(RemoteObject.t), /* A function which serves as a setter for the property, or `undefined` if there is no setter
-(accessor descriptors only). */
-      configurable: bool, /* True if the type of this property descriptor may be changed and if the property may be
-deleted from the corresponding object. */
-      enumerable: bool, /* True if this property shows up during enumeration of the properties on the corresponding
-object. */
-      [@yojson.option]
-      wasThrown: option(bool), /* True if the result was thrown during the evaluation. */
-      [@yojson.option]
-      isOwn: option(bool), /* True if the property is owned for the object. */
-      [@yojson.option]
-      symbol: option(RemoteObject.t) /* Property symbol object, if the property is of the `symbol` type. */,
-    };
-  }
-  and InternalPropertyDescriptor: {
-    /* Object internal property descriptor. This property isn't normally visible in JavaScript code. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Conventional property name. */
-      [@yojson.option]
-      value: option(RemoteObject.t) /* The value associated with the property. */,
-    };
-  } = {
-    /* Object internal property descriptor. This property isn't normally visible in JavaScript code. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Conventional property name. */
-      [@yojson.option]
-      value: option(RemoteObject.t) /* The value associated with the property. */,
-    };
-  }
-  and PrivatePropertyDescriptor: {
-    /* Object private field descriptor. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Private property name. */
-      [@yojson.option]
-      value: option(RemoteObject.t), /* The value associated with the private property. */
-      [@yojson.option]
-      get: option(RemoteObject.t), /* A function which serves as a getter for the private property,
-or `undefined` if there is no getter (accessor descriptors only). */
-      [@yojson.option]
-      set: option(RemoteObject.t) /* A function which serves as a setter for the private property,
-or `undefined` if there is no setter (accessor descriptors only). */,
-    };
-  } = {
-    /* Object private field descriptor. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Private property name. */
-      [@yojson.option]
-      value: option(RemoteObject.t), /* The value associated with the private property. */
-      [@yojson.option]
-      get: option(RemoteObject.t), /* A function which serves as a getter for the private property,
-or `undefined` if there is no getter (accessor descriptors only). */
-      [@yojson.option]
-      set: option(RemoteObject.t) /* A function which serves as a setter for the private property,
-or `undefined` if there is no setter (accessor descriptors only). */,
-    };
-  }
-  and CallArgument: {
-    /* Represents function call argument. Either remote object id `objectId`, primitive `value`,
-       unserializable primitive value or neither of (for undefined) them should be specified. */
-    [@deriving yojson]
-    type t = {
-      [@yojson.option]
-      value: option(string), /* Primitive value or serializable javascript object. */
-      [@yojson.option]
-      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified. */
-      [@yojson.option]
-      objectId: option(RemoteObjectId.t) /* Remote object handle. */,
-    };
-  } = {
-    /* Represents function call argument. Either remote object id `objectId`, primitive `value`,
-       unserializable primitive value or neither of (for undefined) them should be specified. */
-    [@deriving yojson]
-    type t = {
-      [@yojson.option]
-      value: option(string), /* Primitive value or serializable javascript object. */
-      [@yojson.option]
-      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified. */
-      [@yojson.option]
-      objectId: option(RemoteObjectId.t) /* Remote object handle. */,
-    };
-  }
-  and ExecutionContextId: {
-    /* Id of an execution context. */
-    [@deriving yojson]
-    type t = float;
-  } = {
-    /* Id of an execution context. */
-    [@deriving yojson]
-    type t = float;
-  }
-  and ExecutionContextDescription: {
-    /* Description of an isolated world. */
-    [@deriving yojson]
-    type t = {
-      id: ExecutionContextId.t, /* Unique id of the execution context. It can be used to specify in which execution context
-script evaluation should be performed. */
-      origin: string, /* Execution context origin. */
-      name: string, /* Human readable name describing given context. */
-      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique accross
-multiple processes, so can be reliably used to identify specific context while backend
-performs a cross-process navigation. */
-      [@yojson.option]
-      auxData: option(assoc) /* Embedder-specific auxiliary data. */,
-    };
-  } = {
-    /* Description of an isolated world. */
-    [@deriving yojson]
-    type t = {
-      id: ExecutionContextId.t, /* Unique id of the execution context. It can be used to specify in which execution context
-script evaluation should be performed. */
-      origin: string, /* Execution context origin. */
-      name: string, /* Human readable name describing given context. */
-      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique accross
-multiple processes, so can be reliably used to identify specific context while backend
-performs a cross-process navigation. */
-      [@yojson.option]
-      auxData: option(assoc) /* Embedder-specific auxiliary data. */,
-    };
-  }
-  and ExceptionDetails: {
-    /* Detailed information about exception (or error) that was thrown during script compilation or
-       execution. */
-    [@deriving yojson]
-    type t = {
-      exceptionId: float, /* Exception id. */
-      text: string, /* Exception text, which should be used together with exception object when available. */
-      lineNumber: float, /* Line number of the exception location (0-based). */
-      columnNumber: float, /* Column number of the exception location (0-based). */
-      [@yojson.option]
-      scriptId: option(ScriptId.t), /* Script ID of the exception location. */
-      [@yojson.option]
-      url: option(string), /* URL of the exception location, to be used when the script was not reported. */
-      [@yojson.option]
-      stackTrace: option(StackTrace.t), /* JavaScript stack trace if available. */
-      [@yojson.option] [@key "exception"]
-      exception_: option(RemoteObject.t), /* Exception object if available. */
-      [@yojson.option]
-      executionContextId: option(ExecutionContextId.t) /* Identifier of the context where exception happened. */,
-    };
-  } = {
-    /* Detailed information about exception (or error) that was thrown during script compilation or
-       execution. */
-    [@deriving yojson]
-    type t = {
-      exceptionId: float, /* Exception id. */
-      text: string, /* Exception text, which should be used together with exception object when available. */
-      lineNumber: float, /* Line number of the exception location (0-based). */
-      columnNumber: float, /* Column number of the exception location (0-based). */
-      [@yojson.option]
-      scriptId: option(ScriptId.t), /* Script ID of the exception location. */
-      [@yojson.option]
-      url: option(string), /* URL of the exception location, to be used when the script was not reported. */
-      [@yojson.option]
-      stackTrace: option(StackTrace.t), /* JavaScript stack trace if available. */
-      [@yojson.option] [@key "exception"]
-      exception_: option(RemoteObject.t), /* Exception object if available. */
-      [@yojson.option]
-      executionContextId: option(ExecutionContextId.t) /* Identifier of the context where exception happened. */,
-    };
-  }
-  and Timestamp: {
-    /* Number of milliseconds since epoch. */
-    [@deriving yojson]
-    type t = float;
-  } = {
-    /* Number of milliseconds since epoch. */
-    [@deriving yojson]
-    type t = float;
-  }
-  and TimeDelta: {
-    /* Number of milliseconds. */
-    [@deriving yojson]
-    type t = float;
-  } = {
-    /* Number of milliseconds. */
-    [@deriving yojson]
-    type t = float;
-  }
-  and CallFrame: {
-    /* Stack entry for runtime errors and assertions. */
-    [@deriving yojson]
-    type t = {
-      functionName: string, /* JavaScript function name. */
-      scriptId: ScriptId.t, /* JavaScript script id. */
-      url: string, /* JavaScript script name or url. */
-      lineNumber: float, /* JavaScript script line number (0-based). */
-      columnNumber: float /* JavaScript script column number (0-based). */,
-    };
-  } = {
-    /* Stack entry for runtime errors and assertions. */
-    [@deriving yojson]
-    type t = {
-      functionName: string, /* JavaScript function name. */
-      scriptId: ScriptId.t, /* JavaScript script id. */
-      url: string, /* JavaScript script name or url. */
-      lineNumber: float, /* JavaScript script line number (0-based). */
-      columnNumber: float /* JavaScript script column number (0-based). */,
-    };
-  }
-  and StackTrace: {
-    /* Call frames for assertions or error messages. */
-    [@deriving yojson]
-    type t = {
-      [@yojson.option]
-      description: option(string), /* String label of this stack trace. For async traces this may be a name of the function that
-initiated the async call. */
-      callFrames: list(CallFrame.t), /* JavaScript function name. */
-      [@yojson.option]
-      parent: option(StackTrace.t), /* Asynchronous JavaScript stack trace that preceded this stack, if available. */
-      [@yojson.option]
-      parentId: option(StackTraceId.t) /* Asynchronous JavaScript stack trace that preceded this stack, if available. */,
-    };
-  } = {
-    /* Call frames for assertions or error messages. */
-    [@deriving yojson]
-    type t = {
-      [@yojson.option]
-      description: option(string), /* String label of this stack trace. For async traces this may be a name of the function that
-initiated the async call. */
-      callFrames: list(CallFrame.t), /* JavaScript function name. */
-      [@yojson.option]
-      parent: option(StackTrace.t), /* Asynchronous JavaScript stack trace that preceded this stack, if available. */
-      [@yojson.option]
-      parentId: option(StackTraceId.t) /* Asynchronous JavaScript stack trace that preceded this stack, if available. */,
-    };
-  }
-  and UniqueDebuggerId: {
-    /* Unique identifier of current debugger. */
-    [@deriving yojson]
-    type t = string;
-  } = {
-    /* Unique identifier of current debugger. */
-    [@deriving yojson]
-    type t = string;
-  }
-  and StackTraceId: {
-    /* If `debuggerId` is set stack trace comes from another debugger and can be resolved there. This
-       allows to track cross-debugger calls. See `Runtime.StackTrace` and `Debugger.paused` for usages. */
-    [@deriving yojson]
-    type t = {
-      id: string, /* No description provided */
-      [@yojson.option]
-      debuggerId: option(UniqueDebuggerId.t) /* No description provided */,
-    };
-  } = {
-    /* If `debuggerId` is set stack trace comes from another debugger and can be resolved there. This
-       allows to track cross-debugger calls. See `Runtime.StackTrace` and `Debugger.paused` for usages. */
-    [@deriving yojson]
-    type t = {
-      id: string, /* No description provided */
-      [@yojson.option]
-      debuggerId: option(UniqueDebuggerId.t) /* No description provided */,
-    };
-  };
-}
-and Schema: {
-  module rec Domain: {
-    /* Description of the protocol domain. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Domain name. */
-      version: string /* Domain version. */,
-    };
-  };
-} = {
-  module rec Domain: {
-    /* Description of the protocol domain. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Domain name. */
-      version: string /* Domain version. */,
-    };
-  } = {
-    /* Description of the protocol domain. */
-    [@deriving yojson]
-    type t = {
-      name: string, /* Domain name. */
-      version: string /* Domain version. */,
-    };
-  };
-}
 and Security: {
   module rec CertificateId: {
     /* An internal certificate ID value. */
@@ -12262,6 +10733,1535 @@ we can remove "errorCode" and replace it with the fields from
 a Status instance. This also seems like a duplicate of the error
 level enum - there is a todo bug to have that level removed and
 use this instead. (crbug.com/1068454) */,
+    };
+  };
+}
+and Console: {
+  module rec ConsoleMessage: {
+    /* Console message. */
+    [@deriving yojson]
+    type t = {
+      source: string, /* Message source. */
+      level: string, /* Message severity. */
+      text: string, /* Message text. */
+      [@yojson.option]
+      url: option(string), /* URL of the message origin. */
+      [@yojson.option]
+      line: option(float), /* Line number in the resource that generated this message (1-based). */
+      [@yojson.option]
+      column: option(float) /* Column number in the resource that generated this message (1-based). */,
+    };
+  };
+} = {
+  module rec ConsoleMessage: {
+    /* Console message. */
+    [@deriving yojson]
+    type t = {
+      source: string, /* Message source. */
+      level: string, /* Message severity. */
+      text: string, /* Message text. */
+      [@yojson.option]
+      url: option(string), /* URL of the message origin. */
+      [@yojson.option]
+      line: option(float), /* Line number in the resource that generated this message (1-based). */
+      [@yojson.option]
+      column: option(float) /* Column number in the resource that generated this message (1-based). */,
+    };
+  } = {
+    /* Console message. */
+    [@deriving yojson]
+    type t = {
+      source: string, /* Message source. */
+      level: string, /* Message severity. */
+      text: string, /* Message text. */
+      [@yojson.option]
+      url: option(string), /* URL of the message origin. */
+      [@yojson.option]
+      line: option(float), /* Line number in the resource that generated this message (1-based). */
+      [@yojson.option]
+      column: option(float) /* Column number in the resource that generated this message (1-based). */,
+    };
+  };
+}
+and Debugger: {
+  module rec BreakpointId: {
+    /* Breakpoint identifier. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and CallFrameId: {
+    /* Call frame identifier. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and Location: {
+    /* Location in the source code. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
+      lineNumber: float, /* Line number in the script (0-based). */
+      [@yojson.option]
+      columnNumber: option(float) /* Column number in the script (0-based). */,
+    };
+  }
+  and ScriptPosition: {
+    /* Location in the source code. */
+    [@deriving yojson]
+    type t = {
+      lineNumber: float, /* No description provided */
+      columnNumber: float /* No description provided */,
+    };
+  }
+  and LocationRange: {
+    /* Location range within one script. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* No description provided */
+      start: ScriptPosition.t, /* No description provided */
+      [@key "end"]
+      end_: ScriptPosition.t /* No description provided */,
+    };
+  }
+  and CallFrame: {
+    /* JavaScript call frame. Array of call frames form the call stack. */
+    [@deriving yojson]
+    type t = {
+      callFrameId: CallFrameId.t, /* Call frame identifier. This identifier is only valid while the virtual machine is paused. */
+      functionName: string, /* Name of the JavaScript function called on this call frame. */
+      [@yojson.option]
+      functionLocation: option(Location.t), /* Location in the source code. */
+      location: Location.t, /* Location in the source code. */
+      url: string, /* JavaScript script name or url. */
+      scopeChain: list(Scope.t), /* Scope chain for this call frame. */
+      this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
+      [@yojson.option]
+      returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
+    };
+  }
+  and Scope: {
+    /* Scope description. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Scope type. */
+      [@key "object"]
+      object_: Runtime.RemoteObject.t, /* Object representing the scope. For `global` and `with` scopes it represents the actual
+object; for the rest of the scopes, it is artificial transient object enumerating scope
+variables as its properties. */
+      [@yojson.option]
+      name: option(string), /* No description provided */
+      [@yojson.option]
+      startLocation: option(Location.t), /* Location in the source code where scope starts */
+      [@yojson.option]
+      endLocation: option(Location.t) /* Location in the source code where scope ends */,
+    };
+  }
+  and SearchMatch: {
+    /* Search match for resource. */
+    [@deriving yojson]
+    type t = {
+      lineNumber: float, /* Line number in resource content. */
+      lineContent: string /* Line with match content. */,
+    };
+  }
+  and BreakLocation: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
+      lineNumber: float, /* Line number in the script (0-based). */
+      [@yojson.option]
+      columnNumber: option(float), /* Column number in the script (0-based). */
+      [@yojson.option] [@key "type"]
+      type_: option(string) /* No description provided */,
+    };
+  }
+  and ScriptLanguage: {
+    /* Enum of possible script languages. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and DebugSymbols: {
+    /* Debug symbols available for a wasm script. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Type of the debug symbols. */
+      [@yojson.option]
+      externalURL: option(string) /* URL of the external symbol source. */,
+    };
+  };
+} = {
+  module rec BreakpointId: {
+    /* Breakpoint identifier. */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* Breakpoint identifier. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and CallFrameId: {
+    /* Call frame identifier. */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* Call frame identifier. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and Location: {
+    /* Location in the source code. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
+      lineNumber: float, /* Line number in the script (0-based). */
+      [@yojson.option]
+      columnNumber: option(float) /* Column number in the script (0-based). */,
+    };
+  } = {
+    /* Location in the source code. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
+      lineNumber: float, /* Line number in the script (0-based). */
+      [@yojson.option]
+      columnNumber: option(float) /* Column number in the script (0-based). */,
+    };
+  }
+  and ScriptPosition: {
+    /* Location in the source code. */
+    [@deriving yojson]
+    type t = {
+      lineNumber: float, /* No description provided */
+      columnNumber: float /* No description provided */,
+    };
+  } = {
+    /* Location in the source code. */
+    [@deriving yojson]
+    type t = {
+      lineNumber: float, /* No description provided */
+      columnNumber: float /* No description provided */,
+    };
+  }
+  and LocationRange: {
+    /* Location range within one script. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* No description provided */
+      start: ScriptPosition.t, /* No description provided */
+      [@key "end"]
+      end_: ScriptPosition.t /* No description provided */,
+    };
+  } = {
+    /* Location range within one script. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* No description provided */
+      start: ScriptPosition.t, /* No description provided */
+      [@key "end"]
+      end_: ScriptPosition.t /* No description provided */,
+    };
+  }
+  and CallFrame: {
+    /* JavaScript call frame. Array of call frames form the call stack. */
+    [@deriving yojson]
+    type t = {
+      callFrameId: CallFrameId.t, /* Call frame identifier. This identifier is only valid while the virtual machine is paused. */
+      functionName: string, /* Name of the JavaScript function called on this call frame. */
+      [@yojson.option]
+      functionLocation: option(Location.t), /* Location in the source code. */
+      location: Location.t, /* Location in the source code. */
+      url: string, /* JavaScript script name or url. */
+      scopeChain: list(Scope.t), /* Scope chain for this call frame. */
+      this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
+      [@yojson.option]
+      returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
+    };
+  } = {
+    /* JavaScript call frame. Array of call frames form the call stack. */
+    [@deriving yojson]
+    type t = {
+      callFrameId: CallFrameId.t, /* Call frame identifier. This identifier is only valid while the virtual machine is paused. */
+      functionName: string, /* Name of the JavaScript function called on this call frame. */
+      [@yojson.option]
+      functionLocation: option(Location.t), /* Location in the source code. */
+      location: Location.t, /* Location in the source code. */
+      url: string, /* JavaScript script name or url. */
+      scopeChain: list(Scope.t), /* Scope chain for this call frame. */
+      this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
+      [@yojson.option]
+      returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
+    };
+  }
+  and Scope: {
+    /* Scope description. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Scope type. */
+      [@key "object"]
+      object_: Runtime.RemoteObject.t, /* Object representing the scope. For `global` and `with` scopes it represents the actual
+object; for the rest of the scopes, it is artificial transient object enumerating scope
+variables as its properties. */
+      [@yojson.option]
+      name: option(string), /* No description provided */
+      [@yojson.option]
+      startLocation: option(Location.t), /* Location in the source code where scope starts */
+      [@yojson.option]
+      endLocation: option(Location.t) /* Location in the source code where scope ends */,
+    };
+  } = {
+    /* Scope description. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Scope type. */
+      [@key "object"]
+      object_: Runtime.RemoteObject.t, /* Object representing the scope. For `global` and `with` scopes it represents the actual
+object; for the rest of the scopes, it is artificial transient object enumerating scope
+variables as its properties. */
+      [@yojson.option]
+      name: option(string), /* No description provided */
+      [@yojson.option]
+      startLocation: option(Location.t), /* Location in the source code where scope starts */
+      [@yojson.option]
+      endLocation: option(Location.t) /* Location in the source code where scope ends */,
+    };
+  }
+  and SearchMatch: {
+    /* Search match for resource. */
+    [@deriving yojson]
+    type t = {
+      lineNumber: float, /* Line number in resource content. */
+      lineContent: string /* Line with match content. */,
+    };
+  } = {
+    /* Search match for resource. */
+    [@deriving yojson]
+    type t = {
+      lineNumber: float, /* Line number in resource content. */
+      lineContent: string /* Line with match content. */,
+    };
+  }
+  and BreakLocation: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
+      lineNumber: float, /* Line number in the script (0-based). */
+      [@yojson.option]
+      columnNumber: option(float), /* Column number in the script (0-based). */
+      [@yojson.option] [@key "type"]
+      type_: option(string) /* No description provided */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
+      lineNumber: float, /* Line number in the script (0-based). */
+      [@yojson.option]
+      columnNumber: option(float), /* Column number in the script (0-based). */
+      [@yojson.option] [@key "type"]
+      type_: option(string) /* No description provided */,
+    };
+  }
+  and ScriptLanguage: {
+    /* Enum of possible script languages. */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* Enum of possible script languages. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and DebugSymbols: {
+    /* Debug symbols available for a wasm script. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Type of the debug symbols. */
+      [@yojson.option]
+      externalURL: option(string) /* URL of the external symbol source. */,
+    };
+  } = {
+    /* Debug symbols available for a wasm script. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Type of the debug symbols. */
+      [@yojson.option]
+      externalURL: option(string) /* URL of the external symbol source. */,
+    };
+  };
+}
+and HeapProfiler: {
+  module rec HeapSnapshotObjectId: {
+    /* Heap snapshot object id. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and SamplingHeapProfileNode: {
+    /* Sampling Heap Profile node. Holds callsite information, allocation statistics and child nodes. */
+    [@deriving yojson]
+    type t = {
+      callFrame: Runtime.CallFrame.t, /* Function location. */
+      selfSize: float, /* Allocations size in bytes for the node excluding children. */
+      id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
+      children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
+    };
+  }
+  and SamplingHeapProfileSample: {
+    /* A single sample from a sampling profile. */
+    [@deriving yojson]
+    type t = {
+      size: float, /* Allocation size in bytes attributed to the sample. */
+      nodeId: float, /* Id of the corresponding profile tree node. */
+      ordinal: float /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
+between startSampling and stopSampling. */,
+    };
+  }
+  and SamplingHeapProfile: {
+    /* Sampling profile. */
+    [@deriving yojson]
+    type t = {
+      head: SamplingHeapProfileNode.t, /* No description provided */
+      samples: list(SamplingHeapProfileSample.t) /* No description provided */,
+    };
+  };
+} = {
+  module rec HeapSnapshotObjectId: {
+    /* Heap snapshot object id. */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* Heap snapshot object id. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and SamplingHeapProfileNode: {
+    /* Sampling Heap Profile node. Holds callsite information, allocation statistics and child nodes. */
+    [@deriving yojson]
+    type t = {
+      callFrame: Runtime.CallFrame.t, /* Function location. */
+      selfSize: float, /* Allocations size in bytes for the node excluding children. */
+      id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
+      children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
+    };
+  } = {
+    /* Sampling Heap Profile node. Holds callsite information, allocation statistics and child nodes. */
+    [@deriving yojson]
+    type t = {
+      callFrame: Runtime.CallFrame.t, /* Function location. */
+      selfSize: float, /* Allocations size in bytes for the node excluding children. */
+      id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
+      children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
+    };
+  }
+  and SamplingHeapProfileSample: {
+    /* A single sample from a sampling profile. */
+    [@deriving yojson]
+    type t = {
+      size: float, /* Allocation size in bytes attributed to the sample. */
+      nodeId: float, /* Id of the corresponding profile tree node. */
+      ordinal: float /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
+between startSampling and stopSampling. */,
+    };
+  } = {
+    /* A single sample from a sampling profile. */
+    [@deriving yojson]
+    type t = {
+      size: float, /* Allocation size in bytes attributed to the sample. */
+      nodeId: float, /* Id of the corresponding profile tree node. */
+      ordinal: float /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
+between startSampling and stopSampling. */,
+    };
+  }
+  and SamplingHeapProfile: {
+    /* Sampling profile. */
+    [@deriving yojson]
+    type t = {
+      head: SamplingHeapProfileNode.t, /* No description provided */
+      samples: list(SamplingHeapProfileSample.t) /* No description provided */,
+    };
+  } = {
+    /* Sampling profile. */
+    [@deriving yojson]
+    type t = {
+      head: SamplingHeapProfileNode.t, /* No description provided */
+      samples: list(SamplingHeapProfileSample.t) /* No description provided */,
+    };
+  };
+}
+and Profiler: {
+  module rec ProfileNode: {
+    /* Profile node. Holds callsite information, execution statistics and child nodes. */
+    [@deriving yojson]
+    type t = {
+      id: float, /* Unique id of the node. */
+      callFrame: Runtime.CallFrame.t, /* Function location. */
+      [@yojson.option]
+      hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
+      [@yojson.option]
+      children: option(list(float)), /* Child node ids. */
+      [@yojson.option]
+      deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
+optimize. */
+      [@yojson.option]
+      positionTicks: option(list(PositionTickInfo.t)) /* An array of source position ticks. */,
+    };
+  }
+  and Profile: {
+    /* Profile. */
+    [@deriving yojson]
+    type t = {
+      nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
+      startTime: float, /* Profiling start timestamp in microseconds. */
+      endTime: float, /* Profiling end timestamp in microseconds. */
+      [@yojson.option]
+      samples: option(list(float)), /* Ids of samples top nodes. */
+      [@yojson.option]
+      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
+profile startTime. */,
+    };
+  }
+  and PositionTickInfo: {
+    /* Specifies a number of samples attributed to a certain source position. */
+    [@deriving yojson]
+    type t = {
+      line: float, /* Source line number (1-based). */
+      ticks: float /* Number of samples attributed to the source line. */,
+    };
+  }
+  and CoverageRange: {
+    /* Coverage data for a source range. */
+    [@deriving yojson]
+    type t = {
+      startOffset: float, /* JavaScript script source offset for the range start. */
+      endOffset: float, /* JavaScript script source offset for the range end. */
+      count: float /* Collected execution count of the source range. */,
+    };
+  }
+  and FunctionCoverage: {
+    /* Coverage data for a JavaScript function. */
+    [@deriving yojson]
+    type t = {
+      functionName: string, /* JavaScript function name. */
+      ranges: list(CoverageRange.t), /* Source ranges inside the function with coverage data. */
+      isBlockCoverage: bool /* Whether coverage data for this function has block granularity. */,
+    };
+  }
+  and ScriptCoverage: {
+    /* Coverage data for a JavaScript script. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
+      url: string, /* JavaScript script name or url. */
+      functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
+    };
+  }
+  and TypeObject: {
+    /* Describes a type collected during runtime. */
+    [@deriving yojson]
+    type t = {
+      name: string /* Name of a type collected with type profiling. */,
+    };
+  }
+  and TypeProfileEntry: {
+    /* Source offset and types for a parameter or return value. */
+    [@deriving yojson]
+    type t = {
+      offset: float, /* Source offset of the parameter or end of function for return values. */
+      types: list(TypeObject.t) /* The types for this parameter or return value. */,
+    };
+  }
+  and ScriptTypeProfile: {
+    /* Type profile data collected during runtime for a JavaScript script. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
+      url: string, /* JavaScript script name or url. */
+      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
+    };
+  }
+  and CounterInfo: {
+    /* Collected counter information. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Counter name. */
+      value: float /* Counter value. */,
+    };
+  }
+  and RuntimeCallCounterInfo: {
+    /* Runtime call counter information. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Counter name. */
+      value: float, /* Counter value. */
+      time: float /* Counter time in seconds. */,
+    };
+  };
+} = {
+  module rec ProfileNode: {
+    /* Profile node. Holds callsite information, execution statistics and child nodes. */
+    [@deriving yojson]
+    type t = {
+      id: float, /* Unique id of the node. */
+      callFrame: Runtime.CallFrame.t, /* Function location. */
+      [@yojson.option]
+      hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
+      [@yojson.option]
+      children: option(list(float)), /* Child node ids. */
+      [@yojson.option]
+      deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
+optimize. */
+      [@yojson.option]
+      positionTicks: option(list(PositionTickInfo.t)) /* An array of source position ticks. */,
+    };
+  } = {
+    /* Profile node. Holds callsite information, execution statistics and child nodes. */
+    [@deriving yojson]
+    type t = {
+      id: float, /* Unique id of the node. */
+      callFrame: Runtime.CallFrame.t, /* Function location. */
+      [@yojson.option]
+      hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
+      [@yojson.option]
+      children: option(list(float)), /* Child node ids. */
+      [@yojson.option]
+      deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
+optimize. */
+      [@yojson.option]
+      positionTicks: option(list(PositionTickInfo.t)) /* An array of source position ticks. */,
+    };
+  }
+  and Profile: {
+    /* Profile. */
+    [@deriving yojson]
+    type t = {
+      nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
+      startTime: float, /* Profiling start timestamp in microseconds. */
+      endTime: float, /* Profiling end timestamp in microseconds. */
+      [@yojson.option]
+      samples: option(list(float)), /* Ids of samples top nodes. */
+      [@yojson.option]
+      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
+profile startTime. */,
+    };
+  } = {
+    /* Profile. */
+    [@deriving yojson]
+    type t = {
+      nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
+      startTime: float, /* Profiling start timestamp in microseconds. */
+      endTime: float, /* Profiling end timestamp in microseconds. */
+      [@yojson.option]
+      samples: option(list(float)), /* Ids of samples top nodes. */
+      [@yojson.option]
+      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
+profile startTime. */,
+    };
+  }
+  and PositionTickInfo: {
+    /* Specifies a number of samples attributed to a certain source position. */
+    [@deriving yojson]
+    type t = {
+      line: float, /* Source line number (1-based). */
+      ticks: float /* Number of samples attributed to the source line. */,
+    };
+  } = {
+    /* Specifies a number of samples attributed to a certain source position. */
+    [@deriving yojson]
+    type t = {
+      line: float, /* Source line number (1-based). */
+      ticks: float /* Number of samples attributed to the source line. */,
+    };
+  }
+  and CoverageRange: {
+    /* Coverage data for a source range. */
+    [@deriving yojson]
+    type t = {
+      startOffset: float, /* JavaScript script source offset for the range start. */
+      endOffset: float, /* JavaScript script source offset for the range end. */
+      count: float /* Collected execution count of the source range. */,
+    };
+  } = {
+    /* Coverage data for a source range. */
+    [@deriving yojson]
+    type t = {
+      startOffset: float, /* JavaScript script source offset for the range start. */
+      endOffset: float, /* JavaScript script source offset for the range end. */
+      count: float /* Collected execution count of the source range. */,
+    };
+  }
+  and FunctionCoverage: {
+    /* Coverage data for a JavaScript function. */
+    [@deriving yojson]
+    type t = {
+      functionName: string, /* JavaScript function name. */
+      ranges: list(CoverageRange.t), /* Source ranges inside the function with coverage data. */
+      isBlockCoverage: bool /* Whether coverage data for this function has block granularity. */,
+    };
+  } = {
+    /* Coverage data for a JavaScript function. */
+    [@deriving yojson]
+    type t = {
+      functionName: string, /* JavaScript function name. */
+      ranges: list(CoverageRange.t), /* Source ranges inside the function with coverage data. */
+      isBlockCoverage: bool /* Whether coverage data for this function has block granularity. */,
+    };
+  }
+  and ScriptCoverage: {
+    /* Coverage data for a JavaScript script. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
+      url: string, /* JavaScript script name or url. */
+      functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
+    };
+  } = {
+    /* Coverage data for a JavaScript script. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
+      url: string, /* JavaScript script name or url. */
+      functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
+    };
+  }
+  and TypeObject: {
+    /* Describes a type collected during runtime. */
+    [@deriving yojson]
+    type t = {
+      name: string /* Name of a type collected with type profiling. */,
+    };
+  } = {
+    /* Describes a type collected during runtime. */
+    [@deriving yojson]
+    type t = {
+      name: string /* Name of a type collected with type profiling. */,
+    };
+  }
+  and TypeProfileEntry: {
+    /* Source offset and types for a parameter or return value. */
+    [@deriving yojson]
+    type t = {
+      offset: float, /* Source offset of the parameter or end of function for return values. */
+      types: list(TypeObject.t) /* The types for this parameter or return value. */,
+    };
+  } = {
+    /* Source offset and types for a parameter or return value. */
+    [@deriving yojson]
+    type t = {
+      offset: float, /* Source offset of the parameter or end of function for return values. */
+      types: list(TypeObject.t) /* The types for this parameter or return value. */,
+    };
+  }
+  and ScriptTypeProfile: {
+    /* Type profile data collected during runtime for a JavaScript script. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
+      url: string, /* JavaScript script name or url. */
+      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
+    };
+  } = {
+    /* Type profile data collected during runtime for a JavaScript script. */
+    [@deriving yojson]
+    type t = {
+      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
+      url: string, /* JavaScript script name or url. */
+      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
+    };
+  }
+  and CounterInfo: {
+    /* Collected counter information. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Counter name. */
+      value: float /* Counter value. */,
+    };
+  } = {
+    /* Collected counter information. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Counter name. */
+      value: float /* Counter value. */,
+    };
+  }
+  and RuntimeCallCounterInfo: {
+    /* Runtime call counter information. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Counter name. */
+      value: float, /* Counter value. */
+      time: float /* Counter time in seconds. */,
+    };
+  } = {
+    /* Runtime call counter information. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Counter name. */
+      value: float, /* Counter value. */
+      time: float /* Counter time in seconds. */,
+    };
+  };
+}
+and Runtime: {
+  module rec ScriptId: {
+    /* Unique script identifier. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and RemoteObjectId: {
+    /* Unique object identifier. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and UnserializableValue: {
+    /* Primitive value which cannot be JSON-stringified. Includes values `-0`, `NaN`, `Infinity`,
+       `-Infinity`, and bigint literals. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and RemoteObject: {
+    /* Mirror object referencing original JavaScript object. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Object type. */
+      [@yojson.option]
+      subtype: option(string), /* Object subtype hint. Specified for `object` type values only.
+NOTE: If you change anything here, make sure to also update
+`subtype` in `ObjectPreview` and `PropertyPreview` below. */
+      [@yojson.option]
+      className: option(string), /* Object class (constructor) name. Specified for `object` type values only. */
+      [@yojson.option]
+      value: option(string), /* Remote object value in case of primitive values or JSON values (if it was requested). */
+      [@yojson.option]
+      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified does not have `value`, but gets this
+property. */
+      [@yojson.option]
+      description: option(string), /* String representation of the object. */
+      [@yojson.option]
+      objectId: option(RemoteObjectId.t), /* Unique object identifier (for non-primitive values). */
+      [@yojson.option]
+      preview: option(ObjectPreview.t), /* Preview containing abbreviated property values. Specified for `object` type values only. */
+      [@yojson.option]
+      customPreview: option(CustomPreview.t) /* No description provided */,
+    };
+  }
+  and CustomPreview: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      header: string, /* The JSON-stringified result of formatter.header(object, config) call.
+It contains json ML array that represents RemoteObject. */
+      [@yojson.option]
+      bodyGetterId: option(RemoteObjectId.t) /* If formatter returns true as a result of formatter.hasBody call then bodyGetterId will
+contain RemoteObjectId for the function that returns result of formatter.body(object, config) call.
+The result value is json ML array. */,
+    };
+  }
+  and ObjectPreview: {
+    /* Object containing abbreviated remote object value. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Object type. */
+      [@yojson.option]
+      subtype: option(string), /* Object subtype hint. Specified for `object` type values only. */
+      [@yojson.option]
+      description: option(string), /* String representation of the object. */
+      overflow: bool, /* True iff some of the properties or entries of the original object did not fit. */
+      properties: list(PropertyPreview.t), /* List of the properties. */
+      [@yojson.option]
+      entries: option(list(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
+    };
+  }
+  and PropertyPreview: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Property name. */
+      [@key "type"]
+      type_: string, /* Object type. Accessor means that the property itself is an accessor property. */
+      [@yojson.option]
+      value: option(string), /* User-friendly property value string. */
+      [@yojson.option]
+      valuePreview: option(ObjectPreview.t), /* Nested value preview. */
+      [@yojson.option]
+      subtype: option(string) /* Object subtype hint. Specified for `object` type values only. */,
+    };
+  }
+  and EntryPreview: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option]
+      key: option(ObjectPreview.t), /* Preview of the key. Specified for map-like collection entries. */
+      value: ObjectPreview.t /* Preview of the value. */,
+    };
+  }
+  and PropertyDescriptor: {
+    /* Object property descriptor. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Property name or symbol description. */
+      [@yojson.option]
+      value: option(RemoteObject.t), /* The value associated with the property. */
+      [@yojson.option]
+      writable: option(bool), /* True if the value associated with the property may be changed (data descriptors only). */
+      [@yojson.option]
+      get: option(RemoteObject.t), /* A function which serves as a getter for the property, or `undefined` if there is no getter
+(accessor descriptors only). */
+      [@yojson.option]
+      set: option(RemoteObject.t), /* A function which serves as a setter for the property, or `undefined` if there is no setter
+(accessor descriptors only). */
+      configurable: bool, /* True if the type of this property descriptor may be changed and if the property may be
+deleted from the corresponding object. */
+      enumerable: bool, /* True if this property shows up during enumeration of the properties on the corresponding
+object. */
+      [@yojson.option]
+      wasThrown: option(bool), /* True if the result was thrown during the evaluation. */
+      [@yojson.option]
+      isOwn: option(bool), /* True if the property is owned for the object. */
+      [@yojson.option]
+      symbol: option(RemoteObject.t) /* Property symbol object, if the property is of the `symbol` type. */,
+    };
+  }
+  and InternalPropertyDescriptor: {
+    /* Object internal property descriptor. This property isn't normally visible in JavaScript code. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Conventional property name. */
+      [@yojson.option]
+      value: option(RemoteObject.t) /* The value associated with the property. */,
+    };
+  }
+  and PrivatePropertyDescriptor: {
+    /* Object private field descriptor. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Private property name. */
+      [@yojson.option]
+      value: option(RemoteObject.t), /* The value associated with the private property. */
+      [@yojson.option]
+      get: option(RemoteObject.t), /* A function which serves as a getter for the private property,
+or `undefined` if there is no getter (accessor descriptors only). */
+      [@yojson.option]
+      set: option(RemoteObject.t) /* A function which serves as a setter for the private property,
+or `undefined` if there is no setter (accessor descriptors only). */,
+    };
+  }
+  and CallArgument: {
+    /* Represents function call argument. Either remote object id `objectId`, primitive `value`,
+       unserializable primitive value or neither of (for undefined) them should be specified. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option]
+      value: option(string), /* Primitive value or serializable javascript object. */
+      [@yojson.option]
+      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified. */
+      [@yojson.option]
+      objectId: option(RemoteObjectId.t) /* Remote object handle. */,
+    };
+  }
+  and ExecutionContextId: {
+    /* Id of an execution context. */
+    [@deriving yojson]
+    type t = float;
+  }
+  and ExecutionContextDescription: {
+    /* Description of an isolated world. */
+    [@deriving yojson]
+    type t = {
+      id: ExecutionContextId.t, /* Unique id of the execution context. It can be used to specify in which execution context
+script evaluation should be performed. */
+      origin: string, /* Execution context origin. */
+      name: string, /* Human readable name describing given context. */
+      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique accross
+multiple processes, so can be reliably used to identify specific context while backend
+performs a cross-process navigation. */
+      [@yojson.option]
+      auxData: option(assoc) /* Embedder-specific auxiliary data. */,
+    };
+  }
+  and ExceptionDetails: {
+    /* Detailed information about exception (or error) that was thrown during script compilation or
+       execution. */
+    [@deriving yojson]
+    type t = {
+      exceptionId: float, /* Exception id. */
+      text: string, /* Exception text, which should be used together with exception object when available. */
+      lineNumber: float, /* Line number of the exception location (0-based). */
+      columnNumber: float, /* Column number of the exception location (0-based). */
+      [@yojson.option]
+      scriptId: option(ScriptId.t), /* Script ID of the exception location. */
+      [@yojson.option]
+      url: option(string), /* URL of the exception location, to be used when the script was not reported. */
+      [@yojson.option]
+      stackTrace: option(StackTrace.t), /* JavaScript stack trace if available. */
+      [@yojson.option] [@key "exception"]
+      exception_: option(RemoteObject.t), /* Exception object if available. */
+      [@yojson.option]
+      executionContextId: option(ExecutionContextId.t) /* Identifier of the context where exception happened. */,
+    };
+  }
+  and Timestamp: {
+    /* Number of milliseconds since epoch. */
+    [@deriving yojson]
+    type t = float;
+  }
+  and TimeDelta: {
+    /* Number of milliseconds. */
+    [@deriving yojson]
+    type t = float;
+  }
+  and CallFrame: {
+    /* Stack entry for runtime errors and assertions. */
+    [@deriving yojson]
+    type t = {
+      functionName: string, /* JavaScript function name. */
+      scriptId: ScriptId.t, /* JavaScript script id. */
+      url: string, /* JavaScript script name or url. */
+      lineNumber: float, /* JavaScript script line number (0-based). */
+      columnNumber: float /* JavaScript script column number (0-based). */,
+    };
+  }
+  and StackTrace: {
+    /* Call frames for assertions or error messages. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option]
+      description: option(string), /* String label of this stack trace. For async traces this may be a name of the function that
+initiated the async call. */
+      callFrames: list(CallFrame.t), /* JavaScript function name. */
+      [@yojson.option]
+      parent: option(StackTrace.t), /* Asynchronous JavaScript stack trace that preceded this stack, if available. */
+      [@yojson.option]
+      parentId: option(StackTraceId.t) /* Asynchronous JavaScript stack trace that preceded this stack, if available. */,
+    };
+  }
+  and UniqueDebuggerId: {
+    /* Unique identifier of current debugger. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and StackTraceId: {
+    /* If `debuggerId` is set stack trace comes from another debugger and can be resolved there. This
+       allows to track cross-debugger calls. See `Runtime.StackTrace` and `Debugger.paused` for usages. */
+    [@deriving yojson]
+    type t = {
+      id: string, /* No description provided */
+      [@yojson.option]
+      debuggerId: option(UniqueDebuggerId.t) /* No description provided */,
+    };
+  };
+} = {
+  module rec ScriptId: {
+    /* Unique script identifier. */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* Unique script identifier. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and RemoteObjectId: {
+    /* Unique object identifier. */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* Unique object identifier. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and UnserializableValue: {
+    /* Primitive value which cannot be JSON-stringified. Includes values `-0`, `NaN`, `Infinity`,
+       `-Infinity`, and bigint literals. */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* Primitive value which cannot be JSON-stringified. Includes values `-0`, `NaN`, `Infinity`,
+       `-Infinity`, and bigint literals. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and RemoteObject: {
+    /* Mirror object referencing original JavaScript object. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Object type. */
+      [@yojson.option]
+      subtype: option(string), /* Object subtype hint. Specified for `object` type values only.
+NOTE: If you change anything here, make sure to also update
+`subtype` in `ObjectPreview` and `PropertyPreview` below. */
+      [@yojson.option]
+      className: option(string), /* Object class (constructor) name. Specified for `object` type values only. */
+      [@yojson.option]
+      value: option(string), /* Remote object value in case of primitive values or JSON values (if it was requested). */
+      [@yojson.option]
+      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified does not have `value`, but gets this
+property. */
+      [@yojson.option]
+      description: option(string), /* String representation of the object. */
+      [@yojson.option]
+      objectId: option(RemoteObjectId.t), /* Unique object identifier (for non-primitive values). */
+      [@yojson.option]
+      preview: option(ObjectPreview.t), /* Preview containing abbreviated property values. Specified for `object` type values only. */
+      [@yojson.option]
+      customPreview: option(CustomPreview.t) /* No description provided */,
+    };
+  } = {
+    /* Mirror object referencing original JavaScript object. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Object type. */
+      [@yojson.option]
+      subtype: option(string), /* Object subtype hint. Specified for `object` type values only.
+NOTE: If you change anything here, make sure to also update
+`subtype` in `ObjectPreview` and `PropertyPreview` below. */
+      [@yojson.option]
+      className: option(string), /* Object class (constructor) name. Specified for `object` type values only. */
+      [@yojson.option]
+      value: option(string), /* Remote object value in case of primitive values or JSON values (if it was requested). */
+      [@yojson.option]
+      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified does not have `value`, but gets this
+property. */
+      [@yojson.option]
+      description: option(string), /* String representation of the object. */
+      [@yojson.option]
+      objectId: option(RemoteObjectId.t), /* Unique object identifier (for non-primitive values). */
+      [@yojson.option]
+      preview: option(ObjectPreview.t), /* Preview containing abbreviated property values. Specified for `object` type values only. */
+      [@yojson.option]
+      customPreview: option(CustomPreview.t) /* No description provided */,
+    };
+  }
+  and CustomPreview: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      header: string, /* The JSON-stringified result of formatter.header(object, config) call.
+It contains json ML array that represents RemoteObject. */
+      [@yojson.option]
+      bodyGetterId: option(RemoteObjectId.t) /* If formatter returns true as a result of formatter.hasBody call then bodyGetterId will
+contain RemoteObjectId for the function that returns result of formatter.body(object, config) call.
+The result value is json ML array. */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      header: string, /* The JSON-stringified result of formatter.header(object, config) call.
+It contains json ML array that represents RemoteObject. */
+      [@yojson.option]
+      bodyGetterId: option(RemoteObjectId.t) /* If formatter returns true as a result of formatter.hasBody call then bodyGetterId will
+contain RemoteObjectId for the function that returns result of formatter.body(object, config) call.
+The result value is json ML array. */,
+    };
+  }
+  and ObjectPreview: {
+    /* Object containing abbreviated remote object value. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Object type. */
+      [@yojson.option]
+      subtype: option(string), /* Object subtype hint. Specified for `object` type values only. */
+      [@yojson.option]
+      description: option(string), /* String representation of the object. */
+      overflow: bool, /* True iff some of the properties or entries of the original object did not fit. */
+      properties: list(PropertyPreview.t), /* List of the properties. */
+      [@yojson.option]
+      entries: option(list(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
+    };
+  } = {
+    /* Object containing abbreviated remote object value. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: string, /* Object type. */
+      [@yojson.option]
+      subtype: option(string), /* Object subtype hint. Specified for `object` type values only. */
+      [@yojson.option]
+      description: option(string), /* String representation of the object. */
+      overflow: bool, /* True iff some of the properties or entries of the original object did not fit. */
+      properties: list(PropertyPreview.t), /* List of the properties. */
+      [@yojson.option]
+      entries: option(list(EntryPreview.t)) /* List of the entries. Specified for `map` and `set` subtype values only. */,
+    };
+  }
+  and PropertyPreview: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Property name. */
+      [@key "type"]
+      type_: string, /* Object type. Accessor means that the property itself is an accessor property. */
+      [@yojson.option]
+      value: option(string), /* User-friendly property value string. */
+      [@yojson.option]
+      valuePreview: option(ObjectPreview.t), /* Nested value preview. */
+      [@yojson.option]
+      subtype: option(string) /* Object subtype hint. Specified for `object` type values only. */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Property name. */
+      [@key "type"]
+      type_: string, /* Object type. Accessor means that the property itself is an accessor property. */
+      [@yojson.option]
+      value: option(string), /* User-friendly property value string. */
+      [@yojson.option]
+      valuePreview: option(ObjectPreview.t), /* Nested value preview. */
+      [@yojson.option]
+      subtype: option(string) /* Object subtype hint. Specified for `object` type values only. */,
+    };
+  }
+  and EntryPreview: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option]
+      key: option(ObjectPreview.t), /* Preview of the key. Specified for map-like collection entries. */
+      value: ObjectPreview.t /* Preview of the value. */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option]
+      key: option(ObjectPreview.t), /* Preview of the key. Specified for map-like collection entries. */
+      value: ObjectPreview.t /* Preview of the value. */,
+    };
+  }
+  and PropertyDescriptor: {
+    /* Object property descriptor. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Property name or symbol description. */
+      [@yojson.option]
+      value: option(RemoteObject.t), /* The value associated with the property. */
+      [@yojson.option]
+      writable: option(bool), /* True if the value associated with the property may be changed (data descriptors only). */
+      [@yojson.option]
+      get: option(RemoteObject.t), /* A function which serves as a getter for the property, or `undefined` if there is no getter
+(accessor descriptors only). */
+      [@yojson.option]
+      set: option(RemoteObject.t), /* A function which serves as a setter for the property, or `undefined` if there is no setter
+(accessor descriptors only). */
+      configurable: bool, /* True if the type of this property descriptor may be changed and if the property may be
+deleted from the corresponding object. */
+      enumerable: bool, /* True if this property shows up during enumeration of the properties on the corresponding
+object. */
+      [@yojson.option]
+      wasThrown: option(bool), /* True if the result was thrown during the evaluation. */
+      [@yojson.option]
+      isOwn: option(bool), /* True if the property is owned for the object. */
+      [@yojson.option]
+      symbol: option(RemoteObject.t) /* Property symbol object, if the property is of the `symbol` type. */,
+    };
+  } = {
+    /* Object property descriptor. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Property name or symbol description. */
+      [@yojson.option]
+      value: option(RemoteObject.t), /* The value associated with the property. */
+      [@yojson.option]
+      writable: option(bool), /* True if the value associated with the property may be changed (data descriptors only). */
+      [@yojson.option]
+      get: option(RemoteObject.t), /* A function which serves as a getter for the property, or `undefined` if there is no getter
+(accessor descriptors only). */
+      [@yojson.option]
+      set: option(RemoteObject.t), /* A function which serves as a setter for the property, or `undefined` if there is no setter
+(accessor descriptors only). */
+      configurable: bool, /* True if the type of this property descriptor may be changed and if the property may be
+deleted from the corresponding object. */
+      enumerable: bool, /* True if this property shows up during enumeration of the properties on the corresponding
+object. */
+      [@yojson.option]
+      wasThrown: option(bool), /* True if the result was thrown during the evaluation. */
+      [@yojson.option]
+      isOwn: option(bool), /* True if the property is owned for the object. */
+      [@yojson.option]
+      symbol: option(RemoteObject.t) /* Property symbol object, if the property is of the `symbol` type. */,
+    };
+  }
+  and InternalPropertyDescriptor: {
+    /* Object internal property descriptor. This property isn't normally visible in JavaScript code. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Conventional property name. */
+      [@yojson.option]
+      value: option(RemoteObject.t) /* The value associated with the property. */,
+    };
+  } = {
+    /* Object internal property descriptor. This property isn't normally visible in JavaScript code. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Conventional property name. */
+      [@yojson.option]
+      value: option(RemoteObject.t) /* The value associated with the property. */,
+    };
+  }
+  and PrivatePropertyDescriptor: {
+    /* Object private field descriptor. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Private property name. */
+      [@yojson.option]
+      value: option(RemoteObject.t), /* The value associated with the private property. */
+      [@yojson.option]
+      get: option(RemoteObject.t), /* A function which serves as a getter for the private property,
+or `undefined` if there is no getter (accessor descriptors only). */
+      [@yojson.option]
+      set: option(RemoteObject.t) /* A function which serves as a setter for the private property,
+or `undefined` if there is no setter (accessor descriptors only). */,
+    };
+  } = {
+    /* Object private field descriptor. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Private property name. */
+      [@yojson.option]
+      value: option(RemoteObject.t), /* The value associated with the private property. */
+      [@yojson.option]
+      get: option(RemoteObject.t), /* A function which serves as a getter for the private property,
+or `undefined` if there is no getter (accessor descriptors only). */
+      [@yojson.option]
+      set: option(RemoteObject.t) /* A function which serves as a setter for the private property,
+or `undefined` if there is no setter (accessor descriptors only). */,
+    };
+  }
+  and CallArgument: {
+    /* Represents function call argument. Either remote object id `objectId`, primitive `value`,
+       unserializable primitive value or neither of (for undefined) them should be specified. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option]
+      value: option(string), /* Primitive value or serializable javascript object. */
+      [@yojson.option]
+      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified. */
+      [@yojson.option]
+      objectId: option(RemoteObjectId.t) /* Remote object handle. */,
+    };
+  } = {
+    /* Represents function call argument. Either remote object id `objectId`, primitive `value`,
+       unserializable primitive value or neither of (for undefined) them should be specified. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option]
+      value: option(string), /* Primitive value or serializable javascript object. */
+      [@yojson.option]
+      unserializableValue: option(UnserializableValue.t), /* Primitive value which can not be JSON-stringified. */
+      [@yojson.option]
+      objectId: option(RemoteObjectId.t) /* Remote object handle. */,
+    };
+  }
+  and ExecutionContextId: {
+    /* Id of an execution context. */
+    [@deriving yojson]
+    type t = float;
+  } = {
+    /* Id of an execution context. */
+    [@deriving yojson]
+    type t = float;
+  }
+  and ExecutionContextDescription: {
+    /* Description of an isolated world. */
+    [@deriving yojson]
+    type t = {
+      id: ExecutionContextId.t, /* Unique id of the execution context. It can be used to specify in which execution context
+script evaluation should be performed. */
+      origin: string, /* Execution context origin. */
+      name: string, /* Human readable name describing given context. */
+      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique accross
+multiple processes, so can be reliably used to identify specific context while backend
+performs a cross-process navigation. */
+      [@yojson.option]
+      auxData: option(assoc) /* Embedder-specific auxiliary data. */,
+    };
+  } = {
+    /* Description of an isolated world. */
+    [@deriving yojson]
+    type t = {
+      id: ExecutionContextId.t, /* Unique id of the execution context. It can be used to specify in which execution context
+script evaluation should be performed. */
+      origin: string, /* Execution context origin. */
+      name: string, /* Human readable name describing given context. */
+      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique accross
+multiple processes, so can be reliably used to identify specific context while backend
+performs a cross-process navigation. */
+      [@yojson.option]
+      auxData: option(assoc) /* Embedder-specific auxiliary data. */,
+    };
+  }
+  and ExceptionDetails: {
+    /* Detailed information about exception (or error) that was thrown during script compilation or
+       execution. */
+    [@deriving yojson]
+    type t = {
+      exceptionId: float, /* Exception id. */
+      text: string, /* Exception text, which should be used together with exception object when available. */
+      lineNumber: float, /* Line number of the exception location (0-based). */
+      columnNumber: float, /* Column number of the exception location (0-based). */
+      [@yojson.option]
+      scriptId: option(ScriptId.t), /* Script ID of the exception location. */
+      [@yojson.option]
+      url: option(string), /* URL of the exception location, to be used when the script was not reported. */
+      [@yojson.option]
+      stackTrace: option(StackTrace.t), /* JavaScript stack trace if available. */
+      [@yojson.option] [@key "exception"]
+      exception_: option(RemoteObject.t), /* Exception object if available. */
+      [@yojson.option]
+      executionContextId: option(ExecutionContextId.t) /* Identifier of the context where exception happened. */,
+    };
+  } = {
+    /* Detailed information about exception (or error) that was thrown during script compilation or
+       execution. */
+    [@deriving yojson]
+    type t = {
+      exceptionId: float, /* Exception id. */
+      text: string, /* Exception text, which should be used together with exception object when available. */
+      lineNumber: float, /* Line number of the exception location (0-based). */
+      columnNumber: float, /* Column number of the exception location (0-based). */
+      [@yojson.option]
+      scriptId: option(ScriptId.t), /* Script ID of the exception location. */
+      [@yojson.option]
+      url: option(string), /* URL of the exception location, to be used when the script was not reported. */
+      [@yojson.option]
+      stackTrace: option(StackTrace.t), /* JavaScript stack trace if available. */
+      [@yojson.option] [@key "exception"]
+      exception_: option(RemoteObject.t), /* Exception object if available. */
+      [@yojson.option]
+      executionContextId: option(ExecutionContextId.t) /* Identifier of the context where exception happened. */,
+    };
+  }
+  and Timestamp: {
+    /* Number of milliseconds since epoch. */
+    [@deriving yojson]
+    type t = float;
+  } = {
+    /* Number of milliseconds since epoch. */
+    [@deriving yojson]
+    type t = float;
+  }
+  and TimeDelta: {
+    /* Number of milliseconds. */
+    [@deriving yojson]
+    type t = float;
+  } = {
+    /* Number of milliseconds. */
+    [@deriving yojson]
+    type t = float;
+  }
+  and CallFrame: {
+    /* Stack entry for runtime errors and assertions. */
+    [@deriving yojson]
+    type t = {
+      functionName: string, /* JavaScript function name. */
+      scriptId: ScriptId.t, /* JavaScript script id. */
+      url: string, /* JavaScript script name or url. */
+      lineNumber: float, /* JavaScript script line number (0-based). */
+      columnNumber: float /* JavaScript script column number (0-based). */,
+    };
+  } = {
+    /* Stack entry for runtime errors and assertions. */
+    [@deriving yojson]
+    type t = {
+      functionName: string, /* JavaScript function name. */
+      scriptId: ScriptId.t, /* JavaScript script id. */
+      url: string, /* JavaScript script name or url. */
+      lineNumber: float, /* JavaScript script line number (0-based). */
+      columnNumber: float /* JavaScript script column number (0-based). */,
+    };
+  }
+  and StackTrace: {
+    /* Call frames for assertions or error messages. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option]
+      description: option(string), /* String label of this stack trace. For async traces this may be a name of the function that
+initiated the async call. */
+      callFrames: list(CallFrame.t), /* JavaScript function name. */
+      [@yojson.option]
+      parent: option(StackTrace.t), /* Asynchronous JavaScript stack trace that preceded this stack, if available. */
+      [@yojson.option]
+      parentId: option(StackTraceId.t) /* Asynchronous JavaScript stack trace that preceded this stack, if available. */,
+    };
+  } = {
+    /* Call frames for assertions or error messages. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option]
+      description: option(string), /* String label of this stack trace. For async traces this may be a name of the function that
+initiated the async call. */
+      callFrames: list(CallFrame.t), /* JavaScript function name. */
+      [@yojson.option]
+      parent: option(StackTrace.t), /* Asynchronous JavaScript stack trace that preceded this stack, if available. */
+      [@yojson.option]
+      parentId: option(StackTraceId.t) /* Asynchronous JavaScript stack trace that preceded this stack, if available. */,
+    };
+  }
+  and UniqueDebuggerId: {
+    /* Unique identifier of current debugger. */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* Unique identifier of current debugger. */
+    [@deriving yojson]
+    type t = string;
+  }
+  and StackTraceId: {
+    /* If `debuggerId` is set stack trace comes from another debugger and can be resolved there. This
+       allows to track cross-debugger calls. See `Runtime.StackTrace` and `Debugger.paused` for usages. */
+    [@deriving yojson]
+    type t = {
+      id: string, /* No description provided */
+      [@yojson.option]
+      debuggerId: option(UniqueDebuggerId.t) /* No description provided */,
+    };
+  } = {
+    /* If `debuggerId` is set stack trace comes from another debugger and can be resolved there. This
+       allows to track cross-debugger calls. See `Runtime.StackTrace` and `Debugger.paused` for usages. */
+    [@deriving yojson]
+    type t = {
+      id: string, /* No description provided */
+      [@yojson.option]
+      debuggerId: option(UniqueDebuggerId.t) /* No description provided */,
+    };
+  };
+}
+and Schema: {
+  module rec Domain: {
+    /* Description of the protocol domain. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Domain name. */
+      version: string /* Domain version. */,
+    };
+  };
+} = {
+  module rec Domain: {
+    /* Description of the protocol domain. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Domain name. */
+      version: string /* Domain version. */,
+    };
+  } = {
+    /* Description of the protocol domain. */
+    [@deriving yojson]
+    type t = {
+      name: string, /* Domain name. */
+      version: string /* Domain version. */,
     };
   };
 };

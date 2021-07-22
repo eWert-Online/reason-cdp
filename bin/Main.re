@@ -415,12 +415,18 @@ let get_command = (~domain, command) => {
   String.concat("\n", content);
 };
 
-let main = (path, output) => {
-  let protocol = get_file_contents(path) |> Yojson.Basic.from_string;
+let main = (paths, output) => {
+  let protocols =
+    paths
+    |> List.map(path => get_file_contents(path) |> Yojson.Basic.from_string);
   let domains =
-    protocol
-    |> Yojson.Basic.Util.member("domains")
-    |> Yojson.Basic.Util.to_list;
+    protocols
+    |> List.map(protocol =>
+         protocol
+         |> Yojson.Basic.Util.member("domains")
+         |> Yojson.Basic.Util.to_list
+       )
+    |> List.flatten;
 
   let path_types = Filename.concat(output, "Types.re");
   let path_events = Filename.concat(output, "Events.re");
@@ -531,16 +537,24 @@ let info = {
   );
 };
 
-let file = {
-  let doc = "A file to parse.";
-  Arg.(value & pos(0, non_dir_file, "") & info([], ~docv="FILE", ~doc));
+let protocols = {
+  let doc = "A list protocols to parse.";
+  Arg.(
+    non_empty
+    & pos_left(~rev=true, 0, non_dir_file, [])
+    & info([], ~docv="PROTOCOL(S)", ~doc)
+  );
 };
 
 let output = {
   let doc = "The direcory, where to put the generated api";
-  Arg.(value & pos(1, dir, "") & info([], ~docv="DIR", ~doc));
+  Arg.(
+    required
+    & pos(~rev=true, 0, some(dir), None)
+    & info([], ~docv="DIR", ~doc)
+  );
 };
 
-let cmd = Term.(const(main) $ file $ output);
+let cmd = Term.(const(main) $ protocols $ output);
 
 let () = Term.exit @@ Term.eval((cmd, info));

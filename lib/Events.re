@@ -323,183 +323,6 @@ module Cast = {
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
 };
-module Console = {
-  /* Issued when new console message is added. */
-  module MessageAdded = {
-    let name = "Console.messageAdded";
-
-    [@deriving yojson]
-    type result = {
-      message: Types.Console.ConsoleMessage.t /* Console message that has been added. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-};
-module Debugger = {
-  /* Fired when breakpoint is resolved to an actual script and location. */
-  module BreakpointResolved = {
-    let name = "Debugger.breakpointResolved";
-
-    [@deriving yojson]
-    type result = {
-      breakpointId: Types.Debugger.BreakpointId.t, /* Breakpoint unique identifier. */
-      location: Types.Debugger.Location.t /* Actual breakpoint location. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria. */
-  module Paused = {
-    let name = "Debugger.paused";
-
-    [@deriving yojson]
-    type result = {
-      callFrames: list(Types.Debugger.CallFrame.t), /* Call stack the virtual machine stopped on. */
-      reason: string, /* Pause reason. */
-      [@yojson.option]
-      data: option(Types.assoc), /* Object containing break-specific auxiliary properties. */
-      [@yojson.option]
-      hitBreakpoints: option(list(string)), /* Hit breakpoints IDs */
-      [@yojson.option]
-      asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
-      [@yojson.option]
-      asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
-      [@yojson.option]
-      asyncCallStackTraceId: option(Types.Runtime.StackTraceId.t) /* Never present, will be removed. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Fired when the virtual machine resumed execution. */
-  module Resumed = {
-    let name = "Debugger.resumed";
-
-    [@deriving yojson]
-    type result = Types.empty;
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Fired when virtual machine fails to parse the script. */
-  module ScriptFailedToParse = {
-    let name = "Debugger.scriptFailedToParse";
-
-    [@deriving yojson]
-    type result = {
-      scriptId: Types.Runtime.ScriptId.t, /* Identifier of the script parsed. */
-      url: string, /* URL or name of the script parsed (if any). */
-      startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
-      startColumn: float, /* Column offset of the script within the resource with given URL. */
-      endLine: float, /* Last line of the script. */
-      endColumn: float, /* Length of the last line of the script. */
-      executionContextId: Types.Runtime.ExecutionContextId.t, /* Specifies script creation context. */
-      hash: string, /* Content hash of the script. */
-      [@yojson.option]
-      executionContextAuxData: option(Types.assoc), /* Embedder-specific auxiliary data. */
-      [@yojson.option]
-      sourceMapURL: option(string), /* URL of source map associated with script (if any). */
-      [@yojson.option]
-      hasSourceURL: option(bool), /* True, if this script has sourceURL. */
-      [@yojson.option]
-      isModule: option(bool), /* True, if this script is ES6 module. */
-      [@yojson.option]
-      length: option(float), /* This script length. */
-      [@yojson.option]
-      stackTrace: option(Types.Runtime.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
-      [@yojson.option]
-      codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
-      [@yojson.option]
-      scriptLanguage: option(Types.Debugger.ScriptLanguage.t), /* The language of the script. */
-      [@yojson.option]
-      embedderName: option(string) /* The name the embedder supplied for this script. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Fired when virtual machine parses script. This event is also fired for all known and uncollected
-     scripts upon enabling debugger. */
-  module ScriptParsed = {
-    let name = "Debugger.scriptParsed";
-
-    [@deriving yojson]
-    type result = {
-      scriptId: Types.Runtime.ScriptId.t, /* Identifier of the script parsed. */
-      url: string, /* URL or name of the script parsed (if any). */
-      startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
-      startColumn: float, /* Column offset of the script within the resource with given URL. */
-      endLine: float, /* Last line of the script. */
-      endColumn: float, /* Length of the last line of the script. */
-      executionContextId: Types.Runtime.ExecutionContextId.t, /* Specifies script creation context. */
-      hash: string, /* Content hash of the script. */
-      [@yojson.option]
-      executionContextAuxData: option(Types.assoc), /* Embedder-specific auxiliary data. */
-      [@yojson.option]
-      isLiveEdit: option(bool), /* True, if this script is generated as a result of the live edit operation. */
-      [@yojson.option]
-      sourceMapURL: option(string), /* URL of source map associated with script (if any). */
-      [@yojson.option]
-      hasSourceURL: option(bool), /* True, if this script has sourceURL. */
-      [@yojson.option]
-      isModule: option(bool), /* True, if this script is ES6 module. */
-      [@yojson.option]
-      length: option(float), /* This script length. */
-      [@yojson.option]
-      stackTrace: option(Types.Runtime.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
-      [@yojson.option]
-      codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
-      [@yojson.option]
-      scriptLanguage: option(Types.Debugger.ScriptLanguage.t), /* The language of the script. */
-      [@yojson.option]
-      debugSymbols: option(Types.Debugger.DebugSymbols.t), /* If the scriptLanguage is WebASsembly, the source of debug symbols for the module. */
-      [@yojson.option]
-      embedderName: option(string) /* The name the embedder supplied for this script. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-};
 module DOM = {
   /* Fired when `Element`'s attribute is modified. */
   module AttributeModified = {
@@ -896,103 +719,6 @@ module HeadlessExperimental = {
     type result = {
       needsBeginFrames: bool /* True if BeginFrames are needed, false otherwise. */,
     };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-};
-module HeapProfiler = {
-  /* No description provided */
-  module AddHeapSnapshotChunk = {
-    let name = "HeapProfiler.addHeapSnapshotChunk";
-
-    [@deriving yojson]
-    type result = {chunk: string /* No description provided */};
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* If heap objects tracking has been started then backend may send update for one or more fragments */
-  module HeapStatsUpdate = {
-    let name = "HeapProfiler.heapStatsUpdate";
-
-    [@deriving yojson]
-    type result = {
-      statsUpdate: list(float) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
-index, the second integer is a total count of objects for the fragment, the third integer is
-a total size of the objects for the fragment. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* If heap objects tracking has been started then backend regularly sends a current value for last
-     seen object id and corresponding timestamp. If the were changes in the heap since last event
-     then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event. */
-  module LastSeenObjectId = {
-    let name = "HeapProfiler.lastSeenObjectId";
-
-    [@deriving yojson]
-    type result = {
-      lastSeenObjectId: float, /* No description provided */
-      timestamp: float /* No description provided */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* No description provided */
-  module ReportHeapSnapshotProgress = {
-    let name = "HeapProfiler.reportHeapSnapshotProgress";
-
-    [@deriving yojson]
-    type result = {
-      [@key "done"]
-      done_: float, /* No description provided */
-      total: float, /* No description provided */
-      [@yojson.option]
-      finished: option(bool) /* No description provided */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* No description provided */
-  module ResetProfiles = {
-    let name = "HeapProfiler.resetProfiles";
-
-    [@deriving yojson]
-    type result = Types.empty;
 
     [@deriving yojson]
     type t = {
@@ -2303,237 +2029,6 @@ module PerformanceTimeline = {
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
 };
-module Profiler = {
-  /* No description provided */
-  module ConsoleProfileFinished = {
-    let name = "Profiler.consoleProfileFinished";
-
-    [@deriving yojson]
-    type result = {
-      id: string, /* No description provided */
-      location: Types.Debugger.Location.t, /* Location of console.profileEnd(). */
-      profile: Types.Profiler.Profile.t, /* No description provided */
-      [@yojson.option]
-      title: option(string) /* Profile title passed as an argument to console.profile(). */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Sent when new profile recording is started using console.profile() call. */
-  module ConsoleProfileStarted = {
-    let name = "Profiler.consoleProfileStarted";
-
-    [@deriving yojson]
-    type result = {
-      id: string, /* No description provided */
-      location: Types.Debugger.Location.t, /* Location of console.profile(). */
-      [@yojson.option]
-      title: option(string) /* Profile title passed as an argument to console.profile(). */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Reports coverage delta since the last poll (either from an event like this, or from
-     `takePreciseCoverage` for the current isolate. May only be sent if precise code
-     coverage has been started. This event can be trigged by the embedder to, for example,
-     trigger collection of coverage data immediatelly at a certain point in time. */
-  module PreciseCoverageDeltaUpdate = {
-    let name = "Profiler.preciseCoverageDeltaUpdate";
-
-    [@deriving yojson]
-    type result = {
-      timestamp: float, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
-      occassion: string, /* Identifier for distinguishing coverage events. */
-      result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-};
-module Runtime = {
-  /* Notification is issued every time when binding is called. */
-  module BindingCalled = {
-    let name = "Runtime.bindingCalled";
-
-    [@deriving yojson]
-    type result = {
-      name: string, /* No description provided */
-      payload: string, /* No description provided */
-      executionContextId: Types.Runtime.ExecutionContextId.t /* Identifier of the context where the call was made. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Issued when console API was called. */
-  module ConsoleAPICalled = {
-    let name = "Runtime.consoleAPICalled";
-
-    [@deriving yojson]
-    type result = {
-      [@key "type"]
-      type_: string, /* Type of the call. */
-      args: list(Types.Runtime.RemoteObject.t), /* Call arguments. */
-      executionContextId: Types.Runtime.ExecutionContextId.t, /* Identifier of the context where the call was made. */
-      timestamp: Types.Runtime.Timestamp.t, /* Call timestamp. */
-      [@yojson.option]
-      stackTrace: option(Types.Runtime.StackTrace.t), /* Stack trace captured when the call was made. The async stack chain is automatically reported for
-the following call types: `assert`, `error`, `trace`, `warning`. For other types the async call
-chain can be retrieved using `Debugger.getStackTrace` and `stackTrace.parentId` field. */
-      [@yojson.option]
-      context: option(string) /* Console context descriptor for calls on non-default console context (not console.*):
-'anonymous#unique-logger-id' for call on unnamed context, 'name#unique-logger-id' for call
-on named context. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Issued when unhandled exception was revoked. */
-  module ExceptionRevoked = {
-    let name = "Runtime.exceptionRevoked";
-
-    [@deriving yojson]
-    type result = {
-      reason: string, /* Reason describing why exception was revoked. */
-      exceptionId: float /* The id of revoked exception, as reported in `exceptionThrown`. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Issued when exception was thrown and unhandled. */
-  module ExceptionThrown = {
-    let name = "Runtime.exceptionThrown";
-
-    [@deriving yojson]
-    type result = {
-      timestamp: Types.Runtime.Timestamp.t, /* Timestamp of the exception. */
-      exceptionDetails: Types.Runtime.ExceptionDetails.t /* No description provided */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Issued when new execution context is created. */
-  module ExecutionContextCreated = {
-    let name = "Runtime.executionContextCreated";
-
-    [@deriving yojson]
-    type result = {
-      context: Types.Runtime.ExecutionContextDescription.t /* A newly created execution context. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Issued when execution context is destroyed. */
-  module ExecutionContextDestroyed = {
-    let name = "Runtime.executionContextDestroyed";
-
-    [@deriving yojson]
-    type result = {
-      executionContextId: Types.Runtime.ExecutionContextId.t /* Id of the destroyed context */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Issued when all executionContexts were cleared in browser */
-  module ExecutionContextsCleared = {
-    let name = "Runtime.executionContextsCleared";
-
-    [@deriving yojson]
-    type result = Types.empty;
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* Issued when object should be inspected (for example, as a result of inspect() command line API
-     call). */
-  module InspectRequested = {
-    let name = "Runtime.inspectRequested";
-
-    [@deriving yojson]
-    type result = {
-      [@key "object"]
-      object_: Types.Runtime.RemoteObject.t, /* No description provided */
-      hints: Types.assoc /* No description provided */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-};
 module Security = {
   /* There is a certificate error. If overriding certificate errors is enabled, then it should be
      handled with the `handleCertificateError` command. Note: this event does not fire if the
@@ -3371,6 +2866,511 @@ module Media = {
     [@deriving yojson]
     type result = {
       players: list(Types.Media.PlayerId.t) /* No description provided */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+};
+module Console = {
+  /* Issued when new console message is added. */
+  module MessageAdded = {
+    let name = "Console.messageAdded";
+
+    [@deriving yojson]
+    type result = {
+      message: Types.Console.ConsoleMessage.t /* Console message that has been added. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+};
+module Debugger = {
+  /* Fired when breakpoint is resolved to an actual script and location. */
+  module BreakpointResolved = {
+    let name = "Debugger.breakpointResolved";
+
+    [@deriving yojson]
+    type result = {
+      breakpointId: Types.Debugger.BreakpointId.t, /* Breakpoint unique identifier. */
+      location: Types.Debugger.Location.t /* Actual breakpoint location. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria. */
+  module Paused = {
+    let name = "Debugger.paused";
+
+    [@deriving yojson]
+    type result = {
+      callFrames: list(Types.Debugger.CallFrame.t), /* Call stack the virtual machine stopped on. */
+      reason: string, /* Pause reason. */
+      [@yojson.option]
+      data: option(Types.assoc), /* Object containing break-specific auxiliary properties. */
+      [@yojson.option]
+      hitBreakpoints: option(list(string)), /* Hit breakpoints IDs */
+      [@yojson.option]
+      asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
+      [@yojson.option]
+      asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
+      [@yojson.option]
+      asyncCallStackTraceId: option(Types.Runtime.StackTraceId.t) /* Never present, will be removed. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Fired when the virtual machine resumed execution. */
+  module Resumed = {
+    let name = "Debugger.resumed";
+
+    [@deriving yojson]
+    type result = Types.empty;
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Fired when virtual machine fails to parse the script. */
+  module ScriptFailedToParse = {
+    let name = "Debugger.scriptFailedToParse";
+
+    [@deriving yojson]
+    type result = {
+      scriptId: Types.Runtime.ScriptId.t, /* Identifier of the script parsed. */
+      url: string, /* URL or name of the script parsed (if any). */
+      startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
+      startColumn: float, /* Column offset of the script within the resource with given URL. */
+      endLine: float, /* Last line of the script. */
+      endColumn: float, /* Length of the last line of the script. */
+      executionContextId: Types.Runtime.ExecutionContextId.t, /* Specifies script creation context. */
+      hash: string, /* Content hash of the script. */
+      [@yojson.option]
+      executionContextAuxData: option(Types.assoc), /* Embedder-specific auxiliary data. */
+      [@yojson.option]
+      sourceMapURL: option(string), /* URL of source map associated with script (if any). */
+      [@yojson.option]
+      hasSourceURL: option(bool), /* True, if this script has sourceURL. */
+      [@yojson.option]
+      isModule: option(bool), /* True, if this script is ES6 module. */
+      [@yojson.option]
+      length: option(float), /* This script length. */
+      [@yojson.option]
+      stackTrace: option(Types.Runtime.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
+      [@yojson.option]
+      codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
+      [@yojson.option]
+      scriptLanguage: option(Types.Debugger.ScriptLanguage.t), /* The language of the script. */
+      [@yojson.option]
+      embedderName: option(string) /* The name the embedder supplied for this script. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Fired when virtual machine parses script. This event is also fired for all known and uncollected
+     scripts upon enabling debugger. */
+  module ScriptParsed = {
+    let name = "Debugger.scriptParsed";
+
+    [@deriving yojson]
+    type result = {
+      scriptId: Types.Runtime.ScriptId.t, /* Identifier of the script parsed. */
+      url: string, /* URL or name of the script parsed (if any). */
+      startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
+      startColumn: float, /* Column offset of the script within the resource with given URL. */
+      endLine: float, /* Last line of the script. */
+      endColumn: float, /* Length of the last line of the script. */
+      executionContextId: Types.Runtime.ExecutionContextId.t, /* Specifies script creation context. */
+      hash: string, /* Content hash of the script. */
+      [@yojson.option]
+      executionContextAuxData: option(Types.assoc), /* Embedder-specific auxiliary data. */
+      [@yojson.option]
+      isLiveEdit: option(bool), /* True, if this script is generated as a result of the live edit operation. */
+      [@yojson.option]
+      sourceMapURL: option(string), /* URL of source map associated with script (if any). */
+      [@yojson.option]
+      hasSourceURL: option(bool), /* True, if this script has sourceURL. */
+      [@yojson.option]
+      isModule: option(bool), /* True, if this script is ES6 module. */
+      [@yojson.option]
+      length: option(float), /* This script length. */
+      [@yojson.option]
+      stackTrace: option(Types.Runtime.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
+      [@yojson.option]
+      codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
+      [@yojson.option]
+      scriptLanguage: option(Types.Debugger.ScriptLanguage.t), /* The language of the script. */
+      [@yojson.option]
+      debugSymbols: option(Types.Debugger.DebugSymbols.t), /* If the scriptLanguage is WebASsembly, the source of debug symbols for the module. */
+      [@yojson.option]
+      embedderName: option(string) /* The name the embedder supplied for this script. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+};
+module HeapProfiler = {
+  /* No description provided */
+  module AddHeapSnapshotChunk = {
+    let name = "HeapProfiler.addHeapSnapshotChunk";
+
+    [@deriving yojson]
+    type result = {chunk: string /* No description provided */};
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* If heap objects tracking has been started then backend may send update for one or more fragments */
+  module HeapStatsUpdate = {
+    let name = "HeapProfiler.heapStatsUpdate";
+
+    [@deriving yojson]
+    type result = {
+      statsUpdate: list(float) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
+index, the second integer is a total count of objects for the fragment, the third integer is
+a total size of the objects for the fragment. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* If heap objects tracking has been started then backend regularly sends a current value for last
+     seen object id and corresponding timestamp. If the were changes in the heap since last event
+     then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event. */
+  module LastSeenObjectId = {
+    let name = "HeapProfiler.lastSeenObjectId";
+
+    [@deriving yojson]
+    type result = {
+      lastSeenObjectId: float, /* No description provided */
+      timestamp: float /* No description provided */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* No description provided */
+  module ReportHeapSnapshotProgress = {
+    let name = "HeapProfiler.reportHeapSnapshotProgress";
+
+    [@deriving yojson]
+    type result = {
+      [@key "done"]
+      done_: float, /* No description provided */
+      total: float, /* No description provided */
+      [@yojson.option]
+      finished: option(bool) /* No description provided */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* No description provided */
+  module ResetProfiles = {
+    let name = "HeapProfiler.resetProfiles";
+
+    [@deriving yojson]
+    type result = Types.empty;
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+};
+module Profiler = {
+  /* No description provided */
+  module ConsoleProfileFinished = {
+    let name = "Profiler.consoleProfileFinished";
+
+    [@deriving yojson]
+    type result = {
+      id: string, /* No description provided */
+      location: Types.Debugger.Location.t, /* Location of console.profileEnd(). */
+      profile: Types.Profiler.Profile.t, /* No description provided */
+      [@yojson.option]
+      title: option(string) /* Profile title passed as an argument to console.profile(). */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Sent when new profile recording is started using console.profile() call. */
+  module ConsoleProfileStarted = {
+    let name = "Profiler.consoleProfileStarted";
+
+    [@deriving yojson]
+    type result = {
+      id: string, /* No description provided */
+      location: Types.Debugger.Location.t, /* Location of console.profile(). */
+      [@yojson.option]
+      title: option(string) /* Profile title passed as an argument to console.profile(). */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Reports coverage delta since the last poll (either from an event like this, or from
+     `takePreciseCoverage` for the current isolate. May only be sent if precise code
+     coverage has been started. This event can be trigged by the embedder to, for example,
+     trigger collection of coverage data immediatelly at a certain point in time. */
+  module PreciseCoverageDeltaUpdate = {
+    let name = "Profiler.preciseCoverageDeltaUpdate";
+
+    [@deriving yojson]
+    type result = {
+      timestamp: float, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
+      occassion: string, /* Identifier for distinguishing coverage events. */
+      result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+};
+module Runtime = {
+  /* Notification is issued every time when binding is called. */
+  module BindingCalled = {
+    let name = "Runtime.bindingCalled";
+
+    [@deriving yojson]
+    type result = {
+      name: string, /* No description provided */
+      payload: string, /* No description provided */
+      executionContextId: Types.Runtime.ExecutionContextId.t /* Identifier of the context where the call was made. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Issued when console API was called. */
+  module ConsoleAPICalled = {
+    let name = "Runtime.consoleAPICalled";
+
+    [@deriving yojson]
+    type result = {
+      [@key "type"]
+      type_: string, /* Type of the call. */
+      args: list(Types.Runtime.RemoteObject.t), /* Call arguments. */
+      executionContextId: Types.Runtime.ExecutionContextId.t, /* Identifier of the context where the call was made. */
+      timestamp: Types.Runtime.Timestamp.t, /* Call timestamp. */
+      [@yojson.option]
+      stackTrace: option(Types.Runtime.StackTrace.t), /* Stack trace captured when the call was made. The async stack chain is automatically reported for
+the following call types: `assert`, `error`, `trace`, `warning`. For other types the async call
+chain can be retrieved using `Debugger.getStackTrace` and `stackTrace.parentId` field. */
+      [@yojson.option]
+      context: option(string) /* Console context descriptor for calls on non-default console context (not console.*):
+'anonymous#unique-logger-id' for call on unnamed context, 'name#unique-logger-id' for call
+on named context. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Issued when unhandled exception was revoked. */
+  module ExceptionRevoked = {
+    let name = "Runtime.exceptionRevoked";
+
+    [@deriving yojson]
+    type result = {
+      reason: string, /* Reason describing why exception was revoked. */
+      exceptionId: float /* The id of revoked exception, as reported in `exceptionThrown`. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Issued when exception was thrown and unhandled. */
+  module ExceptionThrown = {
+    let name = "Runtime.exceptionThrown";
+
+    [@deriving yojson]
+    type result = {
+      timestamp: Types.Runtime.Timestamp.t, /* Timestamp of the exception. */
+      exceptionDetails: Types.Runtime.ExceptionDetails.t /* No description provided */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Issued when new execution context is created. */
+  module ExecutionContextCreated = {
+    let name = "Runtime.executionContextCreated";
+
+    [@deriving yojson]
+    type result = {
+      context: Types.Runtime.ExecutionContextDescription.t /* A newly created execution context. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Issued when execution context is destroyed. */
+  module ExecutionContextDestroyed = {
+    let name = "Runtime.executionContextDestroyed";
+
+    [@deriving yojson]
+    type result = {
+      executionContextId: Types.Runtime.ExecutionContextId.t /* Id of the destroyed context */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Issued when all executionContexts were cleared in browser */
+  module ExecutionContextsCleared = {
+    let name = "Runtime.executionContextsCleared";
+
+    [@deriving yojson]
+    type result = Types.empty;
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Issued when object should be inspected (for example, as a result of inspect() command line API
+     call). */
+  module InspectRequested = {
+    let name = "Runtime.inspectRequested";
+
+    [@deriving yojson]
+    type result = {
+      [@key "object"]
+      object_: Types.Runtime.RemoteObject.t, /* No description provided */
+      hints: Types.assoc /* No description provided */,
     };
 
     [@deriving yojson]
