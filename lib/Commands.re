@@ -17502,6 +17502,69 @@ module Overlay = {
       };
     };
   };
+  /* No description provided */
+  module SetShowContainerQueryOverlays = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "containerQueryHighlightConfigs"]
+        containerQueryHighlightConfigs:
+          list(Types.Overlay.ContainerQueryHighlightConfig.t) /* An array of node identifiers and descriptors for the highlight appearance. */,
+      };
+      let make = (~containerQueryHighlightConfigs, ()) => {
+        {containerQueryHighlightConfigs: containerQueryHighlightConfigs};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "Overlay.setShowContainerQueryOverlays",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Requests that backend shows paint rectangles */
   module SetShowPaintRects = {
     module Response: {

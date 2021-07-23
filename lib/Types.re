@@ -12104,7 +12104,10 @@ and Overlay: {
       [@yojson.option] [@key "flexItemHighlightConfig"]
       flexItemHighlightConfig: option(FlexItemHighlightConfig.t), /* The flex item highlight configuration (default: all transparent). */
       [@yojson.option] [@key "contrastAlgorithm"]
-      contrastAlgorithm: option(ContrastAlgorithm.t) /* The contrast algorithm to use for the contrast ratio (default: aa). */,
+      contrastAlgorithm: option(ContrastAlgorithm.t), /* The contrast algorithm to use for the contrast ratio (default: aa). */
+      [@yojson.option] [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig:
+        option(ContainerQueryContainerHighlightConfig.t) /* The container query container highlight configuration (default: all transparent). */,
     };
   }
   and ColorFormat: {
@@ -12169,6 +12172,24 @@ and Overlay: {
       contentColor: option(DOM.RGBA.t), /* The content box highlight fill color (default: a dark color). */
       [@yojson.option] [@key "outlineColor"]
       outlineColor: option(DOM.RGBA.t) /* The content box highlight outline color (default: transparent). */,
+    };
+  }
+  and ContainerQueryHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig: ContainerQueryContainerHighlightConfig.t, /* A descriptor for the highlight appearance of container query containers. */
+      [@key "nodeId"]
+      nodeId: DOM.NodeId.t /* Identifier of the container node to highlight. */,
+    };
+  }
+  and ContainerQueryContainerHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "containerBorder"]
+      containerBorder: option(LineStyle.t) /* The style of the container border */,
     };
   }
   and InspectMode: {
@@ -12478,7 +12499,10 @@ and Overlay: {
       [@yojson.option] [@key "flexItemHighlightConfig"]
       flexItemHighlightConfig: option(FlexItemHighlightConfig.t), /* The flex item highlight configuration (default: all transparent). */
       [@yojson.option] [@key "contrastAlgorithm"]
-      contrastAlgorithm: option(ContrastAlgorithm.t) /* The contrast algorithm to use for the contrast ratio (default: aa). */,
+      contrastAlgorithm: option(ContrastAlgorithm.t), /* The contrast algorithm to use for the contrast ratio (default: aa). */
+      [@yojson.option] [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig:
+        option(ContainerQueryContainerHighlightConfig.t) /* The container query container highlight configuration (default: all transparent). */,
     };
   } = {
     /* Configuration data for the highlighting of page elements. */
@@ -12519,7 +12543,10 @@ and Overlay: {
       [@yojson.option] [@key "flexItemHighlightConfig"]
       flexItemHighlightConfig: option(FlexItemHighlightConfig.t), /* The flex item highlight configuration (default: all transparent). */
       [@yojson.option] [@key "contrastAlgorithm"]
-      contrastAlgorithm: option(ContrastAlgorithm.t) /* The contrast algorithm to use for the contrast ratio (default: aa). */,
+      contrastAlgorithm: option(ContrastAlgorithm.t), /* The contrast algorithm to use for the contrast ratio (default: aa). */
+      [@yojson.option] [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig:
+        option(ContainerQueryContainerHighlightConfig.t) /* The container query container highlight configuration (default: all transparent). */,
     };
   }
   and ColorFormat: {
@@ -12652,6 +12679,40 @@ and Overlay: {
       contentColor: option(DOM.RGBA.t), /* The content box highlight fill color (default: a dark color). */
       [@yojson.option] [@key "outlineColor"]
       outlineColor: option(DOM.RGBA.t) /* The content box highlight outline color (default: transparent). */,
+    };
+  }
+  and ContainerQueryHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig: ContainerQueryContainerHighlightConfig.t, /* A descriptor for the highlight appearance of container query containers. */
+      [@key "nodeId"]
+      nodeId: DOM.NodeId.t /* Identifier of the container node to highlight. */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig: ContainerQueryContainerHighlightConfig.t, /* A descriptor for the highlight appearance of container query containers. */
+      [@key "nodeId"]
+      nodeId: DOM.NodeId.t /* Identifier of the container node to highlight. */,
+    };
+  }
+  and ContainerQueryContainerHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "containerBorder"]
+      containerBorder: option(LineStyle.t) /* The style of the container border */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "containerBorder"]
+      containerBorder: option(LineStyle.t) /* The style of the container border */,
     };
   }
   and InspectMode: {
