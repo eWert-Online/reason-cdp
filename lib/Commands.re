@@ -3813,6 +3813,73 @@ be ignored (as if the image had failed to load). */
       };
     };
   };
+  /* Modifies the expression of a container query. */
+  module SetContainerQueryText = {
+    module Response: {
+      type result = {
+        [@key "containerQuery"]
+        containerQuery: Types.CSS.CSSContainerQuery.t /* The resulting CSS container query rule after modification. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "containerQuery"]
+        containerQuery: Types.CSS.CSSContainerQuery.t /* The resulting CSS container query rule after modification. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "styleSheetId"]
+        styleSheetId: Types.CSS.StyleSheetId.t, /* No description provided */
+        [@key "range"]
+        range: Types.CSS.SourceRange.t, /* No description provided */
+        [@key "text"]
+        text: string /* No description provided */,
+      };
+      let make = (~styleSheetId, ~range, ~text, ()) => {
+        {styleSheetId, range, text};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "CSS.setContainerQueryText", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Modifies the rule selector. */
   module SetRuleSelector = {
     module Response: {
@@ -7652,6 +7719,73 @@ successfully. */,
 
       let make = (~sessionId=?, ~params, id) => {
         {id, method: "DOM.getFrameOwner", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns the container of the given node based on container query conditions.
+     If containerName is given, it will find the nearest container with a matching name;
+     otherwise it will find the nearest container regardless of its container name. */
+  module GetContainerForNode = {
+    module Response: {
+      type result = {
+        [@yojson.option] [@key "nodeId"]
+        nodeId: option(Types.DOM.NodeId.t) /* The container node for the given node, or null if not found. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option] [@key "nodeId"]
+        nodeId: option(Types.DOM.NodeId.t) /* The container node for the given node, or null if not found. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t, /* No description provided */
+        [@yojson.option] [@key "containerName"]
+        containerName: option(string) /* No description provided */,
+      };
+      let make = (~nodeId, ~containerName=?, ()) => {
+        {nodeId, containerName};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "DOM.getContainerForNode", sessionId, params}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };
@@ -15846,65 +15980,6 @@ This is a temporary ability and it will be removed in the future. */,
       };
     };
   };
-  /* For testing. */
-  module SetDataSizeLimitsForTest = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@key "maxTotalSize"]
-        maxTotalSize: float, /* Maximum total buffer size. */
-        [@key "maxResourceSize"]
-        maxResourceSize: float /* Maximum per-resource size. */,
-      };
-      let make = (~maxTotalSize, ~maxResourceSize, ()) => {
-        {maxTotalSize, maxResourceSize};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Network.setDataSizeLimitsForTest", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
   /* Specifies whether to always send extra HTTP headers with the requests from this page. */
   module SetExtraHTTPHeaders = {
     module Response: {
@@ -17427,6 +17502,69 @@ module Overlay = {
       };
     };
   };
+  /* No description provided */
+  module SetShowContainerQueryOverlays = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "containerQueryHighlightConfigs"]
+        containerQueryHighlightConfigs:
+          list(Types.Overlay.ContainerQueryHighlightConfig.t) /* An array of node identifiers and descriptors for the highlight appearance. */,
+      };
+      let make = (~containerQueryHighlightConfigs, ()) => {
+        {containerQueryHighlightConfigs: containerQueryHighlightConfigs};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "Overlay.setShowContainerQueryOverlays",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Requests that backend shows paint rectangles */
   module SetShowPaintRects = {
     module Response: {
@@ -18052,17 +18190,19 @@ to false. */,
     };
 
     module Params = {
-      type capturescreenshot_format = [ | `jpeg | `png];
+      type capturescreenshot_format = [ | `jpeg | `png | `webp];
       let capturescreenshot_format_of_yojson =
         fun
         | `String("jpeg") => `jpeg
         | `String("png") => `png
+        | `String("webp") => `webp
         | `String(s) => failwith("unknown enum: " ++ s)
         | _ => failwith("unknown enum type");
       let yojson_of_capturescreenshot_format =
         fun
         | `jpeg => `String("jpeg")
-        | `png => `String("png");
+        | `png => `String("png")
+        | `webp => `String("webp");
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "format"]

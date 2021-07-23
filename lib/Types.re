@@ -1173,6 +1173,7 @@ and Audits: {
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
+      | `ExcludeInvalidSameParty
     ];
     let _samesitecookieexclusionreason_of_yojson:
       Yojson.Basic.t => _samesitecookieexclusionreason;
@@ -1217,8 +1218,13 @@ and Audits: {
        information without the cookie. */
     [@deriving yojson]
     type t = {
-      [@key "cookie"]
-      cookie: AffectedCookie.t, /* No description provided */
+      [@yojson.option] [@key "cookie"]
+      cookie: option(AffectedCookie.t), /* If AffectedCookie is not set then rawCookieLine contains the raw
+Set-Cookie header string. This hints at a problem where the
+cookie line is syntactically or semantically malformed in a way
+that no valid cookie could be created. */
+      [@yojson.option] [@key "rawCookieLine"]
+      rawCookieLine: option(string), /* No description provided */
       [@key "cookieWarningReasons"]
       cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
       [@key "cookieExclusionReasons"]
@@ -1571,6 +1577,30 @@ instead of "limited-quirks". */
       loaderId: Network.LoaderId.t /* No description provided */,
     };
   }
+  and NavigatorUserAgentIssueDetails: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* No description provided */
+      [@yojson.option] [@key "location"]
+      location: option(SourceCodeLocation.t) /* No description provided */,
+    };
+  }
+  and WasmCrossOriginModuleSharingIssueDetails: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "wasmModuleUrl"]
+      wasmModuleUrl: string, /* No description provided */
+      [@key "sourceOrigin"]
+      sourceOrigin: string, /* No description provided */
+      [@key "targetOrigin"]
+      targetOrigin: string, /* No description provided */
+      [@key "isWarning"]
+      isWarning: bool /* No description provided */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -1584,6 +1614,8 @@ instead of "limited-quirks". */
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
+      | `NavigatorUserAgentIssue
+      | `WasmCrossOriginModuleSharingIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -1622,8 +1654,20 @@ instead of "limited-quirks". */
       attributionReportingIssueDetails:
         option(AttributionReportingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "quirksModeIssueDetails"]
-      quirksModeIssueDetails: option(QuirksModeIssueDetails.t) /* No description provided */,
+      quirksModeIssueDetails: option(QuirksModeIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
+      navigatorUserAgentIssueDetails:
+        option(NavigatorUserAgentIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
+      wasmCrossOriginModuleSharingIssue:
+        option(WasmCrossOriginModuleSharingIssueDetails.t) /* No description provided */,
     };
+  }
+  and IssueId: {
+    /* A unique id for a DevTools inspector issue. Allows other entities (e.g.
+       exceptions, CDP message, console messages, etc.) to reference an issue. */
+    [@deriving yojson]
+    type t = string;
   }
   and InspectorIssue: {
     /* An inspector issue reported from the back-end. */
@@ -1632,7 +1676,10 @@ instead of "limited-quirks". */
       [@key "code"]
       code: InspectorIssueCode.t, /* No description provided */
       [@key "details"]
-      details: InspectorIssueDetails.t /* No description provided */,
+      details: InspectorIssueDetails.t, /* No description provided */
+      [@yojson.option] [@key "issueId"]
+      issueId: option(IssueId.t) /* A unique id for this issue. May be omitted if no other entity (e.g.
+exception, CDP message, etc.) is referencing this issue. */,
     };
   };
 } = {
@@ -1699,6 +1746,7 @@ instead of "limited-quirks". */
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
+      | `ExcludeInvalidSameParty
     ];
     let _samesitecookieexclusionreason_of_yojson:
       Yojson.Basic.t => _samesitecookieexclusionreason;
@@ -1713,6 +1761,7 @@ instead of "limited-quirks". */
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
+      | `ExcludeInvalidSameParty
     ];
     let _samesitecookieexclusionreason_of_yojson =
       fun
@@ -1720,6 +1769,7 @@ instead of "limited-quirks". */
       | `String("ExcludeSameSiteNoneInsecure") => `ExcludeSameSiteNoneInsecure
       | `String("ExcludeSameSiteLax") => `ExcludeSameSiteLax
       | `String("ExcludeSameSiteStrict") => `ExcludeSameSiteStrict
+      | `String("ExcludeInvalidSameParty") => `ExcludeInvalidSameParty
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__samesitecookieexclusionreason =
@@ -1728,7 +1778,8 @@ instead of "limited-quirks". */
         `String("ExcludeSameSiteUnspecifiedTreatedAsLax")
       | `ExcludeSameSiteNoneInsecure => `String("ExcludeSameSiteNoneInsecure")
       | `ExcludeSameSiteLax => `String("ExcludeSameSiteLax")
-      | `ExcludeSameSiteStrict => `String("ExcludeSameSiteStrict");
+      | `ExcludeSameSiteStrict => `String("ExcludeSameSiteStrict")
+      | `ExcludeInvalidSameParty => `String("ExcludeInvalidSameParty");
     /* No description provided */
     [@deriving yojson]
     type t = _samesitecookieexclusionreason;
@@ -1826,8 +1877,13 @@ instead of "limited-quirks". */
        information without the cookie. */
     [@deriving yojson]
     type t = {
-      [@key "cookie"]
-      cookie: AffectedCookie.t, /* No description provided */
+      [@yojson.option] [@key "cookie"]
+      cookie: option(AffectedCookie.t), /* If AffectedCookie is not set then rawCookieLine contains the raw
+Set-Cookie header string. This hints at a problem where the
+cookie line is syntactically or semantically malformed in a way
+that no valid cookie could be created. */
+      [@yojson.option] [@key "rawCookieLine"]
+      rawCookieLine: option(string), /* No description provided */
       [@key "cookieWarningReasons"]
       cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
       [@key "cookieExclusionReasons"]
@@ -1848,8 +1904,13 @@ may be used by the front-end as additional context. */
        information without the cookie. */
     [@deriving yojson]
     type t = {
-      [@key "cookie"]
-      cookie: AffectedCookie.t, /* No description provided */
+      [@yojson.option] [@key "cookie"]
+      cookie: option(AffectedCookie.t), /* If AffectedCookie is not set then rawCookieLine contains the raw
+Set-Cookie header string. This hints at a problem where the
+cookie line is syntactically or semantically malformed in a way
+that no valid cookie could be created. */
+      [@yojson.option] [@key "rawCookieLine"]
+      rawCookieLine: option(string), /* No description provided */
       [@key "cookieWarningReasons"]
       cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
       [@key "cookieExclusionReasons"]
@@ -2655,6 +2716,52 @@ instead of "limited-quirks". */
       loaderId: Network.LoaderId.t /* No description provided */,
     };
   }
+  and NavigatorUserAgentIssueDetails: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* No description provided */
+      [@yojson.option] [@key "location"]
+      location: option(SourceCodeLocation.t) /* No description provided */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* No description provided */
+      [@yojson.option] [@key "location"]
+      location: option(SourceCodeLocation.t) /* No description provided */,
+    };
+  }
+  and WasmCrossOriginModuleSharingIssueDetails: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "wasmModuleUrl"]
+      wasmModuleUrl: string, /* No description provided */
+      [@key "sourceOrigin"]
+      sourceOrigin: string, /* No description provided */
+      [@key "targetOrigin"]
+      targetOrigin: string, /* No description provided */
+      [@key "isWarning"]
+      isWarning: bool /* No description provided */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "wasmModuleUrl"]
+      wasmModuleUrl: string, /* No description provided */
+      [@key "sourceOrigin"]
+      sourceOrigin: string, /* No description provided */
+      [@key "targetOrigin"]
+      targetOrigin: string, /* No description provided */
+      [@key "isWarning"]
+      isWarning: bool /* No description provided */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -2668,6 +2775,8 @@ instead of "limited-quirks". */
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
+      | `NavigatorUserAgentIssue
+      | `WasmCrossOriginModuleSharingIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -2689,6 +2798,8 @@ instead of "limited-quirks". */
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
+      | `NavigatorUserAgentIssue
+      | `WasmCrossOriginModuleSharingIssue
     ];
     let _inspectorissuecode_of_yojson =
       fun
@@ -2703,6 +2814,8 @@ instead of "limited-quirks". */
       | `String("CorsIssue") => `CorsIssue
       | `String("AttributionReportingIssue") => `AttributionReportingIssue
       | `String("QuirksModeIssue") => `QuirksModeIssue
+      | `String("NavigatorUserAgentIssue") => `NavigatorUserAgentIssue
+      | `String("WasmCrossOriginModuleSharingIssue") => `WasmCrossOriginModuleSharingIssue
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__inspectorissuecode =
@@ -2717,7 +2830,10 @@ instead of "limited-quirks". */
       | `LowTextContrastIssue => `String("LowTextContrastIssue")
       | `CorsIssue => `String("CorsIssue")
       | `AttributionReportingIssue => `String("AttributionReportingIssue")
-      | `QuirksModeIssue => `String("QuirksModeIssue");
+      | `QuirksModeIssue => `String("QuirksModeIssue")
+      | `NavigatorUserAgentIssue => `String("NavigatorUserAgentIssue")
+      | `WasmCrossOriginModuleSharingIssue =>
+        `String("WasmCrossOriginModuleSharingIssue");
     /* A unique identifier for the type of issue. Each type may use one of the
        optional fields in InspectorIssueDetails to convey more specific
        information about the kind of issue. */
@@ -2753,7 +2869,13 @@ instead of "limited-quirks". */
       attributionReportingIssueDetails:
         option(AttributionReportingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "quirksModeIssueDetails"]
-      quirksModeIssueDetails: option(QuirksModeIssueDetails.t) /* No description provided */,
+      quirksModeIssueDetails: option(QuirksModeIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
+      navigatorUserAgentIssueDetails:
+        option(NavigatorUserAgentIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
+      wasmCrossOriginModuleSharingIssue:
+        option(WasmCrossOriginModuleSharingIssueDetails.t) /* No description provided */,
     };
   } = {
     /* This struct holds a list of optional fields with additional information
@@ -2784,8 +2906,25 @@ instead of "limited-quirks". */
       attributionReportingIssueDetails:
         option(AttributionReportingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "quirksModeIssueDetails"]
-      quirksModeIssueDetails: option(QuirksModeIssueDetails.t) /* No description provided */,
+      quirksModeIssueDetails: option(QuirksModeIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
+      navigatorUserAgentIssueDetails:
+        option(NavigatorUserAgentIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
+      wasmCrossOriginModuleSharingIssue:
+        option(WasmCrossOriginModuleSharingIssueDetails.t) /* No description provided */,
     };
+  }
+  and IssueId: {
+    /* A unique id for a DevTools inspector issue. Allows other entities (e.g.
+       exceptions, CDP message, console messages, etc.) to reference an issue. */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* A unique id for a DevTools inspector issue. Allows other entities (e.g.
+       exceptions, CDP message, console messages, etc.) to reference an issue. */
+    [@deriving yojson]
+    type t = string;
   }
   and InspectorIssue: {
     /* An inspector issue reported from the back-end. */
@@ -2794,7 +2933,10 @@ instead of "limited-quirks". */
       [@key "code"]
       code: InspectorIssueCode.t, /* No description provided */
       [@key "details"]
-      details: InspectorIssueDetails.t /* No description provided */,
+      details: InspectorIssueDetails.t, /* No description provided */
+      [@yojson.option] [@key "issueId"]
+      issueId: option(IssueId.t) /* A unique id for this issue. May be omitted if no other entity (e.g.
+exception, CDP message, etc.) is referencing this issue. */,
     };
   } = {
     /* An inspector issue reported from the back-end. */
@@ -2803,7 +2945,10 @@ instead of "limited-quirks". */
       [@key "code"]
       code: InspectorIssueCode.t, /* No description provided */
       [@key "details"]
-      details: InspectorIssueDetails.t /* No description provided */,
+      details: InspectorIssueDetails.t, /* No description provided */
+      [@yojson.option] [@key "issueId"]
+      issueId: option(IssueId.t) /* A unique id for this issue. May be omitted if no other entity (e.g.
+exception, CDP message, etc.) is referencing this issue. */,
     };
   };
 }
@@ -3498,7 +3643,9 @@ and CSS: {
       [@key "frameId"]
       frameId: Page.FrameId.t, /* Owner frame identifier. */
       [@key "sourceURL"]
-      sourceURL: string, /* Stylesheet resource URL. */
+      sourceURL: string, /* Stylesheet resource URL. Empty if this is a constructed stylesheet created using
+new CSSStyleSheet() (but non-empty if this is a constructed sylesheet imported
+as a CSS module script). */
       [@yojson.option] [@key "sourceMapURL"]
       sourceMapURL: option(string), /* URL of source map associated with the stylesheet (if any). */
       [@key "origin"]
@@ -3520,7 +3667,8 @@ after they have been modified via CSSOM API.
 <link> element's stylesheets become mutable only if DevTools modifies them.
 Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after creation. */
       [@key "isConstructed"]
-      isConstructed: bool, /* Whether this stylesheet is a constructed stylesheet (created using new CSSStyleSheet()). */
+      isConstructed: bool, /* True if this stylesheet is created through new CSSStyleSheet() or imported as a
+CSS module script. */
       [@key "startLine"]
       startLine: float, /* Line offset of the stylesheet within the resource (zero based). */
       [@key "startColumn"]
@@ -3547,8 +3695,11 @@ stylesheet rules) this rule came from. */
       [@key "style"]
       style: CSSStyle.t, /* Associated style declaration. */
       [@yojson.option] [@key "media"]
-      media: option(list(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
-starting with the innermost one, going outwards. */,
+      media: option(list(CSSMedia.t)), /* Media list array (for rules involving media queries). The array enumerates media queries
+starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "containerQueries"]
+      containerQueries: option(list(CSSContainerQuery.t)) /* Container query list array (for rules involving container queries).
+The array enumerates container queries starting with the innermost one, going outwards. */,
     };
   }
   and RuleUsage: {
@@ -3695,6 +3846,21 @@ available). */
       valueRange: option(SourceRange.t), /* The associated range of the value text in the enclosing stylesheet (if available). */
       [@yojson.option] [@key "computedLength"]
       computedLength: option(float) /* Computed length of media query expression (if applicable). */,
+    };
+  }
+  and CSSContainerQuery: {
+    /* CSS container query rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Container query text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
+      [@yojson.option] [@key "name"]
+      name: option(string) /* Optional name for the container. */,
     };
   }
   and PlatformFontUsage: {
@@ -3942,7 +4108,9 @@ stylesheet rules) this rule came from. */
       [@key "frameId"]
       frameId: Page.FrameId.t, /* Owner frame identifier. */
       [@key "sourceURL"]
-      sourceURL: string, /* Stylesheet resource URL. */
+      sourceURL: string, /* Stylesheet resource URL. Empty if this is a constructed stylesheet created using
+new CSSStyleSheet() (but non-empty if this is a constructed sylesheet imported
+as a CSS module script). */
       [@yojson.option] [@key "sourceMapURL"]
       sourceMapURL: option(string), /* URL of source map associated with the stylesheet (if any). */
       [@key "origin"]
@@ -3964,7 +4132,8 @@ after they have been modified via CSSOM API.
 <link> element's stylesheets become mutable only if DevTools modifies them.
 Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after creation. */
       [@key "isConstructed"]
-      isConstructed: bool, /* Whether this stylesheet is a constructed stylesheet (created using new CSSStyleSheet()). */
+      isConstructed: bool, /* True if this stylesheet is created through new CSSStyleSheet() or imported as a
+CSS module script. */
       [@key "startLine"]
       startLine: float, /* Line offset of the stylesheet within the resource (zero based). */
       [@key "startColumn"]
@@ -3985,7 +4154,9 @@ Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after crea
       [@key "frameId"]
       frameId: Page.FrameId.t, /* Owner frame identifier. */
       [@key "sourceURL"]
-      sourceURL: string, /* Stylesheet resource URL. */
+      sourceURL: string, /* Stylesheet resource URL. Empty if this is a constructed stylesheet created using
+new CSSStyleSheet() (but non-empty if this is a constructed sylesheet imported
+as a CSS module script). */
       [@yojson.option] [@key "sourceMapURL"]
       sourceMapURL: option(string), /* URL of source map associated with the stylesheet (if any). */
       [@key "origin"]
@@ -4007,7 +4178,8 @@ after they have been modified via CSSOM API.
 <link> element's stylesheets become mutable only if DevTools modifies them.
 Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after creation. */
       [@key "isConstructed"]
-      isConstructed: bool, /* Whether this stylesheet is a constructed stylesheet (created using new CSSStyleSheet()). */
+      isConstructed: bool, /* True if this stylesheet is created through new CSSStyleSheet() or imported as a
+CSS module script. */
       [@key "startLine"]
       startLine: float, /* Line offset of the stylesheet within the resource (zero based). */
       [@key "startColumn"]
@@ -4034,8 +4206,11 @@ stylesheet rules) this rule came from. */
       [@key "style"]
       style: CSSStyle.t, /* Associated style declaration. */
       [@yojson.option] [@key "media"]
-      media: option(list(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
-starting with the innermost one, going outwards. */,
+      media: option(list(CSSMedia.t)), /* Media list array (for rules involving media queries). The array enumerates media queries
+starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "containerQueries"]
+      containerQueries: option(list(CSSContainerQuery.t)) /* Container query list array (for rules involving container queries).
+The array enumerates container queries starting with the innermost one, going outwards. */,
     };
   } = {
     /* CSS rule representation. */
@@ -4051,8 +4226,11 @@ stylesheet rules) this rule came from. */
       [@key "style"]
       style: CSSStyle.t, /* Associated style declaration. */
       [@yojson.option] [@key "media"]
-      media: option(list(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
-starting with the innermost one, going outwards. */,
+      media: option(list(CSSMedia.t)), /* Media list array (for rules involving media queries). The array enumerates media queries
+starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "containerQueries"]
+      containerQueries: option(list(CSSContainerQuery.t)) /* Container query list array (for rules involving container queries).
+The array enumerates container queries starting with the innermost one, going outwards. */,
     };
   }
   and RuleUsage: {
@@ -4348,6 +4526,35 @@ available). */
       valueRange: option(SourceRange.t), /* The associated range of the value text in the enclosing stylesheet (if available). */
       [@yojson.option] [@key "computedLength"]
       computedLength: option(float) /* Computed length of media query expression (if applicable). */,
+    };
+  }
+  and CSSContainerQuery: {
+    /* CSS container query rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Container query text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
+      [@yojson.option] [@key "name"]
+      name: option(string) /* Optional name for the container. */,
+    };
+  } = {
+    /* CSS container query rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Container query text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
+      [@yojson.option] [@key "name"]
+      name: option(string) /* Optional name for the container. */,
     };
   }
   and PlatformFontUsage: {
@@ -4831,6 +5038,7 @@ and DOM: {
       | `target_text
       | `spelling_error
       | `grammar_error
+      | `highlight
       | `first_line_inherited
       | `scrollbar
       | `scrollbar_thumb
@@ -5067,6 +5275,7 @@ The property is always undefined now. */
       | `target_text
       | `spelling_error
       | `grammar_error
+      | `highlight
       | `first_line_inherited
       | `scrollbar
       | `scrollbar_thumb
@@ -5094,6 +5303,7 @@ The property is always undefined now. */
       | `target_text
       | `spelling_error
       | `grammar_error
+      | `highlight
       | `first_line_inherited
       | `scrollbar
       | `scrollbar_thumb
@@ -5116,6 +5326,7 @@ The property is always undefined now. */
       | `String("target-text") => `target_text
       | `String("spelling-error") => `spelling_error
       | `String("grammar-error") => `grammar_error
+      | `String("highlight") => `highlight
       | `String("first-line-inherited") => `first_line_inherited
       | `String("scrollbar") => `scrollbar
       | `String("scrollbar-thumb") => `scrollbar_thumb
@@ -5139,6 +5350,7 @@ The property is always undefined now. */
       | `target_text => `String("target-text")
       | `spelling_error => `String("spelling-error")
       | `grammar_error => `String("grammar-error")
+      | `highlight => `String("highlight")
       | `first_line_inherited => `String("first-line-inherited")
       | `scrollbar => `String("scrollbar")
       | `scrollbar_thumb => `String("scrollbar-thumb")
@@ -5869,6 +6081,8 @@ getSnapshot was true. */
       parentIndex: option(list(float)), /* Parent node index. */
       [@yojson.option] [@key "nodeType"]
       nodeType: option(list(float)), /* `Node`'s nodeType. */
+      [@yojson.option] [@key "shadowRootType"]
+      shadowRootType: option(RareStringData.t), /* Type of the shadow root the `Node` is in. String values are equal to the `ShadowRootType` enum. */
       [@yojson.option] [@key "nodeName"]
       nodeName: option(list(StringIndex.t)), /* `Node`'s nodeName. */
       [@yojson.option] [@key "nodeValue"]
@@ -6347,6 +6561,8 @@ getSnapshot was true. */
       parentIndex: option(list(float)), /* Parent node index. */
       [@yojson.option] [@key "nodeType"]
       nodeType: option(list(float)), /* `Node`'s nodeType. */
+      [@yojson.option] [@key "shadowRootType"]
+      shadowRootType: option(RareStringData.t), /* Type of the shadow root the `Node` is in. String values are equal to the `ShadowRootType` enum. */
       [@yojson.option] [@key "nodeName"]
       nodeName: option(list(StringIndex.t)), /* `Node`'s nodeName. */
       [@yojson.option] [@key "nodeValue"]
@@ -6384,6 +6600,8 @@ clicked. */
       parentIndex: option(list(float)), /* Parent node index. */
       [@yojson.option] [@key "nodeType"]
       nodeType: option(list(float)), /* `Node`'s nodeType. */
+      [@yojson.option] [@key "shadowRootType"]
+      shadowRootType: option(RareStringData.t), /* Type of the shadow root the `Node` is in. String values are equal to the `ShadowRootType` enum. */
       [@yojson.option] [@key "nodeName"]
       nodeName: option(list(StringIndex.t)), /* `Node`'s nodeName. */
       [@yojson.option] [@key "nodeValue"]
@@ -8588,8 +8806,11 @@ milliseconds relatively to this requestTime. */
       [@yojson.option] [@key "isLinkPreload"]
       isLinkPreload: option(bool), /* Whether is loaded via link preload. */
       [@yojson.option] [@key "trustTokenParams"]
-      trustTokenParams: option(TrustTokenParams.t) /* Set for requests when the TrustToken API is used. Contains the parameters
-passed by the developer (e.g. via "fetch") as understood by the backend. */,
+      trustTokenParams: option(TrustTokenParams.t), /* Set for requests when the TrustToken API is used. Contains the parameters
+passed by the developer (e.g. via "fetch") as understood by the backend. */
+      [@yojson.option] [@key "isSameSite"]
+      isSameSite: option(bool) /* True if this resource request is considered to be the 'same site' as the
+request correspondinfg to the main frame. */,
     };
   }
   and SignedCertificateTimestamp: {
@@ -9279,7 +9500,7 @@ backslash. Omitting is equivalent to `"*"`. */
   and CrossOriginEmbedderPolicyValue: {
     type _crossoriginembedderpolicyvalue = [
       | `None
-      | `CorsOrCredentialless
+      | `Credentialless
       | `RequireCorp
     ];
     let _crossoriginembedderpolicyvalue_of_yojson:
@@ -9886,8 +10107,11 @@ milliseconds relatively to this requestTime. */
       [@yojson.option] [@key "isLinkPreload"]
       isLinkPreload: option(bool), /* Whether is loaded via link preload. */
       [@yojson.option] [@key "trustTokenParams"]
-      trustTokenParams: option(TrustTokenParams.t) /* Set for requests when the TrustToken API is used. Contains the parameters
-passed by the developer (e.g. via "fetch") as understood by the backend. */,
+      trustTokenParams: option(TrustTokenParams.t), /* Set for requests when the TrustToken API is used. Contains the parameters
+passed by the developer (e.g. via "fetch") as understood by the backend. */
+      [@yojson.option] [@key "isSameSite"]
+      isSameSite: option(bool) /* True if this resource request is considered to be the 'same site' as the
+request correspondinfg to the main frame. */,
     };
   } = {
     type _request_referrerpolicy = [
@@ -9949,8 +10173,11 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
       [@yojson.option] [@key "isLinkPreload"]
       isLinkPreload: option(bool), /* Whether is loaded via link preload. */
       [@yojson.option] [@key "trustTokenParams"]
-      trustTokenParams: option(TrustTokenParams.t) /* Set for requests when the TrustToken API is used. Contains the parameters
-passed by the developer (e.g. via "fetch") as understood by the backend. */,
+      trustTokenParams: option(TrustTokenParams.t), /* Set for requests when the TrustToken API is used. Contains the parameters
+passed by the developer (e.g. via "fetch") as understood by the backend. */
+      [@yojson.option] [@key "isSameSite"]
+      isSameSite: option(bool) /* True if this resource request is considered to be the 'same site' as the
+request correspondinfg to the main frame. */,
     };
   }
   and SignedCertificateTimestamp: {
@@ -11587,7 +11814,7 @@ backslash. Omitting is equivalent to `"*"`. */
   and CrossOriginEmbedderPolicyValue: {
     type _crossoriginembedderpolicyvalue = [
       | `None
-      | `CorsOrCredentialless
+      | `Credentialless
       | `RequireCorp
     ];
     let _crossoriginembedderpolicyvalue_of_yojson:
@@ -11600,20 +11827,20 @@ backslash. Omitting is equivalent to `"*"`. */
   } = {
     type _crossoriginembedderpolicyvalue = [
       | `None
-      | `CorsOrCredentialless
+      | `Credentialless
       | `RequireCorp
     ];
     let _crossoriginembedderpolicyvalue_of_yojson =
       fun
       | `String("None") => `None
-      | `String("CorsOrCredentialless") => `CorsOrCredentialless
+      | `String("Credentialless") => `Credentialless
       | `String("RequireCorp") => `RequireCorp
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__crossoriginembedderpolicyvalue =
       fun
       | `None => `String("None")
-      | `CorsOrCredentialless => `String("CorsOrCredentialless")
+      | `Credentialless => `String("Credentialless")
       | `RequireCorp => `String("RequireCorp");
     /* No description provided */
     [@deriving yojson]
@@ -11883,7 +12110,10 @@ and Overlay: {
       [@yojson.option] [@key "flexItemHighlightConfig"]
       flexItemHighlightConfig: option(FlexItemHighlightConfig.t), /* The flex item highlight configuration (default: all transparent). */
       [@yojson.option] [@key "contrastAlgorithm"]
-      contrastAlgorithm: option(ContrastAlgorithm.t) /* The contrast algorithm to use for the contrast ratio (default: aa). */,
+      contrastAlgorithm: option(ContrastAlgorithm.t), /* The contrast algorithm to use for the contrast ratio (default: aa). */
+      [@yojson.option] [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig:
+        option(ContainerQueryContainerHighlightConfig.t) /* The container query container highlight configuration (default: all transparent). */,
     };
   }
   and ColorFormat: {
@@ -11948,6 +12178,24 @@ and Overlay: {
       contentColor: option(DOM.RGBA.t), /* The content box highlight fill color (default: a dark color). */
       [@yojson.option] [@key "outlineColor"]
       outlineColor: option(DOM.RGBA.t) /* The content box highlight outline color (default: transparent). */,
+    };
+  }
+  and ContainerQueryHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig: ContainerQueryContainerHighlightConfig.t, /* A descriptor for the highlight appearance of container query containers. */
+      [@key "nodeId"]
+      nodeId: DOM.NodeId.t /* Identifier of the container node to highlight. */,
+    };
+  }
+  and ContainerQueryContainerHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "containerBorder"]
+      containerBorder: option(LineStyle.t) /* The style of the container border */,
     };
   }
   and InspectMode: {
@@ -12257,7 +12505,10 @@ and Overlay: {
       [@yojson.option] [@key "flexItemHighlightConfig"]
       flexItemHighlightConfig: option(FlexItemHighlightConfig.t), /* The flex item highlight configuration (default: all transparent). */
       [@yojson.option] [@key "contrastAlgorithm"]
-      contrastAlgorithm: option(ContrastAlgorithm.t) /* The contrast algorithm to use for the contrast ratio (default: aa). */,
+      contrastAlgorithm: option(ContrastAlgorithm.t), /* The contrast algorithm to use for the contrast ratio (default: aa). */
+      [@yojson.option] [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig:
+        option(ContainerQueryContainerHighlightConfig.t) /* The container query container highlight configuration (default: all transparent). */,
     };
   } = {
     /* Configuration data for the highlighting of page elements. */
@@ -12298,7 +12549,10 @@ and Overlay: {
       [@yojson.option] [@key "flexItemHighlightConfig"]
       flexItemHighlightConfig: option(FlexItemHighlightConfig.t), /* The flex item highlight configuration (default: all transparent). */
       [@yojson.option] [@key "contrastAlgorithm"]
-      contrastAlgorithm: option(ContrastAlgorithm.t) /* The contrast algorithm to use for the contrast ratio (default: aa). */,
+      contrastAlgorithm: option(ContrastAlgorithm.t), /* The contrast algorithm to use for the contrast ratio (default: aa). */
+      [@yojson.option] [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig:
+        option(ContainerQueryContainerHighlightConfig.t) /* The container query container highlight configuration (default: all transparent). */,
     };
   }
   and ColorFormat: {
@@ -12433,6 +12687,40 @@ and Overlay: {
       outlineColor: option(DOM.RGBA.t) /* The content box highlight outline color (default: transparent). */,
     };
   }
+  and ContainerQueryHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig: ContainerQueryContainerHighlightConfig.t, /* A descriptor for the highlight appearance of container query containers. */
+      [@key "nodeId"]
+      nodeId: DOM.NodeId.t /* Identifier of the container node to highlight. */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "containerQueryContainerHighlightConfig"]
+      containerQueryContainerHighlightConfig: ContainerQueryContainerHighlightConfig.t, /* A descriptor for the highlight appearance of container query containers. */
+      [@key "nodeId"]
+      nodeId: DOM.NodeId.t /* Identifier of the container node to highlight. */,
+    };
+  }
+  and ContainerQueryContainerHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "containerBorder"]
+      containerBorder: option(LineStyle.t) /* The style of the container border */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "containerBorder"]
+      containerBorder: option(LineStyle.t) /* The style of the container border */,
+    };
+  }
   and InspectMode: {
     type _inspectmode = [
       | `searchForNode
@@ -12488,6 +12776,28 @@ and Page: {
     /* Indicates whether a frame has been identified as an ad. */
     [@deriving yojson]
     type t = _adframetype;
+  }
+  and AdFrameExplanation: {
+    type _adframeexplanation = [
+      | `ParentIsAd
+      | `CreatedByAdScript
+      | `MatchedBlockingRule
+    ];
+    let _adframeexplanation_of_yojson: Yojson.Basic.t => _adframeexplanation;
+    let yojson_of__adframeexplanation: _adframeexplanation => Yojson.Basic.t;
+    /* No description provided */
+    [@deriving yojson]
+    type t = _adframeexplanation;
+  }
+  and AdFrameStatus: {
+    /* Indicates whether a frame has been identified as an ad and why. */
+    [@deriving yojson]
+    type t = {
+      [@key "adFrameType"]
+      adFrameType: AdFrameType.t, /* No description provided */
+      [@yojson.option] [@key "explanations"]
+      explanations: option(list(AdFrameExplanation.t)) /* No description provided */,
+    };
   }
   and SecureContextType: {
     type _securecontexttype = [
@@ -12545,6 +12855,7 @@ and Page: {
       | `ch_rtt
       | `ch_ua
       | `ch_ua_arch
+      | `ch_ua_bitness
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
@@ -12586,6 +12897,7 @@ and Page: {
       | `usb
       | `vertical_scroll
       | `web_share
+      | `window_placement
       | `xr_spatial_tracking
     ];
     let _permissionspolicyfeature_of_yojson:
@@ -12745,8 +13057,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       mimeType: string, /* Frame document's mimeType as determined by the browser. */
       [@yojson.option] [@key "unreachableUrl"]
       unreachableUrl: option(string), /* If the frame failed to load, this contains the URL that could not be loaded. Note that unlike url above, this URL may contain a fragment. */
-      [@yojson.option] [@key "adFrameType"]
-      adFrameType: option(AdFrameType.t), /* Indicates whether this frame was tagged as an ad. */
+      [@yojson.option] [@key "adFrameStatus"]
+      adFrameStatus: option(AdFrameStatus.t), /* Indicates whether this frame was tagged as an ad and why. */
       [@key "secureContextType"]
       secureContextType: SecureContextType.t, /* Indicates whether the main document is a secure context and explains why that is the case. */
       [@key "crossOriginIsolatedContextType"]
@@ -13063,6 +13375,135 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     /* The type of a frameNavigated event. */
     [@deriving yojson]
     type t = _navigationtype;
+  }
+  and BackForwardCacheNotRestoredReason: {
+    type _backforwardcachenotrestoredreason = [
+      | `NotMainFrame
+      | `BackForwardCacheDisabled
+      | `RelatedActiveContentsExist
+      | `HTTPStatusNotOK
+      | `SchemeNotHTTPOrHTTPS
+      | `Loading
+      | `WasGrantedMediaAccess
+      | `DisableForRenderFrameHostCalled
+      | `DomainNotAllowed
+      | `HTTPMethodNotGET
+      | `SubframeIsNavigating
+      | `Timeout
+      | `CacheLimit
+      | `JavaScriptExecution
+      | `RendererProcessKilled
+      | `RendererProcessCrashed
+      | `GrantedMediaStreamAccess
+      | `SchedulerTrackedFeatureUsed
+      | `ConflictingBrowsingInstance
+      | `CacheFlushed
+      | `ServiceWorkerVersionActivation
+      | `SessionRestored
+      | `ServiceWorkerPostMessage
+      | `EnteredBackForwardCacheBeforeServiceWorkerHostAdded
+      | `RenderFrameHostReused_SameSite
+      | `RenderFrameHostReused_CrossSite
+      | `ServiceWorkerClaim
+      | `IgnoreEventAndEvict
+      | `HaveInnerContents
+      | `TimeoutPuttingInCache
+      | `BackForwardCacheDisabledByLowMemory
+      | `BackForwardCacheDisabledByCommandLine
+      | `NetworkRequestDatapipeDrainedAsBytesConsumer
+      | `NetworkRequestRedirected
+      | `NetworkRequestTimeout
+      | `NetworkExceedsBufferLimit
+      | `NavigationCancelledWhileRestoring
+      | `NotMostRecentNavigationEntry
+      | `BackForwardCacheDisabledForPrerender
+      | `UserAgentOverrideDiffers
+      | `ForegroundCacheLimit
+      | `BrowsingInstanceNotSwapped
+      | `BackForwardCacheDisabledForDelegate
+      | `OptInUnloadHeaderNotPresent
+      | `UnloadHandlerExistsInSubFrame
+      | `ServiceWorkerUnregistration
+      | `CacheControlNoStore
+      | `CacheControlNoStoreCookieModified
+      | `CacheControlNoStoreHTTPOnlyCookieModified
+      | `WebSocket
+      | `WebRTC
+      | `MainResourceHasCacheControlNoStore
+      | `MainResourceHasCacheControlNoCache
+      | `SubresourceHasCacheControlNoStore
+      | `SubresourceHasCacheControlNoCache
+      | `ContainsPlugins
+      | `DocumentLoaded
+      | `DedicatedWorkerOrWorklet
+      | `OutstandingNetworkRequestOthers
+      | `OutstandingIndexedDBTransaction
+      | `RequestedNotificationsPermission
+      | `RequestedMIDIPermission
+      | `RequestedAudioCapturePermission
+      | `RequestedVideoCapturePermission
+      | `RequestedBackForwardCacheBlockedSensors
+      | `RequestedBackgroundWorkPermission
+      | `BroadcastChannel
+      | `IndexedDBConnection
+      | `WebXR
+      | `SharedWorker
+      | `WebLocks
+      | `WebHID
+      | `WebShare
+      | `RequestedStorageAccessGrant
+      | `WebNfc
+      | `WebFileSystem
+      | `OutstandingNetworkRequestFetch
+      | `OutstandingNetworkRequestXHR
+      | `AppBanner
+      | `Printing
+      | `WebDatabase
+      | `PictureInPicture
+      | `Portal
+      | `SpeechRecognizer
+      | `IdleManager
+      | `PaymentManager
+      | `SpeechSynthesis
+      | `KeyboardLock
+      | `WebOTPService
+      | `OutstandingNetworkRequestDirectSocket
+      | `IsolatedWorldScript
+      | `InjectedStyleSheet
+      | `MediaSessionImplOnServiceCreated
+      | `Unknown
+    ];
+    let _backforwardcachenotrestoredreason_of_yojson:
+      Yojson.Basic.t => _backforwardcachenotrestoredreason;
+    let yojson_of__backforwardcachenotrestoredreason:
+      _backforwardcachenotrestoredreason => Yojson.Basic.t;
+    /* List of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreason;
+  }
+  and BackForwardCacheNotRestoredReasonType: {
+    type _backforwardcachenotrestoredreasontype = [
+      | `SupportPending
+      | `PageSupportNeeded
+      | `Circumstantial
+    ];
+    let _backforwardcachenotrestoredreasontype_of_yojson:
+      Yojson.Basic.t => _backforwardcachenotrestoredreasontype;
+    let yojson_of__backforwardcachenotrestoredreasontype:
+      _backforwardcachenotrestoredreasontype => Yojson.Basic.t;
+    /* Types of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreasontype;
+  }
+  and BackForwardCacheNotRestoredExplanation: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: BackForwardCacheNotRestoredReasonType.t, /* Type of the reason */
+      [@key "reason"]
+      reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
+    };
   };
 } = {
   module rec FrameId: {
@@ -13098,6 +13539,58 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     /* Indicates whether a frame has been identified as an ad. */
     [@deriving yojson]
     type t = _adframetype;
+  }
+  and AdFrameExplanation: {
+    type _adframeexplanation = [
+      | `ParentIsAd
+      | `CreatedByAdScript
+      | `MatchedBlockingRule
+    ];
+    let _adframeexplanation_of_yojson: Yojson.Basic.t => _adframeexplanation;
+    let yojson_of__adframeexplanation: _adframeexplanation => Yojson.Basic.t;
+    /* No description provided */
+    [@deriving yojson]
+    type t = _adframeexplanation;
+  } = {
+    type _adframeexplanation = [
+      | `ParentIsAd
+      | `CreatedByAdScript
+      | `MatchedBlockingRule
+    ];
+    let _adframeexplanation_of_yojson =
+      fun
+      | `String("ParentIsAd") => `ParentIsAd
+      | `String("CreatedByAdScript") => `CreatedByAdScript
+      | `String("MatchedBlockingRule") => `MatchedBlockingRule
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__adframeexplanation =
+      fun
+      | `ParentIsAd => `String("ParentIsAd")
+      | `CreatedByAdScript => `String("CreatedByAdScript")
+      | `MatchedBlockingRule => `String("MatchedBlockingRule");
+    /* No description provided */
+    [@deriving yojson]
+    type t = _adframeexplanation;
+  }
+  and AdFrameStatus: {
+    /* Indicates whether a frame has been identified as an ad and why. */
+    [@deriving yojson]
+    type t = {
+      [@key "adFrameType"]
+      adFrameType: AdFrameType.t, /* No description provided */
+      [@yojson.option] [@key "explanations"]
+      explanations: option(list(AdFrameExplanation.t)) /* No description provided */,
+    };
+  } = {
+    /* Indicates whether a frame has been identified as an ad and why. */
+    [@deriving yojson]
+    type t = {
+      [@key "adFrameType"]
+      adFrameType: AdFrameType.t, /* No description provided */
+      [@yojson.option] [@key "explanations"]
+      explanations: option(list(AdFrameExplanation.t)) /* No description provided */,
+    };
   }
   and SecureContextType: {
     type _securecontexttype = [
@@ -13225,6 +13718,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_rtt
       | `ch_ua
       | `ch_ua_arch
+      | `ch_ua_bitness
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
@@ -13266,6 +13760,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `usb
       | `vertical_scroll
       | `web_share
+      | `window_placement
       | `xr_spatial_tracking
     ];
     let _permissionspolicyfeature_of_yojson:
@@ -13292,6 +13787,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_rtt
       | `ch_ua
       | `ch_ua_arch
+      | `ch_ua_bitness
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
@@ -13333,6 +13829,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `usb
       | `vertical_scroll
       | `web_share
+      | `window_placement
       | `xr_spatial_tracking
     ];
     let _permissionspolicyfeature_of_yojson =
@@ -13351,6 +13848,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("ch-rtt") => `ch_rtt
       | `String("ch-ua") => `ch_ua
       | `String("ch-ua-arch") => `ch_ua_arch
+      | `String("ch-ua-bitness") => `ch_ua_bitness
       | `String("ch-ua-platform") => `ch_ua_platform
       | `String("ch-ua-model") => `ch_ua_model
       | `String("ch-ua-mobile") => `ch_ua_mobile
@@ -13392,6 +13890,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("usb") => `usb
       | `String("vertical-scroll") => `vertical_scroll
       | `String("web-share") => `web_share
+      | `String("window-placement") => `window_placement
       | `String("xr-spatial-tracking") => `xr_spatial_tracking
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
@@ -13411,6 +13910,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_rtt => `String("ch-rtt")
       | `ch_ua => `String("ch-ua")
       | `ch_ua_arch => `String("ch-ua-arch")
+      | `ch_ua_bitness => `String("ch-ua-bitness")
       | `ch_ua_platform => `String("ch-ua-platform")
       | `ch_ua_model => `String("ch-ua-model")
       | `ch_ua_mobile => `String("ch-ua-mobile")
@@ -13455,6 +13955,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `usb => `String("usb")
       | `vertical_scroll => `String("vertical-scroll")
       | `web_share => `String("web-share")
+      | `window_placement => `String("window-placement")
       | `xr_spatial_tracking => `String("xr-spatial-tracking");
     /* All Permissions Policy features. This enum should match the one defined
        in third_party/blink/renderer/core/permissions_policy/permissions_policy_features.json5. */
@@ -13769,8 +14270,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       mimeType: string, /* Frame document's mimeType as determined by the browser. */
       [@yojson.option] [@key "unreachableUrl"]
       unreachableUrl: option(string), /* If the frame failed to load, this contains the URL that could not be loaded. Note that unlike url above, this URL may contain a fragment. */
-      [@yojson.option] [@key "adFrameType"]
-      adFrameType: option(AdFrameType.t), /* Indicates whether this frame was tagged as an ad. */
+      [@yojson.option] [@key "adFrameStatus"]
+      adFrameStatus: option(AdFrameStatus.t), /* Indicates whether this frame was tagged as an ad and why. */
       [@key "secureContextType"]
       secureContextType: SecureContextType.t, /* Indicates whether the main document is a secure context and explains why that is the case. */
       [@key "crossOriginIsolatedContextType"]
@@ -13807,8 +14308,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       mimeType: string, /* Frame document's mimeType as determined by the browser. */
       [@yojson.option] [@key "unreachableUrl"]
       unreachableUrl: option(string), /* If the frame failed to load, this contains the URL that could not be loaded. Note that unlike url above, this URL may contain a fragment. */
-      [@yojson.option] [@key "adFrameType"]
-      adFrameType: option(AdFrameType.t), /* Indicates whether this frame was tagged as an ad. */
+      [@yojson.option] [@key "adFrameStatus"]
+      adFrameStatus: option(AdFrameStatus.t), /* Indicates whether this frame was tagged as an ad and why. */
       [@key "secureContextType"]
       secureContextType: SecureContextType.t, /* Indicates whether the main document is a secure context and explains why that is the case. */
       [@key "crossOriginIsolatedContextType"]
@@ -14508,6 +15009,489 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     /* The type of a frameNavigated event. */
     [@deriving yojson]
     type t = _navigationtype;
+  }
+  and BackForwardCacheNotRestoredReason: {
+    type _backforwardcachenotrestoredreason = [
+      | `NotMainFrame
+      | `BackForwardCacheDisabled
+      | `RelatedActiveContentsExist
+      | `HTTPStatusNotOK
+      | `SchemeNotHTTPOrHTTPS
+      | `Loading
+      | `WasGrantedMediaAccess
+      | `DisableForRenderFrameHostCalled
+      | `DomainNotAllowed
+      | `HTTPMethodNotGET
+      | `SubframeIsNavigating
+      | `Timeout
+      | `CacheLimit
+      | `JavaScriptExecution
+      | `RendererProcessKilled
+      | `RendererProcessCrashed
+      | `GrantedMediaStreamAccess
+      | `SchedulerTrackedFeatureUsed
+      | `ConflictingBrowsingInstance
+      | `CacheFlushed
+      | `ServiceWorkerVersionActivation
+      | `SessionRestored
+      | `ServiceWorkerPostMessage
+      | `EnteredBackForwardCacheBeforeServiceWorkerHostAdded
+      | `RenderFrameHostReused_SameSite
+      | `RenderFrameHostReused_CrossSite
+      | `ServiceWorkerClaim
+      | `IgnoreEventAndEvict
+      | `HaveInnerContents
+      | `TimeoutPuttingInCache
+      | `BackForwardCacheDisabledByLowMemory
+      | `BackForwardCacheDisabledByCommandLine
+      | `NetworkRequestDatapipeDrainedAsBytesConsumer
+      | `NetworkRequestRedirected
+      | `NetworkRequestTimeout
+      | `NetworkExceedsBufferLimit
+      | `NavigationCancelledWhileRestoring
+      | `NotMostRecentNavigationEntry
+      | `BackForwardCacheDisabledForPrerender
+      | `UserAgentOverrideDiffers
+      | `ForegroundCacheLimit
+      | `BrowsingInstanceNotSwapped
+      | `BackForwardCacheDisabledForDelegate
+      | `OptInUnloadHeaderNotPresent
+      | `UnloadHandlerExistsInSubFrame
+      | `ServiceWorkerUnregistration
+      | `CacheControlNoStore
+      | `CacheControlNoStoreCookieModified
+      | `CacheControlNoStoreHTTPOnlyCookieModified
+      | `WebSocket
+      | `WebRTC
+      | `MainResourceHasCacheControlNoStore
+      | `MainResourceHasCacheControlNoCache
+      | `SubresourceHasCacheControlNoStore
+      | `SubresourceHasCacheControlNoCache
+      | `ContainsPlugins
+      | `DocumentLoaded
+      | `DedicatedWorkerOrWorklet
+      | `OutstandingNetworkRequestOthers
+      | `OutstandingIndexedDBTransaction
+      | `RequestedNotificationsPermission
+      | `RequestedMIDIPermission
+      | `RequestedAudioCapturePermission
+      | `RequestedVideoCapturePermission
+      | `RequestedBackForwardCacheBlockedSensors
+      | `RequestedBackgroundWorkPermission
+      | `BroadcastChannel
+      | `IndexedDBConnection
+      | `WebXR
+      | `SharedWorker
+      | `WebLocks
+      | `WebHID
+      | `WebShare
+      | `RequestedStorageAccessGrant
+      | `WebNfc
+      | `WebFileSystem
+      | `OutstandingNetworkRequestFetch
+      | `OutstandingNetworkRequestXHR
+      | `AppBanner
+      | `Printing
+      | `WebDatabase
+      | `PictureInPicture
+      | `Portal
+      | `SpeechRecognizer
+      | `IdleManager
+      | `PaymentManager
+      | `SpeechSynthesis
+      | `KeyboardLock
+      | `WebOTPService
+      | `OutstandingNetworkRequestDirectSocket
+      | `IsolatedWorldScript
+      | `InjectedStyleSheet
+      | `MediaSessionImplOnServiceCreated
+      | `Unknown
+    ];
+    let _backforwardcachenotrestoredreason_of_yojson:
+      Yojson.Basic.t => _backforwardcachenotrestoredreason;
+    let yojson_of__backforwardcachenotrestoredreason:
+      _backforwardcachenotrestoredreason => Yojson.Basic.t;
+    /* List of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreason;
+  } = {
+    type _backforwardcachenotrestoredreason = [
+      | `NotMainFrame
+      | `BackForwardCacheDisabled
+      | `RelatedActiveContentsExist
+      | `HTTPStatusNotOK
+      | `SchemeNotHTTPOrHTTPS
+      | `Loading
+      | `WasGrantedMediaAccess
+      | `DisableForRenderFrameHostCalled
+      | `DomainNotAllowed
+      | `HTTPMethodNotGET
+      | `SubframeIsNavigating
+      | `Timeout
+      | `CacheLimit
+      | `JavaScriptExecution
+      | `RendererProcessKilled
+      | `RendererProcessCrashed
+      | `GrantedMediaStreamAccess
+      | `SchedulerTrackedFeatureUsed
+      | `ConflictingBrowsingInstance
+      | `CacheFlushed
+      | `ServiceWorkerVersionActivation
+      | `SessionRestored
+      | `ServiceWorkerPostMessage
+      | `EnteredBackForwardCacheBeforeServiceWorkerHostAdded
+      | `RenderFrameHostReused_SameSite
+      | `RenderFrameHostReused_CrossSite
+      | `ServiceWorkerClaim
+      | `IgnoreEventAndEvict
+      | `HaveInnerContents
+      | `TimeoutPuttingInCache
+      | `BackForwardCacheDisabledByLowMemory
+      | `BackForwardCacheDisabledByCommandLine
+      | `NetworkRequestDatapipeDrainedAsBytesConsumer
+      | `NetworkRequestRedirected
+      | `NetworkRequestTimeout
+      | `NetworkExceedsBufferLimit
+      | `NavigationCancelledWhileRestoring
+      | `NotMostRecentNavigationEntry
+      | `BackForwardCacheDisabledForPrerender
+      | `UserAgentOverrideDiffers
+      | `ForegroundCacheLimit
+      | `BrowsingInstanceNotSwapped
+      | `BackForwardCacheDisabledForDelegate
+      | `OptInUnloadHeaderNotPresent
+      | `UnloadHandlerExistsInSubFrame
+      | `ServiceWorkerUnregistration
+      | `CacheControlNoStore
+      | `CacheControlNoStoreCookieModified
+      | `CacheControlNoStoreHTTPOnlyCookieModified
+      | `WebSocket
+      | `WebRTC
+      | `MainResourceHasCacheControlNoStore
+      | `MainResourceHasCacheControlNoCache
+      | `SubresourceHasCacheControlNoStore
+      | `SubresourceHasCacheControlNoCache
+      | `ContainsPlugins
+      | `DocumentLoaded
+      | `DedicatedWorkerOrWorklet
+      | `OutstandingNetworkRequestOthers
+      | `OutstandingIndexedDBTransaction
+      | `RequestedNotificationsPermission
+      | `RequestedMIDIPermission
+      | `RequestedAudioCapturePermission
+      | `RequestedVideoCapturePermission
+      | `RequestedBackForwardCacheBlockedSensors
+      | `RequestedBackgroundWorkPermission
+      | `BroadcastChannel
+      | `IndexedDBConnection
+      | `WebXR
+      | `SharedWorker
+      | `WebLocks
+      | `WebHID
+      | `WebShare
+      | `RequestedStorageAccessGrant
+      | `WebNfc
+      | `WebFileSystem
+      | `OutstandingNetworkRequestFetch
+      | `OutstandingNetworkRequestXHR
+      | `AppBanner
+      | `Printing
+      | `WebDatabase
+      | `PictureInPicture
+      | `Portal
+      | `SpeechRecognizer
+      | `IdleManager
+      | `PaymentManager
+      | `SpeechSynthesis
+      | `KeyboardLock
+      | `WebOTPService
+      | `OutstandingNetworkRequestDirectSocket
+      | `IsolatedWorldScript
+      | `InjectedStyleSheet
+      | `MediaSessionImplOnServiceCreated
+      | `Unknown
+    ];
+    let _backforwardcachenotrestoredreason_of_yojson =
+      fun
+      | `String("NotMainFrame") => `NotMainFrame
+      | `String("BackForwardCacheDisabled") => `BackForwardCacheDisabled
+      | `String("RelatedActiveContentsExist") => `RelatedActiveContentsExist
+      | `String("HTTPStatusNotOK") => `HTTPStatusNotOK
+      | `String("SchemeNotHTTPOrHTTPS") => `SchemeNotHTTPOrHTTPS
+      | `String("Loading") => `Loading
+      | `String("WasGrantedMediaAccess") => `WasGrantedMediaAccess
+      | `String("DisableForRenderFrameHostCalled") => `DisableForRenderFrameHostCalled
+      | `String("DomainNotAllowed") => `DomainNotAllowed
+      | `String("HTTPMethodNotGET") => `HTTPMethodNotGET
+      | `String("SubframeIsNavigating") => `SubframeIsNavigating
+      | `String("Timeout") => `Timeout
+      | `String("CacheLimit") => `CacheLimit
+      | `String("JavaScriptExecution") => `JavaScriptExecution
+      | `String("RendererProcessKilled") => `RendererProcessKilled
+      | `String("RendererProcessCrashed") => `RendererProcessCrashed
+      | `String("GrantedMediaStreamAccess") => `GrantedMediaStreamAccess
+      | `String("SchedulerTrackedFeatureUsed") => `SchedulerTrackedFeatureUsed
+      | `String("ConflictingBrowsingInstance") => `ConflictingBrowsingInstance
+      | `String("CacheFlushed") => `CacheFlushed
+      | `String("ServiceWorkerVersionActivation") => `ServiceWorkerVersionActivation
+      | `String("SessionRestored") => `SessionRestored
+      | `String("ServiceWorkerPostMessage") => `ServiceWorkerPostMessage
+      | `String("EnteredBackForwardCacheBeforeServiceWorkerHostAdded") => `EnteredBackForwardCacheBeforeServiceWorkerHostAdded
+      | `String("RenderFrameHostReused_SameSite") => `RenderFrameHostReused_SameSite
+      | `String("RenderFrameHostReused_CrossSite") => `RenderFrameHostReused_CrossSite
+      | `String("ServiceWorkerClaim") => `ServiceWorkerClaim
+      | `String("IgnoreEventAndEvict") => `IgnoreEventAndEvict
+      | `String("HaveInnerContents") => `HaveInnerContents
+      | `String("TimeoutPuttingInCache") => `TimeoutPuttingInCache
+      | `String("BackForwardCacheDisabledByLowMemory") => `BackForwardCacheDisabledByLowMemory
+      | `String("BackForwardCacheDisabledByCommandLine") => `BackForwardCacheDisabledByCommandLine
+      | `String("NetworkRequestDatapipeDrainedAsBytesConsumer") => `NetworkRequestDatapipeDrainedAsBytesConsumer
+      | `String("NetworkRequestRedirected") => `NetworkRequestRedirected
+      | `String("NetworkRequestTimeout") => `NetworkRequestTimeout
+      | `String("NetworkExceedsBufferLimit") => `NetworkExceedsBufferLimit
+      | `String("NavigationCancelledWhileRestoring") => `NavigationCancelledWhileRestoring
+      | `String("NotMostRecentNavigationEntry") => `NotMostRecentNavigationEntry
+      | `String("BackForwardCacheDisabledForPrerender") => `BackForwardCacheDisabledForPrerender
+      | `String("UserAgentOverrideDiffers") => `UserAgentOverrideDiffers
+      | `String("ForegroundCacheLimit") => `ForegroundCacheLimit
+      | `String("BrowsingInstanceNotSwapped") => `BrowsingInstanceNotSwapped
+      | `String("BackForwardCacheDisabledForDelegate") => `BackForwardCacheDisabledForDelegate
+      | `String("OptInUnloadHeaderNotPresent") => `OptInUnloadHeaderNotPresent
+      | `String("UnloadHandlerExistsInSubFrame") => `UnloadHandlerExistsInSubFrame
+      | `String("ServiceWorkerUnregistration") => `ServiceWorkerUnregistration
+      | `String("CacheControlNoStore") => `CacheControlNoStore
+      | `String("CacheControlNoStoreCookieModified") => `CacheControlNoStoreCookieModified
+      | `String("CacheControlNoStoreHTTPOnlyCookieModified") => `CacheControlNoStoreHTTPOnlyCookieModified
+      | `String("WebSocket") => `WebSocket
+      | `String("WebRTC") => `WebRTC
+      | `String("MainResourceHasCacheControlNoStore") => `MainResourceHasCacheControlNoStore
+      | `String("MainResourceHasCacheControlNoCache") => `MainResourceHasCacheControlNoCache
+      | `String("SubresourceHasCacheControlNoStore") => `SubresourceHasCacheControlNoStore
+      | `String("SubresourceHasCacheControlNoCache") => `SubresourceHasCacheControlNoCache
+      | `String("ContainsPlugins") => `ContainsPlugins
+      | `String("DocumentLoaded") => `DocumentLoaded
+      | `String("DedicatedWorkerOrWorklet") => `DedicatedWorkerOrWorklet
+      | `String("OutstandingNetworkRequestOthers") => `OutstandingNetworkRequestOthers
+      | `String("OutstandingIndexedDBTransaction") => `OutstandingIndexedDBTransaction
+      | `String("RequestedNotificationsPermission") => `RequestedNotificationsPermission
+      | `String("RequestedMIDIPermission") => `RequestedMIDIPermission
+      | `String("RequestedAudioCapturePermission") => `RequestedAudioCapturePermission
+      | `String("RequestedVideoCapturePermission") => `RequestedVideoCapturePermission
+      | `String("RequestedBackForwardCacheBlockedSensors") => `RequestedBackForwardCacheBlockedSensors
+      | `String("RequestedBackgroundWorkPermission") => `RequestedBackgroundWorkPermission
+      | `String("BroadcastChannel") => `BroadcastChannel
+      | `String("IndexedDBConnection") => `IndexedDBConnection
+      | `String("WebXR") => `WebXR
+      | `String("SharedWorker") => `SharedWorker
+      | `String("WebLocks") => `WebLocks
+      | `String("WebHID") => `WebHID
+      | `String("WebShare") => `WebShare
+      | `String("RequestedStorageAccessGrant") => `RequestedStorageAccessGrant
+      | `String("WebNfc") => `WebNfc
+      | `String("WebFileSystem") => `WebFileSystem
+      | `String("OutstandingNetworkRequestFetch") => `OutstandingNetworkRequestFetch
+      | `String("OutstandingNetworkRequestXHR") => `OutstandingNetworkRequestXHR
+      | `String("AppBanner") => `AppBanner
+      | `String("Printing") => `Printing
+      | `String("WebDatabase") => `WebDatabase
+      | `String("PictureInPicture") => `PictureInPicture
+      | `String("Portal") => `Portal
+      | `String("SpeechRecognizer") => `SpeechRecognizer
+      | `String("IdleManager") => `IdleManager
+      | `String("PaymentManager") => `PaymentManager
+      | `String("SpeechSynthesis") => `SpeechSynthesis
+      | `String("KeyboardLock") => `KeyboardLock
+      | `String("WebOTPService") => `WebOTPService
+      | `String("OutstandingNetworkRequestDirectSocket") => `OutstandingNetworkRequestDirectSocket
+      | `String("IsolatedWorldScript") => `IsolatedWorldScript
+      | `String("InjectedStyleSheet") => `InjectedStyleSheet
+      | `String("MediaSessionImplOnServiceCreated") => `MediaSessionImplOnServiceCreated
+      | `String("Unknown") => `Unknown
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__backforwardcachenotrestoredreason =
+      fun
+      | `NotMainFrame => `String("NotMainFrame")
+      | `BackForwardCacheDisabled => `String("BackForwardCacheDisabled")
+      | `RelatedActiveContentsExist => `String("RelatedActiveContentsExist")
+      | `HTTPStatusNotOK => `String("HTTPStatusNotOK")
+      | `SchemeNotHTTPOrHTTPS => `String("SchemeNotHTTPOrHTTPS")
+      | `Loading => `String("Loading")
+      | `WasGrantedMediaAccess => `String("WasGrantedMediaAccess")
+      | `DisableForRenderFrameHostCalled =>
+        `String("DisableForRenderFrameHostCalled")
+      | `DomainNotAllowed => `String("DomainNotAllowed")
+      | `HTTPMethodNotGET => `String("HTTPMethodNotGET")
+      | `SubframeIsNavigating => `String("SubframeIsNavigating")
+      | `Timeout => `String("Timeout")
+      | `CacheLimit => `String("CacheLimit")
+      | `JavaScriptExecution => `String("JavaScriptExecution")
+      | `RendererProcessKilled => `String("RendererProcessKilled")
+      | `RendererProcessCrashed => `String("RendererProcessCrashed")
+      | `GrantedMediaStreamAccess => `String("GrantedMediaStreamAccess")
+      | `SchedulerTrackedFeatureUsed => `String("SchedulerTrackedFeatureUsed")
+      | `ConflictingBrowsingInstance => `String("ConflictingBrowsingInstance")
+      | `CacheFlushed => `String("CacheFlushed")
+      | `ServiceWorkerVersionActivation =>
+        `String("ServiceWorkerVersionActivation")
+      | `SessionRestored => `String("SessionRestored")
+      | `ServiceWorkerPostMessage => `String("ServiceWorkerPostMessage")
+      | `EnteredBackForwardCacheBeforeServiceWorkerHostAdded =>
+        `String("EnteredBackForwardCacheBeforeServiceWorkerHostAdded")
+      | `RenderFrameHostReused_SameSite =>
+        `String("RenderFrameHostReused_SameSite")
+      | `RenderFrameHostReused_CrossSite =>
+        `String("RenderFrameHostReused_CrossSite")
+      | `ServiceWorkerClaim => `String("ServiceWorkerClaim")
+      | `IgnoreEventAndEvict => `String("IgnoreEventAndEvict")
+      | `HaveInnerContents => `String("HaveInnerContents")
+      | `TimeoutPuttingInCache => `String("TimeoutPuttingInCache")
+      | `BackForwardCacheDisabledByLowMemory =>
+        `String("BackForwardCacheDisabledByLowMemory")
+      | `BackForwardCacheDisabledByCommandLine =>
+        `String("BackForwardCacheDisabledByCommandLine")
+      | `NetworkRequestDatapipeDrainedAsBytesConsumer =>
+        `String("NetworkRequestDatapipeDrainedAsBytesConsumer")
+      | `NetworkRequestRedirected => `String("NetworkRequestRedirected")
+      | `NetworkRequestTimeout => `String("NetworkRequestTimeout")
+      | `NetworkExceedsBufferLimit => `String("NetworkExceedsBufferLimit")
+      | `NavigationCancelledWhileRestoring =>
+        `String("NavigationCancelledWhileRestoring")
+      | `NotMostRecentNavigationEntry =>
+        `String("NotMostRecentNavigationEntry")
+      | `BackForwardCacheDisabledForPrerender =>
+        `String("BackForwardCacheDisabledForPrerender")
+      | `UserAgentOverrideDiffers => `String("UserAgentOverrideDiffers")
+      | `ForegroundCacheLimit => `String("ForegroundCacheLimit")
+      | `BrowsingInstanceNotSwapped => `String("BrowsingInstanceNotSwapped")
+      | `BackForwardCacheDisabledForDelegate =>
+        `String("BackForwardCacheDisabledForDelegate")
+      | `OptInUnloadHeaderNotPresent => `String("OptInUnloadHeaderNotPresent")
+      | `UnloadHandlerExistsInSubFrame =>
+        `String("UnloadHandlerExistsInSubFrame")
+      | `ServiceWorkerUnregistration => `String("ServiceWorkerUnregistration")
+      | `CacheControlNoStore => `String("CacheControlNoStore")
+      | `CacheControlNoStoreCookieModified =>
+        `String("CacheControlNoStoreCookieModified")
+      | `CacheControlNoStoreHTTPOnlyCookieModified =>
+        `String("CacheControlNoStoreHTTPOnlyCookieModified")
+      | `WebSocket => `String("WebSocket")
+      | `WebRTC => `String("WebRTC")
+      | `MainResourceHasCacheControlNoStore =>
+        `String("MainResourceHasCacheControlNoStore")
+      | `MainResourceHasCacheControlNoCache =>
+        `String("MainResourceHasCacheControlNoCache")
+      | `SubresourceHasCacheControlNoStore =>
+        `String("SubresourceHasCacheControlNoStore")
+      | `SubresourceHasCacheControlNoCache =>
+        `String("SubresourceHasCacheControlNoCache")
+      | `ContainsPlugins => `String("ContainsPlugins")
+      | `DocumentLoaded => `String("DocumentLoaded")
+      | `DedicatedWorkerOrWorklet => `String("DedicatedWorkerOrWorklet")
+      | `OutstandingNetworkRequestOthers =>
+        `String("OutstandingNetworkRequestOthers")
+      | `OutstandingIndexedDBTransaction =>
+        `String("OutstandingIndexedDBTransaction")
+      | `RequestedNotificationsPermission =>
+        `String("RequestedNotificationsPermission")
+      | `RequestedMIDIPermission => `String("RequestedMIDIPermission")
+      | `RequestedAudioCapturePermission =>
+        `String("RequestedAudioCapturePermission")
+      | `RequestedVideoCapturePermission =>
+        `String("RequestedVideoCapturePermission")
+      | `RequestedBackForwardCacheBlockedSensors =>
+        `String("RequestedBackForwardCacheBlockedSensors")
+      | `RequestedBackgroundWorkPermission =>
+        `String("RequestedBackgroundWorkPermission")
+      | `BroadcastChannel => `String("BroadcastChannel")
+      | `IndexedDBConnection => `String("IndexedDBConnection")
+      | `WebXR => `String("WebXR")
+      | `SharedWorker => `String("SharedWorker")
+      | `WebLocks => `String("WebLocks")
+      | `WebHID => `String("WebHID")
+      | `WebShare => `String("WebShare")
+      | `RequestedStorageAccessGrant => `String("RequestedStorageAccessGrant")
+      | `WebNfc => `String("WebNfc")
+      | `WebFileSystem => `String("WebFileSystem")
+      | `OutstandingNetworkRequestFetch =>
+        `String("OutstandingNetworkRequestFetch")
+      | `OutstandingNetworkRequestXHR =>
+        `String("OutstandingNetworkRequestXHR")
+      | `AppBanner => `String("AppBanner")
+      | `Printing => `String("Printing")
+      | `WebDatabase => `String("WebDatabase")
+      | `PictureInPicture => `String("PictureInPicture")
+      | `Portal => `String("Portal")
+      | `SpeechRecognizer => `String("SpeechRecognizer")
+      | `IdleManager => `String("IdleManager")
+      | `PaymentManager => `String("PaymentManager")
+      | `SpeechSynthesis => `String("SpeechSynthesis")
+      | `KeyboardLock => `String("KeyboardLock")
+      | `WebOTPService => `String("WebOTPService")
+      | `OutstandingNetworkRequestDirectSocket =>
+        `String("OutstandingNetworkRequestDirectSocket")
+      | `IsolatedWorldScript => `String("IsolatedWorldScript")
+      | `InjectedStyleSheet => `String("InjectedStyleSheet")
+      | `MediaSessionImplOnServiceCreated =>
+        `String("MediaSessionImplOnServiceCreated")
+      | `Unknown => `String("Unknown");
+    /* List of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreason;
+  }
+  and BackForwardCacheNotRestoredReasonType: {
+    type _backforwardcachenotrestoredreasontype = [
+      | `SupportPending
+      | `PageSupportNeeded
+      | `Circumstantial
+    ];
+    let _backforwardcachenotrestoredreasontype_of_yojson:
+      Yojson.Basic.t => _backforwardcachenotrestoredreasontype;
+    let yojson_of__backforwardcachenotrestoredreasontype:
+      _backforwardcachenotrestoredreasontype => Yojson.Basic.t;
+    /* Types of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreasontype;
+  } = {
+    type _backforwardcachenotrestoredreasontype = [
+      | `SupportPending
+      | `PageSupportNeeded
+      | `Circumstantial
+    ];
+    let _backforwardcachenotrestoredreasontype_of_yojson =
+      fun
+      | `String("SupportPending") => `SupportPending
+      | `String("PageSupportNeeded") => `PageSupportNeeded
+      | `String("Circumstantial") => `Circumstantial
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__backforwardcachenotrestoredreasontype =
+      fun
+      | `SupportPending => `String("SupportPending")
+      | `PageSupportNeeded => `String("PageSupportNeeded")
+      | `Circumstantial => `String("Circumstantial");
+    /* Types of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreasontype;
+  }
+  and BackForwardCacheNotRestoredExplanation: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: BackForwardCacheNotRestoredReasonType.t, /* Type of the reason */
+      [@key "reason"]
+      reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: BackForwardCacheNotRestoredReasonType.t, /* Type of the reason */
+      [@key "reason"]
+      reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
+    };
   };
 }
 and Performance: {
@@ -16487,7 +17471,7 @@ and Fetch: {
     let yojson_of__requeststage: _requeststage => Yojson.Basic.t;
     /* Stages of the request to handle. Request will intercept before the request is
        sent. Response will intercept after the response is received (but before response
-       body is received. */
+       body is received). */
     [@deriving yojson]
     type t = _requeststage;
   }
@@ -16574,7 +17558,7 @@ ProvideCredentials. */,
     let yojson_of__requeststage: _requeststage => Yojson.Basic.t;
     /* Stages of the request to handle. Request will intercept before the request is
        sent. Response will intercept after the response is received (but before response
-       body is received. */
+       body is received). */
     [@deriving yojson]
     type t = _requeststage;
   } = {
@@ -16591,7 +17575,7 @@ ProvideCredentials. */,
       | `Response => `String("Response");
     /* Stages of the request to handle. Request will intercept before the request is
        sent. Response will intercept after the response is received (but before response
-       body is received. */
+       body is received). */
     [@deriving yojson]
     type t = _requeststage;
   }

@@ -1609,6 +1609,102 @@ preemptively (e.g. a cache hit). */
 
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
+  /* Fired once when parsing the .wbn file has succeeded.
+     The event contains the information about the web bundle contents. */
+  module SubresourceWebBundleMetadataReceived = {
+    let name = "Network.subresourceWebBundleMetadataReceived";
+
+    [@deriving yojson]
+    type result = {
+      [@key "requestId"]
+      requestId: Types.Network.RequestId.t, /* Request identifier. Used to match this information to another event. */
+      [@key "urls"]
+      urls: list(string) /* A list of URLs of resources in the subresource Web Bundle. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Fired once when parsing the .wbn file has failed. */
+  module SubresourceWebBundleMetadataError = {
+    let name = "Network.subresourceWebBundleMetadataError";
+
+    [@deriving yojson]
+    type result = {
+      [@key "requestId"]
+      requestId: Types.Network.RequestId.t, /* Request identifier. Used to match this information to another event. */
+      [@key "errorMessage"]
+      errorMessage: string /* Error message */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Fired when handling requests for resources within a .wbn file.
+     Note: this will only be fired for resources that are requested by the webpage. */
+  module SubresourceWebBundleInnerResponseParsed = {
+    let name = "Network.subresourceWebBundleInnerResponseParsed";
+
+    [@deriving yojson]
+    type result = {
+      [@key "innerRequestId"]
+      innerRequestId: Types.Network.RequestId.t, /* Request identifier of the subresource request */
+      [@key "innerRequestURL"]
+      innerRequestURL: string, /* URL of the subresource resource. */
+      [@yojson.option] [@key "bundleRequestId"]
+      bundleRequestId: option(Types.Network.RequestId.t) /* Bundle request identifier. Used to match this information to another event.
+This made be absent in case when the instrumentation was enabled only
+after webbundle was parsed. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Fired when request for resources within a .wbn file failed. */
+  module SubresourceWebBundleInnerResponseError = {
+    let name = "Network.subresourceWebBundleInnerResponseError";
+
+    [@deriving yojson]
+    type result = {
+      [@key "innerRequestId"]
+      innerRequestId: Types.Network.RequestId.t, /* Request identifier of the subresource request */
+      [@key "innerRequestURL"]
+      innerRequestURL: string, /* URL of the subresource resource. */
+      [@key "errorMessage"]
+      errorMessage: string, /* Error message */
+      [@yojson.option] [@key "bundleRequestId"]
+      bundleRequestId: option(Types.Network.RequestId.t) /* Bundle request identifier. Used to match this information to another event.
+This made be absent in case when the instrumentation was enabled only
+after webbundle was parsed. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
 };
 module Overlay = {
   /* Fired when the node should be inspected. This happens after call to `setInspectMode` or when
@@ -2149,7 +2245,10 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
       [@key "loaderId"]
       loaderId: Types.Network.LoaderId.t, /* The loader id for the associated navgation. */
       [@key "frameId"]
-      frameId: Types.Page.FrameId.t /* The frame id of the associated frame. */,
+      frameId: Types.Page.FrameId.t, /* The frame id of the associated frame. */
+      [@key "notRestoredExplanations"]
+      notRestoredExplanations:
+        list(Types.Page.BackForwardCacheNotRestoredExplanation.t) /* Array of reasons why the page could not be cached. This must not be empty. */,
     };
 
     [@deriving yojson]
