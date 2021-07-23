@@ -25,10 +25,13 @@ jobs:
       - name: Check for modified version in devtools-protocol
         id: git-check
         run: |
-          modified=$(npm version --no-git-tag-version "0.0.$(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+")" &> /dev/null && echo true || echo false);
-          branch_exists=$(git rev-parse --verify $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+") &> /dev/null && echo true || echo false);
+          cdp_version=$(cd $GITHUB_WORKSPACE/devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+");
+          modified=$(npm version --no-git-tag-version "0.0.$cdp_version" &> /dev/null && echo true || echo false);
+          branch_exists=$(git rev-parse --verify $cdp_version &> /dev/null && echo true || echo false);
+          echo $cdp_version;
           echo Modified $modified;
           echo Branch exists $branch_exists;
+          echo "::set-output name=cdp_version::$cdp_version";
           echo "::set-output name=modified::$modified";
           echo "::set-output name=branch_exists::$branch_exists";
 
@@ -62,6 +65,6 @@ jobs:
           commit-message: $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "Roll protocol to r.*")
           committer: GitHub Action <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          branch: $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+")
-          delete-branch: true
-          title: $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "Roll protocol to r.*")
+          branch: ${{ steps.git-check.outputs.cdp_version }}
+          delete-branch: false
+          title: Roll protocol to r${{ steps.git-check.outputs.cdp_version }}
