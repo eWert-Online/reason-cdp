@@ -28,7 +28,7 @@ jobs:
           cd devtools-protocol
           last_commit=$(git log -1 --pretty="%B" | cat);
           echo "$last_commit";
-          cdp_version=$(echo "$last_commit" | grep -Eo "\d+");
+          cdp_version=$(echo "$last_commit" | grep -o "[0-9]\+");
           echo "$cdp_version";
           cd ..
           modified=$(npm version --no-git-tag-version "0.0.$cdp_version" &> /dev/null && echo true || echo false);
