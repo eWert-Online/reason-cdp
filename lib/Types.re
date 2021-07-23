@@ -8730,8 +8730,11 @@ milliseconds relatively to this requestTime. */
       [@yojson.option] [@key "isLinkPreload"]
       isLinkPreload: option(bool), /* Whether is loaded via link preload. */
       [@yojson.option] [@key "trustTokenParams"]
-      trustTokenParams: option(TrustTokenParams.t) /* Set for requests when the TrustToken API is used. Contains the parameters
-passed by the developer (e.g. via "fetch") as understood by the backend. */,
+      trustTokenParams: option(TrustTokenParams.t), /* Set for requests when the TrustToken API is used. Contains the parameters
+passed by the developer (e.g. via "fetch") as understood by the backend. */
+      [@yojson.option] [@key "isSameSite"]
+      isSameSite: option(bool) /* True if this resource request is considered to be the 'same site' as the
+request correspondinfg to the main frame. */,
     };
   }
   and SignedCertificateTimestamp: {
@@ -10028,8 +10031,11 @@ milliseconds relatively to this requestTime. */
       [@yojson.option] [@key "isLinkPreload"]
       isLinkPreload: option(bool), /* Whether is loaded via link preload. */
       [@yojson.option] [@key "trustTokenParams"]
-      trustTokenParams: option(TrustTokenParams.t) /* Set for requests when the TrustToken API is used. Contains the parameters
-passed by the developer (e.g. via "fetch") as understood by the backend. */,
+      trustTokenParams: option(TrustTokenParams.t), /* Set for requests when the TrustToken API is used. Contains the parameters
+passed by the developer (e.g. via "fetch") as understood by the backend. */
+      [@yojson.option] [@key "isSameSite"]
+      isSameSite: option(bool) /* True if this resource request is considered to be the 'same site' as the
+request correspondinfg to the main frame. */,
     };
   } = {
     type _request_referrerpolicy = [
@@ -10091,8 +10097,11 @@ passed by the developer (e.g. via "fetch") as understood by the backend. */,
       [@yojson.option] [@key "isLinkPreload"]
       isLinkPreload: option(bool), /* Whether is loaded via link preload. */
       [@yojson.option] [@key "trustTokenParams"]
-      trustTokenParams: option(TrustTokenParams.t) /* Set for requests when the TrustToken API is used. Contains the parameters
-passed by the developer (e.g. via "fetch") as understood by the backend. */,
+      trustTokenParams: option(TrustTokenParams.t), /* Set for requests when the TrustToken API is used. Contains the parameters
+passed by the developer (e.g. via "fetch") as understood by the backend. */
+      [@yojson.option] [@key "isSameSite"]
+      isSameSite: option(bool) /* True if this resource request is considered to be the 'same site' as the
+request correspondinfg to the main frame. */,
     };
   }
   and SignedCertificateTimestamp: {
