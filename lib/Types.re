@@ -1173,6 +1173,7 @@ and Audits: {
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
+      | `ExcludeInvalidSameParty
     ];
     let _samesitecookieexclusionreason_of_yojson:
       Yojson.Basic.t => _samesitecookieexclusionreason;
@@ -1217,8 +1218,13 @@ and Audits: {
        information without the cookie. */
     [@deriving yojson]
     type t = {
-      [@key "cookie"]
-      cookie: AffectedCookie.t, /* No description provided */
+      [@yojson.option] [@key "cookie"]
+      cookie: option(AffectedCookie.t), /* If AffectedCookie is not set then rawCookieLine contains the raw
+Set-Cookie header string. This hints at a problem where the
+cookie line is syntactically or semantically malformed in a way
+that no valid cookie could be created. */
+      [@yojson.option] [@key "rawCookieLine"]
+      rawCookieLine: option(string), /* No description provided */
       [@key "cookieWarningReasons"]
       cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
       [@key "cookieExclusionReasons"]
@@ -1712,6 +1718,7 @@ instead of "limited-quirks". */
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
+      | `ExcludeInvalidSameParty
     ];
     let _samesitecookieexclusionreason_of_yojson:
       Yojson.Basic.t => _samesitecookieexclusionreason;
@@ -1726,6 +1733,7 @@ instead of "limited-quirks". */
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
+      | `ExcludeInvalidSameParty
     ];
     let _samesitecookieexclusionreason_of_yojson =
       fun
@@ -1733,6 +1741,7 @@ instead of "limited-quirks". */
       | `String("ExcludeSameSiteNoneInsecure") => `ExcludeSameSiteNoneInsecure
       | `String("ExcludeSameSiteLax") => `ExcludeSameSiteLax
       | `String("ExcludeSameSiteStrict") => `ExcludeSameSiteStrict
+      | `String("ExcludeInvalidSameParty") => `ExcludeInvalidSameParty
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__samesitecookieexclusionreason =
@@ -1741,7 +1750,8 @@ instead of "limited-quirks". */
         `String("ExcludeSameSiteUnspecifiedTreatedAsLax")
       | `ExcludeSameSiteNoneInsecure => `String("ExcludeSameSiteNoneInsecure")
       | `ExcludeSameSiteLax => `String("ExcludeSameSiteLax")
-      | `ExcludeSameSiteStrict => `String("ExcludeSameSiteStrict");
+      | `ExcludeSameSiteStrict => `String("ExcludeSameSiteStrict")
+      | `ExcludeInvalidSameParty => `String("ExcludeInvalidSameParty");
     /* No description provided */
     [@deriving yojson]
     type t = _samesitecookieexclusionreason;
@@ -1839,8 +1849,13 @@ instead of "limited-quirks". */
        information without the cookie. */
     [@deriving yojson]
     type t = {
-      [@key "cookie"]
-      cookie: AffectedCookie.t, /* No description provided */
+      [@yojson.option] [@key "cookie"]
+      cookie: option(AffectedCookie.t), /* If AffectedCookie is not set then rawCookieLine contains the raw
+Set-Cookie header string. This hints at a problem where the
+cookie line is syntactically or semantically malformed in a way
+that no valid cookie could be created. */
+      [@yojson.option] [@key "rawCookieLine"]
+      rawCookieLine: option(string), /* No description provided */
       [@key "cookieWarningReasons"]
       cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
       [@key "cookieExclusionReasons"]
@@ -1861,8 +1876,13 @@ may be used by the front-end as additional context. */
        information without the cookie. */
     [@deriving yojson]
     type t = {
-      [@key "cookie"]
-      cookie: AffectedCookie.t, /* No description provided */
+      [@yojson.option] [@key "cookie"]
+      cookie: option(AffectedCookie.t), /* If AffectedCookie is not set then rawCookieLine contains the raw
+Set-Cookie header string. This hints at a problem where the
+cookie line is syntactically or semantically malformed in a way
+that no valid cookie could be created. */
+      [@yojson.option] [@key "rawCookieLine"]
+      rawCookieLine: option(string), /* No description provided */
       [@key "cookieWarningReasons"]
       cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
       [@key "cookieExclusionReasons"]
