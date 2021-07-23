@@ -1651,7 +1651,10 @@ instead of "limited-quirks". */
       [@key "code"]
       code: InspectorIssueCode.t, /* No description provided */
       [@key "details"]
-      details: InspectorIssueDetails.t /* No description provided */,
+      details: InspectorIssueDetails.t, /* No description provided */
+      [@yojson.option] [@key "issueId"]
+      issueId: option(string) /* A unique id for this issue. May be omitted if no other entity (e.g.
+exception, CDP message, etc.) is referencing this issue. */,
     };
   };
 } = {
@@ -2854,7 +2857,10 @@ instead of "limited-quirks". */
       [@key "code"]
       code: InspectorIssueCode.t, /* No description provided */
       [@key "details"]
-      details: InspectorIssueDetails.t /* No description provided */,
+      details: InspectorIssueDetails.t, /* No description provided */
+      [@yojson.option] [@key "issueId"]
+      issueId: option(string) /* A unique id for this issue. May be omitted if no other entity (e.g.
+exception, CDP message, etc.) is referencing this issue. */,
     };
   } = {
     /* An inspector issue reported from the back-end. */
@@ -2863,7 +2869,10 @@ instead of "limited-quirks". */
       [@key "code"]
       code: InspectorIssueCode.t, /* No description provided */
       [@key "details"]
-      details: InspectorIssueDetails.t /* No description provided */,
+      details: InspectorIssueDetails.t, /* No description provided */
+      [@yojson.option] [@key "issueId"]
+      issueId: option(string) /* A unique id for this issue. May be omitted if no other entity (e.g.
+exception, CDP message, etc.) is referencing this issue. */,
     };
   };
 }
