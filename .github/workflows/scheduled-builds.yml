@@ -25,7 +25,8 @@ jobs:
       - name: Check for modified version in devtools-protocol
         id: git-check
         run: |
-          cdp_version=$(cd $GITHUB_WORKSPACE/devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+");
+          ls -l
+          cdp_version=$(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+");
           modified=$(npm version --no-git-tag-version "0.0.$cdp_version" &> /dev/null && echo true || echo false);
           branch_exists=$(git rev-parse --verify $cdp_version &> /dev/null && echo true || echo false);
           echo $cdp_version;
