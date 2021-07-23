@@ -2245,7 +2245,10 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
       [@key "loaderId"]
       loaderId: Types.Network.LoaderId.t, /* The loader id for the associated navgation. */
       [@key "frameId"]
-      frameId: Types.Page.FrameId.t /* The frame id of the associated frame. */,
+      frameId: Types.Page.FrameId.t, /* The frame id of the associated frame. */
+      [@key "notRestoredExplanations"]
+      notRestoredExplanations:
+        list(Types.Page.BackForwardCacheNotRestoredExplanation.t) /* Array of reasons why the page could not be cached. This must not be empty. */,
     };
 
     [@deriving yojson]

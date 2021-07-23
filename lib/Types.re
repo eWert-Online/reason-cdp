@@ -13180,6 +13180,140 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     /* The type of a frameNavigated event. */
     [@deriving yojson]
     type t = _navigationtype;
+  }
+  and BackForwardCacheNotRestoredReason: {
+    type _backforwardcachenotrestoredreason = [
+      | `NotMainFrame
+      | `BackForwardCacheDisabled
+      | `RelatedActiveContentsExist
+      | `HTTPStatusNotOK
+      | `SchemeNotHTTPOrHTTPS
+      | `Loading
+      | `WasGrantedMediaAccess
+      | `DisableForRenderFrameHostCalled
+      | `DomainNotAllowed
+      | `HTTPMethodNotGET
+      | `SubframeIsNavigating
+      | `Timeout
+      | `CacheLimit
+      | `JavaScriptExecution
+      | `RendererProcessKilled
+      | `RendererProcessCrashed
+      | `GrantedMediaStreamAccess
+      | `SchedulerTrackedFeatureUsed
+      | `ConflictingBrowsingInstance
+      | `CacheFlushed
+      | `ServiceWorkerVersionActivation
+      | `SessionRestored
+      | `ServiceWorkerPostMessage
+      | `EnteredBackForwardCacheBeforeServiceWorkerHostAdded
+      | `RenderFrameHostReused_SameSite
+      | `RenderFrameHostReused_CrossSite
+      | `ServiceWorkerClaim
+      | `IgnoreEventAndEvict
+      | `HaveInnerContents
+      | `TimeoutPuttingInCache
+      | `BackForwardCacheDisabledByLowMemory
+      | `BackForwardCacheDisabledByCommandLine
+      | `NetworkRequestDatapipeDrainedAsBytesConsumer
+      | `NetworkRequestRedirected
+      | `NetworkRequestTimeout
+      | `NetworkExceedsBufferLimit
+      | `NavigationCancelledWhileRestoring
+      | `NotMostRecentNavigationEntry
+      | `BackForwardCacheDisabledForPrerender
+      | `UserAgentOverrideDiffers
+      | `ForegroundCacheLimit
+      | `BrowsingInstanceNotSwapped
+      | `BackForwardCacheDisabledForDelegate
+      | `OptInUnloadHeaderNotPresent
+      | `UnloadHandlerExistsInMainFrame
+      | `UnloadHandlerExistsInSubFrame
+      | `WebSocket
+      | `WebRTC
+      | `MainResourceHasCacheControlNoStore
+      | `MainResourceHasCacheControlNoCache
+      | `SubresourceHasCacheControlNoStore
+      | `SubresourceHasCacheControlNoCache
+      | `PageShowEventListener
+      | `PageHideEventListener
+      | `BeforeUnloadEventListener
+      | `UnloadEventListener
+      | `FreezeEventListener
+      | `ResumeEventListener
+      | `ContainsPlugins
+      | `DocumentLoaded
+      | `DedicatedWorkerOrWorklet
+      | `OutstandingNetworkRequestOthers
+      | `OutstandingIndexedDBTransaction
+      | `RequestedGeolocationPermission
+      | `RequestedNotificationsPermission
+      | `RequestedMIDIPermission
+      | `RequestedAudioCapturePermission
+      | `RequestedVideoCapturePermission
+      | `RequestedBackForwardCacheBlockedSensors
+      | `RequestedBackgroundWorkPermission
+      | `BroadcastChannel
+      | `IndexedDBConnection
+      | `WebVR
+      | `WebXR
+      | `SharedWorker
+      | `WebLocks
+      | `WebHID
+      | `WebShare
+      | `RequestedStorageAccessGrant
+      | `WebNfc
+      | `WebFileSystem
+      | `OutstandingNetworkRequestFetch
+      | `OutstandingNetworkRequestXHR
+      | `AppBanner
+      | `Printing
+      | `WebDatabase
+      | `PictureInPicture
+      | `Portal
+      | `SpeechRecognizer
+      | `IdleManager
+      | `PaymentManager
+      | `SpeechSynthesis
+      | `KeyboardLock
+      | `WebOTPService
+      | `OutstandingNetworkRequestDirectSocket
+      | `IsolatedWorldScript
+      | `InjectedStyleSheet
+      | `MediaSessionImplOnServiceCreated
+      | `Unknown
+    ];
+    let _backforwardcachenotrestoredreason_of_yojson:
+      Yojson.Basic.t => _backforwardcachenotrestoredreason;
+    let yojson_of__backforwardcachenotrestoredreason:
+      _backforwardcachenotrestoredreason => Yojson.Basic.t;
+    /* List of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreason;
+  }
+  and BackForwardCacheNotRestoredReasonType: {
+    type _backforwardcachenotrestoredreasontype = [
+      | `SupportPending
+      | `PageSupportNeeded
+      | `Circumstantial
+    ];
+    let _backforwardcachenotrestoredreasontype_of_yojson:
+      Yojson.Basic.t => _backforwardcachenotrestoredreasontype;
+    let yojson_of__backforwardcachenotrestoredreasontype:
+      _backforwardcachenotrestoredreasontype => Yojson.Basic.t;
+    /* Types of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreasontype;
+  }
+  and BackForwardCacheNotRestoredExplanation: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: BackForwardCacheNotRestoredReasonType.t, /* Type of the reason */
+      [@key "reason"]
+      reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
+    };
   };
 } = {
   module rec FrameId: {
@@ -14629,6 +14763,509 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     /* The type of a frameNavigated event. */
     [@deriving yojson]
     type t = _navigationtype;
+  }
+  and BackForwardCacheNotRestoredReason: {
+    type _backforwardcachenotrestoredreason = [
+      | `NotMainFrame
+      | `BackForwardCacheDisabled
+      | `RelatedActiveContentsExist
+      | `HTTPStatusNotOK
+      | `SchemeNotHTTPOrHTTPS
+      | `Loading
+      | `WasGrantedMediaAccess
+      | `DisableForRenderFrameHostCalled
+      | `DomainNotAllowed
+      | `HTTPMethodNotGET
+      | `SubframeIsNavigating
+      | `Timeout
+      | `CacheLimit
+      | `JavaScriptExecution
+      | `RendererProcessKilled
+      | `RendererProcessCrashed
+      | `GrantedMediaStreamAccess
+      | `SchedulerTrackedFeatureUsed
+      | `ConflictingBrowsingInstance
+      | `CacheFlushed
+      | `ServiceWorkerVersionActivation
+      | `SessionRestored
+      | `ServiceWorkerPostMessage
+      | `EnteredBackForwardCacheBeforeServiceWorkerHostAdded
+      | `RenderFrameHostReused_SameSite
+      | `RenderFrameHostReused_CrossSite
+      | `ServiceWorkerClaim
+      | `IgnoreEventAndEvict
+      | `HaveInnerContents
+      | `TimeoutPuttingInCache
+      | `BackForwardCacheDisabledByLowMemory
+      | `BackForwardCacheDisabledByCommandLine
+      | `NetworkRequestDatapipeDrainedAsBytesConsumer
+      | `NetworkRequestRedirected
+      | `NetworkRequestTimeout
+      | `NetworkExceedsBufferLimit
+      | `NavigationCancelledWhileRestoring
+      | `NotMostRecentNavigationEntry
+      | `BackForwardCacheDisabledForPrerender
+      | `UserAgentOverrideDiffers
+      | `ForegroundCacheLimit
+      | `BrowsingInstanceNotSwapped
+      | `BackForwardCacheDisabledForDelegate
+      | `OptInUnloadHeaderNotPresent
+      | `UnloadHandlerExistsInMainFrame
+      | `UnloadHandlerExistsInSubFrame
+      | `WebSocket
+      | `WebRTC
+      | `MainResourceHasCacheControlNoStore
+      | `MainResourceHasCacheControlNoCache
+      | `SubresourceHasCacheControlNoStore
+      | `SubresourceHasCacheControlNoCache
+      | `PageShowEventListener
+      | `PageHideEventListener
+      | `BeforeUnloadEventListener
+      | `UnloadEventListener
+      | `FreezeEventListener
+      | `ResumeEventListener
+      | `ContainsPlugins
+      | `DocumentLoaded
+      | `DedicatedWorkerOrWorklet
+      | `OutstandingNetworkRequestOthers
+      | `OutstandingIndexedDBTransaction
+      | `RequestedGeolocationPermission
+      | `RequestedNotificationsPermission
+      | `RequestedMIDIPermission
+      | `RequestedAudioCapturePermission
+      | `RequestedVideoCapturePermission
+      | `RequestedBackForwardCacheBlockedSensors
+      | `RequestedBackgroundWorkPermission
+      | `BroadcastChannel
+      | `IndexedDBConnection
+      | `WebVR
+      | `WebXR
+      | `SharedWorker
+      | `WebLocks
+      | `WebHID
+      | `WebShare
+      | `RequestedStorageAccessGrant
+      | `WebNfc
+      | `WebFileSystem
+      | `OutstandingNetworkRequestFetch
+      | `OutstandingNetworkRequestXHR
+      | `AppBanner
+      | `Printing
+      | `WebDatabase
+      | `PictureInPicture
+      | `Portal
+      | `SpeechRecognizer
+      | `IdleManager
+      | `PaymentManager
+      | `SpeechSynthesis
+      | `KeyboardLock
+      | `WebOTPService
+      | `OutstandingNetworkRequestDirectSocket
+      | `IsolatedWorldScript
+      | `InjectedStyleSheet
+      | `MediaSessionImplOnServiceCreated
+      | `Unknown
+    ];
+    let _backforwardcachenotrestoredreason_of_yojson:
+      Yojson.Basic.t => _backforwardcachenotrestoredreason;
+    let yojson_of__backforwardcachenotrestoredreason:
+      _backforwardcachenotrestoredreason => Yojson.Basic.t;
+    /* List of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreason;
+  } = {
+    type _backforwardcachenotrestoredreason = [
+      | `NotMainFrame
+      | `BackForwardCacheDisabled
+      | `RelatedActiveContentsExist
+      | `HTTPStatusNotOK
+      | `SchemeNotHTTPOrHTTPS
+      | `Loading
+      | `WasGrantedMediaAccess
+      | `DisableForRenderFrameHostCalled
+      | `DomainNotAllowed
+      | `HTTPMethodNotGET
+      | `SubframeIsNavigating
+      | `Timeout
+      | `CacheLimit
+      | `JavaScriptExecution
+      | `RendererProcessKilled
+      | `RendererProcessCrashed
+      | `GrantedMediaStreamAccess
+      | `SchedulerTrackedFeatureUsed
+      | `ConflictingBrowsingInstance
+      | `CacheFlushed
+      | `ServiceWorkerVersionActivation
+      | `SessionRestored
+      | `ServiceWorkerPostMessage
+      | `EnteredBackForwardCacheBeforeServiceWorkerHostAdded
+      | `RenderFrameHostReused_SameSite
+      | `RenderFrameHostReused_CrossSite
+      | `ServiceWorkerClaim
+      | `IgnoreEventAndEvict
+      | `HaveInnerContents
+      | `TimeoutPuttingInCache
+      | `BackForwardCacheDisabledByLowMemory
+      | `BackForwardCacheDisabledByCommandLine
+      | `NetworkRequestDatapipeDrainedAsBytesConsumer
+      | `NetworkRequestRedirected
+      | `NetworkRequestTimeout
+      | `NetworkExceedsBufferLimit
+      | `NavigationCancelledWhileRestoring
+      | `NotMostRecentNavigationEntry
+      | `BackForwardCacheDisabledForPrerender
+      | `UserAgentOverrideDiffers
+      | `ForegroundCacheLimit
+      | `BrowsingInstanceNotSwapped
+      | `BackForwardCacheDisabledForDelegate
+      | `OptInUnloadHeaderNotPresent
+      | `UnloadHandlerExistsInMainFrame
+      | `UnloadHandlerExistsInSubFrame
+      | `WebSocket
+      | `WebRTC
+      | `MainResourceHasCacheControlNoStore
+      | `MainResourceHasCacheControlNoCache
+      | `SubresourceHasCacheControlNoStore
+      | `SubresourceHasCacheControlNoCache
+      | `PageShowEventListener
+      | `PageHideEventListener
+      | `BeforeUnloadEventListener
+      | `UnloadEventListener
+      | `FreezeEventListener
+      | `ResumeEventListener
+      | `ContainsPlugins
+      | `DocumentLoaded
+      | `DedicatedWorkerOrWorklet
+      | `OutstandingNetworkRequestOthers
+      | `OutstandingIndexedDBTransaction
+      | `RequestedGeolocationPermission
+      | `RequestedNotificationsPermission
+      | `RequestedMIDIPermission
+      | `RequestedAudioCapturePermission
+      | `RequestedVideoCapturePermission
+      | `RequestedBackForwardCacheBlockedSensors
+      | `RequestedBackgroundWorkPermission
+      | `BroadcastChannel
+      | `IndexedDBConnection
+      | `WebVR
+      | `WebXR
+      | `SharedWorker
+      | `WebLocks
+      | `WebHID
+      | `WebShare
+      | `RequestedStorageAccessGrant
+      | `WebNfc
+      | `WebFileSystem
+      | `OutstandingNetworkRequestFetch
+      | `OutstandingNetworkRequestXHR
+      | `AppBanner
+      | `Printing
+      | `WebDatabase
+      | `PictureInPicture
+      | `Portal
+      | `SpeechRecognizer
+      | `IdleManager
+      | `PaymentManager
+      | `SpeechSynthesis
+      | `KeyboardLock
+      | `WebOTPService
+      | `OutstandingNetworkRequestDirectSocket
+      | `IsolatedWorldScript
+      | `InjectedStyleSheet
+      | `MediaSessionImplOnServiceCreated
+      | `Unknown
+    ];
+    let _backforwardcachenotrestoredreason_of_yojson =
+      fun
+      | `String("NotMainFrame") => `NotMainFrame
+      | `String("BackForwardCacheDisabled") => `BackForwardCacheDisabled
+      | `String("RelatedActiveContentsExist") => `RelatedActiveContentsExist
+      | `String("HTTPStatusNotOK") => `HTTPStatusNotOK
+      | `String("SchemeNotHTTPOrHTTPS") => `SchemeNotHTTPOrHTTPS
+      | `String("Loading") => `Loading
+      | `String("WasGrantedMediaAccess") => `WasGrantedMediaAccess
+      | `String("DisableForRenderFrameHostCalled") => `DisableForRenderFrameHostCalled
+      | `String("DomainNotAllowed") => `DomainNotAllowed
+      | `String("HTTPMethodNotGET") => `HTTPMethodNotGET
+      | `String("SubframeIsNavigating") => `SubframeIsNavigating
+      | `String("Timeout") => `Timeout
+      | `String("CacheLimit") => `CacheLimit
+      | `String("JavaScriptExecution") => `JavaScriptExecution
+      | `String("RendererProcessKilled") => `RendererProcessKilled
+      | `String("RendererProcessCrashed") => `RendererProcessCrashed
+      | `String("GrantedMediaStreamAccess") => `GrantedMediaStreamAccess
+      | `String("SchedulerTrackedFeatureUsed") => `SchedulerTrackedFeatureUsed
+      | `String("ConflictingBrowsingInstance") => `ConflictingBrowsingInstance
+      | `String("CacheFlushed") => `CacheFlushed
+      | `String("ServiceWorkerVersionActivation") => `ServiceWorkerVersionActivation
+      | `String("SessionRestored") => `SessionRestored
+      | `String("ServiceWorkerPostMessage") => `ServiceWorkerPostMessage
+      | `String("EnteredBackForwardCacheBeforeServiceWorkerHostAdded") => `EnteredBackForwardCacheBeforeServiceWorkerHostAdded
+      | `String("RenderFrameHostReused_SameSite") => `RenderFrameHostReused_SameSite
+      | `String("RenderFrameHostReused_CrossSite") => `RenderFrameHostReused_CrossSite
+      | `String("ServiceWorkerClaim") => `ServiceWorkerClaim
+      | `String("IgnoreEventAndEvict") => `IgnoreEventAndEvict
+      | `String("HaveInnerContents") => `HaveInnerContents
+      | `String("TimeoutPuttingInCache") => `TimeoutPuttingInCache
+      | `String("BackForwardCacheDisabledByLowMemory") => `BackForwardCacheDisabledByLowMemory
+      | `String("BackForwardCacheDisabledByCommandLine") => `BackForwardCacheDisabledByCommandLine
+      | `String("NetworkRequestDatapipeDrainedAsBytesConsumer") => `NetworkRequestDatapipeDrainedAsBytesConsumer
+      | `String("NetworkRequestRedirected") => `NetworkRequestRedirected
+      | `String("NetworkRequestTimeout") => `NetworkRequestTimeout
+      | `String("NetworkExceedsBufferLimit") => `NetworkExceedsBufferLimit
+      | `String("NavigationCancelledWhileRestoring") => `NavigationCancelledWhileRestoring
+      | `String("NotMostRecentNavigationEntry") => `NotMostRecentNavigationEntry
+      | `String("BackForwardCacheDisabledForPrerender") => `BackForwardCacheDisabledForPrerender
+      | `String("UserAgentOverrideDiffers") => `UserAgentOverrideDiffers
+      | `String("ForegroundCacheLimit") => `ForegroundCacheLimit
+      | `String("BrowsingInstanceNotSwapped") => `BrowsingInstanceNotSwapped
+      | `String("BackForwardCacheDisabledForDelegate") => `BackForwardCacheDisabledForDelegate
+      | `String("OptInUnloadHeaderNotPresent") => `OptInUnloadHeaderNotPresent
+      | `String("UnloadHandlerExistsInMainFrame") => `UnloadHandlerExistsInMainFrame
+      | `String("UnloadHandlerExistsInSubFrame") => `UnloadHandlerExistsInSubFrame
+      | `String("WebSocket") => `WebSocket
+      | `String("WebRTC") => `WebRTC
+      | `String("MainResourceHasCacheControlNoStore") => `MainResourceHasCacheControlNoStore
+      | `String("MainResourceHasCacheControlNoCache") => `MainResourceHasCacheControlNoCache
+      | `String("SubresourceHasCacheControlNoStore") => `SubresourceHasCacheControlNoStore
+      | `String("SubresourceHasCacheControlNoCache") => `SubresourceHasCacheControlNoCache
+      | `String("PageShowEventListener") => `PageShowEventListener
+      | `String("PageHideEventListener") => `PageHideEventListener
+      | `String("BeforeUnloadEventListener") => `BeforeUnloadEventListener
+      | `String("UnloadEventListener") => `UnloadEventListener
+      | `String("FreezeEventListener") => `FreezeEventListener
+      | `String("ResumeEventListener") => `ResumeEventListener
+      | `String("ContainsPlugins") => `ContainsPlugins
+      | `String("DocumentLoaded") => `DocumentLoaded
+      | `String("DedicatedWorkerOrWorklet") => `DedicatedWorkerOrWorklet
+      | `String("OutstandingNetworkRequestOthers") => `OutstandingNetworkRequestOthers
+      | `String("OutstandingIndexedDBTransaction") => `OutstandingIndexedDBTransaction
+      | `String("RequestedGeolocationPermission") => `RequestedGeolocationPermission
+      | `String("RequestedNotificationsPermission") => `RequestedNotificationsPermission
+      | `String("RequestedMIDIPermission") => `RequestedMIDIPermission
+      | `String("RequestedAudioCapturePermission") => `RequestedAudioCapturePermission
+      | `String("RequestedVideoCapturePermission") => `RequestedVideoCapturePermission
+      | `String("RequestedBackForwardCacheBlockedSensors") => `RequestedBackForwardCacheBlockedSensors
+      | `String("RequestedBackgroundWorkPermission") => `RequestedBackgroundWorkPermission
+      | `String("BroadcastChannel") => `BroadcastChannel
+      | `String("IndexedDBConnection") => `IndexedDBConnection
+      | `String("WebVR") => `WebVR
+      | `String("WebXR") => `WebXR
+      | `String("SharedWorker") => `SharedWorker
+      | `String("WebLocks") => `WebLocks
+      | `String("WebHID") => `WebHID
+      | `String("WebShare") => `WebShare
+      | `String("RequestedStorageAccessGrant") => `RequestedStorageAccessGrant
+      | `String("WebNfc") => `WebNfc
+      | `String("WebFileSystem") => `WebFileSystem
+      | `String("OutstandingNetworkRequestFetch") => `OutstandingNetworkRequestFetch
+      | `String("OutstandingNetworkRequestXHR") => `OutstandingNetworkRequestXHR
+      | `String("AppBanner") => `AppBanner
+      | `String("Printing") => `Printing
+      | `String("WebDatabase") => `WebDatabase
+      | `String("PictureInPicture") => `PictureInPicture
+      | `String("Portal") => `Portal
+      | `String("SpeechRecognizer") => `SpeechRecognizer
+      | `String("IdleManager") => `IdleManager
+      | `String("PaymentManager") => `PaymentManager
+      | `String("SpeechSynthesis") => `SpeechSynthesis
+      | `String("KeyboardLock") => `KeyboardLock
+      | `String("WebOTPService") => `WebOTPService
+      | `String("OutstandingNetworkRequestDirectSocket") => `OutstandingNetworkRequestDirectSocket
+      | `String("IsolatedWorldScript") => `IsolatedWorldScript
+      | `String("InjectedStyleSheet") => `InjectedStyleSheet
+      | `String("MediaSessionImplOnServiceCreated") => `MediaSessionImplOnServiceCreated
+      | `String("Unknown") => `Unknown
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__backforwardcachenotrestoredreason =
+      fun
+      | `NotMainFrame => `String("NotMainFrame")
+      | `BackForwardCacheDisabled => `String("BackForwardCacheDisabled")
+      | `RelatedActiveContentsExist => `String("RelatedActiveContentsExist")
+      | `HTTPStatusNotOK => `String("HTTPStatusNotOK")
+      | `SchemeNotHTTPOrHTTPS => `String("SchemeNotHTTPOrHTTPS")
+      | `Loading => `String("Loading")
+      | `WasGrantedMediaAccess => `String("WasGrantedMediaAccess")
+      | `DisableForRenderFrameHostCalled =>
+        `String("DisableForRenderFrameHostCalled")
+      | `DomainNotAllowed => `String("DomainNotAllowed")
+      | `HTTPMethodNotGET => `String("HTTPMethodNotGET")
+      | `SubframeIsNavigating => `String("SubframeIsNavigating")
+      | `Timeout => `String("Timeout")
+      | `CacheLimit => `String("CacheLimit")
+      | `JavaScriptExecution => `String("JavaScriptExecution")
+      | `RendererProcessKilled => `String("RendererProcessKilled")
+      | `RendererProcessCrashed => `String("RendererProcessCrashed")
+      | `GrantedMediaStreamAccess => `String("GrantedMediaStreamAccess")
+      | `SchedulerTrackedFeatureUsed => `String("SchedulerTrackedFeatureUsed")
+      | `ConflictingBrowsingInstance => `String("ConflictingBrowsingInstance")
+      | `CacheFlushed => `String("CacheFlushed")
+      | `ServiceWorkerVersionActivation =>
+        `String("ServiceWorkerVersionActivation")
+      | `SessionRestored => `String("SessionRestored")
+      | `ServiceWorkerPostMessage => `String("ServiceWorkerPostMessage")
+      | `EnteredBackForwardCacheBeforeServiceWorkerHostAdded =>
+        `String("EnteredBackForwardCacheBeforeServiceWorkerHostAdded")
+      | `RenderFrameHostReused_SameSite =>
+        `String("RenderFrameHostReused_SameSite")
+      | `RenderFrameHostReused_CrossSite =>
+        `String("RenderFrameHostReused_CrossSite")
+      | `ServiceWorkerClaim => `String("ServiceWorkerClaim")
+      | `IgnoreEventAndEvict => `String("IgnoreEventAndEvict")
+      | `HaveInnerContents => `String("HaveInnerContents")
+      | `TimeoutPuttingInCache => `String("TimeoutPuttingInCache")
+      | `BackForwardCacheDisabledByLowMemory =>
+        `String("BackForwardCacheDisabledByLowMemory")
+      | `BackForwardCacheDisabledByCommandLine =>
+        `String("BackForwardCacheDisabledByCommandLine")
+      | `NetworkRequestDatapipeDrainedAsBytesConsumer =>
+        `String("NetworkRequestDatapipeDrainedAsBytesConsumer")
+      | `NetworkRequestRedirected => `String("NetworkRequestRedirected")
+      | `NetworkRequestTimeout => `String("NetworkRequestTimeout")
+      | `NetworkExceedsBufferLimit => `String("NetworkExceedsBufferLimit")
+      | `NavigationCancelledWhileRestoring =>
+        `String("NavigationCancelledWhileRestoring")
+      | `NotMostRecentNavigationEntry =>
+        `String("NotMostRecentNavigationEntry")
+      | `BackForwardCacheDisabledForPrerender =>
+        `String("BackForwardCacheDisabledForPrerender")
+      | `UserAgentOverrideDiffers => `String("UserAgentOverrideDiffers")
+      | `ForegroundCacheLimit => `String("ForegroundCacheLimit")
+      | `BrowsingInstanceNotSwapped => `String("BrowsingInstanceNotSwapped")
+      | `BackForwardCacheDisabledForDelegate =>
+        `String("BackForwardCacheDisabledForDelegate")
+      | `OptInUnloadHeaderNotPresent => `String("OptInUnloadHeaderNotPresent")
+      | `UnloadHandlerExistsInMainFrame =>
+        `String("UnloadHandlerExistsInMainFrame")
+      | `UnloadHandlerExistsInSubFrame =>
+        `String("UnloadHandlerExistsInSubFrame")
+      | `WebSocket => `String("WebSocket")
+      | `WebRTC => `String("WebRTC")
+      | `MainResourceHasCacheControlNoStore =>
+        `String("MainResourceHasCacheControlNoStore")
+      | `MainResourceHasCacheControlNoCache =>
+        `String("MainResourceHasCacheControlNoCache")
+      | `SubresourceHasCacheControlNoStore =>
+        `String("SubresourceHasCacheControlNoStore")
+      | `SubresourceHasCacheControlNoCache =>
+        `String("SubresourceHasCacheControlNoCache")
+      | `PageShowEventListener => `String("PageShowEventListener")
+      | `PageHideEventListener => `String("PageHideEventListener")
+      | `BeforeUnloadEventListener => `String("BeforeUnloadEventListener")
+      | `UnloadEventListener => `String("UnloadEventListener")
+      | `FreezeEventListener => `String("FreezeEventListener")
+      | `ResumeEventListener => `String("ResumeEventListener")
+      | `ContainsPlugins => `String("ContainsPlugins")
+      | `DocumentLoaded => `String("DocumentLoaded")
+      | `DedicatedWorkerOrWorklet => `String("DedicatedWorkerOrWorklet")
+      | `OutstandingNetworkRequestOthers =>
+        `String("OutstandingNetworkRequestOthers")
+      | `OutstandingIndexedDBTransaction =>
+        `String("OutstandingIndexedDBTransaction")
+      | `RequestedGeolocationPermission =>
+        `String("RequestedGeolocationPermission")
+      | `RequestedNotificationsPermission =>
+        `String("RequestedNotificationsPermission")
+      | `RequestedMIDIPermission => `String("RequestedMIDIPermission")
+      | `RequestedAudioCapturePermission =>
+        `String("RequestedAudioCapturePermission")
+      | `RequestedVideoCapturePermission =>
+        `String("RequestedVideoCapturePermission")
+      | `RequestedBackForwardCacheBlockedSensors =>
+        `String("RequestedBackForwardCacheBlockedSensors")
+      | `RequestedBackgroundWorkPermission =>
+        `String("RequestedBackgroundWorkPermission")
+      | `BroadcastChannel => `String("BroadcastChannel")
+      | `IndexedDBConnection => `String("IndexedDBConnection")
+      | `WebVR => `String("WebVR")
+      | `WebXR => `String("WebXR")
+      | `SharedWorker => `String("SharedWorker")
+      | `WebLocks => `String("WebLocks")
+      | `WebHID => `String("WebHID")
+      | `WebShare => `String("WebShare")
+      | `RequestedStorageAccessGrant => `String("RequestedStorageAccessGrant")
+      | `WebNfc => `String("WebNfc")
+      | `WebFileSystem => `String("WebFileSystem")
+      | `OutstandingNetworkRequestFetch =>
+        `String("OutstandingNetworkRequestFetch")
+      | `OutstandingNetworkRequestXHR =>
+        `String("OutstandingNetworkRequestXHR")
+      | `AppBanner => `String("AppBanner")
+      | `Printing => `String("Printing")
+      | `WebDatabase => `String("WebDatabase")
+      | `PictureInPicture => `String("PictureInPicture")
+      | `Portal => `String("Portal")
+      | `SpeechRecognizer => `String("SpeechRecognizer")
+      | `IdleManager => `String("IdleManager")
+      | `PaymentManager => `String("PaymentManager")
+      | `SpeechSynthesis => `String("SpeechSynthesis")
+      | `KeyboardLock => `String("KeyboardLock")
+      | `WebOTPService => `String("WebOTPService")
+      | `OutstandingNetworkRequestDirectSocket =>
+        `String("OutstandingNetworkRequestDirectSocket")
+      | `IsolatedWorldScript => `String("IsolatedWorldScript")
+      | `InjectedStyleSheet => `String("InjectedStyleSheet")
+      | `MediaSessionImplOnServiceCreated =>
+        `String("MediaSessionImplOnServiceCreated")
+      | `Unknown => `String("Unknown");
+    /* List of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreason;
+  }
+  and BackForwardCacheNotRestoredReasonType: {
+    type _backforwardcachenotrestoredreasontype = [
+      | `SupportPending
+      | `PageSupportNeeded
+      | `Circumstantial
+    ];
+    let _backforwardcachenotrestoredreasontype_of_yojson:
+      Yojson.Basic.t => _backforwardcachenotrestoredreasontype;
+    let yojson_of__backforwardcachenotrestoredreasontype:
+      _backforwardcachenotrestoredreasontype => Yojson.Basic.t;
+    /* Types of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreasontype;
+  } = {
+    type _backforwardcachenotrestoredreasontype = [
+      | `SupportPending
+      | `PageSupportNeeded
+      | `Circumstantial
+    ];
+    let _backforwardcachenotrestoredreasontype_of_yojson =
+      fun
+      | `String("SupportPending") => `SupportPending
+      | `String("PageSupportNeeded") => `PageSupportNeeded
+      | `String("Circumstantial") => `Circumstantial
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__backforwardcachenotrestoredreasontype =
+      fun
+      | `SupportPending => `String("SupportPending")
+      | `PageSupportNeeded => `String("PageSupportNeeded")
+      | `Circumstantial => `String("Circumstantial");
+    /* Types of not restored reasons for back-forward cache. */
+    [@deriving yojson]
+    type t = _backforwardcachenotrestoredreasontype;
+  }
+  and BackForwardCacheNotRestoredExplanation: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: BackForwardCacheNotRestoredReasonType.t, /* Type of the reason */
+      [@key "reason"]
+      reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: BackForwardCacheNotRestoredReasonType.t, /* Type of the reason */
+      [@key "reason"]
+      reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
+    };
   };
 }
 and Performance: {
