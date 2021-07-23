@@ -18,6 +18,7 @@ jobs:
       - name: Checkout devtools-protocol
         uses: actions/checkout@v2
         with:
+          fetch-depth: 0
           repository: ChromeDevTools/devtools-protocol
           path: devtools-protocol
 
