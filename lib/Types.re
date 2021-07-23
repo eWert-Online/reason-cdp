@@ -13258,12 +13258,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `MainResourceHasCacheControlNoCache
       | `SubresourceHasCacheControlNoStore
       | `SubresourceHasCacheControlNoCache
-      | `PageShowEventListener
-      | `PageHideEventListener
-      | `BeforeUnloadEventListener
-      | `UnloadEventListener
-      | `FreezeEventListener
-      | `ResumeEventListener
       | `ContainsPlugins
       | `DocumentLoaded
       | `DedicatedWorkerOrWorklet
@@ -14893,12 +14887,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `MainResourceHasCacheControlNoCache
       | `SubresourceHasCacheControlNoStore
       | `SubresourceHasCacheControlNoCache
-      | `PageShowEventListener
-      | `PageHideEventListener
-      | `BeforeUnloadEventListener
-      | `UnloadEventListener
-      | `FreezeEventListener
-      | `ResumeEventListener
       | `ContainsPlugins
       | `DocumentLoaded
       | `DedicatedWorkerOrWorklet
@@ -15002,12 +14990,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `MainResourceHasCacheControlNoCache
       | `SubresourceHasCacheControlNoStore
       | `SubresourceHasCacheControlNoCache
-      | `PageShowEventListener
-      | `PageHideEventListener
-      | `BeforeUnloadEventListener
-      | `UnloadEventListener
-      | `FreezeEventListener
-      | `ResumeEventListener
       | `ContainsPlugins
       | `DocumentLoaded
       | `DedicatedWorkerOrWorklet
@@ -15104,12 +15086,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("MainResourceHasCacheControlNoCache") => `MainResourceHasCacheControlNoCache
       | `String("SubresourceHasCacheControlNoStore") => `SubresourceHasCacheControlNoStore
       | `String("SubresourceHasCacheControlNoCache") => `SubresourceHasCacheControlNoCache
-      | `String("PageShowEventListener") => `PageShowEventListener
-      | `String("PageHideEventListener") => `PageHideEventListener
-      | `String("BeforeUnloadEventListener") => `BeforeUnloadEventListener
-      | `String("UnloadEventListener") => `UnloadEventListener
-      | `String("FreezeEventListener") => `FreezeEventListener
-      | `String("ResumeEventListener") => `ResumeEventListener
       | `String("ContainsPlugins") => `ContainsPlugins
       | `String("DocumentLoaded") => `DocumentLoaded
       | `String("DedicatedWorkerOrWorklet") => `DedicatedWorkerOrWorklet
@@ -15225,12 +15201,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
         `String("SubresourceHasCacheControlNoStore")
       | `SubresourceHasCacheControlNoCache =>
         `String("SubresourceHasCacheControlNoCache")
-      | `PageShowEventListener => `String("PageShowEventListener")
-      | `PageHideEventListener => `String("PageHideEventListener")
-      | `BeforeUnloadEventListener => `String("BeforeUnloadEventListener")
-      | `UnloadEventListener => `String("UnloadEventListener")
-      | `FreezeEventListener => `String("FreezeEventListener")
-      | `ResumeEventListener => `String("ResumeEventListener")
       | `ContainsPlugins => `String("ContainsPlugins")
       | `DocumentLoaded => `String("DocumentLoaded")
       | `DedicatedWorkerOrWorklet => `String("DedicatedWorkerOrWorklet")
