@@ -2,10 +2,7 @@ name: Check CDP Versions
 
 on:
   schedule:
-    - cron: "0 0 * * *"
-  push:
-    branches:
-      - ci
+    - cron: "0 * * * *"
 
 jobs:
   build:
@@ -18,7 +15,6 @@ jobs:
       - name: Checkout devtools-protocol
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
           repository: ChromeDevTools/devtools-protocol
           path: devtools-protocol
 
@@ -66,9 +62,10 @@ jobs:
         name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          commit-message: $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "Roll protocol to r.*")
+          commit-message: Roll protocol to r${{ steps.git-check.outputs.cdp_version }}
           committer: GitHub Action <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           branch: ${{ steps.git-check.outputs.cdp_version }}
           delete-branch: false
           title: Roll protocol to r${{ steps.git-check.outputs.cdp_version }}
+          body: ""
