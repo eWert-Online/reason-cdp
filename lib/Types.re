@@ -1587,6 +1587,20 @@ instead of "limited-quirks". */
       location: option(SourceCodeLocation.t) /* No description provided */,
     };
   }
+  and WasmCrossOriginModuleSharingIssueDetails: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "wasmModuleUrl"]
+      wasmModuleUrl: string, /* No description provided */
+      [@key "sourceOrigin"]
+      sourceOrigin: string, /* No description provided */
+      [@key "targetOrigin"]
+      targetOrigin: string, /* No description provided */
+      [@key "isWarning"]
+      isWarning: bool /* No description provided */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -1601,6 +1615,7 @@ instead of "limited-quirks". */
       | `AttributionReportingIssue
       | `QuirksModeIssue
       | `NavigatorUserAgentIssue
+      | `WasmCrossOriginModuleSharingIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -1641,7 +1656,11 @@ instead of "limited-quirks". */
       [@yojson.option] [@key "quirksModeIssueDetails"]
       quirksModeIssueDetails: option(QuirksModeIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
-      navigatorUserAgentIssueDetails: option(NavigatorUserAgentIssueDetails.t) /* No description provided */,
+      navigatorUserAgentIssueDetails:
+        option(NavigatorUserAgentIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
+      wasmCrossOriginModuleSharingIssue:
+        option(WasmCrossOriginModuleSharingIssueDetails.t) /* No description provided */,
     };
   }
   and IssueId: {
@@ -2716,6 +2735,33 @@ instead of "limited-quirks". */
       location: option(SourceCodeLocation.t) /* No description provided */,
     };
   }
+  and WasmCrossOriginModuleSharingIssueDetails: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "wasmModuleUrl"]
+      wasmModuleUrl: string, /* No description provided */
+      [@key "sourceOrigin"]
+      sourceOrigin: string, /* No description provided */
+      [@key "targetOrigin"]
+      targetOrigin: string, /* No description provided */
+      [@key "isWarning"]
+      isWarning: bool /* No description provided */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "wasmModuleUrl"]
+      wasmModuleUrl: string, /* No description provided */
+      [@key "sourceOrigin"]
+      sourceOrigin: string, /* No description provided */
+      [@key "targetOrigin"]
+      targetOrigin: string, /* No description provided */
+      [@key "isWarning"]
+      isWarning: bool /* No description provided */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -2730,6 +2776,7 @@ instead of "limited-quirks". */
       | `AttributionReportingIssue
       | `QuirksModeIssue
       | `NavigatorUserAgentIssue
+      | `WasmCrossOriginModuleSharingIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -2752,6 +2799,7 @@ instead of "limited-quirks". */
       | `AttributionReportingIssue
       | `QuirksModeIssue
       | `NavigatorUserAgentIssue
+      | `WasmCrossOriginModuleSharingIssue
     ];
     let _inspectorissuecode_of_yojson =
       fun
@@ -2767,6 +2815,7 @@ instead of "limited-quirks". */
       | `String("AttributionReportingIssue") => `AttributionReportingIssue
       | `String("QuirksModeIssue") => `QuirksModeIssue
       | `String("NavigatorUserAgentIssue") => `NavigatorUserAgentIssue
+      | `String("WasmCrossOriginModuleSharingIssue") => `WasmCrossOriginModuleSharingIssue
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__inspectorissuecode =
@@ -2782,7 +2831,9 @@ instead of "limited-quirks". */
       | `CorsIssue => `String("CorsIssue")
       | `AttributionReportingIssue => `String("AttributionReportingIssue")
       | `QuirksModeIssue => `String("QuirksModeIssue")
-      | `NavigatorUserAgentIssue => `String("NavigatorUserAgentIssue");
+      | `NavigatorUserAgentIssue => `String("NavigatorUserAgentIssue")
+      | `WasmCrossOriginModuleSharingIssue =>
+        `String("WasmCrossOriginModuleSharingIssue");
     /* A unique identifier for the type of issue. Each type may use one of the
        optional fields in InspectorIssueDetails to convey more specific
        information about the kind of issue. */
@@ -2820,7 +2871,11 @@ instead of "limited-quirks". */
       [@yojson.option] [@key "quirksModeIssueDetails"]
       quirksModeIssueDetails: option(QuirksModeIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
-      navigatorUserAgentIssueDetails: option(NavigatorUserAgentIssueDetails.t) /* No description provided */,
+      navigatorUserAgentIssueDetails:
+        option(NavigatorUserAgentIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
+      wasmCrossOriginModuleSharingIssue:
+        option(WasmCrossOriginModuleSharingIssueDetails.t) /* No description provided */,
     };
   } = {
     /* This struct holds a list of optional fields with additional information
@@ -2853,7 +2908,11 @@ instead of "limited-quirks". */
       [@yojson.option] [@key "quirksModeIssueDetails"]
       quirksModeIssueDetails: option(QuirksModeIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
-      navigatorUserAgentIssueDetails: option(NavigatorUserAgentIssueDetails.t) /* No description provided */,
+      navigatorUserAgentIssueDetails:
+        option(NavigatorUserAgentIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
+      wasmCrossOriginModuleSharingIssue:
+        option(WasmCrossOriginModuleSharingIssueDetails.t) /* No description provided */,
     };
   }
   and IssueId: {
