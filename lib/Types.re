@@ -3567,7 +3567,9 @@ and CSS: {
       [@key "frameId"]
       frameId: Page.FrameId.t, /* Owner frame identifier. */
       [@key "sourceURL"]
-      sourceURL: string, /* Stylesheet resource URL. */
+      sourceURL: string, /* Stylesheet resource URL. Empty if this is a constructed stylesheet created using
+new CSSStyleSheet() (but non-empty if this is a constructed sylesheet imported
+as a CSS module script). */
       [@yojson.option] [@key "sourceMapURL"]
       sourceMapURL: option(string), /* URL of source map associated with the stylesheet (if any). */
       [@key "origin"]
@@ -3589,7 +3591,8 @@ after they have been modified via CSSOM API.
 <link> element's stylesheets become mutable only if DevTools modifies them.
 Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after creation. */
       [@key "isConstructed"]
-      isConstructed: bool, /* Whether this stylesheet is a constructed stylesheet (created using new CSSStyleSheet()). */
+      isConstructed: bool, /* True if this stylesheet is created through new CSSStyleSheet() or imported as a
+CSS module script. */
       [@key "startLine"]
       startLine: float, /* Line offset of the stylesheet within the resource (zero based). */
       [@key "startColumn"]
@@ -4027,7 +4030,9 @@ stylesheet rules) this rule came from. */
       [@key "frameId"]
       frameId: Page.FrameId.t, /* Owner frame identifier. */
       [@key "sourceURL"]
-      sourceURL: string, /* Stylesheet resource URL. */
+      sourceURL: string, /* Stylesheet resource URL. Empty if this is a constructed stylesheet created using
+new CSSStyleSheet() (but non-empty if this is a constructed sylesheet imported
+as a CSS module script). */
       [@yojson.option] [@key "sourceMapURL"]
       sourceMapURL: option(string), /* URL of source map associated with the stylesheet (if any). */
       [@key "origin"]
@@ -4049,7 +4054,8 @@ after they have been modified via CSSOM API.
 <link> element's stylesheets become mutable only if DevTools modifies them.
 Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after creation. */
       [@key "isConstructed"]
-      isConstructed: bool, /* Whether this stylesheet is a constructed stylesheet (created using new CSSStyleSheet()). */
+      isConstructed: bool, /* True if this stylesheet is created through new CSSStyleSheet() or imported as a
+CSS module script. */
       [@key "startLine"]
       startLine: float, /* Line offset of the stylesheet within the resource (zero based). */
       [@key "startColumn"]
@@ -4070,7 +4076,9 @@ Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after crea
       [@key "frameId"]
       frameId: Page.FrameId.t, /* Owner frame identifier. */
       [@key "sourceURL"]
-      sourceURL: string, /* Stylesheet resource URL. */
+      sourceURL: string, /* Stylesheet resource URL. Empty if this is a constructed stylesheet created using
+new CSSStyleSheet() (but non-empty if this is a constructed sylesheet imported
+as a CSS module script). */
       [@yojson.option] [@key "sourceMapURL"]
       sourceMapURL: option(string), /* URL of source map associated with the stylesheet (if any). */
       [@key "origin"]
@@ -4092,7 +4100,8 @@ after they have been modified via CSSOM API.
 <link> element's stylesheets become mutable only if DevTools modifies them.
 Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after creation. */
       [@key "isConstructed"]
-      isConstructed: bool, /* Whether this stylesheet is a constructed stylesheet (created using new CSSStyleSheet()). */
+      isConstructed: bool, /* True if this stylesheet is created through new CSSStyleSheet() or imported as a
+CSS module script. */
       [@key "startLine"]
       startLine: float, /* Line offset of the stylesheet within the resource (zero based). */
       [@key "startColumn"]
