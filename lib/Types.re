@@ -9348,7 +9348,7 @@ backslash. Omitting is equivalent to `"*"`. */
   and CrossOriginEmbedderPolicyValue: {
     type _crossoriginembedderpolicyvalue = [
       | `None
-      | `CorsOrCredentialless
+      | `Credentialless
       | `RequireCorp
     ];
     let _crossoriginembedderpolicyvalue_of_yojson:
@@ -11656,7 +11656,7 @@ backslash. Omitting is equivalent to `"*"`. */
   and CrossOriginEmbedderPolicyValue: {
     type _crossoriginembedderpolicyvalue = [
       | `None
-      | `CorsOrCredentialless
+      | `Credentialless
       | `RequireCorp
     ];
     let _crossoriginembedderpolicyvalue_of_yojson:
@@ -11669,20 +11669,20 @@ backslash. Omitting is equivalent to `"*"`. */
   } = {
     type _crossoriginembedderpolicyvalue = [
       | `None
-      | `CorsOrCredentialless
+      | `Credentialless
       | `RequireCorp
     ];
     let _crossoriginembedderpolicyvalue_of_yojson =
       fun
       | `String("None") => `None
-      | `String("CorsOrCredentialless") => `CorsOrCredentialless
+      | `String("Credentialless") => `Credentialless
       | `String("RequireCorp") => `RequireCorp
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__crossoriginembedderpolicyvalue =
       fun
       | `None => `String("None")
-      | `CorsOrCredentialless => `String("CorsOrCredentialless")
+      | `Credentialless => `String("Credentialless")
       | `RequireCorp => `String("RequireCorp");
     /* No description provided */
     [@deriving yojson]
