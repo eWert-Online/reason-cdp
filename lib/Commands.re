@@ -7724,6 +7724,73 @@ successfully. */,
       };
     };
   };
+  /* Returns the container of the given node based on container query conditions.
+     If containerName is given, it will find the nearest container with a matching name;
+     otherwise it will find the nearest container regardless of its container name. */
+  module GetContainerForNode = {
+    module Response: {
+      type result = {
+        [@yojson.option] [@key "nodeId"]
+        nodeId: option(Types.DOM.NodeId.t) /* The container node for the given node, or null if not found. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option] [@key "nodeId"]
+        nodeId: option(Types.DOM.NodeId.t) /* The container node for the given node, or null if not found. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t, /* No description provided */
+        [@yojson.option] [@key "containerName"]
+        containerName: option(string) /* No description provided */,
+      };
+      let make = (~nodeId, ~containerName=?, ()) => {
+        {nodeId, containerName};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "DOM.getContainerForNode", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
 };
 module DOMDebugger = {
   /* Returns event listeners of the given object. */

@@ -3799,7 +3799,9 @@ available). */
       range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
 available). */
       [@yojson.option] [@key "styleSheetId"]
-      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+      styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
+      [@yojson.option] [@key "name"]
+      name: option(string) /* Optional name for the container. */,
     };
   }
   and PlatformFontUsage: {
@@ -4477,7 +4479,9 @@ available). */
       range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
 available). */
       [@yojson.option] [@key "styleSheetId"]
-      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+      styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
+      [@yojson.option] [@key "name"]
+      name: option(string) /* Optional name for the container. */,
     };
   } = {
     /* CSS container query rule descriptor. */
@@ -4489,7 +4493,9 @@ available). */
       range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
 available). */
       [@yojson.option] [@key "styleSheetId"]
-      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+      styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
+      [@yojson.option] [@key "name"]
+      name: option(string) /* Optional name for the container. */,
     };
   }
   and PlatformFontUsage: {
