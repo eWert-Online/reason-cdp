@@ -12683,6 +12683,7 @@ and Page: {
       | `ch_rtt
       | `ch_ua
       | `ch_ua_arch
+      | `ch_ua_bitness
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
@@ -13544,6 +13545,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_rtt
       | `ch_ua
       | `ch_ua_arch
+      | `ch_ua_bitness
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
@@ -13612,6 +13614,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_rtt
       | `ch_ua
       | `ch_ua_arch
+      | `ch_ua_bitness
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
@@ -13672,6 +13675,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("ch-rtt") => `ch_rtt
       | `String("ch-ua") => `ch_ua
       | `String("ch-ua-arch") => `ch_ua_arch
+      | `String("ch-ua-bitness") => `ch_ua_bitness
       | `String("ch-ua-platform") => `ch_ua_platform
       | `String("ch-ua-model") => `ch_ua_model
       | `String("ch-ua-mobile") => `ch_ua_mobile
@@ -13733,6 +13737,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_rtt => `String("ch-rtt")
       | `ch_ua => `String("ch-ua")
       | `ch_ua_arch => `String("ch-ua-arch")
+      | `ch_ua_bitness => `String("ch-ua-bitness")
       | `ch_ua_platform => `String("ch-ua-platform")
       | `ch_ua_model => `String("ch-ua-model")
       | `ch_ua_mobile => `String("ch-ua-mobile")
