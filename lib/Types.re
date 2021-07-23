@@ -12605,6 +12605,28 @@ and Page: {
     [@deriving yojson]
     type t = _adframetype;
   }
+  and AdFrameExplanation: {
+    type _adframeexplanation = [
+      | `ParentIsAd
+      | `CreatedByAdScript
+      | `MatchedBlockingRule
+    ];
+    let _adframeexplanation_of_yojson: Yojson.Basic.t => _adframeexplanation;
+    let yojson_of__adframeexplanation: _adframeexplanation => Yojson.Basic.t;
+    /* No description provided */
+    [@deriving yojson]
+    type t = _adframeexplanation;
+  }
+  and AdFrameStatus: {
+    /* Indicates whether a frame has been identified as an ad and why. */
+    [@deriving yojson]
+    type t = {
+      [@key "adFrameType"]
+      adFrameType: AdFrameType.t, /* No description provided */
+      [@yojson.option] [@key "explanations"]
+      explanations: option(list(AdFrameExplanation.t)) /* No description provided */,
+    };
+  }
   and SecureContextType: {
     type _securecontexttype = [
       | `Secure
@@ -12862,8 +12884,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       mimeType: string, /* Frame document's mimeType as determined by the browser. */
       [@yojson.option] [@key "unreachableUrl"]
       unreachableUrl: option(string), /* If the frame failed to load, this contains the URL that could not be loaded. Note that unlike url above, this URL may contain a fragment. */
-      [@yojson.option] [@key "adFrameType"]
-      adFrameType: option(AdFrameType.t), /* Indicates whether this frame was tagged as an ad. */
+      [@yojson.option] [@key "adFrameStatus"]
+      adFrameStatus: option(AdFrameStatus.t), /* Indicates whether this frame was tagged as an ad and why. */
       [@key "secureContextType"]
       secureContextType: SecureContextType.t, /* Indicates whether the main document is a secure context and explains why that is the case. */
       [@key "crossOriginIsolatedContextType"]
@@ -13349,6 +13371,58 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     /* Indicates whether a frame has been identified as an ad. */
     [@deriving yojson]
     type t = _adframetype;
+  }
+  and AdFrameExplanation: {
+    type _adframeexplanation = [
+      | `ParentIsAd
+      | `CreatedByAdScript
+      | `MatchedBlockingRule
+    ];
+    let _adframeexplanation_of_yojson: Yojson.Basic.t => _adframeexplanation;
+    let yojson_of__adframeexplanation: _adframeexplanation => Yojson.Basic.t;
+    /* No description provided */
+    [@deriving yojson]
+    type t = _adframeexplanation;
+  } = {
+    type _adframeexplanation = [
+      | `ParentIsAd
+      | `CreatedByAdScript
+      | `MatchedBlockingRule
+    ];
+    let _adframeexplanation_of_yojson =
+      fun
+      | `String("ParentIsAd") => `ParentIsAd
+      | `String("CreatedByAdScript") => `CreatedByAdScript
+      | `String("MatchedBlockingRule") => `MatchedBlockingRule
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__adframeexplanation =
+      fun
+      | `ParentIsAd => `String("ParentIsAd")
+      | `CreatedByAdScript => `String("CreatedByAdScript")
+      | `MatchedBlockingRule => `String("MatchedBlockingRule");
+    /* No description provided */
+    [@deriving yojson]
+    type t = _adframeexplanation;
+  }
+  and AdFrameStatus: {
+    /* Indicates whether a frame has been identified as an ad and why. */
+    [@deriving yojson]
+    type t = {
+      [@key "adFrameType"]
+      adFrameType: AdFrameType.t, /* No description provided */
+      [@yojson.option] [@key "explanations"]
+      explanations: option(list(AdFrameExplanation.t)) /* No description provided */,
+    };
+  } = {
+    /* Indicates whether a frame has been identified as an ad and why. */
+    [@deriving yojson]
+    type t = {
+      [@key "adFrameType"]
+      adFrameType: AdFrameType.t, /* No description provided */
+      [@yojson.option] [@key "explanations"]
+      explanations: option(list(AdFrameExplanation.t)) /* No description provided */,
+    };
   }
   and SecureContextType: {
     type _securecontexttype = [
@@ -14024,8 +14098,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       mimeType: string, /* Frame document's mimeType as determined by the browser. */
       [@yojson.option] [@key "unreachableUrl"]
       unreachableUrl: option(string), /* If the frame failed to load, this contains the URL that could not be loaded. Note that unlike url above, this URL may contain a fragment. */
-      [@yojson.option] [@key "adFrameType"]
-      adFrameType: option(AdFrameType.t), /* Indicates whether this frame was tagged as an ad. */
+      [@yojson.option] [@key "adFrameStatus"]
+      adFrameStatus: option(AdFrameStatus.t), /* Indicates whether this frame was tagged as an ad and why. */
       [@key "secureContextType"]
       secureContextType: SecureContextType.t, /* Indicates whether the main document is a secure context and explains why that is the case. */
       [@key "crossOriginIsolatedContextType"]
@@ -14062,8 +14136,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       mimeType: string, /* Frame document's mimeType as determined by the browser. */
       [@yojson.option] [@key "unreachableUrl"]
       unreachableUrl: option(string), /* If the frame failed to load, this contains the URL that could not be loaded. Note that unlike url above, this URL may contain a fragment. */
-      [@yojson.option] [@key "adFrameType"]
-      adFrameType: option(AdFrameType.t), /* Indicates whether this frame was tagged as an ad. */
+      [@yojson.option] [@key "adFrameStatus"]
+      adFrameStatus: option(AdFrameStatus.t), /* Indicates whether this frame was tagged as an ad and why. */
       [@key "secureContextType"]
       secureContextType: SecureContextType.t, /* Indicates whether the main document is a secure context and explains why that is the case. */
       [@key "crossOriginIsolatedContextType"]
