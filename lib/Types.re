@@ -12586,6 +12586,7 @@ and Page: {
       | `usb
       | `vertical_scroll
       | `web_share
+      | `window_placement
       | `xr_spatial_tracking
     ];
     let _permissionspolicyfeature_of_yojson:
@@ -13266,6 +13267,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `usb
       | `vertical_scroll
       | `web_share
+      | `window_placement
       | `xr_spatial_tracking
     ];
     let _permissionspolicyfeature_of_yojson:
@@ -13333,6 +13335,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `usb
       | `vertical_scroll
       | `web_share
+      | `window_placement
       | `xr_spatial_tracking
     ];
     let _permissionspolicyfeature_of_yojson =
@@ -13392,6 +13395,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("usb") => `usb
       | `String("vertical-scroll") => `vertical_scroll
       | `String("web-share") => `web_share
+      | `String("window-placement") => `window_placement
       | `String("xr-spatial-tracking") => `xr_spatial_tracking
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
@@ -13455,6 +13459,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `usb => `String("usb")
       | `vertical_scroll => `String("vertical-scroll")
       | `web_share => `String("web-share")
+      | `window_placement => `String("window-placement")
       | `xr_spatial_tracking => `String("xr-spatial-tracking");
     /* All Permissions Policy features. This enum should match the one defined
        in third_party/blink/renderer/core/permissions_policy/permissions_policy_features.json5. */
