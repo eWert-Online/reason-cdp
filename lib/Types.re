@@ -5038,6 +5038,7 @@ and DOM: {
       | `target_text
       | `spelling_error
       | `grammar_error
+      | `highlight
       | `first_line_inherited
       | `scrollbar
       | `scrollbar_thumb
@@ -5274,6 +5275,7 @@ The property is always undefined now. */
       | `target_text
       | `spelling_error
       | `grammar_error
+      | `highlight
       | `first_line_inherited
       | `scrollbar
       | `scrollbar_thumb
@@ -5301,6 +5303,7 @@ The property is always undefined now. */
       | `target_text
       | `spelling_error
       | `grammar_error
+      | `highlight
       | `first_line_inherited
       | `scrollbar
       | `scrollbar_thumb
@@ -5323,6 +5326,7 @@ The property is always undefined now. */
       | `String("target-text") => `target_text
       | `String("spelling-error") => `spelling_error
       | `String("grammar-error") => `grammar_error
+      | `String("highlight") => `highlight
       | `String("first-line-inherited") => `first_line_inherited
       | `String("scrollbar") => `scrollbar
       | `String("scrollbar-thumb") => `scrollbar_thumb
@@ -5346,6 +5350,7 @@ The property is always undefined now. */
       | `target_text => `String("target-text")
       | `spelling_error => `String("spelling-error")
       | `grammar_error => `String("grammar-error")
+      | `highlight => `String("highlight")
       | `first_line_inherited => `String("first-line-inherited")
       | `scrollbar => `String("scrollbar")
       | `scrollbar_thumb => `String("scrollbar-thumb")
