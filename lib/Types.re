@@ -13435,7 +13435,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
       | `OutstandingIndexedDBTransaction
-      | `RequestedGeolocationPermission
       | `RequestedNotificationsPermission
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
@@ -15067,7 +15066,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
       | `OutstandingIndexedDBTransaction
-      | `RequestedGeolocationPermission
       | `RequestedNotificationsPermission
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
@@ -15169,7 +15167,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
       | `OutstandingIndexedDBTransaction
-      | `RequestedGeolocationPermission
       | `RequestedNotificationsPermission
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
@@ -15264,7 +15261,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("DedicatedWorkerOrWorklet") => `DedicatedWorkerOrWorklet
       | `String("OutstandingNetworkRequestOthers") => `OutstandingNetworkRequestOthers
       | `String("OutstandingIndexedDBTransaction") => `OutstandingIndexedDBTransaction
-      | `String("RequestedGeolocationPermission") => `RequestedGeolocationPermission
       | `String("RequestedNotificationsPermission") => `RequestedNotificationsPermission
       | `String("RequestedMIDIPermission") => `RequestedMIDIPermission
       | `String("RequestedAudioCapturePermission") => `RequestedAudioCapturePermission
@@ -15379,8 +15375,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
         `String("OutstandingNetworkRequestOthers")
       | `OutstandingIndexedDBTransaction =>
         `String("OutstandingIndexedDBTransaction")
-      | `RequestedGeolocationPermission =>
-        `String("RequestedGeolocationPermission")
       | `RequestedNotificationsPermission =>
         `String("RequestedNotificationsPermission")
       | `RequestedMIDIPermission => `String("RequestedMIDIPermission")
