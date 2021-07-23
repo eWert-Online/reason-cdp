@@ -13251,6 +13251,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OptInUnloadHeaderNotPresent
       | `UnloadHandlerExistsInMainFrame
       | `UnloadHandlerExistsInSubFrame
+      | `ServiceWorkerUnregistration
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -14885,6 +14886,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OptInUnloadHeaderNotPresent
       | `UnloadHandlerExistsInMainFrame
       | `UnloadHandlerExistsInSubFrame
+      | `ServiceWorkerUnregistration
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -14993,6 +14995,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OptInUnloadHeaderNotPresent
       | `UnloadHandlerExistsInMainFrame
       | `UnloadHandlerExistsInSubFrame
+      | `ServiceWorkerUnregistration
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -15094,6 +15097,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("OptInUnloadHeaderNotPresent") => `OptInUnloadHeaderNotPresent
       | `String("UnloadHandlerExistsInMainFrame") => `UnloadHandlerExistsInMainFrame
       | `String("UnloadHandlerExistsInSubFrame") => `UnloadHandlerExistsInSubFrame
+      | `String("ServiceWorkerUnregistration") => `ServiceWorkerUnregistration
       | `String("WebSocket") => `WebSocket
       | `String("WebRTC") => `WebRTC
       | `String("MainResourceHasCacheControlNoStore") => `MainResourceHasCacheControlNoStore
@@ -15210,6 +15214,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
         `String("UnloadHandlerExistsInMainFrame")
       | `UnloadHandlerExistsInSubFrame =>
         `String("UnloadHandlerExistsInSubFrame")
+      | `ServiceWorkerUnregistration => `String("ServiceWorkerUnregistration")
       | `WebSocket => `String("WebSocket")
       | `WebRTC => `String("WebRTC")
       | `MainResourceHasCacheControlNoStore =>
