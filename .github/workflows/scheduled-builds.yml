@@ -23,9 +23,13 @@ jobs:
 
       - name: Check for modified version in devtools-protocol
         id: git-check
-        run: echo ::set-output \
-          name=modified::$(npm version --no-git-tag-version "0.0.$(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+")" &> /dev/null && echo true || echo false) \
-          name=branch_exists::$(git rev-parse --verify $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+") &> /dev/null && echo true || echo false)
+        run: |
+          modified=$(npm version --no-git-tag-version "0.0.$(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+")" &> /dev/null && echo true || echo false);
+          branch_exists=$(git rev-parse --verify $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+") &> /dev/null && echo true || echo false);
+          echo Modified $modified;
+          echo Branch exists $branch_exists;
+          echo "::set-output name=modified::$modified";
+          echo "::set-output name=branch_exists::$branch_exists";
 
       - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
         uses: actions/setup-node@v2
