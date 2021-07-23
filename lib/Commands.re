@@ -15913,65 +15913,6 @@ This is a temporary ability and it will be removed in the future. */,
       };
     };
   };
-  /* For testing. */
-  module SetDataSizeLimitsForTest = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Params = {
-      [@deriving yojson]
-      type t = {
-        [@key "maxTotalSize"]
-        maxTotalSize: float, /* Maximum total buffer size. */
-        [@key "maxResourceSize"]
-        maxResourceSize: float /* Maximum per-resource size. */,
-      };
-      let make = (~maxTotalSize, ~maxResourceSize, ()) => {
-        {maxTotalSize, maxResourceSize};
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-        params: Params.t,
-      };
-
-      let make = (~sessionId=?, ~params, id) => {
-        {id, method: "Network.setDataSizeLimitsForTest", sessionId, params}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
   /* Specifies whether to always send extra HTTP headers with the requests from this page. */
   module SetExtraHTTPHeaders = {
     module Response: {
