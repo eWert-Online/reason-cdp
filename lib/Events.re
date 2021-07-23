@@ -4,7 +4,10 @@ module Animation = {
     let name = "Animation.animationCanceled";
 
     [@deriving yojson]
-    type result = {id: string /* Id of the animation that was cancelled. */};
+    type result = {
+      [@key "id"]
+      id: string /* Id of the animation that was cancelled. */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -20,7 +23,10 @@ module Animation = {
     let name = "Animation.animationCreated";
 
     [@deriving yojson]
-    type result = {id: string /* Id of the animation that was created. */};
+    type result = {
+      [@key "id"]
+      id: string /* Id of the animation that was created. */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -37,6 +43,7 @@ module Animation = {
 
     [@deriving yojson]
     type result = {
+      [@key "animation"]
       animation: Types.Animation.Animation.t /* Animation that was started. */,
     };
 
@@ -57,8 +64,11 @@ module ApplicationCache = {
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Identifier of the frame containing document whose application cache updated status. */
+      [@key "manifestURL"]
       manifestURL: string, /* Manifest URL. */
+      [@key "status"]
       status: float /* Updated application cache status. */,
     };
 
@@ -76,7 +86,10 @@ module ApplicationCache = {
     let name = "ApplicationCache.networkStateUpdated";
 
     [@deriving yojson]
-    type result = {isNowOnline: bool /* No description provided */};
+    type result = {
+      [@key "isNowOnline"]
+      isNowOnline: bool /* No description provided */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -95,6 +108,7 @@ module Audits = {
 
     [@deriving yojson]
     type result = {
+      [@key "issue"]
       issue: Types.Audits.InspectorIssue.t /* No description provided */,
     };
 
@@ -115,7 +129,9 @@ module BackgroundService = {
 
     [@deriving yojson]
     type result = {
+      [@key "isRecording"]
       isRecording: bool, /* No description provided */
+      [@key "service"]
       service: Types.BackgroundService.ServiceName.t /* No description provided */,
     };
 
@@ -135,6 +151,7 @@ module BackgroundService = {
 
     [@deriving yojson]
     type result = {
+      [@key "backgroundServiceEvent"]
       backgroundServiceEvent: Types.BackgroundService.BackgroundServiceEvent.t /* No description provided */,
     };
 
@@ -155,9 +172,13 @@ module Browser = {
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame that caused the download to begin. */
+      [@key "guid"]
       guid: string, /* Global unique identifier of the download. */
+      [@key "url"]
       url: string, /* URL of the resource being downloaded. */
+      [@key "suggestedFilename"]
       suggestedFilename: string /* Suggested file name of the resource (the actual name of the file saved on disk may differ). */,
     };
 
@@ -174,12 +195,30 @@ module Browser = {
   module DownloadProgress = {
     let name = "Browser.downloadProgress";
 
+    type downloadprogress_state = [ | `inProgress | `completed | `canceled];
+    let downloadprogress_state_of_yojson =
+      fun
+      | `String("inProgress") => `inProgress
+      | `String("completed") => `completed
+      | `String("canceled") => `canceled
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of_downloadprogress_state =
+      fun
+      | `inProgress => `String("inProgress")
+      | `completed => `String("completed")
+      | `canceled => `String("canceled");
+
     [@deriving yojson]
     type result = {
+      [@key "guid"]
       guid: string, /* Global unique identifier of the download. */
+      [@key "totalBytes"]
       totalBytes: float, /* Total expected bytes to download. */
+      [@key "receivedBytes"]
       receivedBytes: float, /* Total bytes received. */
-      state: string /* Download status. */,
+      [@key "state"]
+      state: downloadprogress_state /* Download status. */,
     };
 
     [@deriving yojson]
@@ -200,7 +239,7 @@ module CSS = {
 
     [@deriving yojson]
     type result = {
-      [@yojson.option]
+      [@yojson.option] [@key "font"]
       font: option(Types.CSS.FontFace.t) /* The web font that has loaded. */,
     };
 
@@ -236,6 +275,7 @@ module CSS = {
 
     [@deriving yojson]
     type result = {
+      [@key "header"]
       header: Types.CSS.CSSStyleSheetHeader.t /* Added stylesheet metainfo. */,
     };
 
@@ -254,6 +294,7 @@ module CSS = {
 
     [@deriving yojson]
     type result = {
+      [@key "styleSheetId"]
       styleSheetId: Types.CSS.StyleSheetId.t /* No description provided */,
     };
 
@@ -272,6 +313,7 @@ module CSS = {
 
     [@deriving yojson]
     type result = {
+      [@key "styleSheetId"]
       styleSheetId: Types.CSS.StyleSheetId.t /* Identifier of the removed stylesheet. */,
     };
 
@@ -293,6 +335,7 @@ module Cast = {
 
     [@deriving yojson]
     type result = {
+      [@key "sinks"]
       sinks: list(Types.Cast.Sink.t) /* No description provided */,
     };
 
@@ -311,7 +354,10 @@ module Cast = {
     let name = "Cast.issueUpdated";
 
     [@deriving yojson]
-    type result = {issueMessage: string /* No description provided */};
+    type result = {
+      [@key "issueMessage"]
+      issueMessage: string /* No description provided */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -330,8 +376,11 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "nodeId"]
       nodeId: Types.DOM.NodeId.t, /* Id of the node that has changed. */
+      [@key "name"]
       name: string, /* Attribute name. */
+      [@key "value"]
       value: string /* Attribute value. */,
     };
 
@@ -350,7 +399,9 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "nodeId"]
       nodeId: Types.DOM.NodeId.t, /* Id of the node that has changed. */
+      [@key "name"]
       name: string /* A ttribute name. */,
     };
 
@@ -369,7 +420,9 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "nodeId"]
       nodeId: Types.DOM.NodeId.t, /* Id of the node that has changed. */
+      [@key "characterData"]
       characterData: string /* New text value. */,
     };
 
@@ -388,7 +441,9 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "nodeId"]
       nodeId: Types.DOM.NodeId.t, /* Id of the node that has changed. */
+      [@key "childNodeCount"]
       childNodeCount: float /* New node count. */,
     };
 
@@ -407,8 +462,11 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "parentNodeId"]
       parentNodeId: Types.DOM.NodeId.t, /* Id of the node that has changed. */
+      [@key "previousNodeId"]
       previousNodeId: Types.DOM.NodeId.t, /* If of the previous siblint. */
+      [@key "node"]
       node: Types.DOM.Node.t /* Inserted node data. */,
     };
 
@@ -427,7 +485,9 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "parentNodeId"]
       parentNodeId: Types.DOM.NodeId.t, /* Parent id. */
+      [@key "nodeId"]
       nodeId: Types.DOM.NodeId.t /* Id of the node that has been removed. */,
     };
 
@@ -446,7 +506,9 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "insertionPointId"]
       insertionPointId: Types.DOM.NodeId.t, /* Insertion point where distributed nodes were updated. */
+      [@key "distributedNodes"]
       distributedNodes: list(Types.DOM.BackendNode.t) /* Distributed nodes for given insertion point. */,
     };
 
@@ -481,6 +543,7 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "nodeIds"]
       nodeIds: list(Types.DOM.NodeId.t) /* Ids of the nodes for which the inline styles have been invalidated. */,
     };
 
@@ -499,7 +562,9 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "parentId"]
       parentId: Types.DOM.NodeId.t, /* Pseudo element's parent element id. */
+      [@key "pseudoElement"]
       pseudoElement: Types.DOM.Node.t /* The added pseudo element. */,
     };
 
@@ -518,7 +583,9 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "parentId"]
       parentId: Types.DOM.NodeId.t, /* Pseudo element's parent element id. */
+      [@key "pseudoElementId"]
       pseudoElementId: Types.DOM.NodeId.t /* The removed pseudo element id. */,
     };
 
@@ -538,7 +605,9 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "parentId"]
       parentId: Types.DOM.NodeId.t, /* Parent node id to populate with children. */
+      [@key "nodes"]
       nodes: list(Types.DOM.Node.t) /* Child nodes array. */,
     };
 
@@ -557,7 +626,9 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "hostId"]
       hostId: Types.DOM.NodeId.t, /* Host element id. */
+      [@key "rootId"]
       rootId: Types.DOM.NodeId.t /* Shadow root id. */,
     };
 
@@ -576,7 +647,9 @@ module DOM = {
 
     [@deriving yojson]
     type result = {
+      [@key "hostId"]
       hostId: Types.DOM.NodeId.t, /* Host element id. */
+      [@key "root"]
       root: Types.DOM.Node.t /* Shadow root. */,
     };
 
@@ -597,8 +670,11 @@ module DOMStorage = {
 
     [@deriving yojson]
     type result = {
+      [@key "storageId"]
       storageId: Types.DOMStorage.StorageId.t, /* No description provided */
+      [@key "key"]
       key: string, /* No description provided */
+      [@key "newValue"]
       newValue: string /* No description provided */,
     };
 
@@ -617,7 +693,9 @@ module DOMStorage = {
 
     [@deriving yojson]
     type result = {
+      [@key "storageId"]
       storageId: Types.DOMStorage.StorageId.t, /* No description provided */
+      [@key "key"]
       key: string /* No description provided */,
     };
 
@@ -636,9 +714,13 @@ module DOMStorage = {
 
     [@deriving yojson]
     type result = {
+      [@key "storageId"]
       storageId: Types.DOMStorage.StorageId.t, /* No description provided */
+      [@key "key"]
       key: string, /* No description provided */
+      [@key "oldValue"]
       oldValue: string, /* No description provided */
+      [@key "newValue"]
       newValue: string /* No description provided */,
     };
 
@@ -657,6 +739,7 @@ module DOMStorage = {
 
     [@deriving yojson]
     type result = {
+      [@key "storageId"]
       storageId: Types.DOMStorage.StorageId.t /* No description provided */,
     };
 
@@ -677,6 +760,7 @@ module Database = {
 
     [@deriving yojson]
     type result = {
+      [@key "database"]
       database: Types.Database.Database.t /* No description provided */,
     };
 
@@ -717,6 +801,7 @@ module HeadlessExperimental = {
 
     [@deriving yojson]
     type result = {
+      [@key "needsBeginFrames"]
       needsBeginFrames: bool /* True if BeginFrames are needed, false otherwise. */,
     };
 
@@ -738,6 +823,7 @@ module Input = {
 
     [@deriving yojson]
     type result = {
+      [@key "data"]
       data: Types.Input.DragData.t /* No description provided */,
     };
 
@@ -758,6 +844,7 @@ module Inspector = {
 
     [@deriving yojson]
     type result = {
+      [@key "reason"]
       reason: string /* The reason why connection has been terminated. */,
     };
 
@@ -810,7 +897,9 @@ module LayerTree = {
 
     [@deriving yojson]
     type result = {
+      [@key "layerId"]
       layerId: Types.LayerTree.LayerId.t, /* The id of the painted layer. */
+      [@key "clip"]
       clip: Types.DOM.Rect.t /* Clip rectangle. */,
     };
 
@@ -829,7 +918,7 @@ module LayerTree = {
 
     [@deriving yojson]
     type result = {
-      [@yojson.option]
+      [@yojson.option] [@key "layers"]
       layers: option(list(Types.LayerTree.Layer.t)) /* Layer tree, absent if not in the comspositing mode. */,
     };
 
@@ -849,7 +938,10 @@ module Log = {
     let name = "Log.entryAdded";
 
     [@deriving yojson]
-    type result = {entry: Types.Log.LogEntry.t /* The entry. */};
+    type result = {
+      [@key "entry"]
+      entry: Types.Log.LogEntry.t /* The entry. */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -868,9 +960,13 @@ module Network = {
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
+      [@key "dataLength"]
       dataLength: float, /* Data chunk length. */
+      [@key "encodedDataLength"]
       encodedDataLength: float /* Actual bytes received (might be less than dataLength for compressed encodings). */,
     };
 
@@ -889,10 +985,15 @@ module Network = {
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
+      [@key "eventName"]
       eventName: string, /* Message type. */
+      [@key "eventId"]
       eventId: string, /* Message identifier. */
+      [@key "data"]
       data: string /* Message content. */,
     };
 
@@ -911,16 +1012,19 @@ module Network = {
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
       [@key "type"]
       type_: Types.Network.ResourceType.t, /* Resource type. */
+      [@key "errorText"]
       errorText: string, /* User friendly error message. */
-      [@yojson.option]
+      [@yojson.option] [@key "canceled"]
       canceled: option(bool), /* True if loading was canceled. */
-      [@yojson.option]
+      [@yojson.option] [@key "blockedReason"]
       blockedReason: option(Types.Network.BlockedReason.t), /* The reason why loading was blocked, if any. */
-      [@yojson.option]
+      [@yojson.option] [@key "corsErrorStatus"]
       corsErrorStatus: option(Types.Network.CorsErrorStatus.t) /* The reason why loading was blocked by CORS, if any. */,
     };
 
@@ -939,10 +1043,13 @@ module Network = {
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
+      [@key "encodedDataLength"]
       encodedDataLength: float, /* Total number of bytes received for this request. */
-      [@yojson.option]
+      [@yojson.option] [@key "shouldReportCorbBlocking"]
       shouldReportCorbBlocking: option(bool) /* Set when 1) response was blocked by Cross-Origin Read Blocking and also
 2) this needs to be reported to the DevTools console. */,
     };
@@ -964,31 +1071,36 @@ module Network = {
 
     [@deriving yojson]
     type result = {
+      [@key "interceptionId"]
       interceptionId: Types.Network.InterceptionId.t, /* Each request the page makes will have a unique id, however if any redirects are encountered
 while processing that fetch, they will be reported with the same id as the original fetch.
 Likewise if HTTP authentication is needed then the same fetch id will be used. */
+      [@key "request"]
       request: Types.Network.Request.t, /* No description provided */
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* The id of the frame that initiated the request. */
+      [@key "resourceType"]
       resourceType: Types.Network.ResourceType.t, /* How the requested resource will be used. */
+      [@key "isNavigationRequest"]
       isNavigationRequest: bool, /* Whether this is a navigation request, which can abort the navigation completely. */
-      [@yojson.option]
+      [@yojson.option] [@key "isDownload"]
       isDownload: option(bool), /* Set if the request is a navigation that will result in a download.
 Only present after response is received from the server (i.e. HeadersReceived stage). */
-      [@yojson.option]
+      [@yojson.option] [@key "redirectUrl"]
       redirectUrl: option(string), /* Redirect location, only sent if a redirect was intercepted. */
-      [@yojson.option]
+      [@yojson.option] [@key "authChallenge"]
       authChallenge: option(Types.Network.AuthChallenge.t), /* Details of the Authorization Challenge encountered. If this is set then
 continueInterceptedRequest must contain an authChallengeResponse. */
-      [@yojson.option]
+      [@yojson.option] [@key "responseErrorReason"]
       responseErrorReason: option(Types.Network.ErrorReason.t), /* Response error if intercepted at response stage or if redirect occurred while intercepting
 request. */
-      [@yojson.option]
+      [@yojson.option] [@key "responseStatusCode"]
       responseStatusCode: option(float), /* Response code if intercepted at response stage or if redirect occurred while intercepting
 request or auth retry occurred. */
-      [@yojson.option]
+      [@yojson.option] [@key "responseHeaders"]
       responseHeaders: option(Types.Network.Headers.t), /* Response headers if intercepted at the response stage or if redirect occurred while
 intercepting request or auth retry occurred. */
-      [@yojson.option]
+      [@yojson.option] [@key "requestId"]
       requestId: option(Types.Network.RequestId.t) /* If the intercepted request had a corresponding requestWillBeSent event fired for it, then
 this requestId will be the same as the requestId present in the requestWillBeSent event. */,
     };
@@ -1008,6 +1120,7 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t /* Request identifier. */,
     };
 
@@ -1026,20 +1139,27 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "loaderId"]
       loaderId: Types.Network.LoaderId.t, /* Loader identifier. Empty string if the request is fetched from worker. */
+      [@key "documentURL"]
       documentURL: string, /* URL of the document this request is loaded for. */
+      [@key "request"]
       request: Types.Network.Request.t, /* Request data. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
+      [@key "wallTime"]
       wallTime: Types.Network.TimeSinceEpoch.t, /* Timestamp. */
+      [@key "initiator"]
       initiator: Types.Network.Initiator.t, /* Request initiator. */
-      [@yojson.option]
+      [@yojson.option] [@key "redirectResponse"]
       redirectResponse: option(Types.Network.Response.t), /* Redirect response data. */
       [@yojson.option] [@key "type"]
       type_: option(Types.Network.ResourceType.t), /* Type of this resource. */
-      [@yojson.option]
+      [@yojson.option] [@key "frameId"]
       frameId: option(Types.Page.FrameId.t), /* Frame identifier. */
-      [@yojson.option]
+      [@yojson.option] [@key "hasUserGesture"]
       hasUserGesture: option(bool) /* Whether the request is initiated by a user gesture. Defaults to false. */,
     };
 
@@ -1058,8 +1178,11 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "newPriority"]
       newPriority: Types.Network.ResourcePriority.t, /* New priority */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t /* Timestamp. */,
     };
 
@@ -1078,7 +1201,9 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "info"]
       info: Types.Network.SignedExchangeInfo.t /* Information about the signed exchange response. */,
     };
 
@@ -1097,13 +1222,17 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "loaderId"]
       loaderId: Types.Network.LoaderId.t, /* Loader identifier. Empty string if the request is fetched from worker. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
       [@key "type"]
       type_: Types.Network.ResourceType.t, /* Resource type. */
+      [@key "response"]
       response: Types.Network.Response.t, /* Response data. */
-      [@yojson.option]
+      [@yojson.option] [@key "frameId"]
       frameId: option(Types.Page.FrameId.t) /* Frame identifier. */,
     };
 
@@ -1122,7 +1251,9 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t /* Timestamp. */,
     };
 
@@ -1141,9 +1272,11 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "url"]
       url: string, /* WebSocket request URL. */
-      [@yojson.option]
+      [@yojson.option] [@key "initiator"]
       initiator: option(Types.Network.Initiator.t) /* Request initiator. */,
     };
 
@@ -1162,8 +1295,11 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
+      [@key "errorMessage"]
       errorMessage: string /* WebSocket error message. */,
     };
 
@@ -1182,8 +1318,11 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
+      [@key "response"]
       response: Types.Network.WebSocketFrame.t /* WebSocket response data. */,
     };
 
@@ -1202,8 +1341,11 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
+      [@key "response"]
       response: Types.Network.WebSocketFrame.t /* WebSocket response data. */,
     };
 
@@ -1222,8 +1364,11 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
+      [@key "response"]
       response: Types.Network.WebSocketResponse.t /* WebSocket response data. */,
     };
 
@@ -1242,9 +1387,13 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
+      [@key "wallTime"]
       wallTime: Types.Network.TimeSinceEpoch.t, /* UTC Timestamp. */
+      [@key "request"]
       request: Types.Network.WebSocketRequest.t /* WebSocket request data. */,
     };
 
@@ -1263,10 +1412,13 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "transportId"]
       transportId: Types.Network.RequestId.t, /* WebTransport identifier. */
+      [@key "url"]
       url: string, /* WebTransport request URL. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
-      [@yojson.option]
+      [@yojson.option] [@key "initiator"]
       initiator: option(Types.Network.Initiator.t) /* Request initiator. */,
     };
 
@@ -1285,7 +1437,9 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "transportId"]
       transportId: Types.Network.RequestId.t, /* WebTransport identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t /* Timestamp. */,
     };
 
@@ -1304,7 +1458,9 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "transportId"]
       transportId: Types.Network.RequestId.t, /* WebTransport identifier. */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t /* Timestamp. */,
     };
 
@@ -1326,11 +1482,14 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. Used to match this information to an existing requestWillBeSent event. */
+      [@key "associatedCookies"]
       associatedCookies: list(Types.Network.BlockedCookieWithReason.t), /* A list of cookies potentially associated to the requested URL. This includes both cookies sent with
 the request and the ones not sent; the latter are distinguished by having blockedReason field set. */
+      [@key "headers"]
       headers: Types.Network.Headers.t, /* Raw request headers as they will be sent over the wire. */
-      [@yojson.option]
+      [@yojson.option] [@key "clientSecurityState"]
       clientSecurityState: option(Types.Network.ClientSecurityState.t) /* The client security state set for the request. */,
     };
 
@@ -1351,14 +1510,18 @@ the request and the ones not sent; the latter are distinguished by having blocke
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* Request identifier. Used to match this information to another responseReceived event. */
+      [@key "blockedCookies"]
       blockedCookies: list(Types.Network.BlockedSetCookieWithReason.t), /* A list of cookies which were not stored from the response along with the corresponding
 reasons for blocking. The cookies here may not be valid due to syntax errors, which
 are represented by the invalid cookie line string instead of a proper cookie. */
+      [@key "headers"]
       headers: Types.Network.Headers.t, /* Raw response headers as they were received over the wire. */
+      [@key "resourceIPAddressSpace"]
       resourceIPAddressSpace: Types.Network.IPAddressSpace.t, /* The IP address space of the resource. The address space can only be determined once the transport
 established the connection, so we can't send it in `requestWillBeSentExtraInfo`. */
-      [@yojson.option]
+      [@yojson.option] [@key "headersText"]
       headersText: option(string) /* Raw response header text as it was received over the wire. The raw text may not always be
 available, such as in the case of HTTP/2 or QUIC. */,
     };
@@ -1379,20 +1542,61 @@ available, such as in the case of HTTP/2 or QUIC. */,
   module TrustTokenOperationDone = {
     let name = "Network.trustTokenOperationDone";
 
+    type trusttokenoperationdone_status = [
+      | `Ok
+      | `InvalidArgument
+      | `FailedPrecondition
+      | `ResourceExhausted
+      | `AlreadyExists
+      | `Unavailable
+      | `BadResponse
+      | `InternalError
+      | `UnknownError
+      | `FulfilledLocally
+    ];
+    let trusttokenoperationdone_status_of_yojson =
+      fun
+      | `String("Ok") => `Ok
+      | `String("InvalidArgument") => `InvalidArgument
+      | `String("FailedPrecondition") => `FailedPrecondition
+      | `String("ResourceExhausted") => `ResourceExhausted
+      | `String("AlreadyExists") => `AlreadyExists
+      | `String("Unavailable") => `Unavailable
+      | `String("BadResponse") => `BadResponse
+      | `String("InternalError") => `InternalError
+      | `String("UnknownError") => `UnknownError
+      | `String("FulfilledLocally") => `FulfilledLocally
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of_trusttokenoperationdone_status =
+      fun
+      | `Ok => `String("Ok")
+      | `InvalidArgument => `String("InvalidArgument")
+      | `FailedPrecondition => `String("FailedPrecondition")
+      | `ResourceExhausted => `String("ResourceExhausted")
+      | `AlreadyExists => `String("AlreadyExists")
+      | `Unavailable => `String("Unavailable")
+      | `BadResponse => `String("BadResponse")
+      | `InternalError => `String("InternalError")
+      | `UnknownError => `String("UnknownError")
+      | `FulfilledLocally => `String("FulfilledLocally");
+
     [@deriving yojson]
     type result = {
-      status: string, /* Detailed success or error status of the operation.
+      [@key "status"]
+      status: trusttokenoperationdone_status, /* Detailed success or error status of the operation.
 'AlreadyExists' also signifies a successful operation, as the result
 of the operation already exists und thus, the operation was abort
 preemptively (e.g. a cache hit). */
       [@key "type"]
       type_: Types.Network.TrustTokenOperationType.t, /* No description provided */
+      [@key "requestId"]
       requestId: Types.Network.RequestId.t, /* No description provided */
-      [@yojson.option]
+      [@yojson.option] [@key "topLevelOrigin"]
       topLevelOrigin: option(string), /* Top level origin. The context in which the operation was attempted. */
-      [@yojson.option]
+      [@yojson.option] [@key "issuerOrigin"]
       issuerOrigin: option(string), /* Origin of the issuer in case of a "Issuance" or "Redemption" operation. */
-      [@yojson.option]
+      [@yojson.option] [@key "issuedTokenCount"]
       issuedTokenCount: option(float) /* The number of obtained Trust Tokens on a successful "Issuance" operation. */,
     };
 
@@ -1414,6 +1618,7 @@ module Overlay = {
 
     [@deriving yojson]
     type result = {
+      [@key "backendNodeId"]
       backendNodeId: Types.DOM.BackendNodeId.t /* Id of the node to inspect. */,
     };
 
@@ -1431,7 +1636,10 @@ module Overlay = {
     let name = "Overlay.nodeHighlightRequested";
 
     [@deriving yojson]
-    type result = {nodeId: Types.DOM.NodeId.t /* No description provided */};
+    type result = {
+      [@key "nodeId"]
+      nodeId: Types.DOM.NodeId.t /* No description provided */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -1448,6 +1656,7 @@ module Overlay = {
 
     [@deriving yojson]
     type result = {
+      [@key "viewport"]
       viewport: Types.Page.Viewport.t /* Viewport to capture, in device independent pixels (dip). */,
     };
 
@@ -1484,6 +1693,7 @@ module Page = {
 
     [@deriving yojson]
     type result = {
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t /* No description provided */,
     };
 
@@ -1500,11 +1710,26 @@ module Page = {
   module FileChooserOpened = {
     let name = "Page.fileChooserOpened";
 
+    type filechooseropened_mode = [ | `selectSingle | `selectMultiple];
+    let filechooseropened_mode_of_yojson =
+      fun
+      | `String("selectSingle") => `selectSingle
+      | `String("selectMultiple") => `selectMultiple
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of_filechooseropened_mode =
+      fun
+      | `selectSingle => `String("selectSingle")
+      | `selectMultiple => `String("selectMultiple");
+
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame containing input node. */
+      [@key "backendNodeId"]
       backendNodeId: Types.DOM.BackendNodeId.t, /* Input node id. */
-      mode: string /* Input mode. */,
+      [@key "mode"]
+      mode: filechooseropened_mode /* Input mode. */,
     };
 
     [@deriving yojson]
@@ -1522,9 +1747,11 @@ module Page = {
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame that has been attached. */
+      [@key "parentFrameId"]
       parentFrameId: Types.Page.FrameId.t, /* Parent frame identifier. */
-      [@yojson.option]
+      [@yojson.option] [@key "stack"]
       stack: option(Types.Runtime.StackTrace.t) /* JavaScript stack trace of when frame was attached, only set if frame initiated from script. */,
     };
 
@@ -1543,6 +1770,7 @@ module Page = {
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t /* Id of the frame that has cleared its scheduled navigation. */,
     };
 
@@ -1559,10 +1787,24 @@ module Page = {
   module FrameDetached = {
     let name = "Page.frameDetached";
 
+    type framedetached_reason = [ | `remove | `swap];
+    let framedetached_reason_of_yojson =
+      fun
+      | `String("remove") => `remove
+      | `String("swap") => `swap
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of_framedetached_reason =
+      fun
+      | `remove => `String("remove")
+      | `swap => `String("swap");
+
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame that has been detached. */
-      reason: string /* No description provided */,
+      [@key "reason"]
+      reason: framedetached_reason /* No description provided */,
     };
 
     [@deriving yojson]
@@ -1580,6 +1822,7 @@ module Page = {
 
     [@deriving yojson]
     type result = {
+      [@key "frame"]
       frame: Types.Page.Frame.t, /* Frame object. */
       [@key "type"]
       type_: Types.Page.NavigationType.t /* No description provided */,
@@ -1599,7 +1842,10 @@ module Page = {
     let name = "Page.documentOpened";
 
     [@deriving yojson]
-    type result = {frame: Types.Page.Frame.t /* Frame object. */};
+    type result = {
+      [@key "frame"]
+      frame: Types.Page.Frame.t /* Frame object. */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -1633,9 +1879,13 @@ module Page = {
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame that is being navigated. */
+      [@key "reason"]
       reason: Types.Page.ClientNavigationReason.t, /* The reason for the navigation. */
+      [@key "url"]
       url: string, /* The destination URL for the requested navigation. */
+      [@key "disposition"]
       disposition: Types.Page.ClientNavigationDisposition.t /* The disposition for the navigation. */,
     };
 
@@ -1654,10 +1904,14 @@ module Page = {
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame that has scheduled a navigation. */
+      [@key "delay"]
       delay: float, /* Delay (in seconds) until the navigation is scheduled to begin. The navigation is not
 guaranteed to start. */
+      [@key "reason"]
       reason: Types.Page.ClientNavigationReason.t, /* The reason for the navigation. */
+      [@key "url"]
       url: string /* The destination URL for the scheduled navigation. */,
     };
 
@@ -1676,6 +1930,7 @@ guaranteed to start. */
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t /* Id of the frame that has started loading. */,
     };
 
@@ -1694,6 +1949,7 @@ guaranteed to start. */
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t /* Id of the frame that has stopped loading. */,
     };
 
@@ -1713,9 +1969,13 @@ guaranteed to start. */
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame that caused download to begin. */
+      [@key "guid"]
       guid: string, /* Global unique identifier of the download. */
+      [@key "url"]
       url: string, /* URL of the resource being downloaded. */
+      [@key "suggestedFilename"]
       suggestedFilename: string /* Suggested file name of the resource (the actual name of the file saved on disk may differ). */,
     };
 
@@ -1733,12 +1993,30 @@ guaranteed to start. */
   module DownloadProgress = {
     let name = "Page.downloadProgress";
 
+    type downloadprogress_state = [ | `inProgress | `completed | `canceled];
+    let downloadprogress_state_of_yojson =
+      fun
+      | `String("inProgress") => `inProgress
+      | `String("completed") => `completed
+      | `String("canceled") => `canceled
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of_downloadprogress_state =
+      fun
+      | `inProgress => `String("inProgress")
+      | `completed => `String("completed")
+      | `canceled => `String("canceled");
+
     [@deriving yojson]
     type result = {
+      [@key "guid"]
       guid: string, /* Global unique identifier of the download. */
+      [@key "totalBytes"]
       totalBytes: float, /* Total expected bytes to download. */
+      [@key "receivedBytes"]
       receivedBytes: float, /* Total bytes received. */
-      state: string /* Download status. */,
+      [@key "state"]
+      state: downloadprogress_state /* Download status. */,
     };
 
     [@deriving yojson]
@@ -1789,7 +2067,9 @@ guaranteed to start. */
 
     [@deriving yojson]
     type result = {
+      [@key "result"]
       result: bool, /* Whether dialog was confirmed. */
+      [@key "userInput"]
       userInput: string /* User input in case of prompt. */,
     };
 
@@ -1809,14 +2089,17 @@ guaranteed to start. */
 
     [@deriving yojson]
     type result = {
+      [@key "url"]
       url: string, /* Frame url. */
+      [@key "message"]
       message: string, /* Message that will be displayed by the dialog. */
       [@key "type"]
       type_: Types.Page.DialogType.t, /* Dialog type. */
+      [@key "hasBrowserHandler"]
       hasBrowserHandler: bool, /* True iff browser is capable showing or acting on the given dialog. When browser has no
 dialog handler for given target, calling alert while Page domain is engaged will stall
 the page execution. Execution can be resumed via calling Page.handleJavaScriptDialog. */
-      [@yojson.option]
+      [@yojson.option] [@key "defaultPrompt"]
       defaultPrompt: option(string) /* Default dialog prompt. */,
     };
 
@@ -1835,9 +2118,13 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame. */
+      [@key "loaderId"]
       loaderId: Types.Network.LoaderId.t, /* Loader identifier. Empty string if the request is fetched from worker. */
+      [@key "name"]
       name: string, /* No description provided */
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t /* No description provided */,
     };
 
@@ -1859,7 +2146,9 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
 
     [@deriving yojson]
     type result = {
+      [@key "loaderId"]
       loaderId: Types.Network.LoaderId.t, /* The loader id for the associated navgation. */
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t /* The frame id of the associated frame. */,
     };
 
@@ -1878,6 +2167,7 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
 
     [@deriving yojson]
     type result = {
+      [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t /* No description provided */,
     };
 
@@ -1896,7 +2186,9 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
 
     [@deriving yojson]
     type result = {
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame. */
+      [@key "url"]
       url: string /* Frame's new url. */,
     };
 
@@ -1915,8 +2207,11 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
 
     [@deriving yojson]
     type result = {
+      [@key "data"]
       data: string, /* Base64-encoded compressed image. (Encoded as a base64 string when passed over JSON) */
+      [@key "metadata"]
       metadata: Types.Page.ScreencastFrameMetadata.t, /* Screencast frame metadata. */
+      [@key "sessionId"]
       sessionId: float /* Frame number. */,
     };
 
@@ -1934,7 +2229,10 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
     let name = "Page.screencastVisibilityChanged";
 
     [@deriving yojson]
-    type result = {visible: bool /* True if the page is visible. */};
+    type result = {
+      [@key "visible"]
+      visible: bool /* True if the page is visible. */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -1952,9 +2250,13 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
 
     [@deriving yojson]
     type result = {
+      [@key "url"]
       url: string, /* The URL for the new window. */
+      [@key "windowName"]
       windowName: string, /* Window name. */
+      [@key "windowFeatures"]
       windowFeatures: list(string), /* An array of enabled window features. */
+      [@key "userGesture"]
       userGesture: bool /* Whether or not it was triggered by user gesture. */,
     };
 
@@ -1974,7 +2276,9 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
 
     [@deriving yojson]
     type result = {
+      [@key "url"]
       url: string, /* No description provided */
+      [@key "data"]
       data: string /* Base64-encoded data (Encoded as a base64 string when passed over JSON) */,
     };
 
@@ -1995,7 +2299,9 @@ module Performance = {
 
     [@deriving yojson]
     type result = {
+      [@key "metrics"]
       metrics: list(Types.Performance.Metric.t), /* Current values of the metrics. */
+      [@key "title"]
       title: string /* Timestamp title. */,
     };
 
@@ -2016,6 +2322,7 @@ module PerformanceTimeline = {
 
     [@deriving yojson]
     type result = {
+      [@key "event"]
       event: Types.PerformanceTimeline.TimelineEvent.t /* No description provided */,
     };
 
@@ -2039,8 +2346,11 @@ module Security = {
 
     [@deriving yojson]
     type result = {
+      [@key "eventId"]
       eventId: float, /* The ID of the event. */
+      [@key "errorType"]
       errorType: string, /* The type of the error. */
+      [@key "requestURL"]
       requestURL: string /* The url that was requested. */,
     };
 
@@ -2059,6 +2369,7 @@ module Security = {
 
     [@deriving yojson]
     type result = {
+      [@key "visibleSecurityState"]
       visibleSecurityState: Types.Security.VisibleSecurityState.t /* Security state information about the page. */,
     };
 
@@ -2077,12 +2388,16 @@ module Security = {
 
     [@deriving yojson]
     type result = {
+      [@key "securityState"]
       securityState: Types.Security.SecurityState.t, /* Security state. */
+      [@key "schemeIsCryptographic"]
       schemeIsCryptographic: bool, /* True if the page was loaded over cryptographic transport such as HTTPS. */
+      [@key "explanations"]
       explanations: list(Types.Security.SecurityStateExplanation.t), /* List of explanations for the security state. If the overall security state is `insecure` or
 `warning`, at least one corresponding explanation should be included. */
+      [@key "insecureContentStatus"]
       insecureContentStatus: Types.Security.InsecureContentStatus.t, /* Information about insecure content on the page. */
-      [@yojson.option]
+      [@yojson.option] [@key "summary"]
       summary: option(string) /* Overrides user-visible description of the state. */,
     };
 
@@ -2103,6 +2418,7 @@ module ServiceWorker = {
 
     [@deriving yojson]
     type result = {
+      [@key "errorMessage"]
       errorMessage: Types.ServiceWorker.ServiceWorkerErrorMessage.t /* No description provided */,
     };
 
@@ -2121,6 +2437,7 @@ module ServiceWorker = {
 
     [@deriving yojson]
     type result = {
+      [@key "registrations"]
       registrations: list(Types.ServiceWorker.ServiceWorkerRegistration.t) /* No description provided */,
     };
 
@@ -2139,6 +2456,7 @@ module ServiceWorker = {
 
     [@deriving yojson]
     type result = {
+      [@key "versions"]
       versions: list(Types.ServiceWorker.ServiceWorkerVersion.t) /* No description provided */,
     };
 
@@ -2159,7 +2477,9 @@ module Storage = {
 
     [@deriving yojson]
     type result = {
+      [@key "origin"]
       origin: string, /* Origin to update. */
+      [@key "cacheName"]
       cacheName: string /* Name of cache in origin. */,
     };
 
@@ -2177,7 +2497,10 @@ module Storage = {
     let name = "Storage.cacheStorageListUpdated";
 
     [@deriving yojson]
-    type result = {origin: string /* Origin to update. */};
+    type result = {
+      [@key "origin"]
+      origin: string /* Origin to update. */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -2194,8 +2517,11 @@ module Storage = {
 
     [@deriving yojson]
     type result = {
+      [@key "origin"]
       origin: string, /* Origin to update. */
+      [@key "databaseName"]
       databaseName: string, /* Database to update. */
+      [@key "objectStoreName"]
       objectStoreName: string /* ObjectStore to update. */,
     };
 
@@ -2213,7 +2539,10 @@ module Storage = {
     let name = "Storage.indexedDBListUpdated";
 
     [@deriving yojson]
-    type result = {origin: string /* Origin to update. */};
+    type result = {
+      [@key "origin"]
+      origin: string /* Origin to update. */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -2232,8 +2561,11 @@ module Target = {
 
     [@deriving yojson]
     type result = {
+      [@key "sessionId"]
       sessionId: Types.Target.SessionID.t, /* Identifier assigned to the session used to send/receive messages. */
+      [@key "targetInfo"]
       targetInfo: Types.Target.TargetInfo.t, /* No description provided */
+      [@key "waitingForDebugger"]
       waitingForDebugger: bool /* No description provided */,
     };
 
@@ -2253,8 +2585,9 @@ module Target = {
 
     [@deriving yojson]
     type result = {
+      [@key "sessionId"]
       sessionId: Types.Target.SessionID.t, /* Detached session identifier. */
-      [@yojson.option]
+      [@yojson.option] [@key "targetId"]
       targetId: option(Types.Target.TargetID.t) /* Deprecated. */,
     };
 
@@ -2274,9 +2607,11 @@ module Target = {
 
     [@deriving yojson]
     type result = {
+      [@key "sessionId"]
       sessionId: Types.Target.SessionID.t, /* Identifier of a session which sends a message. */
+      [@key "message"]
       message: string, /* No description provided */
-      [@yojson.option]
+      [@yojson.option] [@key "targetId"]
       targetId: option(Types.Target.TargetID.t) /* Deprecated. */,
     };
 
@@ -2295,6 +2630,7 @@ module Target = {
 
     [@deriving yojson]
     type result = {
+      [@key "targetInfo"]
       targetInfo: Types.Target.TargetInfo.t /* No description provided */,
     };
 
@@ -2313,6 +2649,7 @@ module Target = {
 
     [@deriving yojson]
     type result = {
+      [@key "targetId"]
       targetId: Types.Target.TargetID.t /* No description provided */,
     };
 
@@ -2331,8 +2668,11 @@ module Target = {
 
     [@deriving yojson]
     type result = {
+      [@key "targetId"]
       targetId: Types.Target.TargetID.t, /* No description provided */
+      [@key "status"]
       status: string, /* Termination status type. */
+      [@key "errorCode"]
       errorCode: float /* Termination error code. */,
     };
 
@@ -2352,6 +2692,7 @@ module Target = {
 
     [@deriving yojson]
     type result = {
+      [@key "targetInfo"]
       targetInfo: Types.Target.TargetInfo.t /* No description provided */,
     };
 
@@ -2372,7 +2713,9 @@ module Tethering = {
 
     [@deriving yojson]
     type result = {
+      [@key "port"]
       port: float, /* Port number that was successfully bound. */
+      [@key "connectionId"]
       connectionId: string /* Connection id to be used. */,
     };
 
@@ -2393,12 +2736,12 @@ module Tracing = {
 
     [@deriving yojson]
     type result = {
-      [@yojson.option]
+      [@yojson.option] [@key "percentFull"]
       percentFull: option(float), /* A number in range [0..1] that indicates the used size of event buffer as a fraction of its
 total size. */
-      [@yojson.option]
+      [@yojson.option] [@key "eventCount"]
       eventCount: option(float), /* An approximate number of events in the trace log. */
-      [@yojson.option]
+      [@yojson.option] [@key "value"]
       value: option(float) /* A number in range [0..1] that indicates the used size of event buffer as a fraction of its
 total size. */,
     };
@@ -2418,7 +2761,10 @@ total size. */,
     let name = "Tracing.dataCollected";
 
     [@deriving yojson]
-    type result = {value: list(Types.assoc) /* No description provided */};
+    type result = {
+      [@key "value"]
+      value: list(Types.assoc) /* No description provided */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -2436,13 +2782,14 @@ total size. */,
 
     [@deriving yojson]
     type result = {
+      [@key "dataLossOccurred"]
       dataLossOccurred: bool, /* Indicates whether some trace data is known to have been lost, e.g. because the trace ring
 buffer wrapped around. */
-      [@yojson.option]
+      [@yojson.option] [@key "stream"]
       stream: option(Types.IO.StreamHandle.t), /* A handle of the stream that holds resulting trace data. */
-      [@yojson.option]
+      [@yojson.option] [@key "traceFormat"]
       traceFormat: option(Types.Tracing.StreamFormat.t), /* Trace data format of returned stream. */
-      [@yojson.option]
+      [@yojson.option] [@key "streamCompression"]
       streamCompression: option(Types.Tracing.StreamCompression.t) /* Compression format of returned stream. */,
     };
 
@@ -2468,17 +2815,21 @@ module Fetch = {
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Fetch.RequestId.t, /* Each request the page makes will have a unique id. */
+      [@key "request"]
       request: Types.Network.Request.t, /* The details of the request. */
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* The id of the frame that initiated the request. */
+      [@key "resourceType"]
       resourceType: Types.Network.ResourceType.t, /* How the requested resource will be used. */
-      [@yojson.option]
+      [@yojson.option] [@key "responseErrorReason"]
       responseErrorReason: option(Types.Network.ErrorReason.t), /* Response error if intercepted at response stage. */
-      [@yojson.option]
+      [@yojson.option] [@key "responseStatusCode"]
       responseStatusCode: option(float), /* Response code if intercepted at response stage. */
-      [@yojson.option]
+      [@yojson.option] [@key "responseHeaders"]
       responseHeaders: option(list(Types.Fetch.HeaderEntry.t)), /* Response headers if intercepted at the response stage. */
-      [@yojson.option]
+      [@yojson.option] [@key "networkId"]
       networkId: option(Types.Fetch.RequestId.t) /* If the intercepted request had a corresponding Network.requestWillBeSent event fired for it,
 then this networkId will be the same as the requestId present in the requestWillBeSent event. */,
     };
@@ -2499,10 +2850,15 @@ then this networkId will be the same as the requestId present in the requestWill
 
     [@deriving yojson]
     type result = {
+      [@key "requestId"]
       requestId: Types.Fetch.RequestId.t, /* Each request the page makes will have a unique id. */
+      [@key "request"]
       request: Types.Network.Request.t, /* The details of the request. */
+      [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* The id of the frame that initiated the request. */
+      [@key "resourceType"]
       resourceType: Types.Network.ResourceType.t, /* How the requested resource will be used. */
+      [@key "authChallenge"]
       authChallenge: Types.Fetch.AuthChallenge.t /* Details of the Authorization Challenge encountered.
 If this is set, client should respond with continueRequest that
 contains AuthChallengeResponse. */,
@@ -2525,6 +2881,7 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "context"]
       context: Types.WebAudio.BaseAudioContext.t /* No description provided */,
     };
 
@@ -2543,6 +2900,7 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "contextId"]
       contextId: Types.WebAudio.GraphObjectId.t /* No description provided */,
     };
 
@@ -2561,6 +2919,7 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "context"]
       context: Types.WebAudio.BaseAudioContext.t /* No description provided */,
     };
 
@@ -2579,6 +2938,7 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "listener"]
       listener: Types.WebAudio.AudioListener.t /* No description provided */,
     };
 
@@ -2597,7 +2957,9 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "contextId"]
       contextId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "listenerId"]
       listenerId: Types.WebAudio.GraphObjectId.t /* No description provided */,
     };
 
@@ -2616,6 +2978,7 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "node"]
       node: Types.WebAudio.AudioNode.t /* No description provided */,
     };
 
@@ -2634,7 +2997,9 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "contextId"]
       contextId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "nodeId"]
       nodeId: Types.WebAudio.GraphObjectId.t /* No description provided */,
     };
 
@@ -2653,6 +3018,7 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "param"]
       param: Types.WebAudio.AudioParam.t /* No description provided */,
     };
 
@@ -2671,8 +3037,11 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "contextId"]
       contextId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "nodeId"]
       nodeId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "paramId"]
       paramId: Types.WebAudio.GraphObjectId.t /* No description provided */,
     };
 
@@ -2691,12 +3060,15 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "contextId"]
       contextId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "sourceId"]
       sourceId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "destinationId"]
       destinationId: Types.WebAudio.GraphObjectId.t, /* No description provided */
-      [@yojson.option]
+      [@yojson.option] [@key "sourceOutputIndex"]
       sourceOutputIndex: option(float), /* No description provided */
-      [@yojson.option]
+      [@yojson.option] [@key "destinationInputIndex"]
       destinationInputIndex: option(float) /* No description provided */,
     };
 
@@ -2715,12 +3087,15 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "contextId"]
       contextId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "sourceId"]
       sourceId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "destinationId"]
       destinationId: Types.WebAudio.GraphObjectId.t, /* No description provided */
-      [@yojson.option]
+      [@yojson.option] [@key "sourceOutputIndex"]
       sourceOutputIndex: option(float), /* No description provided */
-      [@yojson.option]
+      [@yojson.option] [@key "destinationInputIndex"]
       destinationInputIndex: option(float) /* No description provided */,
     };
 
@@ -2739,10 +3114,13 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "contextId"]
       contextId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "sourceId"]
       sourceId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "destinationId"]
       destinationId: Types.WebAudio.GraphObjectId.t, /* No description provided */
-      [@yojson.option]
+      [@yojson.option] [@key "sourceOutputIndex"]
       sourceOutputIndex: option(float) /* No description provided */,
     };
 
@@ -2761,10 +3139,13 @@ module WebAudio = {
 
     [@deriving yojson]
     type result = {
+      [@key "contextId"]
       contextId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "sourceId"]
       sourceId: Types.WebAudio.GraphObjectId.t, /* No description provided */
+      [@key "destinationId"]
       destinationId: Types.WebAudio.GraphObjectId.t, /* No description provided */
-      [@yojson.option]
+      [@yojson.option] [@key "sourceOutputIndex"]
       sourceOutputIndex: option(float) /* No description provided */,
     };
 
@@ -2786,7 +3167,9 @@ module Media = {
 
     [@deriving yojson]
     type result = {
+      [@key "playerId"]
       playerId: Types.Media.PlayerId.t, /* No description provided */
+      [@key "properties"]
       properties: list(Types.Media.PlayerProperty.t) /* No description provided */,
     };
 
@@ -2806,7 +3189,9 @@ module Media = {
 
     [@deriving yojson]
     type result = {
+      [@key "playerId"]
       playerId: Types.Media.PlayerId.t, /* No description provided */
+      [@key "events"]
       events: list(Types.Media.PlayerEvent.t) /* No description provided */,
     };
 
@@ -2825,7 +3210,9 @@ module Media = {
 
     [@deriving yojson]
     type result = {
+      [@key "playerId"]
       playerId: Types.Media.PlayerId.t, /* No description provided */
+      [@key "messages"]
       messages: list(Types.Media.PlayerMessage.t) /* No description provided */,
     };
 
@@ -2844,7 +3231,9 @@ module Media = {
 
     [@deriving yojson]
     type result = {
+      [@key "playerId"]
       playerId: Types.Media.PlayerId.t, /* No description provided */
+      [@key "errors"]
       errors: list(Types.Media.PlayerError.t) /* No description provided */,
     };
 
@@ -2865,6 +3254,7 @@ module Media = {
 
     [@deriving yojson]
     type result = {
+      [@key "players"]
       players: list(Types.Media.PlayerId.t) /* No description provided */,
     };
 
@@ -2885,6 +3275,7 @@ module Console = {
 
     [@deriving yojson]
     type result = {
+      [@key "message"]
       message: Types.Console.ConsoleMessage.t /* Console message that has been added. */,
     };
 
@@ -2905,7 +3296,9 @@ module Debugger = {
 
     [@deriving yojson]
     type result = {
+      [@key "breakpointId"]
       breakpointId: Types.Debugger.BreakpointId.t, /* Breakpoint unique identifier. */
+      [@key "location"]
       location: Types.Debugger.Location.t /* Actual breakpoint location. */,
     };
 
@@ -2922,19 +3315,66 @@ module Debugger = {
   module Paused = {
     let name = "Debugger.paused";
 
+    type paused_reason = [
+      | `ambiguous
+      | `assert_
+      | `CSPViolation
+      | `debugCommand
+      | `DOM
+      | `EventListener
+      | `exception_
+      | `instrumentation
+      | `OOM
+      | `other
+      | `promiseRejection
+      | `XHR
+    ];
+    let paused_reason_of_yojson =
+      fun
+      | `String("ambiguous") => `ambiguous
+      | `String("assert") => `assert_
+      | `String("CSPViolation") => `CSPViolation
+      | `String("debugCommand") => `debugCommand
+      | `String("DOM") => `DOM
+      | `String("EventListener") => `EventListener
+      | `String("exception") => `exception_
+      | `String("instrumentation") => `instrumentation
+      | `String("OOM") => `OOM
+      | `String("other") => `other
+      | `String("promiseRejection") => `promiseRejection
+      | `String("XHR") => `XHR
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of_paused_reason =
+      fun
+      | `ambiguous => `String("ambiguous")
+      | `assert_ => `String("assert")
+      | `CSPViolation => `String("CSPViolation")
+      | `debugCommand => `String("debugCommand")
+      | `DOM => `String("DOM")
+      | `EventListener => `String("EventListener")
+      | `exception_ => `String("exception")
+      | `instrumentation => `String("instrumentation")
+      | `OOM => `String("OOM")
+      | `other => `String("other")
+      | `promiseRejection => `String("promiseRejection")
+      | `XHR => `String("XHR");
+
     [@deriving yojson]
     type result = {
+      [@key "callFrames"]
       callFrames: list(Types.Debugger.CallFrame.t), /* Call stack the virtual machine stopped on. */
-      reason: string, /* Pause reason. */
-      [@yojson.option]
+      [@key "reason"]
+      reason: paused_reason, /* Pause reason. */
+      [@yojson.option] [@key "data"]
       data: option(Types.assoc), /* Object containing break-specific auxiliary properties. */
-      [@yojson.option]
+      [@yojson.option] [@key "hitBreakpoints"]
       hitBreakpoints: option(list(string)), /* Hit breakpoints IDs */
-      [@yojson.option]
+      [@yojson.option] [@key "asyncStackTrace"]
       asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
-      [@yojson.option]
+      [@yojson.option] [@key "asyncStackTraceId"]
       asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
-      [@yojson.option]
+      [@yojson.option] [@key "asyncCallStackTraceId"]
       asyncCallStackTraceId: option(Types.Runtime.StackTraceId.t) /* Never present, will be removed. */,
     };
 
@@ -2969,31 +3409,39 @@ module Debugger = {
 
     [@deriving yojson]
     type result = {
+      [@key "scriptId"]
       scriptId: Types.Runtime.ScriptId.t, /* Identifier of the script parsed. */
+      [@key "url"]
       url: string, /* URL or name of the script parsed (if any). */
+      [@key "startLine"]
       startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
+      [@key "startColumn"]
       startColumn: float, /* Column offset of the script within the resource with given URL. */
+      [@key "endLine"]
       endLine: float, /* Last line of the script. */
+      [@key "endColumn"]
       endColumn: float, /* Length of the last line of the script. */
+      [@key "executionContextId"]
       executionContextId: Types.Runtime.ExecutionContextId.t, /* Specifies script creation context. */
+      [@key "hash"]
       hash: string, /* Content hash of the script. */
-      [@yojson.option]
+      [@yojson.option] [@key "executionContextAuxData"]
       executionContextAuxData: option(Types.assoc), /* Embedder-specific auxiliary data. */
-      [@yojson.option]
+      [@yojson.option] [@key "sourceMapURL"]
       sourceMapURL: option(string), /* URL of source map associated with script (if any). */
-      [@yojson.option]
+      [@yojson.option] [@key "hasSourceURL"]
       hasSourceURL: option(bool), /* True, if this script has sourceURL. */
-      [@yojson.option]
+      [@yojson.option] [@key "isModule"]
       isModule: option(bool), /* True, if this script is ES6 module. */
-      [@yojson.option]
+      [@yojson.option] [@key "length"]
       length: option(float), /* This script length. */
-      [@yojson.option]
+      [@yojson.option] [@key "stackTrace"]
       stackTrace: option(Types.Runtime.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
-      [@yojson.option]
+      [@yojson.option] [@key "codeOffset"]
       codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
-      [@yojson.option]
+      [@yojson.option] [@key "scriptLanguage"]
       scriptLanguage: option(Types.Debugger.ScriptLanguage.t), /* The language of the script. */
-      [@yojson.option]
+      [@yojson.option] [@key "embedderName"]
       embedderName: option(string) /* The name the embedder supplied for this script. */,
     };
 
@@ -3013,35 +3461,43 @@ module Debugger = {
 
     [@deriving yojson]
     type result = {
+      [@key "scriptId"]
       scriptId: Types.Runtime.ScriptId.t, /* Identifier of the script parsed. */
+      [@key "url"]
       url: string, /* URL or name of the script parsed (if any). */
+      [@key "startLine"]
       startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
+      [@key "startColumn"]
       startColumn: float, /* Column offset of the script within the resource with given URL. */
+      [@key "endLine"]
       endLine: float, /* Last line of the script. */
+      [@key "endColumn"]
       endColumn: float, /* Length of the last line of the script. */
+      [@key "executionContextId"]
       executionContextId: Types.Runtime.ExecutionContextId.t, /* Specifies script creation context. */
+      [@key "hash"]
       hash: string, /* Content hash of the script. */
-      [@yojson.option]
+      [@yojson.option] [@key "executionContextAuxData"]
       executionContextAuxData: option(Types.assoc), /* Embedder-specific auxiliary data. */
-      [@yojson.option]
+      [@yojson.option] [@key "isLiveEdit"]
       isLiveEdit: option(bool), /* True, if this script is generated as a result of the live edit operation. */
-      [@yojson.option]
+      [@yojson.option] [@key "sourceMapURL"]
       sourceMapURL: option(string), /* URL of source map associated with script (if any). */
-      [@yojson.option]
+      [@yojson.option] [@key "hasSourceURL"]
       hasSourceURL: option(bool), /* True, if this script has sourceURL. */
-      [@yojson.option]
+      [@yojson.option] [@key "isModule"]
       isModule: option(bool), /* True, if this script is ES6 module. */
-      [@yojson.option]
+      [@yojson.option] [@key "length"]
       length: option(float), /* This script length. */
-      [@yojson.option]
+      [@yojson.option] [@key "stackTrace"]
       stackTrace: option(Types.Runtime.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
-      [@yojson.option]
+      [@yojson.option] [@key "codeOffset"]
       codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
-      [@yojson.option]
+      [@yojson.option] [@key "scriptLanguage"]
       scriptLanguage: option(Types.Debugger.ScriptLanguage.t), /* The language of the script. */
-      [@yojson.option]
+      [@yojson.option] [@key "debugSymbols"]
       debugSymbols: option(Types.Debugger.DebugSymbols.t), /* If the scriptLanguage is WebASsembly, the source of debug symbols for the module. */
-      [@yojson.option]
+      [@yojson.option] [@key "embedderName"]
       embedderName: option(string) /* The name the embedder supplied for this script. */,
     };
 
@@ -3061,7 +3517,10 @@ module HeapProfiler = {
     let name = "HeapProfiler.addHeapSnapshotChunk";
 
     [@deriving yojson]
-    type result = {chunk: string /* No description provided */};
+    type result = {
+      [@key "chunk"]
+      chunk: string /* No description provided */,
+    };
 
     [@deriving yojson]
     type t = {
@@ -3078,6 +3537,7 @@ module HeapProfiler = {
 
     [@deriving yojson]
     type result = {
+      [@key "statsUpdate"]
       statsUpdate: list(float) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
 index, the second integer is a total count of objects for the fragment, the third integer is
 a total size of the objects for the fragment. */,
@@ -3100,7 +3560,9 @@ a total size of the objects for the fragment. */,
 
     [@deriving yojson]
     type result = {
+      [@key "lastSeenObjectId"]
       lastSeenObjectId: float, /* No description provided */
+      [@key "timestamp"]
       timestamp: float /* No description provided */,
     };
 
@@ -3121,8 +3583,9 @@ a total size of the objects for the fragment. */,
     type result = {
       [@key "done"]
       done_: float, /* No description provided */
+      [@key "total"]
       total: float, /* No description provided */
-      [@yojson.option]
+      [@yojson.option] [@key "finished"]
       finished: option(bool) /* No description provided */,
     };
 
@@ -3159,10 +3622,13 @@ module Profiler = {
 
     [@deriving yojson]
     type result = {
+      [@key "id"]
       id: string, /* No description provided */
+      [@key "location"]
       location: Types.Debugger.Location.t, /* Location of console.profileEnd(). */
+      [@key "profile"]
       profile: Types.Profiler.Profile.t, /* No description provided */
-      [@yojson.option]
+      [@yojson.option] [@key "title"]
       title: option(string) /* Profile title passed as an argument to console.profile(). */,
     };
 
@@ -3181,9 +3647,11 @@ module Profiler = {
 
     [@deriving yojson]
     type result = {
+      [@key "id"]
       id: string, /* No description provided */
+      [@key "location"]
       location: Types.Debugger.Location.t, /* Location of console.profile(). */
-      [@yojson.option]
+      [@yojson.option] [@key "title"]
       title: option(string) /* Profile title passed as an argument to console.profile(). */,
     };
 
@@ -3205,8 +3673,11 @@ module Profiler = {
 
     [@deriving yojson]
     type result = {
+      [@key "timestamp"]
       timestamp: float, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
+      [@key "occassion"]
       occassion: string, /* Identifier for distinguishing coverage events. */
+      [@key "result"]
       result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
     };
 
@@ -3227,8 +3698,11 @@ module Runtime = {
 
     [@deriving yojson]
     type result = {
+      [@key "name"]
       name: string, /* No description provided */
+      [@key "payload"]
       payload: string, /* No description provided */
+      [@key "executionContextId"]
       executionContextId: Types.Runtime.ExecutionContextId.t /* Identifier of the context where the call was made. */,
     };
 
@@ -3245,18 +3719,84 @@ module Runtime = {
   module ConsoleAPICalled = {
     let name = "Runtime.consoleAPICalled";
 
+    type consoleapicalled_type = [
+      | `log
+      | `debug
+      | `info
+      | `error
+      | `warning
+      | `dir
+      | `dirxml
+      | `table
+      | `trace
+      | `clear
+      | `startGroup
+      | `startGroupCollapsed
+      | `endGroup
+      | `assert_
+      | `profile
+      | `profileEnd
+      | `count
+      | `timeEnd
+    ];
+    let consoleapicalled_type_of_yojson =
+      fun
+      | `String("log") => `log
+      | `String("debug") => `debug
+      | `String("info") => `info
+      | `String("error") => `error
+      | `String("warning") => `warning
+      | `String("dir") => `dir
+      | `String("dirxml") => `dirxml
+      | `String("table") => `table
+      | `String("trace") => `trace
+      | `String("clear") => `clear
+      | `String("startGroup") => `startGroup
+      | `String("startGroupCollapsed") => `startGroupCollapsed
+      | `String("endGroup") => `endGroup
+      | `String("assert") => `assert_
+      | `String("profile") => `profile
+      | `String("profileEnd") => `profileEnd
+      | `String("count") => `count
+      | `String("timeEnd") => `timeEnd
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of_consoleapicalled_type =
+      fun
+      | `log => `String("log")
+      | `debug => `String("debug")
+      | `info => `String("info")
+      | `error => `String("error")
+      | `warning => `String("warning")
+      | `dir => `String("dir")
+      | `dirxml => `String("dirxml")
+      | `table => `String("table")
+      | `trace => `String("trace")
+      | `clear => `String("clear")
+      | `startGroup => `String("startGroup")
+      | `startGroupCollapsed => `String("startGroupCollapsed")
+      | `endGroup => `String("endGroup")
+      | `assert_ => `String("assert")
+      | `profile => `String("profile")
+      | `profileEnd => `String("profileEnd")
+      | `count => `String("count")
+      | `timeEnd => `String("timeEnd");
+
     [@deriving yojson]
     type result = {
       [@key "type"]
-      type_: string, /* Type of the call. */
+      type_: consoleapicalled_type, /* Type of the call. */
+      [@key "args"]
       args: list(Types.Runtime.RemoteObject.t), /* Call arguments. */
+      [@key "executionContextId"]
       executionContextId: Types.Runtime.ExecutionContextId.t, /* Identifier of the context where the call was made. */
+      [@key "timestamp"]
       timestamp: Types.Runtime.Timestamp.t, /* Call timestamp. */
-      [@yojson.option]
+      [@yojson.option] [@key "stackTrace"]
       stackTrace: option(Types.Runtime.StackTrace.t), /* Stack trace captured when the call was made. The async stack chain is automatically reported for
 the following call types: `assert`, `error`, `trace`, `warning`. For other types the async call
 chain can be retrieved using `Debugger.getStackTrace` and `stackTrace.parentId` field. */
-      [@yojson.option]
+      [@yojson.option] [@key "context"]
       context: option(string) /* Console context descriptor for calls on non-default console context (not console.*):
 'anonymous#unique-logger-id' for call on unnamed context, 'name#unique-logger-id' for call
 on named context. */,
@@ -3277,7 +3817,9 @@ on named context. */,
 
     [@deriving yojson]
     type result = {
+      [@key "reason"]
       reason: string, /* Reason describing why exception was revoked. */
+      [@key "exceptionId"]
       exceptionId: float /* The id of revoked exception, as reported in `exceptionThrown`. */,
     };
 
@@ -3296,7 +3838,9 @@ on named context. */,
 
     [@deriving yojson]
     type result = {
+      [@key "timestamp"]
       timestamp: Types.Runtime.Timestamp.t, /* Timestamp of the exception. */
+      [@key "exceptionDetails"]
       exceptionDetails: Types.Runtime.ExceptionDetails.t /* No description provided */,
     };
 
@@ -3315,6 +3859,7 @@ on named context. */,
 
     [@deriving yojson]
     type result = {
+      [@key "context"]
       context: Types.Runtime.ExecutionContextDescription.t /* A newly created execution context. */,
     };
 
@@ -3333,6 +3878,7 @@ on named context. */,
 
     [@deriving yojson]
     type result = {
+      [@key "executionContextId"]
       executionContextId: Types.Runtime.ExecutionContextId.t /* Id of the destroyed context */,
     };
 
@@ -3370,6 +3916,7 @@ on named context. */,
     type result = {
       [@key "object"]
       object_: Types.Runtime.RemoteObject.t, /* No description provided */
+      [@key "hints"]
       hints: Types.assoc /* No description provided */,
     };
 

@@ -94,6 +94,7 @@ module Accessibility = {
   module GetPartialAXTree = {
     module Response: {
       type result = {
+        [@key "nodes"]
         nodes: list(Types.Accessibility.AXNode.t) /* The `Accessibility.AXNode` for this DOM node, if it exists, plus its ancestors, siblings and
 children, if requested. */,
       };
@@ -108,6 +109,7 @@ children, if requested. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodes"]
         nodes: list(Types.Accessibility.AXNode.t) /* The `Accessibility.AXNode` for this DOM node, if it exists, plus its ancestors, siblings and
 children, if requested. */,
       };
@@ -128,13 +130,13 @@ children, if requested. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node to get the partial accessibility tree for. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node to get the partial accessibility tree for. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t), /* JavaScript object id of the node wrapper to get the partial accessibility tree for. */
-        [@yojson.option]
+        [@yojson.option] [@key "fetchRelatives"]
         fetchRelatives: option(bool) /* Whether to fetch this nodes ancestors, siblings and children. Defaults to true. */,
       };
       let make =
@@ -164,6 +166,7 @@ children, if requested. */,
   module GetFullAXTree = {
     module Response: {
       type result = {
+        [@key "nodes"]
         nodes: list(Types.Accessibility.AXNode.t) /* No description provided */,
       };
 
@@ -177,6 +180,7 @@ children, if requested. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodes"]
         nodes: list(Types.Accessibility.AXNode.t) /* No description provided */,
       };
 
@@ -196,7 +200,7 @@ children, if requested. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "max_depth"]
         max_depth: option(float) /* The maximum depth at which descendants of the root node should be retrieved.
 If omitted, the full tree is returned. */,
       };
@@ -227,6 +231,7 @@ If omitted, the full tree is returned. */,
   module GetChildAXNodes = {
     module Response: {
       type result = {
+        [@key "nodes"]
         nodes: list(Types.Accessibility.AXNode.t) /* No description provided */,
       };
 
@@ -240,6 +245,7 @@ If omitted, the full tree is returned. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodes"]
         nodes: list(Types.Accessibility.AXNode.t) /* No description provided */,
       };
 
@@ -259,6 +265,7 @@ If omitted, the full tree is returned. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "id"]
         id: Types.Accessibility.AXNodeId.t /* No description provided */,
       };
       let make = (~id, ()) => {
@@ -291,6 +298,7 @@ If omitted, the full tree is returned. */,
   module QueryAXTree = {
     module Response: {
       type result = {
+        [@key "nodes"]
         nodes: list(Types.Accessibility.AXNode.t) /* A list of `Accessibility.AXNode` matching the specified attributes,
 including nodes that are ignored for accessibility. */,
       };
@@ -305,6 +313,7 @@ including nodes that are ignored for accessibility. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodes"]
         nodes: list(Types.Accessibility.AXNode.t) /* A list of `Accessibility.AXNode` matching the specified attributes,
 including nodes that are ignored for accessibility. */,
       };
@@ -325,15 +334,15 @@ including nodes that are ignored for accessibility. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node for the root to query. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node for the root to query. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t), /* JavaScript object id of the node wrapper for the root to query. */
-        [@yojson.option]
+        [@yojson.option] [@key "accessibleName"]
         accessibleName: option(string), /* Find nodes with this computed name. */
-        [@yojson.option]
+        [@yojson.option] [@key "role"]
         role: option(string) /* Find nodes with this computed role. */,
       };
       let make =
@@ -461,7 +470,10 @@ module Animation = {
   /* Returns the current time of the an animation. */
   module GetCurrentTime = {
     module Response: {
-      type result = {currentTime: float /* Current time of the page. */};
+      type result = {
+        [@key "currentTime"]
+        currentTime: float /* Current time of the page. */,
+      };
 
       type t = {
         id: int,
@@ -472,7 +484,10 @@ module Animation = {
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {currentTime: float /* Current time of the page. */};
+      type result = {
+        [@key "currentTime"]
+        currentTime: float /* Current time of the page. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -489,7 +504,10 @@ module Animation = {
 
     module Params = {
       [@deriving yojson]
-      type t = {id: string /* Id of animation. */};
+      type t = {
+        [@key "id"]
+        id: string /* Id of animation. */,
+      };
       let make = (~id, ()) => {
         {id: id};
       };
@@ -516,6 +534,7 @@ module Animation = {
   module GetPlaybackRate = {
     module Response: {
       type result = {
+        [@key "playbackRate"]
         playbackRate: float /* Playback rate for animations on page. */,
       };
 
@@ -529,6 +548,7 @@ module Animation = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "playbackRate"]
         playbackRate: float /* Playback rate for animations on page. */,
       };
 
@@ -593,6 +613,7 @@ module Animation = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "animations"]
         animations: list(string) /* List of animation ids to seek. */,
       };
       let make = (~animations, ()) => {
@@ -621,6 +642,7 @@ module Animation = {
   module ResolveAnimation = {
     module Response: {
       type result = {
+        [@key "remoteObject"]
         remoteObject: Types.Runtime.RemoteObject.t /* Corresponding remote object. */,
       };
 
@@ -634,6 +656,7 @@ module Animation = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "remoteObject"]
         remoteObject: Types.Runtime.RemoteObject.t /* Corresponding remote object. */,
       };
 
@@ -652,7 +675,10 @@ module Animation = {
 
     module Params = {
       [@deriving yojson]
-      type t = {animationId: string /* Animation id. */};
+      type t = {
+        [@key "animationId"]
+        animationId: string /* Animation id. */,
+      };
       let make = (~animationId, ()) => {
         {animationId: animationId};
       };
@@ -707,7 +733,9 @@ module Animation = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "animations"]
         animations: list(string), /* List of animation ids to seek. */
+        [@key "currentTime"]
         currentTime: float /* Set the current time of each animation. */,
       };
       let make = (~animations, ~currentTime, ()) => {
@@ -764,7 +792,9 @@ module Animation = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "animations"]
         animations: list(string), /* Animations to set the pause state of. */
+        [@key "paused"]
         paused: bool /* Paused state to set to. */,
       };
       let make = (~animations, ~paused, ()) => {
@@ -821,6 +851,7 @@ module Animation = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "playbackRate"]
         playbackRate: float /* Playback rate for animations on page */,
       };
       let make = (~playbackRate, ()) => {
@@ -877,8 +908,11 @@ module Animation = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "animationId"]
         animationId: string, /* Animation id. */
+        [@key "duration"]
         duration: float, /* Duration of the animation. */
+        [@key "delay"]
         delay: float /* Delay of the animation. */,
       };
       let make = (~animationId, ~duration, ~delay, ()) => {
@@ -954,6 +988,7 @@ module ApplicationCache = {
   module GetApplicationCacheForFrame = {
     module Response: {
       type result = {
+        [@key "applicationCache"]
         applicationCache: Types.ApplicationCache.ApplicationCache.t /* Relevant application cache data for the document in given frame. */,
       };
 
@@ -967,6 +1002,7 @@ module ApplicationCache = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "applicationCache"]
         applicationCache: Types.ApplicationCache.ApplicationCache.t /* Relevant application cache data for the document in given frame. */,
       };
 
@@ -986,6 +1022,7 @@ module ApplicationCache = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t /* Identifier of the frame containing document whose application cache is retrieved. */,
       };
       let make = (~frameId, ()) => {
@@ -1020,6 +1057,7 @@ module ApplicationCache = {
   module GetFramesWithManifests = {
     module Response: {
       type result = {
+        [@key "frameIds"]
         frameIds: list(Types.ApplicationCache.FrameWithManifest.t) /* Array of frame identifiers with manifest urls for each frame containing a document
 associated with some application cache. */,
       };
@@ -1034,6 +1072,7 @@ associated with some application cache. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "frameIds"]
         frameIds: list(Types.ApplicationCache.FrameWithManifest.t) /* Array of frame identifiers with manifest urls for each frame containing a document
 associated with some application cache. */,
       };
@@ -1071,6 +1110,7 @@ associated with some application cache. */,
   module GetManifestForFrame = {
     module Response: {
       type result = {
+        [@key "manifestURL"]
         manifestURL: string /* Manifest URL for document in the given frame. */,
       };
 
@@ -1084,6 +1124,7 @@ associated with some application cache. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "manifestURL"]
         manifestURL: string /* Manifest URL for document in the given frame. */,
       };
 
@@ -1103,6 +1144,7 @@ associated with some application cache. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t /* Identifier of the frame containing document whose manifest is retrieved. */,
       };
       let make = (~frameId, ()) => {
@@ -1139,9 +1181,11 @@ module Audits = {
   module GetEncodedResponse = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "body"]
         body: option(string), /* The encoded body as a base64 string. Omitted if sizeOnly is true. (Encoded as a base64 string when passed over JSON) */
+        [@key "originalSize"]
         originalSize: float, /* Size before re-encoding. */
+        [@key "encodedSize"]
         encodedSize: float /* Size after re-encoding. */,
       };
 
@@ -1155,9 +1199,11 @@ module Audits = {
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "body"]
         body: option(string), /* The encoded body as a base64 string. Omitted if sizeOnly is true. (Encoded as a base64 string when passed over JSON) */
+        [@key "originalSize"]
         originalSize: float, /* Size before re-encoding. */
+        [@key "encodedSize"]
         encodedSize: float /* Size after re-encoding. */,
       };
 
@@ -1175,13 +1221,28 @@ module Audits = {
     };
 
     module Params = {
+      type getencodedresponse_encoding = [ | `webp | `jpeg | `png];
+      let getencodedresponse_encoding_of_yojson =
+        fun
+        | `String("webp") => `webp
+        | `String("jpeg") => `jpeg
+        | `String("png") => `png
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_getencodedresponse_encoding =
+        fun
+        | `webp => `String("webp")
+        | `jpeg => `String("jpeg")
+        | `png => `String("png");
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Network.RequestId.t, /* Identifier of the network request to get content for. */
-        encoding: string, /* The encoding to use. */
-        [@yojson.option]
+        [@key "encoding"]
+        encoding: getencodedresponse_encoding, /* The encoding to use. */
+        [@yojson.option] [@key "quality"]
         quality: option(float), /* The quality of the encoding (0-1). (defaults to 1) */
-        [@yojson.option]
+        [@yojson.option] [@key "sizeOnly"]
         sizeOnly: option(bool) /* Whether to only return the size information (defaults to false). */,
       };
       let make = (~requestId, ~encoding, ~quality=?, ~sizeOnly=?, ()) => {
@@ -1330,7 +1391,7 @@ module Audits = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "reportAAA"]
         reportAAA: option(bool) /* Whether to report WCAG AAA level issues. Default is false. */,
       };
       let make = (~reportAAA=?, ()) => {
@@ -1389,6 +1450,7 @@ module BackgroundService = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "service"]
         service: Types.BackgroundService.ServiceName.t /* No description provided */,
       };
       let make = (~service, ()) => {
@@ -1445,6 +1507,7 @@ module BackgroundService = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "service"]
         service: Types.BackgroundService.ServiceName.t /* No description provided */,
       };
       let make = (~service, ()) => {
@@ -1501,7 +1564,9 @@ module BackgroundService = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "shouldRecord"]
         shouldRecord: bool, /* No description provided */
+        [@key "service"]
         service: Types.BackgroundService.ServiceName.t /* No description provided */,
       };
       let make = (~shouldRecord, ~service, ()) => {
@@ -1558,6 +1623,7 @@ module BackgroundService = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "service"]
         service: Types.BackgroundService.ServiceName.t /* No description provided */,
       };
       let make = (~service, ()) => {
@@ -1616,11 +1682,13 @@ module Browser = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "permission"]
         permission: Types.Browser.PermissionDescriptor.t, /* Descriptor of permission to override. */
+        [@key "setting"]
         setting: Types.Browser.PermissionSetting.t, /* Setting of the permission. */
-        [@yojson.option]
+        [@yojson.option] [@key "origin"]
         origin: option(string), /* Origin the permission applies to, all origins if not specified. */
-        [@yojson.option]
+        [@yojson.option] [@key "browserContextId"]
         browserContextId: option(Types.Browser.BrowserContextID.t) /* Context to override. When omitted, default browser context is used. */,
       };
       let make = (~permission, ~setting, ~origin=?, ~browserContextId=?, ()) => {
@@ -1677,10 +1745,11 @@ module Browser = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "permissions"]
         permissions: list(Types.Browser.PermissionType.t), /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "origin"]
         origin: option(string), /* Origin the permission applies to, all origins if not specified. */
-        [@yojson.option]
+        [@yojson.option] [@key "browserContextId"]
         browserContextId: option(Types.Browser.BrowserContextID.t) /* BrowserContext to override permissions. When omitted, default browser context is used. */,
       };
       let make = (~permissions, ~origin=?, ~browserContextId=?, ()) => {
@@ -1737,7 +1806,7 @@ module Browser = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "browserContextId"]
         browserContextId: option(Types.Browser.BrowserContextID.t) /* BrowserContext to reset permissions. When omitted, default browser context is used. */,
       };
       let make = (~browserContextId=?, ()) => {
@@ -1792,17 +1861,38 @@ module Browser = {
     };
 
     module Params = {
+      type setdownloadbehavior_behavior = [
+        | `deny
+        | `allow
+        | `allowAndName
+        | `default
+      ];
+      let setdownloadbehavior_behavior_of_yojson =
+        fun
+        | `String("deny") => `deny
+        | `String("allow") => `allow
+        | `String("allowAndName") => `allowAndName
+        | `String("default") => `default
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_setdownloadbehavior_behavior =
+        fun
+        | `deny => `String("deny")
+        | `allow => `String("allow")
+        | `allowAndName => `String("allowAndName")
+        | `default => `String("default");
       [@deriving yojson]
       type t = {
-        behavior: string, /* Whether to allow all or deny all download requests, or use default Chrome behavior if
+        [@key "behavior"]
+        behavior: setdownloadbehavior_behavior, /* Whether to allow all or deny all download requests, or use default Chrome behavior if
 available (otherwise deny). |allowAndName| allows download and names files according to
 their dowmload guids. */
-        [@yojson.option]
+        [@yojson.option] [@key "browserContextId"]
         browserContextId: option(Types.Browser.BrowserContextID.t), /* BrowserContext to set download behavior. When omitted, default browser context is used. */
-        [@yojson.option]
+        [@yojson.option] [@key "downloadPath"]
         downloadPath: option(string), /* The default path to save downloaded files to. This is required if behavior is set to 'allow'
 or 'allowAndName'. */
-        [@yojson.option]
+        [@yojson.option] [@key "eventsEnabled"]
         eventsEnabled: option(bool) /* Whether to emit download events (defaults to false). */,
       };
       let make =
@@ -1866,8 +1956,9 @@ or 'allowAndName'. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "guid"]
         guid: string, /* Global unique identifier of the download. */
-        [@yojson.option]
+        [@yojson.option] [@key "browserContextId"]
         browserContextId: option(Types.Browser.BrowserContextID.t) /* BrowserContext to perform the action in. When omitted, default browser context is used. */,
       };
       let make = (~guid, ~browserContextId=?, ()) => {
@@ -2031,10 +2122,15 @@ or 'allowAndName'. */
   module GetVersion = {
     module Response: {
       type result = {
+        [@key "protocolVersion"]
         protocolVersion: string, /* Protocol version. */
+        [@key "product"]
         product: string, /* Product name. */
+        [@key "revision"]
         revision: string, /* Product revision. */
+        [@key "userAgent"]
         userAgent: string, /* User-Agent. */
+        [@key "jsVersion"]
         jsVersion: string /* V8 version. */,
       };
 
@@ -2048,10 +2144,15 @@ or 'allowAndName'. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "protocolVersion"]
         protocolVersion: string, /* Protocol version. */
+        [@key "product"]
         product: string, /* Product name. */
+        [@key "revision"]
         revision: string, /* Product revision. */
+        [@key "userAgent"]
         userAgent: string, /* User-Agent. */
+        [@key "jsVersion"]
         jsVersion: string /* V8 version. */,
       };
 
@@ -2088,7 +2189,10 @@ or 'allowAndName'. */
      --enable-automation is on the commandline. */
   module GetBrowserCommandLine = {
     module Response: {
-      type result = {arguments: list(string) /* Commandline parameters */};
+      type result = {
+        [@key "arguments"]
+        arguments: list(string) /* Commandline parameters */,
+      };
 
       type t = {
         id: int,
@@ -2099,7 +2203,10 @@ or 'allowAndName'. */
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {arguments: list(string) /* Commandline parameters */};
+      type result = {
+        [@key "arguments"]
+        arguments: list(string) /* Commandline parameters */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -2134,6 +2241,7 @@ or 'allowAndName'. */
   module GetHistograms = {
     module Response: {
       type result = {
+        [@key "histograms"]
         histograms: list(Types.Browser.Histogram.t) /* Histograms. */,
       };
 
@@ -2147,6 +2255,7 @@ or 'allowAndName'. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "histograms"]
         histograms: list(Types.Browser.Histogram.t) /* Histograms. */,
       };
 
@@ -2166,11 +2275,11 @@ or 'allowAndName'. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "query"]
         query: option(string), /* Requested substring in name. Only histograms which have query as a
 substring in their name are extracted. An empty or absent query returns
 all histograms. */
-        [@yojson.option]
+        [@yojson.option] [@key "delta"]
         delta: option(bool) /* If true, retrieve delta since last call. */,
       };
       let make = (~query=?, ~delta=?, ()) => {
@@ -2198,7 +2307,10 @@ all histograms. */
   /* Get a Chrome histogram by name. */
   module GetHistogram = {
     module Response: {
-      type result = {histogram: Types.Browser.Histogram.t /* Histogram. */};
+      type result = {
+        [@key "histogram"]
+        histogram: Types.Browser.Histogram.t /* Histogram. */,
+      };
 
       type t = {
         id: int,
@@ -2209,7 +2321,10 @@ all histograms. */
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {histogram: Types.Browser.Histogram.t /* Histogram. */};
+      type result = {
+        [@key "histogram"]
+        histogram: Types.Browser.Histogram.t /* Histogram. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -2227,8 +2342,9 @@ all histograms. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "name"]
         name: string, /* Requested histogram name. */
-        [@yojson.option]
+        [@yojson.option] [@key "delta"]
         delta: option(bool) /* If true, retrieve delta since last call. */,
       };
       let make = (~name, ~delta=?, ()) => {
@@ -2257,6 +2373,7 @@ all histograms. */
   module GetWindowBounds = {
     module Response: {
       type result = {
+        [@key "bounds"]
         bounds: Types.Browser.Bounds.t /* Bounds information of the window. When window state is 'minimized', the restored window
 position and size are returned. */,
       };
@@ -2271,6 +2388,7 @@ position and size are returned. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "bounds"]
         bounds: Types.Browser.Bounds.t /* Bounds information of the window. When window state is 'minimized', the restored window
 position and size are returned. */,
       };
@@ -2290,7 +2408,10 @@ position and size are returned. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {windowId: Types.Browser.WindowID.t /* Browser window id. */};
+      type t = {
+        [@key "windowId"]
+        windowId: Types.Browser.WindowID.t /* Browser window id. */,
+      };
       let make = (~windowId, ()) => {
         {windowId: windowId};
       };
@@ -2317,7 +2438,9 @@ position and size are returned. */,
   module GetWindowForTarget = {
     module Response: {
       type result = {
+        [@key "windowId"]
         windowId: Types.Browser.WindowID.t, /* Browser window id. */
+        [@key "bounds"]
         bounds: Types.Browser.Bounds.t /* Bounds information of the window. When window state is 'minimized', the restored window
 position and size are returned. */,
       };
@@ -2332,7 +2455,9 @@ position and size are returned. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "windowId"]
         windowId: Types.Browser.WindowID.t, /* Browser window id. */
+        [@key "bounds"]
         bounds: Types.Browser.Bounds.t /* Bounds information of the window. When window state is 'minimized', the restored window
 position and size are returned. */,
       };
@@ -2353,7 +2478,7 @@ position and size are returned. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "targetId"]
         targetId: option(Types.Target.TargetID.t) /* Devtools agent host id. If called as a part of the session, associated targetId is used. */,
       };
       let make = (~targetId=?, ()) => {
@@ -2410,7 +2535,9 @@ position and size are returned. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "windowId"]
         windowId: Types.Browser.WindowID.t, /* Browser window id. */
+        [@key "bounds"]
         bounds: Types.Browser.Bounds.t /* New window bounds. The 'minimized', 'maximized' and 'fullscreen' states cannot be combined
 with 'left', 'top', 'width' or 'height'. Leaves unspecified fields unchanged. */,
       };
@@ -2468,9 +2595,9 @@ with 'left', 'top', 'width' or 'height'. Leaves unspecified fields unchanged. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "badgeLabel"]
         badgeLabel: option(string), /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "image"]
         image: option(string) /* Png encoded image. (Encoded as a base64 string when passed over JSON) */,
       };
       let make = (~badgeLabel=?, ~image=?, ()) => {
@@ -2527,6 +2654,7 @@ with 'left', 'top', 'width' or 'height'. Leaves unspecified fields unchanged. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "commandId"]
         commandId: Types.Browser.BrowserCommandId.t /* No description provided */,
       };
       let make = (~commandId, ()) => {
@@ -2557,7 +2685,10 @@ module CSS = {
      position specified by `location`. */
   module AddRule = {
     module Response: {
-      type result = {rule: Types.CSS.CSSRule.t /* The newly created rule. */};
+      type result = {
+        [@key "rule"]
+        rule: Types.CSS.CSSRule.t /* The newly created rule. */,
+      };
 
       type t = {
         id: int,
@@ -2568,7 +2699,10 @@ module CSS = {
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {rule: Types.CSS.CSSRule.t /* The newly created rule. */};
+      type result = {
+        [@key "rule"]
+        rule: Types.CSS.CSSRule.t /* The newly created rule. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -2586,8 +2720,11 @@ module CSS = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "styleSheetId"]
         styleSheetId: Types.CSS.StyleSheetId.t, /* The css style sheet identifier where a new rule should be inserted. */
+        [@key "ruleText"]
         ruleText: string, /* The text of a new rule. */
+        [@key "location"]
         location: Types.CSS.SourceRange.t /* Text position of a new rule in the target style sheet. */,
       };
       let make = (~styleSheetId, ~ruleText, ~location, ()) => {
@@ -2615,7 +2752,10 @@ module CSS = {
   /* Returns all class names from specified stylesheet. */
   module CollectClassNames = {
     module Response: {
-      type result = {classNames: list(string) /* Class name list. */};
+      type result = {
+        [@key "classNames"]
+        classNames: list(string) /* Class name list. */,
+      };
 
       type t = {
         id: int,
@@ -2626,7 +2766,10 @@ module CSS = {
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {classNames: list(string) /* Class name list. */};
+      type result = {
+        [@key "classNames"]
+        classNames: list(string) /* Class name list. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -2644,6 +2787,7 @@ module CSS = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "styleSheetId"]
         styleSheetId: Types.CSS.StyleSheetId.t /* No description provided */,
       };
       let make = (~styleSheetId, ()) => {
@@ -2672,6 +2816,7 @@ module CSS = {
   module CreateStyleSheet = {
     module Response: {
       type result = {
+        [@key "styleSheetId"]
         styleSheetId: Types.CSS.StyleSheetId.t /* Identifier of the created "via-inspector" stylesheet. */,
       };
 
@@ -2685,6 +2830,7 @@ module CSS = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "styleSheetId"]
         styleSheetId: Types.CSS.StyleSheetId.t /* Identifier of the created "via-inspector" stylesheet. */,
       };
 
@@ -2704,6 +2850,7 @@ module CSS = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t /* Identifier of the frame where "via-inspector" stylesheet should be created. */,
       };
       let make = (~frameId, ()) => {
@@ -2852,7 +2999,9 @@ module CSS = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* The element id for which to force the pseudo state. */
+        [@key "forcedPseudoClasses"]
         forcedPseudoClasses: list(string) /* Element pseudo classes to force when computing the element's style. */,
       };
       let make = (~nodeId, ~forcedPseudoClasses, ()) => {
@@ -2881,15 +3030,15 @@ module CSS = {
   module GetBackgroundColors = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "backgroundColors"]
         backgroundColors: option(list(string)), /* The range of background colors behind this element, if it contains any visible text. If no
 visible text is present, this will be undefined. In the case of a flat background color,
 this will consist of simply that color. In the case of a gradient, this will consist of each
 of the color stops. For anything more complicated, this will be an empty array. Images will
 be ignored (as if the image had failed to load). */
-        [@yojson.option]
+        [@yojson.option] [@key "computedFontSize"]
         computedFontSize: option(string), /* The computed font size for this node, as a CSS computed value string (e.g. '12px'). */
-        [@yojson.option]
+        [@yojson.option] [@key "computedFontWeight"]
         computedFontWeight: option(string) /* The computed font weight for this node, as a CSS computed value string (e.g. 'normal' or
 '100'). */,
       };
@@ -2904,15 +3053,15 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "backgroundColors"]
         backgroundColors: option(list(string)), /* The range of background colors behind this element, if it contains any visible text. If no
 visible text is present, this will be undefined. In the case of a flat background color,
 this will consist of simply that color. In the case of a gradient, this will consist of each
 of the color stops. For anything more complicated, this will be an empty array. Images will
 be ignored (as if the image had failed to load). */
-        [@yojson.option]
+        [@yojson.option] [@key "computedFontSize"]
         computedFontSize: option(string), /* The computed font size for this node, as a CSS computed value string (e.g. '12px'). */
-        [@yojson.option]
+        [@yojson.option] [@key "computedFontWeight"]
         computedFontWeight: option(string) /* The computed font weight for this node, as a CSS computed value string (e.g. 'normal' or
 '100'). */,
       };
@@ -2933,6 +3082,7 @@ be ignored (as if the image had failed to load). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Id of the node to get background colors for. */,
       };
       let make = (~nodeId, ()) => {
@@ -2961,6 +3111,7 @@ be ignored (as if the image had failed to load). */
   module GetComputedStyleForNode = {
     module Response: {
       type result = {
+        [@key "computedStyle"]
         computedStyle: list(Types.CSS.CSSComputedStyleProperty.t) /* Computed style for the specified DOM node. */,
       };
 
@@ -2974,6 +3125,7 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "computedStyle"]
         computedStyle: list(Types.CSS.CSSComputedStyleProperty.t) /* Computed style for the specified DOM node. */,
       };
 
@@ -2992,7 +3144,10 @@ be ignored (as if the image had failed to load). */
 
     module Params = {
       [@deriving yojson]
-      type t = {nodeId: Types.DOM.NodeId.t /* No description provided */};
+      type t = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* No description provided */,
+      };
       let make = (~nodeId, ()) => {
         {nodeId: nodeId};
       };
@@ -3020,9 +3175,9 @@ be ignored (as if the image had failed to load). */
   module GetInlineStylesForNode = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "inlineStyle"]
         inlineStyle: option(Types.CSS.CSSStyle.t), /* Inline style for the specified DOM node. */
-        [@yojson.option]
+        [@yojson.option] [@key "attributesStyle"]
         attributesStyle: option(Types.CSS.CSSStyle.t) /* Attribute-defined element style (e.g. resulting from "width=20 height=100%"). */,
       };
 
@@ -3036,9 +3191,9 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "inlineStyle"]
         inlineStyle: option(Types.CSS.CSSStyle.t), /* Inline style for the specified DOM node. */
-        [@yojson.option]
+        [@yojson.option] [@key "attributesStyle"]
         attributesStyle: option(Types.CSS.CSSStyle.t) /* Attribute-defined element style (e.g. resulting from "width=20 height=100%"). */,
       };
 
@@ -3057,7 +3212,10 @@ be ignored (as if the image had failed to load). */
 
     module Params = {
       [@deriving yojson]
-      type t = {nodeId: Types.DOM.NodeId.t /* No description provided */};
+      type t = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* No description provided */,
+      };
       let make = (~nodeId, ()) => {
         {nodeId: nodeId};
       };
@@ -3084,17 +3242,17 @@ be ignored (as if the image had failed to load). */
   module GetMatchedStylesForNode = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "inlineStyle"]
         inlineStyle: option(Types.CSS.CSSStyle.t), /* Inline style for the specified DOM node. */
-        [@yojson.option]
+        [@yojson.option] [@key "attributesStyle"]
         attributesStyle: option(Types.CSS.CSSStyle.t), /* Attribute-defined element style (e.g. resulting from "width=20 height=100%"). */
-        [@yojson.option]
+        [@yojson.option] [@key "matchedCSSRules"]
         matchedCSSRules: option(list(Types.CSS.RuleMatch.t)), /* CSS rules matching this node, from all applicable stylesheets. */
-        [@yojson.option]
+        [@yojson.option] [@key "pseudoElements"]
         pseudoElements: option(list(Types.CSS.PseudoElementMatches.t)), /* Pseudo style matches for this node. */
-        [@yojson.option]
+        [@yojson.option] [@key "inherited"]
         inherited: option(list(Types.CSS.InheritedStyleEntry.t)), /* A chain of inherited styles (from the immediate node parent up to the DOM tree root). */
-        [@yojson.option]
+        [@yojson.option] [@key "cssKeyframesRules"]
         cssKeyframesRules: option(list(Types.CSS.CSSKeyframesRule.t)) /* A list of CSS keyframed animations matching this node. */,
       };
 
@@ -3108,17 +3266,17 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "inlineStyle"]
         inlineStyle: option(Types.CSS.CSSStyle.t), /* Inline style for the specified DOM node. */
-        [@yojson.option]
+        [@yojson.option] [@key "attributesStyle"]
         attributesStyle: option(Types.CSS.CSSStyle.t), /* Attribute-defined element style (e.g. resulting from "width=20 height=100%"). */
-        [@yojson.option]
+        [@yojson.option] [@key "matchedCSSRules"]
         matchedCSSRules: option(list(Types.CSS.RuleMatch.t)), /* CSS rules matching this node, from all applicable stylesheets. */
-        [@yojson.option]
+        [@yojson.option] [@key "pseudoElements"]
         pseudoElements: option(list(Types.CSS.PseudoElementMatches.t)), /* Pseudo style matches for this node. */
-        [@yojson.option]
+        [@yojson.option] [@key "inherited"]
         inherited: option(list(Types.CSS.InheritedStyleEntry.t)), /* A chain of inherited styles (from the immediate node parent up to the DOM tree root). */
-        [@yojson.option]
+        [@yojson.option] [@key "cssKeyframesRules"]
         cssKeyframesRules: option(list(Types.CSS.CSSKeyframesRule.t)) /* A list of CSS keyframed animations matching this node. */,
       };
 
@@ -3137,7 +3295,10 @@ be ignored (as if the image had failed to load). */
 
     module Params = {
       [@deriving yojson]
-      type t = {nodeId: Types.DOM.NodeId.t /* No description provided */};
+      type t = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* No description provided */,
+      };
       let make = (~nodeId, ()) => {
         {nodeId: nodeId};
       };
@@ -3164,6 +3325,7 @@ be ignored (as if the image had failed to load). */
   module GetMediaQueries = {
     module Response: {
       type result = {
+        [@key "medias"]
         medias: list(Types.CSS.CSSMedia.t) /* No description provided */,
       };
 
@@ -3177,6 +3339,7 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "medias"]
         medias: list(Types.CSS.CSSMedia.t) /* No description provided */,
       };
 
@@ -3214,6 +3377,7 @@ be ignored (as if the image had failed to load). */
   module GetPlatformFontsForNode = {
     module Response: {
       type result = {
+        [@key "fonts"]
         fonts: list(Types.CSS.PlatformFontUsage.t) /* Usage statistics for every employed platform font. */,
       };
 
@@ -3227,6 +3391,7 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "fonts"]
         fonts: list(Types.CSS.PlatformFontUsage.t) /* Usage statistics for every employed platform font. */,
       };
 
@@ -3245,7 +3410,10 @@ be ignored (as if the image had failed to load). */
 
     module Params = {
       [@deriving yojson]
-      type t = {nodeId: Types.DOM.NodeId.t /* No description provided */};
+      type t = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* No description provided */,
+      };
       let make = (~nodeId, ()) => {
         {nodeId: nodeId};
       };
@@ -3271,7 +3439,10 @@ be ignored (as if the image had failed to load). */
   /* Returns the current textual content for a stylesheet. */
   module GetStyleSheetText = {
     module Response: {
-      type result = {text: string /* The stylesheet text. */};
+      type result = {
+        [@key "text"]
+        text: string /* The stylesheet text. */,
+      };
 
       type t = {
         id: int,
@@ -3282,7 +3453,10 @@ be ignored (as if the image had failed to load). */
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {text: string /* The stylesheet text. */};
+      type result = {
+        [@key "text"]
+        text: string /* The stylesheet text. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -3300,6 +3474,7 @@ be ignored (as if the image had failed to load). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "styleSheetId"]
         styleSheetId: Types.CSS.StyleSheetId.t /* No description provided */,
       };
       let make = (~styleSheetId, ()) => {
@@ -3361,6 +3536,7 @@ be ignored (as if the image had failed to load). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "propertiesToTrack"]
         propertiesToTrack: list(Types.CSS.CSSComputedStyleProperty.t) /* No description provided */,
       };
       let make = (~propertiesToTrack, ()) => {
@@ -3389,6 +3565,7 @@ be ignored (as if the image had failed to load). */
   module TakeComputedStyleUpdates = {
     module Response: {
       type result = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* The list of node Ids that have their tracked computed styles updated */,
       };
 
@@ -3402,6 +3579,7 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* The list of node Ids that have their tracked computed styles updated */,
       };
 
@@ -3467,8 +3645,11 @@ be ignored (as if the image had failed to load). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* The element id for which to set property. */
+        [@key "propertyName"]
         propertyName: string, /* No description provided */
+        [@key "value"]
         value: string /* No description provided */,
       };
       let make = (~nodeId, ~propertyName, ~value, ()) => {
@@ -3502,6 +3683,7 @@ be ignored (as if the image had failed to load). */
   module SetKeyframeKey = {
     module Response: {
       type result = {
+        [@key "keyText"]
         keyText: Types.CSS.Value.t /* The resulting key text after modification. */,
       };
 
@@ -3515,6 +3697,7 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "keyText"]
         keyText: Types.CSS.Value.t /* The resulting key text after modification. */,
       };
 
@@ -3534,8 +3717,11 @@ be ignored (as if the image had failed to load). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "styleSheetId"]
         styleSheetId: Types.CSS.StyleSheetId.t, /* No description provided */
+        [@key "range"]
         range: Types.CSS.SourceRange.t, /* No description provided */
+        [@key "keyText"]
         keyText: string /* No description provided */,
       };
       let make = (~styleSheetId, ~range, ~keyText, ()) => {
@@ -3564,6 +3750,7 @@ be ignored (as if the image had failed to load). */
   module SetMediaText = {
     module Response: {
       type result = {
+        [@key "media"]
         media: Types.CSS.CSSMedia.t /* The resulting CSS media rule after modification. */,
       };
 
@@ -3577,6 +3764,7 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "media"]
         media: Types.CSS.CSSMedia.t /* The resulting CSS media rule after modification. */,
       };
 
@@ -3596,8 +3784,11 @@ be ignored (as if the image had failed to load). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "styleSheetId"]
         styleSheetId: Types.CSS.StyleSheetId.t, /* No description provided */
+        [@key "range"]
         range: Types.CSS.SourceRange.t, /* No description provided */
+        [@key "text"]
         text: string /* No description provided */,
       };
       let make = (~styleSheetId, ~range, ~text, ()) => {
@@ -3626,6 +3817,7 @@ be ignored (as if the image had failed to load). */
   module SetRuleSelector = {
     module Response: {
       type result = {
+        [@key "selectorList"]
         selectorList: Types.CSS.SelectorList.t /* The resulting selector list after modification. */,
       };
 
@@ -3639,6 +3831,7 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "selectorList"]
         selectorList: Types.CSS.SelectorList.t /* The resulting selector list after modification. */,
       };
 
@@ -3658,8 +3851,11 @@ be ignored (as if the image had failed to load). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "styleSheetId"]
         styleSheetId: Types.CSS.StyleSheetId.t, /* No description provided */
+        [@key "range"]
         range: Types.CSS.SourceRange.t, /* No description provided */
+        [@key "selector"]
         selector: string /* No description provided */,
       };
       let make = (~styleSheetId, ~range, ~selector, ()) => {
@@ -3688,7 +3884,7 @@ be ignored (as if the image had failed to load). */
   module SetStyleSheetText = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "sourceMapURL"]
         sourceMapURL: option(string) /* URL of source map associated with script (if any). */,
       };
 
@@ -3702,7 +3898,7 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "sourceMapURL"]
         sourceMapURL: option(string) /* URL of source map associated with script (if any). */,
       };
 
@@ -3722,7 +3918,9 @@ be ignored (as if the image had failed to load). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "styleSheetId"]
         styleSheetId: Types.CSS.StyleSheetId.t, /* No description provided */
+        [@key "text"]
         text: string /* No description provided */,
       };
       let make = (~styleSheetId, ~text, ()) => {
@@ -3751,6 +3949,7 @@ be ignored (as if the image had failed to load). */
   module SetStyleTexts = {
     module Response: {
       type result = {
+        [@key "styles"]
         styles: list(Types.CSS.CSSStyle.t) /* The resulting styles after modification. */,
       };
 
@@ -3764,6 +3963,7 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "styles"]
         styles: list(Types.CSS.CSSStyle.t) /* The resulting styles after modification. */,
       };
 
@@ -3783,6 +3983,7 @@ be ignored (as if the image had failed to load). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "edits"]
         edits: list(Types.CSS.StyleDeclarationEdit.t) /* No description provided */,
       };
       let make = (~edits, ()) => {
@@ -3857,6 +4058,7 @@ be ignored (as if the image had failed to load). */
   module StopRuleUsageTracking = {
     module Response: {
       type result = {
+        [@key "ruleUsage"]
         ruleUsage: list(Types.CSS.RuleUsage.t) /* No description provided */,
       };
 
@@ -3870,6 +4072,7 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "ruleUsage"]
         ruleUsage: list(Types.CSS.RuleUsage.t) /* No description provided */,
       };
 
@@ -3907,7 +4110,9 @@ be ignored (as if the image had failed to load). */
   module TakeCoverageDelta = {
     module Response: {
       type result = {
+        [@key "coverage"]
         coverage: list(Types.CSS.RuleUsage.t), /* No description provided */
+        [@key "timestamp"]
         timestamp: float /* Monotonically increasing time, in seconds. */,
       };
 
@@ -3921,7 +4126,9 @@ be ignored (as if the image had failed to load). */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "coverage"]
         coverage: list(Types.CSS.RuleUsage.t), /* No description provided */
+        [@key "timestamp"]
         timestamp: float /* Monotonically increasing time, in seconds. */,
       };
 
@@ -3986,6 +4193,7 @@ be ignored (as if the image had failed to load). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "enabled"]
         enabled: bool /* Whether rendering of local fonts is enabled. */,
       };
       let make = (~enabled, ()) => {
@@ -4044,6 +4252,7 @@ module CacheStorage = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "cacheId"]
         cacheId: Types.CacheStorage.CacheId.t /* Id of cache for deletion. */,
       };
       let make = (~cacheId, ()) => {
@@ -4100,7 +4309,9 @@ module CacheStorage = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "cacheId"]
         cacheId: Types.CacheStorage.CacheId.t, /* Id of cache where the entry will be deleted. */
+        [@key "request"]
         request: string /* URL spec of the request. */,
       };
       let make = (~cacheId, ~request, ()) => {
@@ -4129,6 +4340,7 @@ module CacheStorage = {
   module RequestCacheNames = {
     module Response: {
       type result = {
+        [@key "caches"]
         caches: list(Types.CacheStorage.Cache.t) /* Caches for the security origin. */,
       };
 
@@ -4142,6 +4354,7 @@ module CacheStorage = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "caches"]
         caches: list(Types.CacheStorage.Cache.t) /* Caches for the security origin. */,
       };
 
@@ -4160,7 +4373,10 @@ module CacheStorage = {
 
     module Params = {
       [@deriving yojson]
-      type t = {securityOrigin: string /* Security origin. */};
+      type t = {
+        [@key "securityOrigin"]
+        securityOrigin: string /* Security origin. */,
+      };
       let make = (~securityOrigin, ()) => {
         {securityOrigin: securityOrigin};
       };
@@ -4187,6 +4403,7 @@ module CacheStorage = {
   module RequestCachedResponse = {
     module Response: {
       type result = {
+        [@key "response"]
         response: Types.CacheStorage.CachedResponse.t /* Response read from the cache. */,
       };
 
@@ -4200,6 +4417,7 @@ module CacheStorage = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "response"]
         response: Types.CacheStorage.CachedResponse.t /* Response read from the cache. */,
       };
 
@@ -4219,8 +4437,11 @@ module CacheStorage = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "cacheId"]
         cacheId: Types.CacheStorage.CacheId.t, /* Id of cache that contains the entry. */
+        [@key "requestURL"]
         requestURL: string, /* URL spec of the request. */
+        [@key "requestHeaders"]
         requestHeaders: list(Types.CacheStorage.Header.t) /* headers of the request. */,
       };
       let make = (~cacheId, ~requestURL, ~requestHeaders, ()) => {
@@ -4249,7 +4470,9 @@ module CacheStorage = {
   module RequestEntries = {
     module Response: {
       type result = {
+        [@key "cacheDataEntries"]
         cacheDataEntries: list(Types.CacheStorage.DataEntry.t), /* Array of object store data entries. */
+        [@key "returnCount"]
         returnCount: float /* Count of returned entries from this storage. If pathFilter is empty, it
 is the count of all entries from this storage. */,
       };
@@ -4264,7 +4487,9 @@ is the count of all entries from this storage. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "cacheDataEntries"]
         cacheDataEntries: list(Types.CacheStorage.DataEntry.t), /* Array of object store data entries. */
+        [@key "returnCount"]
         returnCount: float /* Count of returned entries from this storage. If pathFilter is empty, it
 is the count of all entries from this storage. */,
       };
@@ -4285,12 +4510,13 @@ is the count of all entries from this storage. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "cacheId"]
         cacheId: Types.CacheStorage.CacheId.t, /* ID of cache to get entries from. */
-        [@yojson.option]
+        [@yojson.option] [@key "skipCount"]
         skipCount: option(float), /* Number of records to skip. */
-        [@yojson.option]
+        [@yojson.option] [@key "pageSize"]
         pageSize: option(float), /* Number of records to fetch. */
-        [@yojson.option]
+        [@yojson.option] [@key "pathFilter"]
         pathFilter: option(string) /* If present, only return the entries containing this substring in the path */,
       };
       let make = (~cacheId, ~skipCount=?, ~pageSize=?, ~pathFilter=?, ()) => {
@@ -4353,7 +4579,7 @@ module Cast = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "presentationUrl"]
         presentationUrl: option(string) /* No description provided */,
       };
       let make = (~presentationUrl=?, ()) => {
@@ -4455,7 +4681,10 @@ module Cast = {
 
     module Params = {
       [@deriving yojson]
-      type t = {sinkName: string /* No description provided */};
+      type t = {
+        [@key "sinkName"]
+        sinkName: string /* No description provided */,
+      };
       let make = (~sinkName, ()) => {
         {sinkName: sinkName};
       };
@@ -4509,7 +4738,10 @@ module Cast = {
 
     module Params = {
       [@deriving yojson]
-      type t = {sinkName: string /* No description provided */};
+      type t = {
+        [@key "sinkName"]
+        sinkName: string /* No description provided */,
+      };
       let make = (~sinkName, ()) => {
         {sinkName: sinkName};
       };
@@ -4563,7 +4795,10 @@ module Cast = {
 
     module Params = {
       [@deriving yojson]
-      type t = {sinkName: string /* No description provided */};
+      type t = {
+        [@key "sinkName"]
+        sinkName: string /* No description provided */,
+      };
       let make = (~sinkName, ()) => {
         {sinkName: sinkName};
       };
@@ -4591,7 +4826,10 @@ module DOM = {
   /* Collects class names for the node with given id and all of it's child nodes. */
   module CollectClassNamesFromSubtree = {
     module Response: {
-      type result = {classNames: list(string) /* Class name list. */};
+      type result = {
+        [@key "classNames"]
+        classNames: list(string) /* Class name list. */,
+      };
 
       type t = {
         id: int,
@@ -4602,7 +4840,10 @@ module DOM = {
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {classNames: list(string) /* Class name list. */};
+      type result = {
+        [@key "classNames"]
+        classNames: list(string) /* Class name list. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -4620,6 +4861,7 @@ module DOM = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Id of the node to collect class names. */,
       };
       let make = (~nodeId, ()) => {
@@ -4648,7 +4890,10 @@ module DOM = {
      given anchor. */
   module CopyTo = {
     module Response: {
-      type result = {nodeId: Types.DOM.NodeId.t /* Id of the node clone. */};
+      type result = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* Id of the node clone. */,
+      };
 
       type t = {
         id: int,
@@ -4659,7 +4904,10 @@ module DOM = {
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {nodeId: Types.DOM.NodeId.t /* Id of the node clone. */};
+      type result = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* Id of the node clone. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -4677,9 +4925,11 @@ module DOM = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the node to copy. */
+        [@key "targetNodeId"]
         targetNodeId: Types.DOM.NodeId.t, /* Id of the element to drop the copy into. */
-        [@yojson.option]
+        [@yojson.option] [@key "insertBeforeNodeId"]
         insertBeforeNodeId: option(Types.DOM.NodeId.t) /* Drop the copy before this node (if absent, the copy becomes the last child of
 `targetNodeId`). */,
       };
@@ -4709,7 +4959,10 @@ module DOM = {
      objects, can be used for automation. */
   module DescribeNode = {
     module Response: {
-      type result = {node: Types.DOM.Node.t /* Node description. */};
+      type result = {
+        [@key "node"]
+        node: Types.DOM.Node.t /* Node description. */,
+      };
 
       type t = {
         id: int,
@@ -4720,7 +4973,10 @@ module DOM = {
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {node: Types.DOM.Node.t /* Node description. */};
+      type result = {
+        [@key "node"]
+        node: Types.DOM.Node.t /* Node description. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -4738,16 +4994,16 @@ module DOM = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t), /* JavaScript object id of the node wrapper. */
-        [@yojson.option]
+        [@yojson.option] [@key "depth"]
         depth: option(float), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
 entire subtree or provide an integer larger than 0. */
-        [@yojson.option]
+        [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots should be traversed when returning the subtree
 (default is false). */,
       };
@@ -4808,13 +5064,13 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t), /* JavaScript object id of the node wrapper. */
-        [@yojson.option]
+        [@yojson.option] [@key "rect"]
         rect: option(Types.DOM.Rect.t) /* The rect to be scrolled into view, relative to the node's border box, in CSS pixels.
 When omitted, center of the node will be used, similar to Element.scrollIntoView. */,
       };
@@ -4917,7 +5173,10 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
 
     module Params = {
       [@deriving yojson]
-      type t = {searchId: string /* Unique search session identifier. */};
+      type t = {
+        [@key "searchId"]
+        searchId: string /* Unique search session identifier. */,
+      };
       let make = (~searchId, ()) => {
         {searchId: searchId};
       };
@@ -5017,11 +5276,11 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t) /* JavaScript object id of the node wrapper. */,
       };
       let make = (~nodeId=?, ~backendNodeId=?, ~objectId=?, ()) => {
@@ -5050,6 +5309,7 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
   module GetAttributes = {
     module Response: {
       type result = {
+        [@key "attributes"]
         attributes: list(string) /* An interleaved array of node attribute names and values. */,
       };
 
@@ -5063,6 +5323,7 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     } = {
       [@deriving yojson]
       type result = {
+        [@key "attributes"]
         attributes: list(string) /* An interleaved array of node attribute names and values. */,
       };
 
@@ -5082,6 +5343,7 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Id of the node to retrieve attibutes for. */,
       };
       let make = (~nodeId, ()) => {
@@ -5110,6 +5372,7 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
   module GetBoxModel = {
     module Response: {
       type result = {
+        [@key "model"]
         model: Types.DOM.BoxModel.t /* Box model for the node. */,
       };
 
@@ -5123,6 +5386,7 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     } = {
       [@deriving yojson]
       type result = {
+        [@key "model"]
         model: Types.DOM.BoxModel.t /* Box model for the node. */,
       };
 
@@ -5142,11 +5406,11 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t) /* JavaScript object id of the node wrapper. */,
       };
       let make = (~nodeId=?, ~backendNodeId=?, ~objectId=?, ()) => {
@@ -5176,6 +5440,7 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
   module GetContentQuads = {
     module Response: {
       type result = {
+        [@key "quads"]
         quads: list(Types.DOM.Quad.t) /* Quads that describe node layout relative to viewport. */,
       };
 
@@ -5189,6 +5454,7 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     } = {
       [@deriving yojson]
       type result = {
+        [@key "quads"]
         quads: list(Types.DOM.Quad.t) /* Quads that describe node layout relative to viewport. */,
       };
 
@@ -5208,11 +5474,11 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t) /* JavaScript object id of the node wrapper. */,
       };
       let make = (~nodeId=?, ~backendNodeId=?, ~objectId=?, ()) => {
@@ -5240,7 +5506,10 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
   /* Returns the root DOM node (and optionally the subtree) to the caller. */
   module GetDocument = {
     module Response: {
-      type result = {root: Types.DOM.Node.t /* Resulting node. */};
+      type result = {
+        [@key "root"]
+        root: Types.DOM.Node.t /* Resulting node. */,
+      };
 
       type t = {
         id: int,
@@ -5251,7 +5520,10 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {root: Types.DOM.Node.t /* Resulting node. */};
+      type result = {
+        [@key "root"]
+        root: Types.DOM.Node.t /* Resulting node. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -5269,10 +5541,10 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "depth"]
         depth: option(float), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
 entire subtree or provide an integer larger than 0. */
-        [@yojson.option]
+        [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots should be traversed when returning the subtree
 (default is false). */,
       };
@@ -5303,7 +5575,10 @@ entire subtree or provide an integer larger than 0. */
      Use DOMSnapshot.captureSnapshot instead. */
   module GetFlattenedDocument = {
     module Response: {
-      type result = {nodes: list(Types.DOM.Node.t) /* Resulting node. */};
+      type result = {
+        [@key "nodes"]
+        nodes: list(Types.DOM.Node.t) /* Resulting node. */,
+      };
 
       type t = {
         id: int,
@@ -5314,7 +5589,10 @@ entire subtree or provide an integer larger than 0. */
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {nodes: list(Types.DOM.Node.t) /* Resulting node. */};
+      type result = {
+        [@key "nodes"]
+        nodes: list(Types.DOM.Node.t) /* Resulting node. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -5332,10 +5610,10 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "depth"]
         depth: option(float), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
 entire subtree or provide an integer larger than 0. */
-        [@yojson.option]
+        [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots should be traversed when returning the subtree
 (default is false). */,
       };
@@ -5365,6 +5643,7 @@ entire subtree or provide an integer larger than 0. */
   module GetNodesForSubtreeByStyle = {
     module Response: {
       type result = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* Resulting nodes. */,
       };
 
@@ -5378,6 +5657,7 @@ entire subtree or provide an integer larger than 0. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* Resulting nodes. */,
       };
 
@@ -5397,9 +5677,11 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Node ID pointing to the root of a subtree. */
+        [@key "computedStyles"]
         computedStyles: list(Types.DOM.CSSComputedStyleProperty.t), /* The style to filter nodes by (includes nodes if any of properties matches). */
-        [@yojson.option]
+        [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots in the same target should be traversed when returning the
 results (default is false). */,
       };
@@ -5430,9 +5712,11 @@ results (default is false). */,
   module GetNodeForLocation = {
     module Response: {
       type result = {
+        [@key "backendNodeId"]
         backendNodeId: Types.DOM.BackendNodeId.t, /* Resulting node. */
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Frame this node belongs to. */
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t) /* Id of the node at given coordinates, only when enabled and requested document. */,
       };
 
@@ -5446,9 +5730,11 @@ results (default is false). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "backendNodeId"]
         backendNodeId: Types.DOM.BackendNodeId.t, /* Resulting node. */
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Frame this node belongs to. */
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t) /* Id of the node at given coordinates, only when enabled and requested document. */,
       };
 
@@ -5468,11 +5754,13 @@ results (default is false). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "x"]
         x: float, /* X coordinate. */
+        [@key "y"]
         y: float, /* Y coordinate. */
-        [@yojson.option]
+        [@yojson.option] [@key "includeUserAgentShadowDOM"]
         includeUserAgentShadowDOM: option(bool), /* False to skip to the nearest non-UA shadow root ancestor (default: false). */
-        [@yojson.option]
+        [@yojson.option] [@key "ignorePointerEventsNone"]
         ignorePointerEventsNone: option(bool) /* Whether to ignore pointer-events: none on elements and hit test them. */,
       };
       let make =
@@ -5507,7 +5795,10 @@ results (default is false). */,
   /* Returns node's HTML markup. */
   module GetOuterHTML = {
     module Response: {
-      type result = {outerHTML: string /* Outer HTML markup. */};
+      type result = {
+        [@key "outerHTML"]
+        outerHTML: string /* Outer HTML markup. */,
+      };
 
       type t = {
         id: int,
@@ -5518,7 +5809,10 @@ results (default is false). */,
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {outerHTML: string /* Outer HTML markup. */};
+      type result = {
+        [@key "outerHTML"]
+        outerHTML: string /* Outer HTML markup. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -5536,11 +5830,11 @@ results (default is false). */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t) /* JavaScript object id of the node wrapper. */,
       };
       let make = (~nodeId=?, ~backendNodeId=?, ~objectId=?, ()) => {
@@ -5569,6 +5863,7 @@ results (default is false). */,
   module GetRelayoutBoundary = {
     module Response: {
       type result = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Relayout boundary node id for the given node. */,
       };
 
@@ -5582,6 +5877,7 @@ results (default is false). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Relayout boundary node id for the given node. */,
       };
 
@@ -5600,7 +5896,10 @@ results (default is false). */,
 
     module Params = {
       [@deriving yojson]
-      type t = {nodeId: Types.DOM.NodeId.t /* Id of the node. */};
+      type t = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* Id of the node. */,
+      };
       let make = (~nodeId, ()) => {
         {nodeId: nodeId};
       };
@@ -5628,6 +5927,7 @@ results (default is false). */,
   module GetSearchResults = {
     module Response: {
       type result = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* Ids of the search result nodes. */,
       };
 
@@ -5641,6 +5941,7 @@ results (default is false). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* Ids of the search result nodes. */,
       };
 
@@ -5660,8 +5961,11 @@ results (default is false). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "searchId"]
         searchId: string, /* Unique search session identifier. */
+        [@key "fromIndex"]
         fromIndex: float, /* Start index of the search result to be returned. */
+        [@key "toIndex"]
         toIndex: float /* End index of the search result to be returned. */,
       };
       let make = (~searchId, ~fromIndex, ~toIndex, ()) => {
@@ -5870,6 +6174,7 @@ results (default is false). */,
   module MoveTo = {
     module Response: {
       type result = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* New id of the moved node. */,
       };
 
@@ -5883,6 +6188,7 @@ results (default is false). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* New id of the moved node. */,
       };
 
@@ -5902,9 +6208,11 @@ results (default is false). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the node to move. */
+        [@key "targetNodeId"]
         targetNodeId: Types.DOM.NodeId.t, /* Id of the element to drop the moved node into. */
-        [@yojson.option]
+        [@yojson.option] [@key "insertBeforeNodeId"]
         insertBeforeNodeId: option(Types.DOM.NodeId.t) /* Drop node before this one (if absent, the moved node becomes the last child of
 `targetNodeId`). */,
       };
@@ -5935,7 +6243,9 @@ results (default is false). */,
   module PerformSearch = {
     module Response: {
       type result = {
+        [@key "searchId"]
         searchId: string, /* Unique search session identifier. */
+        [@key "resultCount"]
         resultCount: float /* Number of search results. */,
       };
 
@@ -5949,7 +6259,9 @@ results (default is false). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "searchId"]
         searchId: string, /* Unique search session identifier. */
+        [@key "resultCount"]
         resultCount: float /* Number of search results. */,
       };
 
@@ -5969,8 +6281,9 @@ results (default is false). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "query"]
         query: string, /* Plain text or query selector or XPath search query. */
-        [@yojson.option]
+        [@yojson.option] [@key "includeUserAgentShadowDOM"]
         includeUserAgentShadowDOM: option(bool) /* True to search in user agent shadow DOM. */,
       };
       let make = (~query, ~includeUserAgentShadowDOM=?, ()) => {
@@ -5999,6 +6312,7 @@ results (default is false). */,
   module PushNodeByPathToFrontend = {
     module Response: {
       type result = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Id of the node for given path. */,
       };
 
@@ -6012,6 +6326,7 @@ results (default is false). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Id of the node for given path. */,
       };
 
@@ -6030,7 +6345,10 @@ results (default is false). */,
 
     module Params = {
       [@deriving yojson]
-      type t = {path: string /* Path to node in the proprietary format. */};
+      type t = {
+        [@key "path"]
+        path: string /* Path to node in the proprietary format. */,
+      };
       let make = (~path, ()) => {
         {path: path};
       };
@@ -6057,6 +6375,7 @@ results (default is false). */,
   module PushNodesByBackendIdsToFrontend = {
     module Response: {
       type result = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* The array of ids of pushed nodes that correspond to the backend ids specified in
 backendNodeIds. */,
       };
@@ -6071,6 +6390,7 @@ backendNodeIds. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* The array of ids of pushed nodes that correspond to the backend ids specified in
 backendNodeIds. */,
       };
@@ -6091,6 +6411,7 @@ backendNodeIds. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "backendNodeIds"]
         backendNodeIds: list(Types.DOM.BackendNodeId.t) /* The array of backend node ids. */,
       };
       let make = (~backendNodeIds, ()) => {
@@ -6118,7 +6439,10 @@ backendNodeIds. */,
   /* Executes `querySelector` on a given node. */
   module QuerySelector = {
     module Response: {
-      type result = {nodeId: Types.DOM.NodeId.t /* Query selector result. */};
+      type result = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* Query selector result. */,
+      };
 
       type t = {
         id: int,
@@ -6129,7 +6453,10 @@ backendNodeIds. */,
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {nodeId: Types.DOM.NodeId.t /* Query selector result. */};
+      type result = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* Query selector result. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -6147,7 +6474,9 @@ backendNodeIds. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the node to query upon. */
+        [@key "selector"]
         selector: string /* Selector string. */,
       };
       let make = (~nodeId, ~selector, ()) => {
@@ -6176,6 +6505,7 @@ backendNodeIds. */,
   module QuerySelectorAll = {
     module Response: {
       type result = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* Query selector result. */,
       };
 
@@ -6189,6 +6519,7 @@ backendNodeIds. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* Query selector result. */,
       };
 
@@ -6208,7 +6539,9 @@ backendNodeIds. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the node to query upon. */
+        [@key "selector"]
         selector: string /* Selector string. */,
       };
       let make = (~nodeId, ~selector, ()) => {
@@ -6310,7 +6643,9 @@ backendNodeIds. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the element to remove attribute from. */
+        [@key "name"]
         name: string /* Name of the attribute to remove. */,
       };
       let make = (~nodeId, ~name, ()) => {
@@ -6366,7 +6701,10 @@ backendNodeIds. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {nodeId: Types.DOM.NodeId.t /* Id of the node to remove. */};
+      type t = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* Id of the node to remove. */,
+      };
       let make = (~nodeId, ()) => {
         {nodeId: nodeId};
       };
@@ -6423,11 +6761,12 @@ backendNodeIds. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the node to get children for. */
-        [@yojson.option]
+        [@yojson.option] [@key "depth"]
         depth: option(float), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
 entire subtree or provide an integer larger than 0. */
-        [@yojson.option]
+        [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots should be traversed when returning the sub-tree
 (default is false). */,
       };
@@ -6459,6 +6798,7 @@ entire subtree or provide an integer larger than 0. */
   module RequestNode = {
     module Response: {
       type result = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Node id for given object. */,
       };
 
@@ -6472,6 +6812,7 @@ entire subtree or provide an integer larger than 0. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Node id for given object. */,
       };
 
@@ -6491,6 +6832,7 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "objectId"]
         objectId: Types.Runtime.RemoteObjectId.t /* JavaScript object id to convert into node. */,
       };
       let make = (~objectId, ()) => {
@@ -6553,13 +6895,13 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Id of the node to resolve. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Backend identifier of the node to resolve. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectGroup"]
         objectGroup: option(string), /* Symbolic group name that can be used to release multiple objects. */
-        [@yojson.option]
+        [@yojson.option] [@key "executionContextId"]
         executionContextId: option(Types.Runtime.ExecutionContextId.t) /* Execution context in which to resolve the node. */,
       };
       let make =
@@ -6623,8 +6965,11 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the element to set attribute for. */
+        [@key "name"]
         name: string, /* Attribute name. */
+        [@key "value"]
         value: string /* Attribute value. */,
       };
       let make = (~nodeId, ~name, ~value, ()) => {
@@ -6682,9 +7027,11 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the element to set attributes for. */
+        [@key "text"]
         text: string, /* Text with a number of attributes. Will parse this text using HTML parser. */
-        [@yojson.option]
+        [@yojson.option] [@key "name"]
         name: option(string) /* Attribute name to replace with new attributes derived from text in case text parsed
 successfully. */,
       };
@@ -6742,12 +7089,13 @@ successfully. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "files"]
         files: list(string), /* Array of file paths to set. */
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t) /* JavaScript object id of the node wrapper. */,
       };
       let make = (~files, ~nodeId=?, ~backendNodeId=?, ~objectId=?, ()) => {
@@ -6803,7 +7151,10 @@ successfully. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {enable: bool /* Enable or disable. */};
+      type t = {
+        [@key "enable"]
+        enable: bool /* Enable or disable. */,
+      };
       let make = (~enable, ()) => {
         {enable: enable};
       };
@@ -6830,7 +7181,7 @@ successfully. */,
   module GetNodeStackTraces = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "creation"]
         creation: option(Types.Runtime.StackTrace.t) /* Creation stack trace, if available. */,
       };
 
@@ -6844,7 +7195,7 @@ successfully. */,
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "creation"]
         creation: option(Types.Runtime.StackTrace.t) /* Creation stack trace, if available. */,
       };
 
@@ -6864,6 +7215,7 @@ successfully. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Id of the node to get stack traces for. */,
       };
       let make = (~nodeId, ()) => {
@@ -6892,7 +7244,10 @@ successfully. */,
      File wrapper. */
   module GetFileInfo = {
     module Response: {
-      type result = {path: string /* No description provided */};
+      type result = {
+        [@key "path"]
+        path: string /* No description provided */,
+      };
 
       type t = {
         id: int,
@@ -6903,7 +7258,10 @@ successfully. */,
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {path: string /* No description provided */};
+      type result = {
+        [@key "path"]
+        path: string /* No description provided */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -6921,6 +7279,7 @@ successfully. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "objectId"]
         objectId: Types.Runtime.RemoteObjectId.t /* JavaScript object id of the node wrapper. */,
       };
       let make = (~objectId, ()) => {
@@ -6978,6 +7337,7 @@ successfully. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* DOM node id to be accessible by means of $x command line API. */,
       };
       let make = (~nodeId, ()) => {
@@ -7005,7 +7365,10 @@ successfully. */,
   /* Sets node name for a node with given id. */
   module SetNodeName = {
     module Response: {
-      type result = {nodeId: Types.DOM.NodeId.t /* New node's id. */};
+      type result = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* New node's id. */,
+      };
 
       type t = {
         id: int,
@@ -7016,7 +7379,10 @@ successfully. */,
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {nodeId: Types.DOM.NodeId.t /* New node's id. */};
+      type result = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* New node's id. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -7034,7 +7400,9 @@ successfully. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the node to set name for. */
+        [@key "name"]
         name: string /* New node's name. */,
       };
       let make = (~nodeId, ~name, ()) => {
@@ -7091,7 +7459,9 @@ successfully. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the node to set value for. */
+        [@key "value"]
         value: string /* New node's value. */,
       };
       let make = (~nodeId, ~value, ()) => {
@@ -7148,7 +7518,9 @@ successfully. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the node to set markup for. */
+        [@key "outerHTML"]
         outerHTML: string /* Outer HTML markup to set. */,
       };
       let make = (~nodeId, ~outerHTML, ()) => {
@@ -7222,8 +7594,9 @@ successfully. */,
   module GetFrameOwner = {
     module Response: {
       type result = {
+        [@key "backendNodeId"]
         backendNodeId: Types.DOM.BackendNodeId.t, /* Resulting node. */
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t) /* Id of the node at given coordinates, only when enabled and requested document. */,
       };
 
@@ -7237,8 +7610,9 @@ successfully. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "backendNodeId"]
         backendNodeId: Types.DOM.BackendNodeId.t, /* Resulting node. */
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t) /* Id of the node at given coordinates, only when enabled and requested document. */,
       };
 
@@ -7257,7 +7631,10 @@ successfully. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {frameId: Types.Page.FrameId.t /* No description provided */};
+      type t = {
+        [@key "frameId"]
+        frameId: Types.Page.FrameId.t /* No description provided */,
+      };
       let make = (~frameId, ()) => {
         {frameId: frameId};
       };
@@ -7286,6 +7663,7 @@ module DOMDebugger = {
   module GetEventListeners = {
     module Response: {
       type result = {
+        [@key "listeners"]
         listeners: list(Types.DOMDebugger.EventListener.t) /* Array of relevant listeners. */,
       };
 
@@ -7299,6 +7677,7 @@ module DOMDebugger = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "listeners"]
         listeners: list(Types.DOMDebugger.EventListener.t) /* Array of relevant listeners. */,
       };
 
@@ -7318,11 +7697,12 @@ module DOMDebugger = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "objectId"]
         objectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the object to return listeners for. */
-        [@yojson.option]
+        [@yojson.option] [@key "depth"]
         depth: option(float), /* The maximum depth at which Node children should be retrieved, defaults to 1. Use -1 for the
 entire subtree or provide an integer larger than 0. */
-        [@yojson.option]
+        [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots should be traversed when returning the subtree
 (default is false). Reports listeners for all contexts if pierce is enabled. */,
       };
@@ -7380,6 +7760,7 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Identifier of the node to remove breakpoint from. */
         [@key "type"]
         type_: Types.DOMDebugger.DOMBreakpointType.t /* Type of the breakpoint to remove. */,
@@ -7438,8 +7819,9 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "eventName"]
         eventName: string, /* Event name. */
-        [@yojson.option]
+        [@yojson.option] [@key "targetName"]
         targetName: option(string) /* EventTarget interface name. */,
       };
       let make = (~eventName, ~targetName=?, ()) => {
@@ -7500,7 +7882,10 @@ entire subtree or provide an integer larger than 0. */
 
     module Params = {
       [@deriving yojson]
-      type t = {eventName: string /* Instrumentation name to stop on. */};
+      type t = {
+        [@key "eventName"]
+        eventName: string /* Instrumentation name to stop on. */,
+      };
       let make = (~eventName, ()) => {
         {eventName: eventName};
       };
@@ -7559,7 +7944,10 @@ entire subtree or provide an integer larger than 0. */
 
     module Params = {
       [@deriving yojson]
-      type t = {url: string /* Resource URL substring. */};
+      type t = {
+        [@key "url"]
+        url: string /* Resource URL substring. */,
+      };
       let make = (~url, ()) => {
         {url: url};
       };
@@ -7614,6 +8002,7 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "violationTypes"]
         violationTypes: list(Types.DOMDebugger.CSPViolationType.t) /* CSP Violations to stop upon. */,
       };
       let make = (~violationTypes, ()) => {
@@ -7670,6 +8059,7 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Identifier of the node to set breakpoint on. */
         [@key "type"]
         type_: Types.DOMDebugger.DOMBreakpointType.t /* Type of the operation to stop upon. */,
@@ -7728,8 +8118,9 @@ entire subtree or provide an integer larger than 0. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "eventName"]
         eventName: string, /* DOM Event name to stop on (any DOM event will do). */
-        [@yojson.option]
+        [@yojson.option] [@key "targetName"]
         targetName: option(string) /* EventTarget interface name to stop on. If equal to `"*"` or not provided, will stop on any
 EventTarget. */,
       };
@@ -7791,7 +8182,10 @@ EventTarget. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {eventName: string /* Instrumentation name to stop on. */};
+      type t = {
+        [@key "eventName"]
+        eventName: string /* Instrumentation name to stop on. */,
+      };
       let make = (~eventName, ()) => {
         {eventName: eventName};
       };
@@ -7851,6 +8245,7 @@ EventTarget. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "url"]
         url: string /* Resource URL substring. All XHRs having this substring in the URL will get stopped upon. */,
       };
       let make = (~url, ()) => {
@@ -7974,8 +8369,11 @@ module DOMSnapshot = {
   module GetSnapshot = {
     module Response: {
       type result = {
+        [@key "domNodes"]
         domNodes: list(Types.DOMSnapshot.DOMNode.t), /* The nodes in the DOM tree. The DOMNode at index 0 corresponds to the root document. */
+        [@key "layoutTreeNodes"]
         layoutTreeNodes: list(Types.DOMSnapshot.LayoutTreeNode.t), /* The nodes in the layout tree. */
+        [@key "computedStyles"]
         computedStyles: list(Types.DOMSnapshot.ComputedStyle.t) /* Whitelisted ComputedStyle properties for each node in the layout tree. */,
       };
 
@@ -7989,8 +8387,11 @@ module DOMSnapshot = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "domNodes"]
         domNodes: list(Types.DOMSnapshot.DOMNode.t), /* The nodes in the DOM tree. The DOMNode at index 0 corresponds to the root document. */
+        [@key "layoutTreeNodes"]
         layoutTreeNodes: list(Types.DOMSnapshot.LayoutTreeNode.t), /* The nodes in the layout tree. */
+        [@key "computedStyles"]
         computedStyles: list(Types.DOMSnapshot.ComputedStyle.t) /* Whitelisted ComputedStyle properties for each node in the layout tree. */,
       };
 
@@ -8010,12 +8411,13 @@ module DOMSnapshot = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "computedStyleWhitelist"]
         computedStyleWhitelist: list(string), /* Whitelist of computed styles to return. */
-        [@yojson.option]
+        [@yojson.option] [@key "includeEventListeners"]
         includeEventListeners: option(bool), /* Whether or not to retrieve details of DOM listeners (default false). */
-        [@yojson.option]
+        [@yojson.option] [@key "includePaintOrder"]
         includePaintOrder: option(bool), /* Whether to determine and include the paint order index of LayoutTreeNodes (default false). */
-        [@yojson.option]
+        [@yojson.option] [@key "includeUserAgentShadowTree"]
         includeUserAgentShadowTree: option(bool) /* Whether to include UA shadow tree in the snapshot (default false). */,
       };
       let make =
@@ -8059,7 +8461,9 @@ module DOMSnapshot = {
   module CaptureSnapshot = {
     module Response: {
       type result = {
+        [@key "documents"]
         documents: list(Types.DOMSnapshot.DocumentSnapshot.t), /* The nodes in the DOM tree. The DOMNode at index 0 corresponds to the root document. */
+        [@key "strings"]
         strings: list(string) /* Shared string table that all string properties refer to with indexes. */,
       };
 
@@ -8073,7 +8477,9 @@ module DOMSnapshot = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "documents"]
         documents: list(Types.DOMSnapshot.DocumentSnapshot.t), /* The nodes in the DOM tree. The DOMNode at index 0 corresponds to the root document. */
+        [@key "strings"]
         strings: list(string) /* Shared string table that all string properties refer to with indexes. */,
       };
 
@@ -8093,16 +8499,17 @@ module DOMSnapshot = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "computedStyles"]
         computedStyles: list(string), /* Whitelist of computed styles to return. */
-        [@yojson.option]
+        [@yojson.option] [@key "includePaintOrder"]
         includePaintOrder: option(bool), /* Whether to include layout object paint orders into the snapshot. */
-        [@yojson.option]
+        [@yojson.option] [@key "includeDOMRects"]
         includeDOMRects: option(bool), /* Whether to include DOM rectangles (offsetRects, clientRects, scrollRects) into the snapshot */
-        [@yojson.option]
+        [@yojson.option] [@key "includeBlendedBackgroundColors"]
         includeBlendedBackgroundColors: option(bool), /* Whether to include blended background colors in the snapshot (default: false).
 Blended background color is achieved by blending background colors of all elements
 that overlap with the current element. */
-        [@yojson.option]
+        [@yojson.option] [@key "includeTextColorOpacities"]
         includeTextColorOpacities: option(bool) /* Whether to include text color opacity in the snapshot (default: false).
 An element might have the opacity property set that affects the text color of the element.
 The final text color opacity is computed based on the opacity of all overlapping elements. */,
@@ -8177,6 +8584,7 @@ module DOMStorage = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "storageId"]
         storageId: Types.DOMStorage.StorageId.t /* No description provided */,
       };
       let make = (~storageId, ()) => {
@@ -8295,6 +8703,7 @@ module DOMStorage = {
   module GetDOMStorageItems = {
     module Response: {
       type result = {
+        [@key "entries"]
         entries: list(Types.DOMStorage.Item.t) /* No description provided */,
       };
 
@@ -8308,6 +8717,7 @@ module DOMStorage = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "entries"]
         entries: list(Types.DOMStorage.Item.t) /* No description provided */,
       };
 
@@ -8327,6 +8737,7 @@ module DOMStorage = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "storageId"]
         storageId: Types.DOMStorage.StorageId.t /* No description provided */,
       };
       let make = (~storageId, ()) => {
@@ -8383,7 +8794,9 @@ module DOMStorage = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "storageId"]
         storageId: Types.DOMStorage.StorageId.t, /* No description provided */
+        [@key "key"]
         key: string /* No description provided */,
       };
       let make = (~storageId, ~key, ()) => {
@@ -8440,8 +8853,11 @@ module DOMStorage = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "storageId"]
         storageId: Types.DOMStorage.StorageId.t, /* No description provided */
+        [@key "key"]
         key: string, /* No description provided */
+        [@key "value"]
         value: string /* No description provided */,
       };
       let make = (~storageId, ~key, ~value, ()) => {
@@ -8562,11 +8978,11 @@ module Database = {
   module ExecuteSQL = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "columnNames"]
         columnNames: option(list(string)), /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "values"]
         values: option(list(string)), /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "sqlError"]
         sqlError: option(Types.Database.Error.t) /* No description provided */,
       };
 
@@ -8580,11 +8996,11 @@ module Database = {
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "columnNames"]
         columnNames: option(list(string)), /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "values"]
         values: option(list(string)), /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "sqlError"]
         sqlError: option(Types.Database.Error.t) /* No description provided */,
       };
 
@@ -8604,7 +9020,9 @@ module Database = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "databaseId"]
         databaseId: Types.Database.DatabaseId.t, /* No description provided */
+        [@key "query"]
         query: string /* No description provided */,
       };
       let make = (~databaseId, ~query, ()) => {
@@ -8632,7 +9050,10 @@ module Database = {
   /* No description provided */
   module GetDatabaseTableNames = {
     module Response: {
-      type result = {tableNames: list(string) /* No description provided */};
+      type result = {
+        [@key "tableNames"]
+        tableNames: list(string) /* No description provided */,
+      };
 
       type t = {
         id: int,
@@ -8643,7 +9064,10 @@ module Database = {
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {tableNames: list(string) /* No description provided */};
+      type result = {
+        [@key "tableNames"]
+        tableNames: list(string) /* No description provided */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -8661,6 +9085,7 @@ module Database = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "databaseId"]
         databaseId: Types.Database.DatabaseId.t /* No description provided */,
       };
       let make = (~databaseId, ()) => {
@@ -8768,8 +9193,11 @@ module DeviceOrientation = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "alpha"]
         alpha: float, /* Mock alpha */
+        [@key "beta"]
         beta: float, /* Mock beta */
+        [@key "gamma"]
         gamma: float /* Mock gamma */,
       };
       let make = (~alpha, ~beta, ~gamma, ()) => {
@@ -8804,7 +9232,10 @@ module Emulation = {
   /* Tells whether emulation is supported. */
   module CanEmulate = {
     module Response: {
-      type result = {result: bool /* True if emulation is supported. */};
+      type result = {
+        [@key "result"]
+        result: bool /* True if emulation is supported. */,
+      };
 
       type t = {
         id: int,
@@ -8815,7 +9246,10 @@ module Emulation = {
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {result: bool /* True if emulation is supported. */};
+      type result = {
+        [@key "result"]
+        result: bool /* True if emulation is supported. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -9013,6 +9447,7 @@ module Emulation = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "enabled"]
         enabled: bool /* Whether to enable to disable focus emulation. */,
       };
       let make = (~enabled, ()) => {
@@ -9069,6 +9504,7 @@ module Emulation = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "rate"]
         rate: float /* Throttling rate as a slowdown factor (1 is no throttle, 2 is 2x slowdown, etc). */,
       };
       let make = (~rate, ()) => {
@@ -9126,7 +9562,7 @@ module Emulation = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "color"]
         color: option(Types.DOM.RGBA.t) /* RGBA of the default background color. If not specified, any existing override will be
 cleared. */,
       };
@@ -9191,29 +9627,33 @@ cleared. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "width"]
         width: float, /* Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+        [@key "height"]
         height: float, /* Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+        [@key "deviceScaleFactor"]
         deviceScaleFactor: float, /* Overriding device scale factor value. 0 disables the override. */
+        [@key "mobile"]
         mobile: bool, /* Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text
 autosizing and more. */
-        [@yojson.option]
+        [@yojson.option] [@key "scale"]
         scale: option(float), /* Scale to apply to resulting view image. */
-        [@yojson.option]
+        [@yojson.option] [@key "screenWidth"]
         screenWidth: option(float), /* Overriding screen width value in pixels (minimum 0, maximum 10000000). */
-        [@yojson.option]
+        [@yojson.option] [@key "screenHeight"]
         screenHeight: option(float), /* Overriding screen height value in pixels (minimum 0, maximum 10000000). */
-        [@yojson.option]
+        [@yojson.option] [@key "positionX"]
         positionX: option(float), /* Overriding view X position on screen in pixels (minimum 0, maximum 10000000). */
-        [@yojson.option]
+        [@yojson.option] [@key "positionY"]
         positionY: option(float), /* Overriding view Y position on screen in pixels (minimum 0, maximum 10000000). */
-        [@yojson.option]
+        [@yojson.option] [@key "dontSetVisibleSize"]
         dontSetVisibleSize: option(bool), /* Do not set visible view size, rely upon explicit setVisibleSize call. */
-        [@yojson.option]
+        [@yojson.option] [@key "screenOrientation"]
         screenOrientation: option(Types.Emulation.ScreenOrientation.t), /* Screen orientation override. */
-        [@yojson.option]
+        [@yojson.option] [@key "viewport"]
         viewport: option(Types.Page.Viewport.t), /* If set, the visible area of the page will be overridden to this viewport. This viewport
 change is not observed by the page, e.g. viewport-relative elements do not change positions. */
-        [@yojson.option]
+        [@yojson.option] [@key "displayFeature"]
         displayFeature: option(Types.Emulation.DisplayFeature.t) /* If set, the display feature of a multi-segment screen. If not set, multi-segment support
 is turned-off. */,
       };
@@ -9301,6 +9741,7 @@ is turned-off. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "hidden"]
         hidden: bool /* Whether scrollbars should be always hidden. */,
       };
       let make = (~hidden, ()) => {
@@ -9357,6 +9798,7 @@ is turned-off. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "disabled"]
         disabled: bool /* Whether document.coookie API should be disabled. */,
       };
       let make = (~disabled, ()) => {
@@ -9411,11 +9853,23 @@ is turned-off. */,
     };
 
     module Params = {
+      type setemittoucheventsformouse_configuration = [ | `mobile | `desktop];
+      let setemittoucheventsformouse_configuration_of_yojson =
+        fun
+        | `String("mobile") => `mobile
+        | `String("desktop") => `desktop
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_setemittoucheventsformouse_configuration =
+        fun
+        | `mobile => `String("mobile")
+        | `desktop => `String("desktop");
       [@deriving yojson]
       type t = {
+        [@key "enabled"]
         enabled: bool, /* Whether touch emulation based on mouse input should be enabled. */
-        [@yojson.option]
-        configuration: option(string) /* Touch/gesture events configuration. Default: current platform. */,
+        [@yojson.option] [@key "configuration"]
+        configuration: option(setemittoucheventsformouse_configuration) /* Touch/gesture events configuration. Default: current platform. */,
       };
       let make = (~enabled, ~configuration=?, ()) => {
         {enabled, configuration};
@@ -9476,9 +9930,9 @@ is turned-off. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "media"]
         media: option(string), /* Media type to emulate. Empty string disables the override. */
-        [@yojson.option]
+        [@yojson.option] [@key "features"]
         features: option(list(Types.Emulation.MediaFeature.t)) /* Media features to emulate. */,
       };
       let make = (~media=?, ~features=?, ()) => {
@@ -9533,10 +9987,36 @@ is turned-off. */,
     };
 
     module Params = {
+      type setemulatedvisiondeficiency_type = [
+        | `none
+        | `achromatopsia
+        | `blurredVision
+        | `deuteranopia
+        | `protanopia
+        | `tritanopia
+      ];
+      let setemulatedvisiondeficiency_type_of_yojson =
+        fun
+        | `String("none") => `none
+        | `String("achromatopsia") => `achromatopsia
+        | `String("blurredVision") => `blurredVision
+        | `String("deuteranopia") => `deuteranopia
+        | `String("protanopia") => `protanopia
+        | `String("tritanopia") => `tritanopia
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_setemulatedvisiondeficiency_type =
+        fun
+        | `none => `String("none")
+        | `achromatopsia => `String("achromatopsia")
+        | `blurredVision => `String("blurredVision")
+        | `deuteranopia => `String("deuteranopia")
+        | `protanopia => `String("protanopia")
+        | `tritanopia => `String("tritanopia");
       [@deriving yojson]
       type t = {
         [@key "type"]
-        type_: string /* Vision deficiency to emulate. */,
+        type_: setemulatedvisiondeficiency_type /* Vision deficiency to emulate. */,
       };
       let make = (~type_, ()) => {
         {type_: type_};
@@ -9598,11 +10078,11 @@ is turned-off. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "latitude"]
         latitude: option(float), /* Mock latitude */
-        [@yojson.option]
+        [@yojson.option] [@key "longitude"]
         longitude: option(float), /* Mock longitude */
-        [@yojson.option]
+        [@yojson.option] [@key "accuracy"]
         accuracy: option(float) /* Mock accuracy */,
       };
       let make = (~latitude=?, ~longitude=?, ~accuracy=?, ()) => {
@@ -9659,7 +10139,9 @@ is turned-off. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "isUserActive"]
         isUserActive: bool, /* Mock isUserActive */
+        [@key "isScreenUnlocked"]
         isScreenUnlocked: bool /* Mock isScreenUnlocked */,
       };
       let make = (~isUserActive, ~isScreenUnlocked, ()) => {
@@ -9761,6 +10243,7 @@ is turned-off. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "platform"]
         platform: string /* The platform navigator.platform should return. */,
       };
       let make = (~platform, ()) => {
@@ -9816,7 +10299,10 @@ is turned-off. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {pageScaleFactor: float /* Page scale factor. */};
+      type t = {
+        [@key "pageScaleFactor"]
+        pageScaleFactor: float /* Page scale factor. */,
+      };
       let make = (~pageScaleFactor, ()) => {
         {pageScaleFactor: pageScaleFactor};
       };
@@ -9871,6 +10357,7 @@ is turned-off. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "value"]
         value: bool /* Whether script execution should be disabled in the page. */,
       };
       let make = (~value, ()) => {
@@ -9932,8 +10419,9 @@ is turned-off. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "enabled"]
         enabled: bool, /* Whether the touch event emulation should be enabled. */
-        [@yojson.option]
+        [@yojson.option] [@key "maxTouchPoints"]
         maxTouchPoints: option(float) /* Maximum touch points supported. Defaults to one. */,
       };
       let make = (~enabled, ~maxTouchPoints=?, ()) => {
@@ -9963,6 +10451,7 @@ is turned-off. */,
   module SetVirtualTimePolicy = {
     module Response: {
       type result = {
+        [@key "virtualTimeTicksBase"]
         virtualTimeTicksBase: float /* Absolute timestamp at which virtual time was first enabled (up time in milliseconds). */,
       };
 
@@ -9976,6 +10465,7 @@ is turned-off. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "virtualTimeTicksBase"]
         virtualTimeTicksBase: float /* Absolute timestamp at which virtual time was first enabled (up time in milliseconds). */,
       };
 
@@ -9995,17 +10485,18 @@ is turned-off. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "policy"]
         policy: Types.Emulation.VirtualTimePolicy.t, /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "budget"]
         budget: option(float), /* If set, after this many virtual milliseconds have elapsed virtual time will be paused and a
 virtualTimeBudgetExpired event is sent. */
-        [@yojson.option]
+        [@yojson.option] [@key "maxVirtualTimeTaskStarvationCount"]
         maxVirtualTimeTaskStarvationCount: option(float), /* If set this specifies the maximum number of tasks that can be run before virtual is forced
 forwards to prevent deadlock. */
-        [@yojson.option]
+        [@yojson.option] [@key "waitForNavigation"]
         waitForNavigation: option(bool), /* If set the virtual time policy change should be deferred until any frame starts navigating.
 Note any previous deferred policy change is superseded. */
-        [@yojson.option]
+        [@yojson.option] [@key "initialVirtualTime"]
         initialVirtualTime: option(Types.Network.TimeSinceEpoch.t) /* If set, base::Time::Now will be overridden to initially return this value. */,
       };
       let make =
@@ -10076,7 +10567,7 @@ Note any previous deferred policy change is superseded. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "locale"]
         locale: option(string) /* ICU style C locale (e.g. "en_US"). If not specified or empty, disables the override and
 restores default host system locale. */,
       };
@@ -10134,6 +10625,7 @@ restores default host system locale. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "timezoneId"]
         timezoneId: string /* The timezone identifier. If empty, disables the override and
 restores default host system timezone. */,
       };
@@ -10193,7 +10685,9 @@ restores default host system timezone. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "width"]
         width: float, /* Frame width (DIP). */
+        [@key "height"]
         height: float /* Frame height (DIP). */,
       };
       let make = (~width, ~height, ()) => {
@@ -10250,6 +10744,7 @@ restores default host system timezone. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "imageTypes"]
         imageTypes: list(Types.Emulation.DisabledImageType.t) /* Image types to disable. */,
       };
       let make = (~imageTypes, ()) => {
@@ -10306,12 +10801,13 @@ restores default host system timezone. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "userAgent"]
         userAgent: string, /* User agent to use. */
-        [@yojson.option]
+        [@yojson.option] [@key "acceptLanguage"]
         acceptLanguage: option(string), /* Browser langugage to emulate. */
-        [@yojson.option]
+        [@yojson.option] [@key "platform"]
         platform: option(string), /* The platform navigator.platform should return. */
-        [@yojson.option]
+        [@yojson.option] [@key "userAgentMetadata"]
         userAgentMetadata: option(Types.Emulation.UserAgentMetadata.t) /* To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData */,
       };
       let make =
@@ -10352,9 +10848,10 @@ module HeadlessExperimental = {
   module BeginFrame = {
     module Response: {
       type result = {
+        [@key "hasDamage"]
         hasDamage: bool, /* Whether the BeginFrame resulted in damage and, thus, a new frame was committed to the
 display. Reported for diagnostic uses, may be removed in the future. */
-        [@yojson.option]
+        [@yojson.option] [@key "screenshotData"]
         screenshotData: option(string) /* Base64-encoded image data of the screenshot, if one was requested and successfully taken. (Encoded as a base64 string when passed over JSON) */,
       };
 
@@ -10368,9 +10865,10 @@ display. Reported for diagnostic uses, may be removed in the future. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "hasDamage"]
         hasDamage: bool, /* Whether the BeginFrame resulted in damage and, thus, a new frame was committed to the
 display. Reported for diagnostic uses, may be removed in the future. */
-        [@yojson.option]
+        [@yojson.option] [@key "screenshotData"]
         screenshotData: option(string) /* Base64-encoded image data of the screenshot, if one was requested and successfully taken. (Encoded as a base64 string when passed over JSON) */,
       };
 
@@ -10390,17 +10888,17 @@ display. Reported for diagnostic uses, may be removed in the future. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "frameTimeTicks"]
         frameTimeTicks: option(float), /* Timestamp of this BeginFrame in Renderer TimeTicks (milliseconds of uptime). If not set,
 the current time will be used. */
-        [@yojson.option]
+        [@yojson.option] [@key "interval"]
         interval: option(float), /* The interval between BeginFrames that is reported to the compositor, in milliseconds.
 Defaults to a 60 frames/second interval, i.e. about 16.666 milliseconds. */
-        [@yojson.option]
+        [@yojson.option] [@key "noDisplayUpdates"]
         noDisplayUpdates: option(bool), /* Whether updates should not be committed and drawn onto the display. False by default. If
 true, only side effects of the BeginFrame will be run, such as layout and animations, but
 any visual updates may not be visible on the display or in screenshots. */
-        [@yojson.option]
+        [@yojson.option] [@key "screenshot"]
         screenshot: option(Types.HeadlessExperimental.ScreenshotParams.t) /* If set, a screenshot of the frame will be captured and returned in the response. Otherwise,
 no screenshot will be captured. Note that capturing a screenshot can fail, for example,
 during renderer initialization. In such a case, no screenshot data will be returned. */,
@@ -10558,6 +11056,7 @@ module IO = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "handle"]
         handle: Types.IO.StreamHandle.t /* Handle of the stream to close. */,
       };
       let make = (~handle, ()) => {
@@ -10586,9 +11085,11 @@ module IO = {
   module Read = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "base64Encoded"]
         base64Encoded: option(bool), /* Set if the data is base64-encoded */
+        [@key "data"]
         data: string, /* Data that were read. */
+        [@key "eof"]
         eof: bool /* Set if the end-of-file condition occurred while reading. */,
       };
 
@@ -10602,9 +11103,11 @@ module IO = {
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "base64Encoded"]
         base64Encoded: option(bool), /* Set if the data is base64-encoded */
+        [@key "data"]
         data: string, /* Data that were read. */
+        [@key "eof"]
         eof: bool /* Set if the end-of-file condition occurred while reading. */,
       };
 
@@ -10624,11 +11127,12 @@ module IO = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "handle"]
         handle: Types.IO.StreamHandle.t, /* Handle of the stream to read. */
-        [@yojson.option]
+        [@yojson.option] [@key "offset"]
         offset: option(float), /* Seek to the specified offset before reading (if not specificed, proceed with offset
 following the last read). Some types of streams may only support sequential reads. */
-        [@yojson.option]
+        [@yojson.option] [@key "size"]
         size: option(float) /* Maximum number of bytes to read (left upon the agent discretion if not specified). */,
       };
       let make = (~handle, ~offset=?, ~size=?, ()) => {
@@ -10656,7 +11160,10 @@ following the last read). Some types of streams may only support sequential read
   /* Return UUID of Blob object specified by a remote object id. */
   module ResolveBlob = {
     module Response: {
-      type result = {uuid: string /* UUID of the specified Blob. */};
+      type result = {
+        [@key "uuid"]
+        uuid: string /* UUID of the specified Blob. */,
+      };
 
       type t = {
         id: int,
@@ -10667,7 +11174,10 @@ following the last read). Some types of streams may only support sequential read
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {uuid: string /* UUID of the specified Blob. */};
+      type result = {
+        [@key "uuid"]
+        uuid: string /* UUID of the specified Blob. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -10685,6 +11195,7 @@ following the last read). Some types of streams may only support sequential read
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "objectId"]
         objectId: Types.Runtime.RemoteObjectId.t /* Object id of a Blob object wrapper. */,
       };
       let make = (~objectId, ()) => {
@@ -10743,8 +11254,11 @@ module IndexedDB = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "securityOrigin"]
         securityOrigin: string, /* Security origin. */
+        [@key "databaseName"]
         databaseName: string, /* Database name. */
+        [@key "objectStoreName"]
         objectStoreName: string /* Object store name. */,
       };
       let make = (~securityOrigin, ~databaseName, ~objectStoreName, ()) => {
@@ -10801,7 +11315,9 @@ module IndexedDB = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "securityOrigin"]
         securityOrigin: string, /* Security origin. */
+        [@key "databaseName"]
         databaseName: string /* Database name. */,
       };
       let make = (~securityOrigin, ~databaseName, ()) => {
@@ -10858,9 +11374,13 @@ module IndexedDB = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "securityOrigin"]
         securityOrigin: string, /* No description provided */
+        [@key "databaseName"]
         databaseName: string, /* No description provided */
+        [@key "objectStoreName"]
         objectStoreName: string, /* No description provided */
+        [@key "keyRange"]
         keyRange: Types.IndexedDB.KeyRange.t /* Range of entry keys to delete */,
       };
       let make =
@@ -10980,7 +11500,9 @@ module IndexedDB = {
   module RequestData = {
     module Response: {
       type result = {
+        [@key "objectStoreDataEntries"]
         objectStoreDataEntries: list(Types.IndexedDB.DataEntry.t), /* Array of object store data entries. */
+        [@key "hasMore"]
         hasMore: bool /* If true, there are more entries to fetch in the given range. */,
       };
 
@@ -10994,7 +11516,9 @@ module IndexedDB = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "objectStoreDataEntries"]
         objectStoreDataEntries: list(Types.IndexedDB.DataEntry.t), /* Array of object store data entries. */
+        [@key "hasMore"]
         hasMore: bool /* If true, there are more entries to fetch in the given range. */,
       };
 
@@ -11014,13 +11538,19 @@ module IndexedDB = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "securityOrigin"]
         securityOrigin: string, /* Security origin. */
+        [@key "databaseName"]
         databaseName: string, /* Database name. */
+        [@key "objectStoreName"]
         objectStoreName: string, /* Object store name. */
+        [@key "indexName"]
         indexName: string, /* Index name, empty string for object store data requests. */
+        [@key "skipCount"]
         skipCount: float, /* Number of records to skip. */
+        [@key "pageSize"]
         pageSize: float, /* Number of records to fetch. */
-        [@yojson.option]
+        [@yojson.option] [@key "keyRange"]
         keyRange: option(Types.IndexedDB.KeyRange.t) /* Key range. */,
       };
       let make =
@@ -11067,7 +11597,9 @@ module IndexedDB = {
   module GetMetadata = {
     module Response: {
       type result = {
+        [@key "entriesCount"]
         entriesCount: float, /* the entries count */
+        [@key "keyGeneratorValue"]
         keyGeneratorValue: float /* the current value of key generator, to become the next inserted
 key into the object store. Valid if objectStore.autoIncrement
 is true. */,
@@ -11083,7 +11615,9 @@ is true. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "entriesCount"]
         entriesCount: float, /* the entries count */
+        [@key "keyGeneratorValue"]
         keyGeneratorValue: float /* the current value of key generator, to become the next inserted
 key into the object store. Valid if objectStore.autoIncrement
 is true. */,
@@ -11105,8 +11639,11 @@ is true. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "securityOrigin"]
         securityOrigin: string, /* Security origin. */
+        [@key "databaseName"]
         databaseName: string, /* Database name. */
+        [@key "objectStoreName"]
         objectStoreName: string /* Object store name. */,
       };
       let make = (~securityOrigin, ~databaseName, ~objectStoreName, ()) => {
@@ -11135,6 +11672,7 @@ is true. */,
   module RequestDatabase = {
     module Response: {
       type result = {
+        [@key "databaseWithObjectStores"]
         databaseWithObjectStores: Types.IndexedDB.DatabaseWithObjectStores.t /* Database with an array of object stores. */,
       };
 
@@ -11148,6 +11686,7 @@ is true. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "databaseWithObjectStores"]
         databaseWithObjectStores: Types.IndexedDB.DatabaseWithObjectStores.t /* Database with an array of object stores. */,
       };
 
@@ -11167,7 +11706,9 @@ is true. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "securityOrigin"]
         securityOrigin: string, /* Security origin. */
+        [@key "databaseName"]
         databaseName: string /* Database name. */,
       };
       let make = (~securityOrigin, ~databaseName, ()) => {
@@ -11196,6 +11737,7 @@ is true. */,
   module RequestDatabaseNames = {
     module Response: {
       type result = {
+        [@key "databaseNames"]
         databaseNames: list(string) /* Database names for origin. */,
       };
 
@@ -11209,6 +11751,7 @@ is true. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "databaseNames"]
         databaseNames: list(string) /* Database names for origin. */,
       };
 
@@ -11227,7 +11770,10 @@ is true. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {securityOrigin: string /* Security origin. */};
+      type t = {
+        [@key "securityOrigin"]
+        securityOrigin: string /* Security origin. */,
+      };
       let make = (~securityOrigin, ()) => {
         {securityOrigin: securityOrigin};
       };
@@ -11282,15 +11828,38 @@ module Input = {
     };
 
     module Params = {
+      type dispatchdragevent_type = [
+        | `dragEnter
+        | `dragOver
+        | `drop
+        | `dragCancel
+      ];
+      let dispatchdragevent_type_of_yojson =
+        fun
+        | `String("dragEnter") => `dragEnter
+        | `String("dragOver") => `dragOver
+        | `String("drop") => `drop
+        | `String("dragCancel") => `dragCancel
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_dispatchdragevent_type =
+        fun
+        | `dragEnter => `String("dragEnter")
+        | `dragOver => `String("dragOver")
+        | `drop => `String("drop")
+        | `dragCancel => `String("dragCancel");
       [@deriving yojson]
       type t = {
         [@key "type"]
-        type_: string, /* Type of the drag event. */
+        type_: dispatchdragevent_type, /* Type of the drag event. */
+        [@key "x"]
         x: float, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
+        [@key "y"]
         y: float, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
 the top of the viewport and Y increases as it proceeds towards the bottom of the viewport. */
+        [@key "data"]
         data: Types.Input.DragData.t, /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "modifiers"]
         modifiers: option(float) /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
 (default: 0). */,
       };
@@ -11346,42 +11915,62 @@ the top of the viewport and Y increases as it proceeds towards the bottom of the
     };
 
     module Params = {
+      type dispatchkeyevent_type = [
+        | `keyDown
+        | `keyUp
+        | `rawKeyDown
+        | `char
+      ];
+      let dispatchkeyevent_type_of_yojson =
+        fun
+        | `String("keyDown") => `keyDown
+        | `String("keyUp") => `keyUp
+        | `String("rawKeyDown") => `rawKeyDown
+        | `String("char") => `char
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_dispatchkeyevent_type =
+        fun
+        | `keyDown => `String("keyDown")
+        | `keyUp => `String("keyUp")
+        | `rawKeyDown => `String("rawKeyDown")
+        | `char => `String("char");
       [@deriving yojson]
       type t = {
         [@key "type"]
-        type_: string, /* Type of the key event. */
-        [@yojson.option]
+        type_: dispatchkeyevent_type, /* Type of the key event. */
+        [@yojson.option] [@key "modifiers"]
         modifiers: option(float), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
 (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "timestamp"]
         timestamp: option(Types.Input.TimeSinceEpoch.t), /* Time at which the event occurred. */
-        [@yojson.option]
+        [@yojson.option] [@key "text"]
         text: option(string), /* Text as generated by processing a virtual key code with a keyboard layout. Not needed for
 for `keyUp` and `rawKeyDown` events (default: "") */
-        [@yojson.option]
+        [@yojson.option] [@key "unmodifiedText"]
         unmodifiedText: option(string), /* Text that would have been generated by the keyboard if no modifiers were pressed (except for
 shift). Useful for shortcut (accelerator) key handling (default: ""). */
-        [@yojson.option]
+        [@yojson.option] [@key "keyIdentifier"]
         keyIdentifier: option(string), /* Unique key identifier (e.g., 'U+0041') (default: ""). */
-        [@yojson.option]
+        [@yojson.option] [@key "code"]
         code: option(string), /* Unique DOM defined string value for each physical key (e.g., 'KeyA') (default: ""). */
-        [@yojson.option]
+        [@yojson.option] [@key "key"]
         key: option(string), /* Unique DOM defined string value describing the meaning of the key in the context of active
 modifiers, keyboard layout, etc (e.g., 'AltGr') (default: ""). */
-        [@yojson.option]
+        [@yojson.option] [@key "windowsVirtualKeyCode"]
         windowsVirtualKeyCode: option(float), /* Windows virtual key code (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "nativeVirtualKeyCode"]
         nativeVirtualKeyCode: option(float), /* Native virtual key code (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "autoRepeat"]
         autoRepeat: option(bool), /* Whether the event was generated from auto repeat (default: false). */
-        [@yojson.option]
+        [@yojson.option] [@key "isKeypad"]
         isKeypad: option(bool), /* Whether the event was generated from the keypad (default: false). */
-        [@yojson.option]
+        [@yojson.option] [@key "isSystemKey"]
         isSystemKey: option(bool), /* Whether the event was a system key event (default: false). */
-        [@yojson.option]
+        [@yojson.option] [@key "location"]
         location: option(float), /* Whether the event was from the left or right side of the keyboard. 1=Left, 2=Right (default:
 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "commands"]
         commands: option(list(string)) /* Editing commands to send with the key event (e.g., 'selectAll') (default: []).
 These are related to but not equal the command names used in `document.execCommand` and NSStandardKeyBindingResponding.
 See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/editing/commands/editor_command_names.h for valid command names. */,
@@ -11474,7 +12063,10 @@ See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink
 
     module Params = {
       [@deriving yojson]
-      type t = {text: string /* The text to insert. */};
+      type t = {
+        [@key "text"]
+        text: string /* The text to insert. */,
+      };
       let make = (~text, ()) => {
         {text: text};
       };
@@ -11527,41 +12119,74 @@ See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink
     };
 
     module Params = {
+      type dispatchmouseevent_type = [
+        | `mousePressed
+        | `mouseReleased
+        | `mouseMoved
+        | `mouseWheel
+      ];
+      let dispatchmouseevent_type_of_yojson =
+        fun
+        | `String("mousePressed") => `mousePressed
+        | `String("mouseReleased") => `mouseReleased
+        | `String("mouseMoved") => `mouseMoved
+        | `String("mouseWheel") => `mouseWheel
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_dispatchmouseevent_type =
+        fun
+        | `mousePressed => `String("mousePressed")
+        | `mouseReleased => `String("mouseReleased")
+        | `mouseMoved => `String("mouseMoved")
+        | `mouseWheel => `String("mouseWheel");
+      type dispatchmouseevent_pointertype = [ | `mouse | `pen];
+      let dispatchmouseevent_pointertype_of_yojson =
+        fun
+        | `String("mouse") => `mouse
+        | `String("pen") => `pen
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_dispatchmouseevent_pointertype =
+        fun
+        | `mouse => `String("mouse")
+        | `pen => `String("pen");
       [@deriving yojson]
       type t = {
         [@key "type"]
-        type_: string, /* Type of the mouse event. */
+        type_: dispatchmouseevent_type, /* Type of the mouse event. */
+        [@key "x"]
         x: float, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
+        [@key "y"]
         y: float, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
 the top of the viewport and Y increases as it proceeds towards the bottom of the viewport. */
-        [@yojson.option]
+        [@yojson.option] [@key "modifiers"]
         modifiers: option(float), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
 (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "timestamp"]
         timestamp: option(Types.Input.TimeSinceEpoch.t), /* Time at which the event occurred. */
-        [@yojson.option]
+        [@yojson.option] [@key "button"]
         button: option(Types.Input.MouseButton.t), /* Mouse button (default: "none"). */
-        [@yojson.option]
+        [@yojson.option] [@key "buttons"]
         buttons: option(float), /* A number indicating which buttons are pressed on the mouse when a mouse event is triggered.
 Left=1, Right=2, Middle=4, Back=8, Forward=16, None=0. */
-        [@yojson.option]
+        [@yojson.option] [@key "clickCount"]
         clickCount: option(float), /* Number of times the mouse button was clicked (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "force"]
         force: option(float), /* The normalized pressure, which has a range of [0,1] (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "tangentialPressure"]
         tangentialPressure: option(float), /* The normalized tangential pressure, which has a range of [-1,1] (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "tiltX"]
         tiltX: option(float), /* The plane angle between the Y-Z plane and the plane containing both the stylus axis and the Y axis, in degrees of the range [-90,90], a positive tiltX is to the right (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "tiltY"]
         tiltY: option(float), /* The plane angle between the X-Z plane and the plane containing both the stylus axis and the X axis, in degrees of the range [-90,90], a positive tiltY is towards the user (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "twist"]
         twist: option(float), /* The clockwise rotation of a pen stylus around its own major axis, in degrees in the range [0,359] (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "deltaX"]
         deltaX: option(float), /* X delta in CSS pixels for mouse wheel event (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "deltaY"]
         deltaY: option(float), /* Y delta in CSS pixels for mouse wheel event (default: 0). */
-        [@yojson.option]
-        pointerType: option(string) /* Pointer type (default: "mouse"). */,
+        [@yojson.option] [@key "pointerType"]
+        pointerType: option(dispatchmouseevent_pointertype) /* Pointer type (default: "mouse"). */,
       };
       let make =
           (
@@ -11651,18 +12276,39 @@ Left=1, Right=2, Middle=4, Back=8, Forward=16, None=0. */
     };
 
     module Params = {
+      type dispatchtouchevent_type = [
+        | `touchStart
+        | `touchEnd
+        | `touchMove
+        | `touchCancel
+      ];
+      let dispatchtouchevent_type_of_yojson =
+        fun
+        | `String("touchStart") => `touchStart
+        | `String("touchEnd") => `touchEnd
+        | `String("touchMove") => `touchMove
+        | `String("touchCancel") => `touchCancel
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_dispatchtouchevent_type =
+        fun
+        | `touchStart => `String("touchStart")
+        | `touchEnd => `String("touchEnd")
+        | `touchMove => `String("touchMove")
+        | `touchCancel => `String("touchCancel");
       [@deriving yojson]
       type t = {
         [@key "type"]
-        type_: string, /* Type of the touch event. TouchEnd and TouchCancel must not contain any touch points, while
+        type_: dispatchtouchevent_type, /* Type of the touch event. TouchEnd and TouchCancel must not contain any touch points, while
 TouchStart and TouchMove must contains at least one. */
+        [@key "touchPoints"]
         touchPoints: list(Types.Input.TouchPoint.t), /* Active touch points on the touch device. One event per any changed point (compared to
 previous touch event in a sequence) is generated, emulating pressing/moving/releasing points
 one by one. */
-        [@yojson.option]
+        [@yojson.option] [@key "modifiers"]
         modifiers: option(float), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
 (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "timestamp"]
         timestamp: option(Types.Input.TimeSinceEpoch.t) /* Time at which the event occurred. */,
       };
       let make = (~type_, ~touchPoints, ~modifiers=?, ~timestamp=?, ()) => {
@@ -11717,23 +12363,46 @@ one by one. */
     };
 
     module Params = {
+      type emulatetouchfrommouseevent_type = [
+        | `mousePressed
+        | `mouseReleased
+        | `mouseMoved
+        | `mouseWheel
+      ];
+      let emulatetouchfrommouseevent_type_of_yojson =
+        fun
+        | `String("mousePressed") => `mousePressed
+        | `String("mouseReleased") => `mouseReleased
+        | `String("mouseMoved") => `mouseMoved
+        | `String("mouseWheel") => `mouseWheel
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_emulatetouchfrommouseevent_type =
+        fun
+        | `mousePressed => `String("mousePressed")
+        | `mouseReleased => `String("mouseReleased")
+        | `mouseMoved => `String("mouseMoved")
+        | `mouseWheel => `String("mouseWheel");
       [@deriving yojson]
       type t = {
         [@key "type"]
-        type_: string, /* Type of the mouse event. */
+        type_: emulatetouchfrommouseevent_type, /* Type of the mouse event. */
+        [@key "x"]
         x: float, /* X coordinate of the mouse pointer in DIP. */
+        [@key "y"]
         y: float, /* Y coordinate of the mouse pointer in DIP. */
+        [@key "button"]
         button: Types.Input.MouseButton.t, /* Mouse button. Only "none", "left", "right" are supported. */
-        [@yojson.option]
+        [@yojson.option] [@key "timestamp"]
         timestamp: option(Types.Input.TimeSinceEpoch.t), /* Time at which the event occurred (default: current time). */
-        [@yojson.option]
+        [@yojson.option] [@key "deltaX"]
         deltaX: option(float), /* X delta in DIP for mouse wheel event (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "deltaY"]
         deltaY: option(float), /* Y delta in DIP for mouse wheel event (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "modifiers"]
         modifiers: option(float), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
 (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "clickCount"]
         clickCount: option(float) /* Number of times the mouse button was clicked (default: 0). */,
       };
       let make =
@@ -11812,6 +12481,7 @@ one by one. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "ignore"]
         ignore: bool /* Ignores input events processing when set to true. */,
       };
       let make = (~ignore, ()) => {
@@ -11868,7 +12538,10 @@ one by one. */
 
     module Params = {
       [@deriving yojson]
-      type t = {enabled: bool /* No description provided */};
+      type t = {
+        [@key "enabled"]
+        enabled: bool /* No description provided */,
+      };
       let make = (~enabled, ()) => {
         {enabled: enabled};
       };
@@ -11923,12 +12596,15 @@ one by one. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "x"]
         x: float, /* X coordinate of the start of the gesture in CSS pixels. */
+        [@key "y"]
         y: float, /* Y coordinate of the start of the gesture in CSS pixels. */
+        [@key "scaleFactor"]
         scaleFactor: float, /* Relative scale factor after zooming (>1.0 zooms in, <1.0 zooms out). */
-        [@yojson.option]
+        [@yojson.option] [@key "relativeSpeed"]
         relativeSpeed: option(float), /* Relative pointer speed in pixels per second (default: 800). */
-        [@yojson.option]
+        [@yojson.option] [@key "gestureSourceType"]
         gestureSourceType: option(Types.Input.GestureSourceType.t) /* Which type of input events to be generated (default: 'default', which queries the platform
 for the preferred input type). */,
       };
@@ -11987,30 +12663,32 @@ for the preferred input type). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "x"]
         x: float, /* X coordinate of the start of the gesture in CSS pixels. */
+        [@key "y"]
         y: float, /* Y coordinate of the start of the gesture in CSS pixels. */
-        [@yojson.option]
+        [@yojson.option] [@key "xDistance"]
         xDistance: option(float), /* The distance to scroll along the X axis (positive to scroll left). */
-        [@yojson.option]
+        [@yojson.option] [@key "yDistance"]
         yDistance: option(float), /* The distance to scroll along the Y axis (positive to scroll up). */
-        [@yojson.option]
+        [@yojson.option] [@key "xOverscroll"]
         xOverscroll: option(float), /* The number of additional pixels to scroll back along the X axis, in addition to the given
 distance. */
-        [@yojson.option]
+        [@yojson.option] [@key "yOverscroll"]
         yOverscroll: option(float), /* The number of additional pixels to scroll back along the Y axis, in addition to the given
 distance. */
-        [@yojson.option]
+        [@yojson.option] [@key "preventFling"]
         preventFling: option(bool), /* Prevent fling (default: true). */
-        [@yojson.option]
+        [@yojson.option] [@key "speed"]
         speed: option(float), /* Swipe speed in pixels per second (default: 800). */
-        [@yojson.option]
+        [@yojson.option] [@key "gestureSourceType"]
         gestureSourceType: option(Types.Input.GestureSourceType.t), /* Which type of input events to be generated (default: 'default', which queries the platform
 for the preferred input type). */
-        [@yojson.option]
+        [@yojson.option] [@key "repeatCount"]
         repeatCount: option(float), /* The number of times to repeat the gesture (default: 0). */
-        [@yojson.option]
+        [@yojson.option] [@key "repeatDelayMs"]
         repeatDelayMs: option(float), /* The number of milliseconds delay between each repeat. (default: 250). */
-        [@yojson.option]
+        [@yojson.option] [@key "interactionMarkerName"]
         interactionMarkerName: option(string) /* The name of the interaction markers to generate, if not empty (default: ""). */,
       };
       let make =
@@ -12095,13 +12773,15 @@ for the preferred input type). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "x"]
         x: float, /* X coordinate of the start of the gesture in CSS pixels. */
+        [@key "y"]
         y: float, /* Y coordinate of the start of the gesture in CSS pixels. */
-        [@yojson.option]
+        [@yojson.option] [@key "duration"]
         duration: option(float), /* Duration between touchdown and touchup events in ms (default: 50). */
-        [@yojson.option]
+        [@yojson.option] [@key "tapCount"]
         tapCount: option(float), /* Number of times to perform the tap (e.g. 2 for double tap, default: 1). */
-        [@yojson.option]
+        [@yojson.option] [@key "gestureSourceType"]
         gestureSourceType: option(Types.Input.GestureSourceType.t) /* Which type of input events to be generated (default: 'default', which queries the platform
 for the preferred input type). */,
       };
@@ -12225,7 +12905,9 @@ module LayerTree = {
   module CompositingReasons = {
     module Response: {
       type result = {
+        [@key "compositingReasons"]
         compositingReasons: list(string), /* A list of strings specifying reasons for the given layer to become composited. */
+        [@key "compositingReasonIds"]
         compositingReasonIds: list(string) /* A list of strings specifying reason IDs for the given layer to become composited. */,
       };
 
@@ -12239,7 +12921,9 @@ module LayerTree = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "compositingReasons"]
         compositingReasons: list(string), /* A list of strings specifying reasons for the given layer to become composited. */
+        [@key "compositingReasonIds"]
         compositingReasonIds: list(string) /* A list of strings specifying reason IDs for the given layer to become composited. */,
       };
 
@@ -12259,6 +12943,7 @@ module LayerTree = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "layerId"]
         layerId: Types.LayerTree.LayerId.t /* The id of the layer for which we want to get the reasons it was composited. */,
       };
       let make = (~layerId, ()) => {
@@ -12377,6 +13062,7 @@ module LayerTree = {
   module LoadSnapshot = {
     module Response: {
       type result = {
+        [@key "snapshotId"]
         snapshotId: Types.LayerTree.SnapshotId.t /* The id of the snapshot. */,
       };
 
@@ -12390,6 +13076,7 @@ module LayerTree = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "snapshotId"]
         snapshotId: Types.LayerTree.SnapshotId.t /* The id of the snapshot. */,
       };
 
@@ -12409,6 +13096,7 @@ module LayerTree = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "tiles"]
         tiles: list(Types.LayerTree.PictureTile.t) /* An array of tiles composing the snapshot. */,
       };
       let make = (~tiles, ()) => {
@@ -12437,6 +13125,7 @@ module LayerTree = {
   module MakeSnapshot = {
     module Response: {
       type result = {
+        [@key "snapshotId"]
         snapshotId: Types.LayerTree.SnapshotId.t /* The id of the layer snapshot. */,
       };
 
@@ -12450,6 +13139,7 @@ module LayerTree = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "snapshotId"]
         snapshotId: Types.LayerTree.SnapshotId.t /* The id of the layer snapshot. */,
       };
 
@@ -12469,6 +13159,7 @@ module LayerTree = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "layerId"]
         layerId: Types.LayerTree.LayerId.t /* The id of the layer. */,
       };
       let make = (~layerId, ()) => {
@@ -12497,6 +13188,7 @@ module LayerTree = {
   module ProfileSnapshot = {
     module Response: {
       type result = {
+        [@key "timings"]
         timings: list(Types.LayerTree.PaintProfile.t) /* The array of paint profiles, one per run. */,
       };
 
@@ -12510,6 +13202,7 @@ module LayerTree = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "timings"]
         timings: list(Types.LayerTree.PaintProfile.t) /* The array of paint profiles, one per run. */,
       };
 
@@ -12529,12 +13222,13 @@ module LayerTree = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "snapshotId"]
         snapshotId: Types.LayerTree.SnapshotId.t, /* The id of the layer snapshot. */
-        [@yojson.option]
+        [@yojson.option] [@key "minRepeatCount"]
         minRepeatCount: option(float), /* The maximum number of times to replay the snapshot (1, if not specified). */
-        [@yojson.option]
+        [@yojson.option] [@key "minDuration"]
         minDuration: option(float), /* The minimum duration (in seconds) to replay the snapshot. */
-        [@yojson.option]
+        [@yojson.option] [@key "clipRect"]
         clipRect: option(Types.DOM.Rect.t) /* The clip rectangle to apply when replaying the snapshot. */,
       };
       let make =
@@ -12592,6 +13286,7 @@ module LayerTree = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "snapshotId"]
         snapshotId: Types.LayerTree.SnapshotId.t /* The id of the layer snapshot. */,
       };
       let make = (~snapshotId, ()) => {
@@ -12619,7 +13314,10 @@ module LayerTree = {
   /* Replays the layer snapshot and returns the resulting bitmap. */
   module ReplaySnapshot = {
     module Response: {
-      type result = {dataURL: string /* A data: URL for resulting image. */};
+      type result = {
+        [@key "dataURL"]
+        dataURL: string /* A data: URL for resulting image. */,
+      };
 
       type t = {
         id: int,
@@ -12630,7 +13328,10 @@ module LayerTree = {
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {dataURL: string /* A data: URL for resulting image. */};
+      type result = {
+        [@key "dataURL"]
+        dataURL: string /* A data: URL for resulting image. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -12648,12 +13349,13 @@ module LayerTree = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "snapshotId"]
         snapshotId: Types.LayerTree.SnapshotId.t, /* The id of the layer snapshot. */
-        [@yojson.option]
+        [@yojson.option] [@key "fromStep"]
         fromStep: option(float), /* The first step to replay from (replay from the very start if not specified). */
-        [@yojson.option]
+        [@yojson.option] [@key "toStep"]
         toStep: option(float), /* The last step to replay to (replay till the end if not specified). */
-        [@yojson.option]
+        [@yojson.option] [@key "scale"]
         scale: option(float) /* The scale to apply while replaying (defaults to 1). */,
       };
       let make = (~snapshotId, ~fromStep=?, ~toStep=?, ~scale=?, ()) => {
@@ -12682,6 +13384,7 @@ module LayerTree = {
   module SnapshotCommandLog = {
     module Response: {
       type result = {
+        [@key "commandLog"]
         commandLog: list(Types.assoc) /* The array of canvas function calls. */,
       };
 
@@ -12695,6 +13398,7 @@ module LayerTree = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "commandLog"]
         commandLog: list(Types.assoc) /* The array of canvas function calls. */,
       };
 
@@ -12714,6 +13418,7 @@ module LayerTree = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "snapshotId"]
         snapshotId: Types.LayerTree.SnapshotId.t /* The id of the layer snapshot. */,
       };
       let make = (~snapshotId, ()) => {
@@ -12908,6 +13613,7 @@ module Log = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "config"]
         config: list(Types.Log.ViolationSetting.t) /* Configuration for violations. */,
       };
       let make = (~config, ()) => {
@@ -12983,8 +13689,11 @@ module Memory = {
   module GetDOMCounters = {
     module Response: {
       type result = {
+        [@key "documents"]
         documents: float, /* No description provided */
+        [@key "nodes"]
         nodes: float, /* No description provided */
+        [@key "jsEventListeners"]
         jsEventListeners: float /* No description provided */,
       };
 
@@ -12998,8 +13707,11 @@ module Memory = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "documents"]
         documents: float, /* No description provided */
+        [@key "nodes"]
         nodes: float, /* No description provided */
+        [@key "jsEventListeners"]
         jsEventListeners: float /* No description provided */,
       };
 
@@ -13154,6 +13866,7 @@ module Memory = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "suppressed"]
         suppressed: bool /* If true, memory pressure notifications will be suppressed. */,
       };
       let make = (~suppressed, ()) => {
@@ -13215,6 +13928,7 @@ module Memory = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "level"]
         level: Types.Memory.PressureLevel.t /* Memory pressure level of the notification. */,
       };
       let make = (~level, ()) => {
@@ -13271,9 +13985,9 @@ module Memory = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "samplingInterval"]
         samplingInterval: option(float), /* Average number of bytes between samples. */
-        [@yojson.option]
+        [@yojson.option] [@key "suppressRandomness"]
         suppressRandomness: option(bool) /* Do not randomize intervals between samples. */,
       };
       let make = (~samplingInterval=?, ~suppressRandomness=?, ()) => {
@@ -13348,6 +14062,7 @@ module Memory = {
   module GetAllTimeSamplingProfile = {
     module Response: {
       type result = {
+        [@key "profile"]
         profile: Types.Memory.SamplingProfile.t /* No description provided */,
       };
 
@@ -13361,6 +14076,7 @@ module Memory = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "profile"]
         profile: Types.Memory.SamplingProfile.t /* No description provided */,
       };
 
@@ -13398,6 +14114,7 @@ module Memory = {
   module GetBrowserSamplingProfile = {
     module Response: {
       type result = {
+        [@key "profile"]
         profile: Types.Memory.SamplingProfile.t /* No description provided */,
       };
 
@@ -13411,6 +14128,7 @@ module Memory = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "profile"]
         profile: Types.Memory.SamplingProfile.t /* No description provided */,
       };
 
@@ -13448,6 +14166,7 @@ module Memory = {
   module GetSamplingProfile = {
     module Response: {
       type result = {
+        [@key "profile"]
         profile: Types.Memory.SamplingProfile.t /* No description provided */,
       };
 
@@ -13461,6 +14180,7 @@ module Memory = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "profile"]
         profile: Types.Memory.SamplingProfile.t /* No description provided */,
       };
 
@@ -13527,6 +14247,7 @@ module Network = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "encodings"]
         encodings: list(Types.Network.ContentEncoding.t) /* List of accepted content encodings. */,
       };
       let make = (~encodings, ()) => {
@@ -13600,6 +14321,7 @@ module Network = {
   module CanClearBrowserCache = {
     module Response: {
       type result = {
+        [@key "result"]
         result: bool /* True if browser cache can be cleared. */,
       };
 
@@ -13613,6 +14335,7 @@ module Network = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: bool /* True if browser cache can be cleared. */,
       };
 
@@ -13649,6 +14372,7 @@ module Network = {
   module CanClearBrowserCookies = {
     module Response: {
       type result = {
+        [@key "result"]
         result: bool /* True if browser cookies can be cleared. */,
       };
 
@@ -13662,6 +14386,7 @@ module Network = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: bool /* True if browser cookies can be cleared. */,
       };
 
@@ -13698,6 +14423,7 @@ module Network = {
   module CanEmulateNetworkConditions = {
     module Response: {
       type result = {
+        [@key "result"]
         result: bool /* True if emulation of network conditions is supported. */,
       };
 
@@ -13711,6 +14437,7 @@ module Network = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: bool /* True if emulation of network conditions is supported. */,
       };
 
@@ -13869,26 +14596,27 @@ module Network = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "interceptionId"]
         interceptionId: Types.Network.InterceptionId.t, /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "errorReason"]
         errorReason: option(Types.Network.ErrorReason.t), /* If set this causes the request to fail with the given reason. Passing `Aborted` for requests
 marked with `isNavigationRequest` also cancels the navigation. Must not be set in response
 to an authChallenge. */
-        [@yojson.option]
+        [@yojson.option] [@key "rawResponse"]
         rawResponse: option(string), /* If set the requests completes using with the provided base64 encoded raw response, including
 HTTP status line and headers etc... Must not be set in response to an authChallenge. (Encoded as a base64 string when passed over JSON) */
-        [@yojson.option]
+        [@yojson.option] [@key "url"]
         url: option(string), /* If set the request url will be modified in a way that's not observable by page. Must not be
 set in response to an authChallenge. */
-        [@yojson.option]
+        [@yojson.option] [@key "method"]
         method: option(string), /* If set this allows the request method to be overridden. Must not be set in response to an
 authChallenge. */
-        [@yojson.option]
+        [@yojson.option] [@key "postData"]
         postData: option(string), /* If set this allows postData to be set. Must not be set in response to an authChallenge. */
-        [@yojson.option]
+        [@yojson.option] [@key "headers"]
         headers: option(Types.Network.Headers.t), /* If set this allows the request headers to be changed. Must not be set in response to an
 authChallenge. */
-        [@yojson.option]
+        [@yojson.option] [@key "authChallengeResponse"]
         authChallengeResponse: option(Types.Network.AuthChallengeResponse.t) /* Response to a requestIntercepted with an authChallenge. Must not be set otherwise. */,
       };
       let make =
@@ -13965,13 +14693,14 @@ authChallenge. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "name"]
         name: string, /* Name of the cookies to remove. */
-        [@yojson.option]
+        [@yojson.option] [@key "url"]
         url: option(string), /* If specified, deletes all the cookies with the given name where domain and path match
 provided URL. */
-        [@yojson.option]
+        [@yojson.option] [@key "domain"]
         domain: option(string), /* If specified, deletes only cookies with the exact domain. */
-        [@yojson.option]
+        [@yojson.option] [@key "path"]
         path: option(string) /* If specified, deletes only cookies with the exact path. */,
       };
       let make = (~name, ~url=?, ~domain=?, ~path=?, ()) => {
@@ -14073,11 +14802,15 @@ provided URL. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "offline"]
         offline: bool, /* True to emulate internet disconnection. */
+        [@key "latency"]
         latency: float, /* Minimum latency from request sent to response headers received (ms). */
+        [@key "downloadThroughput"]
         downloadThroughput: float, /* Maximal aggregated download throughput (bytes/sec). -1 disables download throttling. */
+        [@key "uploadThroughput"]
         uploadThroughput: float, /* Maximal aggregated upload throughput (bytes/sec).  -1 disables upload throttling. */
-        [@yojson.option]
+        [@yojson.option] [@key "connectionType"]
         connectionType: option(Types.Network.ConnectionType.t) /* Connection type if known. */,
       };
       let make =
@@ -14148,11 +14881,11 @@ provided URL. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "maxTotalBufferSize"]
         maxTotalBufferSize: option(float), /* Buffer size in bytes to use when preserving network payloads (XHRs, etc). */
-        [@yojson.option]
+        [@yojson.option] [@key "maxResourceBufferSize"]
         maxResourceBufferSize: option(float), /* Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc). */
-        [@yojson.option]
+        [@yojson.option] [@key "maxPostDataSize"]
         maxPostDataSize: option(float) /* Longest post body size (in bytes) that would be included in requestWillBeSent notification */,
       };
       let make =
@@ -14188,6 +14921,7 @@ provided URL. */
   module GetAllCookies = {
     module Response: {
       type result = {
+        [@key "cookies"]
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
@@ -14201,6 +14935,7 @@ provided URL. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "cookies"]
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
@@ -14236,7 +14971,10 @@ provided URL. */
   /* Returns the DER-encoded certificate. */
   module GetCertificate = {
     module Response: {
-      type result = {tableNames: list(string) /* No description provided */};
+      type result = {
+        [@key "tableNames"]
+        tableNames: list(string) /* No description provided */,
+      };
 
       type t = {
         id: int,
@@ -14247,7 +14985,10 @@ provided URL. */
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {tableNames: list(string) /* No description provided */};
+      type result = {
+        [@key "tableNames"]
+        tableNames: list(string) /* No description provided */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -14264,7 +15005,10 @@ provided URL. */
 
     module Params = {
       [@deriving yojson]
-      type t = {origin: string /* Origin to get certificate for. */};
+      type t = {
+        [@key "origin"]
+        origin: string /* Origin to get certificate for. */,
+      };
       let make = (~origin, ()) => {
         {origin: origin};
       };
@@ -14292,6 +15036,7 @@ provided URL. */
   module GetCookies = {
     module Response: {
       type result = {
+        [@key "cookies"]
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
@@ -14305,6 +15050,7 @@ provided URL. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "cookies"]
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
@@ -14324,7 +15070,7 @@ provided URL. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "urls"]
         urls: option(list(string)) /* The list of URLs for which applicable cookies will be fetched.
 If not specified, it's assumed to be set to the list containing
 the URLs of the page and all of its subframes. */,
@@ -14355,7 +15101,9 @@ the URLs of the page and all of its subframes. */,
   module GetResponseBody = {
     module Response: {
       type result = {
+        [@key "body"]
         body: string, /* Response body. */
+        [@key "base64Encoded"]
         base64Encoded: bool /* True, if content was sent as base64. */,
       };
 
@@ -14369,7 +15117,9 @@ the URLs of the page and all of its subframes. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "body"]
         body: string, /* Response body. */
+        [@key "base64Encoded"]
         base64Encoded: bool /* True, if content was sent as base64. */,
       };
 
@@ -14389,6 +15139,7 @@ the URLs of the page and all of its subframes. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Network.RequestId.t /* Identifier of the network request to get content for. */,
       };
       let make = (~requestId, ()) => {
@@ -14417,6 +15168,7 @@ the URLs of the page and all of its subframes. */,
   module GetRequestPostData = {
     module Response: {
       type result = {
+        [@key "postData"]
         postData: string /* Request body string, omitting files from multipart requests */,
       };
 
@@ -14430,6 +15182,7 @@ the URLs of the page and all of its subframes. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "postData"]
         postData: string /* Request body string, omitting files from multipart requests */,
       };
 
@@ -14449,6 +15202,7 @@ the URLs of the page and all of its subframes. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Network.RequestId.t /* Identifier of the network request to get content for. */,
       };
       let make = (~requestId, ()) => {
@@ -14477,7 +15231,9 @@ the URLs of the page and all of its subframes. */,
   module GetResponseBodyForInterception = {
     module Response: {
       type result = {
+        [@key "body"]
         body: string, /* Response body. */
+        [@key "base64Encoded"]
         base64Encoded: bool /* True, if content was sent as base64. */,
       };
 
@@ -14491,7 +15247,9 @@ the URLs of the page and all of its subframes. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "body"]
         body: string, /* Response body. */
+        [@key "base64Encoded"]
         base64Encoded: bool /* True, if content was sent as base64. */,
       };
 
@@ -14511,6 +15269,7 @@ the URLs of the page and all of its subframes. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "interceptionId"]
         interceptionId: Types.Network.InterceptionId.t /* Identifier for the intercepted request to get body for. */,
       };
       let make = (~interceptionId, ()) => {
@@ -14547,6 +15306,7 @@ the URLs of the page and all of its subframes. */,
   module TakeResponseBodyForInterceptionAsStream = {
     module Response: {
       type result = {
+        [@key "stream"]
         stream: Types.IO.StreamHandle.t /* No description provided */,
       };
 
@@ -14560,6 +15320,7 @@ the URLs of the page and all of its subframes. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "stream"]
         stream: Types.IO.StreamHandle.t /* No description provided */,
       };
 
@@ -14579,6 +15340,7 @@ the URLs of the page and all of its subframes. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "interceptionId"]
         interceptionId: Types.Network.InterceptionId.t /* No description provided */,
       };
       let make = (~interceptionId, ()) => {
@@ -14642,6 +15404,7 @@ the URLs of the page and all of its subframes. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Network.RequestId.t /* Identifier of XHR to replay. */,
       };
       let make = (~requestId, ()) => {
@@ -14670,6 +15433,7 @@ the URLs of the page and all of its subframes. */,
   module SearchInResponseBody = {
     module Response: {
       type result = {
+        [@key "result"]
         result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
       };
 
@@ -14683,6 +15447,7 @@ the URLs of the page and all of its subframes. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
       };
 
@@ -14702,11 +15467,13 @@ the URLs of the page and all of its subframes. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Network.RequestId.t, /* Identifier of the network response to search. */
+        [@key "query"]
         query: string, /* String to search for. */
-        [@yojson.option]
+        [@yojson.option] [@key "caseSensitive"]
         caseSensitive: option(bool), /* If true, search is case sensitive. */
-        [@yojson.option]
+        [@yojson.option] [@key "isRegex"]
         isRegex: option(bool) /* If true, treats string parameter as regex. */,
       };
       let make = (~requestId, ~query, ~caseSensitive=?, ~isRegex=?, ()) => {
@@ -14763,6 +15530,7 @@ the URLs of the page and all of its subframes. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "urls"]
         urls: list(string) /* URL patterns to block. Wildcards ('*') are allowed. */,
       };
       let make = (~urls, ()) => {
@@ -14819,6 +15587,7 @@ the URLs of the page and all of its subframes. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "bypass"]
         bypass: bool /* Bypass service worker and load from network. */,
       };
       let make = (~bypass, ()) => {
@@ -14874,7 +15643,10 @@ the URLs of the page and all of its subframes. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {cacheDisabled: bool /* Cache disabled state. */};
+      type t = {
+        [@key "cacheDisabled"]
+        cacheDisabled: bool /* Cache disabled state. */,
+      };
       let make = (~cacheDisabled, ()) => {
         {cacheDisabled: cacheDisabled};
       };
@@ -14901,6 +15673,7 @@ the URLs of the page and all of its subframes. */,
   module SetCookie = {
     module Response: {
       type result = {
+        [@key "success"]
         success: bool /* Always set to true. If an error occurs, the response indicates protocol error. */,
       };
 
@@ -14914,6 +15687,7 @@ the URLs of the page and all of its subframes. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "success"]
         success: bool /* Always set to true. If an error occurs, the response indicates protocol error. */,
       };
 
@@ -14933,30 +15707,32 @@ the URLs of the page and all of its subframes. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "name"]
         name: string, /* Cookie name. */
+        [@key "value"]
         value: string, /* Cookie value. */
-        [@yojson.option]
+        [@yojson.option] [@key "url"]
         url: option(string), /* The request-URI to associate with the setting of the cookie. This value can affect the
 default domain, path, source port, and source scheme values of the created cookie. */
-        [@yojson.option]
+        [@yojson.option] [@key "domain"]
         domain: option(string), /* Cookie domain. */
-        [@yojson.option]
+        [@yojson.option] [@key "path"]
         path: option(string), /* Cookie path. */
-        [@yojson.option]
+        [@yojson.option] [@key "secure"]
         secure: option(bool), /* True if cookie is secure. */
-        [@yojson.option]
+        [@yojson.option] [@key "httpOnly"]
         httpOnly: option(bool), /* True if cookie is http-only. */
-        [@yojson.option]
+        [@yojson.option] [@key "sameSite"]
         sameSite: option(Types.Network.CookieSameSite.t), /* Cookie SameSite type. */
-        [@yojson.option]
+        [@yojson.option] [@key "expires"]
         expires: option(Types.Network.TimeSinceEpoch.t), /* Cookie expiration date, session cookie if not set */
-        [@yojson.option]
+        [@yojson.option] [@key "priority"]
         priority: option(Types.Network.CookiePriority.t), /* Cookie Priority type. */
-        [@yojson.option]
+        [@yojson.option] [@key "sameParty"]
         sameParty: option(bool), /* True if cookie is SameParty. */
-        [@yojson.option]
+        [@yojson.option] [@key "sourceScheme"]
         sourceScheme: option(Types.Network.CookieSourceScheme.t), /* Cookie source scheme type. */
-        [@yojson.option]
+        [@yojson.option] [@key "sourcePort"]
         sourcePort: option(float) /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
 This is a temporary ability and it will be removed in the future. */,
@@ -15045,6 +15821,7 @@ This is a temporary ability and it will be removed in the future. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "cookies"]
         cookies: list(Types.Network.CookieParam.t) /* Cookies to be set. */,
       };
       let make = (~cookies, ()) => {
@@ -15101,7 +15878,9 @@ This is a temporary ability and it will be removed in the future. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "maxTotalSize"]
         maxTotalSize: float, /* Maximum total buffer size. */
+        [@key "maxResourceSize"]
         maxResourceSize: float /* Maximum per-resource size. */,
       };
       let make = (~maxTotalSize, ~maxResourceSize, ()) => {
@@ -15158,6 +15937,7 @@ This is a temporary ability and it will be removed in the future. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "headers"]
         headers: Types.Network.Headers.t /* Map with extra HTTP headers. */,
       };
       let make = (~headers, ()) => {
@@ -15214,6 +15994,7 @@ This is a temporary ability and it will be removed in the future. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "enabled"]
         enabled: bool /* Whether to attach a page script stack for debugging purpose. */,
       };
       let make = (~enabled, ()) => {
@@ -15271,6 +16052,7 @@ This is a temporary ability and it will be removed in the future. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "patterns"]
         patterns: list(Types.Network.RequestPattern.t) /* Requests matching any of these patterns will be forwarded and wait for the corresponding
 continueInterceptedRequest call. */,
       };
@@ -15328,12 +16110,13 @@ continueInterceptedRequest call. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "userAgent"]
         userAgent: string, /* User agent to use. */
-        [@yojson.option]
+        [@yojson.option] [@key "acceptLanguage"]
         acceptLanguage: option(string), /* Browser langugage to emulate. */
-        [@yojson.option]
+        [@yojson.option] [@key "platform"]
         platform: option(string), /* The platform navigator.platform should return. */
-        [@yojson.option]
+        [@yojson.option] [@key "userAgentMetadata"]
         userAgentMetadata: option(Types.Emulation.UserAgentMetadata.t) /* To be sent in Sec-CH-UA-* headers and returned in navigator.userAgentData */,
       };
       let make =
@@ -15369,6 +16152,7 @@ continueInterceptedRequest call. */,
   module GetSecurityIsolationStatus = {
     module Response: {
       type result = {
+        [@key "status"]
         status: Types.Network.SecurityIsolationStatus.t /* No description provided */,
       };
 
@@ -15382,6 +16166,7 @@ continueInterceptedRequest call. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "status"]
         status: Types.Network.SecurityIsolationStatus.t /* No description provided */,
       };
 
@@ -15401,7 +16186,7 @@ continueInterceptedRequest call. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "frameId"]
         frameId: option(Types.Page.FrameId.t) /* If no frameId is provided, the status of the target is provided. */,
       };
       let make = (~frameId=?, ()) => {
@@ -15430,6 +16215,7 @@ continueInterceptedRequest call. */,
   module LoadNetworkResource = {
     module Response: {
       type result = {
+        [@key "resource"]
         resource: Types.Network.LoadNetworkResourcePageResult.t /* No description provided */,
       };
 
@@ -15443,6 +16229,7 @@ continueInterceptedRequest call. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "resource"]
         resource: Types.Network.LoadNetworkResourcePageResult.t /* No description provided */,
       };
 
@@ -15462,8 +16249,11 @@ continueInterceptedRequest call. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Frame id to get the resource for. */
+        [@key "url"]
         url: string, /* URL of the resource to get content for. */
+        [@key "options"]
         options: Types.Network.LoadNetworkResourceOptions.t /* Options for the request. */,
       };
       let make = (~frameId, ~url, ~options, ()) => {
@@ -15584,6 +16374,7 @@ module Overlay = {
   module GetHighlightObjectForTest = {
     module Response: {
       type result = {
+        [@key "highlight"]
         highlight: Types.assoc /* Highlight data for the node. */,
       };
 
@@ -15597,6 +16388,7 @@ module Overlay = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "highlight"]
         highlight: Types.assoc /* Highlight data for the node. */,
       };
 
@@ -15616,14 +16408,15 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the node to get highlight object for. */
-        [@yojson.option]
+        [@yojson.option] [@key "includeDistance"]
         includeDistance: option(bool), /* Whether to include distance info. */
-        [@yojson.option]
+        [@yojson.option] [@key "includeStyle"]
         includeStyle: option(bool), /* Whether to include style info. */
-        [@yojson.option]
+        [@yojson.option] [@key "colorFormat"]
         colorFormat: option(Types.Overlay.ColorFormat.t), /* The color format to get config with (default: hex). */
-        [@yojson.option]
+        [@yojson.option] [@key "showAccessibilityInfo"]
         showAccessibilityInfo: option(bool) /* Whether to show accessibility info (default: true). */,
       };
       let make =
@@ -15666,6 +16459,7 @@ module Overlay = {
   module GetGridHighlightObjectsForTest = {
     module Response: {
       type result = {
+        [@key "highlights"]
         highlights: Types.assoc /* Grid Highlight data for the node ids provided. */,
       };
 
@@ -15679,6 +16473,7 @@ module Overlay = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "highlights"]
         highlights: Types.assoc /* Grid Highlight data for the node ids provided. */,
       };
 
@@ -15698,6 +16493,7 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeIds"]
         nodeIds: list(Types.DOM.NodeId.t) /* Ids of the node to get highlight object for. */,
       };
       let make = (~nodeIds, ()) => {
@@ -15731,6 +16527,7 @@ module Overlay = {
   module GetSourceOrderHighlightObjectForTest = {
     module Response: {
       type result = {
+        [@key "highlight"]
         highlight: Types.assoc /* Source order highlight data for the node id provided. */,
       };
 
@@ -15744,6 +16541,7 @@ module Overlay = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "highlight"]
         highlight: Types.assoc /* Source order highlight data for the node id provided. */,
       };
 
@@ -15763,6 +16561,7 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t /* Id of the node to highlight. */,
       };
       let make = (~nodeId, ()) => {
@@ -15869,10 +16668,11 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Identifier of the frame to highlight. */
-        [@yojson.option]
+        [@yojson.option] [@key "contentColor"]
         contentColor: option(Types.DOM.RGBA.t), /* The content box highlight fill color (default: transparent). */
-        [@yojson.option]
+        [@yojson.option] [@key "contentOutlineColor"]
         contentOutlineColor: option(Types.DOM.RGBA.t) /* The content box highlight outline color (default: transparent). */,
       };
       let make = (~frameId, ~contentColor=?, ~contentOutlineColor=?, ()) => {
@@ -15930,14 +16730,15 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "highlightConfig"]
         highlightConfig: Types.Overlay.HighlightConfig.t, /* A descriptor for the highlight appearance. */
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node to highlight. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node to highlight. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t), /* JavaScript object id of the node to be highlighted. */
-        [@yojson.option]
+        [@yojson.option] [@key "selector"]
         selector: option(string) /* Selectors to highlight relevant nodes. */,
       };
       let make =
@@ -16002,10 +16803,11 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "quad"]
         quad: Types.DOM.Quad.t, /* Quad to highlight */
-        [@yojson.option]
+        [@yojson.option] [@key "color"]
         color: option(Types.DOM.RGBA.t), /* The highlight fill color (default: transparent). */
-        [@yojson.option]
+        [@yojson.option] [@key "outlineColor"]
         outlineColor: option(Types.DOM.RGBA.t) /* The highlight outline color (default: transparent). */,
       };
       let make = (~quad, ~color=?, ~outlineColor=?, ()) => {
@@ -16062,13 +16864,17 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "x"]
         x: float, /* X coordinate */
+        [@key "y"]
         y: float, /* Y coordinate */
+        [@key "width"]
         width: float, /* Rectangle width */
+        [@key "height"]
         height: float, /* Rectangle height */
-        [@yojson.option]
+        [@yojson.option] [@key "color"]
         color: option(Types.DOM.RGBA.t), /* The highlight fill color (default: transparent). */
-        [@yojson.option]
+        [@yojson.option] [@key "outlineColor"]
         outlineColor: option(Types.DOM.RGBA.t) /* The highlight outline color (default: transparent). */,
       };
       let make = (~x, ~y, ~width, ~height, ~color=?, ~outlineColor=?, ()) => {
@@ -16126,12 +16932,13 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "sourceOrderConfig"]
         sourceOrderConfig: Types.Overlay.SourceOrderConfig.t, /* A descriptor for the appearance of the overlay drawing. */
-        [@yojson.option]
+        [@yojson.option] [@key "nodeId"]
         nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node to highlight. */
-        [@yojson.option]
+        [@yojson.option] [@key "backendNodeId"]
         backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node to highlight. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t) /* JavaScript object id of the node to be highlighted. */,
       };
       let make =
@@ -16190,8 +16997,9 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "mode"]
         mode: Types.Overlay.InspectMode.t, /* Set an inspection mode. */
-        [@yojson.option]
+        [@yojson.option] [@key "highlightConfig"]
         highlightConfig: option(Types.Overlay.HighlightConfig.t) /* A descriptor for the highlight appearance of hovered-over nodes. May be omitted if `enabled
 == false`. */,
       };
@@ -16248,7 +17056,10 @@ module Overlay = {
 
     module Params = {
       [@deriving yojson]
-      type t = {show: bool /* True for showing ad highlights */};
+      type t = {
+        [@key "show"]
+        show: bool /* True for showing ad highlights */,
+      };
       let make = (~show, ()) => {
         {show: show};
       };
@@ -16303,7 +17114,7 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "message"]
         message: option(string) /* The message to display, also triggers resume and step over controls. */,
       };
       let make = (~message=?, ()) => {
@@ -16359,7 +17170,10 @@ module Overlay = {
 
     module Params = {
       [@deriving yojson]
-      type t = {show: bool /* True for showing debug borders */};
+      type t = {
+        [@key "show"]
+        show: bool /* True for showing debug borders */,
+      };
       let make = (~show, ()) => {
         {show: show};
       };
@@ -16413,7 +17227,10 @@ module Overlay = {
 
     module Params = {
       [@deriving yojson]
-      type t = {show: bool /* True for showing the FPS counter */};
+      type t = {
+        [@key "show"]
+        show: bool /* True for showing the FPS counter */,
+      };
       let make = (~show, ()) => {
         {show: show};
       };
@@ -16468,6 +17285,7 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "gridNodeHighlightConfigs"]
         gridNodeHighlightConfigs:
           list(Types.Overlay.GridNodeHighlightConfig.t) /* An array of node identifiers and descriptors for the highlight appearance. */,
       };
@@ -16525,6 +17343,7 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "flexNodeHighlightConfigs"]
         flexNodeHighlightConfigs:
           list(Types.Overlay.FlexNodeHighlightConfig.t) /* An array of node identifiers and descriptors for the highlight appearance. */,
       };
@@ -16582,6 +17401,7 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "scrollSnapHighlightConfigs"]
         scrollSnapHighlightConfigs:
           list(Types.Overlay.ScrollSnapHighlightConfig.t) /* An array of node identifiers and descriptors for the highlight appearance. */,
       };
@@ -16638,7 +17458,10 @@ module Overlay = {
 
     module Params = {
       [@deriving yojson]
-      type t = {result: bool /* True for showing paint rectangles */};
+      type t = {
+        [@key "result"]
+        result: bool /* True for showing paint rectangles */,
+      };
       let make = (~result, ()) => {
         {result: result};
       };
@@ -16692,7 +17515,10 @@ module Overlay = {
 
     module Params = {
       [@deriving yojson]
-      type t = {result: bool /* True for showing layout shift regions */};
+      type t = {
+        [@key "result"]
+        result: bool /* True for showing layout shift regions */,
+      };
       let make = (~result, ()) => {
         {result: result};
       };
@@ -16746,7 +17572,10 @@ module Overlay = {
 
     module Params = {
       [@deriving yojson]
-      type t = {show: bool /* True for showing scroll bottleneck rects */};
+      type t = {
+        [@key "show"]
+        show: bool /* True for showing scroll bottleneck rects */,
+      };
       let make = (~show, ()) => {
         {show: show};
       };
@@ -16805,7 +17634,10 @@ module Overlay = {
 
     module Params = {
       [@deriving yojson]
-      type t = {show: bool /* True for showing hit-test borders */};
+      type t = {
+        [@key "show"]
+        show: bool /* True for showing hit-test borders */,
+      };
       let make = (~show, ()) => {
         {show: show};
       };
@@ -16859,7 +17691,10 @@ module Overlay = {
 
     module Params = {
       [@deriving yojson]
-      type t = {show: bool /* No description provided */};
+      type t = {
+        [@key "show"]
+        show: bool /* No description provided */,
+      };
       let make = (~show, ()) => {
         {show: show};
       };
@@ -16913,7 +17748,10 @@ module Overlay = {
 
     module Params = {
       [@deriving yojson]
-      type t = {show: bool /* Whether to paint size or not. */};
+      type t = {
+        [@key "show"]
+        show: bool /* Whether to paint size or not. */,
+      };
       let make = (~show, ()) => {
         {show: show};
       };
@@ -16968,7 +17806,7 @@ module Overlay = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "hingeConfig"]
         hingeConfig: option(Types.Overlay.HingeConfig.t) /* hinge data, null means hideHinge */,
       };
       let make = (~hingeConfig=?, ()) => {
@@ -16999,6 +17837,7 @@ module Page = {
   module AddScriptToEvaluateOnLoad = {
     module Response: {
       type result = {
+        [@key "identifier"]
         identifier: Types.Page.ScriptIdentifier.t /* Identifier of the added script. */,
       };
 
@@ -17012,6 +17851,7 @@ module Page = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "identifier"]
         identifier: Types.Page.ScriptIdentifier.t /* Identifier of the added script. */,
       };
 
@@ -17030,7 +17870,10 @@ module Page = {
 
     module Params = {
       [@deriving yojson]
-      type t = {scriptSource: string /* No description provided */};
+      type t = {
+        [@key "scriptSource"]
+        scriptSource: string /* No description provided */,
+      };
       let make = (~scriptSource, ()) => {
         {scriptSource: scriptSource};
       };
@@ -17057,6 +17900,7 @@ module Page = {
   module AddScriptToEvaluateOnNewDocument = {
     module Response: {
       type result = {
+        [@key "identifier"]
         identifier: Types.Page.ScriptIdentifier.t /* Identifier of the added script. */,
       };
 
@@ -17070,6 +17914,7 @@ module Page = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "identifier"]
         identifier: Types.Page.ScriptIdentifier.t /* Identifier of the added script. */,
       };
 
@@ -17089,12 +17934,13 @@ module Page = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "source"]
         source: string, /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "worldName"]
         worldName: option(string), /* If specified, creates an isolated world with the given name and evaluates given script in it.
 This world name will be used as the ExecutionContextDescription::name when the corresponding
 event is emitted. */
-        [@yojson.option]
+        [@yojson.option] [@key "includeCommandLineAPI"]
         includeCommandLineAPI: option(bool) /* Specifies whether command line API should be available to the script, defaults
 to false. */,
       };
@@ -17174,6 +18020,7 @@ to false. */,
   module CaptureScreenshot = {
     module Response: {
       type result = {
+        [@key "data"]
         data: string /* Base64-encoded image data. (Encoded as a base64 string when passed over JSON) */,
       };
 
@@ -17187,6 +18034,7 @@ to false. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "data"]
         data: string /* Base64-encoded image data. (Encoded as a base64 string when passed over JSON) */,
       };
 
@@ -17204,17 +18052,28 @@ to false. */,
     };
 
     module Params = {
+      type capturescreenshot_format = [ | `jpeg | `png];
+      let capturescreenshot_format_of_yojson =
+        fun
+        | `String("jpeg") => `jpeg
+        | `String("png") => `png
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_capturescreenshot_format =
+        fun
+        | `jpeg => `String("jpeg")
+        | `png => `String("png");
       [@deriving yojson]
       type t = {
-        [@yojson.option]
-        format: option(string), /* Image compression format (defaults to png). */
-        [@yojson.option]
+        [@yojson.option] [@key "format"]
+        format: option(capturescreenshot_format), /* Image compression format (defaults to png). */
+        [@yojson.option] [@key "quality"]
         quality: option(float), /* Compression quality from range [0..100] (jpeg only). */
-        [@yojson.option]
+        [@yojson.option] [@key "clip"]
         clip: option(Types.Page.Viewport.t), /* Capture the screenshot of a given region only. */
-        [@yojson.option]
+        [@yojson.option] [@key "fromSurface"]
         fromSurface: option(bool), /* Capture the screenshot from the surface, rather than the view. Defaults to true. */
-        [@yojson.option]
+        [@yojson.option] [@key "captureBeyondViewport"]
         captureBeyondViewport: option(bool) /* Capture the screenshot beyond the viewport. Defaults to false. */,
       };
       let make =
@@ -17251,7 +18110,10 @@ to false. */,
      iframes, shadow DOM, external resources, and element-inline styles. */
   module CaptureSnapshot = {
     module Response: {
-      type result = {data: string /* Serialized page data. */};
+      type result = {
+        [@key "data"]
+        data: string /* Serialized page data. */,
+      };
 
       type t = {
         id: int,
@@ -17262,7 +18124,10 @@ to false. */,
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {data: string /* Serialized page data. */};
+      type result = {
+        [@key "data"]
+        data: string /* Serialized page data. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -17278,10 +18143,19 @@ to false. */,
     };
 
     module Params = {
+      type capturesnapshot_format = [ | `mhtml];
+      let capturesnapshot_format_of_yojson =
+        fun
+        | `String("mhtml") => `mhtml
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_capturesnapshot_format =
+        fun
+        | `mhtml => `String("mhtml");
       [@deriving yojson]
       type t = {
-        [@yojson.option]
-        format: option(string) /* Format (defaults to mhtml). */,
+        [@yojson.option] [@key "format"]
+        format: option(capturesnapshot_format) /* Format (defaults to mhtml). */,
       };
       let make = (~format=?, ()) => {
         {format: format};
@@ -17444,6 +18318,7 @@ to false. */,
   module CreateIsolatedWorld = {
     module Response: {
       type result = {
+        [@key "executionContextId"]
         executionContextId: Types.Runtime.ExecutionContextId.t /* Execution context of the isolated world. */,
       };
 
@@ -17457,6 +18332,7 @@ to false. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "executionContextId"]
         executionContextId: Types.Runtime.ExecutionContextId.t /* Execution context of the isolated world. */,
       };
 
@@ -17476,10 +18352,11 @@ to false. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Id of the frame in which the isolated world should be created. */
-        [@yojson.option]
+        [@yojson.option] [@key "worldName"]
         worldName: option(string), /* An optional name which is reported in the Execution Context. */
-        [@yojson.option]
+        [@yojson.option] [@key "grantUniveralAccess"]
         grantUniveralAccess: option(bool) /* Whether or not universal access should be granted to the isolated world. This is a powerful
 option, use with caution. */,
       };
@@ -17537,7 +18414,9 @@ option, use with caution. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "cookieName"]
         cookieName: string, /* Name of the cookie to remove. */
+        [@key "url"]
         url: string /* URL to match cooke domain and path. */,
       };
       let make = (~cookieName, ~url, ()) => {
@@ -17656,11 +18535,13 @@ option, use with caution. */,
   module GetAppManifest = {
     module Response: {
       type result = {
+        [@key "url"]
         url: string, /* Manifest location. */
+        [@key "errors"]
         errors: list(Types.Page.AppManifestError.t), /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "data"]
         data: option(string), /* Manifest content. */
-        [@yojson.option]
+        [@yojson.option] [@key "parsed"]
         parsed: option(Types.Page.AppManifestParsedProperties.t) /* Parsed manifest properties */,
       };
 
@@ -17674,11 +18555,13 @@ option, use with caution. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "url"]
         url: string, /* Manifest location. */
+        [@key "errors"]
         errors: list(Types.Page.AppManifestError.t), /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "data"]
         data: option(string), /* Manifest content. */
-        [@yojson.option]
+        [@yojson.option] [@key "parsed"]
         parsed: option(Types.Page.AppManifestParsedProperties.t) /* Parsed manifest properties */,
       };
 
@@ -17715,6 +18598,7 @@ option, use with caution. */,
   module GetInstallabilityErrors = {
     module Response: {
       type result = {
+        [@key "installabilityErrors"]
         installabilityErrors: list(Types.Page.InstallabilityError.t) /* No description provided */,
       };
 
@@ -17728,6 +18612,7 @@ option, use with caution. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "installabilityErrors"]
         installabilityErrors: list(Types.Page.InstallabilityError.t) /* No description provided */,
       };
 
@@ -17764,7 +18649,7 @@ option, use with caution. */,
   module GetManifestIcons = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "primaryIcon"]
         primaryIcon: option(string) /* No description provided */,
       };
 
@@ -17778,7 +18663,7 @@ option, use with caution. */,
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "primaryIcon"]
         primaryIcon: option(string) /* No description provided */,
       };
 
@@ -17816,6 +18701,7 @@ option, use with caution. */,
   module GetCookies = {
     module Response: {
       type result = {
+        [@key "cookies"]
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
@@ -17829,6 +18715,7 @@ option, use with caution. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "cookies"]
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
@@ -17865,6 +18752,7 @@ option, use with caution. */,
   module GetFrameTree = {
     module Response: {
       type result = {
+        [@key "frameTree"]
         frameTree: Types.Page.FrameTree.t /* Present frame tree structure. */,
       };
 
@@ -17878,6 +18766,7 @@ option, use with caution. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "frameTree"]
         frameTree: Types.Page.FrameTree.t /* Present frame tree structure. */,
       };
 
@@ -17914,11 +18803,17 @@ option, use with caution. */,
   module GetLayoutMetrics = {
     module Response: {
       type result = {
+        [@key "layoutViewport"]
         layoutViewport: Types.Page.LayoutViewport.t, /* Deprecated metrics relating to the layout viewport. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssLayoutViewport` instead. */
+        [@key "visualViewport"]
         visualViewport: Types.Page.VisualViewport.t, /* Deprecated metrics relating to the visual viewport. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssVisualViewport` instead. */
+        [@key "contentSize"]
         contentSize: Types.DOM.Rect.t, /* Deprecated size of scrollable area. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssContentSize` instead. */
+        [@key "cssLayoutViewport"]
         cssLayoutViewport: Types.Page.LayoutViewport.t, /* Metrics relating to the layout viewport in CSS pixels. */
+        [@key "cssVisualViewport"]
         cssVisualViewport: Types.Page.VisualViewport.t, /* Metrics relating to the visual viewport in CSS pixels. */
+        [@key "cssContentSize"]
         cssContentSize: Types.DOM.Rect.t /* Size of scrollable area in CSS pixels. */,
       };
 
@@ -17932,11 +18827,17 @@ option, use with caution. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "layoutViewport"]
         layoutViewport: Types.Page.LayoutViewport.t, /* Deprecated metrics relating to the layout viewport. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssLayoutViewport` instead. */
+        [@key "visualViewport"]
         visualViewport: Types.Page.VisualViewport.t, /* Deprecated metrics relating to the visual viewport. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssVisualViewport` instead. */
+        [@key "contentSize"]
         contentSize: Types.DOM.Rect.t, /* Deprecated size of scrollable area. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssContentSize` instead. */
+        [@key "cssLayoutViewport"]
         cssLayoutViewport: Types.Page.LayoutViewport.t, /* Metrics relating to the layout viewport in CSS pixels. */
+        [@key "cssVisualViewport"]
         cssVisualViewport: Types.Page.VisualViewport.t, /* Metrics relating to the visual viewport in CSS pixels. */
+        [@key "cssContentSize"]
         cssContentSize: Types.DOM.Rect.t /* Size of scrollable area in CSS pixels. */,
       };
 
@@ -17973,7 +18874,9 @@ option, use with caution. */,
   module GetNavigationHistory = {
     module Response: {
       type result = {
+        [@key "currentIndex"]
         currentIndex: float, /* Index of the current navigation history entry. */
+        [@key "entries"]
         entries: list(Types.Page.NavigationEntry.t) /* Array of navigation history entries. */,
       };
 
@@ -17987,7 +18890,9 @@ option, use with caution. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "currentIndex"]
         currentIndex: float, /* Index of the current navigation history entry. */
+        [@key "entries"]
         entries: list(Types.Page.NavigationEntry.t) /* Array of navigation history entries. */,
       };
 
@@ -18069,7 +18974,9 @@ option, use with caution. */,
   module GetResourceContent = {
     module Response: {
       type result = {
+        [@key "content"]
         content: string, /* Resource content. */
+        [@key "base64Encoded"]
         base64Encoded: bool /* True, if content was served as base64. */,
       };
 
@@ -18083,7 +18990,9 @@ option, use with caution. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "content"]
         content: string, /* Resource content. */
+        [@key "base64Encoded"]
         base64Encoded: bool /* True, if content was served as base64. */,
       };
 
@@ -18103,7 +19012,9 @@ option, use with caution. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Frame id to get resource for. */
+        [@key "url"]
         url: string /* URL of the resource to get content for. */,
       };
       let make = (~frameId, ~url, ()) => {
@@ -18132,6 +19043,7 @@ option, use with caution. */,
   module GetResourceTree = {
     module Response: {
       type result = {
+        [@key "frameTree"]
         frameTree: Types.Page.FrameResourceTree.t /* Present frame / resource tree structure. */,
       };
 
@@ -18145,6 +19057,7 @@ option, use with caution. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "frameTree"]
         frameTree: Types.Page.FrameResourceTree.t /* Present frame / resource tree structure. */,
       };
 
@@ -18209,8 +19122,9 @@ option, use with caution. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "accept"]
         accept: bool, /* Whether to accept or dismiss the dialog. */
-        [@yojson.option]
+        [@yojson.option] [@key "promptText"]
         promptText: option(string) /* The text to enter into the dialog prompt before accepting. Used only if this is a prompt
 dialog. */,
       };
@@ -18240,10 +19154,11 @@ dialog. */,
   module Navigate = {
     module Response: {
       type result = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Frame id that has navigated (or failed to navigate) */
-        [@yojson.option]
+        [@yojson.option] [@key "loaderId"]
         loaderId: option(Types.Network.LoaderId.t), /* Loader identifier. */
-        [@yojson.option]
+        [@yojson.option] [@key "errorText"]
         errorText: option(string) /* User friendly error message, present if and only if navigation has failed. */,
       };
 
@@ -18257,10 +19172,11 @@ dialog. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Frame id that has navigated (or failed to navigate) */
-        [@yojson.option]
+        [@yojson.option] [@key "loaderId"]
         loaderId: option(Types.Network.LoaderId.t), /* Loader identifier. */
-        [@yojson.option]
+        [@yojson.option] [@key "errorText"]
         errorText: option(string) /* User friendly error message, present if and only if navigation has failed. */,
       };
 
@@ -18280,14 +19196,15 @@ dialog. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "url"]
         url: string, /* URL to navigate the page to. */
-        [@yojson.option]
+        [@yojson.option] [@key "referrer"]
         referrer: option(string), /* Referrer URL. */
-        [@yojson.option]
+        [@yojson.option] [@key "transitionType"]
         transitionType: option(Types.Page.TransitionType.t), /* Intended transition type. */
-        [@yojson.option]
+        [@yojson.option] [@key "frameId"]
         frameId: option(Types.Page.FrameId.t), /* Frame id to navigate, if not specified navigates the top frame. */
-        [@yojson.option]
+        [@yojson.option] [@key "referrerPolicy"]
         referrerPolicy: option(Types.Page.ReferrerPolicy.t) /* Referrer-policy used for the navigation. */,
       };
       let make =
@@ -18351,7 +19268,10 @@ dialog. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {entryId: float /* Unique id of the entry to navigate to. */};
+      type t = {
+        [@key "entryId"]
+        entryId: float /* Unique id of the entry to navigate to. */,
+      };
       let make = (~entryId, ()) => {
         {entryId: entryId};
       };
@@ -18378,8 +19298,9 @@ dialog. */,
   module PrintToPDF = {
     module Response: {
       type result = {
+        [@key "data"]
         data: string, /* Base64-encoded pdf data. Empty if |returnAsStream| is specified. (Encoded as a base64 string when passed over JSON) */
-        [@yojson.option]
+        [@yojson.option] [@key "stream"]
         stream: option(Types.IO.StreamHandle.t) /* A handle of the stream that holds resulting PDF data. */,
       };
 
@@ -18393,8 +19314,9 @@ dialog. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "data"]
         data: string, /* Base64-encoded pdf data. Empty if |returnAsStream| is specified. (Encoded as a base64 string when passed over JSON) */
-        [@yojson.option]
+        [@yojson.option] [@key "stream"]
         stream: option(Types.IO.StreamHandle.t) /* A handle of the stream that holds resulting PDF data. */,
       };
 
@@ -18412,35 +19334,46 @@ dialog. */,
     };
 
     module Params = {
+      type printtopdf_transfermode = [ | `ReturnAsBase64 | `ReturnAsStream];
+      let printtopdf_transfermode_of_yojson =
+        fun
+        | `String("ReturnAsBase64") => `ReturnAsBase64
+        | `String("ReturnAsStream") => `ReturnAsStream
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_printtopdf_transfermode =
+        fun
+        | `ReturnAsBase64 => `String("ReturnAsBase64")
+        | `ReturnAsStream => `String("ReturnAsStream");
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "landscape"]
         landscape: option(bool), /* Paper orientation. Defaults to false. */
-        [@yojson.option]
+        [@yojson.option] [@key "displayHeaderFooter"]
         displayHeaderFooter: option(bool), /* Display header and footer. Defaults to false. */
-        [@yojson.option]
+        [@yojson.option] [@key "printBackground"]
         printBackground: option(bool), /* Print background graphics. Defaults to false. */
-        [@yojson.option]
+        [@yojson.option] [@key "scale"]
         scale: option(float), /* Scale of the webpage rendering. Defaults to 1. */
-        [@yojson.option]
+        [@yojson.option] [@key "paperWidth"]
         paperWidth: option(float), /* Paper width in inches. Defaults to 8.5 inches. */
-        [@yojson.option]
+        [@yojson.option] [@key "paperHeight"]
         paperHeight: option(float), /* Paper height in inches. Defaults to 11 inches. */
-        [@yojson.option]
+        [@yojson.option] [@key "marginTop"]
         marginTop: option(float), /* Top margin in inches. Defaults to 1cm (~0.4 inches). */
-        [@yojson.option]
+        [@yojson.option] [@key "marginBottom"]
         marginBottom: option(float), /* Bottom margin in inches. Defaults to 1cm (~0.4 inches). */
-        [@yojson.option]
+        [@yojson.option] [@key "marginLeft"]
         marginLeft: option(float), /* Left margin in inches. Defaults to 1cm (~0.4 inches). */
-        [@yojson.option]
+        [@yojson.option] [@key "marginRight"]
         marginRight: option(float), /* Right margin in inches. Defaults to 1cm (~0.4 inches). */
-        [@yojson.option]
+        [@yojson.option] [@key "pageRanges"]
         pageRanges: option(string), /* Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means
 print all pages. */
-        [@yojson.option]
+        [@yojson.option] [@key "ignoreInvalidPageRanges"]
         ignoreInvalidPageRanges: option(bool), /* Whether to silently ignore invalid but successfully parsed page ranges, such as '3-2'.
 Defaults to false. */
-        [@yojson.option]
+        [@yojson.option] [@key "headerTemplate"]
         headerTemplate: option(string), /* HTML template for the print header. Should be valid HTML markup with following
 classes used to inject printing values into them:
 - `date`: formatted print date
@@ -18450,13 +19383,13 @@ classes used to inject printing values into them:
 - `totalPages`: total pages in the document
 
 For example, `<span class=title></span>` would generate span containing the title. */
-        [@yojson.option]
+        [@yojson.option] [@key "footerTemplate"]
         footerTemplate: option(string), /* HTML template for the print footer. Should use the same format as the `headerTemplate`. */
-        [@yojson.option]
+        [@yojson.option] [@key "preferCSSPageSize"]
         preferCSSPageSize: option(bool), /* Whether or not to prefer page size as defined by css. Defaults to false,
 in which case the content will be scaled to fit the paper size. */
-        [@yojson.option]
-        transferMode: option(string) /* return as stream */,
+        [@yojson.option] [@key "transferMode"]
+        transferMode: option(printtopdf_transfermode) /* return as stream */,
       };
       let make =
           (
@@ -18548,9 +19481,9 @@ in which case the content will be scaled to fit the paper size. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "ignoreCache"]
         ignoreCache: option(bool), /* If true, browser cache is ignored (as if the user pressed Shift+refresh). */
-        [@yojson.option]
+        [@yojson.option] [@key "scriptToEvaluateOnLoad"]
         scriptToEvaluateOnLoad: option(string) /* If set, the script will be injected into all frames of the inspected page after reload.
 Argument will be ignored if reloading dataURL origin. */,
       };
@@ -18608,6 +19541,7 @@ Argument will be ignored if reloading dataURL origin. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "identifier"]
         identifier: Types.Page.ScriptIdentifier.t /* No description provided */,
       };
       let make = (~identifier, ()) => {
@@ -18664,6 +19598,7 @@ Argument will be ignored if reloading dataURL origin. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "identifier"]
         identifier: Types.Page.ScriptIdentifier.t /* No description provided */,
       };
       let make = (~identifier, ()) => {
@@ -18724,7 +19659,10 @@ Argument will be ignored if reloading dataURL origin. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {sessionId: float /* Frame number. */};
+      type t = {
+        [@key "sessionId"]
+        sessionId: float /* Frame number. */,
+      };
       let make = (~sessionId, ()) => {
         {sessionId: sessionId};
       };
@@ -18751,6 +19689,7 @@ Argument will be ignored if reloading dataURL origin. */,
   module SearchInResource = {
     module Response: {
       type result = {
+        [@key "result"]
         result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
       };
 
@@ -18764,6 +19703,7 @@ Argument will be ignored if reloading dataURL origin. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
       };
 
@@ -18783,12 +19723,15 @@ Argument will be ignored if reloading dataURL origin. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Frame id for resource to search in. */
+        [@key "url"]
         url: string, /* URL of the resource to search in. */
+        [@key "query"]
         query: string, /* String to search for. */
-        [@yojson.option]
+        [@yojson.option] [@key "caseSensitive"]
         caseSensitive: option(bool), /* If true, search is case sensitive. */
-        [@yojson.option]
+        [@yojson.option] [@key "isRegex"]
         isRegex: option(bool) /* If true, treats string parameter as regex. */,
       };
       let make = (~frameId, ~url, ~query, ~caseSensitive=?, ~isRegex=?, ()) => {
@@ -18844,7 +19787,10 @@ Argument will be ignored if reloading dataURL origin. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {enabled: bool /* Whether to block ads. */};
+      type t = {
+        [@key "enabled"]
+        enabled: bool /* Whether to block ads. */,
+      };
       let make = (~enabled, ()) => {
         {enabled: enabled};
       };
@@ -18898,7 +19844,10 @@ Argument will be ignored if reloading dataURL origin. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {enabled: bool /* Whether to bypass page CSP. */};
+      type t = {
+        [@key "enabled"]
+        enabled: bool /* Whether to bypass page CSP. */,
+      };
       let make = (~enabled, ()) => {
         {enabled: enabled};
       };
@@ -18925,6 +19874,7 @@ Argument will be ignored if reloading dataURL origin. */,
   module GetPermissionsPolicyState = {
     module Response: {
       type result = {
+        [@key "states"]
         states: list(Types.Page.PermissionsPolicyFeatureState.t) /* No description provided */,
       };
 
@@ -18938,6 +19888,7 @@ Argument will be ignored if reloading dataURL origin. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "states"]
         states: list(Types.Page.PermissionsPolicyFeatureState.t) /* No description provided */,
       };
 
@@ -18956,7 +19907,10 @@ Argument will be ignored if reloading dataURL origin. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {frameId: Types.Page.FrameId.t /* No description provided */};
+      type t = {
+        [@key "frameId"]
+        frameId: Types.Page.FrameId.t /* No description provided */,
+      };
       let make = (~frameId, ()) => {
         {frameId: frameId};
       };
@@ -19013,26 +19967,30 @@ Argument will be ignored if reloading dataURL origin. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "width"]
         width: float, /* Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+        [@key "height"]
         height: float, /* Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+        [@key "deviceScaleFactor"]
         deviceScaleFactor: float, /* Overriding device scale factor value. 0 disables the override. */
+        [@key "mobile"]
         mobile: bool, /* Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text
 autosizing and more. */
-        [@yojson.option]
+        [@yojson.option] [@key "scale"]
         scale: option(float), /* Scale to apply to resulting view image. */
-        [@yojson.option]
+        [@yojson.option] [@key "screenWidth"]
         screenWidth: option(float), /* Overriding screen width value in pixels (minimum 0, maximum 10000000). */
-        [@yojson.option]
+        [@yojson.option] [@key "screenHeight"]
         screenHeight: option(float), /* Overriding screen height value in pixels (minimum 0, maximum 10000000). */
-        [@yojson.option]
+        [@yojson.option] [@key "positionX"]
         positionX: option(float), /* Overriding view X position on screen in pixels (minimum 0, maximum 10000000). */
-        [@yojson.option]
+        [@yojson.option] [@key "positionY"]
         positionY: option(float), /* Overriding view Y position on screen in pixels (minimum 0, maximum 10000000). */
-        [@yojson.option]
+        [@yojson.option] [@key "dontSetVisibleSize"]
         dontSetVisibleSize: option(bool), /* Do not set visible view size, rely upon explicit setVisibleSize call. */
-        [@yojson.option]
+        [@yojson.option] [@key "screenOrientation"]
         screenOrientation: option(Types.Emulation.ScreenOrientation.t), /* Screen orientation override. */
-        [@yojson.option]
+        [@yojson.option] [@key "viewport"]
         viewport: option(Types.Page.Viewport.t) /* The viewport dimensions and scale. If not set, the override is cleared. */,
       };
       let make =
@@ -19117,8 +20075,11 @@ autosizing and more. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "alpha"]
         alpha: float, /* Mock alpha */
+        [@key "beta"]
         beta: float, /* Mock beta */
+        [@key "gamma"]
         gamma: float /* Mock gamma */,
       };
       let make = (~alpha, ~beta, ~gamma, ()) => {
@@ -19175,6 +20136,7 @@ autosizing and more. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "fontFamilies"]
         fontFamilies: Types.Page.FontFamilies.t /* Specifies font families to set. If a font family is not specified, it won't be changed. */,
       };
       let make = (~fontFamilies, ()) => {
@@ -19231,6 +20193,7 @@ autosizing and more. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "fontSizes"]
         fontSizes: Types.Page.FontSizes.t /* Specifies font sizes to set. If a font size is not specified, it won't be changed. */,
       };
       let make = (~fontSizes, ()) => {
@@ -19287,7 +20250,9 @@ autosizing and more. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Frame id to set HTML for. */
+        [@key "html"]
         html: string /* HTML content to set. */,
       };
       let make = (~frameId, ~html, ()) => {
@@ -19342,11 +20307,25 @@ autosizing and more. */
     };
 
     module Params = {
+      type setdownloadbehavior_behavior = [ | `deny | `allow | `default];
+      let setdownloadbehavior_behavior_of_yojson =
+        fun
+        | `String("deny") => `deny
+        | `String("allow") => `allow
+        | `String("default") => `default
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_setdownloadbehavior_behavior =
+        fun
+        | `deny => `String("deny")
+        | `allow => `String("allow")
+        | `default => `String("default");
       [@deriving yojson]
       type t = {
-        behavior: string, /* Whether to allow all or deny all download requests, or use default Chrome behavior if
+        [@key "behavior"]
+        behavior: setdownloadbehavior_behavior, /* Whether to allow all or deny all download requests, or use default Chrome behavior if
 available (otherwise deny). */
-        [@yojson.option]
+        [@yojson.option] [@key "downloadPath"]
         downloadPath: option(string) /* The default path to save downloaded files to. This is required if behavior is set to 'allow' */,
       };
       let make = (~behavior, ~downloadPath=?, ()) => {
@@ -19404,11 +20383,11 @@ available (otherwise deny). */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "latitude"]
         latitude: option(float), /* Mock latitude */
-        [@yojson.option]
+        [@yojson.option] [@key "longitude"]
         longitude: option(float), /* Mock longitude */
-        [@yojson.option]
+        [@yojson.option] [@key "accuracy"]
         accuracy: option(float) /* Mock accuracy */,
       };
       let make = (~latitude=?, ~longitude=?, ~accuracy=?, ()) => {
@@ -19465,6 +20444,7 @@ available (otherwise deny). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "enabled"]
         enabled: bool /* If true, starts emitting lifecycle events. */,
       };
       let make = (~enabled, ()) => {
@@ -19519,11 +20499,23 @@ available (otherwise deny). */
     };
 
     module Params = {
+      type settouchemulationenabled_configuration = [ | `mobile | `desktop];
+      let settouchemulationenabled_configuration_of_yojson =
+        fun
+        | `String("mobile") => `mobile
+        | `String("desktop") => `desktop
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_settouchemulationenabled_configuration =
+        fun
+        | `mobile => `String("mobile")
+        | `desktop => `String("desktop");
       [@deriving yojson]
       type t = {
+        [@key "enabled"]
         enabled: bool, /* Whether the touch event emulation should be enabled. */
-        [@yojson.option]
-        configuration: option(string) /* Touch/gesture events configuration. Default: current platform. */,
+        [@yojson.option] [@key "configuration"]
+        configuration: option(settouchemulationenabled_configuration) /* Touch/gesture events configuration. Default: current platform. */,
       };
       let make = (~enabled, ~configuration=?, ()) => {
         {enabled, configuration};
@@ -19577,17 +20569,28 @@ available (otherwise deny). */
     };
 
     module Params = {
+      type startscreencast_format = [ | `jpeg | `png];
+      let startscreencast_format_of_yojson =
+        fun
+        | `String("jpeg") => `jpeg
+        | `String("png") => `png
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_startscreencast_format =
+        fun
+        | `jpeg => `String("jpeg")
+        | `png => `String("png");
       [@deriving yojson]
       type t = {
-        [@yojson.option]
-        format: option(string), /* Image compression format. */
-        [@yojson.option]
+        [@yojson.option] [@key "format"]
+        format: option(startscreencast_format), /* Image compression format. */
+        [@yojson.option] [@key "quality"]
         quality: option(float), /* Compression quality from range [0..100]. */
-        [@yojson.option]
+        [@yojson.option] [@key "maxWidth"]
         maxWidth: option(float), /* Maximum screenshot width. */
-        [@yojson.option]
+        [@yojson.option] [@key "maxHeight"]
         maxHeight: option(float), /* Maximum screenshot height. */
-        [@yojson.option]
+        [@yojson.option] [@key "everyNthFrame"]
         everyNthFrame: option(float) /* Send every n-th frame. */,
       };
       let make =
@@ -19787,8 +20790,22 @@ available (otherwise deny). */
     };
 
     module Params = {
+      type setweblifecyclestate_state = [ | `frozen | `active];
+      let setweblifecyclestate_state_of_yojson =
+        fun
+        | `String("frozen") => `frozen
+        | `String("active") => `active
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_setweblifecyclestate_state =
+        fun
+        | `frozen => `String("frozen")
+        | `active => `String("active");
       [@deriving yojson]
-      type t = {state: string /* Target lifecycle state */};
+      type t = {
+        [@key "state"]
+        state: setweblifecyclestate_state /* Target lifecycle state */,
+      };
       let make = (~state, ()) => {
         {state: state};
       };
@@ -19888,7 +20905,10 @@ available (otherwise deny). */
 
     module Params = {
       [@deriving yojson]
-      type t = {enabled: bool /* No description provided */};
+      type t = {
+        [@key "enabled"]
+        enabled: bool /* No description provided */,
+      };
       let make = (~enabled, ()) => {
         {enabled: enabled};
       };
@@ -19951,6 +20971,7 @@ available (otherwise deny). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "scripts"]
         scripts: list(Types.Page.CompilationCacheParams.t) /* No description provided */,
       };
       let make = (~scripts, ()) => {
@@ -20008,7 +21029,9 @@ available (otherwise deny). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "url"]
         url: string, /* No description provided */
+        [@key "data"]
         data: string /* Base64-encoded data (Encoded as a base64 string when passed over JSON) */,
       };
       let make = (~url, ~data, ()) => {
@@ -20110,8 +21133,9 @@ available (otherwise deny). */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "message"]
         message: string, /* Message to be displayed in the report. */
-        [@yojson.option]
+        [@yojson.option] [@key "group"]
         group: option(string) /* Specifies the endpoint group to deliver the report to. */,
       };
       let make = (~message, ~group=?, ()) => {
@@ -20214,7 +21238,10 @@ available (otherwise deny). */
 
     module Params = {
       [@deriving yojson]
-      type t = {enabled: bool /* No description provided */};
+      type t = {
+        [@key "enabled"]
+        enabled: bool /* No description provided */,
+      };
       let make = (~enabled, ()) => {
         {enabled: enabled};
       };
@@ -20314,10 +21341,21 @@ module Performance = {
     };
 
     module Params = {
+      type enable_timedomain = [ | `timeTicks | `threadTicks];
+      let enable_timedomain_of_yojson =
+        fun
+        | `String("timeTicks") => `timeTicks
+        | `String("threadTicks") => `threadTicks
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_enable_timedomain =
+        fun
+        | `timeTicks => `String("timeTicks")
+        | `threadTicks => `String("threadTicks");
       [@deriving yojson]
       type t = {
-        [@yojson.option]
-        timeDomain: option(string) /* Time domain to use for collecting and reporting duration metrics. */,
+        [@yojson.option] [@key "timeDomain"]
+        timeDomain: option(enable_timedomain) /* Time domain to use for collecting and reporting duration metrics. */,
       };
       let make = (~timeDomain=?, ()) => {
         {timeDomain: timeDomain};
@@ -20373,8 +21411,22 @@ module Performance = {
     };
 
     module Params = {
+      type settimedomain_timedomain = [ | `timeTicks | `threadTicks];
+      let settimedomain_timedomain_of_yojson =
+        fun
+        | `String("timeTicks") => `timeTicks
+        | `String("threadTicks") => `threadTicks
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_settimedomain_timedomain =
+        fun
+        | `timeTicks => `String("timeTicks")
+        | `threadTicks => `String("threadTicks");
       [@deriving yojson]
-      type t = {timeDomain: string /* Time domain */};
+      type t = {
+        [@key "timeDomain"]
+        timeDomain: settimedomain_timedomain /* Time domain */,
+      };
       let make = (~timeDomain, ()) => {
         {timeDomain: timeDomain};
       };
@@ -20401,6 +21453,7 @@ module Performance = {
   module GetMetrics = {
     module Response: {
       type result = {
+        [@key "metrics"]
         metrics: list(Types.Performance.Metric.t) /* Current values for run-time metrics. */,
       };
 
@@ -20414,6 +21467,7 @@ module Performance = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "metrics"]
         metrics: list(Types.Performance.Metric.t) /* Current values for run-time metrics. */,
       };
 
@@ -20481,6 +21535,7 @@ module PerformanceTimeline = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "eventTypes"]
         eventTypes: list(string) /* The types of event to report, as specified in
 https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype
 The specified filter overrides any previous filters, passing empty
@@ -20633,6 +21688,7 @@ module Security = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "ignore"]
         ignore: bool /* If true, all certificate errors will be ignored. */,
       };
       let make = (~ignore, ()) => {
@@ -20689,7 +21745,9 @@ module Security = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "eventId"]
         eventId: float, /* The ID of the event. */
+        [@key "action"]
         action: Types.Security.CertificateErrorAction.t /* The action to take on the certificate error. */,
       };
       let make = (~eventId, ~action, ()) => {
@@ -20747,6 +21805,7 @@ module Security = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "override"]
         override: bool /* If true, certificate errors will be overridden. */,
       };
       let make = (~override, ()) => {
@@ -20810,8 +21869,11 @@ module ServiceWorker = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "origin"]
         origin: string, /* No description provided */
+        [@key "registrationId"]
         registrationId: Types.ServiceWorker.RegistrationID.t, /* No description provided */
+        [@key "data"]
         data: string /* No description provided */,
       };
       let make = (~origin, ~registrationId, ~data, ()) => {
@@ -20913,9 +21975,13 @@ module ServiceWorker = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "origin"]
         origin: string, /* No description provided */
+        [@key "registrationId"]
         registrationId: Types.ServiceWorker.RegistrationID.t, /* No description provided */
+        [@key "tag"]
         tag: string, /* No description provided */
+        [@key "lastChance"]
         lastChance: bool /* No description provided */,
       };
       let make = (~origin, ~registrationId, ~tag, ~lastChance, ()) => {
@@ -20972,8 +22038,11 @@ module ServiceWorker = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "origin"]
         origin: string, /* No description provided */
+        [@key "registrationId"]
         registrationId: Types.ServiceWorker.RegistrationID.t, /* No description provided */
+        [@key "tag"]
         tag: string /* No description provided */,
       };
       let make = (~origin, ~registrationId, ~tag, ()) => {
@@ -21079,7 +22148,10 @@ module ServiceWorker = {
 
     module Params = {
       [@deriving yojson]
-      type t = {versionId: string /* No description provided */};
+      type t = {
+        [@key "versionId"]
+        versionId: string /* No description provided */,
+      };
       let make = (~versionId, ()) => {
         {versionId: versionId};
       };
@@ -21133,7 +22205,10 @@ module ServiceWorker = {
 
     module Params = {
       [@deriving yojson]
-      type t = {forceUpdateOnPageLoad: bool /* No description provided */};
+      type t = {
+        [@key "forceUpdateOnPageLoad"]
+        forceUpdateOnPageLoad: bool /* No description provided */,
+      };
       let make = (~forceUpdateOnPageLoad, ()) => {
         {forceUpdateOnPageLoad: forceUpdateOnPageLoad};
       };
@@ -21192,7 +22267,10 @@ module ServiceWorker = {
 
     module Params = {
       [@deriving yojson]
-      type t = {scopeURL: string /* No description provided */};
+      type t = {
+        [@key "scopeURL"]
+        scopeURL: string /* No description provided */,
+      };
       let make = (~scopeURL, ()) => {
         {scopeURL: scopeURL};
       };
@@ -21246,7 +22324,10 @@ module ServiceWorker = {
 
     module Params = {
       [@deriving yojson]
-      type t = {scopeURL: string /* No description provided */};
+      type t = {
+        [@key "scopeURL"]
+        scopeURL: string /* No description provided */,
+      };
       let make = (~scopeURL, ()) => {
         {scopeURL: scopeURL};
       };
@@ -21345,7 +22426,10 @@ module ServiceWorker = {
 
     module Params = {
       [@deriving yojson]
-      type t = {versionId: string /* No description provided */};
+      type t = {
+        [@key "versionId"]
+        versionId: string /* No description provided */,
+      };
       let make = (~versionId, ()) => {
         {versionId: versionId};
       };
@@ -21399,7 +22483,10 @@ module ServiceWorker = {
 
     module Params = {
       [@deriving yojson]
-      type t = {scopeURL: string /* No description provided */};
+      type t = {
+        [@key "scopeURL"]
+        scopeURL: string /* No description provided */,
+      };
       let make = (~scopeURL, ()) => {
         {scopeURL: scopeURL};
       };
@@ -21453,7 +22540,10 @@ module ServiceWorker = {
 
     module Params = {
       [@deriving yojson]
-      type t = {scopeURL: string /* No description provided */};
+      type t = {
+        [@key "scopeURL"]
+        scopeURL: string /* No description provided */,
+      };
       let make = (~scopeURL, ()) => {
         {scopeURL: scopeURL};
       };
@@ -21510,7 +22600,9 @@ module Storage = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "origin"]
         origin: string, /* Security origin. */
+        [@key "storageTypes"]
         storageTypes: string /* Comma separated list of StorageType to clear. */,
       };
       let make = (~origin, ~storageTypes, ()) => {
@@ -21539,6 +22631,7 @@ module Storage = {
   module GetCookies = {
     module Response: {
       type result = {
+        [@key "cookies"]
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
@@ -21552,6 +22645,7 @@ module Storage = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "cookies"]
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
@@ -21571,7 +22665,7 @@ module Storage = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "browserContextId"]
         browserContextId: option(Types.Browser.BrowserContextID.t) /* Browser context to use when called on the browser endpoint. */,
       };
       let make = (~browserContextId=?, ()) => {
@@ -21628,8 +22722,9 @@ module Storage = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "cookies"]
         cookies: list(Types.Network.CookieParam.t), /* Cookies to be set. */
-        [@yojson.option]
+        [@yojson.option] [@key "browserContextId"]
         browserContextId: option(Types.Browser.BrowserContextID.t) /* Browser context to use when called on the browser endpoint. */,
       };
       let make = (~cookies, ~browserContextId=?, ()) => {
@@ -21686,7 +22781,7 @@ module Storage = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "browserContextId"]
         browserContextId: option(Types.Browser.BrowserContextID.t) /* Browser context to use when called on the browser endpoint. */,
       };
       let make = (~browserContextId=?, ()) => {
@@ -21715,9 +22810,13 @@ module Storage = {
   module GetUsageAndQuota = {
     module Response: {
       type result = {
+        [@key "usage"]
         usage: float, /* Storage usage (bytes). */
+        [@key "quota"]
         quota: float, /* Storage quota (bytes). */
+        [@key "overrideActive"]
         overrideActive: bool, /* Whether or not the origin has an active storage quota override */
+        [@key "usageBreakdown"]
         usageBreakdown: list(Types.Storage.UsageForType.t) /* Storage usage per type (bytes). */,
       };
 
@@ -21731,9 +22830,13 @@ module Storage = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "usage"]
         usage: float, /* Storage usage (bytes). */
+        [@key "quota"]
         quota: float, /* Storage quota (bytes). */
+        [@key "overrideActive"]
         overrideActive: bool, /* Whether or not the origin has an active storage quota override */
+        [@key "usageBreakdown"]
         usageBreakdown: list(Types.Storage.UsageForType.t) /* Storage usage per type (bytes). */,
       };
 
@@ -21752,7 +22855,10 @@ module Storage = {
 
     module Params = {
       [@deriving yojson]
-      type t = {origin: string /* Security origin. */};
+      type t = {
+        [@key "origin"]
+        origin: string /* Security origin. */,
+      };
       let make = (~origin, ()) => {
         {origin: origin};
       };
@@ -21807,8 +22913,9 @@ module Storage = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "origin"]
         origin: string, /* Security origin. */
-        [@yojson.option]
+        [@yojson.option] [@key "quotaSize"]
         quotaSize: option(float) /* The quota size (in bytes) to override the original quota with.
 If this is called multiple times, the overridden quota will be equal to
 the quotaSize provided in the final call. If this is called without
@@ -21870,7 +22977,10 @@ disabled (called without a quotaSize). */,
 
     module Params = {
       [@deriving yojson]
-      type t = {origin: string /* Security origin. */};
+      type t = {
+        [@key "origin"]
+        origin: string /* Security origin. */,
+      };
       let make = (~origin, ()) => {
         {origin: origin};
       };
@@ -21924,7 +23034,10 @@ disabled (called without a quotaSize). */,
 
     module Params = {
       [@deriving yojson]
-      type t = {origin: string /* Security origin. */};
+      type t = {
+        [@key "origin"]
+        origin: string /* Security origin. */,
+      };
       let make = (~origin, ()) => {
         {origin: origin};
       };
@@ -21978,7 +23091,10 @@ disabled (called without a quotaSize). */,
 
     module Params = {
       [@deriving yojson]
-      type t = {origin: string /* Security origin. */};
+      type t = {
+        [@key "origin"]
+        origin: string /* Security origin. */,
+      };
       let make = (~origin, ()) => {
         {origin: origin};
       };
@@ -22037,7 +23153,10 @@ disabled (called without a quotaSize). */,
 
     module Params = {
       [@deriving yojson]
-      type t = {origin: string /* Security origin. */};
+      type t = {
+        [@key "origin"]
+        origin: string /* Security origin. */,
+      };
       let make = (~origin, ()) => {
         {origin: origin};
       };
@@ -22065,6 +23184,7 @@ disabled (called without a quotaSize). */,
   module GetTrustTokens = {
     module Response: {
       type result = {
+        [@key "tokens"]
         tokens: list(Types.Storage.TrustTokens.t) /* No description provided */,
       };
 
@@ -22078,6 +23198,7 @@ disabled (called without a quotaSize). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "tokens"]
         tokens: list(Types.Storage.TrustTokens.t) /* No description provided */,
       };
 
@@ -22115,6 +23236,7 @@ disabled (called without a quotaSize). */,
   module ClearTrustTokens = {
     module Response: {
       type result = {
+        [@key "didDeleteTokens"]
         didDeleteTokens: bool /* True if any tokens were deleted, false otherwise. */,
       };
 
@@ -22128,6 +23250,7 @@ disabled (called without a quotaSize). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "didDeleteTokens"]
         didDeleteTokens: bool /* True if any tokens were deleted, false otherwise. */,
       };
 
@@ -22146,7 +23269,10 @@ disabled (called without a quotaSize). */,
 
     module Params = {
       [@deriving yojson]
-      type t = {issuerOrigin: string /* No description provided */};
+      type t = {
+        [@key "issuerOrigin"]
+        issuerOrigin: string /* No description provided */,
+      };
       let make = (~issuerOrigin, ()) => {
         {issuerOrigin: issuerOrigin};
       };
@@ -22175,11 +23301,15 @@ module SystemInfo = {
   module GetInfo = {
     module Response: {
       type result = {
+        [@key "gpu"]
         gpu: Types.SystemInfo.GPUInfo.t, /* Information about the GPUs on the system. */
+        [@key "modelName"]
         modelName: string, /* A platform-dependent description of the model of the machine. On Mac OS, this is, for
 example, 'MacBookPro'. Will be the empty string if not supported. */
+        [@key "modelVersion"]
         modelVersion: string, /* A platform-dependent description of the version of the machine. On Mac OS, this is, for
 example, '10.1'. Will be the empty string if not supported. */
+        [@key "commandLine"]
         commandLine: string /* The command line string used to launch the browser. Will be the empty string if not
 supported. */,
       };
@@ -22194,11 +23324,15 @@ supported. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "gpu"]
         gpu: Types.SystemInfo.GPUInfo.t, /* Information about the GPUs on the system. */
+        [@key "modelName"]
         modelName: string, /* A platform-dependent description of the model of the machine. On Mac OS, this is, for
 example, 'MacBookPro'. Will be the empty string if not supported. */
+        [@key "modelVersion"]
         modelVersion: string, /* A platform-dependent description of the version of the machine. On Mac OS, this is, for
 example, '10.1'. Will be the empty string if not supported. */
+        [@key "commandLine"]
         commandLine: string /* The command line string used to launch the browser. Will be the empty string if not
 supported. */,
       };
@@ -22236,6 +23370,7 @@ supported. */,
   module GetProcessInfo = {
     module Response: {
       type result = {
+        [@key "processInfo"]
         processInfo: list(Types.SystemInfo.ProcessInfo.t) /* An array of process info blocks. */,
       };
 
@@ -22249,6 +23384,7 @@ supported. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "processInfo"]
         processInfo: list(Types.SystemInfo.ProcessInfo.t) /* An array of process info blocks. */,
       };
 
@@ -22315,6 +23451,7 @@ module Target = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "targetId"]
         targetId: Types.Target.TargetID.t /* No description provided */,
       };
       let make = (~targetId, ()) => {
@@ -22343,6 +23480,7 @@ module Target = {
   module AttachToTarget = {
     module Response: {
       type result = {
+        [@key "sessionId"]
         sessionId: Types.Target.SessionID.t /* Id assigned to the session. */,
       };
 
@@ -22356,6 +23494,7 @@ module Target = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "sessionId"]
         sessionId: Types.Target.SessionID.t /* Id assigned to the session. */,
       };
 
@@ -22375,8 +23514,9 @@ module Target = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "targetId"]
         targetId: Types.Target.TargetID.t, /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "flatten"]
         flatten: option(bool) /* Enables "flat" access to the session via specifying sessionId attribute in the commands.
 We plan to make this the default, deprecate non-flattened mode,
 and eventually retire it. See crbug.com/991325. */,
@@ -22407,6 +23547,7 @@ and eventually retire it. See crbug.com/991325. */,
   module AttachToBrowserTarget = {
     module Response: {
       type result = {
+        [@key "sessionId"]
         sessionId: Types.Target.SessionID.t /* Id assigned to the session. */,
       };
 
@@ -22420,6 +23561,7 @@ and eventually retire it. See crbug.com/991325. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "sessionId"]
         sessionId: Types.Target.SessionID.t /* Id assigned to the session. */,
       };
 
@@ -22456,6 +23598,7 @@ and eventually retire it. See crbug.com/991325. */,
   module CloseTarget = {
     module Response: {
       type result = {
+        [@key "success"]
         success: bool /* Always set to true. If an error occurs, the response indicates protocol error. */,
       };
 
@@ -22469,6 +23612,7 @@ and eventually retire it. See crbug.com/991325. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "success"]
         success: bool /* Always set to true. If an error occurs, the response indicates protocol error. */,
       };
 
@@ -22488,6 +23632,7 @@ and eventually retire it. See crbug.com/991325. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "targetId"]
         targetId: Types.Target.TargetID.t /* No description provided */,
       };
       let make = (~targetId, ()) => {
@@ -22551,8 +23696,9 @@ and eventually retire it. See crbug.com/991325. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "targetId"]
         targetId: Types.Target.TargetID.t, /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "bindingName"]
         bindingName: option(string) /* Binding name, 'cdp' if not specified. */,
       };
       let make = (~targetId, ~bindingName=?, ()) => {
@@ -22582,6 +23728,7 @@ and eventually retire it. See crbug.com/991325. */,
   module CreateBrowserContext = {
     module Response: {
       type result = {
+        [@key "browserContextId"]
         browserContextId: Types.Browser.BrowserContextID.t /* The id of the context created. */,
       };
 
@@ -22595,6 +23742,7 @@ and eventually retire it. See crbug.com/991325. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "browserContextId"]
         browserContextId: Types.Browser.BrowserContextID.t /* The id of the context created. */,
       };
 
@@ -22614,11 +23762,11 @@ and eventually retire it. See crbug.com/991325. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "disposeOnDetach"]
         disposeOnDetach: option(bool), /* If specified, disposes this context when debugging session disconnects. */
-        [@yojson.option]
+        [@yojson.option] [@key "proxyServer"]
         proxyServer: option(string), /* Proxy server, similar to the one passed to --proxy-server */
-        [@yojson.option]
+        [@yojson.option] [@key "proxyBypassList"]
         proxyBypassList: option(string) /* Proxy bypass list, similar to the one passed to --proxy-bypass-list */,
       };
       let make = (~disposeOnDetach=?, ~proxyServer=?, ~proxyBypassList=?, ()) => {
@@ -22647,6 +23795,7 @@ and eventually retire it. See crbug.com/991325. */,
   module GetBrowserContexts = {
     module Response: {
       type result = {
+        [@key "browserContextIds"]
         browserContextIds: list(Types.Browser.BrowserContextID.t) /* An array of browser context ids. */,
       };
 
@@ -22660,6 +23809,7 @@ and eventually retire it. See crbug.com/991325. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "browserContextIds"]
         browserContextIds: list(Types.Browser.BrowserContextID.t) /* An array of browser context ids. */,
       };
 
@@ -22696,6 +23846,7 @@ and eventually retire it. See crbug.com/991325. */,
   module CreateTarget = {
     module Response: {
       type result = {
+        [@key "targetId"]
         targetId: Types.Target.TargetID.t /* The id of the page opened. */,
       };
 
@@ -22709,6 +23860,7 @@ and eventually retire it. See crbug.com/991325. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "targetId"]
         targetId: Types.Target.TargetID.t /* The id of the page opened. */,
       };
 
@@ -22728,19 +23880,20 @@ and eventually retire it. See crbug.com/991325. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "url"]
         url: string, /* The initial URL the page will be navigated to. An empty string indicates about:blank. */
-        [@yojson.option]
+        [@yojson.option] [@key "width"]
         width: option(float), /* Frame width in DIP (headless chrome only). */
-        [@yojson.option]
+        [@yojson.option] [@key "height"]
         height: option(float), /* Frame height in DIP (headless chrome only). */
-        [@yojson.option]
+        [@yojson.option] [@key "browserContextId"]
         browserContextId: option(Types.Browser.BrowserContextID.t), /* The browser context to create the page in. */
-        [@yojson.option]
+        [@yojson.option] [@key "enableBeginFrameControl"]
         enableBeginFrameControl: option(bool), /* Whether BeginFrames for this target will be controlled via DevTools (headless chrome only,
 not supported on MacOS yet, false by default). */
-        [@yojson.option]
+        [@yojson.option] [@key "newWindow"]
         newWindow: option(bool), /* Whether to create a new Window or Tab (chrome-only, false by default). */
-        [@yojson.option]
+        [@yojson.option] [@key "background"]
         background: option(bool) /* Whether to create the target in background or foreground (chrome-only,
 false by default). */,
       };
@@ -22816,9 +23969,9 @@ false by default). */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "sessionId"]
         sessionId: option(Types.Target.SessionID.t), /* Session to detach. */
-        [@yojson.option]
+        [@yojson.option] [@key "targetId"]
         targetId: option(Types.Target.TargetID.t) /* Deprecated. */,
       };
       let make = (~sessionId=?, ~targetId=?, ()) => {
@@ -22876,6 +24029,7 @@ false by default). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "browserContextId"]
         browserContextId: Types.Browser.BrowserContextID.t /* No description provided */,
       };
       let make = (~browserContextId, ()) => {
@@ -22904,6 +24058,7 @@ false by default). */,
   module GetTargetInfo = {
     module Response: {
       type result = {
+        [@key "targetInfo"]
         targetInfo: Types.Target.TargetInfo.t /* No description provided */,
       };
 
@@ -22917,6 +24072,7 @@ false by default). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "targetInfo"]
         targetInfo: Types.Target.TargetInfo.t /* No description provided */,
       };
 
@@ -22936,7 +24092,7 @@ false by default). */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "targetId"]
         targetId: option(Types.Target.TargetID.t) /* No description provided */,
       };
       let make = (~targetId=?, ()) => {
@@ -22965,6 +24121,7 @@ false by default). */,
   module GetTargets = {
     module Response: {
       type result = {
+        [@key "targetInfos"]
         targetInfos: list(Types.Target.TargetInfo.t) /* The list of targets. */,
       };
 
@@ -22978,6 +24135,7 @@ false by default). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "targetInfos"]
         targetInfos: list(Types.Target.TargetInfo.t) /* The list of targets. */,
       };
 
@@ -23044,10 +24202,11 @@ false by default). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "message"]
         message: string, /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "sessionId"]
         sessionId: option(Types.Target.SessionID.t), /* Identifier of the session. */
-        [@yojson.option]
+        [@yojson.option] [@key "targetId"]
         targetId: option(Types.Target.TargetID.t) /* Deprecated. */,
       };
       let make = (~message, ~sessionId=?, ~targetId=?, ()) => {
@@ -23106,10 +24265,12 @@ false by default). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "autoAttach"]
         autoAttach: bool, /* Whether to auto-attach to related targets. */
+        [@key "waitForDebuggerOnStart"]
         waitForDebuggerOnStart: bool, /* Whether to pause new targets when attaching to them. Use `Runtime.runIfWaitingForDebugger`
 to run paused targets. */
-        [@yojson.option]
+        [@yojson.option] [@key "flatten"]
         flatten: option(bool) /* Enables "flat" access to the session via specifying sessionId attribute in the commands.
 We plan to make this the default, deprecate non-flattened mode,
 and eventually retire it. See crbug.com/991325. */,
@@ -23168,7 +24329,10 @@ and eventually retire it. See crbug.com/991325. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {discover: bool /* Whether to discover available targets. */};
+      type t = {
+        [@key "discover"]
+        discover: bool /* Whether to discover available targets. */,
+      };
       let make = (~discover, ()) => {
         {discover: discover};
       };
@@ -23224,6 +24388,7 @@ and eventually retire it. See crbug.com/991325. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "locations"]
         locations: list(Types.Target.RemoteLocation.t) /* List of remote locations. */,
       };
       let make = (~locations, ()) => {
@@ -23281,7 +24446,10 @@ module Tethering = {
 
     module Params = {
       [@deriving yojson]
-      type t = {port: float /* Port number to bind. */};
+      type t = {
+        [@key "port"]
+        port: float /* Port number to bind. */,
+      };
       let make = (~port, ()) => {
         {port: port};
       };
@@ -23335,7 +24503,10 @@ module Tethering = {
 
     module Params = {
       [@deriving yojson]
-      type t = {port: float /* Port number to unbind. */};
+      type t = {
+        [@key "port"]
+        port: float /* Port number to unbind. */,
+      };
       let make = (~port, ()) => {
         {port: port};
       };
@@ -23409,6 +24580,7 @@ module Tracing = {
   module GetCategories = {
     module Response: {
       type result = {
+        [@key "categories"]
         categories: list(string) /* A list of supported tracing categories. */,
       };
 
@@ -23422,6 +24594,7 @@ module Tracing = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "categories"]
         categories: list(string) /* A list of supported tracing categories. */,
       };
 
@@ -23485,7 +24658,10 @@ module Tracing = {
 
     module Params = {
       [@deriving yojson]
-      type t = {syncId: string /* The ID of this clock sync marker */};
+      type t = {
+        [@key "syncId"]
+        syncId: string /* The ID of this clock sync marker */,
+      };
       let make = (~syncId, ()) => {
         {syncId: syncId};
       };
@@ -23512,7 +24688,9 @@ module Tracing = {
   module RequestMemoryDump = {
     module Response: {
       type result = {
+        [@key "dumpGuid"]
         dumpGuid: string, /* GUID of the resulting global memory dump. */
+        [@key "success"]
         success: bool /* True iff the global memory dump succeeded. */,
       };
 
@@ -23526,7 +24704,9 @@ module Tracing = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "dumpGuid"]
         dumpGuid: string, /* GUID of the resulting global memory dump. */
+        [@key "success"]
         success: bool /* True iff the global memory dump succeeded. */,
       };
 
@@ -23546,9 +24726,9 @@ module Tracing = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "deterministic"]
         deterministic: option(bool), /* Enables more deterministic results by forcing garbage collection */
-        [@yojson.option]
+        [@yojson.option] [@key "levelOfDetail"]
         levelOfDetail: option(Types.Tracing.MemoryDumpLevelOfDetail.t) /* Specifies level of details in memory dump. Defaults to "detailed". */,
       };
       let make = (~deterministic=?, ~levelOfDetail=?, ()) => {
@@ -23603,30 +24783,41 @@ module Tracing = {
     };
 
     module Params = {
+      type start_transfermode = [ | `ReportEvents | `ReturnAsStream];
+      let start_transfermode_of_yojson =
+        fun
+        | `String("ReportEvents") => `ReportEvents
+        | `String("ReturnAsStream") => `ReturnAsStream
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_start_transfermode =
+        fun
+        | `ReportEvents => `String("ReportEvents")
+        | `ReturnAsStream => `String("ReturnAsStream");
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "categories"]
         categories: option(string), /* Category/tag filter */
-        [@yojson.option]
+        [@yojson.option] [@key "options"]
         options: option(string), /* Tracing options */
-        [@yojson.option]
+        [@yojson.option] [@key "bufferUsageReportingInterval"]
         bufferUsageReportingInterval: option(float), /* If set, the agent will issue bufferUsage events at this interval, specified in milliseconds */
-        [@yojson.option]
-        transferMode: option(string), /* Whether to report trace events as series of dataCollected events or to save trace to a
+        [@yojson.option] [@key "transferMode"]
+        transferMode: option(start_transfermode), /* Whether to report trace events as series of dataCollected events or to save trace to a
 stream (defaults to `ReportEvents`). */
-        [@yojson.option]
+        [@yojson.option] [@key "streamFormat"]
         streamFormat: option(Types.Tracing.StreamFormat.t), /* Trace data format to use. This only applies when using `ReturnAsStream`
 transfer mode (defaults to `json`). */
-        [@yojson.option]
+        [@yojson.option] [@key "streamCompression"]
         streamCompression: option(Types.Tracing.StreamCompression.t), /* Compression format to use. This only applies when using `ReturnAsStream`
 transfer mode (defaults to `none`) */
-        [@yojson.option]
+        [@yojson.option] [@key "traceConfig"]
         traceConfig: option(Types.Tracing.TraceConfig.t), /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "perfettoConfig"]
         perfettoConfig: option(string), /* Base64-encoded serialized perfetto.protos.TraceConfig protobuf message
 When specified, the parameters `categories`, `options`, `traceConfig`
 are ignored. (Encoded as a base64 string when passed over JSON) */
-        [@yojson.option]
+        [@yojson.option] [@key "tracingBackend"]
         tracingBackend: option(Types.Tracing.TracingBackend.t) /* Backend type (defaults to `auto`) */,
       };
       let make =
@@ -23753,11 +24944,11 @@ module Fetch = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "patterns"]
         patterns: option(list(Types.Fetch.RequestPattern.t)), /* If specified, only requests matching any of these patterns will produce
 fetchRequested event and will be paused until clients response. If not set,
 all requests will be affected. */
-        [@yojson.option]
+        [@yojson.option] [@key "handleAuthRequests"]
         handleAuthRequests: option(bool) /* If true, authRequired events will be issued and requests will be paused
 expecting a call to continueWithAuth. */,
       };
@@ -23815,7 +25006,9 @@ expecting a call to continueWithAuth. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Fetch.RequestId.t, /* An id the client received in requestPaused event. */
+        [@key "errorReason"]
         errorReason: Types.Network.ErrorReason.t /* Causes the request to fail with the given reason. */,
       };
       let make = (~requestId, ~errorReason, ()) => {
@@ -23872,18 +25065,20 @@ expecting a call to continueWithAuth. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Fetch.RequestId.t, /* An id the client received in requestPaused event. */
+        [@key "responseCode"]
         responseCode: float, /* An HTTP response code. */
-        [@yojson.option]
+        [@yojson.option] [@key "responseHeaders"]
         responseHeaders: option(list(Types.Fetch.HeaderEntry.t)), /* Response headers. */
-        [@yojson.option]
+        [@yojson.option] [@key "binaryResponseHeaders"]
         binaryResponseHeaders: option(string), /* Alternative way of specifying response headers as a \0-separated
 series of name: value pairs. Prefer the above method unless you
 need to represent some non-UTF8 values that can't be transmitted
 over the protocol as text. (Encoded as a base64 string when passed over JSON) */
-        [@yojson.option]
+        [@yojson.option] [@key "body"]
         body: option(string), /* A response body. (Encoded as a base64 string when passed over JSON) */
-        [@yojson.option]
+        [@yojson.option] [@key "responsePhrase"]
         responsePhrase: option(string) /* A textual representation of responseCode.
 If absent, a standard phrase matching responseCode is used. */,
       };
@@ -23957,14 +25152,15 @@ If absent, a standard phrase matching responseCode is used. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Fetch.RequestId.t, /* An id the client received in requestPaused event. */
-        [@yojson.option]
+        [@yojson.option] [@key "url"]
         url: option(string), /* If set, the request url will be modified in a way that's not observable by page. */
-        [@yojson.option]
+        [@yojson.option] [@key "method"]
         method: option(string), /* If set, the request method is overridden. */
-        [@yojson.option]
+        [@yojson.option] [@key "postData"]
         postData: option(string), /* If set, overrides the post data in the request. (Encoded as a base64 string when passed over JSON) */
-        [@yojson.option]
+        [@yojson.option] [@key "headers"]
         headers: option(list(Types.Fetch.HeaderEntry.t)) /* If set, overrides the request headers. */,
       };
       let make = (~requestId, ~url=?, ~method=?, ~postData=?, ~headers=?, ()) => {
@@ -24021,7 +25217,9 @@ If absent, a standard phrase matching responseCode is used. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Fetch.RequestId.t, /* An id the client received in authRequired event. */
+        [@key "authChallengeResponse"]
         authChallengeResponse: Types.Fetch.AuthChallengeResponse.t /* Response to  with an authChallenge. */,
       };
       let make = (~requestId, ~authChallengeResponse, ()) => {
@@ -24055,7 +25253,9 @@ If absent, a standard phrase matching responseCode is used. */,
   module GetResponseBody = {
     module Response: {
       type result = {
+        [@key "body"]
         body: string, /* Response body. */
+        [@key "base64Encoded"]
         base64Encoded: bool /* True, if content was sent as base64. */,
       };
 
@@ -24069,7 +25269,9 @@ If absent, a standard phrase matching responseCode is used. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "body"]
         body: string, /* Response body. */
+        [@key "base64Encoded"]
         base64Encoded: bool /* True, if content was sent as base64. */,
       };
 
@@ -24089,6 +25291,7 @@ If absent, a standard phrase matching responseCode is used. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Fetch.RequestId.t /* Identifier for the intercepted request to get body for. */,
       };
       let make = (~requestId, ()) => {
@@ -24126,6 +25329,7 @@ If absent, a standard phrase matching responseCode is used. */,
   module TakeResponseBodyAsStream = {
     module Response: {
       type result = {
+        [@key "stream"]
         stream: Types.IO.StreamHandle.t /* No description provided */,
       };
 
@@ -24139,6 +25343,7 @@ If absent, a standard phrase matching responseCode is used. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "stream"]
         stream: Types.IO.StreamHandle.t /* No description provided */,
       };
 
@@ -24158,6 +25363,7 @@ If absent, a standard phrase matching responseCode is used. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "requestId"]
         requestId: Types.Fetch.RequestId.t /* No description provided */,
       };
       let make = (~requestId, ()) => {
@@ -24278,6 +25484,7 @@ module WebAudio = {
   module GetRealtimeData = {
     module Response: {
       type result = {
+        [@key "realtimeData"]
         realtimeData: Types.WebAudio.ContextRealtimeData.t /* No description provided */,
       };
 
@@ -24291,6 +25498,7 @@ module WebAudio = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "realtimeData"]
         realtimeData: Types.WebAudio.ContextRealtimeData.t /* No description provided */,
       };
 
@@ -24310,6 +25518,7 @@ module WebAudio = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "contextId"]
         contextId: Types.WebAudio.GraphObjectId.t /* No description provided */,
       };
       let make = (~contextId, ()) => {
@@ -24431,6 +25640,7 @@ module WebAuthn = {
   module AddVirtualAuthenticator = {
     module Response: {
       type result = {
+        [@key "authenticatorId"]
         authenticatorId: Types.WebAuthn.AuthenticatorId.t /* No description provided */,
       };
 
@@ -24444,6 +25654,7 @@ module WebAuthn = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "authenticatorId"]
         authenticatorId: Types.WebAuthn.AuthenticatorId.t /* No description provided */,
       };
 
@@ -24463,6 +25674,7 @@ module WebAuthn = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "options"]
         options: Types.WebAuthn.VirtualAuthenticatorOptions.t /* No description provided */,
       };
       let make = (~options, ()) => {
@@ -24519,6 +25731,7 @@ module WebAuthn = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "authenticatorId"]
         authenticatorId: Types.WebAuthn.AuthenticatorId.t /* No description provided */,
       };
       let make = (~authenticatorId, ()) => {
@@ -24575,7 +25788,9 @@ module WebAuthn = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "authenticatorId"]
         authenticatorId: Types.WebAuthn.AuthenticatorId.t, /* No description provided */
+        [@key "credential"]
         credential: Types.WebAuthn.Credential.t /* No description provided */,
       };
       let make = (~authenticatorId, ~credential, ()) => {
@@ -24605,6 +25820,7 @@ module WebAuthn = {
   module GetCredential = {
     module Response: {
       type result = {
+        [@key "credential"]
         credential: Types.WebAuthn.Credential.t /* No description provided */,
       };
 
@@ -24618,6 +25834,7 @@ module WebAuthn = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "credential"]
         credential: Types.WebAuthn.Credential.t /* No description provided */,
       };
 
@@ -24637,7 +25854,9 @@ module WebAuthn = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "authenticatorId"]
         authenticatorId: Types.WebAuthn.AuthenticatorId.t, /* No description provided */
+        [@key "credentialId"]
         credentialId: string /* No description provided */,
       };
       let make = (~authenticatorId, ~credentialId, ()) => {
@@ -24666,6 +25885,7 @@ module WebAuthn = {
   module GetCredentials = {
     module Response: {
       type result = {
+        [@key "credentials"]
         credentials: list(Types.WebAuthn.Credential.t) /* No description provided */,
       };
 
@@ -24679,6 +25899,7 @@ module WebAuthn = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "credentials"]
         credentials: list(Types.WebAuthn.Credential.t) /* No description provided */,
       };
 
@@ -24698,6 +25919,7 @@ module WebAuthn = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "authenticatorId"]
         authenticatorId: Types.WebAuthn.AuthenticatorId.t /* No description provided */,
       };
       let make = (~authenticatorId, ()) => {
@@ -24754,7 +25976,9 @@ module WebAuthn = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "authenticatorId"]
         authenticatorId: Types.WebAuthn.AuthenticatorId.t, /* No description provided */
+        [@key "credentialId"]
         credentialId: string /* No description provided */,
       };
       let make = (~authenticatorId, ~credentialId, ()) => {
@@ -24811,6 +26035,7 @@ module WebAuthn = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "authenticatorId"]
         authenticatorId: Types.WebAuthn.AuthenticatorId.t /* No description provided */,
       };
       let make = (~authenticatorId, ()) => {
@@ -24868,7 +26093,9 @@ module WebAuthn = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "authenticatorId"]
         authenticatorId: Types.WebAuthn.AuthenticatorId.t, /* No description provided */
+        [@key "isUserVerified"]
         isUserVerified: bool /* No description provided */,
       };
       let make = (~authenticatorId, ~isUserVerified, ()) => {
@@ -24926,7 +26153,9 @@ module WebAuthn = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "authenticatorId"]
         authenticatorId: Types.WebAuthn.AuthenticatorId.t, /* No description provided */
+        [@key "enabled"]
         enabled: bool /* No description provided */,
       };
       let make = (~authenticatorId, ~enabled, ()) => {
@@ -25218,11 +26447,23 @@ module Debugger = {
     };
 
     module Params = {
+      type continuetolocation_targetcallframes = [ | `any | `current];
+      let continuetolocation_targetcallframes_of_yojson =
+        fun
+        | `String("any") => `any
+        | `String("current") => `current
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_continuetolocation_targetcallframes =
+        fun
+        | `any => `String("any")
+        | `current => `String("current");
       [@deriving yojson]
       type t = {
+        [@key "location"]
         location: Types.Debugger.Location.t, /* Location to continue to. */
-        [@yojson.option]
-        targetCallFrames: option(string) /* No description provided */,
+        [@yojson.option] [@key "targetCallFrames"]
+        targetCallFrames: option(continuetolocation_targetcallframes) /* No description provided */,
       };
       let make = (~location, ~targetCallFrames=?, ()) => {
         {location, targetCallFrames};
@@ -25296,6 +26537,7 @@ module Debugger = {
   module Enable = {
     module Response: {
       type result = {
+        [@key "debuggerId"]
         debuggerId: Types.Runtime.UniqueDebuggerId.t /* Unique identifier of the debugger. */,
       };
 
@@ -25309,6 +26551,7 @@ module Debugger = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "debuggerId"]
         debuggerId: Types.Runtime.UniqueDebuggerId.t /* Unique identifier of the debugger. */,
       };
 
@@ -25328,7 +26571,7 @@ module Debugger = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "maxScriptsCacheSize"]
         maxScriptsCacheSize: option(float) /* The maximum size in bytes of collected scripts (not referenced by other heap objects)
 the debugger can hold. Puts no limit if paramter is omitted. */,
       };
@@ -25358,8 +26601,9 @@ the debugger can hold. Puts no limit if paramter is omitted. */,
   module EvaluateOnCallFrame = {
     module Response: {
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t, /* Object wrapper for the evaluation result. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -25373,8 +26617,9 @@ the debugger can hold. Puts no limit if paramter is omitted. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t, /* Object wrapper for the evaluation result. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -25394,24 +26639,26 @@ the debugger can hold. Puts no limit if paramter is omitted. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "callFrameId"]
         callFrameId: Types.Debugger.CallFrameId.t, /* Call frame identifier to evaluate on. */
+        [@key "expression"]
         expression: string, /* Expression to evaluate. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectGroup"]
         objectGroup: option(string), /* String object group name to put result into (allows rapid releasing resulting object handles
 using `releaseObjectGroup`). */
-        [@yojson.option]
+        [@yojson.option] [@key "includeCommandLineAPI"]
         includeCommandLineAPI: option(bool), /* Specifies whether command line API should be available to the evaluated expression, defaults
 to false. */
-        [@yojson.option]
+        [@yojson.option] [@key "silent"]
         silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
 execution. Overrides `setPauseOnException` state. */
-        [@yojson.option]
+        [@yojson.option] [@key "returnByValue"]
         returnByValue: option(bool), /* Whether the result is expected to be a JSON object that should be sent by value. */
-        [@yojson.option]
+        [@yojson.option] [@key "generatePreview"]
         generatePreview: option(bool), /* Whether preview should be generated for the result. */
-        [@yojson.option]
+        [@yojson.option] [@key "throwOnSideEffect"]
         throwOnSideEffect: option(bool), /* Whether to throw an exception if side effect cannot be ruled out during evaluation. */
-        [@yojson.option]
+        [@yojson.option] [@key "timeout"]
         timeout: option(Types.Runtime.TimeDelta.t) /* Terminate execution after timing out (number of milliseconds). */,
       };
       let make =
@@ -25463,6 +26710,7 @@ execution. Overrides `setPauseOnException` state. */
   module GetPossibleBreakpoints = {
     module Response: {
       type result = {
+        [@key "locations"]
         locations: list(Types.Debugger.BreakLocation.t) /* List of the possible breakpoint locations. */,
       };
 
@@ -25476,6 +26724,7 @@ execution. Overrides `setPauseOnException` state. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "locations"]
         locations: list(Types.Debugger.BreakLocation.t) /* List of the possible breakpoint locations. */,
       };
 
@@ -25495,11 +26744,12 @@ execution. Overrides `setPauseOnException` state. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "start"]
         start: Types.Debugger.Location.t, /* Start of range to search possible breakpoint locations in. */
         [@yojson.option] [@key "end"]
         end_: option(Types.Debugger.Location.t), /* End of range to search possible breakpoint locations in (excluding). When not specified, end
 of scripts is used as end of range. */
-        [@yojson.option]
+        [@yojson.option] [@key "restrictToFunction"]
         restrictToFunction: option(bool) /* Only consider locations which are in the same (non-nested) function as start. */,
       };
       let make = (~start, ~end_=?, ~restrictToFunction=?, ()) => {
@@ -25528,8 +26778,9 @@ of scripts is used as end of range. */
   module GetScriptSource = {
     module Response: {
       type result = {
+        [@key "scriptSource"]
         scriptSource: string, /* Script source (empty in case of Wasm bytecode). */
-        [@yojson.option]
+        [@yojson.option] [@key "bytecode"]
         bytecode: option(string) /* Wasm bytecode. (Encoded as a base64 string when passed over JSON) */,
       };
 
@@ -25543,8 +26794,9 @@ of scripts is used as end of range. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "scriptSource"]
         scriptSource: string, /* Script source (empty in case of Wasm bytecode). */
-        [@yojson.option]
+        [@yojson.option] [@key "bytecode"]
         bytecode: option(string) /* Wasm bytecode. (Encoded as a base64 string when passed over JSON) */,
       };
 
@@ -25564,6 +26816,7 @@ of scripts is used as end of range. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "scriptId"]
         scriptId: Types.Runtime.ScriptId.t /* Id of the script to get source for. */,
       };
       let make = (~scriptId, ()) => {
@@ -25592,6 +26845,7 @@ of scripts is used as end of range. */
   module GetWasmBytecode = {
     module Response: {
       type result = {
+        [@key "bytecode"]
         bytecode: string /* Script source. (Encoded as a base64 string when passed over JSON) */,
       };
 
@@ -25605,6 +26859,7 @@ of scripts is used as end of range. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "bytecode"]
         bytecode: string /* Script source. (Encoded as a base64 string when passed over JSON) */,
       };
 
@@ -25624,6 +26879,7 @@ of scripts is used as end of range. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "scriptId"]
         scriptId: Types.Runtime.ScriptId.t /* Id of the Wasm script to get source for. */,
       };
       let make = (~scriptId, ()) => {
@@ -25652,6 +26908,7 @@ of scripts is used as end of range. */
   module GetStackTrace = {
     module Response: {
       type result = {
+        [@key "stackTrace"]
         stackTrace: Types.Runtime.StackTrace.t /* No description provided */,
       };
 
@@ -25665,6 +26922,7 @@ of scripts is used as end of range. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "stackTrace"]
         stackTrace: Types.Runtime.StackTrace.t /* No description provided */,
       };
 
@@ -25684,6 +26942,7 @@ of scripts is used as end of range. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "stackTraceId"]
         stackTraceId: Types.Runtime.StackTraceId.t /* No description provided */,
       };
       let make = (~stackTraceId, ()) => {
@@ -25785,6 +27044,7 @@ of scripts is used as end of range. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "parentStackTraceId"]
         parentStackTraceId: Types.Runtime.StackTraceId.t /* Debugger will pause when async call with given stack trace is started. */,
       };
       let make = (~parentStackTraceId, ()) => {
@@ -25841,6 +27101,7 @@ of scripts is used as end of range. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "breakpointId"]
         breakpointId: Types.Debugger.BreakpointId.t /* No description provided */,
       };
       let make = (~breakpointId, ()) => {
@@ -25869,10 +27130,11 @@ of scripts is used as end of range. */
   module RestartFrame = {
     module Response: {
       type result = {
+        [@key "callFrames"]
         callFrames: list(Types.Debugger.CallFrame.t), /* New stack trace. */
-        [@yojson.option]
+        [@yojson.option] [@key "asyncStackTrace"]
         asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
-        [@yojson.option]
+        [@yojson.option] [@key "asyncStackTraceId"]
         asyncStackTraceId: option(Types.Runtime.StackTraceId.t) /* Async stack trace, if any. */,
       };
 
@@ -25886,10 +27148,11 @@ of scripts is used as end of range. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "callFrames"]
         callFrames: list(Types.Debugger.CallFrame.t), /* New stack trace. */
-        [@yojson.option]
+        [@yojson.option] [@key "asyncStackTrace"]
         asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
-        [@yojson.option]
+        [@yojson.option] [@key "asyncStackTraceId"]
         asyncStackTraceId: option(Types.Runtime.StackTraceId.t) /* Async stack trace, if any. */,
       };
 
@@ -25909,6 +27172,7 @@ of scripts is used as end of range. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "callFrameId"]
         callFrameId: Types.Debugger.CallFrameId.t /* Call frame identifier to evaluate on. */,
       };
       let make = (~callFrameId, ()) => {
@@ -25965,7 +27229,7 @@ of scripts is used as end of range. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "terminateOnResume"]
         terminateOnResume: option(bool) /* Set to true to terminate execution upon resuming execution. In contrast
 to Runtime.terminateExecution, this will allows to execute further
 JavaScript (i.e. via evaluation) until execution of the paused code
@@ -25998,6 +27262,7 @@ If execution is currently not paused, this parameter has no effect. */,
   module SearchInContent = {
     module Response: {
       type result = {
+        [@key "result"]
         result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
       };
 
@@ -26011,6 +27276,7 @@ If execution is currently not paused, this parameter has no effect. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
       };
 
@@ -26030,11 +27296,13 @@ If execution is currently not paused, this parameter has no effect. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "scriptId"]
         scriptId: Types.Runtime.ScriptId.t, /* Id of the script to search in. */
+        [@key "query"]
         query: string, /* String to search for. */
-        [@yojson.option]
+        [@yojson.option] [@key "caseSensitive"]
         caseSensitive: option(bool), /* If true, search is case sensitive. */
-        [@yojson.option]
+        [@yojson.option] [@key "isRegex"]
         isRegex: option(bool) /* If true, treats string parameter as regex. */,
       };
       let make = (~scriptId, ~query, ~caseSensitive=?, ~isRegex=?, ()) => {
@@ -26091,6 +27359,7 @@ If execution is currently not paused, this parameter has no effect. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "maxDepth"]
         maxDepth: float /* Maximum depth of async call stacks. Setting to `0` will effectively disable collecting async
 call stacks (default). */,
       };
@@ -26150,6 +27419,7 @@ call stacks (default). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "patterns"]
         patterns: list(string) /* Array of regexps that will be used to check script url for blackbox state. */,
       };
       let make = (~patterns, ()) => {
@@ -26209,7 +27479,9 @@ call stacks (default). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "scriptId"]
         scriptId: Types.Runtime.ScriptId.t, /* Id of the script. */
+        [@key "positions"]
         positions: list(Types.Debugger.ScriptPosition.t) /* No description provided */,
       };
       let make = (~scriptId, ~positions, ()) => {
@@ -26238,7 +27510,9 @@ call stacks (default). */,
   module SetBreakpoint = {
     module Response: {
       type result = {
+        [@key "breakpointId"]
         breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
+        [@key "actualLocation"]
         actualLocation: Types.Debugger.Location.t /* Location this breakpoint resolved into. */,
       };
 
@@ -26252,7 +27526,9 @@ call stacks (default). */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "breakpointId"]
         breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
+        [@key "actualLocation"]
         actualLocation: Types.Debugger.Location.t /* Location this breakpoint resolved into. */,
       };
 
@@ -26272,8 +27548,9 @@ call stacks (default). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "location"]
         location: Types.Debugger.Location.t, /* Location to set breakpoint in. */
-        [@yojson.option]
+        [@yojson.option] [@key "condition"]
         condition: option(string) /* Expression to use as a breakpoint condition. When specified, debugger will only stop on the
 breakpoint if this expression evaluates to true. */,
       };
@@ -26303,6 +27580,7 @@ breakpoint if this expression evaluates to true. */,
   module SetInstrumentationBreakpoint = {
     module Response: {
       type result = {
+        [@key "breakpointId"]
         breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
       };
 
@@ -26316,6 +27594,7 @@ breakpoint if this expression evaluates to true. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "breakpointId"]
         breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
       };
 
@@ -26333,8 +27612,26 @@ breakpoint if this expression evaluates to true. */,
     };
 
     module Params = {
+      type setinstrumentationbreakpoint_instrumentation = [
+        | `beforeScriptExecution
+        | `beforeScriptWithSourceMapExecution
+      ];
+      let setinstrumentationbreakpoint_instrumentation_of_yojson =
+        fun
+        | `String("beforeScriptExecution") => `beforeScriptExecution
+        | `String("beforeScriptWithSourceMapExecution") => `beforeScriptWithSourceMapExecution
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_setinstrumentationbreakpoint_instrumentation =
+        fun
+        | `beforeScriptExecution => `String("beforeScriptExecution")
+        | `beforeScriptWithSourceMapExecution =>
+          `String("beforeScriptWithSourceMapExecution");
       [@deriving yojson]
-      type t = {instrumentation: string /* Instrumentation name. */};
+      type t = {
+        [@key "instrumentation"]
+        instrumentation: setinstrumentationbreakpoint_instrumentation /* Instrumentation name. */,
+      };
       let make = (~instrumentation, ()) => {
         {instrumentation: instrumentation};
       };
@@ -26369,7 +27666,9 @@ breakpoint if this expression evaluates to true. */,
   module SetBreakpointByUrl = {
     module Response: {
       type result = {
+        [@key "breakpointId"]
         breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
+        [@key "locations"]
         locations: list(Types.Debugger.Location.t) /* List of the locations this breakpoint resolved into upon addition. */,
       };
 
@@ -26383,7 +27682,9 @@ breakpoint if this expression evaluates to true. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "breakpointId"]
         breakpointId: Types.Debugger.BreakpointId.t, /* Id of the created breakpoint for further reference. */
+        [@key "locations"]
         locations: list(Types.Debugger.Location.t) /* List of the locations this breakpoint resolved into upon addition. */,
       };
 
@@ -26403,17 +27704,18 @@ breakpoint if this expression evaluates to true. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "lineNumber"]
         lineNumber: float, /* Line number to set breakpoint at. */
-        [@yojson.option]
+        [@yojson.option] [@key "url"]
         url: option(string), /* URL of the resources to set breakpoint on. */
-        [@yojson.option]
+        [@yojson.option] [@key "urlRegex"]
         urlRegex: option(string), /* Regex pattern for the URLs of the resources to set breakpoints on. Either `url` or
 `urlRegex` must be specified. */
-        [@yojson.option]
+        [@yojson.option] [@key "scriptHash"]
         scriptHash: option(string), /* Script hash of the resources to set breakpoint on. */
-        [@yojson.option]
+        [@yojson.option] [@key "columnNumber"]
         columnNumber: option(float), /* Offset in the line to set breakpoint at. */
-        [@yojson.option]
+        [@yojson.option] [@key "condition"]
         condition: option(string) /* Expression to use as a breakpoint condition. When specified, debugger will only stop on the
 breakpoint if this expression evaluates to true. */,
       };
@@ -26454,6 +27756,7 @@ breakpoint if this expression evaluates to true. */,
   module SetBreakpointOnFunctionCall = {
     module Response: {
       type result = {
+        [@key "breakpointId"]
         breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
       };
 
@@ -26467,6 +27770,7 @@ breakpoint if this expression evaluates to true. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "breakpointId"]
         breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
       };
 
@@ -26486,8 +27790,9 @@ breakpoint if this expression evaluates to true. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "objectId"]
         objectId: Types.Runtime.RemoteObjectId.t, /* Function object id. */
-        [@yojson.option]
+        [@yojson.option] [@key "condition"]
         condition: option(string) /* Expression to use as a breakpoint condition. When specified, debugger will
 stop on the breakpoint if this expression evaluates to true. */,
       };
@@ -26549,7 +27854,10 @@ stop on the breakpoint if this expression evaluates to true. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {active: bool /* New value for breakpoints active state. */};
+      type t = {
+        [@key "active"]
+        active: bool /* New value for breakpoints active state. */,
+      };
       let make = (~active, ()) => {
         {active: active};
       };
@@ -26603,8 +27911,24 @@ stop on the breakpoint if this expression evaluates to true. */,
     };
 
     module Params = {
+      type setpauseonexceptions_state = [ | `none | `uncaught | `all];
+      let setpauseonexceptions_state_of_yojson =
+        fun
+        | `String("none") => `none
+        | `String("uncaught") => `uncaught
+        | `String("all") => `all
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_setpauseonexceptions_state =
+        fun
+        | `none => `String("none")
+        | `uncaught => `String("uncaught")
+        | `all => `String("all");
       [@deriving yojson]
-      type t = {state: string /* Pause on exceptions mode. */};
+      type t = {
+        [@key "state"]
+        state: setpauseonexceptions_state /* Pause on exceptions mode. */,
+      };
       let make = (~state, ()) => {
         {state: state};
       };
@@ -26659,6 +27983,7 @@ stop on the breakpoint if this expression evaluates to true. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "newValue"]
         newValue: Types.Runtime.CallArgument.t /* New return value. */,
       };
       let make = (~newValue, ()) => {
@@ -26687,15 +28012,15 @@ stop on the breakpoint if this expression evaluates to true. */,
   module SetScriptSource = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "callFrames"]
         callFrames: option(list(Types.Debugger.CallFrame.t)), /* New stack trace in case editing has happened while VM was stopped. */
-        [@yojson.option]
+        [@yojson.option] [@key "stackChanged"]
         stackChanged: option(bool), /* Whether current call stack  was modified after applying the changes. */
-        [@yojson.option]
+        [@yojson.option] [@key "asyncStackTrace"]
         asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
-        [@yojson.option]
+        [@yojson.option] [@key "asyncStackTraceId"]
         asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. */,
       };
 
@@ -26709,15 +28034,15 @@ stop on the breakpoint if this expression evaluates to true. */,
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "callFrames"]
         callFrames: option(list(Types.Debugger.CallFrame.t)), /* New stack trace in case editing has happened while VM was stopped. */
-        [@yojson.option]
+        [@yojson.option] [@key "stackChanged"]
         stackChanged: option(bool), /* Whether current call stack  was modified after applying the changes. */
-        [@yojson.option]
+        [@yojson.option] [@key "asyncStackTrace"]
         asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
-        [@yojson.option]
+        [@yojson.option] [@key "asyncStackTraceId"]
         asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. */,
       };
 
@@ -26737,9 +28062,11 @@ stop on the breakpoint if this expression evaluates to true. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "scriptId"]
         scriptId: Types.Runtime.ScriptId.t, /* Id of the script to edit. */
+        [@key "scriptSource"]
         scriptSource: string, /* New content of the script. */
-        [@yojson.option]
+        [@yojson.option] [@key "dryRun"]
         dryRun: option(bool) /* If true the change will not actually be applied. Dry run may be used to get result
 description without actually modifying the code. */,
       };
@@ -26796,7 +28123,10 @@ description without actually modifying the code. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {skip: bool /* New value for skip pauses state. */};
+      type t = {
+        [@key "skip"]
+        skip: bool /* New value for skip pauses state. */,
+      };
       let make = (~skip, ()) => {
         {skip: skip};
       };
@@ -26852,10 +28182,14 @@ description without actually modifying the code. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "scopeNumber"]
         scopeNumber: float, /* 0-based number of scope as was listed in scope chain. Only 'local', 'closure' and 'catch'
 scope types are allowed. Other scopes could be manipulated manually. */
+        [@key "variableName"]
         variableName: string, /* Variable name. */
+        [@key "newValue"]
         newValue: Types.Runtime.CallArgument.t, /* New variable value. */
+        [@key "callFrameId"]
         callFrameId: Types.Debugger.CallFrameId.t /* Id of callframe that holds variable. */,
       };
       let make = (~scopeNumber, ~variableName, ~newValue, ~callFrameId, ()) => {
@@ -26912,10 +28246,10 @@ scope types are allowed. Other scopes could be manipulated manually. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "breakOnAsyncCall"]
         breakOnAsyncCall: option(bool), /* Debugger will pause on the execution of the first async task which was scheduled
 before next pause. */
-        [@yojson.option]
+        [@yojson.option] [@key "skipList"]
         skipList: option(list(Types.Debugger.LocationRange.t)) /* The skipList specifies location ranges that should be skipped on step into. */,
       };
       let make = (~breakOnAsyncCall=?, ~skipList=?, ()) => {
@@ -27017,7 +28351,7 @@ before next pause. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "skipList"]
         skipList: option(list(Types.Debugger.LocationRange.t)) /* The skipList specifies location ranges that should be skipped on step over. */,
       };
       let make = (~skipList=?, ()) => {
@@ -27077,6 +28411,7 @@ module HeapProfiler = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "heapObjectId"]
         heapObjectId: Types.HeapProfiler.HeapSnapshotObjectId.t /* Heap snapshot object id to be accessible by means of $x command line API. */,
       };
       let make = (~heapObjectId, ()) => {
@@ -27240,6 +28575,7 @@ module HeapProfiler = {
   module GetHeapObjectId = {
     module Response: {
       type result = {
+        [@key "heapSnapshotObjectId"]
         heapSnapshotObjectId: Types.HeapProfiler.HeapSnapshotObjectId.t /* Id of the heap snapshot object corresponding to the passed remote object id. */,
       };
 
@@ -27253,6 +28589,7 @@ module HeapProfiler = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "heapSnapshotObjectId"]
         heapSnapshotObjectId: Types.HeapProfiler.HeapSnapshotObjectId.t /* Id of the heap snapshot object corresponding to the passed remote object id. */,
       };
 
@@ -27272,6 +28609,7 @@ module HeapProfiler = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "objectId"]
         objectId: Types.Runtime.RemoteObjectId.t /* Identifier of the object to get heap object id for. */,
       };
       let make = (~objectId, ()) => {
@@ -27300,6 +28638,7 @@ module HeapProfiler = {
   module GetObjectByHeapObjectId = {
     module Response: {
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t /* Evaluation result. */,
       };
 
@@ -27313,6 +28652,7 @@ module HeapProfiler = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t /* Evaluation result. */,
       };
 
@@ -27332,8 +28672,9 @@ module HeapProfiler = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "objectId"]
         objectId: Types.HeapProfiler.HeapSnapshotObjectId.t, /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "objectGroup"]
         objectGroup: option(string) /* Symbolic group name that can be used to release multiple objects. */,
       };
       let make = (~objectId, ~objectGroup=?, ()) => {
@@ -27367,6 +28708,7 @@ module HeapProfiler = {
   module GetSamplingProfile = {
     module Response: {
       type result = {
+        [@key "profile"]
         profile: Types.HeapProfiler.SamplingHeapProfile.t /* Return the sampling profile being collected. */,
       };
 
@@ -27380,6 +28722,7 @@ module HeapProfiler = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "profile"]
         profile: Types.HeapProfiler.SamplingHeapProfile.t /* Return the sampling profile being collected. */,
       };
 
@@ -27444,7 +28787,7 @@ module HeapProfiler = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "samplingInterval"]
         samplingInterval: option(float) /* Average sample interval in bytes. Poisson distribution is used for the intervals. The
 default value is 32768 bytes. */,
       };
@@ -27502,7 +28845,7 @@ default value is 32768 bytes. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "trackAllocations"]
         trackAllocations: option(bool) /* No description provided */,
       };
       let make = (~trackAllocations=?, ()) => {
@@ -27536,6 +28879,7 @@ default value is 32768 bytes. */,
   module StopSampling = {
     module Response: {
       type result = {
+        [@key "profile"]
         profile: Types.HeapProfiler.SamplingHeapProfile.t /* Recorded sampling heap profile. */,
       };
 
@@ -27549,6 +28893,7 @@ default value is 32768 bytes. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "profile"]
         profile: Types.HeapProfiler.SamplingHeapProfile.t /* Recorded sampling heap profile. */,
       };
 
@@ -27613,10 +28958,10 @@ default value is 32768 bytes. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "reportProgress"]
         reportProgress: option(bool), /* If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken
 when the tracking is stopped. */
-        [@yojson.option]
+        [@yojson.option] [@key "treatGlobalObjectsAsRoots"]
         treatGlobalObjectsAsRoots: option(bool) /* No description provided */,
       };
       let make = (~reportProgress=?, ~treatGlobalObjectsAsRoots=?, ()) => {
@@ -27678,9 +29023,9 @@ when the tracking is stopped. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "reportProgress"]
         reportProgress: option(bool), /* If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken. */
-        [@yojson.option]
+        [@yojson.option] [@key "treatGlobalObjectsAsRoots"]
         treatGlobalObjectsAsRoots: option(bool) /* If true, a raw snapshot without artifical roots will be generated */,
       };
       let make = (~reportProgress=?, ~treatGlobalObjectsAsRoots=?, ()) => {
@@ -27802,6 +29147,7 @@ module Profiler = {
   module GetBestEffortCoverage = {
     module Response: {
       type result = {
+        [@key "result"]
         result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
       };
 
@@ -27815,6 +29161,7 @@ module Profiler = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
       };
 
@@ -27878,7 +29225,10 @@ module Profiler = {
 
     module Params = {
       [@deriving yojson]
-      type t = {interval: float /* New sampling interval in microseconds. */};
+      type t = {
+        [@key "interval"]
+        interval: float /* New sampling interval in microseconds. */,
+      };
       let make = (~interval, ()) => {
         {interval: interval};
       };
@@ -27952,6 +29302,7 @@ module Profiler = {
   module StartPreciseCoverage = {
     module Response: {
       type result = {
+        [@key "timestamp"]
         timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
       };
 
@@ -27965,6 +29316,7 @@ module Profiler = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "timestamp"]
         timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
       };
 
@@ -27984,11 +29336,11 @@ module Profiler = {
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "callCount"]
         callCount: option(bool), /* Collect accurate call counts beyond simple 'covered' or 'not covered'. */
-        [@yojson.option]
+        [@yojson.option] [@key "detailed"]
         detailed: option(bool), /* Collect block-based coverage. */
-        [@yojson.option]
+        [@yojson.option] [@key "allowTriggeredUpdates"]
         allowTriggeredUpdates: option(bool) /* Allow the backend to send updates on its own initiative */,
       };
       let make = (~callCount=?, ~detailed=?, ~allowTriggeredUpdates=?, ()) => {
@@ -28062,6 +29414,7 @@ module Profiler = {
   module Stop = {
     module Response: {
       type result = {
+        [@key "profile"]
         profile: Types.Profiler.Profile.t /* Recorded profile. */,
       };
 
@@ -28075,6 +29428,7 @@ module Profiler = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "profile"]
         profile: Types.Profiler.Profile.t /* Recorded profile. */,
       };
 
@@ -28203,7 +29557,9 @@ module Profiler = {
   module TakePreciseCoverage = {
     module Response: {
       type result = {
+        [@key "result"]
         result: list(Types.Profiler.ScriptCoverage.t), /* Coverage data for the current isolate. */
+        [@key "timestamp"]
         timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
       };
 
@@ -28217,7 +29573,9 @@ module Profiler = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: list(Types.Profiler.ScriptCoverage.t), /* Coverage data for the current isolate. */
+        [@key "timestamp"]
         timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
       };
 
@@ -28254,6 +29612,7 @@ module Profiler = {
   module TakeTypeProfile = {
     module Response: {
       type result = {
+        [@key "result"]
         result: list(Types.Profiler.ScriptTypeProfile.t) /* Type profile for all scripts since startTypeProfile() was turned on. */,
       };
 
@@ -28267,6 +29626,7 @@ module Profiler = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: list(Types.Profiler.ScriptTypeProfile.t) /* Type profile for all scripts since startTypeProfile() was turned on. */,
       };
 
@@ -28393,6 +29753,7 @@ module Profiler = {
   module GetCounters = {
     module Response: {
       type result = {
+        [@key "result"]
         result: list(Types.Profiler.CounterInfo.t) /* Collected counters information. */,
       };
 
@@ -28406,6 +29767,7 @@ module Profiler = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: list(Types.Profiler.CounterInfo.t) /* Collected counters information. */,
       };
 
@@ -28532,6 +29894,7 @@ module Profiler = {
   module GetRuntimeCallStats = {
     module Response: {
       type result = {
+        [@key "result"]
         result: list(Types.Profiler.RuntimeCallCounterInfo.t) /* Collected runtime call counter information. */,
       };
 
@@ -28545,6 +29908,7 @@ module Profiler = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: list(Types.Profiler.RuntimeCallCounterInfo.t) /* Collected runtime call counter information. */,
       };
 
@@ -28583,8 +29947,9 @@ module Runtime = {
   module AwaitPromise = {
     module Response: {
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t, /* Promise result. Will contain rejected value if promise was rejected. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if stack strace is available. */,
       };
 
@@ -28598,8 +29963,9 @@ module Runtime = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t, /* Promise result. Will contain rejected value if promise was rejected. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if stack strace is available. */,
       };
 
@@ -28619,10 +29985,11 @@ module Runtime = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "promiseObjectId"]
         promiseObjectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the promise. */
-        [@yojson.option]
+        [@yojson.option] [@key "returnByValue"]
         returnByValue: option(bool), /* Whether the result is expected to be a JSON object that should be sent by value. */
-        [@yojson.option]
+        [@yojson.option] [@key "generatePreview"]
         generatePreview: option(bool) /* Whether preview should be generated for the result. */,
       };
       let make = (~promiseObjectId, ~returnByValue=?, ~generatePreview=?, ()) => {
@@ -28652,8 +30019,9 @@ module Runtime = {
   module CallFunctionOn = {
     module Response: {
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t, /* Call result. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -28667,8 +30035,9 @@ module Runtime = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t, /* Call result. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -28688,29 +30057,30 @@ module Runtime = {
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "functionDeclaration"]
         functionDeclaration: string, /* Declaration of the function to call. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t), /* Identifier of the object to call function on. Either objectId or executionContextId should
 be specified. */
-        [@yojson.option]
+        [@yojson.option] [@key "arguments"]
         arguments: option(list(Types.Runtime.CallArgument.t)), /* Call arguments. All call arguments must belong to the same JavaScript world as the target
 object. */
-        [@yojson.option]
+        [@yojson.option] [@key "silent"]
         silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
 execution. Overrides `setPauseOnException` state. */
-        [@yojson.option]
+        [@yojson.option] [@key "returnByValue"]
         returnByValue: option(bool), /* Whether the result is expected to be a JSON object which should be sent by value. */
-        [@yojson.option]
+        [@yojson.option] [@key "generatePreview"]
         generatePreview: option(bool), /* Whether preview should be generated for the result. */
-        [@yojson.option]
+        [@yojson.option] [@key "userGesture"]
         userGesture: option(bool), /* Whether execution should be treated as initiated by user in the UI. */
-        [@yojson.option]
+        [@yojson.option] [@key "awaitPromise"]
         awaitPromise: option(bool), /* Whether execution should `await` for resulting value and return once awaited promise is
 resolved. */
-        [@yojson.option]
+        [@yojson.option] [@key "executionContextId"]
         executionContextId: option(Types.Runtime.ExecutionContextId.t), /* Specifies execution context which global object will be used to call function on. Either
 executionContextId or objectId should be specified. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectGroup"]
         objectGroup: option(string) /* Symbolic group name that can be used to release multiple objects. If objectGroup is not
 specified and objectId is, objectGroup will be inherited from object. */,
       };
@@ -28764,9 +30134,9 @@ specified and objectId is, objectGroup will be inherited from object. */,
   module CompileScript = {
     module Response: {
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "scriptId"]
         scriptId: option(Types.Runtime.ScriptId.t), /* Id of the script. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -28780,9 +30150,9 @@ specified and objectId is, objectGroup will be inherited from object. */,
     } = {
       [@deriving yojson]
       type result = {
-        [@yojson.option]
+        [@yojson.option] [@key "scriptId"]
         scriptId: option(Types.Runtime.ScriptId.t), /* Id of the script. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -28802,10 +30172,13 @@ specified and objectId is, objectGroup will be inherited from object. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "expression"]
         expression: string, /* Expression to compile. */
+        [@key "sourceURL"]
         sourceURL: string, /* Source url to be set for the script. */
+        [@key "persistScript"]
         persistScript: bool, /* Specifies whether the compiled script should be persisted. */
-        [@yojson.option]
+        [@yojson.option] [@key "executionContextId"]
         executionContextId: option(Types.Runtime.ExecutionContextId.t) /* Specifies in which execution context to perform script run. If the parameter is omitted the
 evaluation will be performed in the context of the inspected page. */,
       };
@@ -28973,8 +30346,9 @@ evaluation will be performed in the context of the inspected page. */,
   module Evaluate = {
     module Response: {
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t, /* Evaluation result. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -28988,8 +30362,9 @@ evaluation will be performed in the context of the inspected page. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t, /* Evaluation result. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -29009,46 +30384,47 @@ evaluation will be performed in the context of the inspected page. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "expression"]
         expression: string, /* Expression to evaluate. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectGroup"]
         objectGroup: option(string), /* Symbolic group name that can be used to release multiple objects. */
-        [@yojson.option]
+        [@yojson.option] [@key "includeCommandLineAPI"]
         includeCommandLineAPI: option(bool), /* Determines whether Command Line API should be available during the evaluation. */
-        [@yojson.option]
+        [@yojson.option] [@key "silent"]
         silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
 execution. Overrides `setPauseOnException` state. */
-        [@yojson.option]
+        [@yojson.option] [@key "contextId"]
         contextId: option(Types.Runtime.ExecutionContextId.t), /* Specifies in which execution context to perform evaluation. If the parameter is omitted the
 evaluation will be performed in the context of the inspected page.
 This is mutually exclusive with `uniqueContextId`, which offers an
 alternative way to identify the execution context that is more reliable
 in a multi-process environment. */
-        [@yojson.option]
+        [@yojson.option] [@key "returnByValue"]
         returnByValue: option(bool), /* Whether the result is expected to be a JSON object that should be sent by value. */
-        [@yojson.option]
+        [@yojson.option] [@key "generatePreview"]
         generatePreview: option(bool), /* Whether preview should be generated for the result. */
-        [@yojson.option]
+        [@yojson.option] [@key "userGesture"]
         userGesture: option(bool), /* Whether execution should be treated as initiated by user in the UI. */
-        [@yojson.option]
+        [@yojson.option] [@key "awaitPromise"]
         awaitPromise: option(bool), /* Whether execution should `await` for resulting value and return once awaited promise is
 resolved. */
-        [@yojson.option]
+        [@yojson.option] [@key "throwOnSideEffect"]
         throwOnSideEffect: option(bool), /* Whether to throw an exception if side effect cannot be ruled out during evaluation.
 This implies `disableBreaks` below. */
-        [@yojson.option]
+        [@yojson.option] [@key "timeout"]
         timeout: option(Types.Runtime.TimeDelta.t), /* Terminate execution after timing out (number of milliseconds). */
-        [@yojson.option]
+        [@yojson.option] [@key "disableBreaks"]
         disableBreaks: option(bool), /* Disable breakpoints during execution. */
-        [@yojson.option]
+        [@yojson.option] [@key "replMode"]
         replMode: option(bool), /* Setting this flag to true enables `let` re-declaration and top-level `await`.
 Note that `let` variables can only be re-declared if they originate from
 `replMode` themselves. */
-        [@yojson.option]
+        [@yojson.option] [@key "allowUnsafeEvalBlockedByCSP"]
         allowUnsafeEvalBlockedByCSP: option(bool), /* The Content Security Policy (CSP) for the target might block 'unsafe-eval'
 which includes eval(), Function(), setTimeout() and setInterval()
 when called with non-callable arguments. This flag bypasses CSP for this
 evaluation and allows unsafe-eval. Defaults to true. */
-        [@yojson.option]
+        [@yojson.option] [@key "uniqueContextId"]
         uniqueContextId: option(string) /* An alternative way to specify the execution context to evaluate in.
 Compared to contextId that may be reused accross processes, this is guaranteed to be
 system-unique, so it can be used to prevent accidental evaluation of the expression
@@ -29115,7 +30491,10 @@ This is mutually exclusive with `contextId`. */,
   /* Returns the isolate id. */
   module GetIsolateId = {
     module Response: {
-      type result = {id: string /* The isolate id. */};
+      type result = {
+        [@key "id"]
+        id: string /* The isolate id. */,
+      };
 
       type t = {
         id: int,
@@ -29126,7 +30505,10 @@ This is mutually exclusive with `contextId`. */,
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {id: string /* The isolate id. */};
+      type result = {
+        [@key "id"]
+        id: string /* The isolate id. */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -29162,7 +30544,9 @@ This is mutually exclusive with `contextId`. */,
   module GetHeapUsage = {
     module Response: {
       type result = {
+        [@key "usedSize"]
         usedSize: float, /* Used heap size in bytes. */
+        [@key "totalSize"]
         totalSize: float /* Allocated heap size in bytes. */,
       };
 
@@ -29176,7 +30560,9 @@ This is mutually exclusive with `contextId`. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "usedSize"]
         usedSize: float, /* Used heap size in bytes. */
+        [@key "totalSize"]
         totalSize: float /* Allocated heap size in bytes. */,
       };
 
@@ -29214,14 +30600,15 @@ This is mutually exclusive with `contextId`. */,
   module GetProperties = {
     module Response: {
       type result = {
+        [@key "result"]
         result: list(Types.Runtime.PropertyDescriptor.t), /* Object properties. */
-        [@yojson.option]
+        [@yojson.option] [@key "internalProperties"]
         internalProperties:
           option(list(Types.Runtime.InternalPropertyDescriptor.t)), /* Internal object properties (only of the element itself). */
-        [@yojson.option]
+        [@yojson.option] [@key "privateProperties"]
         privateProperties:
           option(list(Types.Runtime.PrivatePropertyDescriptor.t)), /* Object private properties. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -29235,14 +30622,15 @@ This is mutually exclusive with `contextId`. */,
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: list(Types.Runtime.PropertyDescriptor.t), /* Object properties. */
-        [@yojson.option]
+        [@yojson.option] [@key "internalProperties"]
         internalProperties:
           option(list(Types.Runtime.InternalPropertyDescriptor.t)), /* Internal object properties (only of the element itself). */
-        [@yojson.option]
+        [@yojson.option] [@key "privateProperties"]
         privateProperties:
           option(list(Types.Runtime.PrivatePropertyDescriptor.t)), /* Object private properties. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -29262,14 +30650,15 @@ This is mutually exclusive with `contextId`. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "objectId"]
         objectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the object to return properties for. */
-        [@yojson.option]
+        [@yojson.option] [@key "ownProperties"]
         ownProperties: option(bool), /* If true, returns properties belonging only to the element itself, not to its prototype
 chain. */
-        [@yojson.option]
+        [@yojson.option] [@key "accessorPropertiesOnly"]
         accessorPropertiesOnly: option(bool), /* If true, returns accessor properties (with getter/setter) only; internal properties are not
 returned either. */
-        [@yojson.option]
+        [@yojson.option] [@key "generatePreview"]
         generatePreview: option(bool) /* Whether preview should be generated for the results. */,
       };
       let make =
@@ -29304,7 +30693,10 @@ returned either. */
   /* Returns all let, const and class variables from global scope. */
   module GlobalLexicalScopeNames = {
     module Response: {
-      type result = {names: list(string) /* No description provided */};
+      type result = {
+        [@key "names"]
+        names: list(string) /* No description provided */,
+      };
 
       type t = {
         id: int,
@@ -29315,7 +30707,10 @@ returned either. */
       let parse: string => t;
     } = {
       [@deriving yojson]
-      type result = {names: list(string) /* No description provided */};
+      type result = {
+        [@key "names"]
+        names: list(string) /* No description provided */,
+      };
 
       [@deriving yojson]
       type t = {
@@ -29333,7 +30728,7 @@ returned either. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option]
+        [@yojson.option] [@key "executionContextId"]
         executionContextId: option(Types.Runtime.ExecutionContextId.t) /* Specifies in which execution context to lookup global scope variables. */,
       };
       let make = (~executionContextId=?, ()) => {
@@ -29362,6 +30757,7 @@ returned either. */
   module QueryObjects = {
     module Response: {
       type result = {
+        [@key "objects"]
         objects: Types.Runtime.RemoteObject.t /* Array with objects. */,
       };
 
@@ -29375,6 +30771,7 @@ returned either. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "objects"]
         objects: Types.Runtime.RemoteObject.t /* Array with objects. */,
       };
 
@@ -29394,8 +30791,9 @@ returned either. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "prototypeObjectId"]
         prototypeObjectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the prototype to return objects for. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectGroup"]
         objectGroup: option(string) /* Symbolic group name that can be used to release the results. */,
       };
       let make = (~prototypeObjectId, ~objectGroup=?, ()) => {
@@ -29452,6 +30850,7 @@ returned either. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "objectId"]
         objectId: Types.Runtime.RemoteObjectId.t /* Identifier of the object to release. */,
       };
       let make = (~objectId, ()) => {
@@ -29507,7 +30906,10 @@ returned either. */
 
     module Params = {
       [@deriving yojson]
-      type t = {objectGroup: string /* Symbolic object group name. */};
+      type t = {
+        [@key "objectGroup"]
+        objectGroup: string /* Symbolic object group name. */,
+      };
       let make = (~objectGroup, ()) => {
         {objectGroup: objectGroup};
       };
@@ -29579,8 +30981,9 @@ returned either. */
   module RunScript = {
     module Response: {
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t, /* Run result. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -29594,8 +30997,9 @@ returned either. */
     } = {
       [@deriving yojson]
       type result = {
+        [@key "result"]
         result: Types.Runtime.RemoteObject.t, /* Run result. */
-        [@yojson.option]
+        [@yojson.option] [@key "exceptionDetails"]
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
@@ -29615,22 +31019,23 @@ returned either. */
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "scriptId"]
         scriptId: Types.Runtime.ScriptId.t, /* Id of the script to run. */
-        [@yojson.option]
+        [@yojson.option] [@key "executionContextId"]
         executionContextId: option(Types.Runtime.ExecutionContextId.t), /* Specifies in which execution context to perform script run. If the parameter is omitted the
 evaluation will be performed in the context of the inspected page. */
-        [@yojson.option]
+        [@yojson.option] [@key "objectGroup"]
         objectGroup: option(string), /* Symbolic group name that can be used to release multiple objects. */
-        [@yojson.option]
+        [@yojson.option] [@key "silent"]
         silent: option(bool), /* In silent mode exceptions thrown during evaluation are not reported and do not pause
 execution. Overrides `setPauseOnException` state. */
-        [@yojson.option]
+        [@yojson.option] [@key "includeCommandLineAPI"]
         includeCommandLineAPI: option(bool), /* Determines whether Command Line API should be available during the evaluation. */
-        [@yojson.option]
+        [@yojson.option] [@key "returnByValue"]
         returnByValue: option(bool), /* Whether the result is expected to be a JSON object which should be sent by value. */
-        [@yojson.option]
+        [@yojson.option] [@key "generatePreview"]
         generatePreview: option(bool), /* Whether preview should be generated for the result. */
-        [@yojson.option]
+        [@yojson.option] [@key "awaitPromise"]
         awaitPromise: option(bool) /* Whether execution should `await` for resulting value and return once awaited promise is
 resolved. */,
       };
@@ -29708,6 +31113,7 @@ resolved. */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "maxDepth"]
         maxDepth: float /* Maximum depth of async call stacks. Setting to `0` will effectively disable collecting async
 call stacks (default). */,
       };
@@ -29764,7 +31170,10 @@ call stacks (default). */,
 
     module Params = {
       [@deriving yojson]
-      type t = {enabled: bool /* No description provided */};
+      type t = {
+        [@key "enabled"]
+        enabled: bool /* No description provided */,
+      };
       let make = (~enabled, ()) => {
         {enabled: enabled};
       };
@@ -29823,7 +31232,10 @@ call stacks (default). */,
 
     module Params = {
       [@deriving yojson]
-      type t = {size: float /* No description provided */};
+      type t = {
+        [@key "size"]
+        size: float /* No description provided */,
+      };
       let make = (~size, ()) => {
         {size: size};
       };
@@ -29934,13 +31346,14 @@ call stacks (default). */,
     module Params = {
       [@deriving yojson]
       type t = {
+        [@key "name"]
         name: string, /* No description provided */
-        [@yojson.option]
+        [@yojson.option] [@key "executionContextId"]
         executionContextId: option(Types.Runtime.ExecutionContextId.t), /* If specified, the binding would only be exposed to the specified
 execution context. If omitted and `executionContextName` is not set,
 the binding is exposed to all execution contexts of the target.
 This parameter is mutually exclusive with `executionContextName`. */
-        [@yojson.option]
+        [@yojson.option] [@key "executionContextName"]
         executionContextName: option(string) /* If specified, the binding is exposed to the executionContext with
 matching name, even for contexts created after the binding is added.
 See also `ExecutionContext.name` and `worldName` parameter to
@@ -30001,7 +31414,10 @@ This parameter is mutually exclusive with `executionContextId`. */,
 
     module Params = {
       [@deriving yojson]
-      type t = {name: string /* No description provided */};
+      type t = {
+        [@key "name"]
+        name: string /* No description provided */,
+      };
       let make = (~name, ()) => {
         {name: name};
       };
@@ -30030,6 +31446,7 @@ module Schema = {
   module GetDomains = {
     module Response: {
       type result = {
+        [@key "domains"]
         domains: list(Types.Schema.Domain.t) /* List of supported domains. */,
       };
 
@@ -30043,6 +31460,7 @@ module Schema = {
     } = {
       [@deriving yojson]
       type result = {
+        [@key "domains"]
         domains: list(Types.Schema.Domain.t) /* List of supported domains. */,
       };
 

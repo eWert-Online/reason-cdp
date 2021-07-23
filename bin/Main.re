@@ -2,6 +2,11 @@ open Cmdliner;
 
 Printexc.record_backtrace(true);
 
+module String = {
+  include String;
+  let prefix = (prefix, s) => prefix ++ s;
+};
+
 let get_file_contents = filename => {
   let ic = open_in_bin(filename);
   let file_length = in_channel_length(ic);
@@ -10,19 +15,49 @@ let get_file_contents = filename => {
   data;
 };
 
+let map_reserved_words =
+  fun
+  | "open" => "open_"
+  | "new" => "new_"
+  | "with" => "with_"
+  | "module" => "module_"
+  | "object" => "object_"
+  | "function" => "function_"
+  | "type" => "type_"
+  | "end" => "end_"
+  | "exception" => "exception_"
+  | "done" => "done_"
+  | "assert" => "assert_"
+  | s => s;
+
 let rec map_type =
-        (~key="type", ~additional_ref_path_segment="", ~in_types, typ) => {
+        (~key="type", ~additional_ref_path_segment="", ~enums, ~in_types, typ) => {
   let prim =
     typ |> Yojson.Basic.Util.member(key) |> Yojson.Basic.Util.to_string;
 
-  switch (prim) {
-  | "integer" => "float"
-  | "number" => "float"
-  | "boolean" => "bool"
-  | "any" => "string"
-  | "array" => map_array(typ, ~in_types, ~additional_ref_path_segment)
-  | "object" => map_object(typ, ~in_types, ~additional_ref_path_segment)
-  | t => t
+  let is_enum =
+    typ
+    |> Yojson.Basic.Util.member("enum")
+    |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list)
+    |> Option.is_some;
+
+  switch (is_enum, enums) {
+  | (true, Some(enums)) =>
+    let (name, _) = Queue.take(enums);
+    name;
+  | (true, None) => failwith("Expected enums but didn't find any")
+  | (false, enums) =>
+    switch (prim) {
+    | "integer" => "float"
+    | "number" => "float"
+    | "boolean" => "bool"
+    | "any" => "string"
+    | "array" =>
+      map_array(typ, ~enums, ~in_types, ~additional_ref_path_segment)
+    | "object" =>
+      map_object(typ, ~enums, ~in_types, ~additional_ref_path_segment)
+    | t => t
+    }
   };
 }
 and map_ref = (~in_types, ~additional_path_segment="", typ) => {
@@ -39,7 +74,7 @@ and map_ref = (~in_types, ~additional_path_segment="", typ) => {
     additional_path_segment ++ r ++ ".t";
   };
 }
-and map_array = (~additional_ref_path_segment="", typ, ~in_types) => {
+and map_array = (~additional_ref_path_segment="", ~enums, ~in_types, typ) => {
   let prim =
     typ
     |> Yojson.Basic.Util.member("items")
@@ -61,6 +96,7 @@ and map_array = (~additional_ref_path_segment="", typ, ~in_types) => {
     "list("
     ++ map_type(
          typ |> Yojson.Basic.Util.member("items"),
+         ~enums,
          ~in_types,
          ~additional_ref_path_segment,
        )
@@ -76,7 +112,13 @@ and map_array = (~additional_ref_path_segment="", typ, ~in_types) => {
   };
 }
 and map_object =
-    (~key="properties", ~additional_ref_path_segment="", ~in_types, typ) => {
+    (
+      ~key="properties",
+      ~additional_ref_path_segment="",
+      ~enums,
+      ~in_types,
+      typ,
+    ) => {
   let properties =
     typ
     |> Yojson.Basic.Util.member(key)
@@ -86,16 +128,12 @@ and map_object =
            let name =
              prop
              |> Yojson.Basic.Util.member("name")
-             |> Yojson.Basic.Util.to_string
-             |> (
-               fun
-               | "type" => "[@key \"type\"] type_"
-               | "object" => "[@key \"object\"] object_"
-               | "end" => "[@key \"end\"] end_"
-               | "exception" => "[@key \"exception\"] exception_"
-               | "done" => "[@key \"done\"] done_"
-               | t => t
-             );
+             |> Yojson.Basic.Util.to_string;
+
+           let name =
+             name
+             |> map_reserved_words
+             |> String.prefix("[@key \"" ++ name ++ "\"]");
 
            let description =
              prop
@@ -130,7 +168,7 @@ and map_object =
                  "Unexpected object property value: both type and $ref present",
                )
              | (Some(_prim), None) =>
-               map_type(prop, ~in_types, ~additional_ref_path_segment)
+               map_type(prop, ~enums, ~in_types, ~additional_ref_path_segment)
              | (None, Some(_reference)) =>
                map_ref(
                  prop,
@@ -160,6 +198,144 @@ and map_object =
   };
 };
 
+let rec find_enums = (~path="", t) => {
+  let id =
+    t |> Yojson.Basic.Util.member("id") |> Yojson.Basic.Util.to_string_option;
+
+  let name =
+    t
+    |> Yojson.Basic.Util.member("name")
+    |> Yojson.Basic.Util.to_string_option;
+
+  let path =
+    switch (id, name) {
+    | (None, None) => path
+    | (Some(id), None) => String.concat("_", [path, id])
+    | (None, Some(name)) => String.concat("_", [path, name])
+    | (Some(id), Some(name)) => String.concat("_", [path, id, name])
+    };
+  let path = path |> String.lowercase_ascii;
+
+  let enum =
+    t
+    |> Yojson.Basic.Util.member("enum")
+    |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list)
+    |> Option.map(
+         List.map(enum => {
+           let original = Yojson.Basic.Util.to_string(enum);
+           let enum =
+             original
+             |> String.map(
+                  fun
+                  | '-' => '_'
+                  | c => c,
+                )
+             |> map_reserved_words;
+
+           (original, enum);
+         }),
+       );
+
+  let properties =
+    t
+    |> Yojson.Basic.Util.member("properties")
+    |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list);
+
+  switch (enum, properties) {
+  | (None, None) => []
+  | (Some(enum), None) => [(path, enum)]
+  | (None, Some(prop)) =>
+    prop |> List.map(find_enums(~path)) |> List.flatten
+  | (Some(enum), Some(prop)) => [
+      (path, enum),
+      ...prop |> List.map(find_enums(~path)) |> List.flatten,
+    ]
+  };
+};
+
+let get_enums = enums => {
+  switch (enums) {
+  | [] => ("", "")
+  | enums =>
+    let interface =
+      enums
+      |> List.map(((name, values)) => {
+           let variants =
+             values
+             |> List.map(((_, v)) => "`" ++ v)
+             |> String.concat(" | ");
+
+           String.concat(
+             "\n",
+             [
+               "type " ++ name ++ " = [" ++ variants ++ "];",
+               "let "
+               ++ name
+               ++ "_of_yojson: Yojson.Basic.t => "
+               ++ name
+               ++ ";",
+               "let yojson_of_"
+               ++ name
+               ++ ": "
+               ++ name
+               ++ " => Yojson.Basic.t;",
+             ],
+           );
+         })
+      |> String.concat("");
+
+    let content =
+      enums
+      |> List.map(((name, values)) => {
+           let variants =
+             values
+             |> List.map(((_, v)) => "`" ++ v)
+             |> String.concat(" | ");
+
+           let variants_to_yojson =
+             values
+             |> List.map(((original, enum)) => {
+                  "| `" ++ enum ++ " => `String(\"" ++ original ++ "\")"
+                })
+             |> String.concat("\n");
+
+           let yojson_to_variants =
+             values
+             |> List.map(((original, enum)) => {
+                  "| `String(\"" ++ original ++ "\") => `" ++ enum ++ ""
+                })
+             |> List.append(
+                  _,
+                  [
+                    "| `String(s) => failwith(\"unknown enum: \" ++ s)",
+                    "| _ => failwith(\"unknown enum type\")",
+                  ],
+                )
+             |> String.concat("\n");
+
+           String.concat(
+             "\n",
+             [
+               "type " ++ name ++ " = [" ++ variants ++ "];",
+               "let "
+               ++ name
+               ++ "_of_yojson = fun "
+               ++ yojson_to_variants
+               ++ ";",
+               "let yojson_of_"
+               ++ name
+               ++ " = fun "
+               ++ variants_to_yojson
+               ++ ";",
+             ],
+           );
+         })
+      |> String.concat("");
+
+    (interface, content);
+  };
+};
+
 let get_type = typ => {
   let id =
     typ |> Yojson.Basic.Util.member("id") |> Yojson.Basic.Util.to_string;
@@ -170,12 +346,30 @@ let get_type = typ => {
     |> Yojson.Basic.Util.to_string_option
     |> Option.value(~default="No description provided");
 
-  let type_ = map_type(typ, ~in_types=true);
+  let enums = find_enums(typ);
+  let (enums_i, enums_c) = get_enums(enums);
+
+  let enums_queue = Queue.create();
+  enums |> List.iter(Queue.add(_, enums_queue));
+
+  let type_ = map_type(typ, ~enums=Some(enums_queue), ~in_types=true);
+
+  let interface =
+    String.concat(
+      "\n",
+      [
+        enums_i,
+        "/* " ++ description ++ " */",
+        "[@deriving yojson]",
+        "type t = " ++ type_ ++ ";",
+      ],
+    );
 
   let content =
     String.concat(
       "\n",
       [
+        enums_c,
         "/* " ++ description ++ " */",
         "[@deriving yojson]",
         "type t = " ++ type_ ++ ";",
@@ -183,10 +377,10 @@ let get_type = typ => {
     );
 
   (
-    String.concat("\n", [id ++ ": {", content, "}"]),
+    String.concat("\n", [id ++ ": {", interface, "}"]),
     String.concat(
       "\n",
-      [id ++ ": {", content, "} = ", "{ " ++ content ++ " }"],
+      [id ++ ": {", interface, "} = ", "{ " ++ content ++ " }"],
     ),
   );
 };
@@ -210,22 +404,37 @@ let get_event = (~domain, event) => {
 
   let key = domain ++ "." ++ name;
 
+  let param_enums =
+    switch (parameters) {
+    | None => []
+    | Some(params) =>
+      params |> List.map(find_enums(~path=name)) |> List.flatten
+    };
+
+  let (_enums_i, enums_c) = get_enums(param_enums);
+
   let result =
     switch (parameters) {
     | None => "Types.empty"
     | Some(_) =>
+      let enums_queue = Queue.create();
+      param_enums |> List.iter(Queue.add(_, enums_queue));
+
       map_object(
         event,
+        ~enums=Some(enums_queue),
         ~key="parameters",
         ~in_types=false,
         ~additional_ref_path_segment=domain ++ ".",
-      )
+      );
     };
 
   let content = [
     "/* " ++ description ++ " */",
     "module " ++ module_name ++ " = {",
     "  let name = \"" ++ key ++ "\";",
+    "",
+    enums_c,
     "",
     "  [@deriving yojson]",
     "  type result = " ++ result ++ ";",
@@ -259,13 +468,31 @@ let get_command = (~domain, command) => {
     |> Yojson.Basic.Util.member("parameters")
     |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list);
 
+  let returns =
+    command
+    |> Yojson.Basic.Util.member("returns")
+    |> Yojson.Basic.Util.to_option(Yojson.Basic.Util.to_list);
+
   let module_name = name |> String.capitalize_ascii;
 
   let key = domain ++ "." ++ name;
 
+  let returns_enums =
+    switch (returns) {
+    | None => []
+    | Some(returns) =>
+      returns |> List.map(find_enums(~path=name)) |> List.flatten
+    };
+
+  let (enums_i, enums_c) = get_enums(returns_enums);
+
+  let returns_enums_queue = Queue.create();
+  returns_enums |> List.iter(Queue.add(_, returns_enums_queue));
+
   let result =
     map_object(
       command,
+      ~enums=Some(returns_enums_queue),
       ~key="returns",
       ~in_types=false,
       ~additional_ref_path_segment=domain ++ ".",
@@ -276,6 +503,8 @@ let get_command = (~domain, command) => {
     "module " ++ module_name ++ " = {                                         ",
     "                                                                         ",
     "  module Response: {                                                     ",
+    enums_i,
+    "",
     "    type result = " ++ result ++ ";                                      ",
     "                                                                         ",
     "    type t = {                                                           ",
@@ -286,6 +515,8 @@ let get_command = (~domain, command) => {
     "                                                                         ",
     "    let parse: string => t;                                              ",
     "  } = {                                                                  ",
+    enums_c,
+    "",
     "    [@deriving yojson]                                                   ",
     "    type result = " ++ result ++ ";                                      ",
     "                                                                         ",
@@ -304,82 +535,69 @@ let get_command = (~domain, command) => {
     "                                                                         ",
     switch (params) {
     | None => ""
-    | Some(_) =>
+    | Some(params) =>
+      let param_enums =
+        params |> List.map(find_enums(~path=name)) |> List.flatten;
+
+      let (_enums_i, enums_c) = get_enums(param_enums);
+
+      let enums_queue = Queue.create();
+      param_enums |> List.iter(Queue.add(_, enums_queue));
+
       let args =
-        switch (params) {
-        | None => ""
-        | Some(params) =>
-          params
-          |> List.map(param => {
-               let name =
-                 param
-                 |> Yojson.Basic.Util.member("name")
-                 |> Yojson.Basic.Util.to_string
-                 |> (
-                   fun
-                   | "type" => "type_"
-                   | "object" => "object_"
-                   | "end" => "end_"
-                   | "exception" => "exception_"
-                   | "done" => "done_"
-                   | t => t
-                 );
+        params
+        |> List.map(param => {
+             let name =
+               param
+               |> Yojson.Basic.Util.member("name")
+               |> Yojson.Basic.Util.to_string
+               |> map_reserved_words;
 
-               let optional =
-                 param
-                 |> Yojson.Basic.Util.member("optional")
-                 |> Yojson.Basic.Util.to_bool_option
-                 |> Option.value(~default=false);
+             let optional =
+               param
+               |> Yojson.Basic.Util.member("optional")
+               |> Yojson.Basic.Util.to_bool_option
+               |> Option.value(~default=false);
 
-               if (optional) {
-                 "~" ++ name ++ "=?,";
-               } else {
-                 "~" ++ name ++ ",";
-               };
-             })
-          |> String.concat("\n")
-        };
+             if (optional) {
+               "~" ++ name ++ "=?,";
+             } else {
+               "~" ++ name ++ ",";
+             };
+           })
+        |> String.concat("\n");
+
       String.concat(
         "",
         [
           "  module Params = {                                                ",
+          enums_c,
           "    [@deriving yojson]                                             ",
           "    type t =                                                       ",
           map_object(
             ~in_types=false,
+            ~enums=Some(enums_queue),
             ~key="parameters",
             ~additional_ref_path_segment=domain ++ ".",
             command,
           ),
           "                                                                   ",
           "    let make = (" ++ args ++ " ()) => {                           ",
-          switch (params) {
-          | None => ""
-          | Some(params) =>
-            "{"
-            ++ (
-              params
-              |> List.map(param => {
-                   let name =
-                     param
-                     |> Yojson.Basic.Util.member("name")
-                     |> Yojson.Basic.Util.to_string
-                     |> (
-                       fun
-                       | "type" => "type_"
-                       | "object" => "object_"
-                       | "end" => "end_"
-                       | "exception" => "exception_"
-                       | "done" => "done_"
-                       | t => t
-                     );
+          "{"
+          ++ (
+            params
+            |> List.map(param => {
+                 let name =
+                   param
+                   |> Yojson.Basic.Util.member("name")
+                   |> Yojson.Basic.Util.to_string
+                   |> map_reserved_words;
 
-                   name ++ ": " ++ name;
-                 })
-              |> String.concat(",")
-            )
-            ++ "}"
-          },
+                 name ++ ": " ++ name;
+               })
+            |> String.concat(",")
+          )
+          ++ "}",
           "    };                                                             ",
           "  };                                                               ",
         ],
