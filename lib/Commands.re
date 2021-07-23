@@ -3813,6 +3813,73 @@ be ignored (as if the image had failed to load). */
       };
     };
   };
+  /* Modifies the expression of a container query. */
+  module SetContainerQueryText = {
+    module Response: {
+      type result = {
+        [@key "containerQuery"]
+        containerQuery: Types.CSS.CSSContainerQuery.t /* The resulting CSS container query rule after modification. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "containerQuery"]
+        containerQuery: Types.CSS.CSSContainerQuery.t /* The resulting CSS container query rule after modification. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "styleSheetId"]
+        styleSheetId: Types.CSS.StyleSheetId.t, /* No description provided */
+        [@key "range"]
+        range: Types.CSS.SourceRange.t, /* No description provided */
+        [@key "text"]
+        text: string /* No description provided */,
+      };
+      let make = (~styleSheetId, ~range, ~text, ()) => {
+        {styleSheetId, range, text};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "CSS.setContainerQueryText", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Modifies the rule selector. */
   module SetRuleSelector = {
     module Response: {
