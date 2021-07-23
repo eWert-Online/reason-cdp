@@ -18060,17 +18060,19 @@ to false. */,
     };
 
     module Params = {
-      type capturescreenshot_format = [ | `jpeg | `png];
+      type capturescreenshot_format = [ | `jpeg | `png | `webp];
       let capturescreenshot_format_of_yojson =
         fun
         | `String("jpeg") => `jpeg
         | `String("png") => `png
+        | `String("webp") => `webp
         | `String(s) => failwith("unknown enum: " ++ s)
         | _ => failwith("unknown enum type");
       let yojson_of_capturescreenshot_format =
         fun
         | `jpeg => `String("jpeg")
-        | `png => `String("png");
+        | `png => `String("png")
+        | `webp => `String("webp");
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "format"]
