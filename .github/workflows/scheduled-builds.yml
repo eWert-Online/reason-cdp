@@ -26,8 +26,12 @@ jobs:
         id: git-check
         run: |
           ls -l
-          cdp_version=$(cd devtools-protocol && git log -1 --pretty="%B" | cat | grep -Eo "\d+");
+          cd devtools-protocol
+          last_commit=$(git log -1 --pretty="%B" | cat);
+          echo $last_commit;
+          cdp_version=$($last_commit | grep -Eo "\d+");
           echo $cdp_version;
+          cd ..
           modified=$(npm version --no-git-tag-version "0.0.$cdp_version" &> /dev/null && echo true || echo false);
           echo Modified $modified;
           branch_exists=$(git rev-parse --verify $cdp_version &> /dev/null && echo true || echo false);
