@@ -1644,6 +1644,12 @@ instead of "limited-quirks". */
       navigatorUserAgentIssueDetails: option(NavigatorUserAgentIssueDetails.t) /* No description provided */,
     };
   }
+  and IssueId: {
+    /* A unique id for a DevTools inspector issue. Allows other entities (e.g.
+       exceptions, CDP message, console messages, etc.) to reference an issue. */
+    [@deriving yojson]
+    type t = string;
+  }
   and InspectorIssue: {
     /* An inspector issue reported from the back-end. */
     [@deriving yojson]
@@ -1653,7 +1659,7 @@ instead of "limited-quirks". */
       [@key "details"]
       details: InspectorIssueDetails.t, /* No description provided */
       [@yojson.option] [@key "issueId"]
-      issueId: option(string) /* A unique id for this issue. May be omitted if no other entity (e.g.
+      issueId: option(IssueId.t) /* A unique id for this issue. May be omitted if no other entity (e.g.
 exception, CDP message, etc.) is referencing this issue. */,
     };
   };
@@ -2850,6 +2856,17 @@ instead of "limited-quirks". */
       navigatorUserAgentIssueDetails: option(NavigatorUserAgentIssueDetails.t) /* No description provided */,
     };
   }
+  and IssueId: {
+    /* A unique id for a DevTools inspector issue. Allows other entities (e.g.
+       exceptions, CDP message, console messages, etc.) to reference an issue. */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* A unique id for a DevTools inspector issue. Allows other entities (e.g.
+       exceptions, CDP message, console messages, etc.) to reference an issue. */
+    [@deriving yojson]
+    type t = string;
+  }
   and InspectorIssue: {
     /* An inspector issue reported from the back-end. */
     [@deriving yojson]
@@ -2859,7 +2876,7 @@ instead of "limited-quirks". */
       [@key "details"]
       details: InspectorIssueDetails.t, /* No description provided */
       [@yojson.option] [@key "issueId"]
-      issueId: option(string) /* A unique id for this issue. May be omitted if no other entity (e.g.
+      issueId: option(IssueId.t) /* A unique id for this issue. May be omitted if no other entity (e.g.
 exception, CDP message, etc.) is referencing this issue. */,
     };
   } = {
@@ -2871,7 +2888,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       [@key "details"]
       details: InspectorIssueDetails.t, /* No description provided */
       [@yojson.option] [@key "issueId"]
-      issueId: option(string) /* A unique id for this issue. May be omitted if no other entity (e.g.
+      issueId: option(IssueId.t) /* A unique id for this issue. May be omitted if no other entity (e.g.
 exception, CDP message, etc.) is referencing this issue. */,
     };
   };
