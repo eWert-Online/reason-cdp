@@ -13424,6 +13424,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OptInUnloadHeaderNotPresent
       | `UnloadHandlerExistsInSubFrame
       | `ServiceWorkerUnregistration
+      | `CacheControlNoStore
+      | `CacheControlNoStoreCookieModified
+      | `CacheControlNoStoreHTTPOnlyCookieModified
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -15055,6 +15058,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OptInUnloadHeaderNotPresent
       | `UnloadHandlerExistsInSubFrame
       | `ServiceWorkerUnregistration
+      | `CacheControlNoStore
+      | `CacheControlNoStoreCookieModified
+      | `CacheControlNoStoreHTTPOnlyCookieModified
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -15156,6 +15162,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OptInUnloadHeaderNotPresent
       | `UnloadHandlerExistsInSubFrame
       | `ServiceWorkerUnregistration
+      | `CacheControlNoStore
+      | `CacheControlNoStoreCookieModified
+      | `CacheControlNoStoreHTTPOnlyCookieModified
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -15250,6 +15259,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("OptInUnloadHeaderNotPresent") => `OptInUnloadHeaderNotPresent
       | `String("UnloadHandlerExistsInSubFrame") => `UnloadHandlerExistsInSubFrame
       | `String("ServiceWorkerUnregistration") => `ServiceWorkerUnregistration
+      | `String("CacheControlNoStore") => `CacheControlNoStore
+      | `String("CacheControlNoStoreCookieModified") => `CacheControlNoStoreCookieModified
+      | `String("CacheControlNoStoreHTTPOnlyCookieModified") => `CacheControlNoStoreHTTPOnlyCookieModified
       | `String("WebSocket") => `WebSocket
       | `String("WebRTC") => `WebRTC
       | `String("MainResourceHasCacheControlNoStore") => `MainResourceHasCacheControlNoStore
@@ -15358,6 +15370,11 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `UnloadHandlerExistsInSubFrame =>
         `String("UnloadHandlerExistsInSubFrame")
       | `ServiceWorkerUnregistration => `String("ServiceWorkerUnregistration")
+      | `CacheControlNoStore => `String("CacheControlNoStore")
+      | `CacheControlNoStoreCookieModified =>
+        `String("CacheControlNoStoreCookieModified")
+      | `CacheControlNoStoreHTTPOnlyCookieModified =>
+        `String("CacheControlNoStoreHTTPOnlyCookieModified")
       | `WebSocket => `String("WebSocket")
       | `WebRTC => `String("WebRTC")
       | `MainResourceHasCacheControlNoStore =>
