@@ -3616,8 +3616,11 @@ stylesheet rules) this rule came from. */
       [@key "style"]
       style: CSSStyle.t, /* Associated style declaration. */
       [@yojson.option] [@key "media"]
-      media: option(list(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
-starting with the innermost one, going outwards. */,
+      media: option(list(CSSMedia.t)), /* Media list array (for rules involving media queries). The array enumerates media queries
+starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "containerQueries"]
+      containerQueries: option(list(CSSContainerQuery.t)) /* Container query list array (for rules involving container queries).
+The array enumerates container queries starting with the innermost one, going outwards. */,
     };
   }
   and RuleUsage: {
@@ -3764,6 +3767,19 @@ available). */
       valueRange: option(SourceRange.t), /* The associated range of the value text in the enclosing stylesheet (if available). */
       [@yojson.option] [@key "computedLength"]
       computedLength: option(float) /* Computed length of media query expression (if applicable). */,
+    };
+  }
+  and CSSContainerQuery: {
+    /* CSS container query rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Container query text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
     };
   }
   and PlatformFontUsage: {
@@ -4103,8 +4119,11 @@ stylesheet rules) this rule came from. */
       [@key "style"]
       style: CSSStyle.t, /* Associated style declaration. */
       [@yojson.option] [@key "media"]
-      media: option(list(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
-starting with the innermost one, going outwards. */,
+      media: option(list(CSSMedia.t)), /* Media list array (for rules involving media queries). The array enumerates media queries
+starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "containerQueries"]
+      containerQueries: option(list(CSSContainerQuery.t)) /* Container query list array (for rules involving container queries).
+The array enumerates container queries starting with the innermost one, going outwards. */,
     };
   } = {
     /* CSS rule representation. */
@@ -4120,8 +4139,11 @@ stylesheet rules) this rule came from. */
       [@key "style"]
       style: CSSStyle.t, /* Associated style declaration. */
       [@yojson.option] [@key "media"]
-      media: option(list(CSSMedia.t)) /* Media list array (for rules involving media queries). The array enumerates media queries
-starting with the innermost one, going outwards. */,
+      media: option(list(CSSMedia.t)), /* Media list array (for rules involving media queries). The array enumerates media queries
+starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "containerQueries"]
+      containerQueries: option(list(CSSContainerQuery.t)) /* Container query list array (for rules involving container queries).
+The array enumerates container queries starting with the innermost one, going outwards. */,
     };
   }
   and RuleUsage: {
@@ -4417,6 +4439,31 @@ available). */
       valueRange: option(SourceRange.t), /* The associated range of the value text in the enclosing stylesheet (if available). */
       [@yojson.option] [@key "computedLength"]
       computedLength: option(float) /* Computed length of media query expression (if applicable). */,
+    };
+  }
+  and CSSContainerQuery: {
+    /* CSS container query rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Container query text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+    };
+  } = {
+    /* CSS container query rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Container query text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
     };
   }
   and PlatformFontUsage: {
