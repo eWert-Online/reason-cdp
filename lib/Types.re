@@ -13250,7 +13250,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `BrowsingInstanceNotSwapped
       | `BackForwardCacheDisabledForDelegate
       | `OptInUnloadHeaderNotPresent
-      | `UnloadHandlerExistsInMainFrame
       | `UnloadHandlerExistsInSubFrame
       | `ServiceWorkerUnregistration
       | `WebSocket
@@ -14883,7 +14882,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `BrowsingInstanceNotSwapped
       | `BackForwardCacheDisabledForDelegate
       | `OptInUnloadHeaderNotPresent
-      | `UnloadHandlerExistsInMainFrame
       | `UnloadHandlerExistsInSubFrame
       | `ServiceWorkerUnregistration
       | `WebSocket
@@ -14986,7 +14984,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `BrowsingInstanceNotSwapped
       | `BackForwardCacheDisabledForDelegate
       | `OptInUnloadHeaderNotPresent
-      | `UnloadHandlerExistsInMainFrame
       | `UnloadHandlerExistsInSubFrame
       | `ServiceWorkerUnregistration
       | `WebSocket
@@ -15082,7 +15079,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("BrowsingInstanceNotSwapped") => `BrowsingInstanceNotSwapped
       | `String("BackForwardCacheDisabledForDelegate") => `BackForwardCacheDisabledForDelegate
       | `String("OptInUnloadHeaderNotPresent") => `OptInUnloadHeaderNotPresent
-      | `String("UnloadHandlerExistsInMainFrame") => `UnloadHandlerExistsInMainFrame
       | `String("UnloadHandlerExistsInSubFrame") => `UnloadHandlerExistsInSubFrame
       | `String("ServiceWorkerUnregistration") => `ServiceWorkerUnregistration
       | `String("WebSocket") => `WebSocket
@@ -15191,8 +15187,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `BackForwardCacheDisabledForDelegate =>
         `String("BackForwardCacheDisabledForDelegate")
       | `OptInUnloadHeaderNotPresent => `String("OptInUnloadHeaderNotPresent")
-      | `UnloadHandlerExistsInMainFrame =>
-        `String("UnloadHandlerExistsInMainFrame")
       | `UnloadHandlerExistsInSubFrame =>
         `String("UnloadHandlerExistsInSubFrame")
       | `ServiceWorkerUnregistration => `String("ServiceWorkerUnregistration")
