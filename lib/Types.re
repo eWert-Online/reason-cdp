@@ -13277,7 +13277,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `RequestedBackgroundWorkPermission
       | `BroadcastChannel
       | `IndexedDBConnection
-      | `WebVR
       | `WebXR
       | `SharedWorker
       | `WebLocks
@@ -14912,7 +14911,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `RequestedBackgroundWorkPermission
       | `BroadcastChannel
       | `IndexedDBConnection
-      | `WebVR
       | `WebXR
       | `SharedWorker
       | `WebLocks
@@ -15021,7 +15019,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `RequestedBackgroundWorkPermission
       | `BroadcastChannel
       | `IndexedDBConnection
-      | `WebVR
       | `WebXR
       | `SharedWorker
       | `WebLocks
@@ -15123,7 +15120,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("RequestedBackgroundWorkPermission") => `RequestedBackgroundWorkPermission
       | `String("BroadcastChannel") => `BroadcastChannel
       | `String("IndexedDBConnection") => `IndexedDBConnection
-      | `String("WebVR") => `WebVR
       | `String("WebXR") => `WebXR
       | `String("SharedWorker") => `SharedWorker
       | `String("WebLocks") => `WebLocks
@@ -15252,7 +15248,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
         `String("RequestedBackgroundWorkPermission")
       | `BroadcastChannel => `String("BroadcastChannel")
       | `IndexedDBConnection => `String("IndexedDBConnection")
-      | `WebVR => `String("WebVR")
       | `WebXR => `String("WebXR")
       | `SharedWorker => `String("SharedWorker")
       | `WebLocks => `String("WebLocks")
