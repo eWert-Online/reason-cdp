@@ -16532,7 +16532,7 @@ and Fetch: {
     let yojson_of__requeststage: _requeststage => Yojson.Basic.t;
     /* Stages of the request to handle. Request will intercept before the request is
        sent. Response will intercept after the response is received (but before response
-       body is received. */
+       body is received). */
     [@deriving yojson]
     type t = _requeststage;
   }
@@ -16619,7 +16619,7 @@ ProvideCredentials. */,
     let yojson_of__requeststage: _requeststage => Yojson.Basic.t;
     /* Stages of the request to handle. Request will intercept before the request is
        sent. Response will intercept after the response is received (but before response
-       body is received. */
+       body is received). */
     [@deriving yojson]
     type t = _requeststage;
   } = {
@@ -16636,7 +16636,7 @@ ProvideCredentials. */,
       | `Response => `String("Response");
     /* Stages of the request to handle. Request will intercept before the request is
        sent. Response will intercept after the response is received (but before response
-       body is received. */
+       body is received). */
     [@deriving yojson]
     type t = _requeststage;
   }
