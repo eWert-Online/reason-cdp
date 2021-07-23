@@ -7,3 +7,4 @@ _release
 *.native
 *.install
 .DS_Store
+devtools-protocol

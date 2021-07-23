@@ -1,0 +1,62 @@
+name: Check CDP Versions
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  push:
+    branches:
+      - ci
+
+jobs:
+  build:
+    name: Trigger Protocol Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Reason CDP
+        uses: actions/checkout@v2
+
+      - name: Checkout devtools-protocol
+        uses: actions/checkout@v2
+        with:
+          repository: ChromeDevTools/devtools-protocol
+          path: devtools-protocol
+
+      - name: Check for modified version in devtools-protocol
+        id: git-check
+        run: echo ::set-output \
+          name=modified::$(npm version --no-git-tag-version "0.0.$(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+")" &> /dev/null && echo true || echo false) \
+          name=branch_exists::$(git rev-parse --verify $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+") &> /dev/null && echo true || echo false)
+
+      - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
+        name: Install esy
+        run: |
+          npm install -g esy
+
+      - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
+        uses: esy/github-action@master
+        with:
+          cache-key: ${{ matrix.os }}-${{ hashFiles('esy.lock/index.json') }}
+
+      - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
+        name: Build Reason bindings
+        run: |
+          rm ./lib/Types.re ./lib/Events.re ./lib/Commands.re
+          esy x cdp ./devtools-protocol/json/browser_protocol.json ./devtools-protocol/json/js_protocol.json ./lib
+          esy refmt --in-place ./lib/Types.re ./lib/Events.re ./lib/Commands.re
+          esy
+
+      - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
+        name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "Roll protocol to r.*")
+          committer: GitHub Action <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "\d+")
+          delete-branch: true
+          title: $(cd devtools-protocol && git log -1 --pretty=%B | cat | grep -Eo "Roll protocol to r.*")
