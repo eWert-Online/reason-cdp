@@ -1571,6 +1571,16 @@ instead of "limited-quirks". */
       loaderId: Network.LoaderId.t /* No description provided */,
     };
   }
+  and NavigatorUserAgentIssueDetails: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* No description provided */
+      [@yojson.option] [@key "location"]
+      location: option(SourceCodeLocation.t) /* No description provided */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -1584,6 +1594,7 @@ instead of "limited-quirks". */
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
+      | `NavigatorUserAgentIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -1622,7 +1633,9 @@ instead of "limited-quirks". */
       attributionReportingIssueDetails:
         option(AttributionReportingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "quirksModeIssueDetails"]
-      quirksModeIssueDetails: option(QuirksModeIssueDetails.t) /* No description provided */,
+      quirksModeIssueDetails: option(QuirksModeIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
+      navigatorUserAgentIssueDetails: option(NavigatorUserAgentIssueDetails.t) /* No description provided */,
     };
   }
   and InspectorIssue: {
@@ -2655,6 +2668,25 @@ instead of "limited-quirks". */
       loaderId: Network.LoaderId.t /* No description provided */,
     };
   }
+  and NavigatorUserAgentIssueDetails: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* No description provided */
+      [@yojson.option] [@key "location"]
+      location: option(SourceCodeLocation.t) /* No description provided */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* No description provided */
+      [@yojson.option] [@key "location"]
+      location: option(SourceCodeLocation.t) /* No description provided */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -2668,6 +2700,7 @@ instead of "limited-quirks". */
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
+      | `NavigatorUserAgentIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -2689,6 +2722,7 @@ instead of "limited-quirks". */
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
+      | `NavigatorUserAgentIssue
     ];
     let _inspectorissuecode_of_yojson =
       fun
@@ -2703,6 +2737,7 @@ instead of "limited-quirks". */
       | `String("CorsIssue") => `CorsIssue
       | `String("AttributionReportingIssue") => `AttributionReportingIssue
       | `String("QuirksModeIssue") => `QuirksModeIssue
+      | `String("NavigatorUserAgentIssue") => `NavigatorUserAgentIssue
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__inspectorissuecode =
@@ -2717,7 +2752,8 @@ instead of "limited-quirks". */
       | `LowTextContrastIssue => `String("LowTextContrastIssue")
       | `CorsIssue => `String("CorsIssue")
       | `AttributionReportingIssue => `String("AttributionReportingIssue")
-      | `QuirksModeIssue => `String("QuirksModeIssue");
+      | `QuirksModeIssue => `String("QuirksModeIssue")
+      | `NavigatorUserAgentIssue => `String("NavigatorUserAgentIssue");
     /* A unique identifier for the type of issue. Each type may use one of the
        optional fields in InspectorIssueDetails to convey more specific
        information about the kind of issue. */
@@ -2753,7 +2789,9 @@ instead of "limited-quirks". */
       attributionReportingIssueDetails:
         option(AttributionReportingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "quirksModeIssueDetails"]
-      quirksModeIssueDetails: option(QuirksModeIssueDetails.t) /* No description provided */,
+      quirksModeIssueDetails: option(QuirksModeIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
+      navigatorUserAgentIssueDetails: option(NavigatorUserAgentIssueDetails.t) /* No description provided */,
     };
   } = {
     /* This struct holds a list of optional fields with additional information
@@ -2784,7 +2822,9 @@ instead of "limited-quirks". */
       attributionReportingIssueDetails:
         option(AttributionReportingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "quirksModeIssueDetails"]
-      quirksModeIssueDetails: option(QuirksModeIssueDetails.t) /* No description provided */,
+      quirksModeIssueDetails: option(QuirksModeIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
+      navigatorUserAgentIssueDetails: option(NavigatorUserAgentIssueDetails.t) /* No description provided */,
     };
   }
   and InspectorIssue: {
