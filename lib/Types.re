@@ -6081,6 +6081,8 @@ getSnapshot was true. */
       parentIndex: option(list(float)), /* Parent node index. */
       [@yojson.option] [@key "nodeType"]
       nodeType: option(list(float)), /* `Node`'s nodeType. */
+      [@yojson.option] [@key "shadowRootType"]
+      shadowRootType: option(RareStringData.t), /* Type of the shadow root the `Node` is in. String values are equal to the `ShadowRootType` enum. */
       [@yojson.option] [@key "nodeName"]
       nodeName: option(list(StringIndex.t)), /* `Node`'s nodeName. */
       [@yojson.option] [@key "nodeValue"]
@@ -6559,6 +6561,8 @@ getSnapshot was true. */
       parentIndex: option(list(float)), /* Parent node index. */
       [@yojson.option] [@key "nodeType"]
       nodeType: option(list(float)), /* `Node`'s nodeType. */
+      [@yojson.option] [@key "shadowRootType"]
+      shadowRootType: option(RareStringData.t), /* Type of the shadow root the `Node` is in. String values are equal to the `ShadowRootType` enum. */
       [@yojson.option] [@key "nodeName"]
       nodeName: option(list(StringIndex.t)), /* `Node`'s nodeName. */
       [@yojson.option] [@key "nodeValue"]
@@ -6596,6 +6600,8 @@ clicked. */
       parentIndex: option(list(float)), /* Parent node index. */
       [@yojson.option] [@key "nodeType"]
       nodeType: option(list(float)), /* `Node`'s nodeType. */
+      [@yojson.option] [@key "shadowRootType"]
+      shadowRootType: option(RareStringData.t), /* Type of the shadow root the `Node` is in. String values are equal to the `ShadowRootType` enum. */
       [@yojson.option] [@key "nodeName"]
       nodeName: option(list(StringIndex.t)), /* `Node`'s nodeName. */
       [@yojson.option] [@key "nodeValue"]
