@@ -25,17 +25,16 @@ jobs:
       - name: Check for modified version in devtools-protocol
         id: git-check
         run: |
-          ls -l
           cd devtools-protocol
           last_commit=$(git log -1 --pretty="%B" | cat);
-          echo $last_commit;
-          cdp_version=$($last_commit | grep -Eo "\d+");
-          echo $cdp_version;
+          echo "$last_commit";
+          cdp_version=$(echo "$last_commit" | grep -Eo "\d+");
+          echo "$cdp_version";
           cd ..
           modified=$(npm version --no-git-tag-version "0.0.$cdp_version" &> /dev/null && echo true || echo false);
-          echo Modified $modified;
+          echo "Modified $modified";
           branch_exists=$(git rev-parse --verify $cdp_version &> /dev/null && echo true || echo false);
-          echo Branch exists $branch_exists;
+          echo "Branch exists $branch_exists";
           echo "::set-output name=cdp_version::$cdp_version";
           echo "::set-output name=modified::$modified";
           echo "::set-output name=branch_exists::$branch_exists";
