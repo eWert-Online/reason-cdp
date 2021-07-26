@@ -7677,6 +7677,8 @@ text, HTML markup or any other data. */
     type t = {
       [@key "items"]
       items: list(DragDataItem.t), /* No description provided */
+      [@yojson.option] [@key "files"]
+      files: option(list(string)), /* List of filenames that should be included when dropping */
       [@key "dragOperationsMask"]
       dragOperationsMask: float /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
     };
@@ -7855,6 +7857,8 @@ text, HTML markup or any other data. */
     type t = {
       [@key "items"]
       items: list(DragDataItem.t), /* No description provided */
+      [@yojson.option] [@key "files"]
+      files: option(list(string)), /* List of filenames that should be included when dropping */
       [@key "dragOperationsMask"]
       dragOperationsMask: float /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
     };
@@ -7864,6 +7868,8 @@ text, HTML markup or any other data. */
     type t = {
       [@key "items"]
       items: list(DragDataItem.t), /* No description provided */
+      [@yojson.option] [@key "files"]
+      files: option(list(string)), /* List of filenames that should be included when dropping */
       [@key "dragOperationsMask"]
       dragOperationsMask: float /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
     };
