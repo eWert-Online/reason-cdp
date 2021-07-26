@@ -1521,6 +1521,9 @@ are represented by the invalid cookie line string instead of a proper cookie. */
       [@key "resourceIPAddressSpace"]
       resourceIPAddressSpace: Types.Network.IPAddressSpace.t, /* The IP address space of the resource. The address space can only be determined once the transport
 established the connection, so we can't send it in `requestWillBeSentExtraInfo`. */
+      [@key "statusCode"]
+      statusCode: float, /* The status code of the response. This is useful in cases the request failed and no responseReceived
+event is triggered, which is the case for, e.g., CORS errors. */
       [@yojson.option] [@key "headersText"]
       headersText: option(string) /* Raw response header text as it was received over the wire. The raw text may not always be
 available, such as in the case of HTTP/2 or QUIC. */,
