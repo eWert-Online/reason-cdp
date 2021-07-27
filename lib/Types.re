@@ -13433,6 +13433,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `CacheControlNoStore
       | `CacheControlNoStoreCookieModified
       | `CacheControlNoStoreHTTPOnlyCookieModified
+      | `NoResponseHead
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -15067,6 +15068,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `CacheControlNoStore
       | `CacheControlNoStoreCookieModified
       | `CacheControlNoStoreHTTPOnlyCookieModified
+      | `NoResponseHead
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -15171,6 +15173,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `CacheControlNoStore
       | `CacheControlNoStoreCookieModified
       | `CacheControlNoStoreHTTPOnlyCookieModified
+      | `NoResponseHead
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -15268,6 +15271,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("CacheControlNoStore") => `CacheControlNoStore
       | `String("CacheControlNoStoreCookieModified") => `CacheControlNoStoreCookieModified
       | `String("CacheControlNoStoreHTTPOnlyCookieModified") => `CacheControlNoStoreHTTPOnlyCookieModified
+      | `String("NoResponseHead") => `NoResponseHead
       | `String("WebSocket") => `WebSocket
       | `String("WebRTC") => `WebRTC
       | `String("MainResourceHasCacheControlNoStore") => `MainResourceHasCacheControlNoStore
@@ -15381,6 +15385,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
         `String("CacheControlNoStoreCookieModified")
       | `CacheControlNoStoreHTTPOnlyCookieModified =>
         `String("CacheControlNoStoreHTTPOnlyCookieModified")
+      | `NoResponseHead => `String("NoResponseHead")
       | `WebSocket => `String("WebSocket")
       | `WebRTC => `String("WebRTC")
       | `MainResourceHasCacheControlNoStore =>
