@@ -12223,6 +12223,87 @@ See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink
       };
     };
   };
+  /* This method sets the current candidate text for ime.
+     Use imeCommitComposition to commit the final text.
+     Use imeSetComposition with empty string as text to cancel composition. */
+  module ImeSetComposition = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "text"]
+        text: string, /* The text to insert */
+        [@key "selectionStart"]
+        selectionStart: float, /* selection start */
+        [@key "selectionEnd"]
+        selectionEnd: float, /* selection end */
+        [@yojson.option] [@key "replacementStart"]
+        replacementStart: option(float), /* replacement start */
+        [@yojson.option] [@key "replacementEnd"]
+        replacementEnd: option(float) /* replacement end */,
+      };
+      let make =
+          (
+            ~text,
+            ~selectionStart,
+            ~selectionEnd,
+            ~replacementStart=?,
+            ~replacementEnd=?,
+            (),
+          ) => {
+        {
+          text,
+          selectionStart,
+          selectionEnd,
+          replacementStart,
+          replacementEnd,
+        };
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Input.imeSetComposition", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Dispatches a mouse event to the page. */
   module DispatchMouseEvent = {
     module Response: {
