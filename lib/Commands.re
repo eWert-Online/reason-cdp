@@ -7791,6 +7791,75 @@ successfully. */,
       };
     };
   };
+  /* Returns the descendants of a container query container that have
+     container queries against this container. */
+  module GetQueryingDescendantsForContainer = {
+    module Response: {
+      type result = {
+        [@key "nodeIds"]
+        nodeIds: list(Types.DOM.NodeId.t) /* Descendant nodes with container queries against the given container. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "nodeIds"]
+        nodeIds: list(Types.DOM.NodeId.t) /* Descendant nodes with container queries against the given container. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* Id of the container node to find querying descendants from. */,
+      };
+      let make = (~nodeId, ()) => {
+        {nodeId: nodeId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "DOM.getQueryingDescendantsForContainer",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
 };
 module DOMDebugger = {
   /* Returns event listeners of the given object. */
