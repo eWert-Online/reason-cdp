@@ -9012,13 +9012,13 @@ records. */,
       [@key "headers"]
       headers: Headers.t, /* HTTP response headers. */
       [@yojson.option] [@key "headersText"]
-      headersText: option(string), /* HTTP response headers text. */
+      headersText: option(string), /* HTTP response headers text. This has been replaced by the headers in Network.responseReceivedExtraInfo. */
       [@key "mimeType"]
       mimeType: string, /* Resource mimeType as determined by the browser. */
       [@yojson.option] [@key "requestHeaders"]
       requestHeaders: option(Headers.t), /* Refined HTTP request headers that were actually transmitted over the network. */
       [@yojson.option] [@key "requestHeadersText"]
-      requestHeadersText: option(string), /* HTTP request headers text. */
+      requestHeadersText: option(string), /* HTTP request headers text. This has been replaced by the headers in Network.requestWillBeSentExtraInfo. */
       [@key "connectionReused"]
       connectionReused: bool, /* Specifies whether physical connection was actually reused for this request. */
       [@key "connectionId"]
@@ -10682,13 +10682,13 @@ records. */,
       [@key "headers"]
       headers: Headers.t, /* HTTP response headers. */
       [@yojson.option] [@key "headersText"]
-      headersText: option(string), /* HTTP response headers text. */
+      headersText: option(string), /* HTTP response headers text. This has been replaced by the headers in Network.responseReceivedExtraInfo. */
       [@key "mimeType"]
       mimeType: string, /* Resource mimeType as determined by the browser. */
       [@yojson.option] [@key "requestHeaders"]
       requestHeaders: option(Headers.t), /* Refined HTTP request headers that were actually transmitted over the network. */
       [@yojson.option] [@key "requestHeadersText"]
-      requestHeadersText: option(string), /* HTTP request headers text. */
+      requestHeadersText: option(string), /* HTTP request headers text. This has been replaced by the headers in Network.requestWillBeSentExtraInfo. */
       [@key "connectionReused"]
       connectionReused: bool, /* Specifies whether physical connection was actually reused for this request. */
       [@key "connectionId"]
@@ -10733,13 +10733,13 @@ records. */,
       [@key "headers"]
       headers: Headers.t, /* HTTP response headers. */
       [@yojson.option] [@key "headersText"]
-      headersText: option(string), /* HTTP response headers text. */
+      headersText: option(string), /* HTTP response headers text. This has been replaced by the headers in Network.responseReceivedExtraInfo. */
       [@key "mimeType"]
       mimeType: string, /* Resource mimeType as determined by the browser. */
       [@yojson.option] [@key "requestHeaders"]
       requestHeaders: option(Headers.t), /* Refined HTTP request headers that were actually transmitted over the network. */
       [@yojson.option] [@key "requestHeadersText"]
-      requestHeadersText: option(string), /* HTTP request headers text. */
+      requestHeadersText: option(string), /* HTTP request headers text. This has been replaced by the headers in Network.requestWillBeSentExtraInfo. */
       [@key "connectionReused"]
       connectionReused: bool, /* Specifies whether physical connection was actually reused for this request. */
       [@key "connectionId"]
