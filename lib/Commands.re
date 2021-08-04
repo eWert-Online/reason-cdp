@@ -25454,10 +25454,21 @@ If absent, a standard phrase matching responseCode is used. */,
         [@yojson.option] [@key "postData"]
         postData: option(string), /* If set, overrides the post data in the request. (Encoded as a base64 string when passed over JSON) */
         [@yojson.option] [@key "headers"]
-        headers: option(list(Types.Fetch.HeaderEntry.t)) /* If set, overrides the request headers. */,
+        headers: option(list(Types.Fetch.HeaderEntry.t)), /* If set, overrides the request headers. */
+        [@yojson.option] [@key "interceptResponse"]
+        interceptResponse: option(bool) /* If set, overrides response interception behavior for this request. */,
       };
-      let make = (~requestId, ~url=?, ~method=?, ~postData=?, ~headers=?, ()) => {
-        {requestId, url, method, postData, headers};
+      let make =
+          (
+            ~requestId,
+            ~url=?,
+            ~method=?,
+            ~postData=?,
+            ~headers=?,
+            ~interceptResponse=?,
+            (),
+          ) => {
+        {requestId, url, method, postData, headers, interceptResponse};
       };
     };
 
