@@ -12201,7 +12201,9 @@ and Overlay: {
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "containerBorder"]
-      containerBorder: option(LineStyle.t) /* The style of the container border */,
+      containerBorder: option(LineStyle.t), /* The style of the container border. */
+      [@yojson.option] [@key "descendantBorder"]
+      descendantBorder: option(LineStyle.t) /* The style of the descendants' borders. */,
     };
   }
   and InspectMode: {
@@ -12717,14 +12719,18 @@ and Overlay: {
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "containerBorder"]
-      containerBorder: option(LineStyle.t) /* The style of the container border */,
+      containerBorder: option(LineStyle.t), /* The style of the container border. */
+      [@yojson.option] [@key "descendantBorder"]
+      descendantBorder: option(LineStyle.t) /* The style of the descendants' borders. */,
     };
   } = {
     /* No description provided */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "containerBorder"]
-      containerBorder: option(LineStyle.t) /* The style of the container border */,
+      containerBorder: option(LineStyle.t), /* The style of the container border. */
+      [@yojson.option] [@key "descendantBorder"]
+      descendantBorder: option(LineStyle.t) /* The style of the descendants' borders. */,
     };
   }
   and InspectMode: {
