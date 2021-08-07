@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout Reason CDP
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Checkout devtools-protocol
         uses: actions/checkout@v2
@@ -29,28 +31,25 @@ jobs:
           cd ..
           modified=$(npm version --no-git-tag-version "0.0.$cdp_version" &> /dev/null && echo true || echo false);
           echo "Modified $modified";
-          branch_exists=$(git rev-parse --verify $cdp_version &> /dev/null && echo true || echo false);
-          echo "Branch exists $branch_exists";
           echo "::set-output name=cdp_version::$cdp_version";
           echo "::set-output name=modified::$modified";
-          echo "::set-output name=branch_exists::$branch_exists";
 
-      - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
+      - if: steps.git-check.outputs.modified == 'true'
         uses: actions/setup-node@v2
         with:
           node-version: 14
 
-      - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
+      - if: steps.git-check.outputs.modified == 'true'
         name: Install esy
         run: |
           npm install -g esy
 
-      - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
+      - if: steps.git-check.outputs.modified == 'true'
         uses: esy/github-action@master
         with:
           cache-key: ${{ matrix.os }}-${{ hashFiles('esy.lock/index.json') }}
 
-      - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
+      - if: steps.git-check.outputs.modified == 'true'
         name: Build Reason bindings
         run: |
           rm ./lib/Types.re ./lib/Events.re ./lib/Commands.re
@@ -58,14 +57,10 @@ jobs:
           esy refmt --in-place ./lib/Types.re ./lib/Events.re ./lib/Commands.re
           esy
 
-      - if: steps.git-check.outputs.modified == 'true' && steps.git-check.outputs.branch_exists == 'false'
-        name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          commit-message: Roll protocol to r${{ steps.git-check.outputs.cdp_version }}
-          committer: GitHub Action <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          branch: ${{ steps.git-check.outputs.cdp_version }}
-          delete-branch: false
-          title: Roll protocol to r${{ steps.git-check.outputs.cdp_version }}
-          body: ""
+      - if: steps.git-check.outputs.modified == 'true'
+        name: Commit update
+        run: |
+          git config --global user.name ${{ github.actor }}
+          git config --global user.email ${{ github.actor }}@users.noreply.github.com
+          git commit -am "Roll protocol to r${{ steps.git-check.outputs.cdp_version }}"
+          git push
