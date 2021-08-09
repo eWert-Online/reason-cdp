@@ -1174,6 +1174,7 @@ and Audits: {
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
       | `ExcludeInvalidSameParty
+      | `ExcludeSamePartyCrossPartyContext
     ];
     let _samesitecookieexclusionreason_of_yojson:
       Yojson.Basic.t => _samesitecookieexclusionreason;
@@ -1747,6 +1748,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
       | `ExcludeInvalidSameParty
+      | `ExcludeSamePartyCrossPartyContext
     ];
     let _samesitecookieexclusionreason_of_yojson:
       Yojson.Basic.t => _samesitecookieexclusionreason;
@@ -1762,6 +1764,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
       | `ExcludeInvalidSameParty
+      | `ExcludeSamePartyCrossPartyContext
     ];
     let _samesitecookieexclusionreason_of_yojson =
       fun
@@ -1770,6 +1773,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `String("ExcludeSameSiteLax") => `ExcludeSameSiteLax
       | `String("ExcludeSameSiteStrict") => `ExcludeSameSiteStrict
       | `String("ExcludeInvalidSameParty") => `ExcludeInvalidSameParty
+      | `String("ExcludeSamePartyCrossPartyContext") => `ExcludeSamePartyCrossPartyContext
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__samesitecookieexclusionreason =
@@ -1779,7 +1783,9 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeSameSiteNoneInsecure => `String("ExcludeSameSiteNoneInsecure")
       | `ExcludeSameSiteLax => `String("ExcludeSameSiteLax")
       | `ExcludeSameSiteStrict => `String("ExcludeSameSiteStrict")
-      | `ExcludeInvalidSameParty => `String("ExcludeInvalidSameParty");
+      | `ExcludeInvalidSameParty => `String("ExcludeInvalidSameParty")
+      | `ExcludeSamePartyCrossPartyContext =>
+        `String("ExcludeSamePartyCrossPartyContext");
     /* No description provided */
     [@deriving yojson]
     type t = _samesitecookieexclusionreason;
