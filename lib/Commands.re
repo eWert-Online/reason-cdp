@@ -16474,14 +16474,15 @@ continueInterceptedRequest call. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@key "frameId"]
-        frameId: Types.Page.FrameId.t, /* Frame id to get the resource for. */
+        [@yojson.option] [@key "frameId"]
+        frameId: option(Types.Page.FrameId.t), /* Frame id to get the resource for. Mandatory for frame targets, and
+should be omitted for worker targets. */
         [@key "url"]
         url: string, /* URL of the resource to get content for. */
         [@key "options"]
         options: Types.Network.LoadNetworkResourceOptions.t /* Options for the request. */,
       };
-      let make = (~frameId, ~url, ~options, ()) => {
+      let make = (~frameId=?, ~url, ~options, ()) => {
         {frameId, url, options};
       };
     };
