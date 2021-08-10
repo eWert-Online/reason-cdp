@@ -13056,7 +13056,7 @@ parsable. */
       [@key "id"]
       id: FrameId.t, /* Frame unique identifier. */
       [@yojson.option] [@key "parentId"]
-      parentId: option(string), /* Parent frame identifier. */
+      parentId: option(FrameId.t), /* Parent frame identifier. */
       [@key "loaderId"]
       loaderId: Network.LoaderId.t, /* Identifier of the loader associated with this frame. */
       [@yojson.option] [@key "name"]
@@ -14274,7 +14274,7 @@ parsable. */
       [@key "id"]
       id: FrameId.t, /* Frame unique identifier. */
       [@yojson.option] [@key "parentId"]
-      parentId: option(string), /* Parent frame identifier. */
+      parentId: option(FrameId.t), /* Parent frame identifier. */
       [@key "loaderId"]
       loaderId: Network.LoaderId.t, /* Identifier of the loader associated with this frame. */
       [@yojson.option] [@key "name"]
@@ -14312,7 +14312,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "id"]
       id: FrameId.t, /* Frame unique identifier. */
       [@yojson.option] [@key "parentId"]
-      parentId: option(string), /* Parent frame identifier. */
+      parentId: option(FrameId.t), /* Parent frame identifier. */
       [@key "loaderId"]
       loaderId: Network.LoaderId.t, /* Identifier of the loader associated with this frame. */
       [@yojson.option] [@key "name"]
