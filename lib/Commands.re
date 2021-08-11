@@ -201,11 +201,14 @@ children, if requested. */,
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "max_depth"]
-        max_depth: option(float) /* The maximum depth at which descendants of the root node should be retrieved.
-If omitted, the full tree is returned. */,
+        max_depth: option(float), /* The maximum depth at which descendants of the root node should be retrieved.
+If omitted, the full tree is returned. */
+        [@yojson.option] [@key "frameId"]
+        frameId: option(Types.Page.FrameId.t) /* The frame for whose document the AX tree should be retrieved.
+If omited, the root frame is used. */,
       };
-      let make = (~max_depth=?, ()) => {
-        {max_depth: max_depth};
+      let make = (~max_depth=?, ~frameId=?, ()) => {
+        {max_depth, frameId};
       };
     };
 
@@ -266,10 +269,13 @@ If omitted, the full tree is returned. */,
       [@deriving yojson]
       type t = {
         [@key "id"]
-        id: Types.Accessibility.AXNodeId.t /* No description provided */,
+        id: Types.Accessibility.AXNodeId.t, /* No description provided */
+        [@yojson.option] [@key "frameId"]
+        frameId: option(Types.Page.FrameId.t) /* The frame in whose document the node resides.
+If omitted, the root frame is used. */,
       };
-      let make = (~id, ()) => {
-        {id: id};
+      let make = (~id, ~frameId=?, ()) => {
+        {id, frameId};
       };
     };
 

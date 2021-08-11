@@ -13447,6 +13447,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `CacheControlNoStoreCookieModified
       | `CacheControlNoStoreHTTPOnlyCookieModified
       | `NoResponseHead
+      | `Unknown
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -13491,7 +13492,15 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `IsolatedWorldScript
       | `InjectedStyleSheet
       | `MediaSessionImplOnServiceCreated
-      | `Unknown
+      | `SecurityHandler
+      | `WebAuthenticationAPI
+      | `FileChooser
+      | `Serial
+      | `FileSystemAccess
+      | `MediaDevicesDispatcherHost
+      | `WebBluetooth
+      | `WebUSB
+      | `MediaSession
     ];
     let _backforwardcachenotrestoredreason_of_yojson:
       Yojson.Basic.t => _backforwardcachenotrestoredreason;
@@ -15086,6 +15095,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `CacheControlNoStoreCookieModified
       | `CacheControlNoStoreHTTPOnlyCookieModified
       | `NoResponseHead
+      | `Unknown
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -15130,7 +15140,15 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `IsolatedWorldScript
       | `InjectedStyleSheet
       | `MediaSessionImplOnServiceCreated
-      | `Unknown
+      | `SecurityHandler
+      | `WebAuthenticationAPI
+      | `FileChooser
+      | `Serial
+      | `FileSystemAccess
+      | `MediaDevicesDispatcherHost
+      | `WebBluetooth
+      | `WebUSB
+      | `MediaSession
     ];
     let _backforwardcachenotrestoredreason_of_yojson:
       Yojson.Basic.t => _backforwardcachenotrestoredreason;
@@ -15191,6 +15209,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `CacheControlNoStoreCookieModified
       | `CacheControlNoStoreHTTPOnlyCookieModified
       | `NoResponseHead
+      | `Unknown
       | `WebSocket
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
@@ -15235,7 +15254,15 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `IsolatedWorldScript
       | `InjectedStyleSheet
       | `MediaSessionImplOnServiceCreated
-      | `Unknown
+      | `SecurityHandler
+      | `WebAuthenticationAPI
+      | `FileChooser
+      | `Serial
+      | `FileSystemAccess
+      | `MediaDevicesDispatcherHost
+      | `WebBluetooth
+      | `WebUSB
+      | `MediaSession
     ];
     let _backforwardcachenotrestoredreason_of_yojson =
       fun
@@ -15289,6 +15316,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("CacheControlNoStoreCookieModified") => `CacheControlNoStoreCookieModified
       | `String("CacheControlNoStoreHTTPOnlyCookieModified") => `CacheControlNoStoreHTTPOnlyCookieModified
       | `String("NoResponseHead") => `NoResponseHead
+      | `String("Unknown") => `Unknown
       | `String("WebSocket") => `WebSocket
       | `String("WebRTC") => `WebRTC
       | `String("MainResourceHasCacheControlNoStore") => `MainResourceHasCacheControlNoStore
@@ -15333,7 +15361,15 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("IsolatedWorldScript") => `IsolatedWorldScript
       | `String("InjectedStyleSheet") => `InjectedStyleSheet
       | `String("MediaSessionImplOnServiceCreated") => `MediaSessionImplOnServiceCreated
-      | `String("Unknown") => `Unknown
+      | `String("SecurityHandler") => `SecurityHandler
+      | `String("WebAuthenticationAPI") => `WebAuthenticationAPI
+      | `String("FileChooser") => `FileChooser
+      | `String("Serial") => `Serial
+      | `String("FileSystemAccess") => `FileSystemAccess
+      | `String("MediaDevicesDispatcherHost") => `MediaDevicesDispatcherHost
+      | `String("WebBluetooth") => `WebBluetooth
+      | `String("WebUSB") => `WebUSB
+      | `String("MediaSession") => `MediaSession
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__backforwardcachenotrestoredreason =
@@ -15403,6 +15439,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `CacheControlNoStoreHTTPOnlyCookieModified =>
         `String("CacheControlNoStoreHTTPOnlyCookieModified")
       | `NoResponseHead => `String("NoResponseHead")
+      | `Unknown => `String("Unknown")
       | `WebSocket => `String("WebSocket")
       | `WebRTC => `String("WebRTC")
       | `MainResourceHasCacheControlNoStore =>
@@ -15462,7 +15499,15 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `InjectedStyleSheet => `String("InjectedStyleSheet")
       | `MediaSessionImplOnServiceCreated =>
         `String("MediaSessionImplOnServiceCreated")
-      | `Unknown => `String("Unknown");
+      | `SecurityHandler => `String("SecurityHandler")
+      | `WebAuthenticationAPI => `String("WebAuthenticationAPI")
+      | `FileChooser => `String("FileChooser")
+      | `Serial => `String("Serial")
+      | `FileSystemAccess => `String("FileSystemAccess")
+      | `MediaDevicesDispatcherHost => `String("MediaDevicesDispatcherHost")
+      | `WebBluetooth => `String("WebBluetooth")
+      | `WebUSB => `String("WebUSB")
+      | `MediaSession => `String("MediaSession");
     /* List of not restored reasons for back-forward cache. */
     [@deriving yojson]
     type t = _backforwardcachenotrestoredreason;
