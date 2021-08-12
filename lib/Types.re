@@ -13448,7 +13448,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `CacheControlNoStoreHTTPOnlyCookieModified
       | `NoResponseHead
       | `Unknown
+      | `ActivationNavigationsDisallowedForBug1234857
       | `WebSocket
+      | `WebTransport
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
       | `MainResourceHasCacheControlNoCache
@@ -15096,7 +15098,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `CacheControlNoStoreHTTPOnlyCookieModified
       | `NoResponseHead
       | `Unknown
+      | `ActivationNavigationsDisallowedForBug1234857
       | `WebSocket
+      | `WebTransport
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
       | `MainResourceHasCacheControlNoCache
@@ -15210,7 +15214,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `CacheControlNoStoreHTTPOnlyCookieModified
       | `NoResponseHead
       | `Unknown
+      | `ActivationNavigationsDisallowedForBug1234857
       | `WebSocket
+      | `WebTransport
       | `WebRTC
       | `MainResourceHasCacheControlNoStore
       | `MainResourceHasCacheControlNoCache
@@ -15317,7 +15323,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("CacheControlNoStoreHTTPOnlyCookieModified") => `CacheControlNoStoreHTTPOnlyCookieModified
       | `String("NoResponseHead") => `NoResponseHead
       | `String("Unknown") => `Unknown
+      | `String("ActivationNavigationsDisallowedForBug1234857") => `ActivationNavigationsDisallowedForBug1234857
       | `String("WebSocket") => `WebSocket
+      | `String("WebTransport") => `WebTransport
       | `String("WebRTC") => `WebRTC
       | `String("MainResourceHasCacheControlNoStore") => `MainResourceHasCacheControlNoStore
       | `String("MainResourceHasCacheControlNoCache") => `MainResourceHasCacheControlNoCache
@@ -15440,7 +15448,10 @@ Example URLs: http://www.google.com/file.html -> "google.com"
         `String("CacheControlNoStoreHTTPOnlyCookieModified")
       | `NoResponseHead => `String("NoResponseHead")
       | `Unknown => `String("Unknown")
+      | `ActivationNavigationsDisallowedForBug1234857 =>
+        `String("ActivationNavigationsDisallowedForBug1234857")
       | `WebSocket => `String("WebSocket")
+      | `WebTransport => `String("WebTransport")
       | `WebRTC => `String("WebRTC")
       | `MainResourceHasCacheControlNoStore =>
         `String("MainResourceHasCacheControlNoStore")
