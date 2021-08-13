@@ -24596,7 +24596,9 @@ false by default). */,
   };
   /* Controls whether to automatically attach to new targets which are considered to be related to
      this one. When turned on, attaches to all existing related targets as well. When turned off,
-     automatically detaches from all currently attached targets. */
+     automatically detaches from all currently attached targets.
+     This also clears all targets added by `autoAttachRelated` from the list of targets to watch
+     for creation of related targets. */
   module SetAutoAttach = {
     module Response: {
       type result = Types.assoc;
@@ -24655,6 +24657,69 @@ and eventually retire it. See crbug.com/991325. */,
 
       let make = (~sessionId=?, ~params, id) => {
         {id, method: "Target.setAutoAttach", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Adds the specified target to the list of targets that will be monitored for any related target
+     creation (such as child frames, child workers and new versions of service worker) and reported
+     through `attachedToTarget`. This cancel the effect of any previous `setAutoAttach` and is also
+     cancelled by subsequent `setAutoAttach`. Only available at the Browser target. */
+  module AutoAttachRelated = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "targetId"]
+        targetId: Types.Target.TargetID.t, /* No description provided */
+        [@key "waitForDebuggerOnStart"]
+        waitForDebuggerOnStart: bool /* Whether to pause new targets when attaching to them. Use `Runtime.runIfWaitingForDebugger`
+to run paused targets. */,
+      };
+      let make = (~targetId, ~waitForDebuggerOnStart, ()) => {
+        {targetId, waitForDebuggerOnStart};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Target.autoAttachRelated", sessionId, params}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };
