@@ -9474,6 +9474,16 @@ backslash. Omitting is equivalent to `"*"`. */
     [@deriving yojson]
     type t = _ipaddressspace;
   }
+  and ConnectTiming: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "requestTime"]
+      requestTime: float /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
+milliseconds relatively to this requestTime. Matches ResourceTiming's requestTime for
+the same request (but not for redirected requests). */,
+    };
+  }
   and ClientSecurityState: {
     /* No description provided */
     [@deriving yojson]
@@ -11739,6 +11749,25 @@ backslash. Omitting is equivalent to `"*"`. */
     /* No description provided */
     [@deriving yojson]
     type t = _ipaddressspace;
+  }
+  and ConnectTiming: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "requestTime"]
+      requestTime: float /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
+milliseconds relatively to this requestTime. Matches ResourceTiming's requestTime for
+the same request (but not for redirected requests). */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "requestTime"]
+      requestTime: float /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
+milliseconds relatively to this requestTime. Matches ResourceTiming's requestTime for
+the same request (but not for redirected requests). */,
+    };
   }
   and ClientSecurityState: {
     /* No description provided */

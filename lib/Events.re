@@ -1489,6 +1489,8 @@ this requestId will be the same as the requestId present in the requestWillBeSen
 the request and the ones not sent; the latter are distinguished by having blockedReason field set. */
       [@key "headers"]
       headers: Types.Network.Headers.t, /* Raw request headers as they will be sent over the wire. */
+      [@key "connectTiming"]
+      connectTiming: Types.Network.ConnectTiming.t, /* Connection timing information for the request. */
       [@yojson.option] [@key "clientSecurityState"]
       clientSecurityState: option(Types.Network.ClientSecurityState.t) /* The client security state set for the request. */,
     };
