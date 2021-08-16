@@ -1711,26 +1711,6 @@ after webbundle was parsed. */,
 
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
-  /* Is sent whenever a new report is added.
-     And after 'enableReportingApi' for all existing reports. */
-  module ReportingApiReportAdded = {
-    let name = "Network.reportingApiReportAdded";
-
-    [@deriving yojson]
-    type result = {
-      [@key "report"]
-      report: Types.Network.ReportingApiReport.t /* No description provided */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
 };
 module Overlay = {
   /* Fired when the node should be inspected. This happens after call to `setInspectMode` or when
@@ -2952,6 +2932,8 @@ module Fetch = {
       responseErrorReason: option(Types.Network.ErrorReason.t), /* Response error if intercepted at response stage. */
       [@yojson.option] [@key "responseStatusCode"]
       responseStatusCode: option(float), /* Response code if intercepted at response stage. */
+      [@yojson.option] [@key "responseStatusText"]
+      responseStatusText: option(string), /* Response status text if intercepted at response stage. */
       [@yojson.option] [@key "responseHeaders"]
       responseHeaders: option(list(Types.Fetch.HeaderEntry.t)), /* Response headers if intercepted at the response stage. */
       [@yojson.option] [@key "networkId"]
