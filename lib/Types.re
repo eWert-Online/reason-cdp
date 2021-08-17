@@ -13512,7 +13512,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `WebShare
       | `RequestedStorageAccessGrant
       | `WebNfc
-      | `WebFileSystem
       | `OutstandingNetworkRequestFetch
       | `OutstandingNetworkRequestXHR
       | `AppBanner
@@ -15166,7 +15165,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `WebShare
       | `RequestedStorageAccessGrant
       | `WebNfc
-      | `WebFileSystem
       | `OutstandingNetworkRequestFetch
       | `OutstandingNetworkRequestXHR
       | `AppBanner
@@ -15282,7 +15280,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `WebShare
       | `RequestedStorageAccessGrant
       | `WebNfc
-      | `WebFileSystem
       | `OutstandingNetworkRequestFetch
       | `OutstandingNetworkRequestXHR
       | `AppBanner
@@ -15391,7 +15388,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("WebShare") => `WebShare
       | `String("RequestedStorageAccessGrant") => `RequestedStorageAccessGrant
       | `String("WebNfc") => `WebNfc
-      | `String("WebFileSystem") => `WebFileSystem
       | `String("OutstandingNetworkRequestFetch") => `OutstandingNetworkRequestFetch
       | `String("OutstandingNetworkRequestXHR") => `OutstandingNetworkRequestXHR
       | `String("AppBanner") => `AppBanner
@@ -15528,7 +15524,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `WebShare => `String("WebShare")
       | `RequestedStorageAccessGrant => `String("RequestedStorageAccessGrant")
       | `WebNfc => `String("WebNfc")
-      | `WebFileSystem => `String("WebFileSystem")
       | `OutstandingNetworkRequestFetch =>
         `String("OutstandingNetworkRequestFetch")
       | `OutstandingNetworkRequestXHR =>
