@@ -200,15 +200,17 @@ children, if requested. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@yojson.option] [@key "max_depth"]
-        max_depth: option(float), /* The maximum depth at which descendants of the root node should be retrieved.
+        [@yojson.option] [@key "depth"]
+        depth: option(float), /* The maximum depth at which descendants of the root node should be retrieved.
 If omitted, the full tree is returned. */
+        [@yojson.option] [@key "max_depth"]
+        max_depth: option(float), /* Deprecated. This parameter has been renamed to `depth`. If depth is not provided, max_depth will be used. */
         [@yojson.option] [@key "frameId"]
         frameId: option(Types.Page.FrameId.t) /* The frame for whose document the AX tree should be retrieved.
 If omited, the root frame is used. */,
       };
-      let make = (~max_depth=?, ~frameId=?, ()) => {
-        {max_depth, frameId};
+      let make = (~depth=?, ~max_depth=?, ~frameId=?, ()) => {
+        {depth, max_depth, frameId};
       };
     };
 
