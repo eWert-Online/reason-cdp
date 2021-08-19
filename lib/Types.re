@@ -8206,6 +8206,9 @@ and Log: {
     type _logentry_level = [ | `verbose | `info | `warning | `error];
     let _logentry_level_of_yojson: Yojson.Basic.t => _logentry_level;
     let yojson_of__logentry_level: _logentry_level => Yojson.Basic.t;
+    type _logentry_category = [ | `cors];
+    let _logentry_category_of_yojson: Yojson.Basic.t => _logentry_category;
+    let yojson_of__logentry_category: _logentry_category => Yojson.Basic.t;
     /* Log entry. */
     [@deriving yojson]
     type t = {
@@ -8215,6 +8218,8 @@ and Log: {
       level: _logentry_level, /* Log entry severity. */
       [@key "text"]
       text: string, /* Logged text. */
+      [@yojson.option] [@key "category"]
+      category: option(_logentry_category), /* No description provided */
       [@key "timestamp"]
       timestamp: Runtime.Timestamp.t, /* Timestamp when this entry was added. */
       [@yojson.option] [@key "url"]
@@ -8276,6 +8281,9 @@ and Log: {
     type _logentry_level = [ | `verbose | `info | `warning | `error];
     let _logentry_level_of_yojson: Yojson.Basic.t => _logentry_level;
     let yojson_of__logentry_level: _logentry_level => Yojson.Basic.t;
+    type _logentry_category = [ | `cors];
+    let _logentry_category_of_yojson: Yojson.Basic.t => _logentry_category;
+    let yojson_of__logentry_category: _logentry_category => Yojson.Basic.t;
     /* Log entry. */
     [@deriving yojson]
     type t = {
@@ -8285,6 +8293,8 @@ and Log: {
       level: _logentry_level, /* Log entry severity. */
       [@key "text"]
       text: string, /* Logged text. */
+      [@yojson.option] [@key "category"]
+      category: option(_logentry_category), /* No description provided */
       [@key "timestamp"]
       timestamp: Runtime.Timestamp.t, /* Timestamp when this entry was added. */
       [@yojson.option] [@key "url"]
@@ -8363,6 +8373,15 @@ and Log: {
       | `info => `String("info")
       | `warning => `String("warning")
       | `error => `String("error");
+    type _logentry_category = [ | `cors];
+    let _logentry_category_of_yojson =
+      fun
+      | `String("cors") => `cors
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__logentry_category =
+      fun
+      | `cors => `String("cors");
     /* Log entry. */
     [@deriving yojson]
     type t = {
@@ -8372,6 +8391,8 @@ and Log: {
       level: _logentry_level, /* Log entry severity. */
       [@key "text"]
       text: string, /* Logged text. */
+      [@yojson.option] [@key "category"]
+      category: option(_logentry_category), /* No description provided */
       [@key "timestamp"]
       timestamp: Runtime.Timestamp.t, /* Timestamp when this entry was added. */
       [@yojson.option] [@key "url"]
