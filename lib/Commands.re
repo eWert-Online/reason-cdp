@@ -25565,7 +25565,9 @@ series of name: value pairs. Prefer the above method unless you
 need to represent some non-UTF8 values that can't be transmitted
 over the protocol as text. (Encoded as a base64 string when passed over JSON) */
         [@yojson.option] [@key "body"]
-        body: option(string), /* A response body. (Encoded as a base64 string when passed over JSON) */
+        body: option(string), /* A response body. If absent, original response body will be used if
+the request is intercepted at the response stage and empty body
+will be used if the request is intercepted at the request stage. (Encoded as a base64 string when passed over JSON) */
         [@yojson.option] [@key "responsePhrase"]
         responsePhrase: option(string) /* A textual representation of responseCode.
 If absent, a standard phrase matching responseCode is used. */,
@@ -25738,6 +25740,91 @@ If absent, a standard phrase matching responseCode is used. */,
 
       let make = (~sessionId=?, ~params, id) => {
         {id, method: "Fetch.continueWithAuth", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Continues loading of the paused response, optionally modifying the
+     response headers. If either responseCode or headers are modified, all of them
+     must be present. */
+  module ContinueResponse = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "requestId"]
+        requestId: Types.Fetch.RequestId.t, /* An id the client received in requestPaused event. */
+        [@yojson.option] [@key "responseCode"]
+        responseCode: option(float), /* An HTTP response code. If absent, original response code will be used. */
+        [@yojson.option] [@key "responsePhrase"]
+        responsePhrase: option(string), /* A textual representation of responseCode.
+If absent, a standard phrase matching responseCode is used. */
+        [@yojson.option] [@key "responseHeaders"]
+        responseHeaders: option(list(Types.Fetch.HeaderEntry.t)), /* Response headers. If absent, original response headers will be used. */
+        [@yojson.option] [@key "binaryResponseHeaders"]
+        binaryResponseHeaders: option(string) /* Alternative way of specifying response headers as a \0-separated
+series of name: value pairs. Prefer the above method unless you
+need to represent some non-UTF8 values that can't be transmitted
+over the protocol as text. (Encoded as a base64 string when passed over JSON) */,
+      };
+      let make =
+          (
+            ~requestId,
+            ~responseCode=?,
+            ~responsePhrase=?,
+            ~responseHeaders=?,
+            ~binaryResponseHeaders=?,
+            (),
+          ) => {
+        {
+          requestId,
+          responseCode,
+          responsePhrase,
+          responseHeaders,
+          binaryResponseHeaders,
+        };
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Fetch.continueResponse", sessionId, params}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };
