@@ -19056,6 +19056,57 @@ option, use with caution. */,
       };
     };
   };
+  /* Returns the unique (PWA) app id. */
+  module GetAppId = {
+    module Response: {
+      type result = {
+        [@yojson.option] [@key "appId"]
+        appId: option(string) /* Only returns a value if the feature flag 'WebAppEnableManifestId' is enabled */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option] [@key "appId"]
+        appId: option(string) /* Only returns a value if the feature flag 'WebAppEnableManifestId' is enabled */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "Page.getAppId", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Returns all browser cookies. Depending on the backend support, will return detailed cookie
      information in the `cookies` field. */
   module GetCookies = {
