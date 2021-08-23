@@ -13634,15 +13634,31 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `IsolatedWorldScript
       | `InjectedStyleSheet
       | `MediaSessionImplOnServiceCreated
-      | `SecurityHandler
-      | `WebAuthenticationAPI
-      | `FileChooser
-      | `Serial
-      | `FileSystemAccess
-      | `MediaDevicesDispatcherHost
-      | `WebBluetooth
-      | `WebUSB
-      | `MediaSession
+      | `ContentMediaSessionImplOnServiceCreated
+      | `ContentSecurityHandler
+      | `ContentWebAuthenticationAPI
+      | `ContentFileChooser
+      | `ContentSerial
+      | `ContentFileSystemAccess
+      | `ContentMediaDevicesDispatcherHost
+      | `ContentWebBluetooth
+      | `ContentWebUSB
+      | `ContentMediaSession
+      | `EmbedderPopupBlockerTabHelper
+      | `EmbedderSafeBrowsingTriggeredPopupBlocker
+      | `EmbedderSafeBrowsingThreatDetails
+      | `EmbedderAppBannerManager
+      | `EmbedderDomDistillerViewerSource
+      | `EmbedderDomDistillerSelfDeletingRequestDelegate
+      | `EmbedderOomInterventionTabHelper
+      | `EmbedderOfflinePage
+      | `EmbedderChromePasswordManagerClientBindCredentialManager
+      | `EmbedderPermissionRequestManager
+      | `EmbedderModalDialog
+      | `EmbedderExtensions
+      | `EmbedderExtensionMessaging
+      | `EmbedderExtensionMessagingForOpenPort
+      | `EmbedderExtensionSentMessageToCachedFrame
     ];
     let _backforwardcachenotrestoredreason_of_yojson:
       Yojson.Basic.t => _backforwardcachenotrestoredreason;
@@ -15287,15 +15303,31 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `IsolatedWorldScript
       | `InjectedStyleSheet
       | `MediaSessionImplOnServiceCreated
-      | `SecurityHandler
-      | `WebAuthenticationAPI
-      | `FileChooser
-      | `Serial
-      | `FileSystemAccess
-      | `MediaDevicesDispatcherHost
-      | `WebBluetooth
-      | `WebUSB
-      | `MediaSession
+      | `ContentMediaSessionImplOnServiceCreated
+      | `ContentSecurityHandler
+      | `ContentWebAuthenticationAPI
+      | `ContentFileChooser
+      | `ContentSerial
+      | `ContentFileSystemAccess
+      | `ContentMediaDevicesDispatcherHost
+      | `ContentWebBluetooth
+      | `ContentWebUSB
+      | `ContentMediaSession
+      | `EmbedderPopupBlockerTabHelper
+      | `EmbedderSafeBrowsingTriggeredPopupBlocker
+      | `EmbedderSafeBrowsingThreatDetails
+      | `EmbedderAppBannerManager
+      | `EmbedderDomDistillerViewerSource
+      | `EmbedderDomDistillerSelfDeletingRequestDelegate
+      | `EmbedderOomInterventionTabHelper
+      | `EmbedderOfflinePage
+      | `EmbedderChromePasswordManagerClientBindCredentialManager
+      | `EmbedderPermissionRequestManager
+      | `EmbedderModalDialog
+      | `EmbedderExtensions
+      | `EmbedderExtensionMessaging
+      | `EmbedderExtensionMessagingForOpenPort
+      | `EmbedderExtensionSentMessageToCachedFrame
     ];
     let _backforwardcachenotrestoredreason_of_yojson:
       Yojson.Basic.t => _backforwardcachenotrestoredreason;
@@ -15402,15 +15434,31 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `IsolatedWorldScript
       | `InjectedStyleSheet
       | `MediaSessionImplOnServiceCreated
-      | `SecurityHandler
-      | `WebAuthenticationAPI
-      | `FileChooser
-      | `Serial
-      | `FileSystemAccess
-      | `MediaDevicesDispatcherHost
-      | `WebBluetooth
-      | `WebUSB
-      | `MediaSession
+      | `ContentMediaSessionImplOnServiceCreated
+      | `ContentSecurityHandler
+      | `ContentWebAuthenticationAPI
+      | `ContentFileChooser
+      | `ContentSerial
+      | `ContentFileSystemAccess
+      | `ContentMediaDevicesDispatcherHost
+      | `ContentWebBluetooth
+      | `ContentWebUSB
+      | `ContentMediaSession
+      | `EmbedderPopupBlockerTabHelper
+      | `EmbedderSafeBrowsingTriggeredPopupBlocker
+      | `EmbedderSafeBrowsingThreatDetails
+      | `EmbedderAppBannerManager
+      | `EmbedderDomDistillerViewerSource
+      | `EmbedderDomDistillerSelfDeletingRequestDelegate
+      | `EmbedderOomInterventionTabHelper
+      | `EmbedderOfflinePage
+      | `EmbedderChromePasswordManagerClientBindCredentialManager
+      | `EmbedderPermissionRequestManager
+      | `EmbedderModalDialog
+      | `EmbedderExtensions
+      | `EmbedderExtensionMessaging
+      | `EmbedderExtensionMessagingForOpenPort
+      | `EmbedderExtensionSentMessageToCachedFrame
     ];
     let _backforwardcachenotrestoredreason_of_yojson =
       fun
@@ -15510,15 +15558,31 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("IsolatedWorldScript") => `IsolatedWorldScript
       | `String("InjectedStyleSheet") => `InjectedStyleSheet
       | `String("MediaSessionImplOnServiceCreated") => `MediaSessionImplOnServiceCreated
-      | `String("SecurityHandler") => `SecurityHandler
-      | `String("WebAuthenticationAPI") => `WebAuthenticationAPI
-      | `String("FileChooser") => `FileChooser
-      | `String("Serial") => `Serial
-      | `String("FileSystemAccess") => `FileSystemAccess
-      | `String("MediaDevicesDispatcherHost") => `MediaDevicesDispatcherHost
-      | `String("WebBluetooth") => `WebBluetooth
-      | `String("WebUSB") => `WebUSB
-      | `String("MediaSession") => `MediaSession
+      | `String("ContentMediaSessionImplOnServiceCreated") => `ContentMediaSessionImplOnServiceCreated
+      | `String("ContentSecurityHandler") => `ContentSecurityHandler
+      | `String("ContentWebAuthenticationAPI") => `ContentWebAuthenticationAPI
+      | `String("ContentFileChooser") => `ContentFileChooser
+      | `String("ContentSerial") => `ContentSerial
+      | `String("ContentFileSystemAccess") => `ContentFileSystemAccess
+      | `String("ContentMediaDevicesDispatcherHost") => `ContentMediaDevicesDispatcherHost
+      | `String("ContentWebBluetooth") => `ContentWebBluetooth
+      | `String("ContentWebUSB") => `ContentWebUSB
+      | `String("ContentMediaSession") => `ContentMediaSession
+      | `String("EmbedderPopupBlockerTabHelper") => `EmbedderPopupBlockerTabHelper
+      | `String("EmbedderSafeBrowsingTriggeredPopupBlocker") => `EmbedderSafeBrowsingTriggeredPopupBlocker
+      | `String("EmbedderSafeBrowsingThreatDetails") => `EmbedderSafeBrowsingThreatDetails
+      | `String("EmbedderAppBannerManager") => `EmbedderAppBannerManager
+      | `String("EmbedderDomDistillerViewerSource") => `EmbedderDomDistillerViewerSource
+      | `String("EmbedderDomDistillerSelfDeletingRequestDelegate") => `EmbedderDomDistillerSelfDeletingRequestDelegate
+      | `String("EmbedderOomInterventionTabHelper") => `EmbedderOomInterventionTabHelper
+      | `String("EmbedderOfflinePage") => `EmbedderOfflinePage
+      | `String("EmbedderChromePasswordManagerClientBindCredentialManager") => `EmbedderChromePasswordManagerClientBindCredentialManager
+      | `String("EmbedderPermissionRequestManager") => `EmbedderPermissionRequestManager
+      | `String("EmbedderModalDialog") => `EmbedderModalDialog
+      | `String("EmbedderExtensions") => `EmbedderExtensions
+      | `String("EmbedderExtensionMessaging") => `EmbedderExtensionMessaging
+      | `String("EmbedderExtensionMessagingForOpenPort") => `EmbedderExtensionMessagingForOpenPort
+      | `String("EmbedderExtensionSentMessageToCachedFrame") => `EmbedderExtensionSentMessageToCachedFrame
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__backforwardcachenotrestoredreason =
@@ -15650,15 +15714,43 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `InjectedStyleSheet => `String("InjectedStyleSheet")
       | `MediaSessionImplOnServiceCreated =>
         `String("MediaSessionImplOnServiceCreated")
-      | `SecurityHandler => `String("SecurityHandler")
-      | `WebAuthenticationAPI => `String("WebAuthenticationAPI")
-      | `FileChooser => `String("FileChooser")
-      | `Serial => `String("Serial")
-      | `FileSystemAccess => `String("FileSystemAccess")
-      | `MediaDevicesDispatcherHost => `String("MediaDevicesDispatcherHost")
-      | `WebBluetooth => `String("WebBluetooth")
-      | `WebUSB => `String("WebUSB")
-      | `MediaSession => `String("MediaSession");
+      | `ContentMediaSessionImplOnServiceCreated =>
+        `String("ContentMediaSessionImplOnServiceCreated")
+      | `ContentSecurityHandler => `String("ContentSecurityHandler")
+      | `ContentWebAuthenticationAPI => `String("ContentWebAuthenticationAPI")
+      | `ContentFileChooser => `String("ContentFileChooser")
+      | `ContentSerial => `String("ContentSerial")
+      | `ContentFileSystemAccess => `String("ContentFileSystemAccess")
+      | `ContentMediaDevicesDispatcherHost =>
+        `String("ContentMediaDevicesDispatcherHost")
+      | `ContentWebBluetooth => `String("ContentWebBluetooth")
+      | `ContentWebUSB => `String("ContentWebUSB")
+      | `ContentMediaSession => `String("ContentMediaSession")
+      | `EmbedderPopupBlockerTabHelper =>
+        `String("EmbedderPopupBlockerTabHelper")
+      | `EmbedderSafeBrowsingTriggeredPopupBlocker =>
+        `String("EmbedderSafeBrowsingTriggeredPopupBlocker")
+      | `EmbedderSafeBrowsingThreatDetails =>
+        `String("EmbedderSafeBrowsingThreatDetails")
+      | `EmbedderAppBannerManager => `String("EmbedderAppBannerManager")
+      | `EmbedderDomDistillerViewerSource =>
+        `String("EmbedderDomDistillerViewerSource")
+      | `EmbedderDomDistillerSelfDeletingRequestDelegate =>
+        `String("EmbedderDomDistillerSelfDeletingRequestDelegate")
+      | `EmbedderOomInterventionTabHelper =>
+        `String("EmbedderOomInterventionTabHelper")
+      | `EmbedderOfflinePage => `String("EmbedderOfflinePage")
+      | `EmbedderChromePasswordManagerClientBindCredentialManager =>
+        `String("EmbedderChromePasswordManagerClientBindCredentialManager")
+      | `EmbedderPermissionRequestManager =>
+        `String("EmbedderPermissionRequestManager")
+      | `EmbedderModalDialog => `String("EmbedderModalDialog")
+      | `EmbedderExtensions => `String("EmbedderExtensions")
+      | `EmbedderExtensionMessaging => `String("EmbedderExtensionMessaging")
+      | `EmbedderExtensionMessagingForOpenPort =>
+        `String("EmbedderExtensionMessagingForOpenPort")
+      | `EmbedderExtensionSentMessageToCachedFrame =>
+        `String("EmbedderExtensionSentMessageToCachedFrame");
     /* List of not restored reasons for back-forward cache. */
     [@deriving yojson]
     type t = _backforwardcachenotrestoredreason;
