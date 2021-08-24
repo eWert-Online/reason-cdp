@@ -13633,8 +13633,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OutstandingNetworkRequestDirectSocket
       | `IsolatedWorldScript
       | `InjectedStyleSheet
-      | `MediaSessionImplOnServiceCreated
-      | `ContentMediaSessionImplOnServiceCreated
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -15302,8 +15300,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OutstandingNetworkRequestDirectSocket
       | `IsolatedWorldScript
       | `InjectedStyleSheet
-      | `MediaSessionImplOnServiceCreated
-      | `ContentMediaSessionImplOnServiceCreated
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -15433,8 +15429,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OutstandingNetworkRequestDirectSocket
       | `IsolatedWorldScript
       | `InjectedStyleSheet
-      | `MediaSessionImplOnServiceCreated
-      | `ContentMediaSessionImplOnServiceCreated
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -15557,8 +15551,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("OutstandingNetworkRequestDirectSocket") => `OutstandingNetworkRequestDirectSocket
       | `String("IsolatedWorldScript") => `IsolatedWorldScript
       | `String("InjectedStyleSheet") => `InjectedStyleSheet
-      | `String("MediaSessionImplOnServiceCreated") => `MediaSessionImplOnServiceCreated
-      | `String("ContentMediaSessionImplOnServiceCreated") => `ContentMediaSessionImplOnServiceCreated
       | `String("ContentSecurityHandler") => `ContentSecurityHandler
       | `String("ContentWebAuthenticationAPI") => `ContentWebAuthenticationAPI
       | `String("ContentFileChooser") => `ContentFileChooser
@@ -15712,10 +15704,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
         `String("OutstandingNetworkRequestDirectSocket")
       | `IsolatedWorldScript => `String("IsolatedWorldScript")
       | `InjectedStyleSheet => `String("InjectedStyleSheet")
-      | `MediaSessionImplOnServiceCreated =>
-        `String("MediaSessionImplOnServiceCreated")
-      | `ContentMediaSessionImplOnServiceCreated =>
-        `String("ContentMediaSessionImplOnServiceCreated")
       | `ContentSecurityHandler => `String("ContentSecurityHandler")
       | `ContentWebAuthenticationAPI => `String("ContentWebAuthenticationAPI")
       | `ContentFileChooser => `String("ContentFileChooser")
