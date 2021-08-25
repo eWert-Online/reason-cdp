@@ -13224,9 +13224,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "crossOriginIsolatedContextType"]
       crossOriginIsolatedContextType: CrossOriginIsolatedContextType.t, /* Indicates whether this is a cross origin isolated context. */
       [@key "gatedAPIFeatures"]
-      gatedAPIFeatures: list(GatedAPIFeatures.t), /* Indicated which gated APIs / features are available. */
-      [@yojson.option] [@key "originTrials"]
-      originTrials: option(list(OriginTrial.t)) /* Frame document's origin trials with at least one token present. */,
+      gatedAPIFeatures: list(GatedAPIFeatures.t) /* Indicated which gated APIs / features are available. */,
     };
   }
   and FrameResource: {
@@ -14470,9 +14468,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "crossOriginIsolatedContextType"]
       crossOriginIsolatedContextType: CrossOriginIsolatedContextType.t, /* Indicates whether this is a cross origin isolated context. */
       [@key "gatedAPIFeatures"]
-      gatedAPIFeatures: list(GatedAPIFeatures.t), /* Indicated which gated APIs / features are available. */
-      [@yojson.option] [@key "originTrials"]
-      originTrials: option(list(OriginTrial.t)) /* Frame document's origin trials with at least one token present. */,
+      gatedAPIFeatures: list(GatedAPIFeatures.t) /* Indicated which gated APIs / features are available. */,
     };
   } = {
     /* Information about the Frame on the page. */
@@ -14508,9 +14504,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "crossOriginIsolatedContextType"]
       crossOriginIsolatedContextType: CrossOriginIsolatedContextType.t, /* Indicates whether this is a cross origin isolated context. */
       [@key "gatedAPIFeatures"]
-      gatedAPIFeatures: list(GatedAPIFeatures.t), /* Indicated which gated APIs / features are available. */
-      [@yojson.option] [@key "originTrials"]
-      originTrials: option(list(OriginTrial.t)) /* Frame document's origin trials with at least one token present. */,
+      gatedAPIFeatures: list(GatedAPIFeatures.t) /* Indicated which gated APIs / features are available. */,
     };
   }
   and FrameResource: {
