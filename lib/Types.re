@@ -13681,7 +13681,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `KeyboardLock
       | `WebOTPService
       | `OutstandingNetworkRequestDirectSocket
-      | `IsolatedWorldScript
+      | `InjectedJavascript
       | `InjectedStyleSheet
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
@@ -15345,7 +15345,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `KeyboardLock
       | `WebOTPService
       | `OutstandingNetworkRequestDirectSocket
-      | `IsolatedWorldScript
+      | `InjectedJavascript
       | `InjectedStyleSheet
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
@@ -15475,7 +15475,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `KeyboardLock
       | `WebOTPService
       | `OutstandingNetworkRequestDirectSocket
-      | `IsolatedWorldScript
+      | `InjectedJavascript
       | `InjectedStyleSheet
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
@@ -15598,7 +15598,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("KeyboardLock") => `KeyboardLock
       | `String("WebOTPService") => `WebOTPService
       | `String("OutstandingNetworkRequestDirectSocket") => `OutstandingNetworkRequestDirectSocket
-      | `String("IsolatedWorldScript") => `IsolatedWorldScript
+      | `String("InjectedJavascript") => `InjectedJavascript
       | `String("InjectedStyleSheet") => `InjectedStyleSheet
       | `String("ContentSecurityHandler") => `ContentSecurityHandler
       | `String("ContentWebAuthenticationAPI") => `ContentWebAuthenticationAPI
@@ -15753,7 +15753,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `WebOTPService => `String("WebOTPService")
       | `OutstandingNetworkRequestDirectSocket =>
         `String("OutstandingNetworkRequestDirectSocket")
-      | `IsolatedWorldScript => `String("IsolatedWorldScript")
+      | `InjectedJavascript => `String("InjectedJavascript")
       | `InjectedStyleSheet => `String("InjectedStyleSheet")
       | `ContentSecurityHandler => `String("ContentSecurityHandler")
       | `ContentWebAuthenticationAPI => `String("ContentWebAuthenticationAPI")
