@@ -9585,7 +9585,12 @@ the same request (but not for redirected requests). */,
     };
   }
   and ReportStatus: {
-    type _reportstatus = [ | `Queued | `Pending];
+    type _reportstatus = [
+      | `Queued
+      | `Pending
+      | `MarkedForRemoval
+      | `Success
+    ];
     let _reportstatus_of_yojson: Yojson.Basic.t => _reportstatus;
     let yojson_of__reportstatus: _reportstatus => Yojson.Basic.t;
     /* The status of a Reporting API report. */
@@ -11994,24 +11999,38 @@ the same request (but not for redirected requests). */,
     };
   }
   and ReportStatus: {
-    type _reportstatus = [ | `Queued | `Pending];
+    type _reportstatus = [
+      | `Queued
+      | `Pending
+      | `MarkedForRemoval
+      | `Success
+    ];
     let _reportstatus_of_yojson: Yojson.Basic.t => _reportstatus;
     let yojson_of__reportstatus: _reportstatus => Yojson.Basic.t;
     /* The status of a Reporting API report. */
     [@deriving yojson]
     type t = _reportstatus;
   } = {
-    type _reportstatus = [ | `Queued | `Pending];
+    type _reportstatus = [
+      | `Queued
+      | `Pending
+      | `MarkedForRemoval
+      | `Success
+    ];
     let _reportstatus_of_yojson =
       fun
       | `String("Queued") => `Queued
       | `String("Pending") => `Pending
+      | `String("MarkedForRemoval") => `MarkedForRemoval
+      | `String("Success") => `Success
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__reportstatus =
       fun
       | `Queued => `String("Queued")
-      | `Pending => `String("Pending");
+      | `Pending => `String("Pending")
+      | `MarkedForRemoval => `String("MarkedForRemoval")
+      | `Success => `String("Success");
     /* The status of a Reporting API report. */
     [@deriving yojson]
     type t = _reportstatus;
