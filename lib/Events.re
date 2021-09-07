@@ -1731,6 +1731,25 @@ after webbundle was parsed. */,
 
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
+  /* No description provided */
+  module ReportingApiReportUpdated = {
+    let name = "Network.reportingApiReportUpdated";
+
+    [@deriving yojson]
+    type result = {
+      [@key "report"]
+      report: Types.Network.ReportingApiReport.t /* No description provided */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
 };
 module Overlay = {
   /* Fired when the node should be inspected. This happens after call to `setInspectMode` or when
