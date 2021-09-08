@@ -1535,6 +1535,7 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
       | `AttributionTriggerDataTooLarge
+      | `AttributionEventSourceTriggerDataTooLarge
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2617,6 +2618,7 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
       | `AttributionTriggerDataTooLarge
+      | `AttributionEventSourceTriggerDataTooLarge
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2633,6 +2635,7 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
       | `AttributionTriggerDataTooLarge
+      | `AttributionEventSourceTriggerDataTooLarge
     ];
     let _attributionreportingissuetype_of_yojson =
       fun
@@ -2642,6 +2645,7 @@ used when violation type is kDigitalAssetLinks. */,
       | `String("AttributionSourceUntrustworthyOrigin") => `AttributionSourceUntrustworthyOrigin
       | `String("AttributionUntrustworthyOrigin") => `AttributionUntrustworthyOrigin
       | `String("AttributionTriggerDataTooLarge") => `AttributionTriggerDataTooLarge
+      | `String("AttributionEventSourceTriggerDataTooLarge") => `AttributionEventSourceTriggerDataTooLarge
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__attributionreportingissuetype =
@@ -2655,7 +2659,9 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionUntrustworthyOrigin =>
         `String("AttributionUntrustworthyOrigin")
       | `AttributionTriggerDataTooLarge =>
-        `String("AttributionTriggerDataTooLarge");
+        `String("AttributionTriggerDataTooLarge")
+      | `AttributionEventSourceTriggerDataTooLarge =>
+        `String("AttributionEventSourceTriggerDataTooLarge");
     /* No description provided */
     [@deriving yojson]
     type t = _attributionreportingissuetype;
