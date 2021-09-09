@@ -13689,6 +13689,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OutstandingNetworkRequestDirectSocket
       | `InjectedJavascript
       | `InjectedStyleSheet
+      | `Dummy
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -15353,6 +15354,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OutstandingNetworkRequestDirectSocket
       | `InjectedJavascript
       | `InjectedStyleSheet
+      | `Dummy
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -15483,6 +15485,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `OutstandingNetworkRequestDirectSocket
       | `InjectedJavascript
       | `InjectedStyleSheet
+      | `Dummy
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -15606,6 +15609,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("OutstandingNetworkRequestDirectSocket") => `OutstandingNetworkRequestDirectSocket
       | `String("InjectedJavascript") => `InjectedJavascript
       | `String("InjectedStyleSheet") => `InjectedStyleSheet
+      | `String("Dummy") => `Dummy
       | `String("ContentSecurityHandler") => `ContentSecurityHandler
       | `String("ContentWebAuthenticationAPI") => `ContentWebAuthenticationAPI
       | `String("ContentFileChooser") => `ContentFileChooser
@@ -15761,6 +15765,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
         `String("OutstandingNetworkRequestDirectSocket")
       | `InjectedJavascript => `String("InjectedJavascript")
       | `InjectedStyleSheet => `String("InjectedStyleSheet")
+      | `Dummy => `String("Dummy")
       | `ContentSecurityHandler => `String("ContentSecurityHandler")
       | `ContentWebAuthenticationAPI => `String("ContentWebAuthenticationAPI")
       | `ContentFileChooser => `String("ContentFileChooser")
