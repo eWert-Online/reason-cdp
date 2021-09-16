@@ -13065,7 +13065,6 @@ and Page: {
       | `ch_device_memory
       | `ch_downlink
       | `ch_ect
-      | `ch_lang
       | `ch_prefers_color_scheme
       | `ch_rtt
       | `ch_ua
@@ -13955,7 +13954,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_device_memory
       | `ch_downlink
       | `ch_ect
-      | `ch_lang
       | `ch_prefers_color_scheme
       | `ch_rtt
       | `ch_ua
@@ -14026,7 +14024,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_device_memory
       | `ch_downlink
       | `ch_ect
-      | `ch_lang
       | `ch_prefers_color_scheme
       | `ch_rtt
       | `ch_ua
@@ -14089,7 +14086,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("ch-device-memory") => `ch_device_memory
       | `String("ch-downlink") => `ch_downlink
       | `String("ch-ect") => `ch_ect
-      | `String("ch-lang") => `ch_lang
       | `String("ch-prefers-color-scheme") => `ch_prefers_color_scheme
       | `String("ch-rtt") => `ch_rtt
       | `String("ch-ua") => `ch_ua
@@ -14153,7 +14149,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_device_memory => `String("ch-device-memory")
       | `ch_downlink => `String("ch-downlink")
       | `ch_ect => `String("ch-ect")
-      | `ch_lang => `String("ch-lang")
       | `ch_prefers_color_scheme => `String("ch-prefers-color-scheme")
       | `ch_rtt => `String("ch-rtt")
       | `ch_ua => `String("ch-ua")
