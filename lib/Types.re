@@ -13170,6 +13170,7 @@ and Page: {
       | `FeatureDisabled
       | `TokenDisabled
       | `FeatureDisabledForUser
+      | `UnknownTrial
     ];
     let _origintrialtokenstatus_of_yojson:
       Yojson.Basic.t => _origintrialtokenstatus;
@@ -14287,6 +14288,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `FeatureDisabled
       | `TokenDisabled
       | `FeatureDisabledForUser
+      | `UnknownTrial
     ];
     let _origintrialtokenstatus_of_yojson:
       Yojson.Basic.t => _origintrialtokenstatus;
@@ -14309,6 +14311,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `FeatureDisabled
       | `TokenDisabled
       | `FeatureDisabledForUser
+      | `UnknownTrial
     ];
     let _origintrialtokenstatus_of_yojson =
       fun
@@ -14323,6 +14326,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("FeatureDisabled") => `FeatureDisabled
       | `String("TokenDisabled") => `TokenDisabled
       | `String("FeatureDisabledForUser") => `FeatureDisabledForUser
+      | `String("UnknownTrial") => `UnknownTrial
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__origintrialtokenstatus =
@@ -14337,7 +14341,8 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `WrongVersion => `String("WrongVersion")
       | `FeatureDisabled => `String("FeatureDisabled")
       | `TokenDisabled => `String("TokenDisabled")
-      | `FeatureDisabledForUser => `String("FeatureDisabledForUser");
+      | `FeatureDisabledForUser => `String("FeatureDisabledForUser")
+      | `UnknownTrial => `String("UnknownTrial");
     /* Origin Trial(https://www.chromium.org/blink/origin-trials) support.
        Status for an Origin Trial token. */
     [@deriving yojson]
