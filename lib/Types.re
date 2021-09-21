@@ -9229,6 +9229,7 @@ This is a temporary ability and it will be removed in the future. */,
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
       | `SamePartyConflictsWithOtherAttributes
+      | `NameValuePairExceedsMaxSize
     ];
     let _setcookieblockedreason_of_yojson:
       Yojson.Basic.t => _setcookieblockedreason;
@@ -9253,6 +9254,7 @@ This is a temporary ability and it will be removed in the future. */,
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
+      | `NameValuePairExceedsMaxSize
     ];
     let _cookieblockedreason_of_yojson: Yojson.Basic.t => _cookieblockedreason;
     let yojson_of__cookieblockedreason: _cookieblockedreason => Yojson.Basic.t;
@@ -11132,6 +11134,7 @@ This is a temporary ability and it will be removed in the future. */,
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
       | `SamePartyConflictsWithOtherAttributes
+      | `NameValuePairExceedsMaxSize
     ];
     let _setcookieblockedreason_of_yojson:
       Yojson.Basic.t => _setcookieblockedreason;
@@ -11159,6 +11162,7 @@ This is a temporary ability and it will be removed in the future. */,
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
       | `SamePartyConflictsWithOtherAttributes
+      | `NameValuePairExceedsMaxSize
     ];
     let _setcookieblockedreason_of_yojson =
       fun
@@ -11179,6 +11183,7 @@ This is a temporary ability and it will be removed in the future. */,
       | `String("SchemefulSameSiteUnspecifiedTreatedAsLax") => `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `String("SamePartyFromCrossPartyContext") => `SamePartyFromCrossPartyContext
       | `String("SamePartyConflictsWithOtherAttributes") => `SamePartyConflictsWithOtherAttributes
+      | `String("NameValuePairExceedsMaxSize") => `NameValuePairExceedsMaxSize
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__setcookieblockedreason =
@@ -11203,7 +11208,9 @@ This is a temporary ability and it will be removed in the future. */,
       | `SamePartyFromCrossPartyContext =>
         `String("SamePartyFromCrossPartyContext")
       | `SamePartyConflictsWithOtherAttributes =>
-        `String("SamePartyConflictsWithOtherAttributes");
+        `String("SamePartyConflictsWithOtherAttributes")
+      | `NameValuePairExceedsMaxSize =>
+        `String("NameValuePairExceedsMaxSize");
     /* Types of reasons why a cookie may not be stored from a response. */
     [@deriving yojson]
     type t = _setcookieblockedreason;
@@ -11223,6 +11230,7 @@ This is a temporary ability and it will be removed in the future. */,
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
+      | `NameValuePairExceedsMaxSize
     ];
     let _cookieblockedreason_of_yojson: Yojson.Basic.t => _cookieblockedreason;
     let yojson_of__cookieblockedreason: _cookieblockedreason => Yojson.Basic.t;
@@ -11244,6 +11252,7 @@ This is a temporary ability and it will be removed in the future. */,
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
+      | `NameValuePairExceedsMaxSize
     ];
     let _cookieblockedreason_of_yojson =
       fun
@@ -11260,6 +11269,7 @@ This is a temporary ability and it will be removed in the future. */,
       | `String("SchemefulSameSiteLax") => `SchemefulSameSiteLax
       | `String("SchemefulSameSiteUnspecifiedTreatedAsLax") => `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `String("SamePartyFromCrossPartyContext") => `SamePartyFromCrossPartyContext
+      | `String("NameValuePairExceedsMaxSize") => `NameValuePairExceedsMaxSize
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__cookieblockedreason =
@@ -11279,7 +11289,9 @@ This is a temporary ability and it will be removed in the future. */,
       | `SchemefulSameSiteUnspecifiedTreatedAsLax =>
         `String("SchemefulSameSiteUnspecifiedTreatedAsLax")
       | `SamePartyFromCrossPartyContext =>
-        `String("SamePartyFromCrossPartyContext");
+        `String("SamePartyFromCrossPartyContext")
+      | `NameValuePairExceedsMaxSize =>
+        `String("NameValuePairExceedsMaxSize");
     /* Types of reasons why a cookie may not be sent with a request. */
     [@deriving yojson]
     type t = _cookieblockedreason;
