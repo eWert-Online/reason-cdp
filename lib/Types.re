@@ -13712,6 +13712,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ContentWebUSB
       | `ContentMediaSession
       | `ContentMediaSessionService
+      | `ContentMediaPlay
       | `EmbedderPopupBlockerTabHelper
       | `EmbedderSafeBrowsingTriggeredPopupBlocker
       | `EmbedderSafeBrowsingThreatDetails
@@ -15378,6 +15379,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ContentWebUSB
       | `ContentMediaSession
       | `ContentMediaSessionService
+      | `ContentMediaPlay
       | `EmbedderPopupBlockerTabHelper
       | `EmbedderSafeBrowsingTriggeredPopupBlocker
       | `EmbedderSafeBrowsingThreatDetails
@@ -15510,6 +15512,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ContentWebUSB
       | `ContentMediaSession
       | `ContentMediaSessionService
+      | `ContentMediaPlay
       | `EmbedderPopupBlockerTabHelper
       | `EmbedderSafeBrowsingTriggeredPopupBlocker
       | `EmbedderSafeBrowsingThreatDetails
@@ -15635,6 +15638,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("ContentWebUSB") => `ContentWebUSB
       | `String("ContentMediaSession") => `ContentMediaSession
       | `String("ContentMediaSessionService") => `ContentMediaSessionService
+      | `String("ContentMediaPlay") => `ContentMediaPlay
       | `String("EmbedderPopupBlockerTabHelper") => `EmbedderPopupBlockerTabHelper
       | `String("EmbedderSafeBrowsingTriggeredPopupBlocker") => `EmbedderSafeBrowsingTriggeredPopupBlocker
       | `String("EmbedderSafeBrowsingThreatDetails") => `EmbedderSafeBrowsingThreatDetails
@@ -15793,6 +15797,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ContentWebUSB => `String("ContentWebUSB")
       | `ContentMediaSession => `String("ContentMediaSession")
       | `ContentMediaSessionService => `String("ContentMediaSessionService")
+      | `ContentMediaPlay => `String("ContentMediaPlay")
       | `EmbedderPopupBlockerTabHelper =>
         `String("EmbedderPopupBlockerTabHelper")
       | `EmbedderSafeBrowsingTriggeredPopupBlocker =>
