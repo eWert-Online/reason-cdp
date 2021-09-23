@@ -19114,12 +19114,15 @@ option, use with caution. */,
       };
     };
   };
-  /* Returns the unique (PWA) app id. */
+  /* Returns the unique (PWA) app id.
+     Only returns values if the feature flag 'WebAppEnableManifestId' is enabled */
   module GetAppId = {
     module Response: {
       type result = {
         [@yojson.option] [@key "appId"]
-        appId: option(string) /* Only returns a value if the feature flag 'WebAppEnableManifestId' is enabled */,
+        appId: option(string), /* App id, either from manifest's id attribute or computed from start_url */
+        [@yojson.option] [@key "recommendedId"]
+        recommendedId: option(string) /* Recommendation for manifest's id attribute to match current id computed from start_url */,
       };
 
       type t = {
@@ -19133,7 +19136,9 @@ option, use with caution. */,
       [@deriving yojson]
       type result = {
         [@yojson.option] [@key "appId"]
-        appId: option(string) /* Only returns a value if the feature flag 'WebAppEnableManifestId' is enabled */,
+        appId: option(string), /* App id, either from manifest's id attribute or computed from start_url */
+        [@yojson.option] [@key "recommendedId"]
+        recommendedId: option(string) /* Recommendation for manifest's id attribute to match current id computed from start_url */,
       };
 
       [@deriving yojson]
