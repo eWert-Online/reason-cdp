@@ -1604,6 +1604,26 @@ instead of "limited-quirks". */
       isWarning: bool /* No description provided */,
     };
   }
+  and GenericIssueErrorType: {
+    type _genericissueerrortype = [ | `CrossOriginPortalPostMessageError];
+    let _genericissueerrortype_of_yojson:
+      Yojson.Basic.t => _genericissueerrortype;
+    let yojson_of__genericissueerrortype:
+      _genericissueerrortype => Yojson.Basic.t;
+    /* No description provided */
+    [@deriving yojson]
+    type t = _genericissueerrortype;
+  }
+  and GenericIssueDetails: {
+    /* Depending on the concrete errorType, different properties are set. */
+    [@deriving yojson]
+    type t = {
+      [@key "errorType"]
+      errorType: GenericIssueErrorType.t, /* Issues with the same errorType are aggregated in the frontend. */
+      [@yojson.option] [@key "frameId"]
+      frameId: option(Page.FrameId.t) /* No description provided */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -1619,6 +1639,7 @@ instead of "limited-quirks". */
       | `QuirksModeIssue
       | `NavigatorUserAgentIssue
       | `WasmCrossOriginModuleSharingIssue
+      | `GenericIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -1663,7 +1684,9 @@ instead of "limited-quirks". */
         option(NavigatorUserAgentIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
       wasmCrossOriginModuleSharingIssue:
-        option(WasmCrossOriginModuleSharingIssueDetails.t) /* No description provided */,
+        option(WasmCrossOriginModuleSharingIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "genericIssueDetails"]
+      genericIssueDetails: option(GenericIssueDetails.t) /* No description provided */,
     };
   }
   and IssueId: {
@@ -2780,6 +2803,49 @@ instead of "limited-quirks". */
       isWarning: bool /* No description provided */,
     };
   }
+  and GenericIssueErrorType: {
+    type _genericissueerrortype = [ | `CrossOriginPortalPostMessageError];
+    let _genericissueerrortype_of_yojson:
+      Yojson.Basic.t => _genericissueerrortype;
+    let yojson_of__genericissueerrortype:
+      _genericissueerrortype => Yojson.Basic.t;
+    /* No description provided */
+    [@deriving yojson]
+    type t = _genericissueerrortype;
+  } = {
+    type _genericissueerrortype = [ | `CrossOriginPortalPostMessageError];
+    let _genericissueerrortype_of_yojson =
+      fun
+      | `String("CrossOriginPortalPostMessageError") => `CrossOriginPortalPostMessageError
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__genericissueerrortype =
+      fun
+      | `CrossOriginPortalPostMessageError =>
+        `String("CrossOriginPortalPostMessageError");
+    /* No description provided */
+    [@deriving yojson]
+    type t = _genericissueerrortype;
+  }
+  and GenericIssueDetails: {
+    /* Depending on the concrete errorType, different properties are set. */
+    [@deriving yojson]
+    type t = {
+      [@key "errorType"]
+      errorType: GenericIssueErrorType.t, /* Issues with the same errorType are aggregated in the frontend. */
+      [@yojson.option] [@key "frameId"]
+      frameId: option(Page.FrameId.t) /* No description provided */,
+    };
+  } = {
+    /* Depending on the concrete errorType, different properties are set. */
+    [@deriving yojson]
+    type t = {
+      [@key "errorType"]
+      errorType: GenericIssueErrorType.t, /* Issues with the same errorType are aggregated in the frontend. */
+      [@yojson.option] [@key "frameId"]
+      frameId: option(Page.FrameId.t) /* No description provided */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -2795,6 +2861,7 @@ instead of "limited-quirks". */
       | `QuirksModeIssue
       | `NavigatorUserAgentIssue
       | `WasmCrossOriginModuleSharingIssue
+      | `GenericIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -2818,6 +2885,7 @@ instead of "limited-quirks". */
       | `QuirksModeIssue
       | `NavigatorUserAgentIssue
       | `WasmCrossOriginModuleSharingIssue
+      | `GenericIssue
     ];
     let _inspectorissuecode_of_yojson =
       fun
@@ -2834,6 +2902,7 @@ instead of "limited-quirks". */
       | `String("QuirksModeIssue") => `QuirksModeIssue
       | `String("NavigatorUserAgentIssue") => `NavigatorUserAgentIssue
       | `String("WasmCrossOriginModuleSharingIssue") => `WasmCrossOriginModuleSharingIssue
+      | `String("GenericIssue") => `GenericIssue
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__inspectorissuecode =
@@ -2851,7 +2920,8 @@ instead of "limited-quirks". */
       | `QuirksModeIssue => `String("QuirksModeIssue")
       | `NavigatorUserAgentIssue => `String("NavigatorUserAgentIssue")
       | `WasmCrossOriginModuleSharingIssue =>
-        `String("WasmCrossOriginModuleSharingIssue");
+        `String("WasmCrossOriginModuleSharingIssue")
+      | `GenericIssue => `String("GenericIssue");
     /* A unique identifier for the type of issue. Each type may use one of the
        optional fields in InspectorIssueDetails to convey more specific
        information about the kind of issue. */
@@ -2893,7 +2963,9 @@ instead of "limited-quirks". */
         option(NavigatorUserAgentIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
       wasmCrossOriginModuleSharingIssue:
-        option(WasmCrossOriginModuleSharingIssueDetails.t) /* No description provided */,
+        option(WasmCrossOriginModuleSharingIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "genericIssueDetails"]
+      genericIssueDetails: option(GenericIssueDetails.t) /* No description provided */,
     };
   } = {
     /* This struct holds a list of optional fields with additional information
@@ -2930,7 +3002,9 @@ instead of "limited-quirks". */
         option(NavigatorUserAgentIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
       wasmCrossOriginModuleSharingIssue:
-        option(WasmCrossOriginModuleSharingIssueDetails.t) /* No description provided */,
+        option(WasmCrossOriginModuleSharingIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "genericIssueDetails"]
+      genericIssueDetails: option(GenericIssueDetails.t) /* No description provided */,
     };
   }
   and IssueId: {
