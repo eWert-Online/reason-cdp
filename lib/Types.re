@@ -9048,6 +9048,7 @@ request correspondinfg to the main frame. */,
       | `HeaderDisallowedByPreflightResponse
       | `RedirectContainsCredentials
       | `InsecurePrivateNetwork
+      | `InvalidPrivateNetworkAccess
       | `NoCorsRedirectModeNotFollow
     ];
     let _corserror_of_yojson: Yojson.Basic.t => _corserror;
@@ -10593,6 +10594,7 @@ request correspondinfg to the main frame. */,
       | `HeaderDisallowedByPreflightResponse
       | `RedirectContainsCredentials
       | `InsecurePrivateNetwork
+      | `InvalidPrivateNetworkAccess
       | `NoCorsRedirectModeNotFollow
     ];
     let _corserror_of_yojson: Yojson.Basic.t => _corserror;
@@ -10627,6 +10629,7 @@ request correspondinfg to the main frame. */,
       | `HeaderDisallowedByPreflightResponse
       | `RedirectContainsCredentials
       | `InsecurePrivateNetwork
+      | `InvalidPrivateNetworkAccess
       | `NoCorsRedirectModeNotFollow
     ];
     let _corserror_of_yojson =
@@ -10656,6 +10659,7 @@ request correspondinfg to the main frame. */,
       | `String("HeaderDisallowedByPreflightResponse") => `HeaderDisallowedByPreflightResponse
       | `String("RedirectContainsCredentials") => `RedirectContainsCredentials
       | `String("InsecurePrivateNetwork") => `InsecurePrivateNetwork
+      | `String("InvalidPrivateNetworkAccess") => `InvalidPrivateNetworkAccess
       | `String("NoCorsRedirectModeNotFollow") => `NoCorsRedirectModeNotFollow
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
@@ -10698,6 +10702,7 @@ request correspondinfg to the main frame. */,
         `String("HeaderDisallowedByPreflightResponse")
       | `RedirectContainsCredentials => `String("RedirectContainsCredentials")
       | `InsecurePrivateNetwork => `String("InsecurePrivateNetwork")
+      | `InvalidPrivateNetworkAccess => `String("InvalidPrivateNetworkAccess")
       | `NoCorsRedirectModeNotFollow =>
         `String("NoCorsRedirectModeNotFollow");
     /* The reason why request was blocked. */
