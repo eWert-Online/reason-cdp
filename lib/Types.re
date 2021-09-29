@@ -12500,6 +12500,28 @@ and Overlay: {
       descendantBorder: option(LineStyle.t) /* The style of the descendants' borders. */,
     };
   }
+  and IsolatedElementHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "isolationModeHighlightConfig"]
+      isolationModeHighlightConfig: IsolationModeHighlightConfig.t, /* A descriptor for the highlight appearance of an element in isolation mode. */
+      [@key "nodeId"]
+      nodeId: DOM.NodeId.t /* Identifier of the isolated element to highlight. */,
+    };
+  }
+  and IsolationModeHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "resizerColor"]
+      resizerColor: option(DOM.RGBA.t), /* The fill color of the resizers (default: transparent). */
+      [@yojson.option] [@key "resizerHandleColor"]
+      resizerHandleColor: option(DOM.RGBA.t), /* The fill color for resizer handles (default: transparent). */
+      [@yojson.option] [@key "maskColor"]
+      maskColor: option(DOM.RGBA.t) /* The fill color for the mask covering non-isolated elements (default: transparent). */,
+    };
+  }
   and InspectMode: {
     type _inspectmode = [
       | `searchForNode
@@ -13025,6 +13047,48 @@ and Overlay: {
       containerBorder: option(LineStyle.t), /* The style of the container border. */
       [@yojson.option] [@key "descendantBorder"]
       descendantBorder: option(LineStyle.t) /* The style of the descendants' borders. */,
+    };
+  }
+  and IsolatedElementHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "isolationModeHighlightConfig"]
+      isolationModeHighlightConfig: IsolationModeHighlightConfig.t, /* A descriptor for the highlight appearance of an element in isolation mode. */
+      [@key "nodeId"]
+      nodeId: DOM.NodeId.t /* Identifier of the isolated element to highlight. */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "isolationModeHighlightConfig"]
+      isolationModeHighlightConfig: IsolationModeHighlightConfig.t, /* A descriptor for the highlight appearance of an element in isolation mode. */
+      [@key "nodeId"]
+      nodeId: DOM.NodeId.t /* Identifier of the isolated element to highlight. */,
+    };
+  }
+  and IsolationModeHighlightConfig: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "resizerColor"]
+      resizerColor: option(DOM.RGBA.t), /* The fill color of the resizers (default: transparent). */
+      [@yojson.option] [@key "resizerHandleColor"]
+      resizerHandleColor: option(DOM.RGBA.t), /* The fill color for resizer handles (default: transparent). */
+      [@yojson.option] [@key "maskColor"]
+      maskColor: option(DOM.RGBA.t) /* The fill color for the mask covering non-isolated elements (default: transparent). */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "resizerColor"]
+      resizerColor: option(DOM.RGBA.t), /* The fill color of the resizers (default: transparent). */
+      [@yojson.option] [@key "resizerHandleColor"]
+      resizerHandleColor: option(DOM.RGBA.t), /* The fill color for resizer handles (default: transparent). */
+      [@yojson.option] [@key "maskColor"]
+      maskColor: option(DOM.RGBA.t) /* The fill color for the mask covering non-isolated elements (default: transparent). */,
     };
   }
   and InspectMode: {

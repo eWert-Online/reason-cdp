@@ -18247,6 +18247,64 @@ module Overlay = {
       };
     };
   };
+  /* Show elements in isolation mode with overlays. */
+  module SetShowIsolatedElements = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "isolatedElementHighlightConfigs"]
+        isolatedElementHighlightConfigs:
+          list(Types.Overlay.IsolatedElementHighlightConfig.t) /* An array of node identifiers and descriptors for the highlight appearance. */,
+      };
+      let make = (~isolatedElementHighlightConfigs, ()) => {
+        {isolatedElementHighlightConfigs: isolatedElementHighlightConfigs};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Overlay.setShowIsolatedElements", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
 };
 module Page = {
   /* Deprecated, please use addScriptToEvaluateOnNewDocument instead. */
