@@ -946,6 +946,243 @@ module Animation = {
     };
   };
 };
+module ApplicationCache = {
+  /* Enables application cache domain notifications. */
+  module Enable = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "ApplicationCache.enable", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns relevant application cache data for the document in given frame. */
+  module GetApplicationCacheForFrame = {
+    module Response: {
+      type result = {
+        [@key "applicationCache"]
+        applicationCache: Types.ApplicationCache.ApplicationCache.t /* Relevant application cache data for the document in given frame. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "applicationCache"]
+        applicationCache: Types.ApplicationCache.ApplicationCache.t /* Relevant application cache data for the document in given frame. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "frameId"]
+        frameId: Types.Page.FrameId.t /* Identifier of the frame containing document whose application cache is retrieved. */,
+      };
+      let make = (~frameId, ()) => {
+        {frameId: frameId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "ApplicationCache.getApplicationCacheForFrame",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns array of frame identifiers with manifest urls for each frame containing a document
+     associated with some application cache. */
+  module GetFramesWithManifests = {
+    module Response: {
+      type result = {
+        [@key "frameIds"]
+        frameIds: list(Types.ApplicationCache.FrameWithManifest.t) /* Array of frame identifiers with manifest urls for each frame containing a document
+associated with some application cache. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "frameIds"]
+        frameIds: list(Types.ApplicationCache.FrameWithManifest.t) /* Array of frame identifiers with manifest urls for each frame containing a document
+associated with some application cache. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "ApplicationCache.getFramesWithManifests", sessionId}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns manifest URL for document in the given frame. */
+  module GetManifestForFrame = {
+    module Response: {
+      type result = {
+        [@key "manifestURL"]
+        manifestURL: string /* Manifest URL for document in the given frame. */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "manifestURL"]
+        manifestURL: string /* Manifest URL for document in the given frame. */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "frameId"]
+        frameId: Types.Page.FrameId.t /* Identifier of the frame containing document whose manifest is retrieved. */,
+      };
+      let make = (~frameId, ()) => {
+        {frameId: frameId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "ApplicationCache.getManifestForFrame",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+};
 module Audits = {
   /* Returns the response body and size if it were re-encoded with the specified settings. Only
      applies to images. */
