@@ -3813,7 +3813,7 @@ module Profiler = {
   /* Reports coverage delta since the last poll (either from an event like this, or from
      `takePreciseCoverage` for the current isolate. May only be sent if precise code
      coverage has been started. This event can be trigged by the embedder to, for example,
-     trigger collection of coverage data immediatelly at a certain point in time. */
+     trigger collection of coverage data immediately at a certain point in time. */
   module PreciseCoverageDeltaUpdate = {
     let name = "Profiler.preciseCoverageDeltaUpdate";
 
@@ -3821,8 +3821,8 @@ module Profiler = {
     type result = {
       [@key "timestamp"]
       timestamp: float, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
-      [@key "occassion"]
-      occassion: string, /* Identifier for distinguishing coverage events. */
+      [@key "occasion"]
+      occasion: string, /* Identifier for distinguishing coverage events. */
       [@key "result"]
       result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
     };
@@ -4063,7 +4063,9 @@ on named context. */,
       [@key "object"]
       object_: Types.Runtime.RemoteObject.t, /* No description provided */
       [@key "hints"]
-      hints: Types.assoc /* No description provided */,
+      hints: Types.assoc, /* No description provided */
+      [@yojson.option] [@key "executionContextId"]
+      executionContextId: option(Types.Runtime.ExecutionContextId.t) /* Identifier of the context where the call was made. */,
     };
 
     [@deriving yojson]

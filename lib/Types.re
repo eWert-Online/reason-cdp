@@ -20169,28 +20169,6 @@ profile startTime. */,
       [@key "entries"]
       entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
     };
-  }
-  and CounterInfo: {
-    /* Collected counter information. */
-    [@deriving yojson]
-    type t = {
-      [@key "name"]
-      name: string, /* Counter name. */
-      [@key "value"]
-      value: float /* Counter value. */,
-    };
-  }
-  and RuntimeCallCounterInfo: {
-    /* Runtime call counter information. */
-    [@deriving yojson]
-    type t = {
-      [@key "name"]
-      name: string, /* Counter name. */
-      [@key "value"]
-      value: float, /* Counter value. */
-      [@key "time"]
-      time: float /* Counter time in seconds. */,
-    };
   };
 } = {
   module rec ProfileNode: {
@@ -20406,48 +20384,6 @@ profile startTime. */,
       url: string, /* JavaScript script name or url. */
       [@key "entries"]
       entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
-    };
-  }
-  and CounterInfo: {
-    /* Collected counter information. */
-    [@deriving yojson]
-    type t = {
-      [@key "name"]
-      name: string, /* Counter name. */
-      [@key "value"]
-      value: float /* Counter value. */,
-    };
-  } = {
-    /* Collected counter information. */
-    [@deriving yojson]
-    type t = {
-      [@key "name"]
-      name: string, /* Counter name. */
-      [@key "value"]
-      value: float /* Counter value. */,
-    };
-  }
-  and RuntimeCallCounterInfo: {
-    /* Runtime call counter information. */
-    [@deriving yojson]
-    type t = {
-      [@key "name"]
-      name: string, /* Counter name. */
-      [@key "value"]
-      value: float, /* Counter value. */
-      [@key "time"]
-      time: float /* Counter time in seconds. */,
-    };
-  } = {
-    /* Runtime call counter information. */
-    [@deriving yojson]
-    type t = {
-      [@key "name"]
-      name: string, /* Counter name. */
-      [@key "value"]
-      value: float, /* Counter value. */
-      [@key "time"]
-      time: float /* Counter time in seconds. */,
     };
   };
 }
@@ -20752,7 +20688,7 @@ script evaluation should be performed. */
       [@key "name"]
       name: string, /* Human readable name describing given context. */
       [@key "uniqueId"]
-      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique accross
+      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique across
 multiple processes, so can be reliably used to identify specific context while backend
 performs a cross-process navigation. */
       [@yojson.option] [@key "auxData"]
@@ -20781,7 +20717,11 @@ performs a cross-process navigation. */
       [@yojson.option] [@key "exception"]
       exception_: option(RemoteObject.t), /* Exception object if available. */
       [@yojson.option] [@key "executionContextId"]
-      executionContextId: option(ExecutionContextId.t) /* Identifier of the context where exception happened. */,
+      executionContextId: option(ExecutionContextId.t), /* Identifier of the context where exception happened. */
+      [@yojson.option] [@key "exceptionMetaData"]
+      exceptionMetaData: option(assoc) /* Dictionary with entries of meta data that the client associated
+with this exception, such as information about associated network
+requests, etc. */,
     };
   }
   and Timestamp: {
@@ -21597,7 +21537,7 @@ script evaluation should be performed. */
       [@key "name"]
       name: string, /* Human readable name describing given context. */
       [@key "uniqueId"]
-      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique accross
+      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique across
 multiple processes, so can be reliably used to identify specific context while backend
 performs a cross-process navigation. */
       [@yojson.option] [@key "auxData"]
@@ -21615,7 +21555,7 @@ script evaluation should be performed. */
       [@key "name"]
       name: string, /* Human readable name describing given context. */
       [@key "uniqueId"]
-      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique accross
+      uniqueId: string, /* A system-unique execution context identifier. Unlike the id, this is unique across
 multiple processes, so can be reliably used to identify specific context while backend
 performs a cross-process navigation. */
       [@yojson.option] [@key "auxData"]
@@ -21644,7 +21584,11 @@ performs a cross-process navigation. */
       [@yojson.option] [@key "exception"]
       exception_: option(RemoteObject.t), /* Exception object if available. */
       [@yojson.option] [@key "executionContextId"]
-      executionContextId: option(ExecutionContextId.t) /* Identifier of the context where exception happened. */,
+      executionContextId: option(ExecutionContextId.t), /* Identifier of the context where exception happened. */
+      [@yojson.option] [@key "exceptionMetaData"]
+      exceptionMetaData: option(assoc) /* Dictionary with entries of meta data that the client associated
+with this exception, such as information about associated network
+requests, etc. */,
     };
   } = {
     /* Detailed information about exception (or error) that was thrown during script compilation or
@@ -21668,7 +21612,11 @@ performs a cross-process navigation. */
       [@yojson.option] [@key "exception"]
       exception_: option(RemoteObject.t), /* Exception object if available. */
       [@yojson.option] [@key "executionContextId"]
-      executionContextId: option(ExecutionContextId.t) /* Identifier of the context where exception happened. */,
+      executionContextId: option(ExecutionContextId.t), /* Identifier of the context where exception happened. */
+      [@yojson.option] [@key "exceptionMetaData"]
+      exceptionMetaData: option(assoc) /* Dictionary with entries of meta data that the client associated
+with this exception, such as information about associated network
+requests, etc. */,
     };
   }
   and Timestamp: {

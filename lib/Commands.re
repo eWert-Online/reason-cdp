@@ -27332,7 +27332,7 @@ module Debugger = {
       type t = {
         [@yojson.option] [@key "maxScriptsCacheSize"]
         maxScriptsCacheSize: option(float) /* The maximum size in bytes of collected scripts (not referenced by other heap objects)
-the debugger can hold. Puts no limit if paramter is omitted. */,
+the debugger can hold. Puts no limit if parameter is omitted. */,
       };
       let make = (~maxScriptsCacheSize=?, ()) => {
         {maxScriptsCacheSize: maxScriptsCacheSize};
@@ -29721,10 +29721,18 @@ default value is 32768 bytes. */,
         reportProgress: option(bool), /* If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken
 when the tracking is stopped. */
         [@yojson.option] [@key "treatGlobalObjectsAsRoots"]
-        treatGlobalObjectsAsRoots: option(bool) /* No description provided */,
+        treatGlobalObjectsAsRoots: option(bool), /* No description provided */
+        [@yojson.option] [@key "captureNumericValue"]
+        captureNumericValue: option(bool) /* If true, numerical values are included in the snapshot */,
       };
-      let make = (~reportProgress=?, ~treatGlobalObjectsAsRoots=?, ()) => {
-        {reportProgress, treatGlobalObjectsAsRoots};
+      let make =
+          (
+            ~reportProgress=?,
+            ~treatGlobalObjectsAsRoots=?,
+            ~captureNumericValue=?,
+            (),
+          ) => {
+        {reportProgress, treatGlobalObjectsAsRoots, captureNumericValue};
       };
     };
 
@@ -29785,10 +29793,18 @@ when the tracking is stopped. */
         [@yojson.option] [@key "reportProgress"]
         reportProgress: option(bool), /* If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken. */
         [@yojson.option] [@key "treatGlobalObjectsAsRoots"]
-        treatGlobalObjectsAsRoots: option(bool) /* If true, a raw snapshot without artifical roots will be generated */,
+        treatGlobalObjectsAsRoots: option(bool), /* If true, a raw snapshot without artificial roots will be generated */
+        [@yojson.option] [@key "captureNumericValue"]
+        captureNumericValue: option(bool) /* If true, numerical values are included in the snapshot */,
       };
-      let make = (~reportProgress=?, ~treatGlobalObjectsAsRoots=?, ()) => {
-        {reportProgress, treatGlobalObjectsAsRoots};
+      let make =
+          (
+            ~reportProgress=?,
+            ~treatGlobalObjectsAsRoots=?,
+            ~captureNumericValue=?,
+            (),
+          ) => {
+        {reportProgress, treatGlobalObjectsAsRoots, captureNumericValue};
       };
     };
 
@@ -30418,288 +30434,6 @@ module Profiler = {
       };
     };
   };
-  /* Enable counters collection. */
-  module EnableCounters = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.enableCounters", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Disable counters collection. */
-  module DisableCounters = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.disableCounters", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Retrieve counters. */
-  module GetCounters = {
-    module Response: {
-      type result = {
-        [@key "result"]
-        result: list(Types.Profiler.CounterInfo.t) /* Collected counters information. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        [@key "result"]
-        result: list(Types.Profiler.CounterInfo.t) /* Collected counters information. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.getCounters", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Enable run time call stats collection. */
-  module EnableRuntimeCallStats = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.enableRuntimeCallStats", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Disable run time call stats collection. */
-  module DisableRuntimeCallStats = {
-    module Response: {
-      type result = Types.assoc;
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.disableRuntimeCallStats", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Retrieve run time call stats. */
-  module GetRuntimeCallStats = {
-    module Response: {
-      type result = {
-        [@key "result"]
-        result: list(Types.Profiler.RuntimeCallCounterInfo.t) /* Collected runtime call counter information. */,
-      };
-
-      type t = {
-        id: int,
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        [@key "result"]
-        result: list(Types.Profiler.RuntimeCallCounterInfo.t) /* Collected runtime call counter information. */,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        result,
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.getRuntimeCallStats", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
 };
 module Runtime = {
   /* Add handler to promise with given promise object id. */
@@ -30840,8 +30574,10 @@ resolved. */
         executionContextId: option(Types.Runtime.ExecutionContextId.t), /* Specifies execution context which global object will be used to call function on. Either
 executionContextId or objectId should be specified. */
         [@yojson.option] [@key "objectGroup"]
-        objectGroup: option(string) /* Symbolic group name that can be used to release multiple objects. If objectGroup is not
-specified and objectId is, objectGroup will be inherited from object. */,
+        objectGroup: option(string), /* Symbolic group name that can be used to release multiple objects. If objectGroup is not
+specified and objectId is, objectGroup will be inherited from object. */
+        [@yojson.option] [@key "throwOnSideEffect"]
+        throwOnSideEffect: option(bool) /* Whether to throw an exception if side effect cannot be ruled out during evaluation. */,
       };
       let make =
           (
@@ -30855,6 +30591,7 @@ specified and objectId is, objectGroup will be inherited from object. */,
             ~awaitPromise=?,
             ~executionContextId=?,
             ~objectGroup=?,
+            ~throwOnSideEffect=?,
             (),
           ) => {
         {
@@ -30868,6 +30605,7 @@ specified and objectId is, objectGroup will be inherited from object. */,
           awaitPromise,
           executionContextId,
           objectGroup,
+          throwOnSideEffect,
         };
       };
     };
@@ -31185,9 +30923,9 @@ when called with non-callable arguments. This flag bypasses CSP for this
 evaluation and allows unsafe-eval. Defaults to true. */
         [@yojson.option] [@key "uniqueContextId"]
         uniqueContextId: option(string) /* An alternative way to specify the execution context to evaluate in.
-Compared to contextId that may be reused accross processes, this is guaranteed to be
+Compared to contextId that may be reused across processes, this is guaranteed to be
 system-unique, so it can be used to prevent accidental evaluation of the expression
-in context different than intended (e.g. as a result of navigation accross process
+in context different than intended (e.g. as a result of navigation across process
 boundaries).
 This is mutually exclusive with `contextId`. */,
       };
@@ -31418,7 +31156,9 @@ chain. */
         accessorPropertiesOnly: option(bool), /* If true, returns accessor properties (with getter/setter) only; internal properties are not
 returned either. */
         [@yojson.option] [@key "generatePreview"]
-        generatePreview: option(bool) /* Whether preview should be generated for the results. */,
+        generatePreview: option(bool), /* Whether preview should be generated for the results. */
+        [@yojson.option] [@key "nonIndexedPropertiesOnly"]
+        nonIndexedPropertiesOnly: option(bool) /* If true, returns non-indexed properties only. */,
       };
       let make =
           (
@@ -31426,9 +31166,16 @@ returned either. */
             ~ownProperties=?,
             ~accessorPropertiesOnly=?,
             ~generatePreview=?,
+            ~nonIndexedPropertiesOnly=?,
             (),
           ) => {
-        {objectId, ownProperties, accessorPropertiesOnly, generatePreview};
+        {
+          objectId,
+          ownProperties,
+          accessorPropertiesOnly,
+          generatePreview,
+          nonIndexedPropertiesOnly,
+        };
       };
     };
 
@@ -32111,7 +31858,10 @@ call stacks (default). */,
         executionContextId: option(Types.Runtime.ExecutionContextId.t), /* If specified, the binding would only be exposed to the specified
 execution context. If omitted and `executionContextName` is not set,
 the binding is exposed to all execution contexts of the target.
-This parameter is mutually exclusive with `executionContextName`. */
+This parameter is mutually exclusive with `executionContextName`.
+Deprecated in favor of `executionContextName` due to an unclear use case
+and bugs in implementation (crbug.com/1169639). `executionContextId` will be
+removed in the future. */
         [@yojson.option] [@key "executionContextName"]
         executionContextName: option(string) /* If specified, the binding is exposed to the executionContext with
 matching name, even for contexts created after the binding is added.
