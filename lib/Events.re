@@ -57,50 +57,6 @@ module Animation = {
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
 };
-module ApplicationCache = {
-  /* No description provided */
-  module ApplicationCacheStatusUpdated = {
-    let name = "ApplicationCache.applicationCacheStatusUpdated";
-
-    [@deriving yojson]
-    type result = {
-      [@key "frameId"]
-      frameId: Types.Page.FrameId.t, /* Identifier of the frame containing document whose application cache updated status. */
-      [@key "manifestURL"]
-      manifestURL: string, /* Manifest URL. */
-      [@key "status"]
-      status: float /* Updated application cache status. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-  /* No description provided */
-  module NetworkStateUpdated = {
-    let name = "ApplicationCache.networkStateUpdated";
-
-    [@deriving yojson]
-    type result = {
-      [@key "isNowOnline"]
-      isNowOnline: bool /* No description provided */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-};
 module Audits = {
   /* No description provided */
   module IssueAdded = {
