@@ -1016,6 +1016,126 @@ animation/transition. */,
     };
   };
 }
+and ApplicationCache: {
+  module rec ApplicationCacheResource: {
+    /* Detailed application cache resource information. */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* Resource url. */
+      [@key "size"]
+      size: float, /* Resource size. */
+      [@key "type"]
+      type_: string /* Resource type. */,
+    };
+  }
+  and ApplicationCache: {
+    /* Detailed application cache information. */
+    [@deriving yojson]
+    type t = {
+      [@key "manifestURL"]
+      manifestURL: string, /* Manifest URL. */
+      [@key "size"]
+      size: float, /* Application cache size. */
+      [@key "creationTime"]
+      creationTime: float, /* Application cache creation time. */
+      [@key "updateTime"]
+      updateTime: float, /* Application cache update time. */
+      [@key "resources"]
+      resources: list(ApplicationCacheResource.t) /* Application cache resources. */,
+    };
+  }
+  and FrameWithManifest: {
+    /* Frame identifier - manifest URL pair. */
+    [@deriving yojson]
+    type t = {
+      [@key "frameId"]
+      frameId: Page.FrameId.t, /* Frame identifier. */
+      [@key "manifestURL"]
+      manifestURL: string, /* Manifest URL. */
+      [@key "status"]
+      status: float /* Application cache status. */,
+    };
+  };
+} = {
+  module rec ApplicationCacheResource: {
+    /* Detailed application cache resource information. */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* Resource url. */
+      [@key "size"]
+      size: float, /* Resource size. */
+      [@key "type"]
+      type_: string /* Resource type. */,
+    };
+  } = {
+    /* Detailed application cache resource information. */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* Resource url. */
+      [@key "size"]
+      size: float, /* Resource size. */
+      [@key "type"]
+      type_: string /* Resource type. */,
+    };
+  }
+  and ApplicationCache: {
+    /* Detailed application cache information. */
+    [@deriving yojson]
+    type t = {
+      [@key "manifestURL"]
+      manifestURL: string, /* Manifest URL. */
+      [@key "size"]
+      size: float, /* Application cache size. */
+      [@key "creationTime"]
+      creationTime: float, /* Application cache creation time. */
+      [@key "updateTime"]
+      updateTime: float, /* Application cache update time. */
+      [@key "resources"]
+      resources: list(ApplicationCacheResource.t) /* Application cache resources. */,
+    };
+  } = {
+    /* Detailed application cache information. */
+    [@deriving yojson]
+    type t = {
+      [@key "manifestURL"]
+      manifestURL: string, /* Manifest URL. */
+      [@key "size"]
+      size: float, /* Application cache size. */
+      [@key "creationTime"]
+      creationTime: float, /* Application cache creation time. */
+      [@key "updateTime"]
+      updateTime: float, /* Application cache update time. */
+      [@key "resources"]
+      resources: list(ApplicationCacheResource.t) /* Application cache resources. */,
+    };
+  }
+  and FrameWithManifest: {
+    /* Frame identifier - manifest URL pair. */
+    [@deriving yojson]
+    type t = {
+      [@key "frameId"]
+      frameId: Page.FrameId.t, /* Frame identifier. */
+      [@key "manifestURL"]
+      manifestURL: string, /* Manifest URL. */
+      [@key "status"]
+      status: float /* Application cache status. */,
+    };
+  } = {
+    /* Frame identifier - manifest URL pair. */
+    [@deriving yojson]
+    type t = {
+      [@key "frameId"]
+      frameId: Page.FrameId.t, /* Frame identifier. */
+      [@key "manifestURL"]
+      manifestURL: string, /* Manifest URL. */
+      [@key "status"]
+      status: float /* Application cache status. */,
+    };
+  };
+}
 and Audits: {
   module rec AffectedCookie: {
     /* Information about a cookie that is affected by an inspector issue. */
