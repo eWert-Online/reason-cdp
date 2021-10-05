@@ -8929,6 +8929,7 @@ request correspondinfg to the main frame. */,
       | `RedirectContainsCredentials
       | `InsecurePrivateNetwork
       | `InvalidPrivateNetworkAccess
+      | `UnexpectedPrivateNetworkAccess
       | `NoCorsRedirectModeNotFollow
     ];
     let _corserror_of_yojson: Yojson.Basic.t => _corserror;
@@ -9441,6 +9442,8 @@ backslash. Omitting is equivalent to `"*"`. */
       | `Allow
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
+      | `PreflightBlock
+      | `PreflightWarn
     ];
     let _privatenetworkrequestpolicy_of_yojson:
       Yojson.Basic.t => _privatenetworkrequestpolicy;
@@ -10475,6 +10478,7 @@ request correspondinfg to the main frame. */,
       | `RedirectContainsCredentials
       | `InsecurePrivateNetwork
       | `InvalidPrivateNetworkAccess
+      | `UnexpectedPrivateNetworkAccess
       | `NoCorsRedirectModeNotFollow
     ];
     let _corserror_of_yojson: Yojson.Basic.t => _corserror;
@@ -10510,6 +10514,7 @@ request correspondinfg to the main frame. */,
       | `RedirectContainsCredentials
       | `InsecurePrivateNetwork
       | `InvalidPrivateNetworkAccess
+      | `UnexpectedPrivateNetworkAccess
       | `NoCorsRedirectModeNotFollow
     ];
     let _corserror_of_yojson =
@@ -10540,6 +10545,7 @@ request correspondinfg to the main frame. */,
       | `String("RedirectContainsCredentials") => `RedirectContainsCredentials
       | `String("InsecurePrivateNetwork") => `InsecurePrivateNetwork
       | `String("InvalidPrivateNetworkAccess") => `InvalidPrivateNetworkAccess
+      | `String("UnexpectedPrivateNetworkAccess") => `UnexpectedPrivateNetworkAccess
       | `String("NoCorsRedirectModeNotFollow") => `NoCorsRedirectModeNotFollow
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
@@ -10583,6 +10589,8 @@ request correspondinfg to the main frame. */,
       | `RedirectContainsCredentials => `String("RedirectContainsCredentials")
       | `InsecurePrivateNetwork => `String("InsecurePrivateNetwork")
       | `InvalidPrivateNetworkAccess => `String("InvalidPrivateNetworkAccess")
+      | `UnexpectedPrivateNetworkAccess =>
+        `String("UnexpectedPrivateNetworkAccess")
       | `NoCorsRedirectModeNotFollow =>
         `String("NoCorsRedirectModeNotFollow");
     /* The reason why request was blocked. */
@@ -11731,6 +11739,8 @@ backslash. Omitting is equivalent to `"*"`. */
       | `Allow
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
+      | `PreflightBlock
+      | `PreflightWarn
     ];
     let _privatenetworkrequestpolicy_of_yojson:
       Yojson.Basic.t => _privatenetworkrequestpolicy;
@@ -11744,12 +11754,16 @@ backslash. Omitting is equivalent to `"*"`. */
       | `Allow
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
+      | `PreflightBlock
+      | `PreflightWarn
     ];
     let _privatenetworkrequestpolicy_of_yojson =
       fun
       | `String("Allow") => `Allow
       | `String("BlockFromInsecureToMorePrivate") => `BlockFromInsecureToMorePrivate
       | `String("WarnFromInsecureToMorePrivate") => `WarnFromInsecureToMorePrivate
+      | `String("PreflightBlock") => `PreflightBlock
+      | `String("PreflightWarn") => `PreflightWarn
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__privatenetworkrequestpolicy =
@@ -11758,7 +11772,9 @@ backslash. Omitting is equivalent to `"*"`. */
       | `BlockFromInsecureToMorePrivate =>
         `String("BlockFromInsecureToMorePrivate")
       | `WarnFromInsecureToMorePrivate =>
-        `String("WarnFromInsecureToMorePrivate");
+        `String("WarnFromInsecureToMorePrivate")
+      | `PreflightBlock => `String("PreflightBlock")
+      | `PreflightWarn => `String("PreflightWarn");
     /* No description provided */
     [@deriving yojson]
     type t = _privatenetworkrequestpolicy;
