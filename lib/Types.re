@@ -1273,6 +1273,7 @@ Does not always exist (e.g. for unsafe form submission urls). */
       | `kURLViolation
       | `kTrustedTypesSinkViolation
       | `kTrustedTypesPolicyViolation
+      | `kWasmEvalViolation
     ];
     let _contentsecuritypolicyviolationtype_of_yojson:
       Yojson.Basic.t => _contentsecuritypolicyviolationtype;
@@ -2215,6 +2216,7 @@ Does not always exist (e.g. for unsafe form submission urls). */
       | `kURLViolation
       | `kTrustedTypesSinkViolation
       | `kTrustedTypesPolicyViolation
+      | `kWasmEvalViolation
     ];
     let _contentsecuritypolicyviolationtype_of_yojson:
       Yojson.Basic.t => _contentsecuritypolicyviolationtype;
@@ -2230,6 +2232,7 @@ Does not always exist (e.g. for unsafe form submission urls). */
       | `kURLViolation
       | `kTrustedTypesSinkViolation
       | `kTrustedTypesPolicyViolation
+      | `kWasmEvalViolation
     ];
     let _contentsecuritypolicyviolationtype_of_yojson =
       fun
@@ -2238,6 +2241,7 @@ Does not always exist (e.g. for unsafe form submission urls). */
       | `String("kURLViolation") => `kURLViolation
       | `String("kTrustedTypesSinkViolation") => `kTrustedTypesSinkViolation
       | `String("kTrustedTypesPolicyViolation") => `kTrustedTypesPolicyViolation
+      | `String("kWasmEvalViolation") => `kWasmEvalViolation
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__contentsecuritypolicyviolationtype =
@@ -2247,7 +2251,8 @@ Does not always exist (e.g. for unsafe form submission urls). */
       | `kURLViolation => `String("kURLViolation")
       | `kTrustedTypesSinkViolation => `String("kTrustedTypesSinkViolation")
       | `kTrustedTypesPolicyViolation =>
-        `String("kTrustedTypesPolicyViolation");
+        `String("kTrustedTypesPolicyViolation")
+      | `kWasmEvalViolation => `String("kWasmEvalViolation");
     /* No description provided */
     [@deriving yojson]
     type t = _contentsecuritypolicyviolationtype;
