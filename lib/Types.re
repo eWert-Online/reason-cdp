@@ -64,6 +64,7 @@ module rec Accessibility: {
   }
   and AXValueNativeSourceType: {
     type _axvaluenativesourcetype = [
+      | `description
       | `figcaption
       | `label
       | `labelfor
@@ -367,6 +368,7 @@ module rec Accessibility: {
   }
   and AXValueNativeSourceType: {
     type _axvaluenativesourcetype = [
+      | `description
       | `figcaption
       | `label
       | `labelfor
@@ -386,6 +388,7 @@ module rec Accessibility: {
     type t = _axvaluenativesourcetype;
   } = {
     type _axvaluenativesourcetype = [
+      | `description
       | `figcaption
       | `label
       | `labelfor
@@ -398,6 +401,7 @@ module rec Accessibility: {
     ];
     let _axvaluenativesourcetype_of_yojson =
       fun
+      | `String("description") => `description
       | `String("figcaption") => `figcaption
       | `String("label") => `label
       | `String("labelfor") => `labelfor
@@ -411,6 +415,7 @@ module rec Accessibility: {
       | _ => failwith("unknown enum type");
     let yojson_of__axvaluenativesourcetype =
       fun
+      | `description => `String("description")
       | `figcaption => `String("figcaption")
       | `label => `String("label")
       | `labelfor => `String("labelfor")
