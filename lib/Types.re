@@ -13158,6 +13158,7 @@ and Page: {
       | `hid
       | `idle_detection
       | `interest_cohort
+      | `keyboard_map
       | `magnetometer
       | `microphone
       | `midi
@@ -14050,6 +14051,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `hid
       | `idle_detection
       | `interest_cohort
+      | `keyboard_map
       | `magnetometer
       | `microphone
       | `midi
@@ -14120,6 +14122,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `hid
       | `idle_detection
       | `interest_cohort
+      | `keyboard_map
       | `magnetometer
       | `microphone
       | `midi
@@ -14182,6 +14185,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("hid") => `hid
       | `String("idle-detection") => `idle_detection
       | `String("interest-cohort") => `interest_cohort
+      | `String("keyboard-map") => `keyboard_map
       | `String("magnetometer") => `magnetometer
       | `String("microphone") => `microphone
       | `String("midi") => `midi
@@ -14248,6 +14252,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `hid => `String("hid")
       | `idle_detection => `String("idle-detection")
       | `interest_cohort => `String("interest-cohort")
+      | `keyboard_map => `String("keyboard-map")
       | `magnetometer => `String("magnetometer")
       | `microphone => `String("microphone")
       | `midi => `String("midi")
