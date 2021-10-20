@@ -1109,6 +1109,10 @@ this requestId will be the same as the requestId present in the requestWillBeSen
       wallTime: Types.Network.TimeSinceEpoch.t, /* Timestamp. */
       [@key "initiator"]
       initiator: Types.Network.Initiator.t, /* Request initiator. */
+      [@key "redirectHasExtraInfo"]
+      redirectHasExtraInfo: bool, /* In the case that redirectResponse is populated, this flag indicates whether
+requestWillBeSentExtraInfo and responseReceivedExtraInfo events will be or were emitted
+for the request which was just redirected. */
       [@yojson.option] [@key "redirectResponse"]
       redirectResponse: option(Types.Network.Response.t), /* Redirect response data. */
       [@yojson.option] [@key "type"]
@@ -1188,6 +1192,9 @@ this requestId will be the same as the requestId present in the requestWillBeSen
       type_: Types.Network.ResourceType.t, /* Resource type. */
       [@key "response"]
       response: Types.Network.Response.t, /* Response data. */
+      [@key "hasExtraInfo"]
+      hasExtraInfo: bool, /* Indicates whether requestWillBeSentExtraInfo and responseReceivedExtraInfo events will be
+or were emitted for this request. */
       [@yojson.option] [@key "frameId"]
       frameId: option(Types.Page.FrameId.t) /* Frame identifier. */,
     };
