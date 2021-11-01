@@ -8245,6 +8245,132 @@ EventTarget. */,
     };
   };
 };
+module EventBreakpoints = {
+  /* Sets breakpoint on particular native event. */
+  module SetInstrumentationBreakpoint = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "eventName"]
+        eventName: string /* Instrumentation name to stop on. */,
+      };
+      let make = (~eventName, ()) => {
+        {eventName: eventName};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "EventBreakpoints.setInstrumentationBreakpoint",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Removes breakpoint on particular native event. */
+  module RemoveInstrumentationBreakpoint = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "eventName"]
+        eventName: string /* Instrumentation name to stop on. */,
+      };
+      let make = (~eventName, ()) => {
+        {eventName: eventName};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "EventBreakpoints.removeInstrumentationBreakpoint",
+          sessionId,
+          params,
+        }
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+};
 module DOMSnapshot = {
   /* Disables DOM snapshot agent for the given page. */
   module Disable = {
