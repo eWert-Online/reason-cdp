@@ -1510,6 +1510,26 @@ instead of "limited-quirks". */
       frameId: option(Page.FrameId.t) /* No description provided */,
     };
   }
+  and DeprecationIssueDetails: {
+    /* This issue tracks information needed to print a deprecation message.
+       The formatting is inherited from the old console.log version, see more at:
+       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/deprecation.cc
+       TODO(crbug.com/1264960): Re-work format to add i18n support per:
+       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/public/devtools_protocol/README.md */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "affectedFrame"]
+      affectedFrame: option(AffectedFrame.t), /* No description provided */
+      [@key "sourceCodeLocation"]
+      sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
+      [@yojson.option] [@key "message"]
+      message: option(string) /* The content of the deprecation issue (this won't be translated),
+e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
+around January 2022. Please use Web Storage or Indexed Database
+instead. This standard was abandoned in January, 1970. See
+https://www.chromestatus.com/feature/5684870116278272 for more details." */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -1526,6 +1546,7 @@ instead of "limited-quirks". */
       | `NavigatorUserAgentIssue
       | `WasmCrossOriginModuleSharingIssue
       | `GenericIssue
+      | `DeprecationIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -1572,7 +1593,9 @@ instead of "limited-quirks". */
       wasmCrossOriginModuleSharingIssue:
         option(WasmCrossOriginModuleSharingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "genericIssueDetails"]
-      genericIssueDetails: option(GenericIssueDetails.t) /* No description provided */,
+      genericIssueDetails: option(GenericIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "deprecationIssueDetails"]
+      deprecationIssueDetails: option(DeprecationIssueDetails.t) /* No description provided */,
     };
   }
   and IssueId: {
@@ -2736,6 +2759,45 @@ instead of "limited-quirks". */
       frameId: option(Page.FrameId.t) /* No description provided */,
     };
   }
+  and DeprecationIssueDetails: {
+    /* This issue tracks information needed to print a deprecation message.
+       The formatting is inherited from the old console.log version, see more at:
+       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/deprecation.cc
+       TODO(crbug.com/1264960): Re-work format to add i18n support per:
+       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/public/devtools_protocol/README.md */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "affectedFrame"]
+      affectedFrame: option(AffectedFrame.t), /* No description provided */
+      [@key "sourceCodeLocation"]
+      sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
+      [@yojson.option] [@key "message"]
+      message: option(string) /* The content of the deprecation issue (this won't be translated),
+e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
+around January 2022. Please use Web Storage or Indexed Database
+instead. This standard was abandoned in January, 1970. See
+https://www.chromestatus.com/feature/5684870116278272 for more details." */,
+    };
+  } = {
+    /* This issue tracks information needed to print a deprecation message.
+       The formatting is inherited from the old console.log version, see more at:
+       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/deprecation.cc
+       TODO(crbug.com/1264960): Re-work format to add i18n support per:
+       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/public/devtools_protocol/README.md */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "affectedFrame"]
+      affectedFrame: option(AffectedFrame.t), /* No description provided */
+      [@key "sourceCodeLocation"]
+      sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
+      [@yojson.option] [@key "message"]
+      message: option(string) /* The content of the deprecation issue (this won't be translated),
+e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
+around January 2022. Please use Web Storage or Indexed Database
+instead. This standard was abandoned in January, 1970. See
+https://www.chromestatus.com/feature/5684870116278272 for more details." */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -2752,6 +2814,7 @@ instead of "limited-quirks". */
       | `NavigatorUserAgentIssue
       | `WasmCrossOriginModuleSharingIssue
       | `GenericIssue
+      | `DeprecationIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -2776,6 +2839,7 @@ instead of "limited-quirks". */
       | `NavigatorUserAgentIssue
       | `WasmCrossOriginModuleSharingIssue
       | `GenericIssue
+      | `DeprecationIssue
     ];
     let _inspectorissuecode_of_yojson =
       fun
@@ -2793,6 +2857,7 @@ instead of "limited-quirks". */
       | `String("NavigatorUserAgentIssue") => `NavigatorUserAgentIssue
       | `String("WasmCrossOriginModuleSharingIssue") => `WasmCrossOriginModuleSharingIssue
       | `String("GenericIssue") => `GenericIssue
+      | `String("DeprecationIssue") => `DeprecationIssue
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__inspectorissuecode =
@@ -2811,7 +2876,8 @@ instead of "limited-quirks". */
       | `NavigatorUserAgentIssue => `String("NavigatorUserAgentIssue")
       | `WasmCrossOriginModuleSharingIssue =>
         `String("WasmCrossOriginModuleSharingIssue")
-      | `GenericIssue => `String("GenericIssue");
+      | `GenericIssue => `String("GenericIssue")
+      | `DeprecationIssue => `String("DeprecationIssue");
     /* A unique identifier for the type of issue. Each type may use one of the
        optional fields in InspectorIssueDetails to convey more specific
        information about the kind of issue. */
@@ -2855,7 +2921,9 @@ instead of "limited-quirks". */
       wasmCrossOriginModuleSharingIssue:
         option(WasmCrossOriginModuleSharingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "genericIssueDetails"]
-      genericIssueDetails: option(GenericIssueDetails.t) /* No description provided */,
+      genericIssueDetails: option(GenericIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "deprecationIssueDetails"]
+      deprecationIssueDetails: option(DeprecationIssueDetails.t) /* No description provided */,
     };
   } = {
     /* This struct holds a list of optional fields with additional information
@@ -2894,7 +2962,9 @@ instead of "limited-quirks". */
       wasmCrossOriginModuleSharingIssue:
         option(WasmCrossOriginModuleSharingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "genericIssueDetails"]
-      genericIssueDetails: option(GenericIssueDetails.t) /* No description provided */,
+      genericIssueDetails: option(GenericIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "deprecationIssueDetails"]
+      deprecationIssueDetails: option(DeprecationIssueDetails.t) /* No description provided */,
     };
   }
   and IssueId: {
