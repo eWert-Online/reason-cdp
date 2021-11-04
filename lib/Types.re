@@ -8905,7 +8905,8 @@ request correspondinfg to the main frame. */,
       [@key "logId"]
       logId: string, /* Log ID. */
       [@key "timestamp"]
-      timestamp: TimeSinceEpoch.t, /* Issuance date. */
+      timestamp: float, /* Issuance date. Unlike TimeSinceEpoch, this contains the number of
+milliseconds since January 1, 1970, UTC, not the number of seconds. */
       [@key "hashAlgorithm"]
       hashAlgorithm: string, /* Hash algorithm. */
       [@key "signatureAlgorithm"]
@@ -10330,7 +10331,8 @@ request correspondinfg to the main frame. */,
       [@key "logId"]
       logId: string, /* Log ID. */
       [@key "timestamp"]
-      timestamp: TimeSinceEpoch.t, /* Issuance date. */
+      timestamp: float, /* Issuance date. Unlike TimeSinceEpoch, this contains the number of
+milliseconds since January 1, 1970, UTC, not the number of seconds. */
       [@key "hashAlgorithm"]
       hashAlgorithm: string, /* Hash algorithm. */
       [@key "signatureAlgorithm"]
@@ -10351,7 +10353,8 @@ request correspondinfg to the main frame. */,
       [@key "logId"]
       logId: string, /* Log ID. */
       [@key "timestamp"]
-      timestamp: TimeSinceEpoch.t, /* Issuance date. */
+      timestamp: float, /* Issuance date. Unlike TimeSinceEpoch, this contains the number of
+milliseconds since January 1, 1970, UTC, not the number of seconds. */
       [@key "hashAlgorithm"]
       hashAlgorithm: string, /* Hash algorithm. */
       [@key "signatureAlgorithm"]
