@@ -2500,12 +2500,12 @@ module Security = {
       [@key "schemeIsCryptographic"]
       schemeIsCryptographic: bool, /* True if the page was loaded over cryptographic transport such as HTTPS. */
       [@key "explanations"]
-      explanations: list(Types.Security.SecurityStateExplanation.t), /* List of explanations for the security state. If the overall security state is `insecure` or
-`warning`, at least one corresponding explanation should be included. */
+      explanations: list(Types.Security.SecurityStateExplanation.t), /* Previously a list of explanations for the security state. Now always
+empty. */
       [@key "insecureContentStatus"]
       insecureContentStatus: Types.Security.InsecureContentStatus.t, /* Information about insecure content on the page. */
       [@yojson.option] [@key "summary"]
-      summary: option(string) /* Overrides user-visible description of the state. */,
+      summary: option(string) /* Overrides user-visible description of the state. Always omitted. */,
     };
 
     [@deriving yojson]
