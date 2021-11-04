@@ -21524,6 +21524,77 @@ available (otherwise deny). */
       };
     };
   };
+  /* Sets the Secure Payment Confirmation transaction mode.
+     https://w3c.github.io/secure-payment-confirmation/#sctn-automation-set-spc-transaction-mode */
+  module SetSPCTransactionMode = {
+    module Response: {
+      type result = Types.assoc;
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      type setspctransactionmode_mode = [ | `none | `autoaccept | `autoreject];
+      let setspctransactionmode_mode_of_yojson =
+        fun
+        | `String("none") => `none
+        | `String("autoaccept") => `autoaccept
+        | `String("autoreject") => `autoreject
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_setspctransactionmode_mode =
+        fun
+        | `none => `String("none")
+        | `autoaccept => `String("autoaccept")
+        | `autoreject => `String("autoreject");
+      [@deriving yojson]
+      type t = {
+        [@key "mode"]
+        mode: setspctransactionmode_mode /* No description provided */,
+      };
+      let make = (~mode, ()) => {
+        {mode: mode};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Page.setSPCTransactionMode", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Generates a report for testing. */
   module GenerateTestReport = {
     module Response: {
