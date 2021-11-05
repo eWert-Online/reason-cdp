@@ -13231,6 +13231,7 @@ and Page: {
       | `hid
       | `idle_detection
       | `interest_cohort
+      | `join_ad_interest_group
       | `keyboard_map
       | `magnetometer
       | `microphone
@@ -13239,6 +13240,7 @@ and Page: {
       | `payment
       | `picture_in_picture
       | `publickey_credentials_get
+      | `run_ad_auction
       | `screen_wake_lock
       | `serial
       | `shared_autofill
@@ -14123,6 +14125,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `hid
       | `idle_detection
       | `interest_cohort
+      | `join_ad_interest_group
       | `keyboard_map
       | `magnetometer
       | `microphone
@@ -14131,6 +14134,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `payment
       | `picture_in_picture
       | `publickey_credentials_get
+      | `run_ad_auction
       | `screen_wake_lock
       | `serial
       | `shared_autofill
@@ -14194,6 +14198,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `hid
       | `idle_detection
       | `interest_cohort
+      | `join_ad_interest_group
       | `keyboard_map
       | `magnetometer
       | `microphone
@@ -14202,6 +14207,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `payment
       | `picture_in_picture
       | `publickey_credentials_get
+      | `run_ad_auction
       | `screen_wake_lock
       | `serial
       | `shared_autofill
@@ -14257,6 +14263,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("hid") => `hid
       | `String("idle-detection") => `idle_detection
       | `String("interest-cohort") => `interest_cohort
+      | `String("join-ad-interest-group") => `join_ad_interest_group
       | `String("keyboard-map") => `keyboard_map
       | `String("magnetometer") => `magnetometer
       | `String("microphone") => `microphone
@@ -14265,6 +14272,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("payment") => `payment
       | `String("picture-in-picture") => `picture_in_picture
       | `String("publickey-credentials-get") => `publickey_credentials_get
+      | `String("run-ad-auction") => `run_ad_auction
       | `String("screen-wake-lock") => `screen_wake_lock
       | `String("serial") => `serial
       | `String("shared-autofill") => `shared_autofill
@@ -14324,6 +14332,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `hid => `String("hid")
       | `idle_detection => `String("idle-detection")
       | `interest_cohort => `String("interest-cohort")
+      | `join_ad_interest_group => `String("join-ad-interest-group")
       | `keyboard_map => `String("keyboard-map")
       | `magnetometer => `String("magnetometer")
       | `microphone => `String("microphone")
@@ -14332,6 +14341,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `payment => `String("payment")
       | `picture_in_picture => `String("picture-in-picture")
       | `publickey_credentials_get => `String("publickey-credentials-get")
+      | `run_ad_auction => `String("run-ad-auction")
       | `screen_wake_lock => `String("screen-wake-lock")
       | `serial => `String("serial")
       | `shared_autofill => `String("shared-autofill")
