@@ -231,6 +231,71 @@ If omited, the root frame is used. */,
       };
     };
   };
+  /* Fetches the root node.
+     Requires `enable()` to have been called previously. */
+  module GetRootAXNode = {
+    module Response: {
+      type result = {
+        [@key "node"]
+        node: Types.Accessibility.AXNode.t /* No description provided */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "node"]
+        node: Types.Accessibility.AXNode.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option] [@key "frameId"]
+        frameId: option(Types.Page.FrameId.t) /* The frame in whose document the node resides.
+If omitted, the root frame is used. */,
+      };
+      let make = (~frameId=?, ()) => {
+        {frameId: frameId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Accessibility.getRootAXNode", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Fetches a particular accessibility node by AXNodeId.
      Requires `enable()` to have been called previously. */
   module GetChildAXNodes = {
