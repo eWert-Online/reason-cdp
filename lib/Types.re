@@ -216,10 +216,14 @@ module rec Accessibility: {
       value: option(AXValue.t), /* The value for this `Node`. */
       [@yojson.option] [@key "properties"]
       properties: option(list(AXProperty.t)), /* All other properties */
+      [@yojson.option] [@key "parentId"]
+      parentId: option(AXNodeId.t), /* ID for this node's parent. */
       [@yojson.option] [@key "childIds"]
       childIds: option(list(AXNodeId.t)), /* IDs for each of this node's child nodes. */
       [@yojson.option] [@key "backendDOMNodeId"]
-      backendDOMNodeId: option(DOM.BackendNodeId.t) /* The backend ID for the associated DOM node, if any. */,
+      backendDOMNodeId: option(DOM.BackendNodeId.t), /* The backend ID for the associated DOM node, if any. */
+      [@yojson.option] [@key "frameId"]
+      frameId: option(Page.FrameId.t) /* The frame ID for the frame associated with this nodes document. */,
     };
   };
 } = {
@@ -752,10 +756,14 @@ module rec Accessibility: {
       value: option(AXValue.t), /* The value for this `Node`. */
       [@yojson.option] [@key "properties"]
       properties: option(list(AXProperty.t)), /* All other properties */
+      [@yojson.option] [@key "parentId"]
+      parentId: option(AXNodeId.t), /* ID for this node's parent. */
       [@yojson.option] [@key "childIds"]
       childIds: option(list(AXNodeId.t)), /* IDs for each of this node's child nodes. */
       [@yojson.option] [@key "backendDOMNodeId"]
-      backendDOMNodeId: option(DOM.BackendNodeId.t) /* The backend ID for the associated DOM node, if any. */,
+      backendDOMNodeId: option(DOM.BackendNodeId.t), /* The backend ID for the associated DOM node, if any. */
+      [@yojson.option] [@key "frameId"]
+      frameId: option(Page.FrameId.t) /* The frame ID for the frame associated with this nodes document. */,
     };
   } = {
     /* A node in the accessibility tree. */
@@ -777,10 +785,14 @@ module rec Accessibility: {
       value: option(AXValue.t), /* The value for this `Node`. */
       [@yojson.option] [@key "properties"]
       properties: option(list(AXProperty.t)), /* All other properties */
+      [@yojson.option] [@key "parentId"]
+      parentId: option(AXNodeId.t), /* ID for this node's parent. */
       [@yojson.option] [@key "childIds"]
       childIds: option(list(AXNodeId.t)), /* IDs for each of this node's child nodes. */
       [@yojson.option] [@key "backendDOMNodeId"]
-      backendDOMNodeId: option(DOM.BackendNodeId.t) /* The backend ID for the associated DOM node, if any. */,
+      backendDOMNodeId: option(DOM.BackendNodeId.t), /* The backend ID for the associated DOM node, if any. */
+      [@yojson.option] [@key "frameId"]
+      frameId: option(Page.FrameId.t) /* The frame ID for the frame associated with this nodes document. */,
     };
   };
 }
