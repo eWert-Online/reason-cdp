@@ -2489,7 +2489,7 @@ module Security = {
 
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
-  /* The security state of the page changed. */
+  /* The security state of the page changed. No longer being sent. */
   module SecurityStateChanged = {
     let name = "Security.securityStateChanged";
 
