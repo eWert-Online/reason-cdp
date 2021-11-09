@@ -296,6 +296,74 @@ If omitted, the root frame is used. */,
       };
     };
   };
+  /* Fetches a node and all ancestors up to and including the root.
+     Requires `enable()` to have been called previously. */
+  module GetAXNodeAndAncestors = {
+    module Response: {
+      type result = {
+        [@key "nodes"]
+        nodes: list(Types.Accessibility.AXNode.t) /* No description provided */,
+      };
+
+      type t = {
+        id: int,
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "nodes"]
+        nodes: list(Types.Accessibility.AXNode.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        result,
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option] [@key "nodeId"]
+        nodeId: option(Types.DOM.NodeId.t), /* Identifier of the node to get. */
+        [@yojson.option] [@key "backendNodeId"]
+        backendNodeId: option(Types.DOM.BackendNodeId.t), /* Identifier of the backend node to get. */
+        [@yojson.option] [@key "objectId"]
+        objectId: option(Types.Runtime.RemoteObjectId.t) /* JavaScript object id of the node wrapper to get. */,
+      };
+      let make = (~nodeId=?, ~backendNodeId=?, ~objectId=?, ()) => {
+        {nodeId, backendNodeId, objectId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Accessibility.getAXNodeAndAncestors", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Fetches a particular accessibility node by AXNodeId.
      Requires `enable()` to have been called previously. */
   module GetChildAXNodes = {
