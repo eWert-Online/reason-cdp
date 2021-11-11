@@ -7005,6 +7005,8 @@ A display feature that only splits content will have a 0 mask_length. */,
     type t = {
       [@yojson.option] [@key "brands"]
       brands: option(list(UserAgentBrandVersion.t)), /* No description provided */
+      [@yojson.option] [@key "fullVersionList"]
+      fullVersionList: option(list(UserAgentBrandVersion.t)), /* No description provided */
       [@yojson.option] [@key "fullVersion"]
       fullVersion: option(string), /* No description provided */
       [@key "platform"]
@@ -7207,6 +7209,8 @@ A display feature that only splits content will have a 0 mask_length. */,
     type t = {
       [@yojson.option] [@key "brands"]
       brands: option(list(UserAgentBrandVersion.t)), /* No description provided */
+      [@yojson.option] [@key "fullVersionList"]
+      fullVersionList: option(list(UserAgentBrandVersion.t)), /* No description provided */
       [@yojson.option] [@key "fullVersion"]
       fullVersion: option(string), /* No description provided */
       [@key "platform"]
@@ -7227,6 +7231,8 @@ A display feature that only splits content will have a 0 mask_length. */,
     type t = {
       [@yojson.option] [@key "brands"]
       brands: option(list(UserAgentBrandVersion.t)), /* No description provided */
+      [@yojson.option] [@key "fullVersionList"]
+      fullVersionList: option(list(UserAgentBrandVersion.t)), /* No description provided */
       [@yojson.option] [@key "fullVersion"]
       fullVersion: option(string), /* No description provided */
       [@key "platform"]
@@ -13220,6 +13226,7 @@ and Page: {
       | `ch_ua_model
       | `ch_ua_mobile
       | `ch_ua_full_version
+      | `ch_ua_full_version_list
       | `ch_ua_platform_version
       | `ch_ua_reduced
       | `ch_viewport_height
@@ -14114,6 +14121,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_ua_model
       | `ch_ua_mobile
       | `ch_ua_full_version
+      | `ch_ua_full_version_list
       | `ch_ua_platform_version
       | `ch_ua_reduced
       | `ch_viewport_height
@@ -14187,6 +14195,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_ua_model
       | `ch_ua_mobile
       | `ch_ua_full_version
+      | `ch_ua_full_version_list
       | `ch_ua_platform_version
       | `ch_ua_reduced
       | `ch_viewport_height
@@ -14252,6 +14261,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("ch-ua-model") => `ch_ua_model
       | `String("ch-ua-mobile") => `ch_ua_mobile
       | `String("ch-ua-full-version") => `ch_ua_full_version
+      | `String("ch-ua-full-version-list") => `ch_ua_full_version_list
       | `String("ch-ua-platform-version") => `ch_ua_platform_version
       | `String("ch-ua-reduced") => `ch_ua_reduced
       | `String("ch-viewport-height") => `ch_viewport_height
@@ -14318,6 +14328,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_ua_model => `String("ch-ua-model")
       | `ch_ua_mobile => `String("ch-ua-mobile")
       | `ch_ua_full_version => `String("ch-ua-full-version")
+      | `ch_ua_full_version_list => `String("ch-ua-full-version-list")
       | `ch_ua_platform_version => `String("ch-ua-platform-version")
       | `ch_ua_reduced => `String("ch-ua-reduced")
       | `ch_viewport_height => `String("ch-viewport-height")
