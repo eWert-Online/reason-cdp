@@ -1,3 +1,44 @@
+module Accessibility = {
+  /* The loadComplete event mirrors the load complete event sent by the browser to assistive
+     technology when the web page has finished loading. */
+  module LoadComplete = {
+    let name = "Accessibility.loadComplete";
+
+    [@deriving yojson]
+    type result = {
+      [@key "root"]
+      root: Types.Accessibility.AXNode.t /* New document root node. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* The nodesUpdated event is sent every time a previously requested node has changed the in tree. */
+  module NodesUpdated = {
+    let name = "Accessibility.nodesUpdated";
+
+    [@deriving yojson]
+    type result = {
+      [@key "nodes"]
+      nodes: list(Types.Accessibility.AXNode.t) /* Updated node data. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+};
 module Animation = {
   /* Event for when an animation has been cancelled. */
   module AnimationCanceled = {
