@@ -16105,9 +16105,13 @@ default domain, path, source port, and source scheme values of the created cooki
         [@yojson.option] [@key "sourceScheme"]
         sourceScheme: option(Types.Network.CookieSourceScheme.t), /* Cookie source scheme type. */
         [@yojson.option] [@key "sourcePort"]
-        sourcePort: option(float) /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+        sourcePort: option(float), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
-This is a temporary ability and it will be removed in the future. */,
+This is a temporary ability and it will be removed in the future. */
+        [@yojson.option] [@key "partitionKey"]
+        partitionKey: option(string) /* Cookie partition key. The site of the top-level URL the browser was visiting at the start
+of the request to the endpoint that set the cookie.
+If not set, the cookie will be set as not partitioned. */,
       };
       let make =
           (
@@ -16124,6 +16128,7 @@ This is a temporary ability and it will be removed in the future. */,
             ~sameParty=?,
             ~sourceScheme=?,
             ~sourcePort=?,
+            ~partitionKey=?,
             (),
           ) => {
         {
@@ -16140,6 +16145,7 @@ This is a temporary ability and it will be removed in the future. */,
           sameParty,
           sourceScheme,
           sourcePort,
+          partitionKey,
         };
       };
     };

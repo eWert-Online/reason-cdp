@@ -9260,9 +9260,14 @@ module) (0-based). */
       [@key "sourceScheme"]
       sourceScheme: CookieSourceScheme.t, /* Cookie source scheme type. */
       [@key "sourcePort"]
-      sourcePort: float /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: float, /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
-This is a temporary ability and it will be removed in the future. */,
+This is a temporary ability and it will be removed in the future. */
+      [@yojson.option] [@key "partitionKey"]
+      partitionKey: option(string), /* Cookie partition key. The site of the top-level URL the browser was visiting at the start
+of the request to the endpoint that set the cookie. */
+      [@yojson.option] [@key "partitionKeyOpaque"]
+      partitionKeyOpaque: option(bool) /* True if cookie partition key is opaque. */,
     };
   }
   and SetCookieBlockedReason: {
@@ -9372,9 +9377,13 @@ default domain, path, source port, and source scheme values of the created cooki
       [@yojson.option] [@key "sourceScheme"]
       sourceScheme: option(CookieSourceScheme.t), /* Cookie source scheme type. */
       [@yojson.option] [@key "sourcePort"]
-      sourcePort: option(float) /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: option(float), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
-This is a temporary ability and it will be removed in the future. */,
+This is a temporary ability and it will be removed in the future. */
+      [@yojson.option] [@key "partitionKey"]
+      partitionKey: option(string) /* Cookie partition key. The site of the top-level URL the browser was visiting at the start
+of the request to the endpoint that set the cookie.
+If not set, the cookie will be set as not partitioned. */,
     };
   }
   and AuthChallenge: {
@@ -11143,9 +11152,14 @@ module) (0-based). */
       [@key "sourceScheme"]
       sourceScheme: CookieSourceScheme.t, /* Cookie source scheme type. */
       [@key "sourcePort"]
-      sourcePort: float /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: float, /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
-This is a temporary ability and it will be removed in the future. */,
+This is a temporary ability and it will be removed in the future. */
+      [@yojson.option] [@key "partitionKey"]
+      partitionKey: option(string), /* Cookie partition key. The site of the top-level URL the browser was visiting at the start
+of the request to the endpoint that set the cookie. */
+      [@yojson.option] [@key "partitionKeyOpaque"]
+      partitionKeyOpaque: option(bool) /* True if cookie partition key is opaque. */,
     };
   } = {
     /* Cookie object */
@@ -11178,9 +11192,14 @@ This is a temporary ability and it will be removed in the future. */,
       [@key "sourceScheme"]
       sourceScheme: CookieSourceScheme.t, /* Cookie source scheme type. */
       [@key "sourcePort"]
-      sourcePort: float /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: float, /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
-This is a temporary ability and it will be removed in the future. */,
+This is a temporary ability and it will be removed in the future. */
+      [@yojson.option] [@key "partitionKey"]
+      partitionKey: option(string), /* Cookie partition key. The site of the top-level URL the browser was visiting at the start
+of the request to the endpoint that set the cookie. */
+      [@yojson.option] [@key "partitionKeyOpaque"]
+      partitionKeyOpaque: option(bool) /* True if cookie partition key is opaque. */,
     };
   }
   and SetCookieBlockedReason: {
@@ -11442,9 +11461,13 @@ default domain, path, source port, and source scheme values of the created cooki
       [@yojson.option] [@key "sourceScheme"]
       sourceScheme: option(CookieSourceScheme.t), /* Cookie source scheme type. */
       [@yojson.option] [@key "sourcePort"]
-      sourcePort: option(float) /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: option(float), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
-This is a temporary ability and it will be removed in the future. */,
+This is a temporary ability and it will be removed in the future. */
+      [@yojson.option] [@key "partitionKey"]
+      partitionKey: option(string) /* Cookie partition key. The site of the top-level URL the browser was visiting at the start
+of the request to the endpoint that set the cookie.
+If not set, the cookie will be set as not partitioned. */,
     };
   } = {
     /* Cookie parameter object */
@@ -11476,9 +11499,13 @@ default domain, path, source port, and source scheme values of the created cooki
       [@yojson.option] [@key "sourceScheme"]
       sourceScheme: option(CookieSourceScheme.t), /* Cookie source scheme type. */
       [@yojson.option] [@key "sourcePort"]
-      sourcePort: option(float) /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: option(float), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
-This is a temporary ability and it will be removed in the future. */,
+This is a temporary ability and it will be removed in the future. */
+      [@yojson.option] [@key "partitionKey"]
+      partitionKey: option(string) /* Cookie partition key. The site of the top-level URL the browser was visiting at the start
+of the request to the endpoint that set the cookie.
+If not set, the cookie will be set as not partitioned. */,
     };
   }
   and AuthChallenge: {
