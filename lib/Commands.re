@@ -24400,10 +24400,24 @@ and eventually retire it. See crbug.com/991325. */,
         [@yojson.option] [@key "proxyServer"]
         proxyServer: option(string), /* Proxy server, similar to the one passed to --proxy-server */
         [@yojson.option] [@key "proxyBypassList"]
-        proxyBypassList: option(string) /* Proxy bypass list, similar to the one passed to --proxy-bypass-list */,
+        proxyBypassList: option(string), /* Proxy bypass list, similar to the one passed to --proxy-bypass-list */
+        [@yojson.option] [@key "originsWithUniversalNetworkAccess"]
+        originsWithUniversalNetworkAccess: option(list(string)) /* An optional list of origins to grant unlimited cross-origin access to. */,
       };
-      let make = (~disposeOnDetach=?, ~proxyServer=?, ~proxyBypassList=?, ()) => {
-        {disposeOnDetach, proxyServer, proxyBypassList};
+      let make =
+          (
+            ~disposeOnDetach=?,
+            ~proxyServer=?,
+            ~proxyBypassList=?,
+            ~originsWithUniversalNetworkAccess=?,
+            (),
+          ) => {
+        {
+          disposeOnDetach,
+          proxyServer,
+          proxyBypassList,
+          originsWithUniversalNetworkAccess,
+        };
       };
     };
 
