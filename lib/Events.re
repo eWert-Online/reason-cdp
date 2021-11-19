@@ -1754,6 +1754,27 @@ after webbundle was parsed. */,
 
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
+  /* No description provided */
+  module ReportingApiEndpointsChangedForOrigin = {
+    let name = "Network.reportingApiEndpointsChangedForOrigin";
+
+    [@deriving yojson]
+    type result = {
+      [@key "origin"]
+      origin: string, /* Origin of the document(s) which configured the endpoints. */
+      [@key "endpoints"]
+      endpoints: list(Types.Network.ReportingApiEndpoint.t) /* No description provided */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
 };
 module Overlay = {
   /* Fired when the node should be inspected. This happens after call to `setInspectMode` or when

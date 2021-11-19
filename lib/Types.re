@@ -9700,6 +9700,16 @@ the same request (but not for redirected requests). */,
       status: ReportStatus.t /* No description provided */,
     };
   }
+  and ReportingApiEndpoint: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* The URL of the endpoint to which reports may be delivered. */
+      [@key "groupName"]
+      groupName: string /* Name of the endpoint group. */,
+    };
+  }
   and LoadNetworkResourcePageResult: {
     /* An object providing the result of a network resource load. */
     [@deriving yojson]
@@ -12214,6 +12224,25 @@ the same request (but not for redirected requests). */,
       body: assoc, /* No description provided */
       [@key "status"]
       status: ReportStatus.t /* No description provided */,
+    };
+  }
+  and ReportingApiEndpoint: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* The URL of the endpoint to which reports may be delivered. */
+      [@key "groupName"]
+      groupName: string /* Name of the endpoint group. */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* The URL of the endpoint to which reports may be delivered. */
+      [@key "groupName"]
+      groupName: string /* Name of the endpoint group. */,
     };
   }
   and LoadNetworkResourcePageResult: {
