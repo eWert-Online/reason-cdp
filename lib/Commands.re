@@ -4,10 +4,16 @@ module Accessibility = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16,11 +22,20 @@ module Accessibility = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -50,10 +65,16 @@ module Accessibility = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -62,11 +83,20 @@ module Accessibility = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -99,10 +129,16 @@ module Accessibility = {
 children, if requested. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -115,11 +151,20 @@ children, if requested. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -170,10 +215,16 @@ children, if requested. */,
         nodes: list(Types.Accessibility.AXNode.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -185,11 +236,20 @@ children, if requested. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -240,10 +300,16 @@ If omited, the root frame is used. */,
         node: Types.Accessibility.AXNode.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -255,11 +321,20 @@ If omited, the root frame is used. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -305,10 +380,16 @@ If omitted, the root frame is used. */,
         nodes: list(Types.Accessibility.AXNode.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -320,11 +401,20 @@ If omitted, the root frame is used. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -373,10 +463,16 @@ If omitted, the root frame is used. */,
         nodes: list(Types.Accessibility.AXNode.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -388,11 +484,20 @@ If omitted, the root frame is used. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -444,10 +549,16 @@ If omitted, the root frame is used. */,
 including nodes that are ignored for accessibility. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -460,11 +571,20 @@ including nodes that are ignored for accessibility. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -523,10 +643,16 @@ module Animation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -535,11 +661,20 @@ module Animation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -568,10 +703,16 @@ module Animation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -580,11 +721,20 @@ module Animation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -616,10 +766,16 @@ module Animation = {
         currentTime: float /* Current time of the page. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -631,11 +787,20 @@ module Animation = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -679,10 +844,16 @@ module Animation = {
         playbackRate: float /* Playback rate for animations on page. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -694,11 +865,20 @@ module Animation = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -727,10 +907,16 @@ module Animation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -739,11 +925,20 @@ module Animation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -787,10 +982,16 @@ module Animation = {
         remoteObject: Types.Runtime.RemoteObject.t /* Corresponding remote object. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -802,11 +1003,20 @@ module Animation = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -847,10 +1057,16 @@ module Animation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -859,11 +1075,20 @@ module Animation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -906,10 +1131,16 @@ module Animation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -918,11 +1149,20 @@ module Animation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -965,10 +1205,16 @@ module Animation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -977,11 +1223,20 @@ module Animation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1022,10 +1277,16 @@ module Animation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1034,11 +1295,20 @@ module Animation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1093,10 +1363,16 @@ module Audits = {
         encodedSize: float /* Size after re-encoding. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1112,11 +1388,20 @@ module Audits = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1176,10 +1461,16 @@ module Audits = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1188,11 +1479,20 @@ module Audits = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1222,10 +1522,16 @@ module Audits = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1234,11 +1540,20 @@ module Audits = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1268,10 +1583,16 @@ module Audits = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1280,11 +1601,20 @@ module Audits = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1327,10 +1657,16 @@ module BackgroundService = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1339,11 +1675,20 @@ module BackgroundService = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1384,10 +1729,16 @@ module BackgroundService = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1396,11 +1747,20 @@ module BackgroundService = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1441,10 +1801,16 @@ module BackgroundService = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1453,11 +1819,20 @@ module BackgroundService = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1500,10 +1875,16 @@ module BackgroundService = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1512,11 +1893,20 @@ module BackgroundService = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1559,10 +1949,16 @@ module Browser = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1571,11 +1967,20 @@ module Browser = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1622,10 +2027,16 @@ module Browser = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1634,11 +2045,20 @@ module Browser = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1683,10 +2103,16 @@ module Browser = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1695,11 +2121,20 @@ module Browser = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1740,10 +2175,16 @@ module Browser = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1752,11 +2193,20 @@ module Browser = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1833,10 +2283,16 @@ or 'allowAndName'. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1845,11 +2301,20 @@ or 'allowAndName'. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1892,10 +2357,16 @@ or 'allowAndName'. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1904,11 +2375,20 @@ or 'allowAndName'. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1937,10 +2417,16 @@ or 'allowAndName'. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1949,11 +2435,20 @@ or 'allowAndName'. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -1982,10 +2477,16 @@ or 'allowAndName'. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -1994,11 +2495,20 @@ or 'allowAndName'. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2038,10 +2548,16 @@ or 'allowAndName'. */
         jsVersion: string /* V8 version. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2061,11 +2577,20 @@ or 'allowAndName'. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2098,10 +2623,16 @@ or 'allowAndName'. */
         arguments: list(string) /* Commandline parameters */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2113,11 +2644,20 @@ or 'allowAndName'. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2149,10 +2689,16 @@ or 'allowAndName'. */
         histograms: list(Types.Browser.Histogram.t) /* Histograms. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2164,11 +2710,20 @@ or 'allowAndName'. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2216,10 +2771,16 @@ all histograms. */
         histogram: Types.Browser.Histogram.t /* Histogram. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2231,11 +2792,20 @@ all histograms. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2282,10 +2852,16 @@ all histograms. */
 position and size are returned. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2298,11 +2874,20 @@ position and size are returned. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2349,10 +2934,16 @@ position and size are returned. */,
 position and size are returned. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2367,11 +2958,20 @@ position and size are returned. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2412,10 +3012,16 @@ position and size are returned. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2424,11 +3030,20 @@ position and size are returned. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2472,10 +3087,16 @@ with 'left', 'top', 'width' or 'height'. Leaves unspecified fields unchanged. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2484,11 +3105,20 @@ with 'left', 'top', 'width' or 'height'. Leaves unspecified fields unchanged. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2531,10 +3161,16 @@ with 'left', 'top', 'width' or 'height'. Leaves unspecified fields unchanged. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2543,11 +3179,20 @@ with 'left', 'top', 'width' or 'height'. Leaves unspecified fields unchanged. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2594,10 +3239,16 @@ module CSS = {
         rule: Types.CSS.CSSRule.t /* The newly created rule. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2609,11 +3260,20 @@ module CSS = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2661,10 +3321,16 @@ module CSS = {
         classNames: list(string) /* Class name list. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2676,11 +3342,20 @@ module CSS = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2724,10 +3399,16 @@ module CSS = {
         styleSheetId: Types.CSS.StyleSheetId.t /* Identifier of the created "via-inspector" stylesheet. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2739,11 +3420,20 @@ module CSS = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2784,10 +3474,16 @@ module CSS = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2796,11 +3492,20 @@ module CSS = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2830,10 +3535,16 @@ module CSS = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2842,11 +3553,20 @@ module CSS = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2876,10 +3596,16 @@ module CSS = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2888,11 +3614,20 @@ module CSS = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -2947,10 +3682,16 @@ be ignored (as if the image had failed to load). */
 '100'). */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -2971,11 +3712,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3019,10 +3769,16 @@ be ignored (as if the image had failed to load). */
         computedStyle: list(Types.CSS.CSSComputedStyleProperty.t) /* Computed style for the specified DOM node. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3034,11 +3790,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3085,10 +3850,16 @@ be ignored (as if the image had failed to load). */
         attributesStyle: option(Types.CSS.CSSStyle.t) /* Attribute-defined element style (e.g. resulting from "width=20 height=100%"). */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3102,11 +3873,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3160,10 +3940,16 @@ be ignored (as if the image had failed to load). */
         cssKeyframesRules: option(list(Types.CSS.CSSKeyframesRule.t)) /* A list of CSS keyframed animations matching this node. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3185,11 +3971,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3233,10 +4028,16 @@ be ignored (as if the image had failed to load). */
         medias: list(Types.CSS.CSSMedia.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3248,11 +4049,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3285,10 +4095,16 @@ be ignored (as if the image had failed to load). */
         fonts: list(Types.CSS.PlatformFontUsage.t) /* Usage statistics for every employed platform font. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3300,11 +4116,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3348,10 +4173,16 @@ be ignored (as if the image had failed to load). */
         text: string /* The stylesheet text. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3363,11 +4194,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3413,10 +4253,16 @@ be ignored (as if the image had failed to load). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3425,11 +4271,20 @@ be ignored (as if the image had failed to load). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3473,10 +4328,16 @@ be ignored (as if the image had failed to load). */
         nodeIds: list(Types.DOM.NodeId.t) /* The list of node Ids that have their tracked computed styles updated */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3488,11 +4349,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3522,10 +4392,16 @@ be ignored (as if the image had failed to load). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3534,11 +4410,20 @@ be ignored (as if the image had failed to load). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3591,10 +4476,16 @@ be ignored (as if the image had failed to load). */
         keyText: Types.CSS.Value.t /* The resulting key text after modification. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3606,11 +4497,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3658,10 +4558,16 @@ be ignored (as if the image had failed to load). */
         media: Types.CSS.CSSMedia.t /* The resulting CSS media rule after modification. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3673,11 +4579,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3725,10 +4640,16 @@ be ignored (as if the image had failed to load). */
         containerQuery: Types.CSS.CSSContainerQuery.t /* The resulting CSS container query rule after modification. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3740,11 +4661,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3792,10 +4722,16 @@ be ignored (as if the image had failed to load). */
         selectorList: Types.CSS.SelectorList.t /* The resulting selector list after modification. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3807,11 +4743,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3859,10 +4804,16 @@ be ignored (as if the image had failed to load). */
         sourceMapURL: option(string) /* URL of source map associated with script (if any). */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3874,11 +4825,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3924,10 +4884,16 @@ be ignored (as if the image had failed to load). */
         styles: list(Types.CSS.CSSStyle.t) /* The resulting styles after modification. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3939,11 +4905,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -3984,10 +4959,16 @@ be ignored (as if the image had failed to load). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -3996,11 +4977,20 @@ be ignored (as if the image had failed to load). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4033,10 +5023,16 @@ be ignored (as if the image had failed to load). */
         ruleUsage: list(Types.CSS.RuleUsage.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4048,11 +5044,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4087,10 +5092,16 @@ be ignored (as if the image had failed to load). */
         timestamp: float /* Monotonically increasing time, in seconds. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4104,11 +5115,20 @@ be ignored (as if the image had failed to load). */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4137,10 +5157,16 @@ be ignored (as if the image had failed to load). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4149,11 +5175,20 @@ be ignored (as if the image had failed to load). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4196,10 +5231,16 @@ module CacheStorage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4208,11 +5249,20 @@ module CacheStorage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4253,10 +5303,16 @@ module CacheStorage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4265,11 +5321,20 @@ module CacheStorage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4315,10 +5380,16 @@ module CacheStorage = {
         caches: list(Types.CacheStorage.Cache.t) /* Caches for the security origin. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4330,11 +5401,20 @@ module CacheStorage = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4378,10 +5458,16 @@ module CacheStorage = {
         response: Types.CacheStorage.CachedResponse.t /* Response read from the cache. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4393,11 +5479,20 @@ module CacheStorage = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4448,10 +5543,16 @@ module CacheStorage = {
 is the count of all entries from this storage. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4466,11 +5567,20 @@ is the count of all entries from this storage. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4523,10 +5633,16 @@ module Cast = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4535,11 +5651,20 @@ module Cast = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4580,10 +5705,16 @@ module Cast = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4592,11 +5723,20 @@ module Cast = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4626,10 +5766,16 @@ module Cast = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4638,11 +5784,20 @@ module Cast = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4683,10 +5838,16 @@ module Cast = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4695,11 +5856,20 @@ module Cast = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4740,10 +5910,16 @@ module Cast = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4752,11 +5928,20 @@ module Cast = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4802,10 +5987,16 @@ module DOM = {
         classNames: list(string) /* Class name list. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4817,11 +6008,20 @@ module DOM = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4866,10 +6066,16 @@ module DOM = {
         nodeId: Types.DOM.NodeId.t /* Id of the node clone. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4881,11 +6087,20 @@ module DOM = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -4935,10 +6150,16 @@ module DOM = {
         node: Types.DOM.Node.t /* Node description. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -4950,11 +6171,20 @@ module DOM = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5008,10 +6238,16 @@ entire subtree or provide an integer larger than 0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5020,11 +6256,20 @@ entire subtree or provide an integer larger than 0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5072,10 +6317,16 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5084,11 +6335,20 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5118,10 +6378,16 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5130,11 +6396,20 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5175,10 +6450,16 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5187,11 +6468,20 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5220,10 +6510,16 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5232,11 +6528,20 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5284,10 +6589,16 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
         attributes: list(string) /* An interleaved array of node attribute names and values. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5299,11 +6610,20 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5347,10 +6667,16 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
         model: Types.DOM.BoxModel.t /* Box model for the node. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5362,11 +6688,20 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5415,10 +6750,16 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
         quads: list(Types.DOM.Quad.t) /* Quads that describe node layout relative to viewport. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5430,11 +6771,20 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5482,10 +6832,16 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
         root: Types.DOM.Node.t /* Resulting node. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5497,11 +6853,20 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5551,10 +6916,16 @@ entire subtree or provide an integer larger than 0. */
         nodes: list(Types.DOM.Node.t) /* Resulting node. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5566,11 +6937,20 @@ entire subtree or provide an integer larger than 0. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5618,10 +6998,16 @@ entire subtree or provide an integer larger than 0. */
         nodeIds: list(Types.DOM.NodeId.t) /* Resulting nodes. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5633,11 +7019,20 @@ entire subtree or provide an integer larger than 0. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5691,10 +7086,16 @@ results (default is false). */,
         nodeId: option(Types.DOM.NodeId.t) /* Id of the node at given coordinates, only when enabled and requested document. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5710,11 +7111,20 @@ results (default is false). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5771,10 +7181,16 @@ results (default is false). */,
         outerHTML: string /* Outer HTML markup. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5786,11 +7202,20 @@ results (default is false). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5838,10 +7263,16 @@ results (default is false). */,
         nodeId: Types.DOM.NodeId.t /* Relayout boundary node id for the given node. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5853,11 +7284,20 @@ results (default is false). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5902,10 +7342,16 @@ results (default is false). */,
         nodeIds: list(Types.DOM.NodeId.t) /* Ids of the search result nodes. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5917,11 +7363,20 @@ results (default is false). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -5966,10 +7421,16 @@ results (default is false). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -5978,11 +7439,20 @@ results (default is false). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6011,10 +7481,16 @@ results (default is false). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6023,11 +7499,20 @@ results (default is false). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6056,10 +7541,16 @@ results (default is false). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6068,11 +7559,20 @@ results (default is false). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6101,10 +7601,16 @@ results (default is false). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6113,11 +7619,20 @@ results (default is false). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6149,10 +7664,16 @@ results (default is false). */,
         nodeId: Types.DOM.NodeId.t /* New id of the moved node. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6164,11 +7685,20 @@ results (default is false). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6220,10 +7750,16 @@ results (default is false). */,
         resultCount: float /* Number of search results. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6237,11 +7773,20 @@ results (default is false). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6287,10 +7832,16 @@ results (default is false). */,
         nodeId: Types.DOM.NodeId.t /* Id of the node for given path. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6302,11 +7853,20 @@ results (default is false). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6351,10 +7911,16 @@ results (default is false). */,
 backendNodeIds. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6367,11 +7933,20 @@ backendNodeIds. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6415,10 +7990,16 @@ backendNodeIds. */,
         nodeId: Types.DOM.NodeId.t /* Query selector result. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6430,11 +8011,20 @@ backendNodeIds. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6480,10 +8070,16 @@ backendNodeIds. */,
         nodeIds: list(Types.DOM.NodeId.t) /* Query selector result. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6495,11 +8091,20 @@ backendNodeIds. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6542,10 +8147,16 @@ backendNodeIds. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6554,11 +8165,20 @@ backendNodeIds. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6587,10 +8207,16 @@ backendNodeIds. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6599,11 +8225,20 @@ backendNodeIds. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6646,10 +8281,16 @@ backendNodeIds. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6658,11 +8299,20 @@ backendNodeIds. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6705,10 +8355,16 @@ backendNodeIds. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6717,11 +8373,20 @@ backendNodeIds. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6773,10 +8438,16 @@ entire subtree or provide an integer larger than 0. */
         nodeId: Types.DOM.NodeId.t /* Node id for given object. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6788,11 +8459,20 @@ entire subtree or provide an integer larger than 0. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6836,10 +8516,16 @@ entire subtree or provide an integer larger than 0. */
         object_: Types.Runtime.RemoteObject.t /* JavaScript object wrapper for given node. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6851,11 +8537,20 @@ entire subtree or provide an integer larger than 0. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6909,10 +8604,16 @@ entire subtree or provide an integer larger than 0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6921,11 +8622,20 @@ entire subtree or provide an integer larger than 0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -6971,10 +8681,16 @@ entire subtree or provide an integer larger than 0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -6983,11 +8699,20 @@ entire subtree or provide an integer larger than 0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7033,10 +8758,16 @@ successfully. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7045,11 +8776,20 @@ successfully. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7096,10 +8836,16 @@ successfully. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7108,11 +8854,20 @@ successfully. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7156,10 +8911,16 @@ successfully. */,
         creation: option(Types.Runtime.StackTrace.t) /* Creation stack trace, if available. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7171,11 +8932,20 @@ successfully. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7220,10 +8990,16 @@ successfully. */,
         path: string /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7235,11 +9011,20 @@ successfully. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7281,10 +9066,16 @@ successfully. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7293,11 +9084,20 @@ successfully. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7341,10 +9141,16 @@ successfully. */,
         nodeId: Types.DOM.NodeId.t /* New node's id. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7356,11 +9162,20 @@ successfully. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7403,10 +9218,16 @@ successfully. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7415,11 +9236,20 @@ successfully. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7462,10 +9292,16 @@ successfully. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7474,11 +9310,20 @@ successfully. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7521,10 +9366,16 @@ successfully. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7533,11 +9384,20 @@ successfully. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7571,10 +9431,16 @@ successfully. */,
         nodeId: option(Types.DOM.NodeId.t) /* Id of the node at given coordinates, only when enabled and requested document. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7588,11 +9454,20 @@ successfully. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7638,10 +9513,16 @@ successfully. */,
         nodeId: option(Types.DOM.NodeId.t) /* The container node for the given node, or null if not found. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7653,11 +9534,20 @@ successfully. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7704,10 +9594,16 @@ successfully. */,
         nodeIds: list(Types.DOM.NodeId.t) /* Descendant nodes with container queries against the given container. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7719,11 +9615,20 @@ successfully. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7774,10 +9679,16 @@ module DOMDebugger = {
         listeners: list(Types.DOMDebugger.EventListener.t) /* Array of relevant listeners. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7789,11 +9700,20 @@ module DOMDebugger = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7840,10 +9760,16 @@ entire subtree or provide an integer larger than 0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7852,11 +9778,20 @@ entire subtree or provide an integer larger than 0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7899,10 +9834,16 @@ entire subtree or provide an integer larger than 0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7911,11 +9852,20 @@ entire subtree or provide an integer larger than 0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -7963,10 +9913,16 @@ entire subtree or provide an integer larger than 0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -7975,11 +9931,20 @@ entire subtree or provide an integer larger than 0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8025,10 +9990,16 @@ entire subtree or provide an integer larger than 0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8037,11 +10008,20 @@ entire subtree or provide an integer larger than 0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8082,10 +10062,16 @@ entire subtree or provide an integer larger than 0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8094,11 +10080,20 @@ entire subtree or provide an integer larger than 0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8139,10 +10134,16 @@ entire subtree or provide an integer larger than 0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8151,11 +10152,20 @@ entire subtree or provide an integer larger than 0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8198,10 +10208,16 @@ entire subtree or provide an integer larger than 0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8210,11 +10226,20 @@ entire subtree or provide an integer larger than 0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8263,10 +10288,16 @@ EventTarget. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8275,11 +10306,20 @@ EventTarget. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8325,10 +10365,16 @@ EventTarget. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8337,11 +10383,20 @@ EventTarget. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8384,10 +10439,16 @@ module EventBreakpoints = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8396,11 +10457,20 @@ module EventBreakpoints = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8446,10 +10516,16 @@ module EventBreakpoints = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8458,11 +10534,20 @@ module EventBreakpoints = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8510,10 +10595,16 @@ module DOMSnapshot = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8522,11 +10613,20 @@ module DOMSnapshot = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8555,10 +10655,16 @@ module DOMSnapshot = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8567,11 +10673,20 @@ module DOMSnapshot = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8610,10 +10725,16 @@ module DOMSnapshot = {
         computedStyles: list(Types.DOMSnapshot.ComputedStyle.t) /* Whitelisted ComputedStyle properties for each node in the layout tree. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8629,11 +10750,20 @@ module DOMSnapshot = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8700,10 +10830,16 @@ module DOMSnapshot = {
         strings: list(string) /* Shared string table that all string properties refer to with indexes. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8717,11 +10853,20 @@ module DOMSnapshot = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8790,10 +10935,16 @@ module DOMStorage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8802,11 +10953,20 @@ module DOMStorage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8847,10 +11007,16 @@ module DOMStorage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8859,11 +11025,20 @@ module DOMStorage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8892,10 +11067,16 @@ module DOMStorage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8904,11 +11085,20 @@ module DOMStorage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -8940,10 +11130,16 @@ module DOMStorage = {
         entries: list(Types.DOMStorage.Item.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -8955,11 +11151,20 @@ module DOMStorage = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9000,10 +11205,16 @@ module DOMStorage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9012,11 +11223,20 @@ module DOMStorage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9059,10 +11279,16 @@ module DOMStorage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9071,11 +11297,20 @@ module DOMStorage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9122,10 +11357,16 @@ module Database = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9134,11 +11375,20 @@ module Database = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9167,10 +11417,16 @@ module Database = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9179,11 +11435,20 @@ module Database = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9219,10 +11484,16 @@ module Database = {
         sqlError: option(Types.Database.Error.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9238,11 +11509,20 @@ module Database = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9288,10 +11568,16 @@ module Database = {
         tableNames: list(string) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9303,11 +11589,20 @@ module Database = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9350,10 +11645,16 @@ module DeviceOrientation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9362,11 +11663,20 @@ module DeviceOrientation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9399,10 +11709,16 @@ module DeviceOrientation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9411,11 +11727,20 @@ module DeviceOrientation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9470,10 +11795,16 @@ module Emulation = {
         result: bool /* True if emulation is supported. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9485,11 +11816,20 @@ module Emulation = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9518,10 +11858,16 @@ module Emulation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9530,11 +11876,20 @@ module Emulation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9563,10 +11918,16 @@ module Emulation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9575,11 +11936,20 @@ module Emulation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9608,10 +11978,16 @@ module Emulation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9620,11 +11996,20 @@ module Emulation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9653,10 +12038,16 @@ module Emulation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9665,11 +12056,20 @@ module Emulation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9710,10 +12110,16 @@ module Emulation = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9722,11 +12128,20 @@ module Emulation = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9768,10 +12183,16 @@ If not specified, any existing override will be cleared. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9780,11 +12201,20 @@ If not specified, any existing override will be cleared. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9826,10 +12256,16 @@ If not specified, any existing override will be cleared. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9838,11 +12274,20 @@ If not specified, any existing override will be cleared. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -9891,10 +12336,16 @@ cleared. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -9903,11 +12354,20 @@ cleared. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10005,10 +12465,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10017,11 +12483,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10062,10 +12537,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10074,11 +12555,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10119,10 +12609,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10131,11 +12627,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10194,10 +12699,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10206,11 +12717,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10253,10 +12773,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10265,11 +12791,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10342,10 +12877,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10354,11 +12895,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10403,10 +12953,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10415,11 +12971,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10462,10 +13027,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10474,11 +13045,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10507,10 +13087,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10519,11 +13105,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10564,10 +13159,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10576,11 +13177,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10621,10 +13231,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10633,11 +13249,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10683,10 +13308,16 @@ is turned-off. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10695,11 +13326,20 @@ is turned-off. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10746,10 +13386,16 @@ is turned-off. */,
         virtualTimeTicksBase: float /* Absolute timestamp at which virtual time was first enabled (up time in milliseconds). */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10761,11 +13407,20 @@ is turned-off. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10831,10 +13486,16 @@ Note any previous deferred policy change is superseded. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10843,11 +13504,20 @@ Note any previous deferred policy change is superseded. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10889,10 +13559,16 @@ restores default host system locale. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10901,11 +13577,20 @@ restores default host system locale. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -10949,10 +13634,16 @@ restores default host system timezone. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -10961,11 +13652,20 @@ restores default host system timezone. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11008,10 +13708,16 @@ restores default host system timezone. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11020,11 +13726,20 @@ restores default host system timezone. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11065,10 +13780,16 @@ restores default host system timezone. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11077,11 +13798,20 @@ restores default host system timezone. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11146,10 +13876,16 @@ display. Reported for diagnostic uses, may be removed in the future. */
         screenshotData: option(string) /* Base64-encoded image data of the screenshot, if one was requested and successfully taken. (Encoded as a base64 string when passed over JSON) */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11164,11 +13900,20 @@ display. Reported for diagnostic uses, may be removed in the future. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11228,10 +13973,16 @@ during renderer initialization. In such a case, no screenshot data will be retur
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11240,11 +13991,20 @@ during renderer initialization. In such a case, no screenshot data will be retur
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11273,10 +14033,16 @@ during renderer initialization. In such a case, no screenshot data will be retur
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11285,11 +14051,20 @@ during renderer initialization. In such a case, no screenshot data will be retur
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11320,10 +14095,16 @@ module IO = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11332,11 +14113,20 @@ module IO = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11384,10 +14174,16 @@ module IO = {
         eof: bool /* Set if the end-of-file condition occurred while reading. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11403,11 +14199,20 @@ module IO = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11456,10 +14261,16 @@ following the last read). Some types of streams may only support sequential read
         uuid: string /* UUID of the specified Blob. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11471,11 +14282,20 @@ following the last read). Some types of streams may only support sequential read
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11518,10 +14338,16 @@ module IndexedDB = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11530,11 +14356,20 @@ module IndexedDB = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11579,10 +14414,16 @@ module IndexedDB = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11591,11 +14432,20 @@ module IndexedDB = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11638,10 +14488,16 @@ module IndexedDB = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11650,11 +14506,20 @@ module IndexedDB = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11702,10 +14567,16 @@ module IndexedDB = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11714,11 +14585,20 @@ module IndexedDB = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11747,10 +14627,16 @@ module IndexedDB = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11759,11 +14645,20 @@ module IndexedDB = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11797,10 +14692,16 @@ module IndexedDB = {
         hasMore: bool /* If true, there are more entries to fetch in the given range. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11814,11 +14715,20 @@ module IndexedDB = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11896,10 +14806,16 @@ key into the object store. Valid if objectStore.autoIncrement
 is true. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11915,11 +14831,20 @@ is true. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -11967,10 +14892,16 @@ is true. */,
         databaseWithObjectStores: Types.IndexedDB.DatabaseWithObjectStores.t /* Database with an array of object stores. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -11982,11 +14913,20 @@ is true. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12032,10 +14972,16 @@ is true. */,
         databaseNames: list(string) /* Database names for origin. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12047,11 +14993,20 @@ is true. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12094,10 +15049,16 @@ module Input = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12106,11 +15067,20 @@ module Input = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12181,10 +15151,16 @@ the top of the viewport and Y increases as it proceeds towards the bottom of the
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12193,11 +15169,20 @@ the top of the viewport and Y increases as it proceeds towards the bottom of the
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12328,10 +15313,16 @@ See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12340,11 +15331,20 @@ See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12387,10 +15387,16 @@ See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12399,11 +15405,20 @@ See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12466,10 +15481,16 @@ See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12478,11 +15499,20 @@ See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12623,10 +15653,16 @@ Left=1, Right=2, Middle=4, Back=8, Forward=16, None=0. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12635,11 +15671,20 @@ Left=1, Right=2, Middle=4, Back=8, Forward=16, None=0. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12710,10 +15755,16 @@ one by one. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12722,11 +15773,20 @@ one by one. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12826,10 +15886,16 @@ one by one. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12838,11 +15904,20 @@ one by one. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12884,10 +15959,16 @@ one by one. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12896,11 +15977,20 @@ one by one. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -12941,10 +16031,16 @@ one by one. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -12953,11 +16049,20 @@ one by one. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13008,10 +16113,16 @@ for the preferred input type). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13020,11 +16131,20 @@ for the preferred input type). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13118,10 +16238,16 @@ for the preferred input type). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13130,11 +16256,20 @@ for the preferred input type). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13186,10 +16321,16 @@ module Inspector = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13198,11 +16339,20 @@ module Inspector = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13231,10 +16381,16 @@ module Inspector = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13243,11 +16399,20 @@ module Inspector = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13283,10 +16448,16 @@ module LayerTree = {
         compositingReasonIds: list(string) /* A list of strings specifying reason IDs for the given layer to become composited. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13300,11 +16471,20 @@ module LayerTree = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13345,10 +16525,16 @@ module LayerTree = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13357,11 +16543,20 @@ module LayerTree = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13390,10 +16585,16 @@ module LayerTree = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13402,11 +16603,20 @@ module LayerTree = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13438,10 +16648,16 @@ module LayerTree = {
         snapshotId: Types.LayerTree.SnapshotId.t /* The id of the snapshot. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13453,11 +16669,20 @@ module LayerTree = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13501,10 +16726,16 @@ module LayerTree = {
         snapshotId: Types.LayerTree.SnapshotId.t /* The id of the layer snapshot. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13516,11 +16747,20 @@ module LayerTree = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13564,10 +16804,16 @@ module LayerTree = {
         timings: list(Types.LayerTree.PaintProfile.t) /* The array of paint profiles, one per run. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13579,11 +16825,20 @@ module LayerTree = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13631,10 +16886,16 @@ module LayerTree = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13643,11 +16904,20 @@ module LayerTree = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13691,10 +16961,16 @@ module LayerTree = {
         dataURL: string /* A data: URL for resulting image. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13706,11 +16982,20 @@ module LayerTree = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13760,10 +17045,16 @@ module LayerTree = {
         commandLog: list(Types.assoc) /* The array of canvas function calls. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13775,11 +17066,20 @@ module LayerTree = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13822,10 +17122,16 @@ module Log = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13834,11 +17140,20 @@ module Log = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13867,10 +17182,16 @@ module Log = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13879,11 +17200,20 @@ module Log = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13913,10 +17243,16 @@ module Log = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13925,11 +17261,20 @@ module Log = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -13958,10 +17303,16 @@ module Log = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -13970,11 +17321,20 @@ module Log = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14015,10 +17375,16 @@ module Log = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14027,11 +17393,20 @@ module Log = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14069,10 +17444,16 @@ module Memory = {
         jsEventListeners: float /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14088,11 +17469,20 @@ module Memory = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14121,10 +17511,16 @@ module Memory = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14133,11 +17529,20 @@ module Memory = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14166,10 +17571,16 @@ module Memory = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14178,11 +17589,20 @@ module Memory = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14211,10 +17631,16 @@ module Memory = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14223,11 +17649,20 @@ module Memory = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14273,10 +17708,16 @@ module Memory = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14285,11 +17726,20 @@ module Memory = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14330,10 +17780,16 @@ module Memory = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14342,11 +17798,20 @@ module Memory = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14389,10 +17854,16 @@ module Memory = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14401,11 +17872,20 @@ module Memory = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14438,10 +17918,16 @@ module Memory = {
         profile: Types.Memory.SamplingProfile.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14453,11 +17939,20 @@ module Memory = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14490,10 +17985,16 @@ module Memory = {
         profile: Types.Memory.SamplingProfile.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14505,11 +18006,20 @@ module Memory = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14542,10 +18052,16 @@ module Memory = {
         profile: Types.Memory.SamplingProfile.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14557,11 +18073,20 @@ module Memory = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14592,10 +18117,16 @@ module Network = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14604,11 +18135,20 @@ module Network = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14649,10 +18189,16 @@ module Network = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14661,11 +18207,20 @@ module Network = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14697,10 +18252,16 @@ module Network = {
         result: bool /* True if browser cache can be cleared. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14712,11 +18273,20 @@ module Network = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14748,10 +18318,16 @@ module Network = {
         result: bool /* True if browser cookies can be cleared. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14763,11 +18339,20 @@ module Network = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14799,10 +18384,16 @@ module Network = {
         result: bool /* True if emulation of network conditions is supported. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14814,11 +18405,20 @@ module Network = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14847,10 +18447,16 @@ module Network = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14859,11 +18465,20 @@ module Network = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14892,10 +18507,16 @@ module Network = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14904,11 +18525,20 @@ module Network = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -14941,10 +18571,16 @@ module Network = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -14953,11 +18589,20 @@ module Network = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15038,10 +18683,16 @@ authChallenge. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15050,11 +18701,20 @@ authChallenge. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15102,10 +18762,16 @@ provided URL. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15114,11 +18780,20 @@ provided URL. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15147,10 +18822,16 @@ provided URL. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15159,11 +18840,20 @@ provided URL. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15226,10 +18916,16 @@ provided URL. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15238,11 +18934,20 @@ provided URL. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15297,10 +19002,16 @@ provided URL. */
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15312,11 +19023,20 @@ provided URL. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15348,10 +19068,16 @@ provided URL. */
         tableNames: list(string) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15363,11 +19089,20 @@ provided URL. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15412,10 +19147,16 @@ provided URL. */
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15427,11 +19168,20 @@ provided URL. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15479,10 +19229,16 @@ the URLs of the page and all of its subframes. */,
         base64Encoded: bool /* True, if content was sent as base64. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15496,11 +19252,20 @@ the URLs of the page and all of its subframes. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15544,10 +19309,16 @@ the URLs of the page and all of its subframes. */,
         postData: string /* Request body string, omitting files from multipart requests */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15559,11 +19330,20 @@ the URLs of the page and all of its subframes. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15609,10 +19389,16 @@ the URLs of the page and all of its subframes. */,
         base64Encoded: bool /* True, if content was sent as base64. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15626,11 +19412,20 @@ the URLs of the page and all of its subframes. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15682,10 +19477,16 @@ the URLs of the page and all of its subframes. */,
         stream: Types.IO.StreamHandle.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15697,11 +19498,20 @@ the URLs of the page and all of its subframes. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15749,10 +19559,16 @@ the URLs of the page and all of its subframes. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15761,11 +19577,20 @@ the URLs of the page and all of its subframes. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15809,10 +19634,16 @@ the URLs of the page and all of its subframes. */,
         result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15824,11 +19655,20 @@ the URLs of the page and all of its subframes. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15875,10 +19715,16 @@ the URLs of the page and all of its subframes. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15887,11 +19733,20 @@ the URLs of the page and all of its subframes. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15932,10 +19787,16 @@ the URLs of the page and all of its subframes. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -15944,11 +19805,20 @@ the URLs of the page and all of its subframes. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -15989,10 +19859,16 @@ the URLs of the page and all of its subframes. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16001,11 +19877,20 @@ the URLs of the page and all of its subframes. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16049,10 +19934,16 @@ the URLs of the page and all of its subframes. */,
         success: bool /* Always set to true. If an error occurs, the response indicates protocol error. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16064,11 +19955,20 @@ the URLs of the page and all of its subframes. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16172,10 +20072,16 @@ If not set, the cookie will be set as not partitioned. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16184,11 +20090,20 @@ If not set, the cookie will be set as not partitioned. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16229,10 +20144,16 @@ If not set, the cookie will be set as not partitioned. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16241,11 +20162,20 @@ If not set, the cookie will be set as not partitioned. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16286,10 +20216,16 @@ If not set, the cookie will be set as not partitioned. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16298,11 +20234,20 @@ If not set, the cookie will be set as not partitioned. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16344,10 +20289,16 @@ If not set, the cookie will be set as not partitioned. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16356,11 +20307,20 @@ If not set, the cookie will be set as not partitioned. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16402,10 +20362,16 @@ continueInterceptedRequest call. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16414,11 +20380,20 @@ continueInterceptedRequest call. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16475,10 +20450,16 @@ continueInterceptedRequest call. */,
         status: Types.Network.SecurityIsolationStatus.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16490,11 +20471,20 @@ continueInterceptedRequest call. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16536,10 +20526,16 @@ continueInterceptedRequest call. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16548,11 +20544,20 @@ continueInterceptedRequest call. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16596,10 +20601,16 @@ continueInterceptedRequest call. */,
         resource: Types.Network.LoadNetworkResourcePageResult.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16611,11 +20622,20 @@ continueInterceptedRequest call. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16663,10 +20683,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16675,11 +20701,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16708,10 +20743,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16720,11 +20761,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16756,10 +20806,16 @@ module Overlay = {
         highlight: Types.assoc /* Highlight data for the node. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16771,11 +20827,20 @@ module Overlay = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16841,10 +20906,16 @@ module Overlay = {
         highlights: Types.assoc /* Grid Highlight data for the node ids provided. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16856,11 +20927,20 @@ module Overlay = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16909,10 +20989,16 @@ module Overlay = {
         highlight: Types.assoc /* Source order highlight data for the node id provided. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16924,11 +21010,20 @@ module Overlay = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -16974,10 +21069,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -16986,11 +21087,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17022,10 +21132,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17034,11 +21150,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17084,10 +21209,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17096,11 +21227,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17157,10 +21297,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17169,11 +21315,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17218,10 +21373,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17230,11 +21391,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17286,10 +21456,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17298,11 +21474,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17351,10 +21536,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17363,11 +21554,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17411,10 +21611,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17423,11 +21629,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17468,10 +21683,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17480,11 +21701,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17525,10 +21755,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17537,11 +21773,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17582,10 +21827,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17594,11 +21845,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17639,10 +21899,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17651,11 +21917,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17697,10 +21972,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17709,11 +21990,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17755,10 +22045,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17767,11 +22063,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17813,10 +22118,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17825,11 +22136,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17876,10 +22196,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17888,11 +22214,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17933,10 +22268,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -17945,11 +22286,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -17990,10 +22340,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18002,11 +22358,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18052,10 +22417,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18064,11 +22435,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18109,10 +22489,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18121,11 +22507,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18166,10 +22561,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18178,11 +22579,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18223,10 +22633,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18235,11 +22651,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18280,10 +22705,16 @@ module Overlay = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18292,11 +22723,20 @@ module Overlay = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18343,10 +22783,16 @@ module Page = {
         identifier: Types.Page.ScriptIdentifier.t /* Identifier of the added script. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18358,11 +22804,20 @@ module Page = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18406,10 +22861,16 @@ module Page = {
         identifier: Types.Page.ScriptIdentifier.t /* Identifier of the added script. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18421,11 +22882,20 @@ module Page = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18478,10 +22948,16 @@ to false. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18490,11 +22966,20 @@ to false. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18526,10 +23011,16 @@ to false. */,
         data: string /* Base64-encoded image data. (Encoded as a base64 string when passed over JSON) */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18541,11 +23032,20 @@ to false. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18619,10 +23119,16 @@ to false. */,
         data: string /* Serialized page data. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18634,11 +23140,20 @@ to false. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18688,10 +23203,16 @@ to false. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18700,11 +23221,20 @@ to false. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18733,10 +23263,16 @@ to false. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18745,11 +23281,20 @@ to false. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18778,10 +23323,16 @@ to false. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18790,11 +23341,20 @@ to false. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18826,10 +23386,16 @@ to false. */,
         executionContextId: Types.Runtime.ExecutionContextId.t /* Execution context of the isolated world. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18841,11 +23407,20 @@ to false. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18891,10 +23466,16 @@ option, use with caution. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18903,11 +23484,20 @@ option, use with caution. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18950,10 +23540,16 @@ option, use with caution. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -18962,11 +23558,20 @@ option, use with caution. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -18995,10 +23600,16 @@ option, use with caution. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19007,11 +23618,20 @@ option, use with caution. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19049,10 +23669,16 @@ option, use with caution. */,
         parsed: option(Types.Page.AppManifestParsedProperties.t) /* Parsed manifest properties */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19070,11 +23696,20 @@ option, use with caution. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19106,10 +23741,16 @@ option, use with caution. */,
         installabilityErrors: list(Types.Page.InstallabilityError.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19121,11 +23762,20 @@ option, use with caution. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19157,10 +23807,16 @@ option, use with caution. */,
         primaryIcon: option(string) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19172,11 +23828,20 @@ option, use with caution. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19211,10 +23876,16 @@ option, use with caution. */,
         recommendedId: option(string) /* Recommendation for manifest's id attribute to match current id computed from start_url */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19228,11 +23899,20 @@ option, use with caution. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19265,10 +23945,16 @@ option, use with caution. */,
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19280,11 +23966,20 @@ option, use with caution. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19316,10 +24011,16 @@ option, use with caution. */,
         frameTree: Types.Page.FrameTree.t /* Present frame tree structure. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19331,11 +24032,20 @@ option, use with caution. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19377,10 +24087,16 @@ option, use with caution. */,
         cssContentSize: Types.DOM.Rect.t /* Size of scrollable area in CSS pixels. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19402,11 +24118,20 @@ option, use with caution. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19440,10 +24165,16 @@ option, use with caution. */,
         entries: list(Types.Page.NavigationEntry.t) /* Array of navigation history entries. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19457,11 +24188,20 @@ option, use with caution. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19490,10 +24230,16 @@ option, use with caution. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19502,11 +24248,20 @@ option, use with caution. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19540,10 +24295,16 @@ option, use with caution. */,
         base64Encoded: bool /* True, if content was served as base64. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19557,11 +24318,20 @@ option, use with caution. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19607,10 +24377,16 @@ option, use with caution. */,
         frameTree: Types.Page.FrameResourceTree.t /* Present frame / resource tree structure. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19622,11 +24398,20 @@ option, use with caution. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19655,10 +24440,16 @@ option, use with caution. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19667,11 +24458,20 @@ option, use with caution. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19722,10 +24522,16 @@ dialog. */,
         errorText: option(string) /* User friendly error message, present if and only if navigation has failed. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19741,11 +24547,20 @@ dialog. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19802,10 +24617,16 @@ dialog. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19814,11 +24635,20 @@ dialog. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -19864,10 +24694,16 @@ dialog. */,
         stream: option(Types.IO.StreamHandle.t) /* A handle of the stream that holds resulting PDF data. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -19881,11 +24717,20 @@ dialog. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20014,10 +24859,16 @@ in which case the content will be scaled to fit the paper size. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20026,11 +24877,20 @@ in which case the content will be scaled to fit the paper size. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20074,10 +24934,16 @@ Argument will be ignored if reloading dataURL origin. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20086,11 +24952,20 @@ Argument will be ignored if reloading dataURL origin. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20131,10 +25006,16 @@ Argument will be ignored if reloading dataURL origin. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20143,11 +25024,20 @@ Argument will be ignored if reloading dataURL origin. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20193,10 +25083,16 @@ Argument will be ignored if reloading dataURL origin. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20205,11 +25101,20 @@ Argument will be ignored if reloading dataURL origin. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20253,10 +25158,16 @@ Argument will be ignored if reloading dataURL origin. */,
         result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20268,11 +25179,20 @@ Argument will be ignored if reloading dataURL origin. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20321,10 +25241,16 @@ Argument will be ignored if reloading dataURL origin. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20333,11 +25259,20 @@ Argument will be ignored if reloading dataURL origin. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20378,10 +25313,16 @@ Argument will be ignored if reloading dataURL origin. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20390,11 +25331,20 @@ Argument will be ignored if reloading dataURL origin. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20438,10 +25388,16 @@ Argument will be ignored if reloading dataURL origin. */,
         states: list(Types.Page.PermissionsPolicyFeatureState.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20453,11 +25409,20 @@ Argument will be ignored if reloading dataURL origin. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20501,10 +25466,16 @@ Argument will be ignored if reloading dataURL origin. */,
         originTrials: list(Types.Page.OriginTrial.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20516,11 +25487,20 @@ Argument will be ignored if reloading dataURL origin. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20563,10 +25543,16 @@ Argument will be ignored if reloading dataURL origin. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20575,11 +25561,20 @@ Argument will be ignored if reloading dataURL origin. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20671,10 +25666,16 @@ autosizing and more. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20683,11 +25684,20 @@ autosizing and more. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20732,10 +25742,16 @@ autosizing and more. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20744,11 +25760,20 @@ autosizing and more. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20789,10 +25814,16 @@ autosizing and more. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20801,11 +25832,20 @@ autosizing and more. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20846,10 +25886,16 @@ autosizing and more. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20858,11 +25904,20 @@ autosizing and more. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20905,10 +25960,16 @@ autosizing and more. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20917,11 +25978,20 @@ autosizing and more. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -20979,10 +26049,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -20991,11 +26067,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21040,10 +26125,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21052,11 +26143,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21097,10 +26197,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21109,11 +26215,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21167,10 +26282,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21179,11 +26300,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21251,10 +26381,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21263,11 +26399,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21296,10 +26441,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21308,11 +26459,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21341,10 +26501,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21353,11 +26519,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21388,10 +26563,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21400,11 +26581,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21456,10 +26646,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21468,11 +26664,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21506,10 +26711,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21518,11 +26729,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21564,10 +26784,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21576,11 +26802,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21623,10 +26858,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21635,11 +26876,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21669,10 +26919,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21681,11 +26937,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21739,10 +27004,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21751,11 +27022,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21798,10 +27078,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21810,11 +27096,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21845,10 +27140,16 @@ available (otherwise deny). */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21857,11 +27158,20 @@ available (otherwise deny). */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21904,10 +27214,16 @@ module Performance = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21916,11 +27232,20 @@ module Performance = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -21949,10 +27274,16 @@ module Performance = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -21961,11 +27292,20 @@ module Performance = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22019,10 +27359,16 @@ module Performance = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22031,11 +27377,20 @@ module Performance = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22090,10 +27445,16 @@ module Performance = {
         metrics: list(Types.Performance.Metric.t) /* Current values for run-time metrics. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22105,11 +27466,20 @@ module Performance = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22141,10 +27511,16 @@ module PerformanceTimeline = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22153,11 +27529,20 @@ module PerformanceTimeline = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22204,10 +27589,16 @@ module Security = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22216,11 +27607,20 @@ module Security = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22249,10 +27649,16 @@ module Security = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22261,11 +27667,20 @@ module Security = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22294,10 +27709,16 @@ module Security = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22306,11 +27727,20 @@ module Security = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22351,10 +27781,16 @@ module Security = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22363,11 +27799,20 @@ module Security = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22411,10 +27856,16 @@ module Security = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22423,11 +27874,20 @@ module Security = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22475,10 +27935,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22487,11 +27953,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22536,10 +28011,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22548,11 +28029,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22581,10 +28071,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22593,11 +28089,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22644,10 +28149,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22656,11 +28167,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22710,10 +28230,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22722,11 +28248,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22755,10 +28290,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22767,11 +28308,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22812,10 +28362,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22824,11 +28380,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22874,10 +28439,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22886,11 +28457,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22931,10 +28511,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -22943,11 +28529,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -22988,10 +28583,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23000,11 +28601,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23033,10 +28643,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23045,11 +28661,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23090,10 +28715,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23102,11 +28733,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23147,10 +28787,16 @@ module ServiceWorker = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23159,11 +28805,20 @@ module ServiceWorker = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23206,10 +28861,16 @@ module Storage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23218,11 +28879,20 @@ module Storage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23268,10 +28938,16 @@ module Storage = {
         cookies: list(Types.Network.Cookie.t) /* Array of cookie objects. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23283,11 +28959,20 @@ module Storage = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23328,10 +29013,16 @@ module Storage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23340,11 +29031,20 @@ module Storage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23387,10 +29087,16 @@ module Storage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23399,11 +29105,20 @@ module Storage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23453,10 +29168,16 @@ module Storage = {
         usageBreakdown: list(Types.Storage.UsageForType.t) /* Storage usage per type (bytes). */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23474,11 +29195,20 @@ module Storage = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23519,10 +29249,16 @@ module Storage = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23531,11 +29267,20 @@ module Storage = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23584,10 +29329,16 @@ disabled (called without a quotaSize). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23596,11 +29347,20 @@ disabled (called without a quotaSize). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23641,10 +29401,16 @@ disabled (called without a quotaSize). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23653,11 +29419,20 @@ disabled (called without a quotaSize). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23698,10 +29473,16 @@ disabled (called without a quotaSize). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23710,11 +29491,20 @@ disabled (called without a quotaSize). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23760,10 +29550,16 @@ disabled (called without a quotaSize). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23772,11 +29568,20 @@ disabled (called without a quotaSize). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23821,10 +29626,16 @@ disabled (called without a quotaSize). */,
         tokens: list(Types.Storage.TrustTokens.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23836,11 +29647,20 @@ disabled (called without a quotaSize). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23873,10 +29693,16 @@ disabled (called without a quotaSize). */,
         didDeleteTokens: bool /* True if any tokens were deleted, false otherwise. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23888,11 +29714,20 @@ disabled (called without a quotaSize). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -23947,10 +29782,16 @@ example, '10.1'. Will be the empty string if not supported. */
 supported. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -23971,11 +29812,20 @@ supported. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24007,10 +29857,16 @@ supported. */,
         processInfo: list(Types.SystemInfo.ProcessInfo.t) /* An array of process info blocks. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24022,11 +29878,20 @@ supported. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24057,10 +29922,16 @@ module Target = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24069,11 +29940,20 @@ module Target = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24117,10 +29997,16 @@ module Target = {
         sessionId: Types.Target.SessionID.t /* Id assigned to the session. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24132,11 +30018,20 @@ module Target = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24184,10 +30079,16 @@ and eventually retire it. See crbug.com/991325. */,
         sessionId: Types.Target.SessionID.t /* Id assigned to the session. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24199,11 +30100,20 @@ and eventually retire it. See crbug.com/991325. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24235,10 +30145,16 @@ and eventually retire it. See crbug.com/991325. */,
         success: bool /* Always set to true. If an error occurs, the response indicates protocol error. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24250,11 +30166,20 @@ and eventually retire it. See crbug.com/991325. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24302,10 +30227,16 @@ and eventually retire it. See crbug.com/991325. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24314,11 +30245,20 @@ and eventually retire it. See crbug.com/991325. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24365,10 +30305,16 @@ and eventually retire it. See crbug.com/991325. */,
         browserContextId: Types.Browser.BrowserContextID.t /* The id of the context created. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24380,11 +30326,20 @@ and eventually retire it. See crbug.com/991325. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24446,10 +30401,16 @@ and eventually retire it. See crbug.com/991325. */,
         browserContextIds: list(Types.Browser.BrowserContextID.t) /* An array of browser context ids. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24461,11 +30422,20 @@ and eventually retire it. See crbug.com/991325. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24497,10 +30467,16 @@ and eventually retire it. See crbug.com/991325. */,
         targetId: Types.Target.TargetID.t /* The id of the page opened. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24512,11 +30488,20 @@ and eventually retire it. See crbug.com/991325. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24589,10 +30574,16 @@ false by default). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24601,11 +30592,20 @@ false by default). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24649,10 +30649,16 @@ false by default). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24661,11 +30667,20 @@ false by default). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24709,10 +30724,16 @@ false by default). */,
         targetInfo: Types.Target.TargetInfo.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24724,11 +30745,20 @@ false by default). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24772,10 +30802,16 @@ false by default). */,
         targetInfos: list(Types.Target.TargetInfo.t) /* The list of targets. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24787,11 +30823,20 @@ false by default). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24822,10 +30867,16 @@ false by default). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24834,11 +30885,20 @@ false by default). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24887,10 +30947,16 @@ false by default). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24899,11 +30965,20 @@ false by default). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -24955,10 +31030,16 @@ and eventually retire it. See crbug.com/991325. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -24967,11 +31048,20 @@ and eventually retire it. See crbug.com/991325. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25016,10 +31106,16 @@ to run paused targets. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25028,11 +31124,20 @@ to run paused targets. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25074,10 +31179,16 @@ to run paused targets. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25086,11 +31197,20 @@ to run paused targets. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25133,10 +31253,16 @@ module Tethering = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25145,11 +31271,20 @@ module Tethering = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25190,10 +31325,16 @@ module Tethering = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25202,11 +31343,20 @@ module Tethering = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25249,10 +31399,16 @@ module Tracing = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25261,11 +31417,20 @@ module Tracing = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25297,10 +31462,16 @@ module Tracing = {
         categories: list(string) /* A list of supported tracing categories. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25312,11 +31483,20 @@ module Tracing = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25345,10 +31525,16 @@ module Tracing = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25357,11 +31543,20 @@ module Tracing = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25407,10 +31602,16 @@ module Tracing = {
         success: bool /* True iff the global memory dump succeeded. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25424,11 +31625,20 @@ module Tracing = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25471,10 +31681,16 @@ module Tracing = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25483,11 +31699,20 @@ module Tracing = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25584,10 +31809,16 @@ module Fetch = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25596,11 +31827,20 @@ module Fetch = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25630,10 +31870,16 @@ module Fetch = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25642,11 +31888,20 @@ module Fetch = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25692,10 +31947,16 @@ expecting a call to continueWithAuth. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25704,11 +31965,20 @@ expecting a call to continueWithAuth. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25751,10 +32021,16 @@ expecting a call to continueWithAuth. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25763,11 +32039,20 @@ expecting a call to continueWithAuth. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25840,10 +32125,16 @@ If absent, a standard phrase matching responseCode is used. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25852,11 +32143,20 @@ If absent, a standard phrase matching responseCode is used. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25916,10 +32216,16 @@ If absent, a standard phrase matching responseCode is used. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25928,11 +32234,20 @@ If absent, a standard phrase matching responseCode is used. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -25977,10 +32292,16 @@ If absent, a standard phrase matching responseCode is used. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -25989,11 +32310,20 @@ If absent, a standard phrase matching responseCode is used. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26070,10 +32400,16 @@ over the protocol as text. (Encoded as a base64 string when passed over JSON) */
         base64Encoded: bool /* True, if content was sent as base64. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26087,11 +32423,20 @@ over the protocol as text. (Encoded as a base64 string when passed over JSON) */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26144,10 +32489,16 @@ over the protocol as text. (Encoded as a base64 string when passed over JSON) */
         stream: Types.IO.StreamHandle.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26159,11 +32510,20 @@ over the protocol as text. (Encoded as a base64 string when passed over JSON) */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26206,10 +32566,16 @@ module WebAudio = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26218,11 +32584,20 @@ module WebAudio = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26251,10 +32626,16 @@ module WebAudio = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26263,11 +32644,20 @@ module WebAudio = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26299,10 +32689,16 @@ module WebAudio = {
         realtimeData: Types.WebAudio.ContextRealtimeData.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26314,11 +32710,20 @@ module WebAudio = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26362,10 +32767,16 @@ module WebAuthn = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26374,11 +32785,20 @@ module WebAuthn = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26407,10 +32827,16 @@ module WebAuthn = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26419,11 +32845,20 @@ module WebAuthn = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26455,10 +32890,16 @@ module WebAuthn = {
         authenticatorId: Types.WebAuthn.AuthenticatorId.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26470,11 +32911,20 @@ module WebAuthn = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26515,10 +32965,16 @@ module WebAuthn = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26527,11 +32983,20 @@ module WebAuthn = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26572,10 +33037,16 @@ module WebAuthn = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26584,11 +33055,20 @@ module WebAuthn = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26635,10 +33115,16 @@ module WebAuthn = {
         credential: Types.WebAuthn.Credential.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26650,11 +33136,20 @@ module WebAuthn = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26700,10 +33195,16 @@ module WebAuthn = {
         credentials: list(Types.WebAuthn.Credential.t) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26715,11 +33216,20 @@ module WebAuthn = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26760,10 +33270,16 @@ module WebAuthn = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26772,11 +33288,20 @@ module WebAuthn = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26819,10 +33344,16 @@ module WebAuthn = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26831,11 +33362,20 @@ module WebAuthn = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26877,10 +33417,16 @@ module WebAuthn = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26889,11 +33435,20 @@ module WebAuthn = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -26937,10 +33492,16 @@ module WebAuthn = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -26949,11 +33510,20 @@ module WebAuthn = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27003,10 +33573,16 @@ module Media = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27015,11 +33591,20 @@ module Media = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27048,10 +33633,16 @@ module Media = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27060,11 +33651,20 @@ module Media = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27095,10 +33695,16 @@ module Console = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27107,11 +33713,20 @@ module Console = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27140,10 +33755,16 @@ module Console = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27152,11 +33773,20 @@ module Console = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27186,10 +33816,16 @@ module Console = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27198,11 +33834,20 @@ module Console = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27233,10 +33878,16 @@ module Debugger = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27245,11 +33896,20 @@ module Debugger = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27303,10 +33963,16 @@ module Debugger = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27315,11 +33981,20 @@ module Debugger = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27352,10 +34027,16 @@ module Debugger = {
         debuggerId: Types.Runtime.UniqueDebuggerId.t /* Unique identifier of the debugger. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27367,11 +34048,20 @@ module Debugger = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27418,10 +34108,16 @@ the debugger can hold. Puts no limit if parameter is omitted. */,
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27435,11 +34131,20 @@ the debugger can hold. Puts no limit if parameter is omitted. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27525,10 +34230,16 @@ execution. Overrides `setPauseOnException` state. */
         locations: list(Types.Debugger.BreakLocation.t) /* List of the possible breakpoint locations. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27540,11 +34251,20 @@ execution. Overrides `setPauseOnException` state. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27595,10 +34315,16 @@ of scripts is used as end of range. */
         bytecode: option(string) /* Wasm bytecode. (Encoded as a base64 string when passed over JSON) */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27612,11 +34338,20 @@ of scripts is used as end of range. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27660,10 +34395,16 @@ of scripts is used as end of range. */
         bytecode: string /* Script source. (Encoded as a base64 string when passed over JSON) */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27675,11 +34416,20 @@ of scripts is used as end of range. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27723,10 +34473,16 @@ of scripts is used as end of range. */
         stackTrace: Types.Runtime.StackTrace.t /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27738,11 +34494,20 @@ of scripts is used as end of range. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27783,10 +34548,16 @@ of scripts is used as end of range. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27795,11 +34566,20 @@ of scripts is used as end of range. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27828,10 +34608,16 @@ of scripts is used as end of range. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27840,11 +34626,20 @@ of scripts is used as end of range. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27885,10 +34680,16 @@ of scripts is used as end of range. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27897,11 +34698,20 @@ of scripts is used as end of range. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -27949,10 +34759,16 @@ of scripts is used as end of range. */
         asyncStackTraceId: option(Types.Runtime.StackTraceId.t) /* Async stack trace, if any. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -27968,11 +34784,20 @@ of scripts is used as end of range. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28013,10 +34838,16 @@ of scripts is used as end of range. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28025,11 +34856,20 @@ of scripts is used as end of range. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28077,10 +34917,16 @@ If execution is currently not paused, this parameter has no effect. */,
         result: list(Types.Debugger.SearchMatch.t) /* List of search matches. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28092,11 +34938,20 @@ If execution is currently not paused, this parameter has no effect. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28143,10 +34998,16 @@ If execution is currently not paused, this parameter has no effect. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28155,11 +35016,20 @@ If execution is currently not paused, this parameter has no effect. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28203,10 +35073,16 @@ call stacks (default). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28215,11 +35091,20 @@ call stacks (default). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28263,10 +35148,16 @@ call stacks (default). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28275,11 +35166,20 @@ call stacks (default). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28327,10 +35227,16 @@ call stacks (default). */,
         actualLocation: Types.Debugger.Location.t /* Location this breakpoint resolved into. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28344,11 +35250,20 @@ call stacks (default). */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28395,10 +35310,16 @@ breakpoint if this expression evaluates to true. */,
         breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28410,11 +35331,20 @@ breakpoint if this expression evaluates to true. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28483,10 +35413,16 @@ breakpoint if this expression evaluates to true. */,
         locations: list(Types.Debugger.Location.t) /* List of the locations this breakpoint resolved into upon addition. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28500,11 +35436,20 @@ breakpoint if this expression evaluates to true. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28571,10 +35516,16 @@ breakpoint if this expression evaluates to true. */,
         breakpointId: Types.Debugger.BreakpointId.t /* Id of the created breakpoint for further reference. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28586,11 +35537,20 @@ breakpoint if this expression evaluates to true. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28639,10 +35599,16 @@ stop on the breakpoint if this expression evaluates to true. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28651,11 +35617,20 @@ stop on the breakpoint if this expression evaluates to true. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28697,10 +35672,16 @@ stop on the breakpoint if this expression evaluates to true. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28709,11 +35690,20 @@ stop on the breakpoint if this expression evaluates to true. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28767,10 +35757,16 @@ stop on the breakpoint if this expression evaluates to true. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28779,11 +35775,20 @@ stop on the breakpoint if this expression evaluates to true. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28835,10 +35840,16 @@ stop on the breakpoint if this expression evaluates to true. */,
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28858,11 +35869,20 @@ stop on the breakpoint if this expression evaluates to true. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28908,10 +35928,16 @@ description without actually modifying the code. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28920,11 +35946,20 @@ description without actually modifying the code. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -28966,10 +36001,16 @@ description without actually modifying the code. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -28978,11 +36019,20 @@ description without actually modifying the code. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29030,10 +36080,16 @@ scope types are allowed. Other scopes could be manipulated manually. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29042,11 +36098,20 @@ scope types are allowed. Other scopes could be manipulated manually. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29090,10 +36155,16 @@ before next pause. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29102,11 +36173,20 @@ before next pause. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29135,10 +36215,16 @@ before next pause. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29147,11 +36233,20 @@ before next pause. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29195,10 +36290,16 @@ module HeapProfiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29207,11 +36308,20 @@ module HeapProfiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29252,10 +36362,16 @@ module HeapProfiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29264,11 +36380,20 @@ module HeapProfiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29297,10 +36422,16 @@ module HeapProfiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29309,11 +36440,20 @@ module HeapProfiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29342,10 +36482,16 @@ module HeapProfiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29354,11 +36500,20 @@ module HeapProfiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29390,10 +36545,16 @@ module HeapProfiler = {
         heapSnapshotObjectId: Types.HeapProfiler.HeapSnapshotObjectId.t /* Id of the heap snapshot object corresponding to the passed remote object id. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29405,11 +36566,20 @@ module HeapProfiler = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29453,10 +36623,16 @@ module HeapProfiler = {
         result: Types.Runtime.RemoteObject.t /* Evaluation result. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29468,11 +36644,20 @@ module HeapProfiler = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29523,10 +36708,16 @@ module HeapProfiler = {
         profile: Types.HeapProfiler.SamplingHeapProfile.t /* Return the sampling profile being collected. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29538,11 +36729,20 @@ module HeapProfiler = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29571,10 +36771,16 @@ module HeapProfiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29583,11 +36789,20 @@ module HeapProfiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29629,10 +36844,16 @@ default value is 32768 bytes. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29641,11 +36862,20 @@ default value is 32768 bytes. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29694,10 +36924,16 @@ default value is 32768 bytes. */,
         profile: Types.HeapProfiler.SamplingHeapProfile.t /* Recorded sampling heap profile. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29709,11 +36945,20 @@ default value is 32768 bytes. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29742,10 +36987,16 @@ default value is 32768 bytes. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29754,11 +37005,20 @@ default value is 32768 bytes. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29815,10 +37075,16 @@ when the tracking is stopped. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29827,11 +37093,20 @@ when the tracking is stopped. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29884,10 +37159,16 @@ module Profiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29896,11 +37177,20 @@ module Profiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29929,10 +37219,16 @@ module Profiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29941,11 +37237,20 @@ module Profiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -29978,10 +37283,16 @@ module Profiler = {
         result: list(Types.Profiler.ScriptCoverage.t) /* Coverage data for the current isolate. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -29993,11 +37304,20 @@ module Profiler = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30026,10 +37346,16 @@ module Profiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30038,11 +37364,20 @@ module Profiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30083,10 +37418,16 @@ module Profiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30095,11 +37436,20 @@ module Profiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30133,10 +37483,16 @@ module Profiler = {
         timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30148,11 +37504,20 @@ module Profiler = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30197,10 +37562,16 @@ module Profiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30209,11 +37580,20 @@ module Profiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30245,10 +37625,16 @@ module Profiler = {
         profile: Types.Profiler.Profile.t /* Recorded profile. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30260,11 +37646,20 @@ module Profiler = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30294,10 +37689,16 @@ module Profiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30306,11 +37707,20 @@ module Profiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30339,10 +37749,16 @@ module Profiler = {
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30351,11 +37767,20 @@ module Profiler = {
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30390,10 +37815,16 @@ module Profiler = {
         timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30407,11 +37838,20 @@ module Profiler = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30443,10 +37883,16 @@ module Profiler = {
         result: list(Types.Profiler.ScriptTypeProfile.t) /* Type profile for all scripts since startTypeProfile() was turned on. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30458,11 +37904,20 @@ module Profiler = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30498,10 +37953,16 @@ module Runtime = {
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if stack strace is available. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30515,11 +37976,20 @@ module Runtime = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30570,10 +38040,16 @@ module Runtime = {
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30587,11 +38063,20 @@ module Runtime = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30689,10 +38174,16 @@ specified and objectId is, objectGroup will be inherited from object. */
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30706,11 +38197,20 @@ specified and objectId is, objectGroup will be inherited from object. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30759,10 +38259,16 @@ evaluation will be performed in the context of the inspected page. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30771,11 +38277,20 @@ evaluation will be performed in the context of the inspected page. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30804,10 +38319,16 @@ evaluation will be performed in the context of the inspected page. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30816,11 +38337,20 @@ evaluation will be performed in the context of the inspected page. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30851,10 +38381,16 @@ evaluation will be performed in the context of the inspected page. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30863,11 +38399,20 @@ evaluation will be performed in the context of the inspected page. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -30901,10 +38446,16 @@ evaluation will be performed in the context of the inspected page. */,
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -30918,11 +38469,20 @@ evaluation will be performed in the context of the inspected page. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31045,10 +38605,16 @@ This is mutually exclusive with `contextId`. */,
         id: string /* The isolate id. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31060,11 +38626,20 @@ This is mutually exclusive with `contextId`. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31099,10 +38674,16 @@ This is mutually exclusive with `contextId`. */,
         totalSize: float /* Allocated heap size in bytes. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31116,11 +38697,20 @@ This is mutually exclusive with `contextId`. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31161,10 +38751,16 @@ This is mutually exclusive with `contextId`. */,
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31184,11 +38780,20 @@ This is mutually exclusive with `contextId`. */,
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31256,10 +38861,16 @@ returned either. */
         names: list(string) /* No description provided */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31271,11 +38882,20 @@ returned either. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31319,10 +38939,16 @@ returned either. */
         objects: Types.Runtime.RemoteObject.t /* Array with objects. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31334,11 +38960,20 @@ returned either. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31381,10 +39016,16 @@ returned either. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31393,11 +39034,20 @@ returned either. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31438,10 +39088,16 @@ returned either. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31450,11 +39106,20 @@ returned either. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31495,10 +39160,16 @@ returned either. */
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31507,11 +39178,20 @@ returned either. */
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31545,10 +39225,16 @@ returned either. */
         exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31562,11 +39248,20 @@ returned either. */
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31644,10 +39339,16 @@ resolved. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31656,11 +39357,20 @@ resolved. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31702,10 +39412,16 @@ call stacks (default). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31714,11 +39430,20 @@ call stacks (default). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31764,10 +39489,16 @@ call stacks (default). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31776,11 +39507,20 @@ call stacks (default). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31827,10 +39567,16 @@ call stacks (default). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31839,11 +39585,20 @@ call stacks (default). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31877,10 +39632,16 @@ call stacks (default). */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31889,11 +39650,20 @@ call stacks (default). */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -31949,10 +39719,16 @@ This parameter is mutually exclusive with `executionContextId`. */,
     module Response: {
       type result = Types.assoc;
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -31961,11 +39737,20 @@ This parameter is mutually exclusive with `executionContextId`. */,
       type result = Types.assoc;
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
@@ -32011,10 +39796,16 @@ module Schema = {
         domains: list(Types.Schema.Domain.t) /* List of supported domains. */,
       };
 
+      type error = {
+        code: int,
+        message: string,
+      };
+
       type t = {
         id: int,
+        error: option(error),
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        result: option(result),
       };
 
       let parse: string => t;
@@ -32026,11 +39817,20 @@ module Schema = {
       };
 
       [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
       type t = {
         id: int,
         [@yojson.option]
+        error: option(error),
+        [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
-        result,
+        [@yojson.option]
+        result: option(result),
       };
 
       let parse = response => {
