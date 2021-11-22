@@ -30357,7 +30357,8 @@ and eventually retire it. See crbug.com/991325. */,
         [@yojson.option] [@key "proxyBypassList"]
         proxyBypassList: option(string), /* Proxy bypass list, similar to the one passed to --proxy-bypass-list */
         [@yojson.option] [@key "originsWithUniversalNetworkAccess"]
-        originsWithUniversalNetworkAccess: option(list(string)) /* An optional list of origins to grant unlimited cross-origin access to. */,
+        originsWithUniversalNetworkAccess: option(list(string)) /* An optional list of origins to grant unlimited cross-origin access to.
+Parts of the URL other than those constituting origin are ignored. */,
       };
       let make =
           (
