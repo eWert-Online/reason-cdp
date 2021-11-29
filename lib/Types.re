@@ -9021,6 +9021,8 @@ milliseconds since January 1, 1970, UTC, not the number of seconds. */
       | `PreflightInvalidAllowCredentials
       | `PreflightMissingAllowExternal
       | `PreflightInvalidAllowExternal
+      | `PreflightMissingAllowPrivateNetwork
+      | `PreflightInvalidAllowPrivateNetwork
       | `InvalidAllowMethodsPreflightResponse
       | `InvalidAllowHeadersPreflightResponse
       | `MethodDisallowedByPreflightResponse
@@ -10591,6 +10593,8 @@ milliseconds since January 1, 1970, UTC, not the number of seconds. */
       | `PreflightInvalidAllowCredentials
       | `PreflightMissingAllowExternal
       | `PreflightInvalidAllowExternal
+      | `PreflightMissingAllowPrivateNetwork
+      | `PreflightInvalidAllowPrivateNetwork
       | `InvalidAllowMethodsPreflightResponse
       | `InvalidAllowHeadersPreflightResponse
       | `MethodDisallowedByPreflightResponse
@@ -10627,6 +10631,8 @@ milliseconds since January 1, 1970, UTC, not the number of seconds. */
       | `PreflightInvalidAllowCredentials
       | `PreflightMissingAllowExternal
       | `PreflightInvalidAllowExternal
+      | `PreflightMissingAllowPrivateNetwork
+      | `PreflightInvalidAllowPrivateNetwork
       | `InvalidAllowMethodsPreflightResponse
       | `InvalidAllowHeadersPreflightResponse
       | `MethodDisallowedByPreflightResponse
@@ -10658,6 +10664,8 @@ milliseconds since January 1, 1970, UTC, not the number of seconds. */
       | `String("PreflightInvalidAllowCredentials") => `PreflightInvalidAllowCredentials
       | `String("PreflightMissingAllowExternal") => `PreflightMissingAllowExternal
       | `String("PreflightInvalidAllowExternal") => `PreflightInvalidAllowExternal
+      | `String("PreflightMissingAllowPrivateNetwork") => `PreflightMissingAllowPrivateNetwork
+      | `String("PreflightInvalidAllowPrivateNetwork") => `PreflightInvalidAllowPrivateNetwork
       | `String("InvalidAllowMethodsPreflightResponse") => `InvalidAllowMethodsPreflightResponse
       | `String("InvalidAllowHeadersPreflightResponse") => `InvalidAllowHeadersPreflightResponse
       | `String("MethodDisallowedByPreflightResponse") => `MethodDisallowedByPreflightResponse
@@ -10698,6 +10706,10 @@ milliseconds since January 1, 1970, UTC, not the number of seconds. */
         `String("PreflightMissingAllowExternal")
       | `PreflightInvalidAllowExternal =>
         `String("PreflightInvalidAllowExternal")
+      | `PreflightMissingAllowPrivateNetwork =>
+        `String("PreflightMissingAllowPrivateNetwork")
+      | `PreflightInvalidAllowPrivateNetwork =>
+        `String("PreflightInvalidAllowPrivateNetwork")
       | `InvalidAllowMethodsPreflightResponse =>
         `String("InvalidAllowMethodsPreflightResponse")
       | `InvalidAllowHeadersPreflightResponse =>
