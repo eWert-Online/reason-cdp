@@ -1434,6 +1434,8 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionUntrustworthyOrigin
       | `AttributionTriggerDataTooLarge
       | `AttributionEventSourceTriggerDataTooLarge
+      | `InvalidAttributionSourceExpiry
+      | `InvalidAttributionSourcePriority
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2567,6 +2569,8 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionUntrustworthyOrigin
       | `AttributionTriggerDataTooLarge
       | `AttributionEventSourceTriggerDataTooLarge
+      | `InvalidAttributionSourceExpiry
+      | `InvalidAttributionSourcePriority
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2584,6 +2588,8 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionUntrustworthyOrigin
       | `AttributionTriggerDataTooLarge
       | `AttributionEventSourceTriggerDataTooLarge
+      | `InvalidAttributionSourceExpiry
+      | `InvalidAttributionSourcePriority
     ];
     let _attributionreportingissuetype_of_yojson =
       fun
@@ -2594,6 +2600,8 @@ used when violation type is kDigitalAssetLinks. */,
       | `String("AttributionUntrustworthyOrigin") => `AttributionUntrustworthyOrigin
       | `String("AttributionTriggerDataTooLarge") => `AttributionTriggerDataTooLarge
       | `String("AttributionEventSourceTriggerDataTooLarge") => `AttributionEventSourceTriggerDataTooLarge
+      | `String("InvalidAttributionSourceExpiry") => `InvalidAttributionSourceExpiry
+      | `String("InvalidAttributionSourcePriority") => `InvalidAttributionSourcePriority
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__attributionreportingissuetype =
@@ -2609,7 +2617,11 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionTriggerDataTooLarge =>
         `String("AttributionTriggerDataTooLarge")
       | `AttributionEventSourceTriggerDataTooLarge =>
-        `String("AttributionEventSourceTriggerDataTooLarge");
+        `String("AttributionEventSourceTriggerDataTooLarge")
+      | `InvalidAttributionSourceExpiry =>
+        `String("InvalidAttributionSourceExpiry")
+      | `InvalidAttributionSourcePriority =>
+        `String("InvalidAttributionSourcePriority");
     /* No description provided */
     [@deriving yojson]
     type t = _attributionreportingissuetype;
