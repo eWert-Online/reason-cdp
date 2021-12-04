@@ -1436,6 +1436,9 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionEventSourceTriggerDataTooLarge
       | `InvalidAttributionSourceExpiry
       | `InvalidAttributionSourcePriority
+      | `InvalidEventSourceTriggerData
+      | `InvalidTriggerPriority
+      | `InvalidTriggerDedupKey
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2571,6 +2574,9 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionEventSourceTriggerDataTooLarge
       | `InvalidAttributionSourceExpiry
       | `InvalidAttributionSourcePriority
+      | `InvalidEventSourceTriggerData
+      | `InvalidTriggerPriority
+      | `InvalidTriggerDedupKey
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2590,6 +2596,9 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionEventSourceTriggerDataTooLarge
       | `InvalidAttributionSourceExpiry
       | `InvalidAttributionSourcePriority
+      | `InvalidEventSourceTriggerData
+      | `InvalidTriggerPriority
+      | `InvalidTriggerDedupKey
     ];
     let _attributionreportingissuetype_of_yojson =
       fun
@@ -2602,6 +2611,9 @@ used when violation type is kDigitalAssetLinks. */,
       | `String("AttributionEventSourceTriggerDataTooLarge") => `AttributionEventSourceTriggerDataTooLarge
       | `String("InvalidAttributionSourceExpiry") => `InvalidAttributionSourceExpiry
       | `String("InvalidAttributionSourcePriority") => `InvalidAttributionSourcePriority
+      | `String("InvalidEventSourceTriggerData") => `InvalidEventSourceTriggerData
+      | `String("InvalidTriggerPriority") => `InvalidTriggerPriority
+      | `String("InvalidTriggerDedupKey") => `InvalidTriggerDedupKey
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__attributionreportingissuetype =
@@ -2621,7 +2633,11 @@ used when violation type is kDigitalAssetLinks. */,
       | `InvalidAttributionSourceExpiry =>
         `String("InvalidAttributionSourceExpiry")
       | `InvalidAttributionSourcePriority =>
-        `String("InvalidAttributionSourcePriority");
+        `String("InvalidAttributionSourcePriority")
+      | `InvalidEventSourceTriggerData =>
+        `String("InvalidEventSourceTriggerData")
+      | `InvalidTriggerPriority => `String("InvalidTriggerPriority")
+      | `InvalidTriggerDedupKey => `String("InvalidTriggerDedupKey");
     /* No description provided */
     [@deriving yojson]
     type t = _attributionreportingissuetype;
