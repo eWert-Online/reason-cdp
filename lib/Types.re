@@ -1547,6 +1547,30 @@ instead. This standard was abandoned in January, 1970. See
 https://www.chromestatus.com/feature/5684870116278272 for more details." */,
     };
   }
+  and ClientHintIssueReason: {
+    type _clienthintissuereason = [
+      | `MetaTagAllowListInvalidOrigin
+      | `MetaTagModifiedHTML
+    ];
+    let _clienthintissuereason_of_yojson:
+      Yojson.Basic.t => _clienthintissuereason;
+    let yojson_of__clienthintissuereason:
+      _clienthintissuereason => Yojson.Basic.t;
+    /* No description provided */
+    [@deriving yojson]
+    type t = _clienthintissuereason;
+  }
+  and ClientHintIssueDetails: {
+    /* This issue tracks client hints related issues. It's used to deprecate old
+       features, encourage the use of new ones, and provide general guidance. */
+    [@deriving yojson]
+    type t = {
+      [@key "sourceCodeLocation"]
+      sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
+      [@key "clientHintIssueReason"]
+      clientHintIssueReason: ClientHintIssueReason.t /* No description provided */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -1564,6 +1588,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */,
       | `WasmCrossOriginModuleSharingIssue
       | `GenericIssue
       | `DeprecationIssue
+      | `ClientHintIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -1612,7 +1637,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */,
       [@yojson.option] [@key "genericIssueDetails"]
       genericIssueDetails: option(GenericIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "deprecationIssueDetails"]
-      deprecationIssueDetails: option(DeprecationIssueDetails.t) /* No description provided */,
+      deprecationIssueDetails: option(DeprecationIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "clientHintIssueDetails"]
+      clientHintIssueDetails: option(ClientHintIssueDetails.t) /* No description provided */,
     };
   }
   and IssueId: {
@@ -2838,6 +2865,59 @@ instead. This standard was abandoned in January, 1970. See
 https://www.chromestatus.com/feature/5684870116278272 for more details." */,
     };
   }
+  and ClientHintIssueReason: {
+    type _clienthintissuereason = [
+      | `MetaTagAllowListInvalidOrigin
+      | `MetaTagModifiedHTML
+    ];
+    let _clienthintissuereason_of_yojson:
+      Yojson.Basic.t => _clienthintissuereason;
+    let yojson_of__clienthintissuereason:
+      _clienthintissuereason => Yojson.Basic.t;
+    /* No description provided */
+    [@deriving yojson]
+    type t = _clienthintissuereason;
+  } = {
+    type _clienthintissuereason = [
+      | `MetaTagAllowListInvalidOrigin
+      | `MetaTagModifiedHTML
+    ];
+    let _clienthintissuereason_of_yojson =
+      fun
+      | `String("MetaTagAllowListInvalidOrigin") => `MetaTagAllowListInvalidOrigin
+      | `String("MetaTagModifiedHTML") => `MetaTagModifiedHTML
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__clienthintissuereason =
+      fun
+      | `MetaTagAllowListInvalidOrigin =>
+        `String("MetaTagAllowListInvalidOrigin")
+      | `MetaTagModifiedHTML => `String("MetaTagModifiedHTML");
+    /* No description provided */
+    [@deriving yojson]
+    type t = _clienthintissuereason;
+  }
+  and ClientHintIssueDetails: {
+    /* This issue tracks client hints related issues. It's used to deprecate old
+       features, encourage the use of new ones, and provide general guidance. */
+    [@deriving yojson]
+    type t = {
+      [@key "sourceCodeLocation"]
+      sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
+      [@key "clientHintIssueReason"]
+      clientHintIssueReason: ClientHintIssueReason.t /* No description provided */,
+    };
+  } = {
+    /* This issue tracks client hints related issues. It's used to deprecate old
+       features, encourage the use of new ones, and provide general guidance. */
+    [@deriving yojson]
+    type t = {
+      [@key "sourceCodeLocation"]
+      sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
+      [@key "clientHintIssueReason"]
+      clientHintIssueReason: ClientHintIssueReason.t /* No description provided */,
+    };
+  }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
       | `SameSiteCookieIssue
@@ -2855,6 +2935,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */,
       | `WasmCrossOriginModuleSharingIssue
       | `GenericIssue
       | `DeprecationIssue
+      | `ClientHintIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -2880,6 +2961,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */,
       | `WasmCrossOriginModuleSharingIssue
       | `GenericIssue
       | `DeprecationIssue
+      | `ClientHintIssue
     ];
     let _inspectorissuecode_of_yojson =
       fun
@@ -2898,6 +2980,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */,
       | `String("WasmCrossOriginModuleSharingIssue") => `WasmCrossOriginModuleSharingIssue
       | `String("GenericIssue") => `GenericIssue
       | `String("DeprecationIssue") => `DeprecationIssue
+      | `String("ClientHintIssue") => `ClientHintIssue
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__inspectorissuecode =
@@ -2917,7 +3000,8 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */,
       | `WasmCrossOriginModuleSharingIssue =>
         `String("WasmCrossOriginModuleSharingIssue")
       | `GenericIssue => `String("GenericIssue")
-      | `DeprecationIssue => `String("DeprecationIssue");
+      | `DeprecationIssue => `String("DeprecationIssue")
+      | `ClientHintIssue => `String("ClientHintIssue");
     /* A unique identifier for the type of issue. Each type may use one of the
        optional fields in InspectorIssueDetails to convey more specific
        information about the kind of issue. */
@@ -2963,7 +3047,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */,
       [@yojson.option] [@key "genericIssueDetails"]
       genericIssueDetails: option(GenericIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "deprecationIssueDetails"]
-      deprecationIssueDetails: option(DeprecationIssueDetails.t) /* No description provided */,
+      deprecationIssueDetails: option(DeprecationIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "clientHintIssueDetails"]
+      clientHintIssueDetails: option(ClientHintIssueDetails.t) /* No description provided */,
     };
   } = {
     /* This struct holds a list of optional fields with additional information
@@ -3004,7 +3090,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */,
       [@yojson.option] [@key "genericIssueDetails"]
       genericIssueDetails: option(GenericIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "deprecationIssueDetails"]
-      deprecationIssueDetails: option(DeprecationIssueDetails.t) /* No description provided */,
+      deprecationIssueDetails: option(DeprecationIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "clientHintIssueDetails"]
+      clientHintIssueDetails: option(ClientHintIssueDetails.t) /* No description provided */,
     };
   }
   and IssueId: {
