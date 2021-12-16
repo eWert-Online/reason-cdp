@@ -5228,6 +5228,10 @@ and DOM: {
       | `scrollbar_corner
       | `resizer
       | `input_list_button
+      | `transition
+      | `transition_container
+      | `transition_old_content
+      | `transition_new_content
     ];
     let _pseudotype_of_yojson: Yojson.Basic.t => _pseudotype;
     let yojson_of__pseudotype: _pseudotype => Yojson.Basic.t;
@@ -5465,6 +5469,10 @@ The property is always undefined now. */
       | `scrollbar_corner
       | `resizer
       | `input_list_button
+      | `transition
+      | `transition_container
+      | `transition_old_content
+      | `transition_new_content
     ];
     let _pseudotype_of_yojson: Yojson.Basic.t => _pseudotype;
     let yojson_of__pseudotype: _pseudotype => Yojson.Basic.t;
@@ -5493,6 +5501,10 @@ The property is always undefined now. */
       | `scrollbar_corner
       | `resizer
       | `input_list_button
+      | `transition
+      | `transition_container
+      | `transition_old_content
+      | `transition_new_content
     ];
     let _pseudotype_of_yojson =
       fun
@@ -5516,6 +5528,10 @@ The property is always undefined now. */
       | `String("scrollbar-corner") => `scrollbar_corner
       | `String("resizer") => `resizer
       | `String("input-list-button") => `input_list_button
+      | `String("transition") => `transition
+      | `String("transition-container") => `transition_container
+      | `String("transition-old-content") => `transition_old_content
+      | `String("transition-new-content") => `transition_new_content
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__pseudotype =
@@ -5539,7 +5555,11 @@ The property is always undefined now. */
       | `scrollbar_track_piece => `String("scrollbar-track-piece")
       | `scrollbar_corner => `String("scrollbar-corner")
       | `resizer => `String("resizer")
-      | `input_list_button => `String("input-list-button");
+      | `input_list_button => `String("input-list-button")
+      | `transition => `String("transition")
+      | `transition_container => `String("transition-container")
+      | `transition_old_content => `String("transition-old-content")
+      | `transition_new_content => `String("transition-new-content");
     /* Pseudo element type. */
     [@deriving yojson]
     type t = _pseudotype;
