@@ -14108,6 +14108,18 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "reason"]
       reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
     };
+  }
+  and BackForwardCacheNotRestoredExplanationTree: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* URL of each frame */
+      [@key "explanations"]
+      explanations: list(BackForwardCacheNotRestoredExplanation.t), /* Not restored reasons of each frame */
+      [@key "children"]
+      children: list(BackForwardCacheNotRestoredExplanationTree.t) /* Array of children frame */,
+    };
   };
 } = {
   module rec FrameId: {
@@ -16243,6 +16255,29 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       type_: BackForwardCacheNotRestoredReasonType.t, /* Type of the reason */
       [@key "reason"]
       reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
+    };
+  }
+  and BackForwardCacheNotRestoredExplanationTree: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* URL of each frame */
+      [@key "explanations"]
+      explanations: list(BackForwardCacheNotRestoredExplanation.t), /* Not restored reasons of each frame */
+      [@key "children"]
+      children: list(BackForwardCacheNotRestoredExplanationTree.t) /* Array of children frame */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* URL of each frame */
+      [@key "explanations"]
+      explanations: list(BackForwardCacheNotRestoredExplanation.t), /* Not restored reasons of each frame */
+      [@key "children"]
+      children: list(BackForwardCacheNotRestoredExplanationTree.t) /* Array of children frame */,
     };
   };
 }

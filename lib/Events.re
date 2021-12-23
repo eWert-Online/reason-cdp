@@ -2318,7 +2318,10 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
       frameId: Types.Page.FrameId.t, /* The frame id of the associated frame. */
       [@key "notRestoredExplanations"]
       notRestoredExplanations:
-        list(Types.Page.BackForwardCacheNotRestoredExplanation.t) /* Array of reasons why the page could not be cached. This must not be empty. */,
+        list(Types.Page.BackForwardCacheNotRestoredExplanation.t), /* Array of reasons why the page could not be cached. This must not be empty. */
+      [@yojson.option] [@key "notRestoredExplanationsTree"]
+      notRestoredExplanationsTree:
+        option(Types.Page.BackForwardCacheNotRestoredExplanationTree.t) /* Tree structure of reasons why the page could not be cached for each frame. */,
     };
 
     [@deriving yojson]
