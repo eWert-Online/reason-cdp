@@ -22484,7 +22484,7 @@ module Overlay = {
       };
     };
   };
-  /* Requests that backend shows hit-test borders on layers */
+  /* Deprecated, no longer has any effect. */
   module SetShowHitTestBorders = {
     module Response: {
       type result = Types.assoc;
