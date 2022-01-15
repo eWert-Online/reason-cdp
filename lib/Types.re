@@ -13857,6 +13857,16 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       pictograph: option(string) /* The pictograph font-family. */,
     };
   }
+  and ScriptFontFamilies: {
+    /* Font families collection for a script. */
+    [@deriving yojson]
+    type t = {
+      [@key "script"]
+      script: string, /* Name of the script which these font families are defined for. */
+      [@key "fontFamilies"]
+      fontFamilies: FontFamilies.t /* Generic font families collection for the script. */,
+    };
+  }
   and FontSizes: {
     /* Default font sizes. */
     [@deriving yojson]
@@ -15402,6 +15412,25 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       fantasy: option(string), /* The fantasy font-family. */
       [@yojson.option] [@key "pictograph"]
       pictograph: option(string) /* The pictograph font-family. */,
+    };
+  }
+  and ScriptFontFamilies: {
+    /* Font families collection for a script. */
+    [@deriving yojson]
+    type t = {
+      [@key "script"]
+      script: string, /* Name of the script which these font families are defined for. */
+      [@key "fontFamilies"]
+      fontFamilies: FontFamilies.t /* Generic font families collection for the script. */,
+    };
+  } = {
+    /* Font families collection for a script. */
+    [@deriving yojson]
+    type t = {
+      [@key "script"]
+      script: string, /* Name of the script which these font families are defined for. */
+      [@key "fontFamilies"]
+      fontFamilies: FontFamilies.t /* Generic font families collection for the script. */,
     };
   }
   and FontSizes: {

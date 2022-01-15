@@ -25857,10 +25857,12 @@ autosizing and more. */
       [@deriving yojson]
       type t = {
         [@key "fontFamilies"]
-        fontFamilies: Types.Page.FontFamilies.t /* Specifies font families to set. If a font family is not specified, it won't be changed. */,
+        fontFamilies: Types.Page.FontFamilies.t, /* Specifies font families to set. If a font family is not specified, it won't be changed. */
+        [@yojson.option] [@key "forScripts"]
+        forScripts: option(list(Types.Page.ScriptFontFamilies.t)) /* Specifies font families to set for individual scripts. */,
       };
-      let make = (~fontFamilies, ()) => {
-        {fontFamilies: fontFamilies};
+      let make = (~fontFamilies, ~forScripts=?, ()) => {
+        {fontFamilies, forScripts};
       };
     };
 
