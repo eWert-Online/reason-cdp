@@ -2725,6 +2725,29 @@ module Storage = {
 
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
+  /* One of the interest groups was accessed by the associated page. */
+  module InterestGroupAccessed = {
+    let name = "Storage.interestGroupAccessed";
+
+    [@deriving yojson]
+    type result = {
+      [@key "type"]
+      type_: Types.Storage.InterestGroupAccessType.t, /* No description provided */
+      [@key "ownerOrigin"]
+      ownerOrigin: string, /* No description provided */
+      [@key "name"]
+      name: string /* No description provided */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
 };
 module Target = {
   /* Issued when attached to target because of auto-attach or `attachToTarget` command. */

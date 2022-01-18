@@ -17346,6 +17346,7 @@ and Storage: {
       | `websql
       | `service_workers
       | `cache_storage
+      | `interest_groups
       | `all
       | `other
     ];
@@ -17375,6 +17376,62 @@ and Storage: {
       [@key "count"]
       count: float /* No description provided */,
     };
+  }
+  and InterestGroupAccessType: {
+    type _interestgroupaccesstype = [
+      | `join
+      | `leave
+      | `update
+      | `bid
+      | `win
+    ];
+    let _interestgroupaccesstype_of_yojson:
+      Yojson.Basic.t => _interestgroupaccesstype;
+    let yojson_of__interestgroupaccesstype:
+      _interestgroupaccesstype => Yojson.Basic.t;
+    /* Enum of interest group access types. */
+    [@deriving yojson]
+    type t = _interestgroupaccesstype;
+  }
+  and InterestGroupAd: {
+    /* Ad advertising element inside an interest group. */
+    [@deriving yojson]
+    type t = {
+      [@key "renderUrl"]
+      renderUrl: string, /* No description provided */
+      [@yojson.option] [@key "metadata"]
+      metadata: option(string) /* No description provided */,
+    };
+  }
+  and InterestGroupDetails: {
+    /* The full details of an interest group. */
+    [@deriving yojson]
+    type t = {
+      [@key "ownerOrigin"]
+      ownerOrigin: string, /* No description provided */
+      [@key "name"]
+      name: string, /* No description provided */
+      [@key "expirationTime"]
+      expirationTime: float, /* No description provided */
+      [@key "joiningOrigin"]
+      joiningOrigin: string, /* No description provided */
+      [@yojson.option] [@key "biddingUrl"]
+      biddingUrl: option(string), /* No description provided */
+      [@yojson.option] [@key "biddingWasmHelperUrl"]
+      biddingWasmHelperUrl: option(string), /* No description provided */
+      [@yojson.option] [@key "updateUrl"]
+      updateUrl: option(string), /* No description provided */
+      [@yojson.option] [@key "trustedBiddingSignalsUrl"]
+      trustedBiddingSignalsUrl: option(string), /* No description provided */
+      [@key "trustedBiddingSignalsKeys"]
+      trustedBiddingSignalsKeys: list(string), /* No description provided */
+      [@yojson.option] [@key "userBiddingSignals"]
+      userBiddingSignals: option(string), /* No description provided */
+      [@key "ads"]
+      ads: list(InterestGroupAd.t), /* No description provided */
+      [@key "adComponents"]
+      adComponents: list(InterestGroupAd.t) /* No description provided */,
+    };
   };
 } = {
   module rec StorageType: {
@@ -17388,6 +17445,7 @@ and Storage: {
       | `websql
       | `service_workers
       | `cache_storage
+      | `interest_groups
       | `all
       | `other
     ];
@@ -17407,6 +17465,7 @@ and Storage: {
       | `websql
       | `service_workers
       | `cache_storage
+      | `interest_groups
       | `all
       | `other
     ];
@@ -17421,6 +17480,7 @@ and Storage: {
       | `String("websql") => `websql
       | `String("service_workers") => `service_workers
       | `String("cache_storage") => `cache_storage
+      | `String("interest_groups") => `interest_groups
       | `String("all") => `all
       | `String("other") => `other
       | `String(s) => failwith("unknown enum: " ++ s)
@@ -17436,6 +17496,7 @@ and Storage: {
       | `websql => `String("websql")
       | `service_workers => `String("service_workers")
       | `cache_storage => `String("cache_storage")
+      | `interest_groups => `String("interest_groups")
       | `all => `String("all")
       | `other => `String("other");
     /* Enum of possible storage types. */
@@ -17480,6 +17541,127 @@ and Storage: {
       issuerOrigin: string, /* No description provided */
       [@key "count"]
       count: float /* No description provided */,
+    };
+  }
+  and InterestGroupAccessType: {
+    type _interestgroupaccesstype = [
+      | `join
+      | `leave
+      | `update
+      | `bid
+      | `win
+    ];
+    let _interestgroupaccesstype_of_yojson:
+      Yojson.Basic.t => _interestgroupaccesstype;
+    let yojson_of__interestgroupaccesstype:
+      _interestgroupaccesstype => Yojson.Basic.t;
+    /* Enum of interest group access types. */
+    [@deriving yojson]
+    type t = _interestgroupaccesstype;
+  } = {
+    type _interestgroupaccesstype = [
+      | `join
+      | `leave
+      | `update
+      | `bid
+      | `win
+    ];
+    let _interestgroupaccesstype_of_yojson =
+      fun
+      | `String("join") => `join
+      | `String("leave") => `leave
+      | `String("update") => `update
+      | `String("bid") => `bid
+      | `String("win") => `win
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__interestgroupaccesstype =
+      fun
+      | `join => `String("join")
+      | `leave => `String("leave")
+      | `update => `String("update")
+      | `bid => `String("bid")
+      | `win => `String("win");
+    /* Enum of interest group access types. */
+    [@deriving yojson]
+    type t = _interestgroupaccesstype;
+  }
+  and InterestGroupAd: {
+    /* Ad advertising element inside an interest group. */
+    [@deriving yojson]
+    type t = {
+      [@key "renderUrl"]
+      renderUrl: string, /* No description provided */
+      [@yojson.option] [@key "metadata"]
+      metadata: option(string) /* No description provided */,
+    };
+  } = {
+    /* Ad advertising element inside an interest group. */
+    [@deriving yojson]
+    type t = {
+      [@key "renderUrl"]
+      renderUrl: string, /* No description provided */
+      [@yojson.option] [@key "metadata"]
+      metadata: option(string) /* No description provided */,
+    };
+  }
+  and InterestGroupDetails: {
+    /* The full details of an interest group. */
+    [@deriving yojson]
+    type t = {
+      [@key "ownerOrigin"]
+      ownerOrigin: string, /* No description provided */
+      [@key "name"]
+      name: string, /* No description provided */
+      [@key "expirationTime"]
+      expirationTime: float, /* No description provided */
+      [@key "joiningOrigin"]
+      joiningOrigin: string, /* No description provided */
+      [@yojson.option] [@key "biddingUrl"]
+      biddingUrl: option(string), /* No description provided */
+      [@yojson.option] [@key "biddingWasmHelperUrl"]
+      biddingWasmHelperUrl: option(string), /* No description provided */
+      [@yojson.option] [@key "updateUrl"]
+      updateUrl: option(string), /* No description provided */
+      [@yojson.option] [@key "trustedBiddingSignalsUrl"]
+      trustedBiddingSignalsUrl: option(string), /* No description provided */
+      [@key "trustedBiddingSignalsKeys"]
+      trustedBiddingSignalsKeys: list(string), /* No description provided */
+      [@yojson.option] [@key "userBiddingSignals"]
+      userBiddingSignals: option(string), /* No description provided */
+      [@key "ads"]
+      ads: list(InterestGroupAd.t), /* No description provided */
+      [@key "adComponents"]
+      adComponents: list(InterestGroupAd.t) /* No description provided */,
+    };
+  } = {
+    /* The full details of an interest group. */
+    [@deriving yojson]
+    type t = {
+      [@key "ownerOrigin"]
+      ownerOrigin: string, /* No description provided */
+      [@key "name"]
+      name: string, /* No description provided */
+      [@key "expirationTime"]
+      expirationTime: float, /* No description provided */
+      [@key "joiningOrigin"]
+      joiningOrigin: string, /* No description provided */
+      [@yojson.option] [@key "biddingUrl"]
+      biddingUrl: option(string), /* No description provided */
+      [@yojson.option] [@key "biddingWasmHelperUrl"]
+      biddingWasmHelperUrl: option(string), /* No description provided */
+      [@yojson.option] [@key "updateUrl"]
+      updateUrl: option(string), /* No description provided */
+      [@yojson.option] [@key "trustedBiddingSignalsUrl"]
+      trustedBiddingSignalsUrl: option(string), /* No description provided */
+      [@key "trustedBiddingSignalsKeys"]
+      trustedBiddingSignalsKeys: list(string), /* No description provided */
+      [@yojson.option] [@key "userBiddingSignals"]
+      userBiddingSignals: option(string), /* No description provided */
+      [@key "ads"]
+      ads: list(InterestGroupAd.t), /* No description provided */
+      [@key "adComponents"]
+      adComponents: list(InterestGroupAd.t) /* No description provided */,
     };
   };
 }
