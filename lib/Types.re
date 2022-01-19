@@ -13492,7 +13492,11 @@ and Page: {
     type t = _permissionspolicyfeature;
   }
   and PermissionsPolicyBlockReason: {
-    type _permissionspolicyblockreason = [ | `Header | `IframeAttribute];
+    type _permissionspolicyblockreason = [
+      | `Header
+      | `IframeAttribute
+      | `InFencedFrameTree
+    ];
     let _permissionspolicyblockreason_of_yojson:
       Yojson.Basic.t => _permissionspolicyblockreason;
     let yojson_of__permissionspolicyblockreason:
@@ -14615,7 +14619,11 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     type t = _permissionspolicyfeature;
   }
   and PermissionsPolicyBlockReason: {
-    type _permissionspolicyblockreason = [ | `Header | `IframeAttribute];
+    type _permissionspolicyblockreason = [
+      | `Header
+      | `IframeAttribute
+      | `InFencedFrameTree
+    ];
     let _permissionspolicyblockreason_of_yojson:
       Yojson.Basic.t => _permissionspolicyblockreason;
     let yojson_of__permissionspolicyblockreason:
@@ -14624,17 +14632,23 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = _permissionspolicyblockreason;
   } = {
-    type _permissionspolicyblockreason = [ | `Header | `IframeAttribute];
+    type _permissionspolicyblockreason = [
+      | `Header
+      | `IframeAttribute
+      | `InFencedFrameTree
+    ];
     let _permissionspolicyblockreason_of_yojson =
       fun
       | `String("Header") => `Header
       | `String("IframeAttribute") => `IframeAttribute
+      | `String("InFencedFrameTree") => `InFencedFrameTree
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__permissionspolicyblockreason =
       fun
       | `Header => `String("Header")
-      | `IframeAttribute => `String("IframeAttribute");
+      | `IframeAttribute => `String("IframeAttribute")
+      | `InFencedFrameTree => `String("InFencedFrameTree");
     /* Reason for a permissions policy feature to be disabled. */
     [@deriving yojson]
     type t = _permissionspolicyblockreason;
