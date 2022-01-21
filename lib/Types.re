@@ -1493,20 +1493,6 @@ instead of "limited-quirks". */
       location: option(SourceCodeLocation.t) /* No description provided */,
     };
   }
-  and WasmCrossOriginModuleSharingIssueDetails: {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      [@key "wasmModuleUrl"]
-      wasmModuleUrl: string, /* No description provided */
-      [@key "sourceOrigin"]
-      sourceOrigin: string, /* No description provided */
-      [@key "targetOrigin"]
-      targetOrigin: string, /* No description provided */
-      [@key "isWarning"]
-      isWarning: bool /* No description provided */,
-    };
-  }
   and GenericIssueErrorType: {
     type _genericissueerrortype = [ | `CrossOriginPortalPostMessageError];
     let _genericissueerrortype_of_yojson:
@@ -1587,7 +1573,6 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `AttributionReportingIssue
       | `QuirksModeIssue
       | `NavigatorUserAgentIssue
-      | `WasmCrossOriginModuleSharingIssue
       | `GenericIssue
       | `DeprecationIssue
       | `ClientHintIssue
@@ -1633,9 +1618,6 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
       navigatorUserAgentIssueDetails:
         option(NavigatorUserAgentIssueDetails.t), /* No description provided */
-      [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
-      wasmCrossOriginModuleSharingIssue:
-        option(WasmCrossOriginModuleSharingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "genericIssueDetails"]
       genericIssueDetails: option(GenericIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "deprecationIssueDetails"]
@@ -2758,33 +2740,6 @@ instead of "limited-quirks". */
       location: option(SourceCodeLocation.t) /* No description provided */,
     };
   }
-  and WasmCrossOriginModuleSharingIssueDetails: {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      [@key "wasmModuleUrl"]
-      wasmModuleUrl: string, /* No description provided */
-      [@key "sourceOrigin"]
-      sourceOrigin: string, /* No description provided */
-      [@key "targetOrigin"]
-      targetOrigin: string, /* No description provided */
-      [@key "isWarning"]
-      isWarning: bool /* No description provided */,
-    };
-  } = {
-    /* No description provided */
-    [@deriving yojson]
-    type t = {
-      [@key "wasmModuleUrl"]
-      wasmModuleUrl: string, /* No description provided */
-      [@key "sourceOrigin"]
-      sourceOrigin: string, /* No description provided */
-      [@key "targetOrigin"]
-      targetOrigin: string, /* No description provided */
-      [@key "isWarning"]
-      isWarning: bool /* No description provided */,
-    };
-  }
   and GenericIssueErrorType: {
     type _genericissueerrortype = [ | `CrossOriginPortalPostMessageError];
     let _genericissueerrortype_of_yojson:
@@ -2938,7 +2893,6 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `AttributionReportingIssue
       | `QuirksModeIssue
       | `NavigatorUserAgentIssue
-      | `WasmCrossOriginModuleSharingIssue
       | `GenericIssue
       | `DeprecationIssue
       | `ClientHintIssue
@@ -2964,7 +2918,6 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `AttributionReportingIssue
       | `QuirksModeIssue
       | `NavigatorUserAgentIssue
-      | `WasmCrossOriginModuleSharingIssue
       | `GenericIssue
       | `DeprecationIssue
       | `ClientHintIssue
@@ -2983,7 +2936,6 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `String("AttributionReportingIssue") => `AttributionReportingIssue
       | `String("QuirksModeIssue") => `QuirksModeIssue
       | `String("NavigatorUserAgentIssue") => `NavigatorUserAgentIssue
-      | `String("WasmCrossOriginModuleSharingIssue") => `WasmCrossOriginModuleSharingIssue
       | `String("GenericIssue") => `GenericIssue
       | `String("DeprecationIssue") => `DeprecationIssue
       | `String("ClientHintIssue") => `ClientHintIssue
@@ -3003,8 +2955,6 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `AttributionReportingIssue => `String("AttributionReportingIssue")
       | `QuirksModeIssue => `String("QuirksModeIssue")
       | `NavigatorUserAgentIssue => `String("NavigatorUserAgentIssue")
-      | `WasmCrossOriginModuleSharingIssue =>
-        `String("WasmCrossOriginModuleSharingIssue")
       | `GenericIssue => `String("GenericIssue")
       | `DeprecationIssue => `String("DeprecationIssue")
       | `ClientHintIssue => `String("ClientHintIssue");
@@ -3047,9 +2997,6 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
       navigatorUserAgentIssueDetails:
         option(NavigatorUserAgentIssueDetails.t), /* No description provided */
-      [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
-      wasmCrossOriginModuleSharingIssue:
-        option(WasmCrossOriginModuleSharingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "genericIssueDetails"]
       genericIssueDetails: option(GenericIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "deprecationIssueDetails"]
@@ -3090,9 +3037,6 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       [@yojson.option] [@key "navigatorUserAgentIssueDetails"]
       navigatorUserAgentIssueDetails:
         option(NavigatorUserAgentIssueDetails.t), /* No description provided */
-      [@yojson.option] [@key "wasmCrossOriginModuleSharingIssue"]
-      wasmCrossOriginModuleSharingIssue:
-        option(WasmCrossOriginModuleSharingIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "genericIssueDetails"]
       genericIssueDetails: option(GenericIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "deprecationIssueDetails"]
