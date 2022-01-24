@@ -15321,7 +15321,7 @@ modifiers, keyboard layout, etc (e.g., 'AltGr') (default: ""). */
         [@yojson.option] [@key "commands"]
         commands: option(list(string)) /* Editing commands to send with the key event (e.g., 'selectAll') (default: []).
 These are related to but not equal the command names used in `document.execCommand` and NSStandardKeyBindingResponding.
-See https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/editing/commands/editor_command_names.h for valid command names. */,
+See https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/editing/commands/editor_command_names.h for valid command names. */,
       };
       let make =
           (
