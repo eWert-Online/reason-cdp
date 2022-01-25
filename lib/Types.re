@@ -17370,7 +17370,7 @@ and Storage: {
       [@key "name"]
       name: string, /* No description provided */
       [@key "expirationTime"]
-      expirationTime: float, /* No description provided */
+      expirationTime: Network.TimeSinceEpoch.t, /* No description provided */
       [@key "joiningOrigin"]
       joiningOrigin: string, /* No description provided */
       [@yojson.option] [@key "biddingUrl"]
@@ -17572,7 +17572,7 @@ and Storage: {
       [@key "name"]
       name: string, /* No description provided */
       [@key "expirationTime"]
-      expirationTime: float, /* No description provided */
+      expirationTime: Network.TimeSinceEpoch.t, /* No description provided */
       [@key "joiningOrigin"]
       joiningOrigin: string, /* No description provided */
       [@yojson.option] [@key "biddingUrl"]
@@ -17601,7 +17601,7 @@ and Storage: {
       [@key "name"]
       name: string, /* No description provided */
       [@key "expirationTime"]
-      expirationTime: float, /* No description provided */
+      expirationTime: Network.TimeSinceEpoch.t, /* No description provided */
       [@key "joiningOrigin"]
       joiningOrigin: string, /* No description provided */
       [@yojson.option] [@key "biddingUrl"]

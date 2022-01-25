@@ -2731,6 +2731,8 @@ module Storage = {
 
     [@deriving yojson]
     type result = {
+      [@key "accessTime"]
+      accessTime: Types.Network.TimeSinceEpoch.t, /* No description provided */
       [@key "type"]
       type_: Types.Storage.InterestGroupAccessType.t, /* No description provided */
       [@key "ownerOrigin"]
