@@ -6561,6 +6561,28 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       };
     };
 
+    module Params = {
+      type enable_includewhitespace = [ | `none | `all];
+      let enable_includewhitespace_of_yojson =
+        fun
+        | `String("none") => `none
+        | `String("all") => `all
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_enable_includewhitespace =
+        fun
+        | `none => `String("none")
+        | `all => `String("all");
+      [@deriving yojson]
+      type t = {
+        [@yojson.option] [@key "includeWhitespace"]
+        includeWhitespace: option(enable_includewhitespace) /* Whether to include whitespaces in the children array of returned Nodes. */,
+      };
+      let make = (~includeWhitespace=?, ()) => {
+        {includeWhitespace: includeWhitespace};
+      };
+    };
+
     module Request = {
       [@deriving yojson]
       type t = {
@@ -6568,10 +6590,11 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
         [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
         method: string,
+        params: Params.t,
       };
 
-      let make = (~sessionId=?, id) => {
-        {id, method: "DOM.enable", sessionId}
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "DOM.enable", sessionId, params}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };

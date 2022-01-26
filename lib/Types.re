@@ -13917,7 +13917,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
   }
   and BackForwardCacheNotRestoredReason: {
     type _backforwardcachenotrestoredreason = [
-      | `NotMainFrame
+      | `NotPrimaryMainFrame
       | `BackForwardCacheDisabled
       | `RelatedActiveContentsExist
       | `HTTPStatusNotOK
@@ -15641,7 +15641,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
   }
   and BackForwardCacheNotRestoredReason: {
     type _backforwardcachenotrestoredreason = [
-      | `NotMainFrame
+      | `NotPrimaryMainFrame
       | `BackForwardCacheDisabled
       | `RelatedActiveContentsExist
       | `HTTPStatusNotOK
@@ -15774,7 +15774,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     type t = _backforwardcachenotrestoredreason;
   } = {
     type _backforwardcachenotrestoredreason = [
-      | `NotMainFrame
+      | `NotPrimaryMainFrame
       | `BackForwardCacheDisabled
       | `RelatedActiveContentsExist
       | `HTTPStatusNotOK
@@ -15900,7 +15900,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     ];
     let _backforwardcachenotrestoredreason_of_yojson =
       fun
-      | `String("NotMainFrame") => `NotMainFrame
+      | `String("NotPrimaryMainFrame") => `NotPrimaryMainFrame
       | `String("BackForwardCacheDisabled") => `BackForwardCacheDisabled
       | `String("RelatedActiveContentsExist") => `RelatedActiveContentsExist
       | `String("HTTPStatusNotOK") => `HTTPStatusNotOK
@@ -16027,7 +16027,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | _ => failwith("unknown enum type");
     let yojson_of__backforwardcachenotrestoredreason =
       fun
-      | `NotMainFrame => `String("NotMainFrame")
+      | `NotPrimaryMainFrame => `String("NotPrimaryMainFrame")
       | `BackForwardCacheDisabled => `String("BackForwardCacheDisabled")
       | `RelatedActiveContentsExist => `String("RelatedActiveContentsExist")
       | `HTTPStatusNotOK => `String("HTTPStatusNotOK")
