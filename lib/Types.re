@@ -13379,6 +13379,7 @@ and Page: {
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
+      | `ch_ua_full
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
@@ -14301,6 +14302,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
+      | `ch_ua_full
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
@@ -14375,6 +14377,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
+      | `ch_ua_full
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
@@ -14441,6 +14444,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("ch-ua-platform") => `ch_ua_platform
       | `String("ch-ua-model") => `ch_ua_model
       | `String("ch-ua-mobile") => `ch_ua_mobile
+      | `String("ch-ua-full") => `ch_ua_full
       | `String("ch-ua-full-version") => `ch_ua_full_version
       | `String("ch-ua-full-version-list") => `ch_ua_full_version_list
       | `String("ch-ua-platform-version") => `ch_ua_platform_version
@@ -14508,6 +14512,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_ua_platform => `String("ch-ua-platform")
       | `ch_ua_model => `String("ch-ua-model")
       | `ch_ua_mobile => `String("ch-ua-mobile")
+      | `ch_ua_full => `String("ch-ua-full")
       | `ch_ua_full_version => `String("ch-ua-full-version")
       | `ch_ua_full_version_list => `String("ch-ua-full-version-list")
       | `ch_ua_platform_version => `String("ch-ua-platform-version")
