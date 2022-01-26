@@ -9685,6 +9685,7 @@ the same request (but not for redirected requests). */,
       | `SameOriginAllowPopups
       | `UnsafeNone
       | `SameOriginPlusCoep
+      | `SameOriginAllowPopupsPlusCoep
     ];
     let _crossoriginopenerpolicyvalue_of_yojson:
       Yojson.Basic.t => _crossoriginopenerpolicyvalue;
@@ -12090,6 +12091,7 @@ the same request (but not for redirected requests). */,
       | `SameOriginAllowPopups
       | `UnsafeNone
       | `SameOriginPlusCoep
+      | `SameOriginAllowPopupsPlusCoep
     ];
     let _crossoriginopenerpolicyvalue_of_yojson:
       Yojson.Basic.t => _crossoriginopenerpolicyvalue;
@@ -12104,6 +12106,7 @@ the same request (but not for redirected requests). */,
       | `SameOriginAllowPopups
       | `UnsafeNone
       | `SameOriginPlusCoep
+      | `SameOriginAllowPopupsPlusCoep
     ];
     let _crossoriginopenerpolicyvalue_of_yojson =
       fun
@@ -12111,6 +12114,7 @@ the same request (but not for redirected requests). */,
       | `String("SameOriginAllowPopups") => `SameOriginAllowPopups
       | `String("UnsafeNone") => `UnsafeNone
       | `String("SameOriginPlusCoep") => `SameOriginPlusCoep
+      | `String("SameOriginAllowPopupsPlusCoep") => `SameOriginAllowPopupsPlusCoep
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__crossoriginopenerpolicyvalue =
@@ -12118,7 +12122,9 @@ the same request (but not for redirected requests). */,
       | `SameOrigin => `String("SameOrigin")
       | `SameOriginAllowPopups => `String("SameOriginAllowPopups")
       | `UnsafeNone => `String("UnsafeNone")
-      | `SameOriginPlusCoep => `String("SameOriginPlusCoep");
+      | `SameOriginPlusCoep => `String("SameOriginPlusCoep")
+      | `SameOriginAllowPopupsPlusCoep =>
+        `String("SameOriginAllowPopupsPlusCoep");
     /* No description provided */
     [@deriving yojson]
     type t = _crossoriginopenerpolicyvalue;
