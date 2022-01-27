@@ -1548,6 +1548,47 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
     [@deriving yojson]
     type t = _clienthintissuereason;
   }
+  and FederatedAuthRequestIssueDetails: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "federatedAuthRequestIssueReason"]
+      federatedAuthRequestIssueReason: FederatedAuthRequestIssueReason.t /* No description provided */,
+    };
+  }
+  and FederatedAuthRequestIssueReason: {
+    type _federatedauthrequestissuereason = [
+      | `ApprovalDeclined
+      | `TooManyRequests
+      | `WellKnownHttpNotFound
+      | `WellKnownNoResponse
+      | `WellKnownInvalidResponse
+      | `ClientIdMetadataHttpNotFound
+      | `ClientIdMetadataNoResponse
+      | `ClientIdMetadataInvalidResponse
+      | `ErrorFetchingSignin
+      | `InvalidSigninResponse
+      | `AccountsHttpNotFound
+      | `AccountsNoResponse
+      | `AccountsInvalidResponse
+      | `IdTokenHttpNotFound
+      | `IdTokenNoResponse
+      | `IdTokenInvalidResponse
+      | `IdTokenInvalidRequest
+      | `ErrorIdToken
+      | `Canceled
+    ];
+    let _federatedauthrequestissuereason_of_yojson:
+      Yojson.Basic.t => _federatedauthrequestissuereason;
+    let yojson_of__federatedauthrequestissuereason:
+      _federatedauthrequestissuereason => Yojson.Basic.t;
+    /* Represents the failure reason when a federated authentication reason fails.
+       Should be updated alongside RequestIdTokenStatus in
+       third_party/blink/public/mojom/webid/federated_auth_request.mojom to include
+       all cases except for success. */
+    [@deriving yojson]
+    type t = _federatedauthrequestissuereason;
+  }
   and ClientHintIssueDetails: {
     /* This issue tracks client hints related issues. It's used to deprecate old
        features, encourage the use of new ones, and provide general guidance. */
@@ -1576,6 +1617,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `GenericIssue
       | `DeprecationIssue
       | `ClientHintIssue
+      | `FederatedAuthRequestIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -1623,7 +1665,10 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       [@yojson.option] [@key "deprecationIssueDetails"]
       deprecationIssueDetails: option(DeprecationIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "clientHintIssueDetails"]
-      clientHintIssueDetails: option(ClientHintIssueDetails.t) /* No description provided */,
+      clientHintIssueDetails: option(ClientHintIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "federatedAuthRequestIssueDetails"]
+      federatedAuthRequestIssueDetails:
+        option(FederatedAuthRequestIssueDetails.t) /* No description provided */,
     };
   }
   and IssueId: {
@@ -2858,6 +2903,128 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
     [@deriving yojson]
     type t = _clienthintissuereason;
   }
+  and FederatedAuthRequestIssueDetails: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "federatedAuthRequestIssueReason"]
+      federatedAuthRequestIssueReason: FederatedAuthRequestIssueReason.t /* No description provided */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "federatedAuthRequestIssueReason"]
+      federatedAuthRequestIssueReason: FederatedAuthRequestIssueReason.t /* No description provided */,
+    };
+  }
+  and FederatedAuthRequestIssueReason: {
+    type _federatedauthrequestissuereason = [
+      | `ApprovalDeclined
+      | `TooManyRequests
+      | `WellKnownHttpNotFound
+      | `WellKnownNoResponse
+      | `WellKnownInvalidResponse
+      | `ClientIdMetadataHttpNotFound
+      | `ClientIdMetadataNoResponse
+      | `ClientIdMetadataInvalidResponse
+      | `ErrorFetchingSignin
+      | `InvalidSigninResponse
+      | `AccountsHttpNotFound
+      | `AccountsNoResponse
+      | `AccountsInvalidResponse
+      | `IdTokenHttpNotFound
+      | `IdTokenNoResponse
+      | `IdTokenInvalidResponse
+      | `IdTokenInvalidRequest
+      | `ErrorIdToken
+      | `Canceled
+    ];
+    let _federatedauthrequestissuereason_of_yojson:
+      Yojson.Basic.t => _federatedauthrequestissuereason;
+    let yojson_of__federatedauthrequestissuereason:
+      _federatedauthrequestissuereason => Yojson.Basic.t;
+    /* Represents the failure reason when a federated authentication reason fails.
+       Should be updated alongside RequestIdTokenStatus in
+       third_party/blink/public/mojom/webid/federated_auth_request.mojom to include
+       all cases except for success. */
+    [@deriving yojson]
+    type t = _federatedauthrequestissuereason;
+  } = {
+    type _federatedauthrequestissuereason = [
+      | `ApprovalDeclined
+      | `TooManyRequests
+      | `WellKnownHttpNotFound
+      | `WellKnownNoResponse
+      | `WellKnownInvalidResponse
+      | `ClientIdMetadataHttpNotFound
+      | `ClientIdMetadataNoResponse
+      | `ClientIdMetadataInvalidResponse
+      | `ErrorFetchingSignin
+      | `InvalidSigninResponse
+      | `AccountsHttpNotFound
+      | `AccountsNoResponse
+      | `AccountsInvalidResponse
+      | `IdTokenHttpNotFound
+      | `IdTokenNoResponse
+      | `IdTokenInvalidResponse
+      | `IdTokenInvalidRequest
+      | `ErrorIdToken
+      | `Canceled
+    ];
+    let _federatedauthrequestissuereason_of_yojson =
+      fun
+      | `String("ApprovalDeclined") => `ApprovalDeclined
+      | `String("TooManyRequests") => `TooManyRequests
+      | `String("WellKnownHttpNotFound") => `WellKnownHttpNotFound
+      | `String("WellKnownNoResponse") => `WellKnownNoResponse
+      | `String("WellKnownInvalidResponse") => `WellKnownInvalidResponse
+      | `String("ClientIdMetadataHttpNotFound") => `ClientIdMetadataHttpNotFound
+      | `String("ClientIdMetadataNoResponse") => `ClientIdMetadataNoResponse
+      | `String("ClientIdMetadataInvalidResponse") => `ClientIdMetadataInvalidResponse
+      | `String("ErrorFetchingSignin") => `ErrorFetchingSignin
+      | `String("InvalidSigninResponse") => `InvalidSigninResponse
+      | `String("AccountsHttpNotFound") => `AccountsHttpNotFound
+      | `String("AccountsNoResponse") => `AccountsNoResponse
+      | `String("AccountsInvalidResponse") => `AccountsInvalidResponse
+      | `String("IdTokenHttpNotFound") => `IdTokenHttpNotFound
+      | `String("IdTokenNoResponse") => `IdTokenNoResponse
+      | `String("IdTokenInvalidResponse") => `IdTokenInvalidResponse
+      | `String("IdTokenInvalidRequest") => `IdTokenInvalidRequest
+      | `String("ErrorIdToken") => `ErrorIdToken
+      | `String("Canceled") => `Canceled
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__federatedauthrequestissuereason =
+      fun
+      | `ApprovalDeclined => `String("ApprovalDeclined")
+      | `TooManyRequests => `String("TooManyRequests")
+      | `WellKnownHttpNotFound => `String("WellKnownHttpNotFound")
+      | `WellKnownNoResponse => `String("WellKnownNoResponse")
+      | `WellKnownInvalidResponse => `String("WellKnownInvalidResponse")
+      | `ClientIdMetadataHttpNotFound =>
+        `String("ClientIdMetadataHttpNotFound")
+      | `ClientIdMetadataNoResponse => `String("ClientIdMetadataNoResponse")
+      | `ClientIdMetadataInvalidResponse =>
+        `String("ClientIdMetadataInvalidResponse")
+      | `ErrorFetchingSignin => `String("ErrorFetchingSignin")
+      | `InvalidSigninResponse => `String("InvalidSigninResponse")
+      | `AccountsHttpNotFound => `String("AccountsHttpNotFound")
+      | `AccountsNoResponse => `String("AccountsNoResponse")
+      | `AccountsInvalidResponse => `String("AccountsInvalidResponse")
+      | `IdTokenHttpNotFound => `String("IdTokenHttpNotFound")
+      | `IdTokenNoResponse => `String("IdTokenNoResponse")
+      | `IdTokenInvalidResponse => `String("IdTokenInvalidResponse")
+      | `IdTokenInvalidRequest => `String("IdTokenInvalidRequest")
+      | `ErrorIdToken => `String("ErrorIdToken")
+      | `Canceled => `String("Canceled");
+    /* Represents the failure reason when a federated authentication reason fails.
+       Should be updated alongside RequestIdTokenStatus in
+       third_party/blink/public/mojom/webid/federated_auth_request.mojom to include
+       all cases except for success. */
+    [@deriving yojson]
+    type t = _federatedauthrequestissuereason;
+  }
   and ClientHintIssueDetails: {
     /* This issue tracks client hints related issues. It's used to deprecate old
        features, encourage the use of new ones, and provide general guidance. */
@@ -2896,6 +3063,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `GenericIssue
       | `DeprecationIssue
       | `ClientHintIssue
+      | `FederatedAuthRequestIssue
     ];
     let _inspectorissuecode_of_yojson: Yojson.Basic.t => _inspectorissuecode;
     let yojson_of__inspectorissuecode: _inspectorissuecode => Yojson.Basic.t;
@@ -2921,6 +3089,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `GenericIssue
       | `DeprecationIssue
       | `ClientHintIssue
+      | `FederatedAuthRequestIssue
     ];
     let _inspectorissuecode_of_yojson =
       fun
@@ -2939,6 +3108,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `String("GenericIssue") => `GenericIssue
       | `String("DeprecationIssue") => `DeprecationIssue
       | `String("ClientHintIssue") => `ClientHintIssue
+      | `String("FederatedAuthRequestIssue") => `FederatedAuthRequestIssue
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__inspectorissuecode =
@@ -2957,7 +3127,8 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `NavigatorUserAgentIssue => `String("NavigatorUserAgentIssue")
       | `GenericIssue => `String("GenericIssue")
       | `DeprecationIssue => `String("DeprecationIssue")
-      | `ClientHintIssue => `String("ClientHintIssue");
+      | `ClientHintIssue => `String("ClientHintIssue")
+      | `FederatedAuthRequestIssue => `String("FederatedAuthRequestIssue");
     /* A unique identifier for the type of issue. Each type may use one of the
        optional fields in InspectorIssueDetails to convey more specific
        information about the kind of issue. */
@@ -3002,7 +3173,10 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       [@yojson.option] [@key "deprecationIssueDetails"]
       deprecationIssueDetails: option(DeprecationIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "clientHintIssueDetails"]
-      clientHintIssueDetails: option(ClientHintIssueDetails.t) /* No description provided */,
+      clientHintIssueDetails: option(ClientHintIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "federatedAuthRequestIssueDetails"]
+      federatedAuthRequestIssueDetails:
+        option(FederatedAuthRequestIssueDetails.t) /* No description provided */,
     };
   } = {
     /* This struct holds a list of optional fields with additional information
@@ -3042,7 +3216,10 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       [@yojson.option] [@key "deprecationIssueDetails"]
       deprecationIssueDetails: option(DeprecationIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "clientHintIssueDetails"]
-      clientHintIssueDetails: option(ClientHintIssueDetails.t) /* No description provided */,
+      clientHintIssueDetails: option(ClientHintIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "federatedAuthRequestIssueDetails"]
+      federatedAuthRequestIssueDetails:
+        option(FederatedAuthRequestIssueDetails.t) /* No description provided */,
     };
   }
   and IssueId: {
