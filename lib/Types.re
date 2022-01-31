@@ -13567,6 +13567,7 @@ and Page: {
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
       | `ch_ua_reduced
+      | `ch_ua_wow64
       | `ch_viewport_height
       | `ch_viewport_width
       | `ch_width
@@ -14490,6 +14491,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
       | `ch_ua_reduced
+      | `ch_ua_wow64
       | `ch_viewport_height
       | `ch_viewport_width
       | `ch_width
@@ -14565,6 +14567,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
       | `ch_ua_reduced
+      | `ch_ua_wow64
       | `ch_viewport_height
       | `ch_viewport_width
       | `ch_width
@@ -14632,6 +14635,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("ch-ua-full-version-list") => `ch_ua_full_version_list
       | `String("ch-ua-platform-version") => `ch_ua_platform_version
       | `String("ch-ua-reduced") => `ch_ua_reduced
+      | `String("ch-ua-wow64") => `ch_ua_wow64
       | `String("ch-viewport-height") => `ch_viewport_height
       | `String("ch-viewport-width") => `ch_viewport_width
       | `String("ch-width") => `ch_width
@@ -14700,6 +14704,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_ua_full_version_list => `String("ch-ua-full-version-list")
       | `ch_ua_platform_version => `String("ch-ua-platform-version")
       | `ch_ua_reduced => `String("ch-ua-reduced")
+      | `ch_ua_wow64 => `String("ch-ua-wow64")
       | `ch_viewport_height => `String("ch-viewport-height")
       | `ch_viewport_width => `String("ch-viewport-width")
       | `ch_width => `String("ch-width")
