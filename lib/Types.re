@@ -4005,8 +4005,11 @@ stylesheet rules) this rule came from. */
       media: option(list(CSSMedia.t)), /* Media list array (for rules involving media queries). The array enumerates media queries
 starting with the innermost one, going outwards. */
       [@yojson.option] [@key "containerQueries"]
-      containerQueries: option(list(CSSContainerQuery.t)) /* Container query list array (for rules involving container queries).
-The array enumerates container queries starting with the innermost one, going outwards. */,
+      containerQueries: option(list(CSSContainerQuery.t)), /* Container query list array (for rules involving container queries).
+The array enumerates container queries starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "supports"]
+      supports: option(list(CSSSupports.t)) /* @supports CSS at-rule array.
+The array enumerates @supports at-rules starting with the innermost one, going outwards. */,
     };
   }
   and RuleUsage: {
@@ -4168,6 +4171,19 @@ available). */
       styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
       [@yojson.option] [@key "name"]
       name: option(string) /* Optional name for the container. */,
+    };
+  }
+  and CSSSupports: {
+    /* CSS Supports at-rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Supports rule text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
     };
   }
   and PlatformFontUsage: {
@@ -4516,8 +4532,11 @@ stylesheet rules) this rule came from. */
       media: option(list(CSSMedia.t)), /* Media list array (for rules involving media queries). The array enumerates media queries
 starting with the innermost one, going outwards. */
       [@yojson.option] [@key "containerQueries"]
-      containerQueries: option(list(CSSContainerQuery.t)) /* Container query list array (for rules involving container queries).
-The array enumerates container queries starting with the innermost one, going outwards. */,
+      containerQueries: option(list(CSSContainerQuery.t)), /* Container query list array (for rules involving container queries).
+The array enumerates container queries starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "supports"]
+      supports: option(list(CSSSupports.t)) /* @supports CSS at-rule array.
+The array enumerates @supports at-rules starting with the innermost one, going outwards. */,
     };
   } = {
     /* CSS rule representation. */
@@ -4536,8 +4555,11 @@ stylesheet rules) this rule came from. */
       media: option(list(CSSMedia.t)), /* Media list array (for rules involving media queries). The array enumerates media queries
 starting with the innermost one, going outwards. */
       [@yojson.option] [@key "containerQueries"]
-      containerQueries: option(list(CSSContainerQuery.t)) /* Container query list array (for rules involving container queries).
-The array enumerates container queries starting with the innermost one, going outwards. */,
+      containerQueries: option(list(CSSContainerQuery.t)), /* Container query list array (for rules involving container queries).
+The array enumerates container queries starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "supports"]
+      supports: option(list(CSSSupports.t)) /* @supports CSS at-rule array.
+The array enumerates @supports at-rules starting with the innermost one, going outwards. */,
     };
   }
   and RuleUsage: {
@@ -4862,6 +4884,31 @@ available). */
       styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
       [@yojson.option] [@key "name"]
       name: option(string) /* Optional name for the container. */,
+    };
+  }
+  and CSSSupports: {
+    /* CSS Supports at-rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Supports rule text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+    };
+  } = {
+    /* CSS Supports at-rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Supports rule text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
     };
   }
   and PlatformFontUsage: {
