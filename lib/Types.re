@@ -13618,6 +13618,7 @@ and Page: {
       | `ch_viewport_height
       | `ch_viewport_width
       | `ch_width
+      | `ch_partitioned_cookies
       | `clipboard_read
       | `clipboard_write
       | `cross_origin_isolated
@@ -14542,6 +14543,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_viewport_height
       | `ch_viewport_width
       | `ch_width
+      | `ch_partitioned_cookies
       | `clipboard_read
       | `clipboard_write
       | `cross_origin_isolated
@@ -14618,6 +14620,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_viewport_height
       | `ch_viewport_width
       | `ch_width
+      | `ch_partitioned_cookies
       | `clipboard_read
       | `clipboard_write
       | `cross_origin_isolated
@@ -14686,6 +14689,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("ch-viewport-height") => `ch_viewport_height
       | `String("ch-viewport-width") => `ch_viewport_width
       | `String("ch-width") => `ch_width
+      | `String("ch-partitioned-cookies") => `ch_partitioned_cookies
       | `String("clipboard-read") => `clipboard_read
       | `String("clipboard-write") => `clipboard_write
       | `String("cross-origin-isolated") => `cross_origin_isolated
@@ -14755,6 +14759,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ch_viewport_height => `String("ch-viewport-height")
       | `ch_viewport_width => `String("ch-viewport-width")
       | `ch_width => `String("ch-width")
+      | `ch_partitioned_cookies => `String("ch-partitioned-cookies")
       | `clipboard_read => `String("clipboard-read")
       | `clipboard_write => `String("clipboard-write")
       | `cross_origin_isolated => `String("cross-origin-isolated")
