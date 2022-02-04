@@ -13534,9 +13534,6 @@ virtualTimeBudgetExpired event is sent. */
         [@yojson.option] [@key "maxVirtualTimeTaskStarvationCount"]
         maxVirtualTimeTaskStarvationCount: option(float), /* If set this specifies the maximum number of tasks that can be run before virtual is forced
 forwards to prevent deadlock. */
-        [@yojson.option] [@key "waitForNavigation"]
-        waitForNavigation: option(bool), /* If set the virtual time policy change should be deferred until any frame starts navigating.
-Note any previous deferred policy change is superseded. */
         [@yojson.option] [@key "initialVirtualTime"]
         initialVirtualTime: option(Types.Network.TimeSinceEpoch.t) /* If set, base::Time::Now will be overridden to initially return this value. */,
       };
@@ -13545,7 +13542,6 @@ Note any previous deferred policy change is superseded. */
             ~policy,
             ~budget=?,
             ~maxVirtualTimeTaskStarvationCount=?,
-            ~waitForNavigation=?,
             ~initialVirtualTime=?,
             (),
           ) => {
@@ -13553,7 +13549,6 @@ Note any previous deferred policy change is superseded. */
           policy,
           budget,
           maxVirtualTimeTaskStarvationCount,
-          waitForNavigation,
           initialVirtualTime,
         };
       };
