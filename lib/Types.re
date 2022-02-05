@@ -13636,7 +13636,6 @@ and Page: {
       | `gyroscope
       | `hid
       | `idle_detection
-      | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
       | `magnetometer
@@ -14561,7 +14560,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `gyroscope
       | `hid
       | `idle_detection
-      | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
       | `magnetometer
@@ -14638,7 +14636,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `gyroscope
       | `hid
       | `idle_detection
-      | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
       | `magnetometer
@@ -14707,7 +14704,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("gyroscope") => `gyroscope
       | `String("hid") => `hid
       | `String("idle-detection") => `idle_detection
-      | `String("interest-cohort") => `interest_cohort
       | `String("join-ad-interest-group") => `join_ad_interest_group
       | `String("keyboard-map") => `keyboard_map
       | `String("magnetometer") => `magnetometer
@@ -14780,7 +14776,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `gyroscope => `String("gyroscope")
       | `hid => `String("hid")
       | `idle_detection => `String("idle-detection")
-      | `interest_cohort => `String("interest-cohort")
       | `join_ad_interest_group => `String("join-ad-interest-group")
       | `keyboard_map => `String("keyboard-map")
       | `magnetometer => `String("magnetometer")
