@@ -1560,9 +1560,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
     type _federatedauthrequestissuereason = [
       | `ApprovalDeclined
       | `TooManyRequests
-      | `WellKnownHttpNotFound
-      | `WellKnownNoResponse
-      | `WellKnownInvalidResponse
+      | `ManifestHttpNotFound
+      | `ManifestNoResponse
+      | `ManifestInvalidResponse
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
@@ -2922,9 +2922,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
     type _federatedauthrequestissuereason = [
       | `ApprovalDeclined
       | `TooManyRequests
-      | `WellKnownHttpNotFound
-      | `WellKnownNoResponse
-      | `WellKnownInvalidResponse
+      | `ManifestHttpNotFound
+      | `ManifestNoResponse
+      | `ManifestInvalidResponse
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
@@ -2954,9 +2954,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
     type _federatedauthrequestissuereason = [
       | `ApprovalDeclined
       | `TooManyRequests
-      | `WellKnownHttpNotFound
-      | `WellKnownNoResponse
-      | `WellKnownInvalidResponse
+      | `ManifestHttpNotFound
+      | `ManifestNoResponse
+      | `ManifestInvalidResponse
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
@@ -2976,9 +2976,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       fun
       | `String("ApprovalDeclined") => `ApprovalDeclined
       | `String("TooManyRequests") => `TooManyRequests
-      | `String("WellKnownHttpNotFound") => `WellKnownHttpNotFound
-      | `String("WellKnownNoResponse") => `WellKnownNoResponse
-      | `String("WellKnownInvalidResponse") => `WellKnownInvalidResponse
+      | `String("ManifestHttpNotFound") => `ManifestHttpNotFound
+      | `String("ManifestNoResponse") => `ManifestNoResponse
+      | `String("ManifestInvalidResponse") => `ManifestInvalidResponse
       | `String("ClientMetadataHttpNotFound") => `ClientMetadataHttpNotFound
       | `String("ClientMetadataNoResponse") => `ClientMetadataNoResponse
       | `String("ClientMetadataInvalidResponse") => `ClientMetadataInvalidResponse
@@ -2999,9 +2999,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       fun
       | `ApprovalDeclined => `String("ApprovalDeclined")
       | `TooManyRequests => `String("TooManyRequests")
-      | `WellKnownHttpNotFound => `String("WellKnownHttpNotFound")
-      | `WellKnownNoResponse => `String("WellKnownNoResponse")
-      | `WellKnownInvalidResponse => `String("WellKnownInvalidResponse")
+      | `ManifestHttpNotFound => `String("ManifestHttpNotFound")
+      | `ManifestNoResponse => `String("ManifestNoResponse")
+      | `ManifestInvalidResponse => `String("ManifestInvalidResponse")
       | `ClientMetadataHttpNotFound => `String("ClientMetadataHttpNotFound")
       | `ClientMetadataNoResponse => `String("ClientMetadataNoResponse")
       | `ClientMetadataInvalidResponse =>
