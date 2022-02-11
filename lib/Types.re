@@ -1563,9 +1563,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `WellKnownHttpNotFound
       | `WellKnownNoResponse
       | `WellKnownInvalidResponse
-      | `ClientIdMetadataHttpNotFound
-      | `ClientIdMetadataNoResponse
-      | `ClientIdMetadataInvalidResponse
+      | `ClientMetadataHttpNotFound
+      | `ClientMetadataNoResponse
+      | `ClientMetadataInvalidResponse
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -2925,9 +2925,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `WellKnownHttpNotFound
       | `WellKnownNoResponse
       | `WellKnownInvalidResponse
-      | `ClientIdMetadataHttpNotFound
-      | `ClientIdMetadataNoResponse
-      | `ClientIdMetadataInvalidResponse
+      | `ClientMetadataHttpNotFound
+      | `ClientMetadataNoResponse
+      | `ClientMetadataInvalidResponse
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -2957,9 +2957,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `WellKnownHttpNotFound
       | `WellKnownNoResponse
       | `WellKnownInvalidResponse
-      | `ClientIdMetadataHttpNotFound
-      | `ClientIdMetadataNoResponse
-      | `ClientIdMetadataInvalidResponse
+      | `ClientMetadataHttpNotFound
+      | `ClientMetadataNoResponse
+      | `ClientMetadataInvalidResponse
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -2979,9 +2979,9 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `String("WellKnownHttpNotFound") => `WellKnownHttpNotFound
       | `String("WellKnownNoResponse") => `WellKnownNoResponse
       | `String("WellKnownInvalidResponse") => `WellKnownInvalidResponse
-      | `String("ClientIdMetadataHttpNotFound") => `ClientIdMetadataHttpNotFound
-      | `String("ClientIdMetadataNoResponse") => `ClientIdMetadataNoResponse
-      | `String("ClientIdMetadataInvalidResponse") => `ClientIdMetadataInvalidResponse
+      | `String("ClientMetadataHttpNotFound") => `ClientMetadataHttpNotFound
+      | `String("ClientMetadataNoResponse") => `ClientMetadataNoResponse
+      | `String("ClientMetadataInvalidResponse") => `ClientMetadataInvalidResponse
       | `String("ErrorFetchingSignin") => `ErrorFetchingSignin
       | `String("InvalidSigninResponse") => `InvalidSigninResponse
       | `String("AccountsHttpNotFound") => `AccountsHttpNotFound
@@ -3002,11 +3002,10 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `WellKnownHttpNotFound => `String("WellKnownHttpNotFound")
       | `WellKnownNoResponse => `String("WellKnownNoResponse")
       | `WellKnownInvalidResponse => `String("WellKnownInvalidResponse")
-      | `ClientIdMetadataHttpNotFound =>
-        `String("ClientIdMetadataHttpNotFound")
-      | `ClientIdMetadataNoResponse => `String("ClientIdMetadataNoResponse")
-      | `ClientIdMetadataInvalidResponse =>
-        `String("ClientIdMetadataInvalidResponse")
+      | `ClientMetadataHttpNotFound => `String("ClientMetadataHttpNotFound")
+      | `ClientMetadataNoResponse => `String("ClientMetadataNoResponse")
+      | `ClientMetadataInvalidResponse =>
+        `String("ClientMetadataInvalidResponse")
       | `ErrorFetchingSignin => `String("ErrorFetchingSignin")
       | `InvalidSigninResponse => `String("InvalidSigninResponse")
       | `AccountsHttpNotFound => `String("AccountsHttpNotFound")
