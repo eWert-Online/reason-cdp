@@ -1154,6 +1154,7 @@ may be used by the front-end as additional context. */
   }
   and MixedContentResourceType: {
     type _mixedcontentresourcetype = [
+      | `AttributionSrc
       | `Audio
       | `Beacon
       | `CSPReport
@@ -1977,6 +1978,7 @@ may be used by the front-end as additional context. */
   }
   and MixedContentResourceType: {
     type _mixedcontentresourcetype = [
+      | `AttributionSrc
       | `Audio
       | `Beacon
       | `CSPReport
@@ -2013,6 +2015,7 @@ may be used by the front-end as additional context. */
     type t = _mixedcontentresourcetype;
   } = {
     type _mixedcontentresourcetype = [
+      | `AttributionSrc
       | `Audio
       | `Beacon
       | `CSPReport
@@ -2042,6 +2045,7 @@ may be used by the front-end as additional context. */
     ];
     let _mixedcontentresourcetype_of_yojson =
       fun
+      | `String("AttributionSrc") => `AttributionSrc
       | `String("Audio") => `Audio
       | `String("Beacon") => `Beacon
       | `String("CSPReport") => `CSPReport
@@ -2072,6 +2076,7 @@ may be used by the front-end as additional context. */
       | _ => failwith("unknown enum type");
     let yojson_of__mixedcontentresourcetype =
       fun
+      | `AttributionSrc => `String("AttributionSrc")
       | `Audio => `String("Audio")
       | `Beacon => `String("Beacon")
       | `CSPReport => `String("CSPReport")
