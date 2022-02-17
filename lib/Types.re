@@ -1585,7 +1585,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       _federatedauthrequestissuereason => Yojson.Basic.t;
     /* Represents the failure reason when a federated authentication reason fails.
        Should be updated alongside RequestIdTokenStatus in
-       third_party/blink/public/mojom/webid/federated_auth_request.mojom to include
+       third_party/blink/public/mojom/devtools/inspector_issue.mojom to include
        all cases except for success. */
     [@deriving yojson]
     type t = _federatedauthrequestissuereason;
@@ -2951,7 +2951,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       _federatedauthrequestissuereason => Yojson.Basic.t;
     /* Represents the failure reason when a federated authentication reason fails.
        Should be updated alongside RequestIdTokenStatus in
-       third_party/blink/public/mojom/webid/federated_auth_request.mojom to include
+       third_party/blink/public/mojom/devtools/inspector_issue.mojom to include
        all cases except for success. */
     [@deriving yojson]
     type t = _federatedauthrequestissuereason;
@@ -3024,7 +3024,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `Canceled => `String("Canceled");
     /* Represents the failure reason when a federated authentication reason fails.
        Should be updated alongside RequestIdTokenStatus in
-       third_party/blink/public/mojom/webid/federated_auth_request.mojom to include
+       third_party/blink/public/mojom/devtools/inspector_issue.mojom to include
        all cases except for success. */
     [@deriving yojson]
     type t = _federatedauthrequestissuereason;
