@@ -4241,6 +4241,87 @@ be ignored (as if the image had failed to load). */
       };
     };
   };
+  /* Returns all layers parsed by the rendering engine for the tree scope of a node.
+     Given a DOM element identified by nodeId, getLayersForNode returns the root
+     layer for the nearest ancestor document or shadow root. The layer root contains
+     the full layer tree for the tree scope and their ordering. */
+  module GetLayersForNode = {
+    module Response: {
+      type result = {
+        [@key "rootLayer"]
+        rootLayer: Types.CSS.CSSLayerData.t /* No description provided */,
+      };
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "rootLayer"]
+        rootLayer: Types.CSS.CSSLayerData.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "nodeId"]
+        nodeId: Types.DOM.NodeId.t /* No description provided */,
+      };
+      let make = (~nodeId, ()) => {
+        {nodeId: nodeId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "CSS.getLayersForNode", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Starts tracking the given computed styles for updates. The specified array of properties
      replaces the one previously specified. Pass empty array to disable tracking.
      Use takeComputedStyleUpdates to retrieve the list of nodes that had properties modified.

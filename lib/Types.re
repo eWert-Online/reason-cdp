@@ -4012,8 +4012,11 @@ starting with the innermost one, going outwards. */
       containerQueries: option(list(CSSContainerQuery.t)), /* Container query list array (for rules involving container queries).
 The array enumerates container queries starting with the innermost one, going outwards. */
       [@yojson.option] [@key "supports"]
-      supports: option(list(CSSSupports.t)) /* @supports CSS at-rule array.
-The array enumerates @supports at-rules starting with the innermost one, going outwards. */,
+      supports: option(list(CSSSupports.t)), /* @supports CSS at-rule array.
+The array enumerates @supports at-rules starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "layers"]
+      layers: option(list(CSSLayer.t)) /* Cascade layer array. Contains the layer hierarchy that this rule belongs to starting
+with the innermost layer and going outwards. */,
     };
   }
   and RuleUsage: {
@@ -4188,6 +4191,32 @@ available). */
 available). */
       [@yojson.option] [@key "styleSheetId"]
       styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+    };
+  }
+  and CSSLayer: {
+    /* CSS Layer at-rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Layer name. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+    };
+  }
+  and CSSLayerData: {
+    /* CSS Layer data. */
+    [@deriving yojson]
+    type t = {
+      [@key "name"]
+      name: string, /* Layer name. */
+      [@yojson.option] [@key "subLayers"]
+      subLayers: option(list(CSSLayerData.t)), /* Direct sub-layers */
+      [@key "order"]
+      order: float /* Layer order. The order determines the order of the layer in the cascade order.
+A higher number has higher priority in the cascade order. */,
     };
   }
   and PlatformFontUsage: {
@@ -4539,8 +4568,11 @@ starting with the innermost one, going outwards. */
       containerQueries: option(list(CSSContainerQuery.t)), /* Container query list array (for rules involving container queries).
 The array enumerates container queries starting with the innermost one, going outwards. */
       [@yojson.option] [@key "supports"]
-      supports: option(list(CSSSupports.t)) /* @supports CSS at-rule array.
-The array enumerates @supports at-rules starting with the innermost one, going outwards. */,
+      supports: option(list(CSSSupports.t)), /* @supports CSS at-rule array.
+The array enumerates @supports at-rules starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "layers"]
+      layers: option(list(CSSLayer.t)) /* Cascade layer array. Contains the layer hierarchy that this rule belongs to starting
+with the innermost layer and going outwards. */,
     };
   } = {
     /* CSS rule representation. */
@@ -4562,8 +4594,11 @@ starting with the innermost one, going outwards. */
       containerQueries: option(list(CSSContainerQuery.t)), /* Container query list array (for rules involving container queries).
 The array enumerates container queries starting with the innermost one, going outwards. */
       [@yojson.option] [@key "supports"]
-      supports: option(list(CSSSupports.t)) /* @supports CSS at-rule array.
-The array enumerates @supports at-rules starting with the innermost one, going outwards. */,
+      supports: option(list(CSSSupports.t)), /* @supports CSS at-rule array.
+The array enumerates @supports at-rules starting with the innermost one, going outwards. */
+      [@yojson.option] [@key "layers"]
+      layers: option(list(CSSLayer.t)) /* Cascade layer array. Contains the layer hierarchy that this rule belongs to starting
+with the innermost layer and going outwards. */,
     };
   }
   and RuleUsage: {
@@ -4913,6 +4948,56 @@ available). */
 available). */
       [@yojson.option] [@key "styleSheetId"]
       styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+    };
+  }
+  and CSSLayer: {
+    /* CSS Layer at-rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Layer name. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+    };
+  } = {
+    /* CSS Layer at-rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Layer name. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+    };
+  }
+  and CSSLayerData: {
+    /* CSS Layer data. */
+    [@deriving yojson]
+    type t = {
+      [@key "name"]
+      name: string, /* Layer name. */
+      [@yojson.option] [@key "subLayers"]
+      subLayers: option(list(CSSLayerData.t)), /* Direct sub-layers */
+      [@key "order"]
+      order: float /* Layer order. The order determines the order of the layer in the cascade order.
+A higher number has higher priority in the cascade order. */,
+    };
+  } = {
+    /* CSS Layer data. */
+    [@deriving yojson]
+    type t = {
+      [@key "name"]
+      name: string, /* Layer name. */
+      [@yojson.option] [@key "subLayers"]
+      subLayers: option(list(CSSLayerData.t)), /* Direct sub-layers */
+      [@key "order"]
+      order: float /* Layer order. The order determines the order of the layer in the cascade order.
+A higher number has higher priority in the cascade order. */,
     };
   }
   and PlatformFontUsage: {
