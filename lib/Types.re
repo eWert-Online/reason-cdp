@@ -14399,7 +14399,11 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "type"]
       type_: BackForwardCacheNotRestoredReasonType.t, /* Type of the reason */
       [@key "reason"]
-      reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
+      reason: BackForwardCacheNotRestoredReason.t, /* Not restored reason */
+      [@yojson.option] [@key "context"]
+      context: option(string) /* Context associated with the reason. The meaning of this context is
+dependent on the reason:
+- EmbedderExtensionSentMessageToCachedFrame: the extension ID. */,
     };
   }
   and BackForwardCacheNotRestoredExplanationTree: {
@@ -16575,7 +16579,11 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "type"]
       type_: BackForwardCacheNotRestoredReasonType.t, /* Type of the reason */
       [@key "reason"]
-      reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
+      reason: BackForwardCacheNotRestoredReason.t, /* Not restored reason */
+      [@yojson.option] [@key "context"]
+      context: option(string) /* Context associated with the reason. The meaning of this context is
+dependent on the reason:
+- EmbedderExtensionSentMessageToCachedFrame: the extension ID. */,
     };
   } = {
     /* No description provided */
@@ -16584,7 +16592,11 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "type"]
       type_: BackForwardCacheNotRestoredReasonType.t, /* Type of the reason */
       [@key "reason"]
-      reason: BackForwardCacheNotRestoredReason.t /* Not restored reason */,
+      reason: BackForwardCacheNotRestoredReason.t, /* Not restored reason */
+      [@yojson.option] [@key "context"]
+      context: option(string) /* Context associated with the reason. The meaning of this context is
+dependent on the reason:
+- EmbedderExtensionSentMessageToCachedFrame: the extension ID. */,
     };
   }
   and BackForwardCacheNotRestoredExplanationTree: {
