@@ -1064,8 +1064,8 @@ and Audits: {
       frameId: Page.FrameId.t /* No description provided */,
     };
   }
-  and SameSiteCookieExclusionReason: {
-    type _samesitecookieexclusionreason = [
+  and CookieExclusionReason: {
+    type _cookieexclusionreason = [
       | `ExcludeSameSiteUnspecifiedTreatedAsLax
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
@@ -1073,16 +1073,16 @@ and Audits: {
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
     ];
-    let _samesitecookieexclusionreason_of_yojson:
-      Yojson.Basic.t => _samesitecookieexclusionreason;
-    let yojson_of__samesitecookieexclusionreason:
-      _samesitecookieexclusionreason => Yojson.Basic.t;
+    let _cookieexclusionreason_of_yojson:
+      Yojson.Basic.t => _cookieexclusionreason;
+    let yojson_of__cookieexclusionreason:
+      _cookieexclusionreason => Yojson.Basic.t;
     /* No description provided */
     [@deriving yojson]
-    type t = _samesitecookieexclusionreason;
+    type t = _cookieexclusionreason;
   }
-  and SameSiteCookieWarningReason: {
-    type _samesitecookiewarningreason = [
+  and CookieWarningReason: {
+    type _cookiewarningreason = [
       | `WarnSameSiteUnspecifiedCrossSiteContext
       | `WarnSameSiteNoneInsecure
       | `WarnSameSiteUnspecifiedLaxAllowUnsafe
@@ -1092,25 +1092,21 @@ and Audits: {
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
     ];
-    let _samesitecookiewarningreason_of_yojson:
-      Yojson.Basic.t => _samesitecookiewarningreason;
-    let yojson_of__samesitecookiewarningreason:
-      _samesitecookiewarningreason => Yojson.Basic.t;
+    let _cookiewarningreason_of_yojson: Yojson.Basic.t => _cookiewarningreason;
+    let yojson_of__cookiewarningreason: _cookiewarningreason => Yojson.Basic.t;
     /* No description provided */
     [@deriving yojson]
-    type t = _samesitecookiewarningreason;
+    type t = _cookiewarningreason;
   }
-  and SameSiteCookieOperation: {
-    type _samesitecookieoperation = [ | `SetCookie | `ReadCookie];
-    let _samesitecookieoperation_of_yojson:
-      Yojson.Basic.t => _samesitecookieoperation;
-    let yojson_of__samesitecookieoperation:
-      _samesitecookieoperation => Yojson.Basic.t;
+  and CookieOperation: {
+    type _cookieoperation = [ | `SetCookie | `ReadCookie];
+    let _cookieoperation_of_yojson: Yojson.Basic.t => _cookieoperation;
+    let yojson_of__cookieoperation: _cookieoperation => Yojson.Basic.t;
     /* No description provided */
     [@deriving yojson]
-    type t = _samesitecookieoperation;
+    type t = _cookieoperation;
   }
-  and SameSiteCookieIssueDetails: {
+  and CookieIssueDetails: {
     /* This information is currently necessary, as the front-end has a difficult
        time finding a specific cookie. With this, we can convey specific error
        information without the cookie. */
@@ -1124,11 +1120,11 @@ that no valid cookie could be created. */
       [@yojson.option] [@key "rawCookieLine"]
       rawCookieLine: option(string), /* No description provided */
       [@key "cookieWarningReasons"]
-      cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
+      cookieWarningReasons: list(CookieWarningReason.t), /* No description provided */
       [@key "cookieExclusionReasons"]
-      cookieExclusionReasons: list(SameSiteCookieExclusionReason.t), /* No description provided */
+      cookieExclusionReasons: list(CookieExclusionReason.t), /* No description provided */
       [@key "operation"]
-      operation: SameSiteCookieOperation.t, /* Optionally identifies the site-for-cookies and the cookie url, which
+      operation: CookieOperation.t, /* Optionally identifies the site-for-cookies and the cookie url, which
 may be used by the front-end as additional context. */
       [@yojson.option] [@key "siteForCookies"]
       siteForCookies: option(string), /* No description provided */
@@ -1603,7 +1599,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
   }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
-      | `SameSiteCookieIssue
+      | `CookieIssue
       | `MixedContentIssue
       | `BlockedByResponseIssue
       | `HeavyAdIssue
@@ -1634,8 +1630,8 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
        add a new optional field to this type. */
     [@deriving yojson]
     type t = {
-      [@yojson.option] [@key "sameSiteCookieIssueDetails"]
-      sameSiteCookieIssueDetails: option(SameSiteCookieIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "cookieIssueDetails"]
+      cookieIssueDetails: option(CookieIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "mixedContentIssueDetails"]
       mixedContentIssueDetails: option(MixedContentIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "blockedByResponseIssueDetails"]
@@ -1749,8 +1745,8 @@ exception, CDP message, etc.) is referencing this issue. */,
       frameId: Page.FrameId.t /* No description provided */,
     };
   }
-  and SameSiteCookieExclusionReason: {
-    type _samesitecookieexclusionreason = [
+  and CookieExclusionReason: {
+    type _cookieexclusionreason = [
       | `ExcludeSameSiteUnspecifiedTreatedAsLax
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
@@ -1758,15 +1754,15 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
     ];
-    let _samesitecookieexclusionreason_of_yojson:
-      Yojson.Basic.t => _samesitecookieexclusionreason;
-    let yojson_of__samesitecookieexclusionreason:
-      _samesitecookieexclusionreason => Yojson.Basic.t;
+    let _cookieexclusionreason_of_yojson:
+      Yojson.Basic.t => _cookieexclusionreason;
+    let yojson_of__cookieexclusionreason:
+      _cookieexclusionreason => Yojson.Basic.t;
     /* No description provided */
     [@deriving yojson]
-    type t = _samesitecookieexclusionreason;
+    type t = _cookieexclusionreason;
   } = {
-    type _samesitecookieexclusionreason = [
+    type _cookieexclusionreason = [
       | `ExcludeSameSiteUnspecifiedTreatedAsLax
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
@@ -1774,7 +1770,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
     ];
-    let _samesitecookieexclusionreason_of_yojson =
+    let _cookieexclusionreason_of_yojson =
       fun
       | `String("ExcludeSameSiteUnspecifiedTreatedAsLax") => `ExcludeSameSiteUnspecifiedTreatedAsLax
       | `String("ExcludeSameSiteNoneInsecure") => `ExcludeSameSiteNoneInsecure
@@ -1784,7 +1780,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `String("ExcludeSamePartyCrossPartyContext") => `ExcludeSamePartyCrossPartyContext
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
-    let yojson_of__samesitecookieexclusionreason =
+    let yojson_of__cookieexclusionreason =
       fun
       | `ExcludeSameSiteUnspecifiedTreatedAsLax =>
         `String("ExcludeSameSiteUnspecifiedTreatedAsLax")
@@ -1796,10 +1792,10 @@ exception, CDP message, etc.) is referencing this issue. */,
         `String("ExcludeSamePartyCrossPartyContext");
     /* No description provided */
     [@deriving yojson]
-    type t = _samesitecookieexclusionreason;
+    type t = _cookieexclusionreason;
   }
-  and SameSiteCookieWarningReason: {
-    type _samesitecookiewarningreason = [
+  and CookieWarningReason: {
+    type _cookiewarningreason = [
       | `WarnSameSiteUnspecifiedCrossSiteContext
       | `WarnSameSiteNoneInsecure
       | `WarnSameSiteUnspecifiedLaxAllowUnsafe
@@ -1809,15 +1805,13 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
     ];
-    let _samesitecookiewarningreason_of_yojson:
-      Yojson.Basic.t => _samesitecookiewarningreason;
-    let yojson_of__samesitecookiewarningreason:
-      _samesitecookiewarningreason => Yojson.Basic.t;
+    let _cookiewarningreason_of_yojson: Yojson.Basic.t => _cookiewarningreason;
+    let yojson_of__cookiewarningreason: _cookiewarningreason => Yojson.Basic.t;
     /* No description provided */
     [@deriving yojson]
-    type t = _samesitecookiewarningreason;
+    type t = _cookiewarningreason;
   } = {
-    type _samesitecookiewarningreason = [
+    type _cookiewarningreason = [
       | `WarnSameSiteUnspecifiedCrossSiteContext
       | `WarnSameSiteNoneInsecure
       | `WarnSameSiteUnspecifiedLaxAllowUnsafe
@@ -1827,7 +1821,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
     ];
-    let _samesitecookiewarningreason_of_yojson =
+    let _cookiewarningreason_of_yojson =
       fun
       | `String("WarnSameSiteUnspecifiedCrossSiteContext") => `WarnSameSiteUnspecifiedCrossSiteContext
       | `String("WarnSameSiteNoneInsecure") => `WarnSameSiteNoneInsecure
@@ -1839,7 +1833,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `String("WarnSameSiteLaxCrossDowngradeLax") => `WarnSameSiteLaxCrossDowngradeLax
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
-    let yojson_of__samesitecookiewarningreason =
+    let yojson_of__cookiewarningreason =
       fun
       | `WarnSameSiteUnspecifiedCrossSiteContext =>
         `String("WarnSameSiteUnspecifiedCrossSiteContext")
@@ -1858,34 +1852,32 @@ exception, CDP message, etc.) is referencing this issue. */,
         `String("WarnSameSiteLaxCrossDowngradeLax");
     /* No description provided */
     [@deriving yojson]
-    type t = _samesitecookiewarningreason;
+    type t = _cookiewarningreason;
   }
-  and SameSiteCookieOperation: {
-    type _samesitecookieoperation = [ | `SetCookie | `ReadCookie];
-    let _samesitecookieoperation_of_yojson:
-      Yojson.Basic.t => _samesitecookieoperation;
-    let yojson_of__samesitecookieoperation:
-      _samesitecookieoperation => Yojson.Basic.t;
+  and CookieOperation: {
+    type _cookieoperation = [ | `SetCookie | `ReadCookie];
+    let _cookieoperation_of_yojson: Yojson.Basic.t => _cookieoperation;
+    let yojson_of__cookieoperation: _cookieoperation => Yojson.Basic.t;
     /* No description provided */
     [@deriving yojson]
-    type t = _samesitecookieoperation;
+    type t = _cookieoperation;
   } = {
-    type _samesitecookieoperation = [ | `SetCookie | `ReadCookie];
-    let _samesitecookieoperation_of_yojson =
+    type _cookieoperation = [ | `SetCookie | `ReadCookie];
+    let _cookieoperation_of_yojson =
       fun
       | `String("SetCookie") => `SetCookie
       | `String("ReadCookie") => `ReadCookie
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
-    let yojson_of__samesitecookieoperation =
+    let yojson_of__cookieoperation =
       fun
       | `SetCookie => `String("SetCookie")
       | `ReadCookie => `String("ReadCookie");
     /* No description provided */
     [@deriving yojson]
-    type t = _samesitecookieoperation;
+    type t = _cookieoperation;
   }
-  and SameSiteCookieIssueDetails: {
+  and CookieIssueDetails: {
     /* This information is currently necessary, as the front-end has a difficult
        time finding a specific cookie. With this, we can convey specific error
        information without the cookie. */
@@ -1899,11 +1891,11 @@ that no valid cookie could be created. */
       [@yojson.option] [@key "rawCookieLine"]
       rawCookieLine: option(string), /* No description provided */
       [@key "cookieWarningReasons"]
-      cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
+      cookieWarningReasons: list(CookieWarningReason.t), /* No description provided */
       [@key "cookieExclusionReasons"]
-      cookieExclusionReasons: list(SameSiteCookieExclusionReason.t), /* No description provided */
+      cookieExclusionReasons: list(CookieExclusionReason.t), /* No description provided */
       [@key "operation"]
-      operation: SameSiteCookieOperation.t, /* Optionally identifies the site-for-cookies and the cookie url, which
+      operation: CookieOperation.t, /* Optionally identifies the site-for-cookies and the cookie url, which
 may be used by the front-end as additional context. */
       [@yojson.option] [@key "siteForCookies"]
       siteForCookies: option(string), /* No description provided */
@@ -1926,11 +1918,11 @@ that no valid cookie could be created. */
       [@yojson.option] [@key "rawCookieLine"]
       rawCookieLine: option(string), /* No description provided */
       [@key "cookieWarningReasons"]
-      cookieWarningReasons: list(SameSiteCookieWarningReason.t), /* No description provided */
+      cookieWarningReasons: list(CookieWarningReason.t), /* No description provided */
       [@key "cookieExclusionReasons"]
-      cookieExclusionReasons: list(SameSiteCookieExclusionReason.t), /* No description provided */
+      cookieExclusionReasons: list(CookieExclusionReason.t), /* No description provided */
       [@key "operation"]
-      operation: SameSiteCookieOperation.t, /* Optionally identifies the site-for-cookies and the cookie url, which
+      operation: CookieOperation.t, /* Optionally identifies the site-for-cookies and the cookie url, which
 may be used by the front-end as additional context. */
       [@yojson.option] [@key "siteForCookies"]
       siteForCookies: option(string), /* No description provided */
@@ -3052,7 +3044,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
   }
   and InspectorIssueCode: {
     type _inspectorissuecode = [
-      | `SameSiteCookieIssue
+      | `CookieIssue
       | `MixedContentIssue
       | `BlockedByResponseIssue
       | `HeavyAdIssue
@@ -3078,7 +3070,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
     type t = _inspectorissuecode;
   } = {
     type _inspectorissuecode = [
-      | `SameSiteCookieIssue
+      | `CookieIssue
       | `MixedContentIssue
       | `BlockedByResponseIssue
       | `HeavyAdIssue
@@ -3097,7 +3089,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
     ];
     let _inspectorissuecode_of_yojson =
       fun
-      | `String("SameSiteCookieIssue") => `SameSiteCookieIssue
+      | `String("CookieIssue") => `CookieIssue
       | `String("MixedContentIssue") => `MixedContentIssue
       | `String("BlockedByResponseIssue") => `BlockedByResponseIssue
       | `String("HeavyAdIssue") => `HeavyAdIssue
@@ -3117,7 +3109,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | _ => failwith("unknown enum type");
     let yojson_of__inspectorissuecode =
       fun
-      | `SameSiteCookieIssue => `String("SameSiteCookieIssue")
+      | `CookieIssue => `String("CookieIssue")
       | `MixedContentIssue => `String("MixedContentIssue")
       | `BlockedByResponseIssue => `String("BlockedByResponseIssue")
       | `HeavyAdIssue => `String("HeavyAdIssue")
@@ -3145,8 +3137,8 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
        add a new optional field to this type. */
     [@deriving yojson]
     type t = {
-      [@yojson.option] [@key "sameSiteCookieIssueDetails"]
-      sameSiteCookieIssueDetails: option(SameSiteCookieIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "cookieIssueDetails"]
+      cookieIssueDetails: option(CookieIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "mixedContentIssueDetails"]
       mixedContentIssueDetails: option(MixedContentIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "blockedByResponseIssueDetails"]
@@ -3188,8 +3180,8 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
        add a new optional field to this type. */
     [@deriving yojson]
     type t = {
-      [@yojson.option] [@key "sameSiteCookieIssueDetails"]
-      sameSiteCookieIssueDetails: option(SameSiteCookieIssueDetails.t), /* No description provided */
+      [@yojson.option] [@key "cookieIssueDetails"]
+      cookieIssueDetails: option(CookieIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "mixedContentIssueDetails"]
       mixedContentIssueDetails: option(MixedContentIssueDetails.t), /* No description provided */
       [@yojson.option] [@key "blockedByResponseIssueDetails"]
