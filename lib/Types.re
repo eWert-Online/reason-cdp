@@ -12887,7 +12887,7 @@ and Overlay: {
     };
   }
   and ColorFormat: {
-    type _colorformat = [ | `rgb | `hsl | `hex];
+    type _colorformat = [ | `rgb | `hsl | `hwb | `hex];
     let _colorformat_of_yojson: Yojson.Basic.t => _colorformat;
     let yojson_of__colorformat: _colorformat => Yojson.Basic.t;
     /* No description provided */
@@ -13350,18 +13350,19 @@ and Overlay: {
     };
   }
   and ColorFormat: {
-    type _colorformat = [ | `rgb | `hsl | `hex];
+    type _colorformat = [ | `rgb | `hsl | `hwb | `hex];
     let _colorformat_of_yojson: Yojson.Basic.t => _colorformat;
     let yojson_of__colorformat: _colorformat => Yojson.Basic.t;
     /* No description provided */
     [@deriving yojson]
     type t = _colorformat;
   } = {
-    type _colorformat = [ | `rgb | `hsl | `hex];
+    type _colorformat = [ | `rgb | `hsl | `hwb | `hex];
     let _colorformat_of_yojson =
       fun
       | `String("rgb") => `rgb
       | `String("hsl") => `hsl
+      | `String("hwb") => `hwb
       | `String("hex") => `hex
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
@@ -13369,6 +13370,7 @@ and Overlay: {
       fun
       | `rgb => `String("rgb")
       | `hsl => `String("hsl")
+      | `hwb => `String("hwb")
       | `hex => `String("hex");
     /* No description provided */
     [@deriving yojson]
