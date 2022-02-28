@@ -1091,6 +1091,7 @@ and Audits: {
       | `WarnSameSiteStrictCrossDowngradeLax
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
+      | `WarnAttributeValueExceedsMaxSize
     ];
     let _cookiewarningreason_of_yojson: Yojson.Basic.t => _cookiewarningreason;
     let yojson_of__cookiewarningreason: _cookiewarningreason => Yojson.Basic.t;
@@ -1804,6 +1805,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `WarnSameSiteStrictCrossDowngradeLax
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
+      | `WarnAttributeValueExceedsMaxSize
     ];
     let _cookiewarningreason_of_yojson: Yojson.Basic.t => _cookiewarningreason;
     let yojson_of__cookiewarningreason: _cookiewarningreason => Yojson.Basic.t;
@@ -1820,6 +1822,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `WarnSameSiteStrictCrossDowngradeLax
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
+      | `WarnAttributeValueExceedsMaxSize
     ];
     let _cookiewarningreason_of_yojson =
       fun
@@ -1831,6 +1834,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `String("WarnSameSiteStrictCrossDowngradeLax") => `WarnSameSiteStrictCrossDowngradeLax
       | `String("WarnSameSiteLaxCrossDowngradeStrict") => `WarnSameSiteLaxCrossDowngradeStrict
       | `String("WarnSameSiteLaxCrossDowngradeLax") => `WarnSameSiteLaxCrossDowngradeLax
+      | `String("WarnAttributeValueExceedsMaxSize") => `WarnAttributeValueExceedsMaxSize
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__cookiewarningreason =
@@ -1849,7 +1853,9 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `WarnSameSiteLaxCrossDowngradeStrict =>
         `String("WarnSameSiteLaxCrossDowngradeStrict")
       | `WarnSameSiteLaxCrossDowngradeLax =>
-        `String("WarnSameSiteLaxCrossDowngradeLax");
+        `String("WarnSameSiteLaxCrossDowngradeLax")
+      | `WarnAttributeValueExceedsMaxSize =>
+        `String("WarnAttributeValueExceedsMaxSize");
     /* No description provided */
     [@deriving yojson]
     type t = _cookiewarningreason;
