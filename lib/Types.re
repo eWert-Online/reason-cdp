@@ -1564,6 +1564,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
+      | `ClientMetadataMissingPrivacyPolicyUrl
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -2931,6 +2932,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
+      | `ClientMetadataMissingPrivacyPolicyUrl
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -2963,6 +2965,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
+      | `ClientMetadataMissingPrivacyPolicyUrl
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -2985,6 +2988,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `String("ClientMetadataHttpNotFound") => `ClientMetadataHttpNotFound
       | `String("ClientMetadataNoResponse") => `ClientMetadataNoResponse
       | `String("ClientMetadataInvalidResponse") => `ClientMetadataInvalidResponse
+      | `String("ClientMetadataMissingPrivacyPolicyUrl") => `ClientMetadataMissingPrivacyPolicyUrl
       | `String("ErrorFetchingSignin") => `ErrorFetchingSignin
       | `String("InvalidSigninResponse") => `InvalidSigninResponse
       | `String("AccountsHttpNotFound") => `AccountsHttpNotFound
@@ -3009,6 +3013,8 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `ClientMetadataNoResponse => `String("ClientMetadataNoResponse")
       | `ClientMetadataInvalidResponse =>
         `String("ClientMetadataInvalidResponse")
+      | `ClientMetadataMissingPrivacyPolicyUrl =>
+        `String("ClientMetadataMissingPrivacyPolicyUrl")
       | `ErrorFetchingSignin => `String("ErrorFetchingSignin")
       | `InvalidSigninResponse => `String("InvalidSigninResponse")
       | `AccountsHttpNotFound => `String("AccountsHttpNotFound")
