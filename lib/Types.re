@@ -3919,6 +3919,14 @@ and CSS: {
       matchedCSSRules: list(RuleMatch.t) /* Matches of CSS rules matching the ancestor node in the style inheritance chain. */,
     };
   }
+  and InheritedPseudoElementMatches: {
+    /* Inherited pseudo element matches from pseudos of an ancestor node. */
+    [@deriving yojson]
+    type t = {
+      [@key "pseudoElements"]
+      pseudoElements: list(PseudoElementMatches.t) /* Matches of pseudo styles from the pseudos of an ancestor node. */,
+    };
+  }
   and RuleMatch: {
     /* Match data for a CSS rule. */
     [@deriving yojson]
@@ -4400,6 +4408,21 @@ stylesheet rules) this rule came from. */
       inlineStyle: option(CSSStyle.t), /* The ancestor node's inline style, if any, in the style inheritance chain. */
       [@key "matchedCSSRules"]
       matchedCSSRules: list(RuleMatch.t) /* Matches of CSS rules matching the ancestor node in the style inheritance chain. */,
+    };
+  }
+  and InheritedPseudoElementMatches: {
+    /* Inherited pseudo element matches from pseudos of an ancestor node. */
+    [@deriving yojson]
+    type t = {
+      [@key "pseudoElements"]
+      pseudoElements: list(PseudoElementMatches.t) /* Matches of pseudo styles from the pseudos of an ancestor node. */,
+    };
+  } = {
+    /* Inherited pseudo element matches from pseudos of an ancestor node. */
+    [@deriving yojson]
+    type t = {
+      [@key "pseudoElements"]
+      pseudoElements: list(PseudoElementMatches.t) /* Matches of pseudo styles from the pseudos of an ancestor node. */,
     };
   }
   and RuleMatch: {

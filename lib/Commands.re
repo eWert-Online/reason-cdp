@@ -3934,6 +3934,9 @@ be ignored (as if the image had failed to load). */
         pseudoElements: option(list(Types.CSS.PseudoElementMatches.t)), /* Pseudo style matches for this node. */
         [@yojson.option] [@key "inherited"]
         inherited: option(list(Types.CSS.InheritedStyleEntry.t)), /* A chain of inherited styles (from the immediate node parent up to the DOM tree root). */
+        [@yojson.option] [@key "inheritedPseudoElements"]
+        inheritedPseudoElements:
+          option(list(Types.CSS.InheritedPseudoElementMatches.t)), /* A chain of inherited pseudo element styles (from the immediate node parent up to the DOM tree root). */
         [@yojson.option] [@key "cssKeyframesRules"]
         cssKeyframesRules: option(list(Types.CSS.CSSKeyframesRule.t)) /* A list of CSS keyframed animations matching this node. */,
       };
@@ -3964,6 +3967,9 @@ be ignored (as if the image had failed to load). */
         pseudoElements: option(list(Types.CSS.PseudoElementMatches.t)), /* Pseudo style matches for this node. */
         [@yojson.option] [@key "inherited"]
         inherited: option(list(Types.CSS.InheritedStyleEntry.t)), /* A chain of inherited styles (from the immediate node parent up to the DOM tree root). */
+        [@yojson.option] [@key "inheritedPseudoElements"]
+        inheritedPseudoElements:
+          option(list(Types.CSS.InheritedPseudoElementMatches.t)), /* A chain of inherited pseudo element styles (from the immediate node parent up to the DOM tree root). */
         [@yojson.option] [@key "cssKeyframesRules"]
         cssKeyframesRules: option(list(Types.CSS.CSSKeyframesRule.t)) /* A list of CSS keyframed animations matching this node. */,
       };
