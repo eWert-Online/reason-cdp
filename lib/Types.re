@@ -1565,6 +1565,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
       | `ClientMetadataMissingPrivacyPolicyUrl
+      | `DisabledInSettings
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -2933,6 +2934,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
       | `ClientMetadataMissingPrivacyPolicyUrl
+      | `DisabledInSettings
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -2966,6 +2968,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
       | `ClientMetadataMissingPrivacyPolicyUrl
+      | `DisabledInSettings
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -2989,6 +2992,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       | `String("ClientMetadataNoResponse") => `ClientMetadataNoResponse
       | `String("ClientMetadataInvalidResponse") => `ClientMetadataInvalidResponse
       | `String("ClientMetadataMissingPrivacyPolicyUrl") => `ClientMetadataMissingPrivacyPolicyUrl
+      | `String("DisabledInSettings") => `DisabledInSettings
       | `String("ErrorFetchingSignin") => `ErrorFetchingSignin
       | `String("InvalidSigninResponse") => `InvalidSigninResponse
       | `String("AccountsHttpNotFound") => `AccountsHttpNotFound
@@ -3015,6 +3019,7 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
         `String("ClientMetadataInvalidResponse")
       | `ClientMetadataMissingPrivacyPolicyUrl =>
         `String("ClientMetadataMissingPrivacyPolicyUrl")
+      | `DisabledInSettings => `String("DisabledInSettings")
       | `ErrorFetchingSignin => `String("ErrorFetchingSignin")
       | `InvalidSigninResponse => `String("InvalidSigninResponse")
       | `AccountsHttpNotFound => `String("AccountsHttpNotFound")
