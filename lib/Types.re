@@ -1524,13 +1524,13 @@ instead of "limited-quirks". */
       [@key "sourceCodeLocation"]
       sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
       [@yojson.option] [@key "message"]
-      message: option(string), /* The content of the deprecation issue (this won't be translated),
+      message: option(string), /* The content of an untranslated deprecation issue,
 e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
 around January 2022. Please use Web Storage or Indexed Database
 instead. This standard was abandoned in January, 1970. See
 https://www.chromestatus.com/feature/5684870116278272 for more details." */
       [@key "deprecationType"]
-      deprecationType: string /* No description provided */,
+      deprecationType: string /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */,
     };
   }
   and ClientHintIssueReason: {
@@ -2846,13 +2846,13 @@ instead of "limited-quirks". */
       [@key "sourceCodeLocation"]
       sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
       [@yojson.option] [@key "message"]
-      message: option(string), /* The content of the deprecation issue (this won't be translated),
+      message: option(string), /* The content of an untranslated deprecation issue,
 e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
 around January 2022. Please use Web Storage or Indexed Database
 instead. This standard was abandoned in January, 1970. See
 https://www.chromestatus.com/feature/5684870116278272 for more details." */
       [@key "deprecationType"]
-      deprecationType: string /* No description provided */,
+      deprecationType: string /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */,
     };
   } = {
     /* This issue tracks information needed to print a deprecation message.
@@ -2867,13 +2867,13 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       [@key "sourceCodeLocation"]
       sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
       [@yojson.option] [@key "message"]
-      message: option(string), /* The content of the deprecation issue (this won't be translated),
+      message: option(string), /* The content of an untranslated deprecation issue,
 e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
 around January 2022. Please use Web Storage or Indexed Database
 instead. This standard was abandoned in January, 1970. See
 https://www.chromestatus.com/feature/5684870116278272 for more details." */
       [@key "deprecationType"]
-      deprecationType: string /* No description provided */,
+      deprecationType: string /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */,
     };
   }
   and ClientHintIssueReason: {
