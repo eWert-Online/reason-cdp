@@ -14333,6 +14333,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `NoResponseHead
       | `Unknown
       | `ActivationNavigationsDisallowedForBug1234857
+      | `ErrorDocument
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -16069,6 +16070,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `NoResponseHead
       | `Unknown
       | `ActivationNavigationsDisallowedForBug1234857
+      | `ErrorDocument
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -16202,6 +16204,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `NoResponseHead
       | `Unknown
       | `ActivationNavigationsDisallowedForBug1234857
+      | `ErrorDocument
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -16328,6 +16331,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("NoResponseHead") => `NoResponseHead
       | `String("Unknown") => `Unknown
       | `String("ActivationNavigationsDisallowedForBug1234857") => `ActivationNavigationsDisallowedForBug1234857
+      | `String("ErrorDocument") => `ErrorDocument
       | `String("WebSocket") => `WebSocket
       | `String("WebTransport") => `WebTransport
       | `String("WebRTC") => `WebRTC
@@ -16472,6 +16476,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `Unknown => `String("Unknown")
       | `ActivationNavigationsDisallowedForBug1234857 =>
         `String("ActivationNavigationsDisallowedForBug1234857")
+      | `ErrorDocument => `String("ErrorDocument")
       | `WebSocket => `String("WebSocket")
       | `WebTransport => `String("WebTransport")
       | `WebRTC => `String("WebRTC")
