@@ -4203,6 +4203,8 @@ available). */
     type t = {
       [@key "text"]
       text: string, /* Supports rule text. */
+      [@key "active"]
+      active: bool, /* Whether the supports condition is satisfied. */
       [@yojson.option] [@key "range"]
       range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
 available). */
@@ -4963,6 +4965,8 @@ available). */
     type t = {
       [@key "text"]
       text: string, /* Supports rule text. */
+      [@key "active"]
+      active: bool, /* Whether the supports condition is satisfied. */
       [@yojson.option] [@key "range"]
       range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
 available). */
@@ -4975,6 +4979,8 @@ available). */
     type t = {
       [@key "text"]
       text: string, /* Supports rule text. */
+      [@key "active"]
+      active: bool, /* Whether the supports condition is satisfied. */
       [@yojson.option] [@key "range"]
       range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
 available). */
