@@ -13733,6 +13733,7 @@ and Page: {
       | `ambient_light_sensor
       | `attribution_reporting
       | `autoplay
+      | `browsing_topics
       | `camera
       | `ch_dpr
       | `ch_device_memory
@@ -13773,6 +13774,7 @@ and Page: {
       | `gyroscope
       | `hid
       | `idle_detection
+      | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
       | `magnetometer
@@ -14662,6 +14664,7 @@ dependent on the reason:
       | `ambient_light_sensor
       | `attribution_reporting
       | `autoplay
+      | `browsing_topics
       | `camera
       | `ch_dpr
       | `ch_device_memory
@@ -14702,6 +14705,7 @@ dependent on the reason:
       | `gyroscope
       | `hid
       | `idle_detection
+      | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
       | `magnetometer
@@ -14738,6 +14742,7 @@ dependent on the reason:
       | `ambient_light_sensor
       | `attribution_reporting
       | `autoplay
+      | `browsing_topics
       | `camera
       | `ch_dpr
       | `ch_device_memory
@@ -14778,6 +14783,7 @@ dependent on the reason:
       | `gyroscope
       | `hid
       | `idle_detection
+      | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
       | `magnetometer
@@ -14806,6 +14812,7 @@ dependent on the reason:
       | `String("ambient-light-sensor") => `ambient_light_sensor
       | `String("attribution-reporting") => `attribution_reporting
       | `String("autoplay") => `autoplay
+      | `String("browsing-topics") => `browsing_topics
       | `String("camera") => `camera
       | `String("ch-dpr") => `ch_dpr
       | `String("ch-device-memory") => `ch_device_memory
@@ -14846,6 +14853,7 @@ dependent on the reason:
       | `String("gyroscope") => `gyroscope
       | `String("hid") => `hid
       | `String("idle-detection") => `idle_detection
+      | `String("interest-cohort") => `interest_cohort
       | `String("join-ad-interest-group") => `join_ad_interest_group
       | `String("keyboard-map") => `keyboard_map
       | `String("magnetometer") => `magnetometer
@@ -14875,6 +14883,7 @@ dependent on the reason:
       | `ambient_light_sensor => `String("ambient-light-sensor")
       | `attribution_reporting => `String("attribution-reporting")
       | `autoplay => `String("autoplay")
+      | `browsing_topics => `String("browsing-topics")
       | `camera => `String("camera")
       | `ch_dpr => `String("ch-dpr")
       | `ch_device_memory => `String("ch-device-memory")
@@ -14918,6 +14927,7 @@ dependent on the reason:
       | `gyroscope => `String("gyroscope")
       | `hid => `String("hid")
       | `idle_detection => `String("idle-detection")
+      | `interest_cohort => `String("interest-cohort")
       | `join_ad_interest_group => `String("join-ad-interest-group")
       | `keyboard_map => `String("keyboard-map")
       | `magnetometer => `String("magnetometer")
