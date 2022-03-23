@@ -261,7 +261,7 @@ children, if requested. */,
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "depth"]
-        depth: option(float), /* The maximum depth at which descendants of the root node should be retrieved.
+        depth: option(Types.number), /* The maximum depth at which descendants of the root node should be retrieved.
 If omitted, the full tree is returned. */
         [@yojson.option] [@key "frameId"]
         frameId: option(Types.Page.FrameId.t) /* The frame for whose document the AX tree should be retrieved.
@@ -761,7 +761,7 @@ module Animation = {
     module Response: {
       type result = {
         [@key "currentTime"]
-        currentTime: float /* Current time of the page. */,
+        currentTime: Types.number /* Current time of the page. */,
       };
 
       type error = {
@@ -781,7 +781,7 @@ module Animation = {
       [@deriving yojson]
       type result = {
         [@key "currentTime"]
-        currentTime: float /* Current time of the page. */,
+        currentTime: Types.number /* Current time of the page. */,
       };
 
       [@deriving yojson]
@@ -839,7 +839,7 @@ module Animation = {
     module Response: {
       type result = {
         [@key "playbackRate"]
-        playbackRate: float /* Playback rate for animations on page. */,
+        playbackRate: Types.number /* Playback rate for animations on page. */,
       };
 
       type error = {
@@ -859,7 +859,7 @@ module Animation = {
       [@deriving yojson]
       type result = {
         [@key "playbackRate"]
-        playbackRate: float /* Playback rate for animations on page. */,
+        playbackRate: Types.number /* Playback rate for animations on page. */,
       };
 
       [@deriving yojson]
@@ -1100,7 +1100,7 @@ module Animation = {
         [@key "animations"]
         animations: list(string), /* List of animation ids to seek. */
         [@key "currentTime"]
-        currentTime: float /* Set the current time of each animation. */,
+        currentTime: Types.number /* Set the current time of each animation. */,
       };
       let make = (~animations, ~currentTime, ()) => {
         {animations, currentTime};
@@ -1246,7 +1246,7 @@ module Animation = {
       [@deriving yojson]
       type t = {
         [@key "playbackRate"]
-        playbackRate: float /* Playback rate for animations on page */,
+        playbackRate: Types.number /* Playback rate for animations on page */,
       };
       let make = (~playbackRate, ()) => {
         {playbackRate: playbackRate};
@@ -1320,9 +1320,9 @@ module Animation = {
         [@key "animationId"]
         animationId: string, /* Animation id. */
         [@key "duration"]
-        duration: float, /* Duration of the animation. */
+        duration: Types.number, /* Duration of the animation. */
         [@key "delay"]
-        delay: float /* Delay of the animation. */,
+        delay: Types.number /* Delay of the animation. */,
       };
       let make = (~animationId, ~duration, ~delay, ()) => {
         {animationId, duration, delay};
@@ -1356,9 +1356,9 @@ module Audits = {
         [@yojson.option] [@key "body"]
         body: option(string), /* The encoded body as a base64 string. Omitted if sizeOnly is true. (Encoded as a base64 string when passed over JSON) */
         [@key "originalSize"]
-        originalSize: float, /* Size before re-encoding. */
+        originalSize: Types.number, /* Size before re-encoding. */
         [@key "encodedSize"]
-        encodedSize: float /* Size after re-encoding. */,
+        encodedSize: Types.number /* Size after re-encoding. */,
       };
 
       type error = {
@@ -1380,9 +1380,9 @@ module Audits = {
         [@yojson.option] [@key "body"]
         body: option(string), /* The encoded body as a base64 string. Omitted if sizeOnly is true. (Encoded as a base64 string when passed over JSON) */
         [@key "originalSize"]
-        originalSize: float, /* Size before re-encoding. */
+        originalSize: Types.number, /* Size before re-encoding. */
         [@key "encodedSize"]
-        encodedSize: float /* Size after re-encoding. */,
+        encodedSize: Types.number /* Size after re-encoding. */,
       };
 
       [@deriving yojson]
@@ -1428,7 +1428,7 @@ module Audits = {
         [@key "encoding"]
         encoding: getencodedresponse_encoding, /* The encoding to use. */
         [@yojson.option] [@key "quality"]
-        quality: option(float), /* The quality of the encoding (0-1). (defaults to 1) */
+        quality: option(Types.number), /* The quality of the encoding (0-1). (defaults to 1) */
         [@yojson.option] [@key "sizeOnly"]
         sizeOnly: option(bool) /* Whether to only return the size information (defaults to false). */,
       };
@@ -5256,7 +5256,7 @@ be ignored (as if the image had failed to load). */
         [@key "coverage"]
         coverage: list(Types.CSS.RuleUsage.t), /* No description provided */
         [@key "timestamp"]
-        timestamp: float /* Monotonically increasing time, in seconds. */,
+        timestamp: Types.number /* Monotonically increasing time, in seconds. */,
       };
 
       type error = {
@@ -5278,7 +5278,7 @@ be ignored (as if the image had failed to load). */
         [@key "coverage"]
         coverage: list(Types.CSS.RuleUsage.t), /* No description provided */
         [@key "timestamp"]
-        timestamp: float /* Monotonically increasing time, in seconds. */,
+        timestamp: Types.number /* Monotonically increasing time, in seconds. */,
       };
 
       [@deriving yojson]
@@ -5706,7 +5706,7 @@ module CacheStorage = {
         [@key "cacheDataEntries"]
         cacheDataEntries: list(Types.CacheStorage.DataEntry.t), /* Array of object store data entries. */
         [@key "returnCount"]
-        returnCount: float /* Count of returned entries from this storage. If pathFilter is empty, it
+        returnCount: Types.number /* Count of returned entries from this storage. If pathFilter is empty, it
 is the count of all entries from this storage. */,
       };
 
@@ -5729,7 +5729,7 @@ is the count of all entries from this storage. */,
         [@key "cacheDataEntries"]
         cacheDataEntries: list(Types.CacheStorage.DataEntry.t), /* Array of object store data entries. */
         [@key "returnCount"]
-        returnCount: float /* Count of returned entries from this storage. If pathFilter is empty, it
+        returnCount: Types.number /* Count of returned entries from this storage. If pathFilter is empty, it
 is the count of all entries from this storage. */,
       };
 
@@ -5761,9 +5761,9 @@ is the count of all entries from this storage. */,
         [@key "cacheId"]
         cacheId: Types.CacheStorage.CacheId.t, /* ID of cache to get entries from. */
         [@yojson.option] [@key "skipCount"]
-        skipCount: option(float), /* Number of records to skip. */
+        skipCount: option(Types.number), /* Number of records to skip. */
         [@yojson.option] [@key "pageSize"]
-        pageSize: option(float), /* Number of records to fetch. */
+        pageSize: option(Types.number), /* Number of records to fetch. */
         [@yojson.option] [@key "pathFilter"]
         pathFilter: option(string) /* If present, only return the entries containing this substring in the path */,
       };
@@ -6441,7 +6441,7 @@ module DOM = {
         [@yojson.option] [@key "objectId"]
         objectId: option(Types.Runtime.RemoteObjectId.t), /* JavaScript object id of the node wrapper. */
         [@yojson.option] [@key "depth"]
-        depth: option(float), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
+        depth: option(Types.number), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
 entire subtree or provide an integer larger than 0. */
         [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots should be traversed when returning the subtree
@@ -7140,7 +7140,7 @@ When omitted, center of the node will be used, similar to Element.scrollIntoView
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "depth"]
-        depth: option(float), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
+        depth: option(Types.number), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
 entire subtree or provide an integer larger than 0. */
         [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots should be traversed when returning the subtree
@@ -7224,7 +7224,7 @@ entire subtree or provide an integer larger than 0. */
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "depth"]
-        depth: option(float), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
+        depth: option(Types.number), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
 entire subtree or provide an integer larger than 0. */
         [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots should be traversed when returning the subtree
@@ -7398,9 +7398,9 @@ results (default is false). */,
       [@deriving yojson]
       type t = {
         [@key "x"]
-        x: float, /* X coordinate. */
+        x: Types.number, /* X coordinate. */
         [@key "y"]
-        y: float, /* Y coordinate. */
+        y: Types.number, /* Y coordinate. */
         [@yojson.option] [@key "includeUserAgentShadowDOM"]
         includeUserAgentShadowDOM: option(bool), /* False to skip to the nearest non-UA shadow root ancestor (default: false). */
         [@yojson.option] [@key "ignorePointerEventsNone"]
@@ -7652,9 +7652,9 @@ results (default is false). */,
         [@key "searchId"]
         searchId: string, /* Unique search session identifier. */
         [@key "fromIndex"]
-        fromIndex: float, /* Start index of the search result to be returned. */
+        fromIndex: Types.number, /* Start index of the search result to be returned. */
         [@key "toIndex"]
-        toIndex: float /* End index of the search result to be returned. */,
+        toIndex: Types.number /* End index of the search result to be returned. */,
       };
       let make = (~searchId, ~fromIndex, ~toIndex, ()) => {
         {searchId, fromIndex, toIndex};
@@ -8009,7 +8009,7 @@ results (default is false). */,
         [@key "searchId"]
         searchId: string, /* Unique search session identifier. */
         [@key "resultCount"]
-        resultCount: float /* Number of search results. */,
+        resultCount: Types.number /* Number of search results. */,
       };
 
       type error = {
@@ -8031,7 +8031,7 @@ results (default is false). */,
         [@key "searchId"]
         searchId: string, /* Unique search session identifier. */
         [@key "resultCount"]
-        resultCount: float /* Number of search results. */,
+        resultCount: Types.number /* Number of search results. */,
       };
 
       [@deriving yojson]
@@ -8662,7 +8662,7 @@ backendNodeIds. */,
         [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* Id of the node to get children for. */
         [@yojson.option] [@key "depth"]
-        depth: option(float), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
+        depth: option(Types.number), /* The maximum depth at which children should be retrieved, defaults to 1. Use -1 for the
 entire subtree or provide an integer larger than 0. */
         [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots should be traversed when returning the sub-tree
@@ -9989,7 +9989,7 @@ module DOMDebugger = {
         [@key "objectId"]
         objectId: Types.Runtime.RemoteObjectId.t, /* Identifier of the object to return listeners for. */
         [@yojson.option] [@key "depth"]
-        depth: option(float), /* The maximum depth at which Node children should be retrieved, defaults to 1. Use -1 for the
+        depth: option(Types.number), /* The maximum depth at which Node children should be retrieved, defaults to 1. Use -1 for the
 entire subtree or provide an integer larger than 0. */
         [@yojson.option] [@key "pierce"]
         pierce: option(bool) /* Whether or not iframes and shadow roots should be traversed when returning the subtree
@@ -12014,11 +12014,11 @@ module DeviceOrientation = {
       [@deriving yojson]
       type t = {
         [@key "alpha"]
-        alpha: float, /* Mock alpha */
+        alpha: Types.number, /* Mock alpha */
         [@key "beta"]
-        beta: float, /* Mock beta */
+        beta: Types.number, /* Mock beta */
         [@key "gamma"]
-        gamma: float /* Mock gamma */,
+        gamma: Types.number /* Mock gamma */,
       };
       let make = (~alpha, ~beta, ~gamma, ()) => {
         {alpha, beta, gamma};
@@ -12488,7 +12488,7 @@ If not specified, any existing override will be cleared. */,
       [@deriving yojson]
       type t = {
         [@key "rate"]
-        rate: float /* Throttling rate as a slowdown factor (1 is no throttle, 2 is 2x slowdown, etc). */,
+        rate: Types.number /* Throttling rate as a slowdown factor (1 is no throttle, 2 is 2x slowdown, etc). */,
       };
       let make = (~rate, ()) => {
         {rate: rate};
@@ -12641,24 +12641,24 @@ cleared. */,
       [@deriving yojson]
       type t = {
         [@key "width"]
-        width: float, /* Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+        width: Types.number, /* Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
         [@key "height"]
-        height: float, /* Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+        height: Types.number, /* Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
         [@key "deviceScaleFactor"]
-        deviceScaleFactor: float, /* Overriding device scale factor value. 0 disables the override. */
+        deviceScaleFactor: Types.number, /* Overriding device scale factor value. 0 disables the override. */
         [@key "mobile"]
         mobile: bool, /* Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text
 autosizing and more. */
         [@yojson.option] [@key "scale"]
-        scale: option(float), /* Scale to apply to resulting view image. */
+        scale: option(Types.number), /* Scale to apply to resulting view image. */
         [@yojson.option] [@key "screenWidth"]
-        screenWidth: option(float), /* Overriding screen width value in pixels (minimum 0, maximum 10000000). */
+        screenWidth: option(Types.number), /* Overriding screen width value in pixels (minimum 0, maximum 10000000). */
         [@yojson.option] [@key "screenHeight"]
-        screenHeight: option(float), /* Overriding screen height value in pixels (minimum 0, maximum 10000000). */
+        screenHeight: option(Types.number), /* Overriding screen height value in pixels (minimum 0, maximum 10000000). */
         [@yojson.option] [@key "positionX"]
-        positionX: option(float), /* Overriding view X position on screen in pixels (minimum 0, maximum 10000000). */
+        positionX: option(Types.number), /* Overriding view X position on screen in pixels (minimum 0, maximum 10000000). */
         [@yojson.option] [@key "positionY"]
-        positionY: option(float), /* Overriding view Y position on screen in pixels (minimum 0, maximum 10000000). */
+        positionY: option(Types.number), /* Overriding view Y position on screen in pixels (minimum 0, maximum 10000000). */
         [@yojson.option] [@key "dontSetVisibleSize"]
         dontSetVisibleSize: option(bool), /* Do not set visible view size, rely upon explicit setVisibleSize call. */
         [@yojson.option] [@key "screenOrientation"]
@@ -13182,11 +13182,11 @@ is turned-off. */,
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "latitude"]
-        latitude: option(float), /* Mock latitude */
+        latitude: option(Types.number), /* Mock latitude */
         [@yojson.option] [@key "longitude"]
-        longitude: option(float), /* Mock longitude */
+        longitude: option(Types.number), /* Mock longitude */
         [@yojson.option] [@key "accuracy"]
-        accuracy: option(float) /* Mock accuracy */,
+        accuracy: option(Types.number) /* Mock accuracy */,
       };
       let make = (~latitude=?, ~longitude=?, ~accuracy=?, ()) => {
         {latitude, longitude, accuracy};
@@ -13464,7 +13464,7 @@ is turned-off. */,
       [@deriving yojson]
       type t = {
         [@key "pageScaleFactor"]
-        pageScaleFactor: float /* Page scale factor. */,
+        pageScaleFactor: Types.number /* Page scale factor. */,
       };
       let make = (~pageScaleFactor, ()) => {
         {pageScaleFactor: pageScaleFactor};
@@ -13615,7 +13615,7 @@ is turned-off. */,
         [@key "enabled"]
         enabled: bool, /* Whether the touch event emulation should be enabled. */
         [@yojson.option] [@key "maxTouchPoints"]
-        maxTouchPoints: option(float) /* Maximum touch points supported. Defaults to one. */,
+        maxTouchPoints: option(Types.number) /* Maximum touch points supported. Defaults to one. */,
       };
       let make = (~enabled, ~maxTouchPoints=?, ()) => {
         {enabled, maxTouchPoints};
@@ -13645,7 +13645,7 @@ is turned-off. */,
     module Response: {
       type result = {
         [@key "virtualTimeTicksBase"]
-        virtualTimeTicksBase: float /* Absolute timestamp at which virtual time was first enabled (up time in milliseconds). */,
+        virtualTimeTicksBase: Types.number /* Absolute timestamp at which virtual time was first enabled (up time in milliseconds). */,
       };
 
       type error = {
@@ -13665,7 +13665,7 @@ is turned-off. */,
       [@deriving yojson]
       type result = {
         [@key "virtualTimeTicksBase"]
-        virtualTimeTicksBase: float /* Absolute timestamp at which virtual time was first enabled (up time in milliseconds). */,
+        virtualTimeTicksBase: Types.number /* Absolute timestamp at which virtual time was first enabled (up time in milliseconds). */,
       };
 
       [@deriving yojson]
@@ -13696,10 +13696,10 @@ is turned-off. */,
         [@key "policy"]
         policy: Types.Emulation.VirtualTimePolicy.t, /* No description provided */
         [@yojson.option] [@key "budget"]
-        budget: option(float), /* If set, after this many virtual milliseconds have elapsed virtual time will be paused and a
+        budget: option(Types.number), /* If set, after this many virtual milliseconds have elapsed virtual time will be paused and a
 virtualTimeBudgetExpired event is sent. */
         [@yojson.option] [@key "maxVirtualTimeTaskStarvationCount"]
-        maxVirtualTimeTaskStarvationCount: option(float), /* If set this specifies the maximum number of tasks that can be run before virtual is forced
+        maxVirtualTimeTaskStarvationCount: option(Types.number), /* If set this specifies the maximum number of tasks that can be run before virtual is forced
 forwards to prevent deadlock. */
         [@yojson.option] [@key "initialVirtualTime"]
         initialVirtualTime: option(Types.Network.TimeSinceEpoch.t) /* If set, base::Time::Now will be overridden to initially return this value. */,
@@ -13934,9 +13934,9 @@ restores default host system timezone. */,
       [@deriving yojson]
       type t = {
         [@key "width"]
-        width: float, /* Frame width (DIP). */
+        width: Types.number, /* Frame width (DIP). */
         [@key "height"]
-        height: float /* Frame height (DIP). */,
+        height: Types.number /* Frame height (DIP). */,
       };
       let make = (~width, ~height, ()) => {
         {width, height};
@@ -14254,10 +14254,10 @@ display. Reported for diagnostic uses, may be removed in the future. */
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "frameTimeTicks"]
-        frameTimeTicks: option(float), /* Timestamp of this BeginFrame in Renderer TimeTicks (milliseconds of uptime). If not set,
+        frameTimeTicks: option(Types.number), /* Timestamp of this BeginFrame in Renderer TimeTicks (milliseconds of uptime). If not set,
 the current time will be used. */
         [@yojson.option] [@key "interval"]
-        interval: option(float), /* The interval between BeginFrames that is reported to the compositor, in milliseconds.
+        interval: option(Types.number), /* The interval between BeginFrames that is reported to the compositor, in milliseconds.
 Defaults to a 60 frames/second interval, i.e. about 16.666 milliseconds. */
         [@yojson.option] [@key "noDisplayUpdates"]
         noDisplayUpdates: option(bool), /* Whether updates should not be committed and drawn onto the display. False by default. If
@@ -14555,10 +14555,10 @@ module IO = {
         [@key "handle"]
         handle: Types.IO.StreamHandle.t, /* Handle of the stream to read. */
         [@yojson.option] [@key "offset"]
-        offset: option(float), /* Seek to the specified offset before reading (if not specificed, proceed with offset
+        offset: option(Types.number), /* Seek to the specified offset before reading (if not specificed, proceed with offset
 following the last read). Some types of streams may only support sequential reads. */
         [@yojson.option] [@key "size"]
-        size: option(float) /* Maximum number of bytes to read (left upon the agent discretion if not specified). */,
+        size: option(Types.number) /* Maximum number of bytes to read (left upon the agent discretion if not specified). */,
       };
       let make = (~handle, ~offset=?, ~size=?, ()) => {
         {handle, offset, size};
@@ -15077,9 +15077,9 @@ module IndexedDB = {
         [@key "indexName"]
         indexName: string, /* Index name, empty string for object store data requests. */
         [@key "skipCount"]
-        skipCount: float, /* Number of records to skip. */
+        skipCount: Types.number, /* Number of records to skip. */
         [@key "pageSize"]
-        pageSize: float, /* Number of records to fetch. */
+        pageSize: Types.number, /* Number of records to fetch. */
         [@yojson.option] [@key "keyRange"]
         keyRange: option(Types.IndexedDB.KeyRange.t) /* Key range. */,
       };
@@ -15128,9 +15128,9 @@ module IndexedDB = {
     module Response: {
       type result = {
         [@key "entriesCount"]
-        entriesCount: float, /* the entries count */
+        entriesCount: Types.number, /* the entries count */
         [@key "keyGeneratorValue"]
-        keyGeneratorValue: float /* the current value of key generator, to become the next inserted
+        keyGeneratorValue: Types.number /* the current value of key generator, to become the next inserted
 key into the object store. Valid if objectStore.autoIncrement
 is true. */,
       };
@@ -15152,9 +15152,9 @@ is true. */,
       [@deriving yojson]
       type result = {
         [@key "entriesCount"]
-        entriesCount: float, /* the entries count */
+        entriesCount: Types.number, /* the entries count */
         [@key "keyGeneratorValue"]
-        keyGeneratorValue: float /* the current value of key generator, to become the next inserted
+        keyGeneratorValue: Types.number /* the current value of key generator, to become the next inserted
 key into the object store. Valid if objectStore.autoIncrement
 is true. */,
       };
@@ -15443,14 +15443,14 @@ module Input = {
         [@key "type"]
         type_: dispatchdragevent_type, /* Type of the drag event. */
         [@key "x"]
-        x: float, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
+        x: Types.number, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
         [@key "y"]
-        y: float, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
+        y: Types.number, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
 the top of the viewport and Y increases as it proceeds towards the bottom of the viewport. */
         [@key "data"]
         data: Types.Input.DragData.t, /* No description provided */
         [@yojson.option] [@key "modifiers"]
-        modifiers: option(float) /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
+        modifiers: option(Types.number) /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
 (default: 0). */,
       };
       let make = (~type_, ~x, ~y, ~data, ~modifiers=?, ()) => {
@@ -15545,7 +15545,7 @@ the top of the viewport and Y increases as it proceeds towards the bottom of the
         [@key "type"]
         type_: dispatchkeyevent_type, /* Type of the key event. */
         [@yojson.option] [@key "modifiers"]
-        modifiers: option(float), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
+        modifiers: option(Types.number), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
 (default: 0). */
         [@yojson.option] [@key "timestamp"]
         timestamp: option(Types.Input.TimeSinceEpoch.t), /* Time at which the event occurred. */
@@ -15563,9 +15563,9 @@ shift). Useful for shortcut (accelerator) key handling (default: ""). */
         key: option(string), /* Unique DOM defined string value describing the meaning of the key in the context of active
 modifiers, keyboard layout, etc (e.g., 'AltGr') (default: ""). */
         [@yojson.option] [@key "windowsVirtualKeyCode"]
-        windowsVirtualKeyCode: option(float), /* Windows virtual key code (default: 0). */
+        windowsVirtualKeyCode: option(Types.number), /* Windows virtual key code (default: 0). */
         [@yojson.option] [@key "nativeVirtualKeyCode"]
-        nativeVirtualKeyCode: option(float), /* Native virtual key code (default: 0). */
+        nativeVirtualKeyCode: option(Types.number), /* Native virtual key code (default: 0). */
         [@yojson.option] [@key "autoRepeat"]
         autoRepeat: option(bool), /* Whether the event was generated from auto repeat (default: false). */
         [@yojson.option] [@key "isKeypad"]
@@ -15573,7 +15573,7 @@ modifiers, keyboard layout, etc (e.g., 'AltGr') (default: ""). */
         [@yojson.option] [@key "isSystemKey"]
         isSystemKey: option(bool), /* Whether the event was a system key event (default: false). */
         [@yojson.option] [@key "location"]
-        location: option(float), /* Whether the event was from the left or right side of the keyboard. 1=Left, 2=Right (default:
+        location: option(Types.number), /* Whether the event was from the left or right side of the keyboard. 1=Left, 2=Right (default:
 0). */
         [@yojson.option] [@key "commands"]
         commands: option(list(string)) /* Editing commands to send with the key event (e.g., 'selectAll') (default: []).
@@ -15761,13 +15761,13 @@ See https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/r
         [@key "text"]
         text: string, /* The text to insert */
         [@key "selectionStart"]
-        selectionStart: float, /* selection start */
+        selectionStart: Types.number, /* selection start */
         [@key "selectionEnd"]
-        selectionEnd: float, /* selection end */
+        selectionEnd: Types.number, /* selection end */
         [@yojson.option] [@key "replacementStart"]
-        replacementStart: option(float), /* replacement start */
+        replacementStart: option(Types.number), /* replacement start */
         [@yojson.option] [@key "replacementEnd"]
-        replacementEnd: option(float) /* replacement end */,
+        replacementEnd: option(Types.number) /* replacement end */,
       };
       let make =
           (
@@ -15886,36 +15886,36 @@ See https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/r
         [@key "type"]
         type_: dispatchmouseevent_type, /* Type of the mouse event. */
         [@key "x"]
-        x: float, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
+        x: Types.number, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
         [@key "y"]
-        y: float, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
+        y: Types.number, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
 the top of the viewport and Y increases as it proceeds towards the bottom of the viewport. */
         [@yojson.option] [@key "modifiers"]
-        modifiers: option(float), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
+        modifiers: option(Types.number), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
 (default: 0). */
         [@yojson.option] [@key "timestamp"]
         timestamp: option(Types.Input.TimeSinceEpoch.t), /* Time at which the event occurred. */
         [@yojson.option] [@key "button"]
         button: option(Types.Input.MouseButton.t), /* Mouse button (default: "none"). */
         [@yojson.option] [@key "buttons"]
-        buttons: option(float), /* A number indicating which buttons are pressed on the mouse when a mouse event is triggered.
+        buttons: option(Types.number), /* A number indicating which buttons are pressed on the mouse when a mouse event is triggered.
 Left=1, Right=2, Middle=4, Back=8, Forward=16, None=0. */
         [@yojson.option] [@key "clickCount"]
-        clickCount: option(float), /* Number of times the mouse button was clicked (default: 0). */
+        clickCount: option(Types.number), /* Number of times the mouse button was clicked (default: 0). */
         [@yojson.option] [@key "force"]
-        force: option(float), /* The normalized pressure, which has a range of [0,1] (default: 0). */
+        force: option(Types.number), /* The normalized pressure, which has a range of [0,1] (default: 0). */
         [@yojson.option] [@key "tangentialPressure"]
-        tangentialPressure: option(float), /* The normalized tangential pressure, which has a range of [-1,1] (default: 0). */
+        tangentialPressure: option(Types.number), /* The normalized tangential pressure, which has a range of [-1,1] (default: 0). */
         [@yojson.option] [@key "tiltX"]
-        tiltX: option(float), /* The plane angle between the Y-Z plane and the plane containing both the stylus axis and the Y axis, in degrees of the range [-90,90], a positive tiltX is to the right (default: 0). */
+        tiltX: option(Types.number), /* The plane angle between the Y-Z plane and the plane containing both the stylus axis and the Y axis, in degrees of the range [-90,90], a positive tiltX is to the right (default: 0). */
         [@yojson.option] [@key "tiltY"]
-        tiltY: option(float), /* The plane angle between the X-Z plane and the plane containing both the stylus axis and the X axis, in degrees of the range [-90,90], a positive tiltY is towards the user (default: 0). */
+        tiltY: option(Types.number), /* The plane angle between the X-Z plane and the plane containing both the stylus axis and the X axis, in degrees of the range [-90,90], a positive tiltY is towards the user (default: 0). */
         [@yojson.option] [@key "twist"]
-        twist: option(float), /* The clockwise rotation of a pen stylus around its own major axis, in degrees in the range [0,359] (default: 0). */
+        twist: option(Types.number), /* The clockwise rotation of a pen stylus around its own major axis, in degrees in the range [0,359] (default: 0). */
         [@yojson.option] [@key "deltaX"]
-        deltaX: option(float), /* X delta in CSS pixels for mouse wheel event (default: 0). */
+        deltaX: option(Types.number), /* X delta in CSS pixels for mouse wheel event (default: 0). */
         [@yojson.option] [@key "deltaY"]
-        deltaY: option(float), /* Y delta in CSS pixels for mouse wheel event (default: 0). */
+        deltaY: option(Types.number), /* Y delta in CSS pixels for mouse wheel event (default: 0). */
         [@yojson.option] [@key "pointerType"]
         pointerType: option(dispatchmouseevent_pointertype) /* Pointer type (default: "mouse"). */,
       };
@@ -16052,7 +16052,7 @@ TouchStart and TouchMove must contains at least one. */
 previous touch event in a sequence) is generated, emulating pressing/moving/releasing points
 one by one. */
         [@yojson.option] [@key "modifiers"]
-        modifiers: option(float), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
+        modifiers: option(Types.number), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
 (default: 0). */
         [@yojson.option] [@key "timestamp"]
         timestamp: option(Types.Input.TimeSinceEpoch.t) /* Time at which the event occurred. */,
@@ -16149,22 +16149,22 @@ one by one. */
         [@key "type"]
         type_: emulatetouchfrommouseevent_type, /* Type of the mouse event. */
         [@key "x"]
-        x: float, /* X coordinate of the mouse pointer in DIP. */
+        x: Types.number, /* X coordinate of the mouse pointer in DIP. */
         [@key "y"]
-        y: float, /* Y coordinate of the mouse pointer in DIP. */
+        y: Types.number, /* Y coordinate of the mouse pointer in DIP. */
         [@key "button"]
         button: Types.Input.MouseButton.t, /* Mouse button. Only "none", "left", "right" are supported. */
         [@yojson.option] [@key "timestamp"]
         timestamp: option(Types.Input.TimeSinceEpoch.t), /* Time at which the event occurred (default: current time). */
         [@yojson.option] [@key "deltaX"]
-        deltaX: option(float), /* X delta in DIP for mouse wheel event (default: 0). */
+        deltaX: option(Types.number), /* X delta in DIP for mouse wheel event (default: 0). */
         [@yojson.option] [@key "deltaY"]
-        deltaY: option(float), /* Y delta in DIP for mouse wheel event (default: 0). */
+        deltaY: option(Types.number), /* Y delta in DIP for mouse wheel event (default: 0). */
         [@yojson.option] [@key "modifiers"]
-        modifiers: option(float), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
+        modifiers: option(Types.number), /* Bit field representing pressed modifier keys. Alt=1, Ctrl=2, Meta/Command=4, Shift=8
 (default: 0). */
         [@yojson.option] [@key "clickCount"]
-        clickCount: option(float) /* Number of times the mouse button was clicked (default: 0). */,
+        clickCount: option(Types.number) /* Number of times the mouse button was clicked (default: 0). */,
       };
       let make =
           (
@@ -16403,13 +16403,13 @@ one by one. */
       [@deriving yojson]
       type t = {
         [@key "x"]
-        x: float, /* X coordinate of the start of the gesture in CSS pixels. */
+        x: Types.number, /* X coordinate of the start of the gesture in CSS pixels. */
         [@key "y"]
-        y: float, /* Y coordinate of the start of the gesture in CSS pixels. */
+        y: Types.number, /* Y coordinate of the start of the gesture in CSS pixels. */
         [@key "scaleFactor"]
-        scaleFactor: float, /* Relative scale factor after zooming (>1.0 zooms in, <1.0 zooms out). */
+        scaleFactor: Types.number, /* Relative scale factor after zooming (>1.0 zooms in, <1.0 zooms out). */
         [@yojson.option] [@key "relativeSpeed"]
-        relativeSpeed: option(float), /* Relative pointer speed in pixels per second (default: 800). */
+        relativeSpeed: option(Types.number), /* Relative pointer speed in pixels per second (default: 800). */
         [@yojson.option] [@key "gestureSourceType"]
         gestureSourceType: option(Types.Input.GestureSourceType.t) /* Which type of input events to be generated (default: 'default', which queries the platform
 for the preferred input type). */,
@@ -16485,30 +16485,30 @@ for the preferred input type). */,
       [@deriving yojson]
       type t = {
         [@key "x"]
-        x: float, /* X coordinate of the start of the gesture in CSS pixels. */
+        x: Types.number, /* X coordinate of the start of the gesture in CSS pixels. */
         [@key "y"]
-        y: float, /* Y coordinate of the start of the gesture in CSS pixels. */
+        y: Types.number, /* Y coordinate of the start of the gesture in CSS pixels. */
         [@yojson.option] [@key "xDistance"]
-        xDistance: option(float), /* The distance to scroll along the X axis (positive to scroll left). */
+        xDistance: option(Types.number), /* The distance to scroll along the X axis (positive to scroll left). */
         [@yojson.option] [@key "yDistance"]
-        yDistance: option(float), /* The distance to scroll along the Y axis (positive to scroll up). */
+        yDistance: option(Types.number), /* The distance to scroll along the Y axis (positive to scroll up). */
         [@yojson.option] [@key "xOverscroll"]
-        xOverscroll: option(float), /* The number of additional pixels to scroll back along the X axis, in addition to the given
+        xOverscroll: option(Types.number), /* The number of additional pixels to scroll back along the X axis, in addition to the given
 distance. */
         [@yojson.option] [@key "yOverscroll"]
-        yOverscroll: option(float), /* The number of additional pixels to scroll back along the Y axis, in addition to the given
+        yOverscroll: option(Types.number), /* The number of additional pixels to scroll back along the Y axis, in addition to the given
 distance. */
         [@yojson.option] [@key "preventFling"]
         preventFling: option(bool), /* Prevent fling (default: true). */
         [@yojson.option] [@key "speed"]
-        speed: option(float), /* Swipe speed in pixels per second (default: 800). */
+        speed: option(Types.number), /* Swipe speed in pixels per second (default: 800). */
         [@yojson.option] [@key "gestureSourceType"]
         gestureSourceType: option(Types.Input.GestureSourceType.t), /* Which type of input events to be generated (default: 'default', which queries the platform
 for the preferred input type). */
         [@yojson.option] [@key "repeatCount"]
-        repeatCount: option(float), /* The number of times to repeat the gesture (default: 0). */
+        repeatCount: option(Types.number), /* The number of times to repeat the gesture (default: 0). */
         [@yojson.option] [@key "repeatDelayMs"]
-        repeatDelayMs: option(float), /* The number of milliseconds delay between each repeat. (default: 250). */
+        repeatDelayMs: option(Types.number), /* The number of milliseconds delay between each repeat. (default: 250). */
         [@yojson.option] [@key "interactionMarkerName"]
         interactionMarkerName: option(string) /* The name of the interaction markers to generate, if not empty (default: ""). */,
       };
@@ -16610,13 +16610,13 @@ for the preferred input type). */
       [@deriving yojson]
       type t = {
         [@key "x"]
-        x: float, /* X coordinate of the start of the gesture in CSS pixels. */
+        x: Types.number, /* X coordinate of the start of the gesture in CSS pixels. */
         [@key "y"]
-        y: float, /* Y coordinate of the start of the gesture in CSS pixels. */
+        y: Types.number, /* Y coordinate of the start of the gesture in CSS pixels. */
         [@yojson.option] [@key "duration"]
-        duration: option(float), /* Duration between touchdown and touchup events in ms (default: 50). */
+        duration: option(Types.number), /* Duration between touchdown and touchup events in ms (default: 50). */
         [@yojson.option] [@key "tapCount"]
-        tapCount: option(float), /* Number of times to perform the tap (e.g. 2 for double tap, default: 1). */
+        tapCount: option(Types.number), /* Number of times to perform the tap (e.g. 2 for double tap, default: 1). */
         [@yojson.option] [@key "gestureSourceType"]
         gestureSourceType: option(Types.Input.GestureSourceType.t) /* Which type of input events to be generated (default: 'default', which queries the platform
 for the preferred input type). */,
@@ -17181,9 +17181,9 @@ module LayerTree = {
         [@key "snapshotId"]
         snapshotId: Types.LayerTree.SnapshotId.t, /* The id of the layer snapshot. */
         [@yojson.option] [@key "minRepeatCount"]
-        minRepeatCount: option(float), /* The maximum number of times to replay the snapshot (1, if not specified). */
+        minRepeatCount: option(Types.number), /* The maximum number of times to replay the snapshot (1, if not specified). */
         [@yojson.option] [@key "minDuration"]
-        minDuration: option(float), /* The minimum duration (in seconds) to replay the snapshot. */
+        minDuration: option(Types.number), /* The minimum duration (in seconds) to replay the snapshot. */
         [@yojson.option] [@key "clipRect"]
         clipRect: option(Types.DOM.Rect.t) /* The clip rectangle to apply when replaying the snapshot. */,
       };
@@ -17338,11 +17338,11 @@ module LayerTree = {
         [@key "snapshotId"]
         snapshotId: Types.LayerTree.SnapshotId.t, /* The id of the layer snapshot. */
         [@yojson.option] [@key "fromStep"]
-        fromStep: option(float), /* The first step to replay from (replay from the very start if not specified). */
+        fromStep: option(Types.number), /* The first step to replay from (replay from the very start if not specified). */
         [@yojson.option] [@key "toStep"]
-        toStep: option(float), /* The last step to replay to (replay till the end if not specified). */
+        toStep: option(Types.number), /* The last step to replay to (replay till the end if not specified). */
         [@yojson.option] [@key "scale"]
-        scale: option(float) /* The scale to apply while replaying (defaults to 1). */,
+        scale: option(Types.number) /* The scale to apply while replaying (defaults to 1). */,
       };
       let make = (~snapshotId, ~fromStep=?, ~toStep=?, ~scale=?, ()) => {
         {snapshotId, fromStep, toStep, scale};
@@ -17766,11 +17766,11 @@ module Memory = {
     module Response: {
       type result = {
         [@key "documents"]
-        documents: float, /* No description provided */
+        documents: Types.number, /* No description provided */
         [@key "nodes"]
-        nodes: float, /* No description provided */
+        nodes: Types.number, /* No description provided */
         [@key "jsEventListeners"]
-        jsEventListeners: float /* No description provided */,
+        jsEventListeners: Types.number /* No description provided */,
       };
 
       type error = {
@@ -17790,11 +17790,11 @@ module Memory = {
       [@deriving yojson]
       type result = {
         [@key "documents"]
-        documents: float, /* No description provided */
+        documents: Types.number, /* No description provided */
         [@key "nodes"]
-        nodes: float, /* No description provided */
+        nodes: Types.number, /* No description provided */
         [@key "jsEventListeners"]
-        jsEventListeners: float /* No description provided */,
+        jsEventListeners: Types.number /* No description provided */,
       };
 
       [@deriving yojson]
@@ -18152,7 +18152,7 @@ module Memory = {
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "samplingInterval"]
-        samplingInterval: option(float), /* Average number of bytes between samples. */
+        samplingInterval: option(Types.number), /* Average number of bytes between samples. */
         [@yojson.option] [@key "suppressRandomness"]
         suppressRandomness: option(bool) /* Do not randomize intervals between samples. */,
       };
@@ -19196,11 +19196,11 @@ provided URL. */
         [@key "offline"]
         offline: bool, /* True to emulate internet disconnection. */
         [@key "latency"]
-        latency: float, /* Minimum latency from request sent to response headers received (ms). */
+        latency: Types.number, /* Minimum latency from request sent to response headers received (ms). */
         [@key "downloadThroughput"]
-        downloadThroughput: float, /* Maximal aggregated download throughput (bytes/sec). -1 disables download throttling. */
+        downloadThroughput: Types.number, /* Maximal aggregated download throughput (bytes/sec). -1 disables download throttling. */
         [@key "uploadThroughput"]
-        uploadThroughput: float, /* Maximal aggregated upload throughput (bytes/sec).  -1 disables upload throttling. */
+        uploadThroughput: Types.number, /* Maximal aggregated upload throughput (bytes/sec).  -1 disables upload throttling. */
         [@yojson.option] [@key "connectionType"]
         connectionType: option(Types.Network.ConnectionType.t) /* Connection type if known. */,
       };
@@ -19288,11 +19288,11 @@ provided URL. */
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "maxTotalBufferSize"]
-        maxTotalBufferSize: option(float), /* Buffer size in bytes to use when preserving network payloads (XHRs, etc). */
+        maxTotalBufferSize: option(Types.number), /* Buffer size in bytes to use when preserving network payloads (XHRs, etc). */
         [@yojson.option] [@key "maxResourceBufferSize"]
-        maxResourceBufferSize: option(float), /* Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc). */
+        maxResourceBufferSize: option(Types.number), /* Per-resource buffer size in bytes to use when preserving network payloads (XHRs, etc). */
         [@yojson.option] [@key "maxPostDataSize"]
-        maxPostDataSize: option(float) /* Longest post body size (in bytes) that would be included in requestWillBeSent notification */,
+        maxPostDataSize: option(Types.number) /* Longest post body size (in bytes) that would be included in requestWillBeSent notification */,
       };
       let make =
           (
@@ -20334,7 +20334,7 @@ default domain, path, source port, and source scheme values of the created cooki
         [@yojson.option] [@key "sourceScheme"]
         sourceScheme: option(Types.Network.CookieSourceScheme.t), /* Cookie source scheme type. */
         [@yojson.option] [@key "sourcePort"]
-        sourcePort: option(float), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+        sourcePort: option(Types.number), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
 This is a temporary ability and it will be removed in the future. */
         [@yojson.option] [@key "partitionKey"]
@@ -21745,13 +21745,13 @@ module Overlay = {
       [@deriving yojson]
       type t = {
         [@key "x"]
-        x: float, /* X coordinate */
+        x: Types.number, /* X coordinate */
         [@key "y"]
-        y: float, /* Y coordinate */
+        y: Types.number, /* Y coordinate */
         [@key "width"]
-        width: float, /* Rectangle width */
+        width: Types.number, /* Rectangle width */
         [@key "height"]
-        height: float, /* Rectangle height */
+        height: Types.number, /* Rectangle height */
         [@yojson.option] [@key "color"]
         color: option(Types.DOM.RGBA.t), /* The highlight fill color (default: transparent). */
         [@yojson.option] [@key "outlineColor"]
@@ -23401,7 +23401,7 @@ to false. */,
         [@yojson.option] [@key "format"]
         format: option(capturescreenshot_format), /* Image compression format (defaults to png). */
         [@yojson.option] [@key "quality"]
-        quality: option(float), /* Compression quality from range [0..100] (jpeg only). */
+        quality: option(Types.number), /* Compression quality from range [0..100] (jpeg only). */
         [@yojson.option] [@key "clip"]
         clip: option(Types.Page.Viewport.t), /* Capture the screenshot of a given region only. */
         [@yojson.option] [@key "fromSurface"]
@@ -24489,7 +24489,7 @@ option, use with caution. */,
     module Response: {
       type result = {
         [@key "currentIndex"]
-        currentIndex: float, /* Index of the current navigation history entry. */
+        currentIndex: Types.number, /* Index of the current navigation history entry. */
         [@key "entries"]
         entries: list(Types.Page.NavigationEntry.t) /* Array of navigation history entries. */,
       };
@@ -24511,7 +24511,7 @@ option, use with caution. */,
       [@deriving yojson]
       type result = {
         [@key "currentIndex"]
-        currentIndex: float, /* Index of the current navigation history entry. */
+        currentIndex: Types.number, /* Index of the current navigation history entry. */
         [@key "entries"]
         entries: list(Types.Page.NavigationEntry.t) /* Array of navigation history entries. */,
       };
@@ -24989,7 +24989,7 @@ dialog. */,
       [@deriving yojson]
       type t = {
         [@key "entryId"]
-        entryId: float /* Unique id of the entry to navigate to. */,
+        entryId: Types.number /* Unique id of the entry to navigate to. */,
       };
       let make = (~entryId, ()) => {
         {entryId: entryId};
@@ -25088,19 +25088,19 @@ dialog. */,
         [@yojson.option] [@key "printBackground"]
         printBackground: option(bool), /* Print background graphics. Defaults to false. */
         [@yojson.option] [@key "scale"]
-        scale: option(float), /* Scale of the webpage rendering. Defaults to 1. */
+        scale: option(Types.number), /* Scale of the webpage rendering. Defaults to 1. */
         [@yojson.option] [@key "paperWidth"]
-        paperWidth: option(float), /* Paper width in inches. Defaults to 8.5 inches. */
+        paperWidth: option(Types.number), /* Paper width in inches. Defaults to 8.5 inches. */
         [@yojson.option] [@key "paperHeight"]
-        paperHeight: option(float), /* Paper height in inches. Defaults to 11 inches. */
+        paperHeight: option(Types.number), /* Paper height in inches. Defaults to 11 inches. */
         [@yojson.option] [@key "marginTop"]
-        marginTop: option(float), /* Top margin in inches. Defaults to 1cm (~0.4 inches). */
+        marginTop: option(Types.number), /* Top margin in inches. Defaults to 1cm (~0.4 inches). */
         [@yojson.option] [@key "marginBottom"]
-        marginBottom: option(float), /* Bottom margin in inches. Defaults to 1cm (~0.4 inches). */
+        marginBottom: option(Types.number), /* Bottom margin in inches. Defaults to 1cm (~0.4 inches). */
         [@yojson.option] [@key "marginLeft"]
-        marginLeft: option(float), /* Left margin in inches. Defaults to 1cm (~0.4 inches). */
+        marginLeft: option(Types.number), /* Left margin in inches. Defaults to 1cm (~0.4 inches). */
         [@yojson.option] [@key "marginRight"]
-        marginRight: option(float), /* Right margin in inches. Defaults to 1cm (~0.4 inches). */
+        marginRight: option(Types.number), /* Right margin in inches. Defaults to 1cm (~0.4 inches). */
         [@yojson.option] [@key "pageRanges"]
         pageRanges: option(string), /* Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means
 print all pages. */
@@ -25455,7 +25455,7 @@ Argument will be ignored if reloading dataURL origin. */,
       [@deriving yojson]
       type t = {
         [@key "sessionId"]
-        sessionId: float /* Frame number. */,
+        sessionId: Types.number /* Frame number. */,
       };
       let make = (~sessionId, ()) => {
         {sessionId: sessionId};
@@ -25915,24 +25915,24 @@ Argument will be ignored if reloading dataURL origin. */,
       [@deriving yojson]
       type t = {
         [@key "width"]
-        width: float, /* Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+        width: Types.number, /* Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
         [@key "height"]
-        height: float, /* Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
+        height: Types.number, /* Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
         [@key "deviceScaleFactor"]
-        deviceScaleFactor: float, /* Overriding device scale factor value. 0 disables the override. */
+        deviceScaleFactor: Types.number, /* Overriding device scale factor value. 0 disables the override. */
         [@key "mobile"]
         mobile: bool, /* Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text
 autosizing and more. */
         [@yojson.option] [@key "scale"]
-        scale: option(float), /* Scale to apply to resulting view image. */
+        scale: option(Types.number), /* Scale to apply to resulting view image. */
         [@yojson.option] [@key "screenWidth"]
-        screenWidth: option(float), /* Overriding screen width value in pixels (minimum 0, maximum 10000000). */
+        screenWidth: option(Types.number), /* Overriding screen width value in pixels (minimum 0, maximum 10000000). */
         [@yojson.option] [@key "screenHeight"]
-        screenHeight: option(float), /* Overriding screen height value in pixels (minimum 0, maximum 10000000). */
+        screenHeight: option(Types.number), /* Overriding screen height value in pixels (minimum 0, maximum 10000000). */
         [@yojson.option] [@key "positionX"]
-        positionX: option(float), /* Overriding view X position on screen in pixels (minimum 0, maximum 10000000). */
+        positionX: option(Types.number), /* Overriding view X position on screen in pixels (minimum 0, maximum 10000000). */
         [@yojson.option] [@key "positionY"]
-        positionY: option(float), /* Overriding view Y position on screen in pixels (minimum 0, maximum 10000000). */
+        positionY: option(Types.number), /* Overriding view Y position on screen in pixels (minimum 0, maximum 10000000). */
         [@yojson.option] [@key "dontSetVisibleSize"]
         dontSetVisibleSize: option(bool), /* Do not set visible view size, rely upon explicit setVisibleSize call. */
         [@yojson.option] [@key "screenOrientation"]
@@ -26038,11 +26038,11 @@ autosizing and more. */
       [@deriving yojson]
       type t = {
         [@key "alpha"]
-        alpha: float, /* Mock alpha */
+        alpha: Types.number, /* Mock alpha */
         [@key "beta"]
-        beta: float, /* Mock beta */
+        beta: Types.number, /* Mock beta */
         [@key "gamma"]
-        gamma: float /* Mock gamma */,
+        gamma: Types.number /* Mock gamma */,
       };
       let make = (~alpha, ~beta, ~gamma, ()) => {
         {alpha, beta, gamma};
@@ -26423,11 +26423,11 @@ available (otherwise deny). */
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "latitude"]
-        latitude: option(float), /* Mock latitude */
+        latitude: option(Types.number), /* Mock latitude */
         [@yojson.option] [@key "longitude"]
-        longitude: option(float), /* Mock longitude */
+        longitude: option(Types.number), /* Mock longitude */
         [@yojson.option] [@key "accuracy"]
-        accuracy: option(float) /* Mock accuracy */,
+        accuracy: option(Types.number) /* Mock accuracy */,
       };
       let make = (~latitude=?, ~longitude=?, ~accuracy=?, ()) => {
         {latitude, longitude, accuracy};
@@ -26669,13 +26669,13 @@ available (otherwise deny). */
         [@yojson.option] [@key "format"]
         format: option(startscreencast_format), /* Image compression format. */
         [@yojson.option] [@key "quality"]
-        quality: option(float), /* Compression quality from range [0..100]. */
+        quality: option(Types.number), /* Compression quality from range [0..100]. */
         [@yojson.option] [@key "maxWidth"]
-        maxWidth: option(float), /* Maximum screenshot width. */
+        maxWidth: option(Types.number), /* Maximum screenshot width. */
         [@yojson.option] [@key "maxHeight"]
-        maxHeight: option(float), /* Maximum screenshot height. */
+        maxHeight: option(Types.number), /* Maximum screenshot height. */
         [@yojson.option] [@key "everyNthFrame"]
-        everyNthFrame: option(float) /* Send every n-th frame. */,
+        everyNthFrame: option(Types.number) /* Send every n-th frame. */,
       };
       let make =
           (
@@ -28155,7 +28155,7 @@ module Security = {
       [@deriving yojson]
       type t = {
         [@key "eventId"]
-        eventId: float, /* The ID of the event. */
+        eventId: Types.number, /* The ID of the event. */
         [@key "action"]
         action: Types.Security.CertificateErrorAction.t /* The action to take on the certificate error. */,
       };
@@ -29490,9 +29490,9 @@ module Storage = {
     module Response: {
       type result = {
         [@key "usage"]
-        usage: float, /* Storage usage (bytes). */
+        usage: Types.number, /* Storage usage (bytes). */
         [@key "quota"]
-        quota: float, /* Storage quota (bytes). */
+        quota: Types.number, /* Storage quota (bytes). */
         [@key "overrideActive"]
         overrideActive: bool, /* Whether or not the origin has an active storage quota override */
         [@key "usageBreakdown"]
@@ -29516,9 +29516,9 @@ module Storage = {
       [@deriving yojson]
       type result = {
         [@key "usage"]
-        usage: float, /* Storage usage (bytes). */
+        usage: Types.number, /* Storage usage (bytes). */
         [@key "quota"]
-        quota: float, /* Storage quota (bytes). */
+        quota: Types.number, /* Storage quota (bytes). */
         [@key "overrideActive"]
         overrideActive: bool, /* Whether or not the origin has an active storage quota override */
         [@key "usageBreakdown"]
@@ -29625,7 +29625,7 @@ module Storage = {
         [@key "origin"]
         origin: string, /* Security origin. */
         [@yojson.option] [@key "quotaSize"]
-        quotaSize: option(float) /* The quota size (in bytes) to override the original quota with.
+        quotaSize: option(Types.number) /* The quota size (in bytes) to override the original quota with.
 If this is called multiple times, the overridden quota will be equal to
 the quotaSize provided in the final call. If this is called without
 specifying a quotaSize, the quota will be reset to the default value for
@@ -30999,9 +30999,9 @@ Parts of the URL other than those constituting origin are ignored. */,
         [@key "url"]
         url: string, /* The initial URL the page will be navigated to. An empty string indicates about:blank. */
         [@yojson.option] [@key "width"]
-        width: option(float), /* Frame width in DIP (headless chrome only). */
+        width: option(Types.number), /* Frame width in DIP (headless chrome only). */
         [@yojson.option] [@key "height"]
-        height: option(float), /* Frame height in DIP (headless chrome only). */
+        height: option(Types.number), /* Frame height in DIP (headless chrome only). */
         [@yojson.option] [@key "browserContextId"]
         browserContextId: option(Types.Browser.BrowserContextID.t), /* The browser context to create the page in. */
         [@yojson.option] [@key "enableBeginFrameControl"]
@@ -31780,7 +31780,7 @@ module Tethering = {
       [@deriving yojson]
       type t = {
         [@key "port"]
-        port: float /* Port number to bind. */,
+        port: Types.number /* Port number to bind. */,
       };
       let make = (~port, ()) => {
         {port: port};
@@ -31852,7 +31852,7 @@ module Tethering = {
       [@deriving yojson]
       type t = {
         [@key "port"]
-        port: float /* Port number to unbind. */,
+        port: Types.number /* Port number to unbind. */,
       };
       let make = (~port, ()) => {
         {port: port};
@@ -32223,7 +32223,7 @@ module Tracing = {
         [@yojson.option] [@key "options"]
         options: option(string), /* Tracing options */
         [@yojson.option] [@key "bufferUsageReportingInterval"]
-        bufferUsageReportingInterval: option(float), /* If set, the agent will issue bufferUsage events at this interval, specified in milliseconds */
+        bufferUsageReportingInterval: option(Types.number), /* If set, the agent will issue bufferUsage events at this interval, specified in milliseconds */
         [@yojson.option] [@key "transferMode"]
         transferMode: option(start_transfermode), /* Whether to report trace events as series of dataCollected events or to save trace to a
 stream (defaults to `ReportEvents`). */
@@ -32550,7 +32550,7 @@ expecting a call to continueWithAuth. */,
         [@key "requestId"]
         requestId: Types.Fetch.RequestId.t, /* An id the client received in requestPaused event. */
         [@key "responseCode"]
-        responseCode: float, /* An HTTP response code. */
+        responseCode: Types.number, /* An HTTP response code. */
         [@yojson.option] [@key "responseHeaders"]
         responseHeaders: option(list(Types.Fetch.HeaderEntry.t)), /* Response headers. */
         [@yojson.option] [@key "binaryResponseHeaders"]
@@ -32821,7 +32821,7 @@ If absent, a standard phrase matching responseCode is used. */,
         [@key "requestId"]
         requestId: Types.Fetch.RequestId.t, /* An id the client received in requestPaused event. */
         [@yojson.option] [@key "responseCode"]
-        responseCode: option(float), /* An HTTP response code. If absent, original response code will be used. */
+        responseCode: option(Types.number), /* An HTTP response code. If absent, original response code will be used. */
         [@yojson.option] [@key "responsePhrase"]
         responsePhrase: option(string), /* A textual representation of responseCode.
 If absent, a standard phrase matching responseCode is used. */
@@ -34557,7 +34557,7 @@ module Debugger = {
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "maxScriptsCacheSize"]
-        maxScriptsCacheSize: option(float) /* The maximum size in bytes of collected scripts (not referenced by other heap objects)
+        maxScriptsCacheSize: option(Types.number) /* The maximum size in bytes of collected scripts (not referenced by other heap objects)
 the debugger can hold. Puts no limit if parameter is omitted. */,
       };
       let make = (~maxScriptsCacheSize=?, ()) => {
@@ -35525,7 +35525,7 @@ If execution is currently not paused, this parameter has no effect. */,
       [@deriving yojson]
       type t = {
         [@key "maxDepth"]
-        maxDepth: float /* Maximum depth of async call stacks. Setting to `0` will effectively disable collecting async
+        maxDepth: Types.number /* Maximum depth of async call stacks. Setting to `0` will effectively disable collecting async
 call stacks (default). */,
       };
       let make = (~maxDepth, ()) => {
@@ -35945,7 +35945,7 @@ breakpoint if this expression evaluates to true. */,
       [@deriving yojson]
       type t = {
         [@key "lineNumber"]
-        lineNumber: float, /* Line number to set breakpoint at. */
+        lineNumber: Types.number, /* Line number to set breakpoint at. */
         [@yojson.option] [@key "url"]
         url: option(string), /* URL of the resources to set breakpoint on. */
         [@yojson.option] [@key "urlRegex"]
@@ -35954,7 +35954,7 @@ breakpoint if this expression evaluates to true. */,
         [@yojson.option] [@key "scriptHash"]
         scriptHash: option(string), /* Script hash of the resources to set breakpoint on. */
         [@yojson.option] [@key "columnNumber"]
-        columnNumber: option(float), /* Offset in the line to set breakpoint at. */
+        columnNumber: option(Types.number), /* Offset in the line to set breakpoint at. */
         [@yojson.option] [@key "condition"]
         condition: option(string) /* Expression to use as a breakpoint condition. When specified, debugger will only stop on the
 breakpoint if this expression evaluates to true. */,
@@ -36528,7 +36528,7 @@ description without actually modifying the code. */,
       [@deriving yojson]
       type t = {
         [@key "scopeNumber"]
-        scopeNumber: float, /* 0-based number of scope as was listed in scope chain. Only 'local', 'closure' and 'catch'
+        scopeNumber: Types.number, /* 0-based number of scope as was listed in scope chain. Only 'local', 'closure' and 'catch'
 scope types are allowed. Other scopes could be manipulated manually. */
         [@key "variableName"]
         variableName: string, /* Variable name. */
@@ -37298,7 +37298,7 @@ module HeapProfiler = {
       [@deriving yojson]
       type t = {
         [@yojson.option] [@key "samplingInterval"]
-        samplingInterval: option(float) /* Average sample interval in bytes. Poisson distribution is used for the intervals. The
+        samplingInterval: option(Types.number) /* Average sample interval in bytes. Poisson distribution is used for the intervals. The
 default value is 32768 bytes. */,
       };
       let make = (~samplingInterval=?, ()) => {
@@ -37873,7 +37873,7 @@ module Profiler = {
       [@deriving yojson]
       type t = {
         [@key "interval"]
-        interval: float /* New sampling interval in microseconds. */,
+        interval: Types.number /* New sampling interval in microseconds. */,
       };
       let make = (~interval, ()) => {
         {interval: interval};
@@ -37964,7 +37964,7 @@ module Profiler = {
     module Response: {
       type result = {
         [@key "timestamp"]
-        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
+        timestamp: Types.number /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
       };
 
       type error = {
@@ -37984,7 +37984,7 @@ module Profiler = {
       [@deriving yojson]
       type result = {
         [@key "timestamp"]
-        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
+        timestamp: Types.number /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
       };
 
       [@deriving yojson]
@@ -38296,7 +38296,7 @@ module Profiler = {
         [@key "result"]
         result: list(Types.Profiler.ScriptCoverage.t), /* Coverage data for the current isolate. */
         [@key "timestamp"]
-        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
+        timestamp: Types.number /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
       };
 
       type error = {
@@ -38318,7 +38318,7 @@ module Profiler = {
         [@key "result"]
         result: list(Types.Profiler.ScriptCoverage.t), /* Coverage data for the current isolate. */
         [@key "timestamp"]
-        timestamp: float /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
+        timestamp: Types.number /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */,
       };
 
       [@deriving yojson]
@@ -39153,9 +39153,9 @@ This is mutually exclusive with `contextId`. */,
     module Response: {
       type result = {
         [@key "usedSize"]
-        usedSize: float, /* Used heap size in bytes. */
+        usedSize: Types.number, /* Used heap size in bytes. */
         [@key "totalSize"]
-        totalSize: float /* Allocated heap size in bytes. */,
+        totalSize: Types.number /* Allocated heap size in bytes. */,
       };
 
       type error = {
@@ -39175,9 +39175,9 @@ This is mutually exclusive with `contextId`. */,
       [@deriving yojson]
       type result = {
         [@key "usedSize"]
-        usedSize: float, /* Used heap size in bytes. */
+        usedSize: Types.number, /* Used heap size in bytes. */
         [@key "totalSize"]
-        totalSize: float /* Allocated heap size in bytes. */,
+        totalSize: Types.number /* Allocated heap size in bytes. */,
       };
 
       [@deriving yojson]
@@ -39866,7 +39866,7 @@ resolved. */,
       [@deriving yojson]
       type t = {
         [@key "maxDepth"]
-        maxDepth: float /* Maximum depth of async call stacks. Setting to `0` will effectively disable collecting async
+        maxDepth: Types.number /* Maximum depth of async call stacks. Setting to `0` will effectively disable collecting async
 call stacks (default). */,
       };
       let make = (~maxDepth, ()) => {
@@ -40016,7 +40016,7 @@ call stacks (default). */,
       [@deriving yojson]
       type t = {
         [@key "size"]
-        size: float /* No description provided */,
+        size: Types.number /* No description provided */,
       };
       let make = (~size, ()) => {
         {size: size};

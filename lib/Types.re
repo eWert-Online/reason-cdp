@@ -1,6 +1,21 @@
 [@deriving yojson]
 type empty;
 
+type number = [ | `Int(int) | `Float(float)];
+let number_of_yojson =
+  fun
+  | `Float(f) when Float.is_integer(f) => `Int(int_of_float(f))
+  | `Float(f) => `Float(f)
+  | `Int(i) => `Int(i)
+  | _ => failwith("Not a number");
+
+let yojson_of_number = number => {
+  switch (number) {
+  | `Float(f) => `Float(f)
+  | `Int(i) => `Int(i)
+  };
+};
+
 type assoc = list((string, string));
 let assoc_of_yojson =
   fun
@@ -813,11 +828,11 @@ and Animation: {
       [@key "playState"]
       playState: string, /* `Animation`'s play state. */
       [@key "playbackRate"]
-      playbackRate: float, /* `Animation`'s playback rate. */
+      playbackRate: number, /* `Animation`'s playback rate. */
       [@key "startTime"]
-      startTime: float, /* `Animation`'s start time. */
+      startTime: number, /* `Animation`'s start time. */
       [@key "currentTime"]
-      currentTime: float, /* `Animation`'s current time. */
+      currentTime: number, /* `Animation`'s current time. */
       [@key "type"]
       type_: _animation_type, /* Animation type of `Animation`. */
       [@yojson.option] [@key "source"]
@@ -832,15 +847,15 @@ animation/transition. */,
     [@deriving yojson]
     type t = {
       [@key "delay"]
-      delay: float, /* `AnimationEffect`'s delay. */
+      delay: number, /* `AnimationEffect`'s delay. */
       [@key "endDelay"]
-      endDelay: float, /* `AnimationEffect`'s end delay. */
+      endDelay: number, /* `AnimationEffect`'s end delay. */
       [@key "iterationStart"]
-      iterationStart: float, /* `AnimationEffect`'s iteration start. */
+      iterationStart: number, /* `AnimationEffect`'s iteration start. */
       [@key "iterations"]
-      iterations: float, /* `AnimationEffect`'s iterations. */
+      iterations: number, /* `AnimationEffect`'s iterations. */
       [@key "duration"]
-      duration: float, /* `AnimationEffect`'s iteration duration. */
+      duration: number, /* `AnimationEffect`'s iteration duration. */
       [@key "direction"]
       direction: string, /* `AnimationEffect`'s playback direction. */
       [@key "fill"]
@@ -890,11 +905,11 @@ animation/transition. */,
       [@key "playState"]
       playState: string, /* `Animation`'s play state. */
       [@key "playbackRate"]
-      playbackRate: float, /* `Animation`'s playback rate. */
+      playbackRate: number, /* `Animation`'s playback rate. */
       [@key "startTime"]
-      startTime: float, /* `Animation`'s start time. */
+      startTime: number, /* `Animation`'s start time. */
       [@key "currentTime"]
-      currentTime: float, /* `Animation`'s current time. */
+      currentTime: number, /* `Animation`'s current time. */
       [@key "type"]
       type_: _animation_type, /* Animation type of `Animation`. */
       [@yojson.option] [@key "source"]
@@ -929,11 +944,11 @@ animation/transition. */,
       [@key "playState"]
       playState: string, /* `Animation`'s play state. */
       [@key "playbackRate"]
-      playbackRate: float, /* `Animation`'s playback rate. */
+      playbackRate: number, /* `Animation`'s playback rate. */
       [@key "startTime"]
-      startTime: float, /* `Animation`'s start time. */
+      startTime: number, /* `Animation`'s start time. */
       [@key "currentTime"]
-      currentTime: float, /* `Animation`'s current time. */
+      currentTime: number, /* `Animation`'s current time. */
       [@key "type"]
       type_: _animation_type, /* Animation type of `Animation`. */
       [@yojson.option] [@key "source"]
@@ -948,15 +963,15 @@ animation/transition. */,
     [@deriving yojson]
     type t = {
       [@key "delay"]
-      delay: float, /* `AnimationEffect`'s delay. */
+      delay: number, /* `AnimationEffect`'s delay. */
       [@key "endDelay"]
-      endDelay: float, /* `AnimationEffect`'s end delay. */
+      endDelay: number, /* `AnimationEffect`'s end delay. */
       [@key "iterationStart"]
-      iterationStart: float, /* `AnimationEffect`'s iteration start. */
+      iterationStart: number, /* `AnimationEffect`'s iteration start. */
       [@key "iterations"]
-      iterations: float, /* `AnimationEffect`'s iterations. */
+      iterations: number, /* `AnimationEffect`'s iterations. */
       [@key "duration"]
-      duration: float, /* `AnimationEffect`'s iteration duration. */
+      duration: number, /* `AnimationEffect`'s iteration duration. */
       [@key "direction"]
       direction: string, /* `AnimationEffect`'s playback direction. */
       [@key "fill"]
@@ -973,15 +988,15 @@ animation/transition. */,
     [@deriving yojson]
     type t = {
       [@key "delay"]
-      delay: float, /* `AnimationEffect`'s delay. */
+      delay: number, /* `AnimationEffect`'s delay. */
       [@key "endDelay"]
-      endDelay: float, /* `AnimationEffect`'s end delay. */
+      endDelay: number, /* `AnimationEffect`'s end delay. */
       [@key "iterationStart"]
-      iterationStart: float, /* `AnimationEffect`'s iteration start. */
+      iterationStart: number, /* `AnimationEffect`'s iteration start. */
       [@key "iterations"]
-      iterations: float, /* `AnimationEffect`'s iterations. */
+      iterations: number, /* `AnimationEffect`'s iterations. */
       [@key "duration"]
-      duration: float, /* `AnimationEffect`'s iteration duration. */
+      duration: number, /* `AnimationEffect`'s iteration duration. */
       [@key "direction"]
       direction: string, /* `AnimationEffect`'s playback direction. */
       [@key "fill"]
@@ -1302,9 +1317,9 @@ Does not always exist (e.g. for unsafe form submission urls). */
       [@key "url"]
       url: string, /* No description provided */
       [@key "lineNumber"]
-      lineNumber: float, /* No description provided */
+      lineNumber: number, /* No description provided */
       [@key "columnNumber"]
-      columnNumber: float /* No description provided */,
+      columnNumber: number /* No description provided */,
     };
   }
   and ContentSecurityPolicyIssueDetails: {
@@ -1373,7 +1388,7 @@ Does not always exist (e.g. for unsafe form submission urls). */
       [@key "violationType"]
       violationType: TwaQualityEnforcementViolationType.t, /* No description provided */
       [@yojson.option] [@key "httpStatusCode"]
-      httpStatusCode: option(float), /* No description provided */
+      httpStatusCode: option(number), /* No description provided */
       [@yojson.option] [@key "packageName"]
       packageName: option(string), /* The package name of the Trusted Web Activity client app. This field is
 only used when violation type is kDigitalAssetLinks. */
@@ -1391,11 +1406,11 @@ used when violation type is kDigitalAssetLinks. */,
       [@key "violatingNodeSelector"]
       violatingNodeSelector: string, /* No description provided */
       [@key "contrastRatio"]
-      contrastRatio: float, /* No description provided */
+      contrastRatio: number, /* No description provided */
       [@key "thresholdAA"]
-      thresholdAA: float, /* No description provided */
+      thresholdAA: number, /* No description provided */
       [@key "thresholdAAA"]
-      thresholdAAA: float, /* No description provided */
+      thresholdAAA: number, /* No description provided */
       [@key "fontSize"]
       fontSize: string, /* No description provided */
       [@key "fontWeight"]
@@ -2367,9 +2382,9 @@ Does not always exist (e.g. for unsafe form submission urls). */
       [@key "url"]
       url: string, /* No description provided */
       [@key "lineNumber"]
-      lineNumber: float, /* No description provided */
+      lineNumber: number, /* No description provided */
       [@key "columnNumber"]
-      columnNumber: float /* No description provided */,
+      columnNumber: number /* No description provided */,
     };
   } = {
     /* No description provided */
@@ -2380,9 +2395,9 @@ Does not always exist (e.g. for unsafe form submission urls). */
       [@key "url"]
       url: string, /* No description provided */
       [@key "lineNumber"]
-      lineNumber: float, /* No description provided */
+      lineNumber: number, /* No description provided */
       [@key "columnNumber"]
-      columnNumber: float /* No description provided */,
+      columnNumber: number /* No description provided */,
     };
   }
   and ContentSecurityPolicyIssueDetails: {
@@ -2518,7 +2533,7 @@ Does not always exist (e.g. for unsafe form submission urls). */
       [@key "violationType"]
       violationType: TwaQualityEnforcementViolationType.t, /* No description provided */
       [@yojson.option] [@key "httpStatusCode"]
-      httpStatusCode: option(float), /* No description provided */
+      httpStatusCode: option(number), /* No description provided */
       [@yojson.option] [@key "packageName"]
       packageName: option(string), /* The package name of the Trusted Web Activity client app. This field is
 only used when violation type is kDigitalAssetLinks. */
@@ -2535,7 +2550,7 @@ used when violation type is kDigitalAssetLinks. */,
       [@key "violationType"]
       violationType: TwaQualityEnforcementViolationType.t, /* No description provided */
       [@yojson.option] [@key "httpStatusCode"]
-      httpStatusCode: option(float), /* No description provided */
+      httpStatusCode: option(number), /* No description provided */
       [@yojson.option] [@key "packageName"]
       packageName: option(string), /* The package name of the Trusted Web Activity client app. This field is
 only used when violation type is kDigitalAssetLinks. */
@@ -2553,11 +2568,11 @@ used when violation type is kDigitalAssetLinks. */,
       [@key "violatingNodeSelector"]
       violatingNodeSelector: string, /* No description provided */
       [@key "contrastRatio"]
-      contrastRatio: float, /* No description provided */
+      contrastRatio: number, /* No description provided */
       [@key "thresholdAA"]
-      thresholdAA: float, /* No description provided */
+      thresholdAA: number, /* No description provided */
       [@key "thresholdAAA"]
-      thresholdAAA: float, /* No description provided */
+      thresholdAAA: number, /* No description provided */
       [@key "fontSize"]
       fontSize: string, /* No description provided */
       [@key "fontWeight"]
@@ -2572,11 +2587,11 @@ used when violation type is kDigitalAssetLinks. */,
       [@key "violatingNodeSelector"]
       violatingNodeSelector: string, /* No description provided */
       [@key "contrastRatio"]
-      contrastRatio: float, /* No description provided */
+      contrastRatio: number, /* No description provided */
       [@key "thresholdAA"]
-      thresholdAA: float, /* No description provided */
+      thresholdAA: number, /* No description provided */
       [@key "thresholdAAA"]
-      thresholdAAA: float, /* No description provided */
+      thresholdAAA: number, /* No description provided */
       [@key "fontSize"]
       fontSize: string, /* No description provided */
       [@key "fontWeight"]
@@ -3438,7 +3453,7 @@ and Browser: {
   and WindowID: {
     /* No description provided */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and WindowState: {
     type _windowstate = [ | `normal | `minimized | `maximized | `fullscreen];
@@ -3453,13 +3468,13 @@ and Browser: {
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "left"]
-      left: option(float), /* The offset from the left edge of the screen to the window in pixels. */
+      left: option(number), /* The offset from the left edge of the screen to the window in pixels. */
       [@yojson.option] [@key "top"]
-      top: option(float), /* The offset from the top edge of the screen to the window in pixels. */
+      top: option(number), /* The offset from the top edge of the screen to the window in pixels. */
       [@yojson.option] [@key "width"]
-      width: option(float), /* The window width in pixels. */
+      width: option(number), /* The window width in pixels. */
       [@yojson.option] [@key "height"]
-      height: option(float), /* The window height in pixels. */
+      height: option(number), /* The window height in pixels. */
       [@yojson.option] [@key "windowState"]
       windowState: option(WindowState.t) /* The window state. Default to normal. */,
     };
@@ -3536,11 +3551,11 @@ Note that userVisibleOnly = true is the only currently supported type. */
     [@deriving yojson]
     type t = {
       [@key "low"]
-      low: float, /* Minimum value (inclusive). */
+      low: number, /* Minimum value (inclusive). */
       [@key "high"]
-      high: float, /* Maximum value (exclusive). */
+      high: number, /* Maximum value (exclusive). */
       [@key "count"]
-      count: float /* Number of samples. */,
+      count: number /* Number of samples. */,
     };
   }
   and Histogram: {
@@ -3550,9 +3565,9 @@ Note that userVisibleOnly = true is the only currently supported type. */
       [@key "name"]
       name: string, /* Name. */
       [@key "sum"]
-      sum: float, /* Sum of sample values. */
+      sum: number, /* Sum of sample values. */
       [@key "count"]
-      count: float, /* Total number of samples. */
+      count: number, /* Total number of samples. */
       [@key "buckets"]
       buckets: list(Bucket.t) /* Buckets. */,
     };
@@ -3570,11 +3585,11 @@ Note that userVisibleOnly = true is the only currently supported type. */
   and WindowID: {
     /* No description provided */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* No description provided */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and WindowState: {
     type _windowstate = [ | `normal | `minimized | `maximized | `fullscreen];
@@ -3608,13 +3623,13 @@ Note that userVisibleOnly = true is the only currently supported type. */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "left"]
-      left: option(float), /* The offset from the left edge of the screen to the window in pixels. */
+      left: option(number), /* The offset from the left edge of the screen to the window in pixels. */
       [@yojson.option] [@key "top"]
-      top: option(float), /* The offset from the top edge of the screen to the window in pixels. */
+      top: option(number), /* The offset from the top edge of the screen to the window in pixels. */
       [@yojson.option] [@key "width"]
-      width: option(float), /* The window width in pixels. */
+      width: option(number), /* The window width in pixels. */
       [@yojson.option] [@key "height"]
-      height: option(float), /* The window height in pixels. */
+      height: option(number), /* The window height in pixels. */
       [@yojson.option] [@key "windowState"]
       windowState: option(WindowState.t) /* The window state. Default to normal. */,
     };
@@ -3623,13 +3638,13 @@ Note that userVisibleOnly = true is the only currently supported type. */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "left"]
-      left: option(float), /* The offset from the left edge of the screen to the window in pixels. */
+      left: option(number), /* The offset from the left edge of the screen to the window in pixels. */
       [@yojson.option] [@key "top"]
-      top: option(float), /* The offset from the top edge of the screen to the window in pixels. */
+      top: option(number), /* The offset from the top edge of the screen to the window in pixels. */
       [@yojson.option] [@key "width"]
-      width: option(float), /* The window width in pixels. */
+      width: option(number), /* The window width in pixels. */
       [@yojson.option] [@key "height"]
-      height: option(float), /* The window height in pixels. */
+      height: option(number), /* The window height in pixels. */
       [@yojson.option] [@key "windowState"]
       windowState: option(WindowState.t) /* The window state. Default to normal. */,
     };
@@ -3837,22 +3852,22 @@ Note that userVisibleOnly = true is the only currently supported type. */
     [@deriving yojson]
     type t = {
       [@key "low"]
-      low: float, /* Minimum value (inclusive). */
+      low: number, /* Minimum value (inclusive). */
       [@key "high"]
-      high: float, /* Maximum value (exclusive). */
+      high: number, /* Maximum value (exclusive). */
       [@key "count"]
-      count: float /* Number of samples. */,
+      count: number /* Number of samples. */,
     };
   } = {
     /* Chrome histogram bucket. */
     [@deriving yojson]
     type t = {
       [@key "low"]
-      low: float, /* Minimum value (inclusive). */
+      low: number, /* Minimum value (inclusive). */
       [@key "high"]
-      high: float, /* Maximum value (exclusive). */
+      high: number, /* Maximum value (exclusive). */
       [@key "count"]
-      count: float /* Number of samples. */,
+      count: number /* Number of samples. */,
     };
   }
   and Histogram: {
@@ -3862,9 +3877,9 @@ Note that userVisibleOnly = true is the only currently supported type. */
       [@key "name"]
       name: string, /* Name. */
       [@key "sum"]
-      sum: float, /* Sum of sample values. */
+      sum: number, /* Sum of sample values. */
       [@key "count"]
-      count: float, /* Total number of samples. */
+      count: number, /* Total number of samples. */
       [@key "buckets"]
       buckets: list(Bucket.t) /* Buckets. */,
     };
@@ -3875,9 +3890,9 @@ Note that userVisibleOnly = true is the only currently supported type. */
       [@key "name"]
       name: string, /* Name. */
       [@key "sum"]
-      sum: float, /* Sum of sample values. */
+      sum: number, /* Sum of sample values. */
       [@key "count"]
-      count: float, /* Total number of samples. */
+      count: number, /* Total number of samples. */
       [@key "buckets"]
       buckets: list(Bucket.t) /* Buckets. */,
     };
@@ -3939,7 +3954,7 @@ and CSS: {
       [@key "rule"]
       rule: CSSRule.t, /* CSS rule in the match. */
       [@key "matchingSelectors"]
-      matchingSelectors: list(float) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
+      matchingSelectors: list(number) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
     };
   }
   and Value: {
@@ -3998,15 +4013,15 @@ Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after crea
       isConstructed: bool, /* True if this stylesheet is created through new CSSStyleSheet() or imported as a
 CSS module script. */
       [@key "startLine"]
-      startLine: float, /* Line offset of the stylesheet within the resource (zero based). */
+      startLine: number, /* Line offset of the stylesheet within the resource (zero based). */
       [@key "startColumn"]
-      startColumn: float, /* Column offset of the stylesheet within the resource (zero based). */
+      startColumn: number, /* Column offset of the stylesheet within the resource (zero based). */
       [@key "length"]
-      length: float, /* Size of the content (in characters). */
+      length: number, /* Size of the content (in characters). */
       [@key "endLine"]
-      endLine: float, /* Line offset of the end of the stylesheet within the resource (zero based). */
+      endLine: number, /* Line offset of the end of the stylesheet within the resource (zero based). */
       [@key "endColumn"]
-      endColumn: float /* Column offset of the end of the stylesheet within the resource (zero based). */,
+      endColumn: number /* Column offset of the end of the stylesheet within the resource (zero based). */,
     };
   }
   and CSSRule: {
@@ -4044,9 +4059,9 @@ with the innermost layer and going outwards. */,
       styleSheetId: StyleSheetId.t, /* The css style sheet identifier (absent for user agent stylesheet and user-specified
 stylesheet rules) this rule came from. */
       [@key "startOffset"]
-      startOffset: float, /* Offset of the start of the rule (including selector) from the beginning of the stylesheet. */
+      startOffset: number, /* Offset of the start of the rule (including selector) from the beginning of the stylesheet. */
       [@key "endOffset"]
-      endOffset: float, /* Offset of the end of the rule body from the beginning of the stylesheet. */
+      endOffset: number, /* Offset of the end of the rule body from the beginning of the stylesheet. */
       [@key "used"]
       used: bool /* Indicates whether the rule was actually used by some element in the page. */,
     };
@@ -4056,13 +4071,13 @@ stylesheet rules) this rule came from. */
     [@deriving yojson]
     type t = {
       [@key "startLine"]
-      startLine: float, /* Start line of range. */
+      startLine: number, /* Start line of range. */
       [@key "startColumn"]
-      startColumn: float, /* Start column of range (inclusive). */
+      startColumn: number, /* Start column of range (inclusive). */
       [@key "endLine"]
-      endLine: float, /* End line of range */
+      endLine: number, /* End line of range */
       [@key "endColumn"]
-      endColumn: float /* End column of range (exclusive). */,
+      endColumn: number /* End column of range (exclusive). */,
     };
   }
   and ShorthandEntry: {
@@ -4171,7 +4186,7 @@ available). */
     [@deriving yojson]
     type t = {
       [@key "value"]
-      value: float, /* Media query expression value. */
+      value: number, /* Media query expression value. */
       [@key "unit"]
       unit: string, /* Media query expression units. */
       [@key "feature"]
@@ -4179,7 +4194,7 @@ available). */
       [@yojson.option] [@key "valueRange"]
       valueRange: option(SourceRange.t), /* The associated range of the value text in the enclosing stylesheet (if available). */
       [@yojson.option] [@key "computedLength"]
-      computedLength: option(float) /* Computed length of media query expression (if applicable). */,
+      computedLength: option(number) /* Computed length of media query expression (if applicable). */,
     };
   }
   and CSSContainerQuery: {
@@ -4234,7 +4249,7 @@ available). */
       [@yojson.option] [@key "subLayers"]
       subLayers: option(list(CSSLayerData.t)), /* Direct sub-layers */
       [@key "order"]
-      order: float /* Layer order. The order determines the order of the layer in the cascade order.
+      order: number /* Layer order. The order determines the order of the layer in the cascade order.
 A higher number has higher priority in the cascade order. */,
     };
   }
@@ -4247,7 +4262,7 @@ A higher number has higher priority in the cascade order. */,
       [@key "isCustomFont"]
       isCustomFont: bool, /* Indicates if the font was downloaded or resolved locally. */
       [@key "glyphCount"]
-      glyphCount: float /* Amount of glyphs that were rendered with this font. */,
+      glyphCount: number /* Amount of glyphs that were rendered with this font. */,
     };
   }
   and FontVariationAxis: {
@@ -4259,11 +4274,11 @@ A higher number has higher priority in the cascade order. */,
       [@key "name"]
       name: string, /* Human-readable variation name in the default language (normally, "en"). */
       [@key "minValue"]
-      minValue: float, /* The minimum value (inclusive) the font supports for this tag. */
+      minValue: number, /* The minimum value (inclusive) the font supports for this tag. */
       [@key "maxValue"]
-      maxValue: float, /* The maximum value (inclusive) the font supports for this tag. */
+      maxValue: number, /* The maximum value (inclusive) the font supports for this tag. */
       [@key "defaultValue"]
-      defaultValue: float /* The default value. */,
+      defaultValue: number /* The default value. */,
     };
   }
   and FontFace: {
@@ -4439,7 +4454,7 @@ stylesheet rules) this rule came from. */
       [@key "rule"]
       rule: CSSRule.t, /* CSS rule in the match. */
       [@key "matchingSelectors"]
-      matchingSelectors: list(float) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
+      matchingSelectors: list(number) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
     };
   } = {
     /* Match data for a CSS rule. */
@@ -4448,7 +4463,7 @@ stylesheet rules) this rule came from. */
       [@key "rule"]
       rule: CSSRule.t, /* CSS rule in the match. */
       [@key "matchingSelectors"]
-      matchingSelectors: list(float) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
+      matchingSelectors: list(number) /* Matching selector indices in the rule's selectorList selectors (0-based). */,
     };
   }
   and Value: {
@@ -4525,15 +4540,15 @@ Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after crea
       isConstructed: bool, /* True if this stylesheet is created through new CSSStyleSheet() or imported as a
 CSS module script. */
       [@key "startLine"]
-      startLine: float, /* Line offset of the stylesheet within the resource (zero based). */
+      startLine: number, /* Line offset of the stylesheet within the resource (zero based). */
       [@key "startColumn"]
-      startColumn: float, /* Column offset of the stylesheet within the resource (zero based). */
+      startColumn: number, /* Column offset of the stylesheet within the resource (zero based). */
       [@key "length"]
-      length: float, /* Size of the content (in characters). */
+      length: number, /* Size of the content (in characters). */
       [@key "endLine"]
-      endLine: float, /* Line offset of the end of the stylesheet within the resource (zero based). */
+      endLine: number, /* Line offset of the end of the stylesheet within the resource (zero based). */
       [@key "endColumn"]
-      endColumn: float /* Column offset of the end of the stylesheet within the resource (zero based). */,
+      endColumn: number /* Column offset of the end of the stylesheet within the resource (zero based). */,
     };
   } = {
     /* CSS stylesheet metainformation. */
@@ -4571,15 +4586,15 @@ Constructed stylesheets (new CSSStyleSheet()) are mutable immediately after crea
       isConstructed: bool, /* True if this stylesheet is created through new CSSStyleSheet() or imported as a
 CSS module script. */
       [@key "startLine"]
-      startLine: float, /* Line offset of the stylesheet within the resource (zero based). */
+      startLine: number, /* Line offset of the stylesheet within the resource (zero based). */
       [@key "startColumn"]
-      startColumn: float, /* Column offset of the stylesheet within the resource (zero based). */
+      startColumn: number, /* Column offset of the stylesheet within the resource (zero based). */
       [@key "length"]
-      length: float, /* Size of the content (in characters). */
+      length: number, /* Size of the content (in characters). */
       [@key "endLine"]
-      endLine: float, /* Line offset of the end of the stylesheet within the resource (zero based). */
+      endLine: number, /* Line offset of the end of the stylesheet within the resource (zero based). */
       [@key "endColumn"]
-      endColumn: float /* Column offset of the end of the stylesheet within the resource (zero based). */,
+      endColumn: number /* Column offset of the end of the stylesheet within the resource (zero based). */,
     };
   }
   and CSSRule: {
@@ -4643,9 +4658,9 @@ with the innermost layer and going outwards. */,
       styleSheetId: StyleSheetId.t, /* The css style sheet identifier (absent for user agent stylesheet and user-specified
 stylesheet rules) this rule came from. */
       [@key "startOffset"]
-      startOffset: float, /* Offset of the start of the rule (including selector) from the beginning of the stylesheet. */
+      startOffset: number, /* Offset of the start of the rule (including selector) from the beginning of the stylesheet. */
       [@key "endOffset"]
-      endOffset: float, /* Offset of the end of the rule body from the beginning of the stylesheet. */
+      endOffset: number, /* Offset of the end of the rule body from the beginning of the stylesheet. */
       [@key "used"]
       used: bool /* Indicates whether the rule was actually used by some element in the page. */,
     };
@@ -4657,9 +4672,9 @@ stylesheet rules) this rule came from. */
       styleSheetId: StyleSheetId.t, /* The css style sheet identifier (absent for user agent stylesheet and user-specified
 stylesheet rules) this rule came from. */
       [@key "startOffset"]
-      startOffset: float, /* Offset of the start of the rule (including selector) from the beginning of the stylesheet. */
+      startOffset: number, /* Offset of the start of the rule (including selector) from the beginning of the stylesheet. */
       [@key "endOffset"]
-      endOffset: float, /* Offset of the end of the rule body from the beginning of the stylesheet. */
+      endOffset: number, /* Offset of the end of the rule body from the beginning of the stylesheet. */
       [@key "used"]
       used: bool /* Indicates whether the rule was actually used by some element in the page. */,
     };
@@ -4669,26 +4684,26 @@ stylesheet rules) this rule came from. */
     [@deriving yojson]
     type t = {
       [@key "startLine"]
-      startLine: float, /* Start line of range. */
+      startLine: number, /* Start line of range. */
       [@key "startColumn"]
-      startColumn: float, /* Start column of range (inclusive). */
+      startColumn: number, /* Start column of range (inclusive). */
       [@key "endLine"]
-      endLine: float, /* End line of range */
+      endLine: number, /* End line of range */
       [@key "endColumn"]
-      endColumn: float /* End column of range (exclusive). */,
+      endColumn: number /* End column of range (exclusive). */,
     };
   } = {
     /* Text range within a resource. All numbers are zero-based. */
     [@deriving yojson]
     type t = {
       [@key "startLine"]
-      startLine: float, /* Start line of range. */
+      startLine: number, /* Start line of range. */
       [@key "startColumn"]
-      startColumn: float, /* Start column of range (inclusive). */
+      startColumn: number, /* Start column of range (inclusive). */
       [@key "endLine"]
-      endLine: float, /* End line of range */
+      endLine: number, /* End line of range */
       [@key "endColumn"]
-      endColumn: float /* End column of range (exclusive). */,
+      endColumn: number /* End column of range (exclusive). */,
     };
   }
   and ShorthandEntry: {
@@ -4904,7 +4919,7 @@ available). */
     [@deriving yojson]
     type t = {
       [@key "value"]
-      value: float, /* Media query expression value. */
+      value: number, /* Media query expression value. */
       [@key "unit"]
       unit: string, /* Media query expression units. */
       [@key "feature"]
@@ -4912,14 +4927,14 @@ available). */
       [@yojson.option] [@key "valueRange"]
       valueRange: option(SourceRange.t), /* The associated range of the value text in the enclosing stylesheet (if available). */
       [@yojson.option] [@key "computedLength"]
-      computedLength: option(float) /* Computed length of media query expression (if applicable). */,
+      computedLength: option(number) /* Computed length of media query expression (if applicable). */,
     };
   } = {
     /* Media query expression descriptor. */
     [@deriving yojson]
     type t = {
       [@key "value"]
-      value: float, /* Media query expression value. */
+      value: number, /* Media query expression value. */
       [@key "unit"]
       unit: string, /* Media query expression units. */
       [@key "feature"]
@@ -4927,7 +4942,7 @@ available). */
       [@yojson.option] [@key "valueRange"]
       valueRange: option(SourceRange.t), /* The associated range of the value text in the enclosing stylesheet (if available). */
       [@yojson.option] [@key "computedLength"]
-      computedLength: option(float) /* Computed length of media query expression (if applicable). */,
+      computedLength: option(number) /* Computed length of media query expression (if applicable). */,
     };
   }
   and CSSContainerQuery: {
@@ -5022,7 +5037,7 @@ available). */
       [@yojson.option] [@key "subLayers"]
       subLayers: option(list(CSSLayerData.t)), /* Direct sub-layers */
       [@key "order"]
-      order: float /* Layer order. The order determines the order of the layer in the cascade order.
+      order: number /* Layer order. The order determines the order of the layer in the cascade order.
 A higher number has higher priority in the cascade order. */,
     };
   } = {
@@ -5034,7 +5049,7 @@ A higher number has higher priority in the cascade order. */,
       [@yojson.option] [@key "subLayers"]
       subLayers: option(list(CSSLayerData.t)), /* Direct sub-layers */
       [@key "order"]
-      order: float /* Layer order. The order determines the order of the layer in the cascade order.
+      order: number /* Layer order. The order determines the order of the layer in the cascade order.
 A higher number has higher priority in the cascade order. */,
     };
   }
@@ -5047,7 +5062,7 @@ A higher number has higher priority in the cascade order. */,
       [@key "isCustomFont"]
       isCustomFont: bool, /* Indicates if the font was downloaded or resolved locally. */
       [@key "glyphCount"]
-      glyphCount: float /* Amount of glyphs that were rendered with this font. */,
+      glyphCount: number /* Amount of glyphs that were rendered with this font. */,
     };
   } = {
     /* Information about amount of glyphs that were rendered with given font. */
@@ -5058,7 +5073,7 @@ A higher number has higher priority in the cascade order. */,
       [@key "isCustomFont"]
       isCustomFont: bool, /* Indicates if the font was downloaded or resolved locally. */
       [@key "glyphCount"]
-      glyphCount: float /* Amount of glyphs that were rendered with this font. */,
+      glyphCount: number /* Amount of glyphs that were rendered with this font. */,
     };
   }
   and FontVariationAxis: {
@@ -5070,11 +5085,11 @@ A higher number has higher priority in the cascade order. */,
       [@key "name"]
       name: string, /* Human-readable variation name in the default language (normally, "en"). */
       [@key "minValue"]
-      minValue: float, /* The minimum value (inclusive) the font supports for this tag. */
+      minValue: number, /* The minimum value (inclusive) the font supports for this tag. */
       [@key "maxValue"]
-      maxValue: float, /* The maximum value (inclusive) the font supports for this tag. */
+      maxValue: number, /* The maximum value (inclusive) the font supports for this tag. */
       [@key "defaultValue"]
-      defaultValue: float /* The default value. */,
+      defaultValue: number /* The default value. */,
     };
   } = {
     /* Information about font variation axes for variable fonts */
@@ -5085,11 +5100,11 @@ A higher number has higher priority in the cascade order. */,
       [@key "name"]
       name: string, /* Human-readable variation name in the default language (normally, "en"). */
       [@key "minValue"]
-      minValue: float, /* The minimum value (inclusive) the font supports for this tag. */
+      minValue: number, /* The minimum value (inclusive) the font supports for this tag. */
       [@key "maxValue"]
-      maxValue: float, /* The maximum value (inclusive) the font supports for this tag. */
+      maxValue: number, /* The maximum value (inclusive) the font supports for this tag. */
       [@key "defaultValue"]
-      defaultValue: float /* The default value. */,
+      defaultValue: number /* The default value. */,
     };
   }
   and FontFace: {
@@ -5245,9 +5260,9 @@ and CacheStorage: {
       [@key "requestHeaders"]
       requestHeaders: list(Header.t), /* Request headers */
       [@key "responseTime"]
-      responseTime: float, /* Number of seconds since epoch. */
+      responseTime: number, /* Number of seconds since epoch. */
       [@key "responseStatus"]
-      responseStatus: float, /* HTTP response status code. */
+      responseStatus: number, /* HTTP response status code. */
       [@key "responseStatusText"]
       responseStatusText: string, /* HTTP response status text. */
       [@key "responseType"]
@@ -5352,9 +5367,9 @@ and CacheStorage: {
       [@key "requestHeaders"]
       requestHeaders: list(Header.t), /* Request headers */
       [@key "responseTime"]
-      responseTime: float, /* Number of seconds since epoch. */
+      responseTime: number, /* Number of seconds since epoch. */
       [@key "responseStatus"]
-      responseStatus: float, /* HTTP response status code. */
+      responseStatus: number, /* HTTP response status code. */
       [@key "responseStatusText"]
       responseStatusText: string, /* HTTP response status text. */
       [@key "responseType"]
@@ -5373,9 +5388,9 @@ and CacheStorage: {
       [@key "requestHeaders"]
       requestHeaders: list(Header.t), /* Request headers */
       [@key "responseTime"]
-      responseTime: float, /* Number of seconds since epoch. */
+      responseTime: number, /* Number of seconds since epoch. */
       [@key "responseStatus"]
-      responseStatus: float, /* HTTP response status code. */
+      responseStatus: number, /* HTTP response status code. */
       [@key "responseStatusText"]
       responseStatusText: string, /* HTTP response status text. */
       [@key "responseType"]
@@ -5487,20 +5502,20 @@ and DOM: {
   module rec NodeId: {
     /* Unique DOM node identifier. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and BackendNodeId: {
     /* Unique DOM node identifier used to reference a node that may not have been pushed to the
        front-end. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and BackendNode: {
     /* Backend node with a friendly name. */
     [@deriving yojson]
     type t = {
       [@key "nodeType"]
-      nodeType: float, /* `Node`'s nodeType. */
+      nodeType: number, /* `Node`'s nodeType. */
       [@key "nodeName"]
       nodeName: string, /* `Node`'s nodeName. */
       [@key "backendNodeId"]
@@ -5575,7 +5590,7 @@ fire DOM events for nodes known to the client. */
       [@key "backendNodeId"]
       backendNodeId: BackendNodeId.t, /* The BackendNodeId for this node. */
       [@key "nodeType"]
-      nodeType: float, /* `Node`'s nodeType. */
+      nodeType: number, /* `Node`'s nodeType. */
       [@key "nodeName"]
       nodeName: string, /* `Node`'s nodeName. */
       [@key "localName"]
@@ -5583,7 +5598,7 @@ fire DOM events for nodes known to the client. */
       [@key "nodeValue"]
       nodeValue: string, /* `Node`'s nodeValue. */
       [@yojson.option] [@key "childNodeCount"]
-      childNodeCount: option(float), /* Child count for `Container` nodes. */
+      childNodeCount: option(number), /* Child count for `Container` nodes. */
       [@yojson.option] [@key "children"]
       children: option(list(Node.t)), /* Child nodes of this node when requested with children. */
       [@yojson.option] [@key "attributes"]
@@ -5635,19 +5650,19 @@ The property is always undefined now. */
     [@deriving yojson]
     type t = {
       [@key "r"]
-      r: float, /* The red component, in the [0-255] range. */
+      r: number, /* The red component, in the [0-255] range. */
       [@key "g"]
-      g: float, /* The green component, in the [0-255] range. */
+      g: number, /* The green component, in the [0-255] range. */
       [@key "b"]
-      b: float, /* The blue component, in the [0-255] range. */
+      b: number, /* The blue component, in the [0-255] range. */
       [@yojson.option] [@key "a"]
-      a: option(float) /* The alpha component, in the [0-1] range (default: 1). */,
+      a: option(number) /* The alpha component, in the [0-1] range (default: 1). */,
     };
   }
   and Quad: {
     /* An array of quad vertices, x immediately followed by y for each point, points clock-wise. */
     [@deriving yojson]
-    type t = list(float);
+    type t = list(number);
   }
   and BoxModel: {
     /* Box model. */
@@ -5662,9 +5677,9 @@ The property is always undefined now. */
       [@key "margin"]
       margin: Quad.t, /* Margin box */
       [@key "width"]
-      width: float, /* Node width */
+      width: number, /* Node width */
       [@key "height"]
-      height: float, /* Node height */
+      height: number, /* Node height */
       [@yojson.option] [@key "shapeOutside"]
       shapeOutside: option(ShapeOutsideInfo.t) /* Shape outside coordinates */,
     };
@@ -5686,13 +5701,13 @@ The property is always undefined now. */
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* X coordinate */
+      x: number, /* X coordinate */
       [@key "y"]
-      y: float, /* Y coordinate */
+      y: number, /* Y coordinate */
       [@key "width"]
-      width: float, /* Rectangle width */
+      width: number, /* Rectangle width */
       [@key "height"]
-      height: float /* Rectangle height */,
+      height: number /* Rectangle height */,
     };
   }
   and CSSComputedStyleProperty: {
@@ -5709,29 +5724,29 @@ The property is always undefined now. */
   module rec NodeId: {
     /* Unique DOM node identifier. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* Unique DOM node identifier. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and BackendNodeId: {
     /* Unique DOM node identifier used to reference a node that may not have been pushed to the
        front-end. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* Unique DOM node identifier used to reference a node that may not have been pushed to the
        front-end. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and BackendNode: {
     /* Backend node with a friendly name. */
     [@deriving yojson]
     type t = {
       [@key "nodeType"]
-      nodeType: float, /* `Node`'s nodeType. */
+      nodeType: number, /* `Node`'s nodeType. */
       [@key "nodeName"]
       nodeName: string, /* `Node`'s nodeName. */
       [@key "backendNodeId"]
@@ -5742,7 +5757,7 @@ The property is always undefined now. */
     [@deriving yojson]
     type t = {
       [@key "nodeType"]
-      nodeType: float, /* `Node`'s nodeType. */
+      nodeType: number, /* `Node`'s nodeType. */
       [@key "nodeName"]
       nodeName: string, /* `Node`'s nodeName. */
       [@key "backendNodeId"]
@@ -5945,7 +5960,7 @@ fire DOM events for nodes known to the client. */
       [@key "backendNodeId"]
       backendNodeId: BackendNodeId.t, /* The BackendNodeId for this node. */
       [@key "nodeType"]
-      nodeType: float, /* `Node`'s nodeType. */
+      nodeType: number, /* `Node`'s nodeType. */
       [@key "nodeName"]
       nodeName: string, /* `Node`'s nodeName. */
       [@key "localName"]
@@ -5953,7 +5968,7 @@ fire DOM events for nodes known to the client. */
       [@key "nodeValue"]
       nodeValue: string, /* `Node`'s nodeValue. */
       [@yojson.option] [@key "childNodeCount"]
-      childNodeCount: option(float), /* Child count for `Container` nodes. */
+      childNodeCount: option(number), /* Child count for `Container` nodes. */
       [@yojson.option] [@key "children"]
       children: option(list(Node.t)), /* Child nodes of this node when requested with children. */
       [@yojson.option] [@key "attributes"]
@@ -6013,7 +6028,7 @@ fire DOM events for nodes known to the client. */
       [@key "backendNodeId"]
       backendNodeId: BackendNodeId.t, /* The BackendNodeId for this node. */
       [@key "nodeType"]
-      nodeType: float, /* `Node`'s nodeType. */
+      nodeType: number, /* `Node`'s nodeType. */
       [@key "nodeName"]
       nodeName: string, /* `Node`'s nodeName. */
       [@key "localName"]
@@ -6021,7 +6036,7 @@ fire DOM events for nodes known to the client. */
       [@key "nodeValue"]
       nodeValue: string, /* `Node`'s nodeValue. */
       [@yojson.option] [@key "childNodeCount"]
-      childNodeCount: option(float), /* Child count for `Container` nodes. */
+      childNodeCount: option(number), /* Child count for `Container` nodes. */
       [@yojson.option] [@key "children"]
       children: option(list(Node.t)), /* Child nodes of this node when requested with children. */
       [@yojson.option] [@key "attributes"]
@@ -6073,36 +6088,36 @@ The property is always undefined now. */
     [@deriving yojson]
     type t = {
       [@key "r"]
-      r: float, /* The red component, in the [0-255] range. */
+      r: number, /* The red component, in the [0-255] range. */
       [@key "g"]
-      g: float, /* The green component, in the [0-255] range. */
+      g: number, /* The green component, in the [0-255] range. */
       [@key "b"]
-      b: float, /* The blue component, in the [0-255] range. */
+      b: number, /* The blue component, in the [0-255] range. */
       [@yojson.option] [@key "a"]
-      a: option(float) /* The alpha component, in the [0-1] range (default: 1). */,
+      a: option(number) /* The alpha component, in the [0-1] range (default: 1). */,
     };
   } = {
     /* A structure holding an RGBA color. */
     [@deriving yojson]
     type t = {
       [@key "r"]
-      r: float, /* The red component, in the [0-255] range. */
+      r: number, /* The red component, in the [0-255] range. */
       [@key "g"]
-      g: float, /* The green component, in the [0-255] range. */
+      g: number, /* The green component, in the [0-255] range. */
       [@key "b"]
-      b: float, /* The blue component, in the [0-255] range. */
+      b: number, /* The blue component, in the [0-255] range. */
       [@yojson.option] [@key "a"]
-      a: option(float) /* The alpha component, in the [0-1] range (default: 1). */,
+      a: option(number) /* The alpha component, in the [0-1] range (default: 1). */,
     };
   }
   and Quad: {
     /* An array of quad vertices, x immediately followed by y for each point, points clock-wise. */
     [@deriving yojson]
-    type t = list(float);
+    type t = list(number);
   } = {
     /* An array of quad vertices, x immediately followed by y for each point, points clock-wise. */
     [@deriving yojson]
-    type t = list(float);
+    type t = list(number);
   }
   and BoxModel: {
     /* Box model. */
@@ -6117,9 +6132,9 @@ The property is always undefined now. */
       [@key "margin"]
       margin: Quad.t, /* Margin box */
       [@key "width"]
-      width: float, /* Node width */
+      width: number, /* Node width */
       [@key "height"]
-      height: float, /* Node height */
+      height: number, /* Node height */
       [@yojson.option] [@key "shapeOutside"]
       shapeOutside: option(ShapeOutsideInfo.t) /* Shape outside coordinates */,
     };
@@ -6136,9 +6151,9 @@ The property is always undefined now. */
       [@key "margin"]
       margin: Quad.t, /* Margin box */
       [@key "width"]
-      width: float, /* Node width */
+      width: number, /* Node width */
       [@key "height"]
-      height: float, /* Node height */
+      height: number, /* Node height */
       [@yojson.option] [@key "shapeOutside"]
       shapeOutside: option(ShapeOutsideInfo.t) /* Shape outside coordinates */,
     };
@@ -6171,26 +6186,26 @@ The property is always undefined now. */
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* X coordinate */
+      x: number, /* X coordinate */
       [@key "y"]
-      y: float, /* Y coordinate */
+      y: number, /* Y coordinate */
       [@key "width"]
-      width: float, /* Rectangle width */
+      width: number, /* Rectangle width */
       [@key "height"]
-      height: float /* Rectangle height */,
+      height: number /* Rectangle height */,
     };
   } = {
     /* Rectangle. */
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* X coordinate */
+      x: number, /* X coordinate */
       [@key "y"]
-      y: float, /* Y coordinate */
+      y: number, /* Y coordinate */
       [@key "width"]
-      width: float, /* Rectangle width */
+      width: number, /* Rectangle width */
       [@key "height"]
-      height: float /* Rectangle height */,
+      height: number /* Rectangle height */,
     };
   }
   and CSSComputedStyleProperty: {
@@ -6252,9 +6267,9 @@ and DOMDebugger: {
       [@key "scriptId"]
       scriptId: Runtime.ScriptId.t, /* Script id of the handler code. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in the script (0-based). */
+      lineNumber: number, /* Line number in the script (0-based). */
       [@key "columnNumber"]
-      columnNumber: float, /* Column number in the script (0-based). */
+      columnNumber: number, /* Column number in the script (0-based). */
       [@yojson.option] [@key "handler"]
       handler: option(Runtime.RemoteObject.t), /* Event handler function value. */
       [@yojson.option] [@key "originalHandler"]
@@ -6342,9 +6357,9 @@ and DOMDebugger: {
       [@key "scriptId"]
       scriptId: Runtime.ScriptId.t, /* Script id of the handler code. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in the script (0-based). */
+      lineNumber: number, /* Line number in the script (0-based). */
       [@key "columnNumber"]
-      columnNumber: float, /* Column number in the script (0-based). */
+      columnNumber: number, /* Column number in the script (0-based). */
       [@yojson.option] [@key "handler"]
       handler: option(Runtime.RemoteObject.t), /* Event handler function value. */
       [@yojson.option] [@key "originalHandler"]
@@ -6367,9 +6382,9 @@ and DOMDebugger: {
       [@key "scriptId"]
       scriptId: Runtime.ScriptId.t, /* Script id of the handler code. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in the script (0-based). */
+      lineNumber: number, /* Line number in the script (0-based). */
       [@key "columnNumber"]
-      columnNumber: float, /* Column number in the script (0-based). */
+      columnNumber: number, /* Column number in the script (0-based). */
       [@yojson.option] [@key "handler"]
       handler: option(Runtime.RemoteObject.t), /* Event handler function value. */
       [@yojson.option] [@key "originalHandler"]
@@ -6385,7 +6400,7 @@ and DOMSnapshot: {
     [@deriving yojson]
     type t = {
       [@key "nodeType"]
-      nodeType: float, /* `Node`'s nodeType. */
+      nodeType: number, /* `Node`'s nodeType. */
       [@key "nodeName"]
       nodeName: string, /* `Node`'s nodeName. */
       [@key "nodeValue"]
@@ -6401,15 +6416,15 @@ and DOMSnapshot: {
       [@key "backendNodeId"]
       backendNodeId: DOM.BackendNodeId.t, /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
       [@yojson.option] [@key "childNodeIndexes"]
-      childNodeIndexes: option(list(float)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
+      childNodeIndexes: option(list(number)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
 any. */
       [@yojson.option] [@key "attributes"]
       attributes: option(list(NameValue.t)), /* Attributes of an `Element` node. */
       [@yojson.option] [@key "pseudoElementIndexes"]
-      pseudoElementIndexes: option(list(float)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
+      pseudoElementIndexes: option(list(number)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option] [@key "layoutNodeIndex"]
-      layoutNodeIndex: option(float), /* The index of the node's related layout tree node in the `layoutTreeNodes` array returned by
+      layoutNodeIndex: option(number), /* The index of the node's related layout tree node in the `layoutTreeNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option] [@key "documentURL"]
       documentURL: option(string), /* Document URL that `Document` or `FrameOwner` node points to. */
@@ -6426,7 +6441,7 @@ any. */
       [@yojson.option] [@key "frameId"]
       frameId: option(Page.FrameId.t), /* Frame ID for frame owner elements and also for the document node. */
       [@yojson.option] [@key "contentDocumentIndex"]
-      contentDocumentIndex: option(float), /* The index of a frame owner element's content document in the `domNodes` array returned by
+      contentDocumentIndex: option(number), /* The index of a frame owner element's content document in the `domNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option] [@key "pseudoType"]
       pseudoType: option(DOM.PseudoType.t), /* Type of a pseudo element node. */
@@ -6443,9 +6458,9 @@ clicked. */
       [@yojson.option] [@key "originURL"]
       originURL: option(string), /* The url of the script (if any) that generates this node. */
       [@yojson.option] [@key "scrollOffsetX"]
-      scrollOffsetX: option(float), /* Scroll offsets, set when this node is a Document. */
+      scrollOffsetX: option(number), /* Scroll offsets, set when this node is a Document. */
       [@yojson.option] [@key "scrollOffsetY"]
-      scrollOffsetY: option(float) /* No description provided */,
+      scrollOffsetY: option(number) /* No description provided */,
     };
   }
   and InlineTextBox: {
@@ -6456,10 +6471,10 @@ clicked. */
       [@key "boundingBox"]
       boundingBox: DOM.Rect.t, /* The bounding box in document coordinates. Note that scroll offset of the document is ignored. */
       [@key "startCharacterIndex"]
-      startCharacterIndex: float, /* The starting index in characters, for this post layout textbox substring. Characters that
+      startCharacterIndex: number, /* The starting index in characters, for this post layout textbox substring. Characters that
 would be represented as a surrogate pair in UTF-16 have length 2. */
       [@key "numCharacters"]
-      numCharacters: float /* The number of characters in this post layout textbox substring. Characters that would be
+      numCharacters: number /* The number of characters in this post layout textbox substring. Characters that would be
 represented as a surrogate pair in UTF-16 have length 2. */,
     };
   }
@@ -6468,7 +6483,7 @@ represented as a surrogate pair in UTF-16 have length 2. */,
     [@deriving yojson]
     type t = {
       [@key "domNodeIndex"]
-      domNodeIndex: float, /* The index of the related DOM node in the `domNodes` array returned by `getSnapshot`. */
+      domNodeIndex: number, /* The index of the related DOM node in the `domNodes` array returned by `getSnapshot`. */
       [@key "boundingBox"]
       boundingBox: DOM.Rect.t, /* The bounding box in document coordinates. Note that scroll offset of the document is ignored. */
       [@yojson.option] [@key "layoutText"]
@@ -6476,9 +6491,9 @@ represented as a surrogate pair in UTF-16 have length 2. */,
       [@yojson.option] [@key "inlineTextNodes"]
       inlineTextNodes: option(list(InlineTextBox.t)), /* The post-layout inline text nodes, if any. */
       [@yojson.option] [@key "styleIndex"]
-      styleIndex: option(float), /* Index into the `computedStyles` array returned by `getSnapshot`. */
+      styleIndex: option(number), /* Index into the `computedStyles` array returned by `getSnapshot`. */
       [@yojson.option] [@key "paintOrder"]
-      paintOrder: option(float), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
+      paintOrder: option(number), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
 that are painted together will have the same index. Only provided if includePaintOrder in
 getSnapshot was true. */
       [@yojson.option] [@key "isStackingContext"]
@@ -6506,7 +6521,7 @@ getSnapshot was true. */
   and StringIndex: {
     /* Index of the string in the strings table. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and ArrayOfStrings: {
     /* Index of the string in the strings table. */
@@ -6518,7 +6533,7 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@key "index"]
-      index: list(float), /* No description provided */
+      index: list(number), /* No description provided */
       [@key "value"]
       value: list(StringIndex.t) /* No description provided */,
     };
@@ -6528,7 +6543,7 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@key "index"]
-      index: list(float) /* No description provided */,
+      index: list(number) /* No description provided */,
     };
   }
   and RareIntegerData: {
@@ -6536,15 +6551,15 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@key "index"]
-      index: list(float), /* No description provided */
+      index: list(number), /* No description provided */
       [@key "value"]
-      value: list(float) /* No description provided */,
+      value: list(number) /* No description provided */,
     };
   }
   and Rectangle: {
     /* No description provided */
     [@deriving yojson]
-    type t = list(float);
+    type t = list(number);
   }
   and DocumentSnapshot: {
     /* Document snapshot. */
@@ -6573,13 +6588,13 @@ getSnapshot was true. */
       [@key "textBoxes"]
       textBoxes: TextBoxSnapshot.t, /* The post-layout inline text nodes. */
       [@yojson.option] [@key "scrollOffsetX"]
-      scrollOffsetX: option(float), /* Horizontal scroll offset. */
+      scrollOffsetX: option(number), /* Horizontal scroll offset. */
       [@yojson.option] [@key "scrollOffsetY"]
-      scrollOffsetY: option(float), /* Vertical scroll offset. */
+      scrollOffsetY: option(number), /* Vertical scroll offset. */
       [@yojson.option] [@key "contentWidth"]
-      contentWidth: option(float), /* Document content width. */
+      contentWidth: option(number), /* Document content width. */
       [@yojson.option] [@key "contentHeight"]
-      contentHeight: option(float) /* Document content height. */,
+      contentHeight: option(number) /* Document content height. */,
     };
   }
   and NodeTreeSnapshot: {
@@ -6587,9 +6602,9 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "parentIndex"]
-      parentIndex: option(list(float)), /* Parent node index. */
+      parentIndex: option(list(number)), /* Parent node index. */
       [@yojson.option] [@key "nodeType"]
-      nodeType: option(list(float)), /* `Node`'s nodeType. */
+      nodeType: option(list(number)), /* `Node`'s nodeType. */
       [@yojson.option] [@key "shadowRootType"]
       shadowRootType: option(RareStringData.t), /* Type of the shadow root the `Node` is in. String values are equal to the `ShadowRootType` enum. */
       [@yojson.option] [@key "nodeName"]
@@ -6627,7 +6642,7 @@ clicked. */
     [@deriving yojson]
     type t = {
       [@key "nodeIndex"]
-      nodeIndex: list(float), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
+      nodeIndex: list(number), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
       [@key "styles"]
       styles: list(ArrayOfStrings.t), /* Array of indexes specifying computed style strings, filtered according to the `computedStyles` parameter passed to `captureSnapshot`. */
       [@key "bounds"]
@@ -6637,7 +6652,7 @@ clicked. */
       [@key "stackingContexts"]
       stackingContexts: RareBooleanData.t, /* Stacking context information. */
       [@yojson.option] [@key "paintOrders"]
-      paintOrders: option(list(float)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
+      paintOrders: option(list(number)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
 that are painted together will have the same index. Only provided if includePaintOrder in
 captureSnapshot was true. */
       [@yojson.option] [@key "offsetRects"]
@@ -6649,7 +6664,7 @@ captureSnapshot was true. */
       [@yojson.option] [@key "blendedBackgroundColors"]
       blendedBackgroundColors: option(list(StringIndex.t)), /* The list of background colors that are blended with colors of overlapping elements. */
       [@yojson.option] [@key "textColorOpacities"]
-      textColorOpacities: option(list(float)) /* The list of computed text opacities. */,
+      textColorOpacities: option(list(number)) /* The list of computed text opacities. */,
     };
   }
   and TextBoxSnapshot: {
@@ -6658,14 +6673,14 @@ captureSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@key "layoutIndex"]
-      layoutIndex: list(float), /* Index of the layout tree node that owns this box collection. */
+      layoutIndex: list(number), /* Index of the layout tree node that owns this box collection. */
       [@key "bounds"]
       bounds: list(Rectangle.t), /* The absolute position bounding box. */
       [@key "start"]
-      start: list(float), /* The starting index in characters, for this post layout textbox substring. Characters that
+      start: list(number), /* The starting index in characters, for this post layout textbox substring. Characters that
 would be represented as a surrogate pair in UTF-16 have length 2. */
       [@key "length"]
-      length: list(float) /* The number of characters in this post layout textbox substring. Characters that would be
+      length: list(number) /* The number of characters in this post layout textbox substring. Characters that would be
 represented as a surrogate pair in UTF-16 have length 2. */,
     };
   };
@@ -6675,7 +6690,7 @@ represented as a surrogate pair in UTF-16 have length 2. */,
     [@deriving yojson]
     type t = {
       [@key "nodeType"]
-      nodeType: float, /* `Node`'s nodeType. */
+      nodeType: number, /* `Node`'s nodeType. */
       [@key "nodeName"]
       nodeName: string, /* `Node`'s nodeName. */
       [@key "nodeValue"]
@@ -6691,15 +6706,15 @@ represented as a surrogate pair in UTF-16 have length 2. */,
       [@key "backendNodeId"]
       backendNodeId: DOM.BackendNodeId.t, /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
       [@yojson.option] [@key "childNodeIndexes"]
-      childNodeIndexes: option(list(float)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
+      childNodeIndexes: option(list(number)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
 any. */
       [@yojson.option] [@key "attributes"]
       attributes: option(list(NameValue.t)), /* Attributes of an `Element` node. */
       [@yojson.option] [@key "pseudoElementIndexes"]
-      pseudoElementIndexes: option(list(float)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
+      pseudoElementIndexes: option(list(number)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option] [@key "layoutNodeIndex"]
-      layoutNodeIndex: option(float), /* The index of the node's related layout tree node in the `layoutTreeNodes` array returned by
+      layoutNodeIndex: option(number), /* The index of the node's related layout tree node in the `layoutTreeNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option] [@key "documentURL"]
       documentURL: option(string), /* Document URL that `Document` or `FrameOwner` node points to. */
@@ -6716,7 +6731,7 @@ any. */
       [@yojson.option] [@key "frameId"]
       frameId: option(Page.FrameId.t), /* Frame ID for frame owner elements and also for the document node. */
       [@yojson.option] [@key "contentDocumentIndex"]
-      contentDocumentIndex: option(float), /* The index of a frame owner element's content document in the `domNodes` array returned by
+      contentDocumentIndex: option(number), /* The index of a frame owner element's content document in the `domNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option] [@key "pseudoType"]
       pseudoType: option(DOM.PseudoType.t), /* Type of a pseudo element node. */
@@ -6733,16 +6748,16 @@ clicked. */
       [@yojson.option] [@key "originURL"]
       originURL: option(string), /* The url of the script (if any) that generates this node. */
       [@yojson.option] [@key "scrollOffsetX"]
-      scrollOffsetX: option(float), /* Scroll offsets, set when this node is a Document. */
+      scrollOffsetX: option(number), /* Scroll offsets, set when this node is a Document. */
       [@yojson.option] [@key "scrollOffsetY"]
-      scrollOffsetY: option(float) /* No description provided */,
+      scrollOffsetY: option(number) /* No description provided */,
     };
   } = {
     /* A Node in the DOM tree. */
     [@deriving yojson]
     type t = {
       [@key "nodeType"]
-      nodeType: float, /* `Node`'s nodeType. */
+      nodeType: number, /* `Node`'s nodeType. */
       [@key "nodeName"]
       nodeName: string, /* `Node`'s nodeName. */
       [@key "nodeValue"]
@@ -6758,15 +6773,15 @@ clicked. */
       [@key "backendNodeId"]
       backendNodeId: DOM.BackendNodeId.t, /* `Node`'s id, corresponds to DOM.Node.backendNodeId. */
       [@yojson.option] [@key "childNodeIndexes"]
-      childNodeIndexes: option(list(float)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
+      childNodeIndexes: option(list(number)), /* The indexes of the node's child nodes in the `domNodes` array returned by `getSnapshot`, if
 any. */
       [@yojson.option] [@key "attributes"]
       attributes: option(list(NameValue.t)), /* Attributes of an `Element` node. */
       [@yojson.option] [@key "pseudoElementIndexes"]
-      pseudoElementIndexes: option(list(float)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
+      pseudoElementIndexes: option(list(number)), /* Indexes of pseudo elements associated with this node in the `domNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option] [@key "layoutNodeIndex"]
-      layoutNodeIndex: option(float), /* The index of the node's related layout tree node in the `layoutTreeNodes` array returned by
+      layoutNodeIndex: option(number), /* The index of the node's related layout tree node in the `layoutTreeNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option] [@key "documentURL"]
       documentURL: option(string), /* Document URL that `Document` or `FrameOwner` node points to. */
@@ -6783,7 +6798,7 @@ any. */
       [@yojson.option] [@key "frameId"]
       frameId: option(Page.FrameId.t), /* Frame ID for frame owner elements and also for the document node. */
       [@yojson.option] [@key "contentDocumentIndex"]
-      contentDocumentIndex: option(float), /* The index of a frame owner element's content document in the `domNodes` array returned by
+      contentDocumentIndex: option(number), /* The index of a frame owner element's content document in the `domNodes` array returned by
 `getSnapshot`, if any. */
       [@yojson.option] [@key "pseudoType"]
       pseudoType: option(DOM.PseudoType.t), /* Type of a pseudo element node. */
@@ -6800,9 +6815,9 @@ clicked. */
       [@yojson.option] [@key "originURL"]
       originURL: option(string), /* The url of the script (if any) that generates this node. */
       [@yojson.option] [@key "scrollOffsetX"]
-      scrollOffsetX: option(float), /* Scroll offsets, set when this node is a Document. */
+      scrollOffsetX: option(number), /* Scroll offsets, set when this node is a Document. */
       [@yojson.option] [@key "scrollOffsetY"]
-      scrollOffsetY: option(float) /* No description provided */,
+      scrollOffsetY: option(number) /* No description provided */,
     };
   }
   and InlineTextBox: {
@@ -6813,10 +6828,10 @@ clicked. */
       [@key "boundingBox"]
       boundingBox: DOM.Rect.t, /* The bounding box in document coordinates. Note that scroll offset of the document is ignored. */
       [@key "startCharacterIndex"]
-      startCharacterIndex: float, /* The starting index in characters, for this post layout textbox substring. Characters that
+      startCharacterIndex: number, /* The starting index in characters, for this post layout textbox substring. Characters that
 would be represented as a surrogate pair in UTF-16 have length 2. */
       [@key "numCharacters"]
-      numCharacters: float /* The number of characters in this post layout textbox substring. Characters that would be
+      numCharacters: number /* The number of characters in this post layout textbox substring. Characters that would be
 represented as a surrogate pair in UTF-16 have length 2. */,
     };
   } = {
@@ -6827,10 +6842,10 @@ represented as a surrogate pair in UTF-16 have length 2. */,
       [@key "boundingBox"]
       boundingBox: DOM.Rect.t, /* The bounding box in document coordinates. Note that scroll offset of the document is ignored. */
       [@key "startCharacterIndex"]
-      startCharacterIndex: float, /* The starting index in characters, for this post layout textbox substring. Characters that
+      startCharacterIndex: number, /* The starting index in characters, for this post layout textbox substring. Characters that
 would be represented as a surrogate pair in UTF-16 have length 2. */
       [@key "numCharacters"]
-      numCharacters: float /* The number of characters in this post layout textbox substring. Characters that would be
+      numCharacters: number /* The number of characters in this post layout textbox substring. Characters that would be
 represented as a surrogate pair in UTF-16 have length 2. */,
     };
   }
@@ -6839,7 +6854,7 @@ represented as a surrogate pair in UTF-16 have length 2. */,
     [@deriving yojson]
     type t = {
       [@key "domNodeIndex"]
-      domNodeIndex: float, /* The index of the related DOM node in the `domNodes` array returned by `getSnapshot`. */
+      domNodeIndex: number, /* The index of the related DOM node in the `domNodes` array returned by `getSnapshot`. */
       [@key "boundingBox"]
       boundingBox: DOM.Rect.t, /* The bounding box in document coordinates. Note that scroll offset of the document is ignored. */
       [@yojson.option] [@key "layoutText"]
@@ -6847,9 +6862,9 @@ represented as a surrogate pair in UTF-16 have length 2. */,
       [@yojson.option] [@key "inlineTextNodes"]
       inlineTextNodes: option(list(InlineTextBox.t)), /* The post-layout inline text nodes, if any. */
       [@yojson.option] [@key "styleIndex"]
-      styleIndex: option(float), /* Index into the `computedStyles` array returned by `getSnapshot`. */
+      styleIndex: option(number), /* Index into the `computedStyles` array returned by `getSnapshot`. */
       [@yojson.option] [@key "paintOrder"]
-      paintOrder: option(float), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
+      paintOrder: option(number), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
 that are painted together will have the same index. Only provided if includePaintOrder in
 getSnapshot was true. */
       [@yojson.option] [@key "isStackingContext"]
@@ -6860,7 +6875,7 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@key "domNodeIndex"]
-      domNodeIndex: float, /* The index of the related DOM node in the `domNodes` array returned by `getSnapshot`. */
+      domNodeIndex: number, /* The index of the related DOM node in the `domNodes` array returned by `getSnapshot`. */
       [@key "boundingBox"]
       boundingBox: DOM.Rect.t, /* The bounding box in document coordinates. Note that scroll offset of the document is ignored. */
       [@yojson.option] [@key "layoutText"]
@@ -6868,9 +6883,9 @@ getSnapshot was true. */
       [@yojson.option] [@key "inlineTextNodes"]
       inlineTextNodes: option(list(InlineTextBox.t)), /* The post-layout inline text nodes, if any. */
       [@yojson.option] [@key "styleIndex"]
-      styleIndex: option(float), /* Index into the `computedStyles` array returned by `getSnapshot`. */
+      styleIndex: option(number), /* Index into the `computedStyles` array returned by `getSnapshot`. */
       [@yojson.option] [@key "paintOrder"]
-      paintOrder: option(float), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
+      paintOrder: option(number), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
 that are painted together will have the same index. Only provided if includePaintOrder in
 getSnapshot was true. */
       [@yojson.option] [@key "isStackingContext"]
@@ -6914,11 +6929,11 @@ getSnapshot was true. */
   and StringIndex: {
     /* Index of the string in the strings table. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* Index of the string in the strings table. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and ArrayOfStrings: {
     /* Index of the string in the strings table. */
@@ -6934,7 +6949,7 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@key "index"]
-      index: list(float), /* No description provided */
+      index: list(number), /* No description provided */
       [@key "value"]
       value: list(StringIndex.t) /* No description provided */,
     };
@@ -6943,7 +6958,7 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@key "index"]
-      index: list(float), /* No description provided */
+      index: list(number), /* No description provided */
       [@key "value"]
       value: list(StringIndex.t) /* No description provided */,
     };
@@ -6953,14 +6968,14 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@key "index"]
-      index: list(float) /* No description provided */,
+      index: list(number) /* No description provided */,
     };
   } = {
     /* No description provided */
     [@deriving yojson]
     type t = {
       [@key "index"]
-      index: list(float) /* No description provided */,
+      index: list(number) /* No description provided */,
     };
   }
   and RareIntegerData: {
@@ -6968,28 +6983,28 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@key "index"]
-      index: list(float), /* No description provided */
+      index: list(number), /* No description provided */
       [@key "value"]
-      value: list(float) /* No description provided */,
+      value: list(number) /* No description provided */,
     };
   } = {
     /* No description provided */
     [@deriving yojson]
     type t = {
       [@key "index"]
-      index: list(float), /* No description provided */
+      index: list(number), /* No description provided */
       [@key "value"]
-      value: list(float) /* No description provided */,
+      value: list(number) /* No description provided */,
     };
   }
   and Rectangle: {
     /* No description provided */
     [@deriving yojson]
-    type t = list(float);
+    type t = list(number);
   } = {
     /* No description provided */
     [@deriving yojson]
-    type t = list(float);
+    type t = list(number);
   }
   and DocumentSnapshot: {
     /* Document snapshot. */
@@ -7018,13 +7033,13 @@ getSnapshot was true. */
       [@key "textBoxes"]
       textBoxes: TextBoxSnapshot.t, /* The post-layout inline text nodes. */
       [@yojson.option] [@key "scrollOffsetX"]
-      scrollOffsetX: option(float), /* Horizontal scroll offset. */
+      scrollOffsetX: option(number), /* Horizontal scroll offset. */
       [@yojson.option] [@key "scrollOffsetY"]
-      scrollOffsetY: option(float), /* Vertical scroll offset. */
+      scrollOffsetY: option(number), /* Vertical scroll offset. */
       [@yojson.option] [@key "contentWidth"]
-      contentWidth: option(float), /* Document content width. */
+      contentWidth: option(number), /* Document content width. */
       [@yojson.option] [@key "contentHeight"]
-      contentHeight: option(float) /* Document content height. */,
+      contentHeight: option(number) /* Document content height. */,
     };
   } = {
     /* Document snapshot. */
@@ -7053,13 +7068,13 @@ getSnapshot was true. */
       [@key "textBoxes"]
       textBoxes: TextBoxSnapshot.t, /* The post-layout inline text nodes. */
       [@yojson.option] [@key "scrollOffsetX"]
-      scrollOffsetX: option(float), /* Horizontal scroll offset. */
+      scrollOffsetX: option(number), /* Horizontal scroll offset. */
       [@yojson.option] [@key "scrollOffsetY"]
-      scrollOffsetY: option(float), /* Vertical scroll offset. */
+      scrollOffsetY: option(number), /* Vertical scroll offset. */
       [@yojson.option] [@key "contentWidth"]
-      contentWidth: option(float), /* Document content width. */
+      contentWidth: option(number), /* Document content width. */
       [@yojson.option] [@key "contentHeight"]
-      contentHeight: option(float) /* Document content height. */,
+      contentHeight: option(number) /* Document content height. */,
     };
   }
   and NodeTreeSnapshot: {
@@ -7067,9 +7082,9 @@ getSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "parentIndex"]
-      parentIndex: option(list(float)), /* Parent node index. */
+      parentIndex: option(list(number)), /* Parent node index. */
       [@yojson.option] [@key "nodeType"]
-      nodeType: option(list(float)), /* `Node`'s nodeType. */
+      nodeType: option(list(number)), /* `Node`'s nodeType. */
       [@yojson.option] [@key "shadowRootType"]
       shadowRootType: option(RareStringData.t), /* Type of the shadow root the `Node` is in. String values are equal to the `ShadowRootType` enum. */
       [@yojson.option] [@key "nodeName"]
@@ -7106,9 +7121,9 @@ clicked. */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "parentIndex"]
-      parentIndex: option(list(float)), /* Parent node index. */
+      parentIndex: option(list(number)), /* Parent node index. */
       [@yojson.option] [@key "nodeType"]
-      nodeType: option(list(float)), /* `Node`'s nodeType. */
+      nodeType: option(list(number)), /* `Node`'s nodeType. */
       [@yojson.option] [@key "shadowRootType"]
       shadowRootType: option(RareStringData.t), /* Type of the shadow root the `Node` is in. String values are equal to the `ShadowRootType` enum. */
       [@yojson.option] [@key "nodeName"]
@@ -7146,7 +7161,7 @@ clicked. */
     [@deriving yojson]
     type t = {
       [@key "nodeIndex"]
-      nodeIndex: list(float), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
+      nodeIndex: list(number), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
       [@key "styles"]
       styles: list(ArrayOfStrings.t), /* Array of indexes specifying computed style strings, filtered according to the `computedStyles` parameter passed to `captureSnapshot`. */
       [@key "bounds"]
@@ -7156,7 +7171,7 @@ clicked. */
       [@key "stackingContexts"]
       stackingContexts: RareBooleanData.t, /* Stacking context information. */
       [@yojson.option] [@key "paintOrders"]
-      paintOrders: option(list(float)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
+      paintOrders: option(list(number)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
 that are painted together will have the same index. Only provided if includePaintOrder in
 captureSnapshot was true. */
       [@yojson.option] [@key "offsetRects"]
@@ -7168,14 +7183,14 @@ captureSnapshot was true. */
       [@yojson.option] [@key "blendedBackgroundColors"]
       blendedBackgroundColors: option(list(StringIndex.t)), /* The list of background colors that are blended with colors of overlapping elements. */
       [@yojson.option] [@key "textColorOpacities"]
-      textColorOpacities: option(list(float)) /* The list of computed text opacities. */,
+      textColorOpacities: option(list(number)) /* The list of computed text opacities. */,
     };
   } = {
     /* Table of details of an element in the DOM tree with a LayoutObject. */
     [@deriving yojson]
     type t = {
       [@key "nodeIndex"]
-      nodeIndex: list(float), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
+      nodeIndex: list(number), /* Index of the corresponding node in the `NodeTreeSnapshot` array returned by `captureSnapshot`. */
       [@key "styles"]
       styles: list(ArrayOfStrings.t), /* Array of indexes specifying computed style strings, filtered according to the `computedStyles` parameter passed to `captureSnapshot`. */
       [@key "bounds"]
@@ -7185,7 +7200,7 @@ captureSnapshot was true. */
       [@key "stackingContexts"]
       stackingContexts: RareBooleanData.t, /* Stacking context information. */
       [@yojson.option] [@key "paintOrders"]
-      paintOrders: option(list(float)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
+      paintOrders: option(list(number)), /* Global paint order index, which is determined by the stacking order of the nodes. Nodes
 that are painted together will have the same index. Only provided if includePaintOrder in
 captureSnapshot was true. */
       [@yojson.option] [@key "offsetRects"]
@@ -7197,7 +7212,7 @@ captureSnapshot was true. */
       [@yojson.option] [@key "blendedBackgroundColors"]
       blendedBackgroundColors: option(list(StringIndex.t)), /* The list of background colors that are blended with colors of overlapping elements. */
       [@yojson.option] [@key "textColorOpacities"]
-      textColorOpacities: option(list(float)) /* The list of computed text opacities. */,
+      textColorOpacities: option(list(number)) /* The list of computed text opacities. */,
     };
   }
   and TextBoxSnapshot: {
@@ -7206,14 +7221,14 @@ captureSnapshot was true. */
     [@deriving yojson]
     type t = {
       [@key "layoutIndex"]
-      layoutIndex: list(float), /* Index of the layout tree node that owns this box collection. */
+      layoutIndex: list(number), /* Index of the layout tree node that owns this box collection. */
       [@key "bounds"]
       bounds: list(Rectangle.t), /* The absolute position bounding box. */
       [@key "start"]
-      start: list(float), /* The starting index in characters, for this post layout textbox substring. Characters that
+      start: list(number), /* The starting index in characters, for this post layout textbox substring. Characters that
 would be represented as a surrogate pair in UTF-16 have length 2. */
       [@key "length"]
-      length: list(float) /* The number of characters in this post layout textbox substring. Characters that would be
+      length: list(number) /* The number of characters in this post layout textbox substring. Characters that would be
 represented as a surrogate pair in UTF-16 have length 2. */,
     };
   } = {
@@ -7222,14 +7237,14 @@ represented as a surrogate pair in UTF-16 have length 2. */,
     [@deriving yojson]
     type t = {
       [@key "layoutIndex"]
-      layoutIndex: list(float), /* Index of the layout tree node that owns this box collection. */
+      layoutIndex: list(number), /* Index of the layout tree node that owns this box collection. */
       [@key "bounds"]
       bounds: list(Rectangle.t), /* The absolute position bounding box. */
       [@key "start"]
-      start: list(float), /* The starting index in characters, for this post layout textbox substring. Characters that
+      start: list(number), /* The starting index in characters, for this post layout textbox substring. Characters that
 would be represented as a surrogate pair in UTF-16 have length 2. */
       [@key "length"]
-      length: list(float) /* The number of characters in this post layout textbox substring. Characters that would be
+      length: list(number) /* The number of characters in this post layout textbox substring. Characters that would be
 represented as a surrogate pair in UTF-16 have length 2. */,
     };
   };
@@ -7307,7 +7322,7 @@ and Database: {
       [@key "message"]
       message: string, /* Error message. */
       [@key "code"]
-      code: float /* Error code. */,
+      code: number /* Error code. */,
     };
   };
 } = {
@@ -7354,7 +7369,7 @@ and Database: {
       [@key "message"]
       message: string, /* Error message. */
       [@key "code"]
-      code: float /* Error code. */,
+      code: number /* Error code. */,
     };
   } = {
     /* Database error. */
@@ -7363,7 +7378,7 @@ and Database: {
       [@key "message"]
       message: string, /* Error message. */
       [@key "code"]
-      code: float /* Error code. */,
+      code: number /* Error code. */,
     };
   };
 }
@@ -7385,7 +7400,7 @@ and Emulation: {
       [@key "type"]
       type_: _screenorientation_type, /* Orientation type. */
       [@key "angle"]
-      angle: float /* Orientation angle. */,
+      angle: number /* Orientation angle. */,
     };
   }
   and DisplayFeature: {
@@ -7400,10 +7415,10 @@ and Emulation: {
       [@key "orientation"]
       orientation: _displayfeature_orientation, /* Orientation of a display feature in relation to screen */
       [@key "offset"]
-      offset: float, /* The offset from the screen origin in either the x (for vertical
+      offset: number, /* The offset from the screen origin in either the x (for vertical
 orientation) or y (for horizontal orientation) direction. */
       [@key "maskLength"]
-      maskLength: float /* A display feature may mask content such that it is not physically
+      maskLength: number /* A display feature may mask content such that it is not physically
 displayed - this length along with the offset describes this area.
 A display feature that only splits content will have a 0 mask_length. */,
     };
@@ -7492,7 +7507,7 @@ A display feature that only splits content will have a 0 mask_length. */,
       [@key "type"]
       type_: _screenorientation_type, /* Orientation type. */
       [@key "angle"]
-      angle: float /* Orientation angle. */,
+      angle: number /* Orientation angle. */,
     };
   } = {
     type _screenorientation_type = [
@@ -7521,7 +7536,7 @@ A display feature that only splits content will have a 0 mask_length. */,
       [@key "type"]
       type_: _screenorientation_type, /* Orientation type. */
       [@key "angle"]
-      angle: float /* Orientation angle. */,
+      angle: number /* Orientation angle. */,
     };
   }
   and DisplayFeature: {
@@ -7536,10 +7551,10 @@ A display feature that only splits content will have a 0 mask_length. */,
       [@key "orientation"]
       orientation: _displayfeature_orientation, /* Orientation of a display feature in relation to screen */
       [@key "offset"]
-      offset: float, /* The offset from the screen origin in either the x (for vertical
+      offset: number, /* The offset from the screen origin in either the x (for vertical
 orientation) or y (for horizontal orientation) direction. */
       [@key "maskLength"]
-      maskLength: float /* A display feature may mask content such that it is not physically
+      maskLength: number /* A display feature may mask content such that it is not physically
 displayed - this length along with the offset describes this area.
 A display feature that only splits content will have a 0 mask_length. */,
     };
@@ -7561,10 +7576,10 @@ A display feature that only splits content will have a 0 mask_length. */,
       [@key "orientation"]
       orientation: _displayfeature_orientation, /* Orientation of a display feature in relation to screen */
       [@key "offset"]
-      offset: float, /* The offset from the screen origin in either the x (for vertical
+      offset: number, /* The offset from the screen origin in either the x (for vertical
 orientation) or y (for horizontal orientation) direction. */
       [@key "maskLength"]
-      maskLength: float /* A display feature may mask content such that it is not physically
+      maskLength: number /* A display feature may mask content such that it is not physically
 displayed - this length along with the offset describes this area.
 A display feature that only splits content will have a 0 mask_length. */,
     };
@@ -7731,7 +7746,7 @@ and HeadlessExperimental: {
       [@yojson.option] [@key "format"]
       format: option(_screenshotparams_format), /* Image compression format (defaults to png). */
       [@yojson.option] [@key "quality"]
-      quality: option(float) /* Compression quality from range [0..100] (jpeg only). */,
+      quality: option(number) /* Compression quality from range [0..100] (jpeg only). */,
     };
   };
 } = {
@@ -7747,7 +7762,7 @@ and HeadlessExperimental: {
       [@yojson.option] [@key "format"]
       format: option(_screenshotparams_format), /* Image compression format (defaults to png). */
       [@yojson.option] [@key "quality"]
-      quality: option(float) /* Compression quality from range [0..100] (jpeg only). */,
+      quality: option(number) /* Compression quality from range [0..100] (jpeg only). */,
     };
   } = {
     type _screenshotparams_format = [ | `jpeg | `png];
@@ -7767,7 +7782,7 @@ and HeadlessExperimental: {
       [@yojson.option] [@key "format"]
       format: option(_screenshotparams_format), /* Image compression format (defaults to png). */
       [@yojson.option] [@key "quality"]
-      quality: option(float) /* Compression quality from range [0..100] (jpeg only). */,
+      quality: option(number) /* Compression quality from range [0..100] (jpeg only). */,
     };
   };
 }
@@ -7799,7 +7814,7 @@ and IndexedDB: {
       [@key "name"]
       name: string, /* Database name. */
       [@key "version"]
-      version: float, /* Database version (type is not 'integer', as the standard
+      version: number, /* Database version (type is not 'integer', as the standard
 requires the version number to be 'unsigned long long') */
       [@key "objectStores"]
       objectStores: list(ObjectStore.t) /* Object stores in this database. */,
@@ -7843,11 +7858,11 @@ requires the version number to be 'unsigned long long') */
       [@key "type"]
       type_: _key_type, /* Key type. */
       [@yojson.option] [@key "number"]
-      number: option(float), /* Number value. */
+      number: option(number), /* Number value. */
       [@yojson.option] [@key "string"]
       string: option(string), /* String value. */
       [@yojson.option] [@key "date"]
-      date: option(float), /* Date value. */
+      date: option(number), /* Date value. */
       [@yojson.option] [@key "array"]
       array: option(list(Key.t)) /* Array value. */,
     };
@@ -7901,7 +7916,7 @@ requires the version number to be 'unsigned long long') */
       [@key "name"]
       name: string, /* Database name. */
       [@key "version"]
-      version: float, /* Database version (type is not 'integer', as the standard
+      version: number, /* Database version (type is not 'integer', as the standard
 requires the version number to be 'unsigned long long') */
       [@key "objectStores"]
       objectStores: list(ObjectStore.t) /* Object stores in this database. */,
@@ -7913,7 +7928,7 @@ requires the version number to be 'unsigned long long') */
       [@key "name"]
       name: string, /* Database name. */
       [@key "version"]
-      version: float, /* Database version (type is not 'integer', as the standard
+      version: number, /* Database version (type is not 'integer', as the standard
 requires the version number to be 'unsigned long long') */
       [@key "objectStores"]
       objectStores: list(ObjectStore.t) /* Object stores in this database. */,
@@ -7983,11 +7998,11 @@ requires the version number to be 'unsigned long long') */
       [@key "type"]
       type_: _key_type, /* Key type. */
       [@yojson.option] [@key "number"]
-      number: option(float), /* Number value. */
+      number: option(number), /* Number value. */
       [@yojson.option] [@key "string"]
       string: option(string), /* String value. */
       [@yojson.option] [@key "date"]
-      date: option(float), /* Date value. */
+      date: option(number), /* Date value. */
       [@yojson.option] [@key "array"]
       array: option(list(Key.t)) /* Array value. */,
     };
@@ -8013,11 +8028,11 @@ requires the version number to be 'unsigned long long') */
       [@key "type"]
       type_: _key_type, /* Key type. */
       [@yojson.option] [@key "number"]
-      number: option(float), /* Number value. */
+      number: option(number), /* Number value. */
       [@yojson.option] [@key "string"]
       string: option(string), /* String value. */
       [@yojson.option] [@key "date"]
-      date: option(float), /* Date value. */
+      date: option(number), /* Date value. */
       [@yojson.option] [@key "array"]
       array: option(list(Key.t)) /* Array value. */,
     };
@@ -8118,28 +8133,28 @@ and Input: {
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
+      x: number, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
       [@key "y"]
-      y: float, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
+      y: number, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
 the top of the viewport and Y increases as it proceeds towards the bottom of the viewport. */
       [@yojson.option] [@key "radiusX"]
-      radiusX: option(float), /* X radius of the touch area (default: 1.0). */
+      radiusX: option(number), /* X radius of the touch area (default: 1.0). */
       [@yojson.option] [@key "radiusY"]
-      radiusY: option(float), /* Y radius of the touch area (default: 1.0). */
+      radiusY: option(number), /* Y radius of the touch area (default: 1.0). */
       [@yojson.option] [@key "rotationAngle"]
-      rotationAngle: option(float), /* Rotation angle (default: 0.0). */
+      rotationAngle: option(number), /* Rotation angle (default: 0.0). */
       [@yojson.option] [@key "force"]
-      force: option(float), /* Force (default: 1.0). */
+      force: option(number), /* Force (default: 1.0). */
       [@yojson.option] [@key "tangentialPressure"]
-      tangentialPressure: option(float), /* The normalized tangential pressure, which has a range of [-1,1] (default: 0). */
+      tangentialPressure: option(number), /* The normalized tangential pressure, which has a range of [-1,1] (default: 0). */
       [@yojson.option] [@key "tiltX"]
-      tiltX: option(float), /* The plane angle between the Y-Z plane and the plane containing both the stylus axis and the Y axis, in degrees of the range [-90,90], a positive tiltX is to the right (default: 0) */
+      tiltX: option(number), /* The plane angle between the Y-Z plane and the plane containing both the stylus axis and the Y axis, in degrees of the range [-90,90], a positive tiltX is to the right (default: 0) */
       [@yojson.option] [@key "tiltY"]
-      tiltY: option(float), /* The plane angle between the X-Z plane and the plane containing both the stylus axis and the X axis, in degrees of the range [-90,90], a positive tiltY is towards the user (default: 0). */
+      tiltY: option(number), /* The plane angle between the X-Z plane and the plane containing both the stylus axis and the X axis, in degrees of the range [-90,90], a positive tiltY is towards the user (default: 0). */
       [@yojson.option] [@key "twist"]
-      twist: option(float), /* The clockwise rotation of a pen stylus around its own major axis, in degrees in the range [0,359] (default: 0). */
+      twist: option(number), /* The clockwise rotation of a pen stylus around its own major axis, in degrees in the range [0,359] (default: 0). */
       [@yojson.option] [@key "id"]
-      id: option(float) /* Identifier used to track touch sources between events, must be unique within an event. */,
+      id: option(number) /* Identifier used to track touch sources between events, must be unique within an event. */,
     };
   }
   and GestureSourceType: {
@@ -8168,7 +8183,7 @@ the top of the viewport and Y increases as it proceeds towards the bottom of the
   and TimeSinceEpoch: {
     /* UTC time in seconds, counted from January 1, 1970. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and DragDataItem: {
     /* No description provided */
@@ -8195,7 +8210,7 @@ text, HTML markup or any other data. */
       [@yojson.option] [@key "files"]
       files: option(list(string)), /* List of filenames that should be included when dropping */
       [@key "dragOperationsMask"]
-      dragOperationsMask: float /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
+      dragOperationsMask: number /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
     };
   };
 } = {
@@ -8204,56 +8219,56 @@ text, HTML markup or any other data. */
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
+      x: number, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
       [@key "y"]
-      y: float, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
+      y: number, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
 the top of the viewport and Y increases as it proceeds towards the bottom of the viewport. */
       [@yojson.option] [@key "radiusX"]
-      radiusX: option(float), /* X radius of the touch area (default: 1.0). */
+      radiusX: option(number), /* X radius of the touch area (default: 1.0). */
       [@yojson.option] [@key "radiusY"]
-      radiusY: option(float), /* Y radius of the touch area (default: 1.0). */
+      radiusY: option(number), /* Y radius of the touch area (default: 1.0). */
       [@yojson.option] [@key "rotationAngle"]
-      rotationAngle: option(float), /* Rotation angle (default: 0.0). */
+      rotationAngle: option(number), /* Rotation angle (default: 0.0). */
       [@yojson.option] [@key "force"]
-      force: option(float), /* Force (default: 1.0). */
+      force: option(number), /* Force (default: 1.0). */
       [@yojson.option] [@key "tangentialPressure"]
-      tangentialPressure: option(float), /* The normalized tangential pressure, which has a range of [-1,1] (default: 0). */
+      tangentialPressure: option(number), /* The normalized tangential pressure, which has a range of [-1,1] (default: 0). */
       [@yojson.option] [@key "tiltX"]
-      tiltX: option(float), /* The plane angle between the Y-Z plane and the plane containing both the stylus axis and the Y axis, in degrees of the range [-90,90], a positive tiltX is to the right (default: 0) */
+      tiltX: option(number), /* The plane angle between the Y-Z plane and the plane containing both the stylus axis and the Y axis, in degrees of the range [-90,90], a positive tiltX is to the right (default: 0) */
       [@yojson.option] [@key "tiltY"]
-      tiltY: option(float), /* The plane angle between the X-Z plane and the plane containing both the stylus axis and the X axis, in degrees of the range [-90,90], a positive tiltY is towards the user (default: 0). */
+      tiltY: option(number), /* The plane angle between the X-Z plane and the plane containing both the stylus axis and the X axis, in degrees of the range [-90,90], a positive tiltY is towards the user (default: 0). */
       [@yojson.option] [@key "twist"]
-      twist: option(float), /* The clockwise rotation of a pen stylus around its own major axis, in degrees in the range [0,359] (default: 0). */
+      twist: option(number), /* The clockwise rotation of a pen stylus around its own major axis, in degrees in the range [0,359] (default: 0). */
       [@yojson.option] [@key "id"]
-      id: option(float) /* Identifier used to track touch sources between events, must be unique within an event. */,
+      id: option(number) /* Identifier used to track touch sources between events, must be unique within an event. */,
     };
   } = {
     /* No description provided */
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
+      x: number, /* X coordinate of the event relative to the main frame's viewport in CSS pixels. */
       [@key "y"]
-      y: float, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
+      y: number, /* Y coordinate of the event relative to the main frame's viewport in CSS pixels. 0 refers to
 the top of the viewport and Y increases as it proceeds towards the bottom of the viewport. */
       [@yojson.option] [@key "radiusX"]
-      radiusX: option(float), /* X radius of the touch area (default: 1.0). */
+      radiusX: option(number), /* X radius of the touch area (default: 1.0). */
       [@yojson.option] [@key "radiusY"]
-      radiusY: option(float), /* Y radius of the touch area (default: 1.0). */
+      radiusY: option(number), /* Y radius of the touch area (default: 1.0). */
       [@yojson.option] [@key "rotationAngle"]
-      rotationAngle: option(float), /* Rotation angle (default: 0.0). */
+      rotationAngle: option(number), /* Rotation angle (default: 0.0). */
       [@yojson.option] [@key "force"]
-      force: option(float), /* Force (default: 1.0). */
+      force: option(number), /* Force (default: 1.0). */
       [@yojson.option] [@key "tangentialPressure"]
-      tangentialPressure: option(float), /* The normalized tangential pressure, which has a range of [-1,1] (default: 0). */
+      tangentialPressure: option(number), /* The normalized tangential pressure, which has a range of [-1,1] (default: 0). */
       [@yojson.option] [@key "tiltX"]
-      tiltX: option(float), /* The plane angle between the Y-Z plane and the plane containing both the stylus axis and the Y axis, in degrees of the range [-90,90], a positive tiltX is to the right (default: 0) */
+      tiltX: option(number), /* The plane angle between the Y-Z plane and the plane containing both the stylus axis and the Y axis, in degrees of the range [-90,90], a positive tiltX is to the right (default: 0) */
       [@yojson.option] [@key "tiltY"]
-      tiltY: option(float), /* The plane angle between the X-Z plane and the plane containing both the stylus axis and the X axis, in degrees of the range [-90,90], a positive tiltY is towards the user (default: 0). */
+      tiltY: option(number), /* The plane angle between the X-Z plane and the plane containing both the stylus axis and the X axis, in degrees of the range [-90,90], a positive tiltY is towards the user (default: 0). */
       [@yojson.option] [@key "twist"]
-      twist: option(float), /* The clockwise rotation of a pen stylus around its own major axis, in degrees in the range [0,359] (default: 0). */
+      twist: option(number), /* The clockwise rotation of a pen stylus around its own major axis, in degrees in the range [0,359] (default: 0). */
       [@yojson.option] [@key "id"]
-      id: option(float) /* Identifier used to track touch sources between events, must be unique within an event. */,
+      id: option(number) /* Identifier used to track touch sources between events, must be unique within an event. */,
     };
   }
   and GestureSourceType: {
@@ -8329,11 +8344,11 @@ the top of the viewport and Y increases as it proceeds towards the bottom of the
   and TimeSinceEpoch: {
     /* UTC time in seconds, counted from January 1, 1970. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* UTC time in seconds, counted from January 1, 1970. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and DragDataItem: {
     /* No description provided */
@@ -8375,7 +8390,7 @@ text, HTML markup or any other data. */
       [@yojson.option] [@key "files"]
       files: option(list(string)), /* List of filenames that should be included when dropping */
       [@key "dragOperationsMask"]
-      dragOperationsMask: float /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
+      dragOperationsMask: number /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
     };
   } = {
     /* No description provided */
@@ -8386,7 +8401,7 @@ text, HTML markup or any other data. */
       [@yojson.option] [@key "files"]
       files: option(list(string)), /* List of filenames that should be included when dropping */
       [@key "dragOperationsMask"]
-      dragOperationsMask: float /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
+      dragOperationsMask: number /* Bit field representing allowed drag operations. Copy = 1, Link = 2, Move = 16 */,
     };
   };
 }
@@ -8437,9 +8452,9 @@ and LayerTree: {
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* Offset from owning layer left boundary */
+      x: number, /* Offset from owning layer left boundary */
       [@key "y"]
-      y: float, /* Offset from owning layer top boundary */
+      y: number, /* Offset from owning layer top boundary */
       [@key "picture"]
       picture: string /* Base64-encoded snapshot data. (Encoded as a base64 string when passed over JSON) */,
     };
@@ -8455,23 +8470,23 @@ and LayerTree: {
       [@yojson.option] [@key "backendNodeId"]
       backendNodeId: option(DOM.BackendNodeId.t), /* The backend id for the node associated with this layer. */
       [@key "offsetX"]
-      offsetX: float, /* Offset from parent layer, X coordinate. */
+      offsetX: number, /* Offset from parent layer, X coordinate. */
       [@key "offsetY"]
-      offsetY: float, /* Offset from parent layer, Y coordinate. */
+      offsetY: number, /* Offset from parent layer, Y coordinate. */
       [@key "width"]
-      width: float, /* Layer width. */
+      width: number, /* Layer width. */
       [@key "height"]
-      height: float, /* Layer height. */
+      height: number, /* Layer height. */
       [@yojson.option] [@key "transform"]
-      transform: option(list(float)), /* Transformation matrix for layer, default is identity matrix */
+      transform: option(list(number)), /* Transformation matrix for layer, default is identity matrix */
       [@yojson.option] [@key "anchorX"]
-      anchorX: option(float), /* Transform anchor point X, absent if no transform specified */
+      anchorX: option(number), /* Transform anchor point X, absent if no transform specified */
       [@yojson.option] [@key "anchorY"]
-      anchorY: option(float), /* Transform anchor point Y, absent if no transform specified */
+      anchorY: option(number), /* Transform anchor point Y, absent if no transform specified */
       [@yojson.option] [@key "anchorZ"]
-      anchorZ: option(float), /* Transform anchor point Z, absent if no transform specified */
+      anchorZ: option(number), /* Transform anchor point Z, absent if no transform specified */
       [@key "paintCount"]
-      paintCount: float, /* Indicates how many time this layer has painted. */
+      paintCount: number, /* Indicates how many time this layer has painted. */
       [@key "drawsContent"]
       drawsContent: bool, /* Indicates whether this layer hosts any content, rather than being used for
 transform/scrolling purposes only. */
@@ -8486,7 +8501,7 @@ transform/scrolling purposes only. */
   and PaintProfile: {
     /* Array of timings, one per paint step. */
     [@deriving yojson]
-    type t = list(float);
+    type t = list(number);
   };
 } = {
   module rec LayerId: {
@@ -8582,9 +8597,9 @@ transform/scrolling purposes only. */
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* Offset from owning layer left boundary */
+      x: number, /* Offset from owning layer left boundary */
       [@key "y"]
-      y: float, /* Offset from owning layer top boundary */
+      y: number, /* Offset from owning layer top boundary */
       [@key "picture"]
       picture: string /* Base64-encoded snapshot data. (Encoded as a base64 string when passed over JSON) */,
     };
@@ -8593,9 +8608,9 @@ transform/scrolling purposes only. */
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* Offset from owning layer left boundary */
+      x: number, /* Offset from owning layer left boundary */
       [@key "y"]
-      y: float, /* Offset from owning layer top boundary */
+      y: number, /* Offset from owning layer top boundary */
       [@key "picture"]
       picture: string /* Base64-encoded snapshot data. (Encoded as a base64 string when passed over JSON) */,
     };
@@ -8611,23 +8626,23 @@ transform/scrolling purposes only. */
       [@yojson.option] [@key "backendNodeId"]
       backendNodeId: option(DOM.BackendNodeId.t), /* The backend id for the node associated with this layer. */
       [@key "offsetX"]
-      offsetX: float, /* Offset from parent layer, X coordinate. */
+      offsetX: number, /* Offset from parent layer, X coordinate. */
       [@key "offsetY"]
-      offsetY: float, /* Offset from parent layer, Y coordinate. */
+      offsetY: number, /* Offset from parent layer, Y coordinate. */
       [@key "width"]
-      width: float, /* Layer width. */
+      width: number, /* Layer width. */
       [@key "height"]
-      height: float, /* Layer height. */
+      height: number, /* Layer height. */
       [@yojson.option] [@key "transform"]
-      transform: option(list(float)), /* Transformation matrix for layer, default is identity matrix */
+      transform: option(list(number)), /* Transformation matrix for layer, default is identity matrix */
       [@yojson.option] [@key "anchorX"]
-      anchorX: option(float), /* Transform anchor point X, absent if no transform specified */
+      anchorX: option(number), /* Transform anchor point X, absent if no transform specified */
       [@yojson.option] [@key "anchorY"]
-      anchorY: option(float), /* Transform anchor point Y, absent if no transform specified */
+      anchorY: option(number), /* Transform anchor point Y, absent if no transform specified */
       [@yojson.option] [@key "anchorZ"]
-      anchorZ: option(float), /* Transform anchor point Z, absent if no transform specified */
+      anchorZ: option(number), /* Transform anchor point Z, absent if no transform specified */
       [@key "paintCount"]
-      paintCount: float, /* Indicates how many time this layer has painted. */
+      paintCount: number, /* Indicates how many time this layer has painted. */
       [@key "drawsContent"]
       drawsContent: bool, /* Indicates whether this layer hosts any content, rather than being used for
 transform/scrolling purposes only. */
@@ -8649,23 +8664,23 @@ transform/scrolling purposes only. */
       [@yojson.option] [@key "backendNodeId"]
       backendNodeId: option(DOM.BackendNodeId.t), /* The backend id for the node associated with this layer. */
       [@key "offsetX"]
-      offsetX: float, /* Offset from parent layer, X coordinate. */
+      offsetX: number, /* Offset from parent layer, X coordinate. */
       [@key "offsetY"]
-      offsetY: float, /* Offset from parent layer, Y coordinate. */
+      offsetY: number, /* Offset from parent layer, Y coordinate. */
       [@key "width"]
-      width: float, /* Layer width. */
+      width: number, /* Layer width. */
       [@key "height"]
-      height: float, /* Layer height. */
+      height: number, /* Layer height. */
       [@yojson.option] [@key "transform"]
-      transform: option(list(float)), /* Transformation matrix for layer, default is identity matrix */
+      transform: option(list(number)), /* Transformation matrix for layer, default is identity matrix */
       [@yojson.option] [@key "anchorX"]
-      anchorX: option(float), /* Transform anchor point X, absent if no transform specified */
+      anchorX: option(number), /* Transform anchor point X, absent if no transform specified */
       [@yojson.option] [@key "anchorY"]
-      anchorY: option(float), /* Transform anchor point Y, absent if no transform specified */
+      anchorY: option(number), /* Transform anchor point Y, absent if no transform specified */
       [@yojson.option] [@key "anchorZ"]
-      anchorZ: option(float), /* Transform anchor point Z, absent if no transform specified */
+      anchorZ: option(number), /* Transform anchor point Z, absent if no transform specified */
       [@key "paintCount"]
-      paintCount: float, /* Indicates how many time this layer has painted. */
+      paintCount: number, /* Indicates how many time this layer has painted. */
       [@key "drawsContent"]
       drawsContent: bool, /* Indicates whether this layer hosts any content, rather than being used for
 transform/scrolling purposes only. */
@@ -8680,11 +8695,11 @@ transform/scrolling purposes only. */
   and PaintProfile: {
     /* Array of timings, one per paint step. */
     [@deriving yojson]
-    type t = list(float);
+    type t = list(number);
   } = {
     /* Array of timings, one per paint step. */
     [@deriving yojson]
-    type t = list(float);
+    type t = list(number);
   };
 }
 and Log: {
@@ -8728,7 +8743,7 @@ and Log: {
       [@yojson.option] [@key "url"]
       url: option(string), /* URL of the resource if known. */
       [@yojson.option] [@key "lineNumber"]
-      lineNumber: option(float), /* Line number in the resource. */
+      lineNumber: option(number), /* Line number in the resource. */
       [@yojson.option] [@key "stackTrace"]
       stackTrace: option(Runtime.StackTrace.t), /* JavaScript stack trace. */
       [@yojson.option] [@key "networkRequestId"]
@@ -8759,7 +8774,7 @@ and Log: {
       [@key "name"]
       name: _violationsetting_name, /* Violation type. */
       [@key "threshold"]
-      threshold: float /* Time threshold to trigger upon. */,
+      threshold: number /* Time threshold to trigger upon. */,
     };
   };
 } = {
@@ -8803,7 +8818,7 @@ and Log: {
       [@yojson.option] [@key "url"]
       url: option(string), /* URL of the resource if known. */
       [@yojson.option] [@key "lineNumber"]
-      lineNumber: option(float), /* Line number in the resource. */
+      lineNumber: option(number), /* Line number in the resource. */
       [@yojson.option] [@key "stackTrace"]
       stackTrace: option(Runtime.StackTrace.t), /* JavaScript stack trace. */
       [@yojson.option] [@key "networkRequestId"]
@@ -8901,7 +8916,7 @@ and Log: {
       [@yojson.option] [@key "url"]
       url: option(string), /* URL of the resource if known. */
       [@yojson.option] [@key "lineNumber"]
-      lineNumber: option(float), /* Line number in the resource. */
+      lineNumber: option(number), /* Line number in the resource. */
       [@yojson.option] [@key "stackTrace"]
       stackTrace: option(Runtime.StackTrace.t), /* JavaScript stack trace. */
       [@yojson.option] [@key "networkRequestId"]
@@ -8932,7 +8947,7 @@ and Log: {
       [@key "name"]
       name: _violationsetting_name, /* Violation type. */
       [@key "threshold"]
-      threshold: float /* Time threshold to trigger upon. */,
+      threshold: number /* Time threshold to trigger upon. */,
     };
   } = {
     type _violationsetting_name = [
@@ -8970,7 +8985,7 @@ and Log: {
       [@key "name"]
       name: _violationsetting_name, /* Violation type. */
       [@key "threshold"]
-      threshold: float /* Time threshold to trigger upon. */,
+      threshold: number /* Time threshold to trigger upon. */,
     };
   };
 }
@@ -8988,9 +9003,9 @@ and Memory: {
     [@deriving yojson]
     type t = {
       [@key "size"]
-      size: float, /* Size of the sampled allocation. */
+      size: number, /* Size of the sampled allocation. */
       [@key "total"]
-      total: float, /* Total bytes attributed to this sample. */
+      total: number, /* Total bytes attributed to this sample. */
       [@key "stack"]
       stack: list(string) /* Execution stack at the point of allocation. */,
     };
@@ -9017,7 +9032,7 @@ and Memory: {
       baseAddress: string, /* Base address where the module is loaded into memory. Encoded as a decimal
 or hexadecimal (0x prefixed) string. */
       [@key "size"]
-      size: float /* Size of the module in bytes. */,
+      size: number /* Size of the module in bytes. */,
     };
   };
 } = {
@@ -9049,9 +9064,9 @@ or hexadecimal (0x prefixed) string. */
     [@deriving yojson]
     type t = {
       [@key "size"]
-      size: float, /* Size of the sampled allocation. */
+      size: number, /* Size of the sampled allocation. */
       [@key "total"]
-      total: float, /* Total bytes attributed to this sample. */
+      total: number, /* Total bytes attributed to this sample. */
       [@key "stack"]
       stack: list(string) /* Execution stack at the point of allocation. */,
     };
@@ -9060,9 +9075,9 @@ or hexadecimal (0x prefixed) string. */
     [@deriving yojson]
     type t = {
       [@key "size"]
-      size: float, /* Size of the sampled allocation. */
+      size: number, /* Size of the sampled allocation. */
       [@key "total"]
-      total: float, /* Total bytes attributed to this sample. */
+      total: number, /* Total bytes attributed to this sample. */
       [@key "stack"]
       stack: list(string) /* Execution stack at the point of allocation. */,
     };
@@ -9098,7 +9113,7 @@ or hexadecimal (0x prefixed) string. */
       baseAddress: string, /* Base address where the module is loaded into memory. Encoded as a decimal
 or hexadecimal (0x prefixed) string. */
       [@key "size"]
-      size: float /* Size of the module in bytes. */,
+      size: number /* Size of the module in bytes. */,
     };
   } = {
     /* Executable module information */
@@ -9112,7 +9127,7 @@ or hexadecimal (0x prefixed) string. */
       baseAddress: string, /* Base address where the module is loaded into memory. Encoded as a decimal
 or hexadecimal (0x prefixed) string. */
       [@key "size"]
-      size: float /* Size of the module in bytes. */,
+      size: number /* Size of the module in bytes. */,
     };
   };
 }
@@ -9184,12 +9199,12 @@ and Network: {
   and TimeSinceEpoch: {
     /* UTC time in seconds, counted from January 1, 1970. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and MonotonicTime: {
     /* Monotonically increasing time in seconds since an arbitrary point in the past. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and Headers: {
     /* Request / response headers as keys / values of JSON object. */
@@ -9247,42 +9262,42 @@ and Network: {
     [@deriving yojson]
     type t = {
       [@key "requestTime"]
-      requestTime: float, /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
+      requestTime: number, /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
 milliseconds relatively to this requestTime. */
       [@key "proxyStart"]
-      proxyStart: float, /* Started resolving proxy. */
+      proxyStart: number, /* Started resolving proxy. */
       [@key "proxyEnd"]
-      proxyEnd: float, /* Finished resolving proxy. */
+      proxyEnd: number, /* Finished resolving proxy. */
       [@key "dnsStart"]
-      dnsStart: float, /* Started DNS address resolve. */
+      dnsStart: number, /* Started DNS address resolve. */
       [@key "dnsEnd"]
-      dnsEnd: float, /* Finished DNS address resolve. */
+      dnsEnd: number, /* Finished DNS address resolve. */
       [@key "connectStart"]
-      connectStart: float, /* Started connecting to the remote host. */
+      connectStart: number, /* Started connecting to the remote host. */
       [@key "connectEnd"]
-      connectEnd: float, /* Connected to the remote host. */
+      connectEnd: number, /* Connected to the remote host. */
       [@key "sslStart"]
-      sslStart: float, /* Started SSL handshake. */
+      sslStart: number, /* Started SSL handshake. */
       [@key "sslEnd"]
-      sslEnd: float, /* Finished SSL handshake. */
+      sslEnd: number, /* Finished SSL handshake. */
       [@key "workerStart"]
-      workerStart: float, /* Started running ServiceWorker. */
+      workerStart: number, /* Started running ServiceWorker. */
       [@key "workerReady"]
-      workerReady: float, /* Finished Starting ServiceWorker. */
+      workerReady: number, /* Finished Starting ServiceWorker. */
       [@key "workerFetchStart"]
-      workerFetchStart: float, /* Started fetch event. */
+      workerFetchStart: number, /* Started fetch event. */
       [@key "workerRespondWithSettled"]
-      workerRespondWithSettled: float, /* Settled fetch event respondWith promise. */
+      workerRespondWithSettled: number, /* Settled fetch event respondWith promise. */
       [@key "sendStart"]
-      sendStart: float, /* Started sending request. */
+      sendStart: number, /* Started sending request. */
       [@key "sendEnd"]
-      sendEnd: float, /* Finished sending request. */
+      sendEnd: number, /* Finished sending request. */
       [@key "pushStart"]
-      pushStart: float, /* Time the server started pushing request. */
+      pushStart: number, /* Time the server started pushing request. */
       [@key "pushEnd"]
-      pushEnd: float, /* Time the server finished pushing request. */
+      pushEnd: number, /* Time the server finished pushing request. */
       [@key "receiveHeadersEnd"]
-      receiveHeadersEnd: float /* Finished receiving response headers. */,
+      receiveHeadersEnd: number /* Finished receiving response headers. */,
     };
   }
   and ResourcePriority: {
@@ -9368,7 +9383,7 @@ request correspondinfg to the main frame. */,
       [@key "logId"]
       logId: string, /* Log ID. */
       [@key "timestamp"]
-      timestamp: float, /* Issuance date. Unlike TimeSinceEpoch, this contains the number of
+      timestamp: number, /* Issuance date. Unlike TimeSinceEpoch, this contains the number of
 milliseconds since January 1, 1970, UTC, not the number of seconds. */
       [@key "hashAlgorithm"]
       hashAlgorithm: string, /* Hash algorithm. */
@@ -9547,7 +9562,7 @@ records. */,
       [@key "url"]
       url: string, /* Response URL. This URL can be different from CachedResource.url in case of redirect. */
       [@key "status"]
-      status: float, /* HTTP response status code. */
+      status: number, /* HTTP response status code. */
       [@key "statusText"]
       statusText: string, /* HTTP response status text. */
       [@key "headers"]
@@ -9563,11 +9578,11 @@ records. */,
       [@key "connectionReused"]
       connectionReused: bool, /* Specifies whether physical connection was actually reused for this request. */
       [@key "connectionId"]
-      connectionId: float, /* Physical connection id that was actually used for this request. */
+      connectionId: number, /* Physical connection id that was actually used for this request. */
       [@yojson.option] [@key "remoteIPAddress"]
       remoteIPAddress: option(string), /* Remote IP address. */
       [@yojson.option] [@key "remotePort"]
-      remotePort: option(float), /* Remote port. */
+      remotePort: option(number), /* Remote port. */
       [@yojson.option] [@key "fromDiskCache"]
       fromDiskCache: option(bool), /* Specifies that the request was served from the disk cache. */
       [@yojson.option] [@key "fromServiceWorker"]
@@ -9575,7 +9590,7 @@ records. */,
       [@yojson.option] [@key "fromPrefetchCache"]
       fromPrefetchCache: option(bool), /* Specifies that the request was served from the prefetch cache. */
       [@key "encodedDataLength"]
-      encodedDataLength: float, /* Total number of bytes received for this request so far. */
+      encodedDataLength: number, /* Total number of bytes received for this request so far. */
       [@yojson.option] [@key "timing"]
       timing: option(ResourceTiming.t), /* Timing information for the given request. */
       [@yojson.option] [@key "serviceWorkerResponseSource"]
@@ -9605,7 +9620,7 @@ records. */,
     [@deriving yojson]
     type t = {
       [@key "status"]
-      status: float, /* HTTP response status code. */
+      status: number, /* HTTP response status code. */
       [@key "statusText"]
       statusText: string, /* HTTP response status text. */
       [@key "headers"]
@@ -9623,7 +9638,7 @@ records. */,
     [@deriving yojson]
     type t = {
       [@key "opcode"]
-      opcode: float, /* WebSocket message opcode. */
+      opcode: number, /* WebSocket message opcode. */
       [@key "mask"]
       mask: bool, /* WebSocket message mask. */
       [@key "payloadData"]
@@ -9643,7 +9658,7 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       [@yojson.option] [@key "response"]
       response: option(Response.t), /* Cached response data. */
       [@key "bodySize"]
-      bodySize: float /* Cached response body size. */,
+      bodySize: number /* Cached response body size. */,
     };
   }
   and Initiator: {
@@ -9667,10 +9682,10 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       [@yojson.option] [@key "url"]
       url: option(string), /* Initiator URL, set for Parser type or for Script type (when script is importing module) or for SignedExchange type. */
       [@yojson.option] [@key "lineNumber"]
-      lineNumber: option(float), /* Initiator line number, set for Parser type or for Script type (when script is importing
+      lineNumber: option(number), /* Initiator line number, set for Parser type or for Script type (when script is importing
 module) (0-based). */
       [@yojson.option] [@key "columnNumber"]
-      columnNumber: option(float), /* Initiator column number, set for Parser type or for Script type (when script is importing
+      columnNumber: option(number), /* Initiator column number, set for Parser type or for Script type (when script is importing
 module) (0-based). */
       [@yojson.option] [@key "requestId"]
       requestId: option(RequestId.t) /* Set if another request triggered this request (e.g. preflight). */,
@@ -9689,9 +9704,9 @@ module) (0-based). */
       [@key "path"]
       path: string, /* Cookie path. */
       [@key "expires"]
-      expires: float, /* Cookie expiration date as the number of seconds since the UNIX epoch. */
+      expires: number, /* Cookie expiration date as the number of seconds since the UNIX epoch. */
       [@key "size"]
-      size: float, /* Cookie size. */
+      size: number, /* Cookie size. */
       [@key "httpOnly"]
       httpOnly: bool, /* True if cookie is http-only. */
       [@key "secure"]
@@ -9707,7 +9722,7 @@ module) (0-based). */
       [@key "sourceScheme"]
       sourceScheme: CookieSourceScheme.t, /* Cookie source scheme type. */
       [@key "sourcePort"]
-      sourcePort: float, /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: number, /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
 This is a temporary ability and it will be removed in the future. */
       [@yojson.option] [@key "partitionKey"]
@@ -9824,7 +9839,7 @@ default domain, path, source port, and source scheme values of the created cooki
       [@yojson.option] [@key "sourceScheme"]
       sourceScheme: option(CookieSourceScheme.t), /* Cookie source scheme type. */
       [@yojson.option] [@key "sourcePort"]
-      sourcePort: option(float), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: option(number), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
 This is a temporary ability and it will be removed in the future. */
       [@yojson.option] [@key "partitionKey"]
@@ -9917,9 +9932,9 @@ backslash. Omitting is equivalent to `"*"`. */
       [@key "validityUrl"]
       validityUrl: string, /* Signed exchange signature validity Url. */
       [@key "date"]
-      date: float, /* Signed exchange signature date. */
+      date: number, /* Signed exchange signature date. */
       [@key "expires"]
-      expires: float, /* Signed exchange signature expires. */
+      expires: number, /* Signed exchange signature expires. */
       [@yojson.option] [@key "certificates"]
       certificates: option(list(string)) /* The encoded certificates. */,
     };
@@ -9932,7 +9947,7 @@ backslash. Omitting is equivalent to `"*"`. */
       [@key "requestUrl"]
       requestUrl: string, /* Signed exchange request URL. */
       [@key "responseCode"]
-      responseCode: float, /* Signed exchange response code. */
+      responseCode: number, /* Signed exchange response code. */
       [@key "responseHeaders"]
       responseHeaders: Headers.t, /* Signed exchange response headers. */
       [@key "signatures"]
@@ -9965,7 +9980,7 @@ backslash. Omitting is equivalent to `"*"`. */
       [@key "message"]
       message: string, /* Error message. */
       [@yojson.option] [@key "signatureIndex"]
-      signatureIndex: option(float), /* The index of the signature which caused the error. */
+      signatureIndex: option(number), /* The index of the signature which caused the error. */
       [@yojson.option] [@key "errorField"]
       errorField: option(SignedExchangeErrorField.t) /* The field which caused the error. */,
     };
@@ -10021,7 +10036,7 @@ backslash. Omitting is equivalent to `"*"`. */
     [@deriving yojson]
     type t = {
       [@key "requestTime"]
-      requestTime: float /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
+      requestTime: number /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
 milliseconds relatively to this requestTime. Matches ResourceTiming's requestTime for
 the same request (but not for redirected requests). */,
     };
@@ -10139,9 +10154,9 @@ the same request (but not for redirected requests). */,
       [@key "timestamp"]
       timestamp: Network.TimeSinceEpoch.t, /* When the report was generated. */
       [@key "depth"]
-      depth: float, /* How many uploads deep the related request was. */
+      depth: number, /* How many uploads deep the related request was. */
       [@key "completedAttempts"]
-      completedAttempts: float, /* The number of delivery attempts made so far, not including an active attempt. */
+      completedAttempts: number, /* The number of delivery attempts made so far, not including an active attempt. */
       [@key "body"]
       body: assoc, /* No description provided */
       [@key "status"]
@@ -10165,11 +10180,11 @@ the same request (but not for redirected requests). */,
       [@key "success"]
       success: bool, /* No description provided */
       [@yojson.option] [@key "netError"]
-      netError: option(float), /* Optional values used for error reporting. */
+      netError: option(number), /* Optional values used for error reporting. */
       [@yojson.option] [@key "netErrorName"]
       netErrorName: option(string), /* No description provided */
       [@yojson.option] [@key "httpStatusCode"]
-      httpStatusCode: option(float), /* No description provided */
+      httpStatusCode: option(number), /* No description provided */
       [@yojson.option] [@key "stream"]
       stream: option(IO.StreamHandle.t), /* If successful, one of the following two fields holds the result. */
       [@yojson.option] [@key "headers"]
@@ -10384,20 +10399,20 @@ the same request (but not for redirected requests). */,
   and TimeSinceEpoch: {
     /* UTC time in seconds, counted from January 1, 1970. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* UTC time in seconds, counted from January 1, 1970. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and MonotonicTime: {
     /* Monotonically increasing time in seconds since an arbitrary point in the past. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* Monotonically increasing time in seconds since an arbitrary point in the past. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and Headers: {
     /* Request / response headers as keys / values of JSON object. */
@@ -10553,84 +10568,84 @@ the same request (but not for redirected requests). */,
     [@deriving yojson]
     type t = {
       [@key "requestTime"]
-      requestTime: float, /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
+      requestTime: number, /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
 milliseconds relatively to this requestTime. */
       [@key "proxyStart"]
-      proxyStart: float, /* Started resolving proxy. */
+      proxyStart: number, /* Started resolving proxy. */
       [@key "proxyEnd"]
-      proxyEnd: float, /* Finished resolving proxy. */
+      proxyEnd: number, /* Finished resolving proxy. */
       [@key "dnsStart"]
-      dnsStart: float, /* Started DNS address resolve. */
+      dnsStart: number, /* Started DNS address resolve. */
       [@key "dnsEnd"]
-      dnsEnd: float, /* Finished DNS address resolve. */
+      dnsEnd: number, /* Finished DNS address resolve. */
       [@key "connectStart"]
-      connectStart: float, /* Started connecting to the remote host. */
+      connectStart: number, /* Started connecting to the remote host. */
       [@key "connectEnd"]
-      connectEnd: float, /* Connected to the remote host. */
+      connectEnd: number, /* Connected to the remote host. */
       [@key "sslStart"]
-      sslStart: float, /* Started SSL handshake. */
+      sslStart: number, /* Started SSL handshake. */
       [@key "sslEnd"]
-      sslEnd: float, /* Finished SSL handshake. */
+      sslEnd: number, /* Finished SSL handshake. */
       [@key "workerStart"]
-      workerStart: float, /* Started running ServiceWorker. */
+      workerStart: number, /* Started running ServiceWorker. */
       [@key "workerReady"]
-      workerReady: float, /* Finished Starting ServiceWorker. */
+      workerReady: number, /* Finished Starting ServiceWorker. */
       [@key "workerFetchStart"]
-      workerFetchStart: float, /* Started fetch event. */
+      workerFetchStart: number, /* Started fetch event. */
       [@key "workerRespondWithSettled"]
-      workerRespondWithSettled: float, /* Settled fetch event respondWith promise. */
+      workerRespondWithSettled: number, /* Settled fetch event respondWith promise. */
       [@key "sendStart"]
-      sendStart: float, /* Started sending request. */
+      sendStart: number, /* Started sending request. */
       [@key "sendEnd"]
-      sendEnd: float, /* Finished sending request. */
+      sendEnd: number, /* Finished sending request. */
       [@key "pushStart"]
-      pushStart: float, /* Time the server started pushing request. */
+      pushStart: number, /* Time the server started pushing request. */
       [@key "pushEnd"]
-      pushEnd: float, /* Time the server finished pushing request. */
+      pushEnd: number, /* Time the server finished pushing request. */
       [@key "receiveHeadersEnd"]
-      receiveHeadersEnd: float /* Finished receiving response headers. */,
+      receiveHeadersEnd: number /* Finished receiving response headers. */,
     };
   } = {
     /* Timing information for the request. */
     [@deriving yojson]
     type t = {
       [@key "requestTime"]
-      requestTime: float, /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
+      requestTime: number, /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
 milliseconds relatively to this requestTime. */
       [@key "proxyStart"]
-      proxyStart: float, /* Started resolving proxy. */
+      proxyStart: number, /* Started resolving proxy. */
       [@key "proxyEnd"]
-      proxyEnd: float, /* Finished resolving proxy. */
+      proxyEnd: number, /* Finished resolving proxy. */
       [@key "dnsStart"]
-      dnsStart: float, /* Started DNS address resolve. */
+      dnsStart: number, /* Started DNS address resolve. */
       [@key "dnsEnd"]
-      dnsEnd: float, /* Finished DNS address resolve. */
+      dnsEnd: number, /* Finished DNS address resolve. */
       [@key "connectStart"]
-      connectStart: float, /* Started connecting to the remote host. */
+      connectStart: number, /* Started connecting to the remote host. */
       [@key "connectEnd"]
-      connectEnd: float, /* Connected to the remote host. */
+      connectEnd: number, /* Connected to the remote host. */
       [@key "sslStart"]
-      sslStart: float, /* Started SSL handshake. */
+      sslStart: number, /* Started SSL handshake. */
       [@key "sslEnd"]
-      sslEnd: float, /* Finished SSL handshake. */
+      sslEnd: number, /* Finished SSL handshake. */
       [@key "workerStart"]
-      workerStart: float, /* Started running ServiceWorker. */
+      workerStart: number, /* Started running ServiceWorker. */
       [@key "workerReady"]
-      workerReady: float, /* Finished Starting ServiceWorker. */
+      workerReady: number, /* Finished Starting ServiceWorker. */
       [@key "workerFetchStart"]
-      workerFetchStart: float, /* Started fetch event. */
+      workerFetchStart: number, /* Started fetch event. */
       [@key "workerRespondWithSettled"]
-      workerRespondWithSettled: float, /* Settled fetch event respondWith promise. */
+      workerRespondWithSettled: number, /* Settled fetch event respondWith promise. */
       [@key "sendStart"]
-      sendStart: float, /* Started sending request. */
+      sendStart: number, /* Started sending request. */
       [@key "sendEnd"]
-      sendEnd: float, /* Finished sending request. */
+      sendEnd: number, /* Finished sending request. */
       [@key "pushStart"]
-      pushStart: float, /* Time the server started pushing request. */
+      pushStart: number, /* Time the server started pushing request. */
       [@key "pushEnd"]
-      pushEnd: float, /* Time the server finished pushing request. */
+      pushEnd: number, /* Time the server finished pushing request. */
       [@key "receiveHeadersEnd"]
-      receiveHeadersEnd: float /* Finished receiving response headers. */,
+      receiveHeadersEnd: number /* Finished receiving response headers. */,
     };
   }
   and ResourcePriority: {
@@ -10816,7 +10831,7 @@ request correspondinfg to the main frame. */,
       [@key "logId"]
       logId: string, /* Log ID. */
       [@key "timestamp"]
-      timestamp: float, /* Issuance date. Unlike TimeSinceEpoch, this contains the number of
+      timestamp: number, /* Issuance date. Unlike TimeSinceEpoch, this contains the number of
 milliseconds since January 1, 1970, UTC, not the number of seconds. */
       [@key "hashAlgorithm"]
       hashAlgorithm: string, /* Hash algorithm. */
@@ -10838,7 +10853,7 @@ milliseconds since January 1, 1970, UTC, not the number of seconds. */
       [@key "logId"]
       logId: string, /* Log ID. */
       [@key "timestamp"]
-      timestamp: float, /* Issuance date. Unlike TimeSinceEpoch, this contains the number of
+      timestamp: number, /* Issuance date. Unlike TimeSinceEpoch, this contains the number of
 milliseconds since January 1, 1970, UTC, not the number of seconds. */
       [@key "hashAlgorithm"]
       hashAlgorithm: string, /* Hash algorithm. */
@@ -11314,7 +11329,7 @@ records. */,
       [@key "url"]
       url: string, /* Response URL. This URL can be different from CachedResource.url in case of redirect. */
       [@key "status"]
-      status: float, /* HTTP response status code. */
+      status: number, /* HTTP response status code. */
       [@key "statusText"]
       statusText: string, /* HTTP response status text. */
       [@key "headers"]
@@ -11330,11 +11345,11 @@ records. */,
       [@key "connectionReused"]
       connectionReused: bool, /* Specifies whether physical connection was actually reused for this request. */
       [@key "connectionId"]
-      connectionId: float, /* Physical connection id that was actually used for this request. */
+      connectionId: number, /* Physical connection id that was actually used for this request. */
       [@yojson.option] [@key "remoteIPAddress"]
       remoteIPAddress: option(string), /* Remote IP address. */
       [@yojson.option] [@key "remotePort"]
-      remotePort: option(float), /* Remote port. */
+      remotePort: option(number), /* Remote port. */
       [@yojson.option] [@key "fromDiskCache"]
       fromDiskCache: option(bool), /* Specifies that the request was served from the disk cache. */
       [@yojson.option] [@key "fromServiceWorker"]
@@ -11342,7 +11357,7 @@ records. */,
       [@yojson.option] [@key "fromPrefetchCache"]
       fromPrefetchCache: option(bool), /* Specifies that the request was served from the prefetch cache. */
       [@key "encodedDataLength"]
-      encodedDataLength: float, /* Total number of bytes received for this request so far. */
+      encodedDataLength: number, /* Total number of bytes received for this request so far. */
       [@yojson.option] [@key "timing"]
       timing: option(ResourceTiming.t), /* Timing information for the given request. */
       [@yojson.option] [@key "serviceWorkerResponseSource"]
@@ -11365,7 +11380,7 @@ records. */,
       [@key "url"]
       url: string, /* Response URL. This URL can be different from CachedResource.url in case of redirect. */
       [@key "status"]
-      status: float, /* HTTP response status code. */
+      status: number, /* HTTP response status code. */
       [@key "statusText"]
       statusText: string, /* HTTP response status text. */
       [@key "headers"]
@@ -11381,11 +11396,11 @@ records. */,
       [@key "connectionReused"]
       connectionReused: bool, /* Specifies whether physical connection was actually reused for this request. */
       [@key "connectionId"]
-      connectionId: float, /* Physical connection id that was actually used for this request. */
+      connectionId: number, /* Physical connection id that was actually used for this request. */
       [@yojson.option] [@key "remoteIPAddress"]
       remoteIPAddress: option(string), /* Remote IP address. */
       [@yojson.option] [@key "remotePort"]
-      remotePort: option(float), /* Remote port. */
+      remotePort: option(number), /* Remote port. */
       [@yojson.option] [@key "fromDiskCache"]
       fromDiskCache: option(bool), /* Specifies that the request was served from the disk cache. */
       [@yojson.option] [@key "fromServiceWorker"]
@@ -11393,7 +11408,7 @@ records. */,
       [@yojson.option] [@key "fromPrefetchCache"]
       fromPrefetchCache: option(bool), /* Specifies that the request was served from the prefetch cache. */
       [@key "encodedDataLength"]
-      encodedDataLength: float, /* Total number of bytes received for this request so far. */
+      encodedDataLength: number, /* Total number of bytes received for this request so far. */
       [@yojson.option] [@key "timing"]
       timing: option(ResourceTiming.t), /* Timing information for the given request. */
       [@yojson.option] [@key "serviceWorkerResponseSource"]
@@ -11430,7 +11445,7 @@ records. */,
     [@deriving yojson]
     type t = {
       [@key "status"]
-      status: float, /* HTTP response status code. */
+      status: number, /* HTTP response status code. */
       [@key "statusText"]
       statusText: string, /* HTTP response status text. */
       [@key "headers"]
@@ -11447,7 +11462,7 @@ records. */,
     [@deriving yojson]
     type t = {
       [@key "status"]
-      status: float, /* HTTP response status code. */
+      status: number, /* HTTP response status code. */
       [@key "statusText"]
       statusText: string, /* HTTP response status text. */
       [@key "headers"]
@@ -11465,7 +11480,7 @@ records. */,
     [@deriving yojson]
     type t = {
       [@key "opcode"]
-      opcode: float, /* WebSocket message opcode. */
+      opcode: number, /* WebSocket message opcode. */
       [@key "mask"]
       mask: bool, /* WebSocket message mask. */
       [@key "payloadData"]
@@ -11478,7 +11493,7 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
     [@deriving yojson]
     type t = {
       [@key "opcode"]
-      opcode: float, /* WebSocket message opcode. */
+      opcode: number, /* WebSocket message opcode. */
       [@key "mask"]
       mask: bool, /* WebSocket message mask. */
       [@key "payloadData"]
@@ -11498,7 +11513,7 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       [@yojson.option] [@key "response"]
       response: option(Response.t), /* Cached response data. */
       [@key "bodySize"]
-      bodySize: float /* Cached response body size. */,
+      bodySize: number /* Cached response body size. */,
     };
   } = {
     /* Information about the cached resource. */
@@ -11511,7 +11526,7 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       [@yojson.option] [@key "response"]
       response: option(Response.t), /* Cached response data. */
       [@key "bodySize"]
-      bodySize: float /* Cached response body size. */,
+      bodySize: number /* Cached response body size. */,
     };
   }
   and Initiator: {
@@ -11535,10 +11550,10 @@ If the opcode isn't 1, then payloadData is a base64 encoded string representing 
       [@yojson.option] [@key "url"]
       url: option(string), /* Initiator URL, set for Parser type or for Script type (when script is importing module) or for SignedExchange type. */
       [@yojson.option] [@key "lineNumber"]
-      lineNumber: option(float), /* Initiator line number, set for Parser type or for Script type (when script is importing
+      lineNumber: option(number), /* Initiator line number, set for Parser type or for Script type (when script is importing
 module) (0-based). */
       [@yojson.option] [@key "columnNumber"]
-      columnNumber: option(float), /* Initiator column number, set for Parser type or for Script type (when script is importing
+      columnNumber: option(number), /* Initiator column number, set for Parser type or for Script type (when script is importing
 module) (0-based). */
       [@yojson.option] [@key "requestId"]
       requestId: option(RequestId.t) /* Set if another request triggered this request (e.g. preflight). */,
@@ -11580,10 +11595,10 @@ module) (0-based). */
       [@yojson.option] [@key "url"]
       url: option(string), /* Initiator URL, set for Parser type or for Script type (when script is importing module) or for SignedExchange type. */
       [@yojson.option] [@key "lineNumber"]
-      lineNumber: option(float), /* Initiator line number, set for Parser type or for Script type (when script is importing
+      lineNumber: option(number), /* Initiator line number, set for Parser type or for Script type (when script is importing
 module) (0-based). */
       [@yojson.option] [@key "columnNumber"]
-      columnNumber: option(float), /* Initiator column number, set for Parser type or for Script type (when script is importing
+      columnNumber: option(number), /* Initiator column number, set for Parser type or for Script type (when script is importing
 module) (0-based). */
       [@yojson.option] [@key "requestId"]
       requestId: option(RequestId.t) /* Set if another request triggered this request (e.g. preflight). */,
@@ -11602,9 +11617,9 @@ module) (0-based). */
       [@key "path"]
       path: string, /* Cookie path. */
       [@key "expires"]
-      expires: float, /* Cookie expiration date as the number of seconds since the UNIX epoch. */
+      expires: number, /* Cookie expiration date as the number of seconds since the UNIX epoch. */
       [@key "size"]
-      size: float, /* Cookie size. */
+      size: number, /* Cookie size. */
       [@key "httpOnly"]
       httpOnly: bool, /* True if cookie is http-only. */
       [@key "secure"]
@@ -11620,7 +11635,7 @@ module) (0-based). */
       [@key "sourceScheme"]
       sourceScheme: CookieSourceScheme.t, /* Cookie source scheme type. */
       [@key "sourcePort"]
-      sourcePort: float, /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: number, /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
 This is a temporary ability and it will be removed in the future. */
       [@yojson.option] [@key "partitionKey"]
@@ -11642,9 +11657,9 @@ of the request to the endpoint that set the cookie. */
       [@key "path"]
       path: string, /* Cookie path. */
       [@key "expires"]
-      expires: float, /* Cookie expiration date as the number of seconds since the UNIX epoch. */
+      expires: number, /* Cookie expiration date as the number of seconds since the UNIX epoch. */
       [@key "size"]
-      size: float, /* Cookie size. */
+      size: number, /* Cookie size. */
       [@key "httpOnly"]
       httpOnly: bool, /* True if cookie is http-only. */
       [@key "secure"]
@@ -11660,7 +11675,7 @@ of the request to the endpoint that set the cookie. */
       [@key "sourceScheme"]
       sourceScheme: CookieSourceScheme.t, /* Cookie source scheme type. */
       [@key "sourcePort"]
-      sourcePort: float, /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: number, /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
 This is a temporary ability and it will be removed in the future. */
       [@yojson.option] [@key "partitionKey"]
@@ -11929,7 +11944,7 @@ default domain, path, source port, and source scheme values of the created cooki
       [@yojson.option] [@key "sourceScheme"]
       sourceScheme: option(CookieSourceScheme.t), /* Cookie source scheme type. */
       [@yojson.option] [@key "sourcePort"]
-      sourcePort: option(float), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: option(number), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
 This is a temporary ability and it will be removed in the future. */
       [@yojson.option] [@key "partitionKey"]
@@ -11967,7 +11982,7 @@ default domain, path, source port, and source scheme values of the created cooki
       [@yojson.option] [@key "sourceScheme"]
       sourceScheme: option(CookieSourceScheme.t), /* Cookie source scheme type. */
       [@yojson.option] [@key "sourcePort"]
-      sourcePort: option(float), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
+      sourcePort: option(number), /* Cookie source port. Valid values are {-1, [1, 65535]}, -1 indicates an unspecified port.
 An unspecified port value allows protocol clients to emulate legacy cookie scope for the port.
 This is a temporary ability and it will be removed in the future. */
       [@yojson.option] [@key "partitionKey"]
@@ -12144,9 +12159,9 @@ backslash. Omitting is equivalent to `"*"`. */
       [@key "validityUrl"]
       validityUrl: string, /* Signed exchange signature validity Url. */
       [@key "date"]
-      date: float, /* Signed exchange signature date. */
+      date: number, /* Signed exchange signature date. */
       [@key "expires"]
-      expires: float, /* Signed exchange signature expires. */
+      expires: number, /* Signed exchange signature expires. */
       [@yojson.option] [@key "certificates"]
       certificates: option(list(string)) /* The encoded certificates. */,
     };
@@ -12168,9 +12183,9 @@ backslash. Omitting is equivalent to `"*"`. */
       [@key "validityUrl"]
       validityUrl: string, /* Signed exchange signature validity Url. */
       [@key "date"]
-      date: float, /* Signed exchange signature date. */
+      date: number, /* Signed exchange signature date. */
       [@key "expires"]
-      expires: float, /* Signed exchange signature expires. */
+      expires: number, /* Signed exchange signature expires. */
       [@yojson.option] [@key "certificates"]
       certificates: option(list(string)) /* The encoded certificates. */,
     };
@@ -12183,7 +12198,7 @@ backslash. Omitting is equivalent to `"*"`. */
       [@key "requestUrl"]
       requestUrl: string, /* Signed exchange request URL. */
       [@key "responseCode"]
-      responseCode: float, /* Signed exchange response code. */
+      responseCode: number, /* Signed exchange response code. */
       [@key "responseHeaders"]
       responseHeaders: Headers.t, /* Signed exchange response headers. */
       [@key "signatures"]
@@ -12199,7 +12214,7 @@ backslash. Omitting is equivalent to `"*"`. */
       [@key "requestUrl"]
       requestUrl: string, /* Signed exchange request URL. */
       [@key "responseCode"]
-      responseCode: float, /* Signed exchange response code. */
+      responseCode: number, /* Signed exchange response code. */
       [@key "responseHeaders"]
       responseHeaders: Headers.t, /* Signed exchange response headers. */
       [@key "signatures"]
@@ -12262,7 +12277,7 @@ backslash. Omitting is equivalent to `"*"`. */
       [@key "message"]
       message: string, /* Error message. */
       [@yojson.option] [@key "signatureIndex"]
-      signatureIndex: option(float), /* The index of the signature which caused the error. */
+      signatureIndex: option(number), /* The index of the signature which caused the error. */
       [@yojson.option] [@key "errorField"]
       errorField: option(SignedExchangeErrorField.t) /* The field which caused the error. */,
     };
@@ -12273,7 +12288,7 @@ backslash. Omitting is equivalent to `"*"`. */
       [@key "message"]
       message: string, /* Error message. */
       [@yojson.option] [@key "signatureIndex"]
-      signatureIndex: option(float), /* The index of the signature which caused the error. */
+      signatureIndex: option(number), /* The index of the signature which caused the error. */
       [@yojson.option] [@key "errorField"]
       errorField: option(SignedExchangeErrorField.t) /* The field which caused the error. */,
     };
@@ -12407,7 +12422,7 @@ backslash. Omitting is equivalent to `"*"`. */
     [@deriving yojson]
     type t = {
       [@key "requestTime"]
-      requestTime: float /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
+      requestTime: number /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
 milliseconds relatively to this requestTime. Matches ResourceTiming's requestTime for
 the same request (but not for redirected requests). */,
     };
@@ -12416,7 +12431,7 @@ the same request (but not for redirected requests). */,
     [@deriving yojson]
     type t = {
       [@key "requestTime"]
-      requestTime: float /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
+      requestTime: number /* Timing's requestTime is a baseline in seconds, while the other numbers are ticks in
 milliseconds relatively to this requestTime. Matches ResourceTiming's requestTime for
 the same request (but not for redirected requests). */,
     };
@@ -12657,9 +12672,9 @@ the same request (but not for redirected requests). */,
       [@key "timestamp"]
       timestamp: Network.TimeSinceEpoch.t, /* When the report was generated. */
       [@key "depth"]
-      depth: float, /* How many uploads deep the related request was. */
+      depth: number, /* How many uploads deep the related request was. */
       [@key "completedAttempts"]
-      completedAttempts: float, /* The number of delivery attempts made so far, not including an active attempt. */
+      completedAttempts: number, /* The number of delivery attempts made so far, not including an active attempt. */
       [@key "body"]
       body: assoc, /* No description provided */
       [@key "status"]
@@ -12680,9 +12695,9 @@ the same request (but not for redirected requests). */,
       [@key "timestamp"]
       timestamp: Network.TimeSinceEpoch.t, /* When the report was generated. */
       [@key "depth"]
-      depth: float, /* How many uploads deep the related request was. */
+      depth: number, /* How many uploads deep the related request was. */
       [@key "completedAttempts"]
-      completedAttempts: float, /* The number of delivery attempts made so far, not including an active attempt. */
+      completedAttempts: number, /* The number of delivery attempts made so far, not including an active attempt. */
       [@key "body"]
       body: assoc, /* No description provided */
       [@key "status"]
@@ -12715,11 +12730,11 @@ the same request (but not for redirected requests). */,
       [@key "success"]
       success: bool, /* No description provided */
       [@yojson.option] [@key "netError"]
-      netError: option(float), /* Optional values used for error reporting. */
+      netError: option(number), /* Optional values used for error reporting. */
       [@yojson.option] [@key "netErrorName"]
       netErrorName: option(string), /* No description provided */
       [@yojson.option] [@key "httpStatusCode"]
-      httpStatusCode: option(float), /* No description provided */
+      httpStatusCode: option(number), /* No description provided */
       [@yojson.option] [@key "stream"]
       stream: option(IO.StreamHandle.t), /* If successful, one of the following two fields holds the result. */
       [@yojson.option] [@key "headers"]
@@ -12732,11 +12747,11 @@ the same request (but not for redirected requests). */,
       [@key "success"]
       success: bool, /* No description provided */
       [@yojson.option] [@key "netError"]
-      netError: option(float), /* Optional values used for error reporting. */
+      netError: option(number), /* Optional values used for error reporting. */
       [@yojson.option] [@key "netErrorName"]
       netErrorName: option(string), /* No description provided */
       [@yojson.option] [@key "httpStatusCode"]
-      httpStatusCode: option(float), /* No description provided */
+      httpStatusCode: option(number), /* No description provided */
       [@yojson.option] [@key "stream"]
       stream: option(IO.StreamHandle.t), /* If successful, one of the following two fields holds the result. */
       [@yojson.option] [@key "headers"]
@@ -13982,7 +13997,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@yojson.option] [@key "lastModified"]
       lastModified: option(Network.TimeSinceEpoch.t), /* last-modified timestamp as reported by server. */
       [@yojson.option] [@key "contentSize"]
-      contentSize: option(float), /* Resource content size. */
+      contentSize: option(number), /* Resource content size. */
       [@yojson.option] [@key "failed"]
       failed: option(bool), /* True if the resource failed to load. */
       [@yojson.option] [@key "canceled"]
@@ -14043,7 +14058,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "id"]
-      id: float, /* Unique id of the navigation history entry. */
+      id: number, /* Unique id of the navigation history entry. */
       [@key "url"]
       url: string, /* URL of the navigation history entry. */
       [@key "userTypedURL"]
@@ -14059,17 +14074,17 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "offsetTop"]
-      offsetTop: float, /* Top offset in DIP. */
+      offsetTop: number, /* Top offset in DIP. */
       [@key "pageScaleFactor"]
-      pageScaleFactor: float, /* Page scale factor. */
+      pageScaleFactor: number, /* Page scale factor. */
       [@key "deviceWidth"]
-      deviceWidth: float, /* Device screen width in DIP. */
+      deviceWidth: number, /* Device screen width in DIP. */
       [@key "deviceHeight"]
-      deviceHeight: float, /* Device screen height in DIP. */
+      deviceHeight: number, /* Device screen height in DIP. */
       [@key "scrollOffsetX"]
-      scrollOffsetX: float, /* Position of horizontal scroll in CSS pixels. */
+      scrollOffsetX: number, /* Position of horizontal scroll in CSS pixels. */
       [@key "scrollOffsetY"]
-      scrollOffsetY: float, /* Position of vertical scroll in CSS pixels. */
+      scrollOffsetY: number, /* Position of vertical scroll in CSS pixels. */
       [@yojson.option] [@key "timestamp"]
       timestamp: option(Network.TimeSinceEpoch.t) /* Frame swap timestamp. */,
     };
@@ -14089,11 +14104,11 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "message"]
       message: string, /* Error message. */
       [@key "critical"]
-      critical: float, /* If criticial, this is a non-recoverable parse error. */
+      critical: number, /* If criticial, this is a non-recoverable parse error. */
       [@key "line"]
-      line: float, /* Error line. */
+      line: number, /* Error line. */
       [@key "column"]
-      column: float /* Error column. */,
+      column: number /* Error column. */,
     };
   }
   and AppManifestParsedProperties: {
@@ -14109,13 +14124,13 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "pageX"]
-      pageX: float, /* Horizontal offset relative to the document (CSS pixels). */
+      pageX: number, /* Horizontal offset relative to the document (CSS pixels). */
       [@key "pageY"]
-      pageY: float, /* Vertical offset relative to the document (CSS pixels). */
+      pageY: number, /* Vertical offset relative to the document (CSS pixels). */
       [@key "clientWidth"]
-      clientWidth: float, /* Width (CSS pixels), excludes scrollbar if present. */
+      clientWidth: number, /* Width (CSS pixels), excludes scrollbar if present. */
       [@key "clientHeight"]
-      clientHeight: float /* Height (CSS pixels), excludes scrollbar if present. */,
+      clientHeight: number /* Height (CSS pixels), excludes scrollbar if present. */,
     };
   }
   and VisualViewport: {
@@ -14123,21 +14138,21 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "offsetX"]
-      offsetX: float, /* Horizontal offset relative to the layout viewport (CSS pixels). */
+      offsetX: number, /* Horizontal offset relative to the layout viewport (CSS pixels). */
       [@key "offsetY"]
-      offsetY: float, /* Vertical offset relative to the layout viewport (CSS pixels). */
+      offsetY: number, /* Vertical offset relative to the layout viewport (CSS pixels). */
       [@key "pageX"]
-      pageX: float, /* Horizontal offset relative to the document (CSS pixels). */
+      pageX: number, /* Horizontal offset relative to the document (CSS pixels). */
       [@key "pageY"]
-      pageY: float, /* Vertical offset relative to the document (CSS pixels). */
+      pageY: number, /* Vertical offset relative to the document (CSS pixels). */
       [@key "clientWidth"]
-      clientWidth: float, /* Width (CSS pixels), excludes scrollbar if present. */
+      clientWidth: number, /* Width (CSS pixels), excludes scrollbar if present. */
       [@key "clientHeight"]
-      clientHeight: float, /* Height (CSS pixels), excludes scrollbar if present. */
+      clientHeight: number, /* Height (CSS pixels), excludes scrollbar if present. */
       [@key "scale"]
-      scale: float, /* Scale relative to the ideal viewport (size at width=device-width). */
+      scale: number, /* Scale relative to the ideal viewport (size at width=device-width). */
       [@yojson.option] [@key "zoom"]
-      zoom: option(float) /* Page zoom factor (CSS to device independent pixels ratio). */,
+      zoom: option(number) /* Page zoom factor (CSS to device independent pixels ratio). */,
     };
   }
   and Viewport: {
@@ -14145,15 +14160,15 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* X offset in device independent pixels (dip). */
+      x: number, /* X offset in device independent pixels (dip). */
       [@key "y"]
-      y: float, /* Y offset in device independent pixels (dip). */
+      y: number, /* Y offset in device independent pixels (dip). */
       [@key "width"]
-      width: float, /* Rectangle width in device independent pixels (dip). */
+      width: number, /* Rectangle width in device independent pixels (dip). */
       [@key "height"]
-      height: float, /* Rectangle height in device independent pixels (dip). */
+      height: number, /* Rectangle height in device independent pixels (dip). */
       [@key "scale"]
-      scale: float /* Page scale factor. */,
+      scale: number /* Page scale factor. */,
     };
   }
   and FontFamilies: {
@@ -14191,9 +14206,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "standard"]
-      standard: option(float), /* Default standard font size. */
+      standard: option(number), /* Default standard font size. */
       [@yojson.option] [@key "fixed"]
-      fixed: option(float) /* Default fixed font size. */,
+      fixed: option(number) /* Default fixed font size. */,
     };
   }
   and ClientNavigationReason: {
@@ -15335,7 +15350,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@yojson.option] [@key "lastModified"]
       lastModified: option(Network.TimeSinceEpoch.t), /* last-modified timestamp as reported by server. */
       [@yojson.option] [@key "contentSize"]
-      contentSize: option(float), /* Resource content size. */
+      contentSize: option(number), /* Resource content size. */
       [@yojson.option] [@key "failed"]
       failed: option(bool), /* True if the resource failed to load. */
       [@yojson.option] [@key "canceled"]
@@ -15354,7 +15369,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@yojson.option] [@key "lastModified"]
       lastModified: option(Network.TimeSinceEpoch.t), /* last-modified timestamp as reported by server. */
       [@yojson.option] [@key "contentSize"]
-      contentSize: option(float), /* Resource content size. */
+      contentSize: option(number), /* Resource content size. */
       [@yojson.option] [@key "failed"]
       failed: option(bool), /* True if the resource failed to load. */
       [@yojson.option] [@key "canceled"]
@@ -15490,7 +15505,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "id"]
-      id: float, /* Unique id of the navigation history entry. */
+      id: number, /* Unique id of the navigation history entry. */
       [@key "url"]
       url: string, /* URL of the navigation history entry. */
       [@key "userTypedURL"]
@@ -15505,7 +15520,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "id"]
-      id: float, /* Unique id of the navigation history entry. */
+      id: number, /* Unique id of the navigation history entry. */
       [@key "url"]
       url: string, /* URL of the navigation history entry. */
       [@key "userTypedURL"]
@@ -15521,17 +15536,17 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "offsetTop"]
-      offsetTop: float, /* Top offset in DIP. */
+      offsetTop: number, /* Top offset in DIP. */
       [@key "pageScaleFactor"]
-      pageScaleFactor: float, /* Page scale factor. */
+      pageScaleFactor: number, /* Page scale factor. */
       [@key "deviceWidth"]
-      deviceWidth: float, /* Device screen width in DIP. */
+      deviceWidth: number, /* Device screen width in DIP. */
       [@key "deviceHeight"]
-      deviceHeight: float, /* Device screen height in DIP. */
+      deviceHeight: number, /* Device screen height in DIP. */
       [@key "scrollOffsetX"]
-      scrollOffsetX: float, /* Position of horizontal scroll in CSS pixels. */
+      scrollOffsetX: number, /* Position of horizontal scroll in CSS pixels. */
       [@key "scrollOffsetY"]
-      scrollOffsetY: float, /* Position of vertical scroll in CSS pixels. */
+      scrollOffsetY: number, /* Position of vertical scroll in CSS pixels. */
       [@yojson.option] [@key "timestamp"]
       timestamp: option(Network.TimeSinceEpoch.t) /* Frame swap timestamp. */,
     };
@@ -15540,17 +15555,17 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "offsetTop"]
-      offsetTop: float, /* Top offset in DIP. */
+      offsetTop: number, /* Top offset in DIP. */
       [@key "pageScaleFactor"]
-      pageScaleFactor: float, /* Page scale factor. */
+      pageScaleFactor: number, /* Page scale factor. */
       [@key "deviceWidth"]
-      deviceWidth: float, /* Device screen width in DIP. */
+      deviceWidth: number, /* Device screen width in DIP. */
       [@key "deviceHeight"]
-      deviceHeight: float, /* Device screen height in DIP. */
+      deviceHeight: number, /* Device screen height in DIP. */
       [@key "scrollOffsetX"]
-      scrollOffsetX: float, /* Position of horizontal scroll in CSS pixels. */
+      scrollOffsetX: number, /* Position of horizontal scroll in CSS pixels. */
       [@key "scrollOffsetY"]
-      scrollOffsetY: float, /* Position of vertical scroll in CSS pixels. */
+      scrollOffsetY: number, /* Position of vertical scroll in CSS pixels. */
       [@yojson.option] [@key "timestamp"]
       timestamp: option(Network.TimeSinceEpoch.t) /* Frame swap timestamp. */,
     };
@@ -15589,11 +15604,11 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "message"]
       message: string, /* Error message. */
       [@key "critical"]
-      critical: float, /* If criticial, this is a non-recoverable parse error. */
+      critical: number, /* If criticial, this is a non-recoverable parse error. */
       [@key "line"]
-      line: float, /* Error line. */
+      line: number, /* Error line. */
       [@key "column"]
-      column: float /* Error column. */,
+      column: number /* Error column. */,
     };
   } = {
     /* Error while paring app manifest. */
@@ -15602,11 +15617,11 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@key "message"]
       message: string, /* Error message. */
       [@key "critical"]
-      critical: float, /* If criticial, this is a non-recoverable parse error. */
+      critical: number, /* If criticial, this is a non-recoverable parse error. */
       [@key "line"]
-      line: float, /* Error line. */
+      line: number, /* Error line. */
       [@key "column"]
-      column: float /* Error column. */,
+      column: number /* Error column. */,
     };
   }
   and AppManifestParsedProperties: {
@@ -15629,26 +15644,26 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "pageX"]
-      pageX: float, /* Horizontal offset relative to the document (CSS pixels). */
+      pageX: number, /* Horizontal offset relative to the document (CSS pixels). */
       [@key "pageY"]
-      pageY: float, /* Vertical offset relative to the document (CSS pixels). */
+      pageY: number, /* Vertical offset relative to the document (CSS pixels). */
       [@key "clientWidth"]
-      clientWidth: float, /* Width (CSS pixels), excludes scrollbar if present. */
+      clientWidth: number, /* Width (CSS pixels), excludes scrollbar if present. */
       [@key "clientHeight"]
-      clientHeight: float /* Height (CSS pixels), excludes scrollbar if present. */,
+      clientHeight: number /* Height (CSS pixels), excludes scrollbar if present. */,
     };
   } = {
     /* Layout viewport position and dimensions. */
     [@deriving yojson]
     type t = {
       [@key "pageX"]
-      pageX: float, /* Horizontal offset relative to the document (CSS pixels). */
+      pageX: number, /* Horizontal offset relative to the document (CSS pixels). */
       [@key "pageY"]
-      pageY: float, /* Vertical offset relative to the document (CSS pixels). */
+      pageY: number, /* Vertical offset relative to the document (CSS pixels). */
       [@key "clientWidth"]
-      clientWidth: float, /* Width (CSS pixels), excludes scrollbar if present. */
+      clientWidth: number, /* Width (CSS pixels), excludes scrollbar if present. */
       [@key "clientHeight"]
-      clientHeight: float /* Height (CSS pixels), excludes scrollbar if present. */,
+      clientHeight: number /* Height (CSS pixels), excludes scrollbar if present. */,
     };
   }
   and VisualViewport: {
@@ -15656,42 +15671,42 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "offsetX"]
-      offsetX: float, /* Horizontal offset relative to the layout viewport (CSS pixels). */
+      offsetX: number, /* Horizontal offset relative to the layout viewport (CSS pixels). */
       [@key "offsetY"]
-      offsetY: float, /* Vertical offset relative to the layout viewport (CSS pixels). */
+      offsetY: number, /* Vertical offset relative to the layout viewport (CSS pixels). */
       [@key "pageX"]
-      pageX: float, /* Horizontal offset relative to the document (CSS pixels). */
+      pageX: number, /* Horizontal offset relative to the document (CSS pixels). */
       [@key "pageY"]
-      pageY: float, /* Vertical offset relative to the document (CSS pixels). */
+      pageY: number, /* Vertical offset relative to the document (CSS pixels). */
       [@key "clientWidth"]
-      clientWidth: float, /* Width (CSS pixels), excludes scrollbar if present. */
+      clientWidth: number, /* Width (CSS pixels), excludes scrollbar if present. */
       [@key "clientHeight"]
-      clientHeight: float, /* Height (CSS pixels), excludes scrollbar if present. */
+      clientHeight: number, /* Height (CSS pixels), excludes scrollbar if present. */
       [@key "scale"]
-      scale: float, /* Scale relative to the ideal viewport (size at width=device-width). */
+      scale: number, /* Scale relative to the ideal viewport (size at width=device-width). */
       [@yojson.option] [@key "zoom"]
-      zoom: option(float) /* Page zoom factor (CSS to device independent pixels ratio). */,
+      zoom: option(number) /* Page zoom factor (CSS to device independent pixels ratio). */,
     };
   } = {
     /* Visual viewport position, dimensions, and scale. */
     [@deriving yojson]
     type t = {
       [@key "offsetX"]
-      offsetX: float, /* Horizontal offset relative to the layout viewport (CSS pixels). */
+      offsetX: number, /* Horizontal offset relative to the layout viewport (CSS pixels). */
       [@key "offsetY"]
-      offsetY: float, /* Vertical offset relative to the layout viewport (CSS pixels). */
+      offsetY: number, /* Vertical offset relative to the layout viewport (CSS pixels). */
       [@key "pageX"]
-      pageX: float, /* Horizontal offset relative to the document (CSS pixels). */
+      pageX: number, /* Horizontal offset relative to the document (CSS pixels). */
       [@key "pageY"]
-      pageY: float, /* Vertical offset relative to the document (CSS pixels). */
+      pageY: number, /* Vertical offset relative to the document (CSS pixels). */
       [@key "clientWidth"]
-      clientWidth: float, /* Width (CSS pixels), excludes scrollbar if present. */
+      clientWidth: number, /* Width (CSS pixels), excludes scrollbar if present. */
       [@key "clientHeight"]
-      clientHeight: float, /* Height (CSS pixels), excludes scrollbar if present. */
+      clientHeight: number, /* Height (CSS pixels), excludes scrollbar if present. */
       [@key "scale"]
-      scale: float, /* Scale relative to the ideal viewport (size at width=device-width). */
+      scale: number, /* Scale relative to the ideal viewport (size at width=device-width). */
       [@yojson.option] [@key "zoom"]
-      zoom: option(float) /* Page zoom factor (CSS to device independent pixels ratio). */,
+      zoom: option(number) /* Page zoom factor (CSS to device independent pixels ratio). */,
     };
   }
   and Viewport: {
@@ -15699,30 +15714,30 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* X offset in device independent pixels (dip). */
+      x: number, /* X offset in device independent pixels (dip). */
       [@key "y"]
-      y: float, /* Y offset in device independent pixels (dip). */
+      y: number, /* Y offset in device independent pixels (dip). */
       [@key "width"]
-      width: float, /* Rectangle width in device independent pixels (dip). */
+      width: number, /* Rectangle width in device independent pixels (dip). */
       [@key "height"]
-      height: float, /* Rectangle height in device independent pixels (dip). */
+      height: number, /* Rectangle height in device independent pixels (dip). */
       [@key "scale"]
-      scale: float /* Page scale factor. */,
+      scale: number /* Page scale factor. */,
     };
   } = {
     /* Viewport for capturing screenshot. */
     [@deriving yojson]
     type t = {
       [@key "x"]
-      x: float, /* X offset in device independent pixels (dip). */
+      x: number, /* X offset in device independent pixels (dip). */
       [@key "y"]
-      y: float, /* Y offset in device independent pixels (dip). */
+      y: number, /* Y offset in device independent pixels (dip). */
       [@key "width"]
-      width: float, /* Rectangle width in device independent pixels (dip). */
+      width: number, /* Rectangle width in device independent pixels (dip). */
       [@key "height"]
-      height: float, /* Rectangle height in device independent pixels (dip). */
+      height: number, /* Rectangle height in device independent pixels (dip). */
       [@key "scale"]
-      scale: float /* Page scale factor. */,
+      scale: number /* Page scale factor. */,
     };
   }
   and FontFamilies: {
@@ -15788,18 +15803,18 @@ Example URLs: http://www.google.com/file.html -> "google.com"
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "standard"]
-      standard: option(float), /* Default standard font size. */
+      standard: option(number), /* Default standard font size. */
       [@yojson.option] [@key "fixed"]
-      fixed: option(float) /* Default fixed font size. */,
+      fixed: option(number) /* Default fixed font size. */,
     };
   } = {
     /* Default font sizes. */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "standard"]
-      standard: option(float), /* Default standard font size. */
+      standard: option(number), /* Default standard font size. */
       [@yojson.option] [@key "fixed"]
-      fixed: option(float) /* Default fixed font size. */,
+      fixed: option(number) /* Default fixed font size. */,
     };
   }
   and ClientNavigationReason: {
@@ -16686,7 +16701,7 @@ and Performance: {
       [@key "name"]
       name: string, /* Metric name. */
       [@key "value"]
-      value: float /* Metric value. */,
+      value: number /* Metric value. */,
     };
   };
 } = {
@@ -16697,7 +16712,7 @@ and Performance: {
       [@key "name"]
       name: string, /* Metric name. */
       [@key "value"]
-      value: float /* Metric value. */,
+      value: number /* Metric value. */,
     };
   } = {
     /* Run-time execution metric. */
@@ -16706,7 +16721,7 @@ and Performance: {
       [@key "name"]
       name: string, /* Metric name. */
       [@key "value"]
-      value: float /* Metric value. */,
+      value: number /* Metric value. */,
     };
   };
 }
@@ -16720,7 +16735,7 @@ and PerformanceTimeline: {
       [@key "loadTime"]
       loadTime: Network.TimeSinceEpoch.t, /* No description provided */
       [@key "size"]
-      size: float, /* The number of pixels being painted. */
+      size: number, /* The number of pixels being painted. */
       [@yojson.option] [@key "elementId"]
       elementId: option(string), /* The id attribute of the element, if available. */
       [@yojson.option] [@key "url"]
@@ -16746,7 +16761,7 @@ and PerformanceTimeline: {
     [@deriving yojson]
     type t = {
       [@key "value"]
-      value: float, /* Score increment produced by this event. */
+      value: number, /* Score increment produced by this event. */
       [@key "hadRecentInput"]
       hadRecentInput: bool, /* No description provided */
       [@key "lastInputTime"]
@@ -16769,7 +16784,7 @@ This determines which of the optional "details" fiedls is present. */
       [@key "time"]
       time: Network.TimeSinceEpoch.t, /* Time in seconds since Epoch, monotonically increasing within document lifetime. */
       [@yojson.option] [@key "duration"]
-      duration: option(float), /* Event duration, if applicable. */
+      duration: option(number), /* Event duration, if applicable. */
       [@yojson.option] [@key "lcpDetails"]
       lcpDetails: option(LargestContentfulPaint.t), /* No description provided */
       [@yojson.option] [@key "layoutShiftDetails"]
@@ -16786,7 +16801,7 @@ This determines which of the optional "details" fiedls is present. */
       [@key "loadTime"]
       loadTime: Network.TimeSinceEpoch.t, /* No description provided */
       [@key "size"]
-      size: float, /* The number of pixels being painted. */
+      size: number, /* The number of pixels being painted. */
       [@yojson.option] [@key "elementId"]
       elementId: option(string), /* The id attribute of the element, if available. */
       [@yojson.option] [@key "url"]
@@ -16803,7 +16818,7 @@ This determines which of the optional "details" fiedls is present. */
       [@key "loadTime"]
       loadTime: Network.TimeSinceEpoch.t, /* No description provided */
       [@key "size"]
-      size: float, /* The number of pixels being painted. */
+      size: number, /* The number of pixels being painted. */
       [@yojson.option] [@key "elementId"]
       elementId: option(string), /* The id attribute of the element, if available. */
       [@yojson.option] [@key "url"]
@@ -16840,7 +16855,7 @@ This determines which of the optional "details" fiedls is present. */
     [@deriving yojson]
     type t = {
       [@key "value"]
-      value: float, /* Score increment produced by this event. */
+      value: number, /* Score increment produced by this event. */
       [@key "hadRecentInput"]
       hadRecentInput: bool, /* No description provided */
       [@key "lastInputTime"]
@@ -16853,7 +16868,7 @@ This determines which of the optional "details" fiedls is present. */
     [@deriving yojson]
     type t = {
       [@key "value"]
-      value: float, /* Score increment produced by this event. */
+      value: number, /* Score increment produced by this event. */
       [@key "hadRecentInput"]
       hadRecentInput: bool, /* No description provided */
       [@key "lastInputTime"]
@@ -16876,7 +16891,7 @@ This determines which of the optional "details" fiedls is present. */
       [@key "time"]
       time: Network.TimeSinceEpoch.t, /* Time in seconds since Epoch, monotonically increasing within document lifetime. */
       [@yojson.option] [@key "duration"]
-      duration: option(float), /* Event duration, if applicable. */
+      duration: option(number), /* Event duration, if applicable. */
       [@yojson.option] [@key "lcpDetails"]
       lcpDetails: option(LargestContentfulPaint.t), /* No description provided */
       [@yojson.option] [@key "layoutShiftDetails"]
@@ -16896,7 +16911,7 @@ This determines which of the optional "details" fiedls is present. */
       [@key "time"]
       time: Network.TimeSinceEpoch.t, /* Time in seconds since Epoch, monotonically increasing within document lifetime. */
       [@yojson.option] [@key "duration"]
-      duration: option(float), /* Event duration, if applicable. */
+      duration: option(number), /* Event duration, if applicable. */
       [@yojson.option] [@key "lcpDetails"]
       lcpDetails: option(LargestContentfulPaint.t), /* No description provided */
       [@yojson.option] [@key "layoutShiftDetails"]
@@ -16908,7 +16923,7 @@ and Security: {
   module rec CertificateId: {
     /* An internal certificate ID value. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and MixedContentType: {
     type _mixedcontenttype = [ | `blockable | `optionally_blockable | `none];
@@ -17063,11 +17078,11 @@ and Security: {
   module rec CertificateId: {
     /* An internal certificate ID value. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* An internal certificate ID value. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and MixedContentType: {
     type _mixedcontenttype = [ | `blockable | `optionally_blockable | `none];
@@ -17464,9 +17479,9 @@ and ServiceWorker: {
       [@key "status"]
       status: ServiceWorkerVersionStatus.t, /* No description provided */
       [@yojson.option] [@key "scriptLastModified"]
-      scriptLastModified: option(float), /* The Last-Modified header value of the main script. */
+      scriptLastModified: option(number), /* The Last-Modified header value of the main script. */
       [@yojson.option] [@key "scriptResponseTime"]
-      scriptResponseTime: option(float), /* The time at which the response headers of the main script were received from the server.
+      scriptResponseTime: option(number), /* The time at which the response headers of the main script were received from the server.
 For cached script it is the last time the cache entry was validated. */
       [@yojson.option] [@key "controlledClients"]
       controlledClients: option(list(Target.TargetID.t)), /* No description provided */
@@ -17487,9 +17502,9 @@ For cached script it is the last time the cache entry was validated. */
       [@key "sourceURL"]
       sourceURL: string, /* No description provided */
       [@key "lineNumber"]
-      lineNumber: float, /* No description provided */
+      lineNumber: number, /* No description provided */
       [@key "columnNumber"]
-      columnNumber: float /* No description provided */,
+      columnNumber: number /* No description provided */,
     };
   };
 } = {
@@ -17626,9 +17641,9 @@ For cached script it is the last time the cache entry was validated. */
       [@key "status"]
       status: ServiceWorkerVersionStatus.t, /* No description provided */
       [@yojson.option] [@key "scriptLastModified"]
-      scriptLastModified: option(float), /* The Last-Modified header value of the main script. */
+      scriptLastModified: option(number), /* The Last-Modified header value of the main script. */
       [@yojson.option] [@key "scriptResponseTime"]
-      scriptResponseTime: option(float), /* The time at which the response headers of the main script were received from the server.
+      scriptResponseTime: option(number), /* The time at which the response headers of the main script were received from the server.
 For cached script it is the last time the cache entry was validated. */
       [@yojson.option] [@key "controlledClients"]
       controlledClients: option(list(Target.TargetID.t)), /* No description provided */
@@ -17650,9 +17665,9 @@ For cached script it is the last time the cache entry was validated. */
       [@key "status"]
       status: ServiceWorkerVersionStatus.t, /* No description provided */
       [@yojson.option] [@key "scriptLastModified"]
-      scriptLastModified: option(float), /* The Last-Modified header value of the main script. */
+      scriptLastModified: option(number), /* The Last-Modified header value of the main script. */
       [@yojson.option] [@key "scriptResponseTime"]
-      scriptResponseTime: option(float), /* The time at which the response headers of the main script were received from the server.
+      scriptResponseTime: option(number), /* The time at which the response headers of the main script were received from the server.
 For cached script it is the last time the cache entry was validated. */
       [@yojson.option] [@key "controlledClients"]
       controlledClients: option(list(Target.TargetID.t)), /* No description provided */
@@ -17673,9 +17688,9 @@ For cached script it is the last time the cache entry was validated. */
       [@key "sourceURL"]
       sourceURL: string, /* No description provided */
       [@key "lineNumber"]
-      lineNumber: float, /* No description provided */
+      lineNumber: number, /* No description provided */
       [@key "columnNumber"]
-      columnNumber: float /* No description provided */,
+      columnNumber: number /* No description provided */,
     };
   } = {
     /* ServiceWorker error message. */
@@ -17690,9 +17705,9 @@ For cached script it is the last time the cache entry was validated. */
       [@key "sourceURL"]
       sourceURL: string, /* No description provided */
       [@key "lineNumber"]
-      lineNumber: float, /* No description provided */
+      lineNumber: number, /* No description provided */
       [@key "columnNumber"]
-      columnNumber: float /* No description provided */,
+      columnNumber: number /* No description provided */,
     };
   };
 }
@@ -17725,7 +17740,7 @@ and Storage: {
       [@key "storageType"]
       storageType: StorageType.t, /* Name of storage type. */
       [@key "usage"]
-      usage: float /* Storage usage (bytes). */,
+      usage: number /* Storage usage (bytes). */,
     };
   }
   and TrustTokens: {
@@ -17736,7 +17751,7 @@ and Storage: {
       [@key "issuerOrigin"]
       issuerOrigin: string, /* No description provided */
       [@key "count"]
-      count: float /* No description provided */,
+      count: number /* No description provided */,
     };
   }
   and InterestGroupAccessType: {
@@ -17872,7 +17887,7 @@ and Storage: {
       [@key "storageType"]
       storageType: StorageType.t, /* Name of storage type. */
       [@key "usage"]
-      usage: float /* Storage usage (bytes). */,
+      usage: number /* Storage usage (bytes). */,
     };
   } = {
     /* Usage for a storage type. */
@@ -17881,7 +17896,7 @@ and Storage: {
       [@key "storageType"]
       storageType: StorageType.t, /* Name of storage type. */
       [@key "usage"]
-      usage: float /* Storage usage (bytes). */,
+      usage: number /* Storage usage (bytes). */,
     };
   }
   and TrustTokens: {
@@ -17892,7 +17907,7 @@ and Storage: {
       [@key "issuerOrigin"]
       issuerOrigin: string, /* No description provided */
       [@key "count"]
-      count: float /* No description provided */,
+      count: number /* No description provided */,
     };
   } = {
     /* Pair of issuer origin and number of available (signed, but not used) Trust
@@ -17902,7 +17917,7 @@ and Storage: {
       [@key "issuerOrigin"]
       issuerOrigin: string, /* No description provided */
       [@key "count"]
-      count: float /* No description provided */,
+      count: number /* No description provided */,
     };
   }
   and InterestGroupAccessType: {
@@ -18033,13 +18048,13 @@ and SystemInfo: {
     [@deriving yojson]
     type t = {
       [@key "vendorId"]
-      vendorId: float, /* PCI ID of the GPU vendor, if available; 0 otherwise. */
+      vendorId: number, /* PCI ID of the GPU vendor, if available; 0 otherwise. */
       [@key "deviceId"]
-      deviceId: float, /* PCI ID of the GPU device, if available; 0 otherwise. */
+      deviceId: number, /* PCI ID of the GPU device, if available; 0 otherwise. */
       [@yojson.option] [@key "subSysId"]
-      subSysId: option(float), /* Sub sys ID of the GPU, only available on Windows. */
+      subSysId: option(number), /* Sub sys ID of the GPU, only available on Windows. */
       [@yojson.option] [@key "revision"]
-      revision: option(float), /* Revision of the GPU, only available on Windows. */
+      revision: option(number), /* Revision of the GPU, only available on Windows. */
       [@key "vendorString"]
       vendorString: string, /* String description of the GPU vendor, if the PCI ID is not available. */
       [@key "deviceString"]
@@ -18055,9 +18070,9 @@ and SystemInfo: {
     [@deriving yojson]
     type t = {
       [@key "width"]
-      width: float, /* Width in pixels. */
+      width: number, /* Width in pixels. */
       [@key "height"]
-      height: float /* Height in pixels. */,
+      height: number /* Height in pixels. */,
     };
   }
   and VideoDecodeAcceleratorCapability: {
@@ -18083,11 +18098,11 @@ and SystemInfo: {
       [@key "maxResolution"]
       maxResolution: Size.t, /* Maximum video dimensions in pixels supported for this |profile|. */
       [@key "maxFramerateNumerator"]
-      maxFramerateNumerator: float, /* Maximum encoding framerate in frames per second supported for this
+      maxFramerateNumerator: number, /* Maximum encoding framerate in frames per second supported for this
 |profile|, as fraction's numerator and denominator, e.g. 24/1 fps,
 24000/1001 fps, etc. */
       [@key "maxFramerateDenominator"]
-      maxFramerateDenominator: float /* No description provided */,
+      maxFramerateDenominator: number /* No description provided */,
     };
   }
   and SubsamplingFormat: {
@@ -18148,9 +18163,9 @@ and SystemInfo: {
       [@key "type"]
       type_: string, /* Specifies process type. */
       [@key "id"]
-      id: float, /* Specifies process id. */
+      id: number, /* Specifies process id. */
       [@key "cpuTime"]
-      cpuTime: float /* Specifies cumulative CPU usage in seconds across all threads of the
+      cpuTime: number /* Specifies cumulative CPU usage in seconds across all threads of the
 process since the process start. */,
     };
   };
@@ -18160,13 +18175,13 @@ process since the process start. */,
     [@deriving yojson]
     type t = {
       [@key "vendorId"]
-      vendorId: float, /* PCI ID of the GPU vendor, if available; 0 otherwise. */
+      vendorId: number, /* PCI ID of the GPU vendor, if available; 0 otherwise. */
       [@key "deviceId"]
-      deviceId: float, /* PCI ID of the GPU device, if available; 0 otherwise. */
+      deviceId: number, /* PCI ID of the GPU device, if available; 0 otherwise. */
       [@yojson.option] [@key "subSysId"]
-      subSysId: option(float), /* Sub sys ID of the GPU, only available on Windows. */
+      subSysId: option(number), /* Sub sys ID of the GPU, only available on Windows. */
       [@yojson.option] [@key "revision"]
-      revision: option(float), /* Revision of the GPU, only available on Windows. */
+      revision: option(number), /* Revision of the GPU, only available on Windows. */
       [@key "vendorString"]
       vendorString: string, /* String description of the GPU vendor, if the PCI ID is not available. */
       [@key "deviceString"]
@@ -18181,13 +18196,13 @@ process since the process start. */,
     [@deriving yojson]
     type t = {
       [@key "vendorId"]
-      vendorId: float, /* PCI ID of the GPU vendor, if available; 0 otherwise. */
+      vendorId: number, /* PCI ID of the GPU vendor, if available; 0 otherwise. */
       [@key "deviceId"]
-      deviceId: float, /* PCI ID of the GPU device, if available; 0 otherwise. */
+      deviceId: number, /* PCI ID of the GPU device, if available; 0 otherwise. */
       [@yojson.option] [@key "subSysId"]
-      subSysId: option(float), /* Sub sys ID of the GPU, only available on Windows. */
+      subSysId: option(number), /* Sub sys ID of the GPU, only available on Windows. */
       [@yojson.option] [@key "revision"]
-      revision: option(float), /* Revision of the GPU, only available on Windows. */
+      revision: option(number), /* Revision of the GPU, only available on Windows. */
       [@key "vendorString"]
       vendorString: string, /* String description of the GPU vendor, if the PCI ID is not available. */
       [@key "deviceString"]
@@ -18203,18 +18218,18 @@ process since the process start. */,
     [@deriving yojson]
     type t = {
       [@key "width"]
-      width: float, /* Width in pixels. */
+      width: number, /* Width in pixels. */
       [@key "height"]
-      height: float /* Height in pixels. */,
+      height: number /* Height in pixels. */,
     };
   } = {
     /* Describes the width and height dimensions of an entity. */
     [@deriving yojson]
     type t = {
       [@key "width"]
-      width: float, /* Width in pixels. */
+      width: number, /* Width in pixels. */
       [@key "height"]
-      height: float /* Height in pixels. */,
+      height: number /* Height in pixels. */,
     };
   }
   and VideoDecodeAcceleratorCapability: {
@@ -18252,11 +18267,11 @@ process since the process start. */,
       [@key "maxResolution"]
       maxResolution: Size.t, /* Maximum video dimensions in pixels supported for this |profile|. */
       [@key "maxFramerateNumerator"]
-      maxFramerateNumerator: float, /* Maximum encoding framerate in frames per second supported for this
+      maxFramerateNumerator: number, /* Maximum encoding framerate in frames per second supported for this
 |profile|, as fraction's numerator and denominator, e.g. 24/1 fps,
 24000/1001 fps, etc. */
       [@key "maxFramerateDenominator"]
-      maxFramerateDenominator: float /* No description provided */,
+      maxFramerateDenominator: number /* No description provided */,
     };
   } = {
     /* Describes a supported video encoding profile with its associated maximum
@@ -18268,11 +18283,11 @@ process since the process start. */,
       [@key "maxResolution"]
       maxResolution: Size.t, /* Maximum video dimensions in pixels supported for this |profile|. */
       [@key "maxFramerateNumerator"]
-      maxFramerateNumerator: float, /* Maximum encoding framerate in frames per second supported for this
+      maxFramerateNumerator: number, /* Maximum encoding framerate in frames per second supported for this
 |profile|, as fraction's numerator and denominator, e.g. 24/1 fps,
 24000/1001 fps, etc. */
       [@key "maxFramerateDenominator"]
-      maxFramerateDenominator: float /* No description provided */,
+      maxFramerateDenominator: number /* No description provided */,
     };
   }
   and SubsamplingFormat: {
@@ -18400,9 +18415,9 @@ process since the process start. */,
       [@key "type"]
       type_: string, /* Specifies process type. */
       [@key "id"]
-      id: float, /* Specifies process id. */
+      id: number, /* Specifies process id. */
       [@key "cpuTime"]
-      cpuTime: float /* Specifies cumulative CPU usage in seconds across all threads of the
+      cpuTime: number /* Specifies cumulative CPU usage in seconds across all threads of the
 process since the process start. */,
     };
   } = {
@@ -18412,9 +18427,9 @@ process since the process start. */,
       [@key "type"]
       type_: string, /* Specifies process type. */
       [@key "id"]
-      id: float, /* Specifies process id. */
+      id: number, /* Specifies process id. */
       [@key "cpuTime"]
-      cpuTime: float /* Specifies cumulative CPU usage in seconds across all threads of the
+      cpuTime: number /* Specifies cumulative CPU usage in seconds across all threads of the
 process since the process start. */,
     };
   };
@@ -18461,7 +18476,7 @@ and Target: {
       [@key "host"]
       host: string, /* No description provided */
       [@key "port"]
-      port: float /* No description provided */,
+      port: number /* No description provided */,
     };
   };
 } = {
@@ -18537,7 +18552,7 @@ and Target: {
       [@key "host"]
       host: string, /* No description provided */
       [@key "port"]
-      port: float /* No description provided */,
+      port: number /* No description provided */,
     };
   } = {
     /* No description provided */
@@ -18546,7 +18561,7 @@ and Target: {
       [@key "host"]
       host: string, /* No description provided */
       [@key "port"]
-      port: float /* No description provided */,
+      port: number /* No description provided */,
     };
   };
 }
@@ -19153,15 +19168,15 @@ and WebAudio: {
     [@deriving yojson]
     type t = {
       [@key "currentTime"]
-      currentTime: float, /* The current context time in second in BaseAudioContext. */
+      currentTime: number, /* The current context time in second in BaseAudioContext. */
       [@key "renderCapacity"]
-      renderCapacity: float, /* The time spent on rendering graph divided by render quantum duration,
+      renderCapacity: number, /* The time spent on rendering graph divided by render quantum duration,
 and multiplied by 100. 100 means the audio renderer reached the full
 capacity and glitch may occur. */
       [@key "callbackIntervalMean"]
-      callbackIntervalMean: float, /* A running mean of callback interval. */
+      callbackIntervalMean: number, /* A running mean of callback interval. */
       [@key "callbackIntervalVariance"]
-      callbackIntervalVariance: float /* A running variance of callback interval. */,
+      callbackIntervalVariance: number /* A running variance of callback interval. */,
     };
   }
   and BaseAudioContext: {
@@ -19177,11 +19192,11 @@ capacity and glitch may occur. */
       [@yojson.option] [@key "realtimeData"]
       realtimeData: option(ContextRealtimeData.t), /* No description provided */
       [@key "callbackBufferSize"]
-      callbackBufferSize: float, /* Platform-dependent callback buffer size. */
+      callbackBufferSize: number, /* Platform-dependent callback buffer size. */
       [@key "maxOutputChannelCount"]
-      maxOutputChannelCount: float, /* Number of output channels supported by audio hardware in use. */
+      maxOutputChannelCount: number, /* Number of output channels supported by audio hardware in use. */
       [@key "sampleRate"]
-      sampleRate: float /* Context sample rate. */,
+      sampleRate: number /* Context sample rate. */,
     };
   }
   and AudioListener: {
@@ -19205,11 +19220,11 @@ capacity and glitch may occur. */
       [@key "nodeType"]
       nodeType: NodeType.t, /* No description provided */
       [@key "numberOfInputs"]
-      numberOfInputs: float, /* No description provided */
+      numberOfInputs: number, /* No description provided */
       [@key "numberOfOutputs"]
-      numberOfOutputs: float, /* No description provided */
+      numberOfOutputs: number, /* No description provided */
       [@key "channelCount"]
-      channelCount: float, /* No description provided */
+      channelCount: number, /* No description provided */
       [@key "channelCountMode"]
       channelCountMode: ChannelCountMode.t, /* No description provided */
       [@key "channelInterpretation"]
@@ -19231,11 +19246,11 @@ capacity and glitch may occur. */
       [@key "rate"]
       rate: AutomationRate.t, /* No description provided */
       [@key "defaultValue"]
-      defaultValue: float, /* No description provided */
+      defaultValue: number, /* No description provided */
       [@key "minValue"]
-      minValue: float, /* No description provided */
+      minValue: number, /* No description provided */
       [@key "maxValue"]
-      maxValue: float /* No description provided */,
+      maxValue: number /* No description provided */,
     };
   };
 } = {
@@ -19392,30 +19407,30 @@ capacity and glitch may occur. */
     [@deriving yojson]
     type t = {
       [@key "currentTime"]
-      currentTime: float, /* The current context time in second in BaseAudioContext. */
+      currentTime: number, /* The current context time in second in BaseAudioContext. */
       [@key "renderCapacity"]
-      renderCapacity: float, /* The time spent on rendering graph divided by render quantum duration,
+      renderCapacity: number, /* The time spent on rendering graph divided by render quantum duration,
 and multiplied by 100. 100 means the audio renderer reached the full
 capacity and glitch may occur. */
       [@key "callbackIntervalMean"]
-      callbackIntervalMean: float, /* A running mean of callback interval. */
+      callbackIntervalMean: number, /* A running mean of callback interval. */
       [@key "callbackIntervalVariance"]
-      callbackIntervalVariance: float /* A running variance of callback interval. */,
+      callbackIntervalVariance: number /* A running variance of callback interval. */,
     };
   } = {
     /* Fields in AudioContext that change in real-time. */
     [@deriving yojson]
     type t = {
       [@key "currentTime"]
-      currentTime: float, /* The current context time in second in BaseAudioContext. */
+      currentTime: number, /* The current context time in second in BaseAudioContext. */
       [@key "renderCapacity"]
-      renderCapacity: float, /* The time spent on rendering graph divided by render quantum duration,
+      renderCapacity: number, /* The time spent on rendering graph divided by render quantum duration,
 and multiplied by 100. 100 means the audio renderer reached the full
 capacity and glitch may occur. */
       [@key "callbackIntervalMean"]
-      callbackIntervalMean: float, /* A running mean of callback interval. */
+      callbackIntervalMean: number, /* A running mean of callback interval. */
       [@key "callbackIntervalVariance"]
-      callbackIntervalVariance: float /* A running variance of callback interval. */,
+      callbackIntervalVariance: number /* A running variance of callback interval. */,
     };
   }
   and BaseAudioContext: {
@@ -19431,11 +19446,11 @@ capacity and glitch may occur. */
       [@yojson.option] [@key "realtimeData"]
       realtimeData: option(ContextRealtimeData.t), /* No description provided */
       [@key "callbackBufferSize"]
-      callbackBufferSize: float, /* Platform-dependent callback buffer size. */
+      callbackBufferSize: number, /* Platform-dependent callback buffer size. */
       [@key "maxOutputChannelCount"]
-      maxOutputChannelCount: float, /* Number of output channels supported by audio hardware in use. */
+      maxOutputChannelCount: number, /* Number of output channels supported by audio hardware in use. */
       [@key "sampleRate"]
-      sampleRate: float /* Context sample rate. */,
+      sampleRate: number /* Context sample rate. */,
     };
   } = {
     /* Protocol object for BaseAudioContext */
@@ -19450,11 +19465,11 @@ capacity and glitch may occur. */
       [@yojson.option] [@key "realtimeData"]
       realtimeData: option(ContextRealtimeData.t), /* No description provided */
       [@key "callbackBufferSize"]
-      callbackBufferSize: float, /* Platform-dependent callback buffer size. */
+      callbackBufferSize: number, /* Platform-dependent callback buffer size. */
       [@key "maxOutputChannelCount"]
-      maxOutputChannelCount: float, /* Number of output channels supported by audio hardware in use. */
+      maxOutputChannelCount: number, /* Number of output channels supported by audio hardware in use. */
       [@key "sampleRate"]
-      sampleRate: float /* Context sample rate. */,
+      sampleRate: number /* Context sample rate. */,
     };
   }
   and AudioListener: {
@@ -19487,11 +19502,11 @@ capacity and glitch may occur. */
       [@key "nodeType"]
       nodeType: NodeType.t, /* No description provided */
       [@key "numberOfInputs"]
-      numberOfInputs: float, /* No description provided */
+      numberOfInputs: number, /* No description provided */
       [@key "numberOfOutputs"]
-      numberOfOutputs: float, /* No description provided */
+      numberOfOutputs: number, /* No description provided */
       [@key "channelCount"]
-      channelCount: float, /* No description provided */
+      channelCount: number, /* No description provided */
       [@key "channelCountMode"]
       channelCountMode: ChannelCountMode.t, /* No description provided */
       [@key "channelInterpretation"]
@@ -19508,11 +19523,11 @@ capacity and glitch may occur. */
       [@key "nodeType"]
       nodeType: NodeType.t, /* No description provided */
       [@key "numberOfInputs"]
-      numberOfInputs: float, /* No description provided */
+      numberOfInputs: number, /* No description provided */
       [@key "numberOfOutputs"]
-      numberOfOutputs: float, /* No description provided */
+      numberOfOutputs: number, /* No description provided */
       [@key "channelCount"]
-      channelCount: float, /* No description provided */
+      channelCount: number, /* No description provided */
       [@key "channelCountMode"]
       channelCountMode: ChannelCountMode.t, /* No description provided */
       [@key "channelInterpretation"]
@@ -19534,11 +19549,11 @@ capacity and glitch may occur. */
       [@key "rate"]
       rate: AutomationRate.t, /* No description provided */
       [@key "defaultValue"]
-      defaultValue: float, /* No description provided */
+      defaultValue: number, /* No description provided */
       [@key "minValue"]
-      minValue: float, /* No description provided */
+      minValue: number, /* No description provided */
       [@key "maxValue"]
-      maxValue: float /* No description provided */,
+      maxValue: number /* No description provided */,
     };
   } = {
     /* Protocol object for AudioParam */
@@ -19555,11 +19570,11 @@ capacity and glitch may occur. */
       [@key "rate"]
       rate: AutomationRate.t, /* No description provided */
       [@key "defaultValue"]
-      defaultValue: float, /* No description provided */
+      defaultValue: number, /* No description provided */
       [@key "minValue"]
-      minValue: float, /* No description provided */
+      minValue: number, /* No description provided */
       [@key "maxValue"]
-      maxValue: float /* No description provided */,
+      maxValue: number /* No description provided */,
     };
   };
 }
@@ -19654,7 +19669,7 @@ credential. */
       userHandle: option(string), /* An opaque byte sequence with a maximum size of 64 bytes mapping the
 credential to a specific user. (Encoded as a base64 string when passed over JSON) */
       [@key "signCount"]
-      signCount: float, /* Signature counter. This is incremented by one for each successful
+      signCount: number, /* Signature counter. This is incremented by one for each successful
 assertion.
 See https://w3c.github.io/webauthn/#signature-counter */
       [@yojson.option] [@key "largeBlob"]
@@ -19847,7 +19862,7 @@ credential. */
       userHandle: option(string), /* An opaque byte sequence with a maximum size of 64 bytes mapping the
 credential to a specific user. (Encoded as a base64 string when passed over JSON) */
       [@key "signCount"]
-      signCount: float, /* Signature counter. This is incremented by one for each successful
+      signCount: number, /* Signature counter. This is incremented by one for each successful
 assertion.
 See https://w3c.github.io/webauthn/#signature-counter */
       [@yojson.option] [@key "largeBlob"]
@@ -19871,7 +19886,7 @@ credential. */
       userHandle: option(string), /* An opaque byte sequence with a maximum size of 64 bytes mapping the
 credential to a specific user. (Encoded as a base64 string when passed over JSON) */
       [@key "signCount"]
-      signCount: float, /* Signature counter. This is incremented by one for each successful
+      signCount: number, /* Signature counter. This is incremented by one for each successful
 assertion.
 See https://w3c.github.io/webauthn/#signature-counter */
       [@yojson.option] [@key "largeBlob"]
@@ -19889,7 +19904,7 @@ and Media: {
   and Timestamp: {
     /* No description provided */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and PlayerMessage: {
     type _playermessage_level = [ | `error | `warning | `info | `debug];
@@ -19963,11 +19978,11 @@ use this instead. (crbug.com/1068454) */,
   and Timestamp: {
     /* No description provided */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* No description provided */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and PlayerMessage: {
     type _playermessage_level = [ | `error | `warning | `info | `debug];
@@ -20146,9 +20161,9 @@ and Console: {
       [@yojson.option] [@key "url"]
       url: option(string), /* URL of the message origin. */
       [@yojson.option] [@key "line"]
-      line: option(float), /* Line number in the resource that generated this message (1-based). */
+      line: option(number), /* Line number in the resource that generated this message (1-based). */
       [@yojson.option] [@key "column"]
-      column: option(float) /* Column number in the resource that generated this message (1-based). */,
+      column: option(number) /* Column number in the resource that generated this message (1-based). */,
     };
   };
 } = {
@@ -20193,9 +20208,9 @@ and Console: {
       [@yojson.option] [@key "url"]
       url: option(string), /* URL of the message origin. */
       [@yojson.option] [@key "line"]
-      line: option(float), /* Line number in the resource that generated this message (1-based). */
+      line: option(number), /* Line number in the resource that generated this message (1-based). */
       [@yojson.option] [@key "column"]
-      column: option(float) /* Column number in the resource that generated this message (1-based). */,
+      column: option(number) /* Column number in the resource that generated this message (1-based). */,
     };
   } = {
     type _consolemessage_source = [
@@ -20274,9 +20289,9 @@ and Console: {
       [@yojson.option] [@key "url"]
       url: option(string), /* URL of the message origin. */
       [@yojson.option] [@key "line"]
-      line: option(float), /* Line number in the resource that generated this message (1-based). */
+      line: option(number), /* Line number in the resource that generated this message (1-based). */
       [@yojson.option] [@key "column"]
-      column: option(float) /* Column number in the resource that generated this message (1-based). */,
+      column: option(number) /* Column number in the resource that generated this message (1-based). */,
     };
   };
 }
@@ -20298,9 +20313,9 @@ and Debugger: {
       [@key "scriptId"]
       scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in the script (0-based). */
+      lineNumber: number, /* Line number in the script (0-based). */
       [@yojson.option] [@key "columnNumber"]
-      columnNumber: option(float) /* Column number in the script (0-based). */,
+      columnNumber: option(number) /* Column number in the script (0-based). */,
     };
   }
   and ScriptPosition: {
@@ -20308,9 +20323,9 @@ and Debugger: {
     [@deriving yojson]
     type t = {
       [@key "lineNumber"]
-      lineNumber: float, /* No description provided */
+      lineNumber: number, /* No description provided */
       [@key "columnNumber"]
-      columnNumber: float /* No description provided */,
+      columnNumber: number /* No description provided */,
     };
   }
   and LocationRange: {
@@ -20384,7 +20399,7 @@ variables as its properties. */
     [@deriving yojson]
     type t = {
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in resource content. */
+      lineNumber: number, /* Line number in resource content. */
       [@key "lineContent"]
       lineContent: string /* Line with match content. */,
     };
@@ -20399,9 +20414,9 @@ variables as its properties. */
       [@key "scriptId"]
       scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in the script (0-based). */
+      lineNumber: number, /* Line number in the script (0-based). */
       [@yojson.option] [@key "columnNumber"]
-      columnNumber: option(float), /* Column number in the script (0-based). */
+      columnNumber: option(number), /* Column number in the script (0-based). */
       [@yojson.option] [@key "type"]
       type_: option(_breaklocation_type) /* No description provided */,
     };
@@ -20458,9 +20473,9 @@ variables as its properties. */
       [@key "scriptId"]
       scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in the script (0-based). */
+      lineNumber: number, /* Line number in the script (0-based). */
       [@yojson.option] [@key "columnNumber"]
-      columnNumber: option(float) /* Column number in the script (0-based). */,
+      columnNumber: option(number) /* Column number in the script (0-based). */,
     };
   } = {
     /* Location in the source code. */
@@ -20469,9 +20484,9 @@ variables as its properties. */
       [@key "scriptId"]
       scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in the script (0-based). */
+      lineNumber: number, /* Line number in the script (0-based). */
       [@yojson.option] [@key "columnNumber"]
-      columnNumber: option(float) /* Column number in the script (0-based). */,
+      columnNumber: option(number) /* Column number in the script (0-based). */,
     };
   }
   and ScriptPosition: {
@@ -20479,18 +20494,18 @@ variables as its properties. */
     [@deriving yojson]
     type t = {
       [@key "lineNumber"]
-      lineNumber: float, /* No description provided */
+      lineNumber: number, /* No description provided */
       [@key "columnNumber"]
-      columnNumber: float /* No description provided */,
+      columnNumber: number /* No description provided */,
     };
   } = {
     /* Location in the source code. */
     [@deriving yojson]
     type t = {
       [@key "lineNumber"]
-      lineNumber: float, /* No description provided */
+      lineNumber: number, /* No description provided */
       [@key "columnNumber"]
-      columnNumber: float /* No description provided */,
+      columnNumber: number /* No description provided */,
     };
   }
   and LocationRange: {
@@ -20651,7 +20666,7 @@ variables as its properties. */
     [@deriving yojson]
     type t = {
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in resource content. */
+      lineNumber: number, /* Line number in resource content. */
       [@key "lineContent"]
       lineContent: string /* Line with match content. */,
     };
@@ -20660,7 +20675,7 @@ variables as its properties. */
     [@deriving yojson]
     type t = {
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in resource content. */
+      lineNumber: number, /* Line number in resource content. */
       [@key "lineContent"]
       lineContent: string /* Line with match content. */,
     };
@@ -20675,9 +20690,9 @@ variables as its properties. */
       [@key "scriptId"]
       scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in the script (0-based). */
+      lineNumber: number, /* Line number in the script (0-based). */
       [@yojson.option] [@key "columnNumber"]
-      columnNumber: option(float), /* Column number in the script (0-based). */
+      columnNumber: option(number), /* Column number in the script (0-based). */
       [@yojson.option] [@key "type"]
       type_: option(_breaklocation_type) /* No description provided */,
     };
@@ -20701,9 +20716,9 @@ variables as its properties. */
       [@key "scriptId"]
       scriptId: Runtime.ScriptId.t, /* Script identifier as reported in the `Debugger.scriptParsed`. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number in the script (0-based). */
+      lineNumber: number, /* Line number in the script (0-based). */
       [@yojson.option] [@key "columnNumber"]
-      columnNumber: option(float), /* Column number in the script (0-based). */
+      columnNumber: option(number), /* Column number in the script (0-based). */
       [@yojson.option] [@key "type"]
       type_: option(_breaklocation_type) /* No description provided */,
     };
@@ -20792,9 +20807,9 @@ and HeapProfiler: {
       [@key "callFrame"]
       callFrame: Runtime.CallFrame.t, /* Function location. */
       [@key "selfSize"]
-      selfSize: float, /* Allocations size in bytes for the node excluding children. */
+      selfSize: number, /* Allocations size in bytes for the node excluding children. */
       [@key "id"]
-      id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
+      id: number, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
       [@key "children"]
       children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
     };
@@ -20804,11 +20819,11 @@ and HeapProfiler: {
     [@deriving yojson]
     type t = {
       [@key "size"]
-      size: float, /* Allocation size in bytes attributed to the sample. */
+      size: number, /* Allocation size in bytes attributed to the sample. */
       [@key "nodeId"]
-      nodeId: float, /* Id of the corresponding profile tree node. */
+      nodeId: number, /* Id of the corresponding profile tree node. */
       [@key "ordinal"]
-      ordinal: float /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
+      ordinal: number /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
 between startSampling and stopSampling. */,
     };
   }
@@ -20839,9 +20854,9 @@ between startSampling and stopSampling. */,
       [@key "callFrame"]
       callFrame: Runtime.CallFrame.t, /* Function location. */
       [@key "selfSize"]
-      selfSize: float, /* Allocations size in bytes for the node excluding children. */
+      selfSize: number, /* Allocations size in bytes for the node excluding children. */
       [@key "id"]
-      id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
+      id: number, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
       [@key "children"]
       children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
     };
@@ -20852,9 +20867,9 @@ between startSampling and stopSampling. */,
       [@key "callFrame"]
       callFrame: Runtime.CallFrame.t, /* Function location. */
       [@key "selfSize"]
-      selfSize: float, /* Allocations size in bytes for the node excluding children. */
+      selfSize: number, /* Allocations size in bytes for the node excluding children. */
       [@key "id"]
-      id: float, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
+      id: number, /* Node id. Ids are unique across all profiles collected between startSampling and stopSampling. */
       [@key "children"]
       children: list(SamplingHeapProfileNode.t) /* Child nodes. */,
     };
@@ -20864,11 +20879,11 @@ between startSampling and stopSampling. */,
     [@deriving yojson]
     type t = {
       [@key "size"]
-      size: float, /* Allocation size in bytes attributed to the sample. */
+      size: number, /* Allocation size in bytes attributed to the sample. */
       [@key "nodeId"]
-      nodeId: float, /* Id of the corresponding profile tree node. */
+      nodeId: number, /* Id of the corresponding profile tree node. */
       [@key "ordinal"]
-      ordinal: float /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
+      ordinal: number /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
 between startSampling and stopSampling. */,
     };
   } = {
@@ -20876,11 +20891,11 @@ between startSampling and stopSampling. */,
     [@deriving yojson]
     type t = {
       [@key "size"]
-      size: float, /* Allocation size in bytes attributed to the sample. */
+      size: number, /* Allocation size in bytes attributed to the sample. */
       [@key "nodeId"]
-      nodeId: float, /* Id of the corresponding profile tree node. */
+      nodeId: number, /* Id of the corresponding profile tree node. */
       [@key "ordinal"]
-      ordinal: float /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
+      ordinal: number /* Time-ordered sample ordinal number. It is unique across all profiles retrieved
 between startSampling and stopSampling. */,
     };
   }
@@ -20910,13 +20925,13 @@ and Profiler: {
     [@deriving yojson]
     type t = {
       [@key "id"]
-      id: float, /* Unique id of the node. */
+      id: number, /* Unique id of the node. */
       [@key "callFrame"]
       callFrame: Runtime.CallFrame.t, /* Function location. */
       [@yojson.option] [@key "hitCount"]
-      hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
+      hitCount: option(number), /* Number of samples where this node was on top of the call stack. */
       [@yojson.option] [@key "children"]
-      children: option(list(float)), /* Child node ids. */
+      children: option(list(number)), /* Child node ids. */
       [@yojson.option] [@key "deoptReason"]
       deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
 optimize. */
@@ -20931,13 +20946,13 @@ optimize. */
       [@key "nodes"]
       nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
       [@key "startTime"]
-      startTime: float, /* Profiling start timestamp in microseconds. */
+      startTime: number, /* Profiling start timestamp in microseconds. */
       [@key "endTime"]
-      endTime: float, /* Profiling end timestamp in microseconds. */
+      endTime: number, /* Profiling end timestamp in microseconds. */
       [@yojson.option] [@key "samples"]
-      samples: option(list(float)), /* Ids of samples top nodes. */
+      samples: option(list(number)), /* Ids of samples top nodes. */
       [@yojson.option] [@key "timeDeltas"]
-      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
+      timeDeltas: option(list(number)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
 profile startTime. */,
     };
   }
@@ -20946,9 +20961,9 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       [@key "line"]
-      line: float, /* Source line number (1-based). */
+      line: number, /* Source line number (1-based). */
       [@key "ticks"]
-      ticks: float /* Number of samples attributed to the source line. */,
+      ticks: number /* Number of samples attributed to the source line. */,
     };
   }
   and CoverageRange: {
@@ -20956,11 +20971,11 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       [@key "startOffset"]
-      startOffset: float, /* JavaScript script source offset for the range start. */
+      startOffset: number, /* JavaScript script source offset for the range start. */
       [@key "endOffset"]
-      endOffset: float, /* JavaScript script source offset for the range end. */
+      endOffset: number, /* JavaScript script source offset for the range end. */
       [@key "count"]
-      count: float /* Collected execution count of the source range. */,
+      count: number /* Collected execution count of the source range. */,
     };
   }
   and FunctionCoverage: {
@@ -21000,7 +21015,7 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       [@key "offset"]
-      offset: float, /* Source offset of the parameter or end of function for return values. */
+      offset: number, /* Source offset of the parameter or end of function for return values. */
       [@key "types"]
       types: list(TypeObject.t) /* The types for this parameter or return value. */,
     };
@@ -21023,13 +21038,13 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       [@key "id"]
-      id: float, /* Unique id of the node. */
+      id: number, /* Unique id of the node. */
       [@key "callFrame"]
       callFrame: Runtime.CallFrame.t, /* Function location. */
       [@yojson.option] [@key "hitCount"]
-      hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
+      hitCount: option(number), /* Number of samples where this node was on top of the call stack. */
       [@yojson.option] [@key "children"]
-      children: option(list(float)), /* Child node ids. */
+      children: option(list(number)), /* Child node ids. */
       [@yojson.option] [@key "deoptReason"]
       deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
 optimize. */
@@ -21041,13 +21056,13 @@ optimize. */
     [@deriving yojson]
     type t = {
       [@key "id"]
-      id: float, /* Unique id of the node. */
+      id: number, /* Unique id of the node. */
       [@key "callFrame"]
       callFrame: Runtime.CallFrame.t, /* Function location. */
       [@yojson.option] [@key "hitCount"]
-      hitCount: option(float), /* Number of samples where this node was on top of the call stack. */
+      hitCount: option(number), /* Number of samples where this node was on top of the call stack. */
       [@yojson.option] [@key "children"]
-      children: option(list(float)), /* Child node ids. */
+      children: option(list(number)), /* Child node ids. */
       [@yojson.option] [@key "deoptReason"]
       deoptReason: option(string), /* The reason of being not optimized. The function may be deoptimized or marked as don't
 optimize. */
@@ -21062,13 +21077,13 @@ optimize. */
       [@key "nodes"]
       nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
       [@key "startTime"]
-      startTime: float, /* Profiling start timestamp in microseconds. */
+      startTime: number, /* Profiling start timestamp in microseconds. */
       [@key "endTime"]
-      endTime: float, /* Profiling end timestamp in microseconds. */
+      endTime: number, /* Profiling end timestamp in microseconds. */
       [@yojson.option] [@key "samples"]
-      samples: option(list(float)), /* Ids of samples top nodes. */
+      samples: option(list(number)), /* Ids of samples top nodes. */
       [@yojson.option] [@key "timeDeltas"]
-      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
+      timeDeltas: option(list(number)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
 profile startTime. */,
     };
   } = {
@@ -21078,13 +21093,13 @@ profile startTime. */,
       [@key "nodes"]
       nodes: list(ProfileNode.t), /* The list of profile nodes. First item is the root node. */
       [@key "startTime"]
-      startTime: float, /* Profiling start timestamp in microseconds. */
+      startTime: number, /* Profiling start timestamp in microseconds. */
       [@key "endTime"]
-      endTime: float, /* Profiling end timestamp in microseconds. */
+      endTime: number, /* Profiling end timestamp in microseconds. */
       [@yojson.option] [@key "samples"]
-      samples: option(list(float)), /* Ids of samples top nodes. */
+      samples: option(list(number)), /* Ids of samples top nodes. */
       [@yojson.option] [@key "timeDeltas"]
-      timeDeltas: option(list(float)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
+      timeDeltas: option(list(number)) /* Time intervals between adjacent samples in microseconds. The first delta is relative to the
 profile startTime. */,
     };
   }
@@ -21093,18 +21108,18 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       [@key "line"]
-      line: float, /* Source line number (1-based). */
+      line: number, /* Source line number (1-based). */
       [@key "ticks"]
-      ticks: float /* Number of samples attributed to the source line. */,
+      ticks: number /* Number of samples attributed to the source line. */,
     };
   } = {
     /* Specifies a number of samples attributed to a certain source position. */
     [@deriving yojson]
     type t = {
       [@key "line"]
-      line: float, /* Source line number (1-based). */
+      line: number, /* Source line number (1-based). */
       [@key "ticks"]
-      ticks: float /* Number of samples attributed to the source line. */,
+      ticks: number /* Number of samples attributed to the source line. */,
     };
   }
   and CoverageRange: {
@@ -21112,22 +21127,22 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       [@key "startOffset"]
-      startOffset: float, /* JavaScript script source offset for the range start. */
+      startOffset: number, /* JavaScript script source offset for the range start. */
       [@key "endOffset"]
-      endOffset: float, /* JavaScript script source offset for the range end. */
+      endOffset: number, /* JavaScript script source offset for the range end. */
       [@key "count"]
-      count: float /* Collected execution count of the source range. */,
+      count: number /* Collected execution count of the source range. */,
     };
   } = {
     /* Coverage data for a source range. */
     [@deriving yojson]
     type t = {
       [@key "startOffset"]
-      startOffset: float, /* JavaScript script source offset for the range start. */
+      startOffset: number, /* JavaScript script source offset for the range start. */
       [@key "endOffset"]
-      endOffset: float, /* JavaScript script source offset for the range end. */
+      endOffset: number, /* JavaScript script source offset for the range end. */
       [@key "count"]
-      count: float /* Collected execution count of the source range. */,
+      count: number /* Collected execution count of the source range. */,
     };
   }
   and FunctionCoverage: {
@@ -21196,7 +21211,7 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       [@key "offset"]
-      offset: float, /* Source offset of the parameter or end of function for return values. */
+      offset: number, /* Source offset of the parameter or end of function for return values. */
       [@key "types"]
       types: list(TypeObject.t) /* The types for this parameter or return value. */,
     };
@@ -21205,7 +21220,7 @@ profile startTime. */,
     [@deriving yojson]
     type t = {
       [@key "offset"]
-      offset: float, /* Source offset of the parameter or end of function for return values. */
+      offset: number, /* Source offset of the parameter or end of function for return values. */
       [@key "types"]
       types: list(TypeObject.t) /* The types for this parameter or return value. */,
     };
@@ -21521,7 +21536,7 @@ or `undefined` if there is no setter (accessor descriptors only). */,
   and ExecutionContextId: {
     /* Id of an execution context. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and ExecutionContextDescription: {
     /* Description of an isolated world. */
@@ -21548,13 +21563,13 @@ performs a cross-process navigation. */
     [@deriving yojson]
     type t = {
       [@key "exceptionId"]
-      exceptionId: float, /* Exception id. */
+      exceptionId: number, /* Exception id. */
       [@key "text"]
       text: string, /* Exception text, which should be used together with exception object when available. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number of the exception location (0-based). */
+      lineNumber: number, /* Line number of the exception location (0-based). */
       [@key "columnNumber"]
-      columnNumber: float, /* Column number of the exception location (0-based). */
+      columnNumber: number, /* Column number of the exception location (0-based). */
       [@yojson.option] [@key "scriptId"]
       scriptId: option(ScriptId.t), /* Script ID of the exception location. */
       [@yojson.option] [@key "url"]
@@ -21574,12 +21589,12 @@ requests, etc. */,
   and Timestamp: {
     /* Number of milliseconds since epoch. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and TimeDelta: {
     /* Number of milliseconds. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and CallFrame: {
     /* Stack entry for runtime errors and assertions. */
@@ -21592,9 +21607,9 @@ requests, etc. */,
       [@key "url"]
       url: string, /* JavaScript script name or url. */
       [@key "lineNumber"]
-      lineNumber: float, /* JavaScript script line number (0-based). */
+      lineNumber: number, /* JavaScript script line number (0-based). */
       [@key "columnNumber"]
-      columnNumber: float /* JavaScript script column number (0-based). */,
+      columnNumber: number /* JavaScript script column number (0-based). */,
     };
   }
   and StackTrace: {
@@ -22366,11 +22381,11 @@ or `undefined` if there is no setter (accessor descriptors only). */,
   and ExecutionContextId: {
     /* Id of an execution context. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* Id of an execution context. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and ExecutionContextDescription: {
     /* Description of an isolated world. */
@@ -22415,13 +22430,13 @@ performs a cross-process navigation. */
     [@deriving yojson]
     type t = {
       [@key "exceptionId"]
-      exceptionId: float, /* Exception id. */
+      exceptionId: number, /* Exception id. */
       [@key "text"]
       text: string, /* Exception text, which should be used together with exception object when available. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number of the exception location (0-based). */
+      lineNumber: number, /* Line number of the exception location (0-based). */
       [@key "columnNumber"]
-      columnNumber: float, /* Column number of the exception location (0-based). */
+      columnNumber: number, /* Column number of the exception location (0-based). */
       [@yojson.option] [@key "scriptId"]
       scriptId: option(ScriptId.t), /* Script ID of the exception location. */
       [@yojson.option] [@key "url"]
@@ -22443,13 +22458,13 @@ requests, etc. */,
     [@deriving yojson]
     type t = {
       [@key "exceptionId"]
-      exceptionId: float, /* Exception id. */
+      exceptionId: number, /* Exception id. */
       [@key "text"]
       text: string, /* Exception text, which should be used together with exception object when available. */
       [@key "lineNumber"]
-      lineNumber: float, /* Line number of the exception location (0-based). */
+      lineNumber: number, /* Line number of the exception location (0-based). */
       [@key "columnNumber"]
-      columnNumber: float, /* Column number of the exception location (0-based). */
+      columnNumber: number, /* Column number of the exception location (0-based). */
       [@yojson.option] [@key "scriptId"]
       scriptId: option(ScriptId.t), /* Script ID of the exception location. */
       [@yojson.option] [@key "url"]
@@ -22469,20 +22484,20 @@ requests, etc. */,
   and Timestamp: {
     /* Number of milliseconds since epoch. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* Number of milliseconds since epoch. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and TimeDelta: {
     /* Number of milliseconds. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   } = {
     /* Number of milliseconds. */
     [@deriving yojson]
-    type t = float;
+    type t = number;
   }
   and CallFrame: {
     /* Stack entry for runtime errors and assertions. */
@@ -22495,9 +22510,9 @@ requests, etc. */,
       [@key "url"]
       url: string, /* JavaScript script name or url. */
       [@key "lineNumber"]
-      lineNumber: float, /* JavaScript script line number (0-based). */
+      lineNumber: number, /* JavaScript script line number (0-based). */
       [@key "columnNumber"]
-      columnNumber: float /* JavaScript script column number (0-based). */,
+      columnNumber: number /* JavaScript script column number (0-based). */,
     };
   } = {
     /* Stack entry for runtime errors and assertions. */
@@ -22510,9 +22525,9 @@ requests, etc. */,
       [@key "url"]
       url: string, /* JavaScript script name or url. */
       [@key "lineNumber"]
-      lineNumber: float, /* JavaScript script line number (0-based). */
+      lineNumber: number, /* JavaScript script line number (0-based). */
       [@key "columnNumber"]
-      columnNumber: float /* JavaScript script column number (0-based). */,
+      columnNumber: number /* JavaScript script column number (0-based). */,
     };
   }
   and StackTrace: {

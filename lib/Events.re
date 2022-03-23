@@ -211,9 +211,9 @@ module Browser = {
       [@key "guid"]
       guid: string, /* Global unique identifier of the download. */
       [@key "totalBytes"]
-      totalBytes: float, /* Total expected bytes to download. */
+      totalBytes: Types.number, /* Total expected bytes to download. */
       [@key "receivedBytes"]
-      receivedBytes: float, /* Total bytes received. */
+      receivedBytes: Types.number, /* Total bytes received. */
       [@key "state"]
       state: downloadprogress_state /* Download status. */,
     };
@@ -441,7 +441,7 @@ module DOM = {
       [@key "nodeId"]
       nodeId: Types.DOM.NodeId.t, /* Id of the node that has changed. */
       [@key "childNodeCount"]
-      childNodeCount: float /* New node count. */,
+      childNodeCount: Types.number /* New node count. */,
     };
 
     [@deriving yojson]
@@ -962,9 +962,9 @@ module Network = {
       [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
       [@key "dataLength"]
-      dataLength: float, /* Data chunk length. */
+      dataLength: Types.number, /* Data chunk length. */
       [@key "encodedDataLength"]
-      encodedDataLength: float /* Actual bytes received (might be less than dataLength for compressed encodings). */,
+      encodedDataLength: Types.number /* Actual bytes received (might be less than dataLength for compressed encodings). */,
     };
 
     [@deriving yojson]
@@ -1045,7 +1045,7 @@ module Network = {
       [@key "timestamp"]
       timestamp: Types.Network.MonotonicTime.t, /* Timestamp. */
       [@key "encodedDataLength"]
-      encodedDataLength: float, /* Total number of bytes received for this request. */
+      encodedDataLength: Types.number, /* Total number of bytes received for this request. */
       [@yojson.option] [@key "shouldReportCorbBlocking"]
       shouldReportCorbBlocking: option(bool) /* Set when 1) response was blocked by Cross-Origin Read Blocking and also
 2) this needs to be reported to the DevTools console. */,
@@ -1092,7 +1092,7 @@ continueInterceptedRequest must contain an authChallengeResponse. */
       responseErrorReason: option(Types.Network.ErrorReason.t), /* Response error if intercepted at response stage or if redirect occurred while intercepting
 request. */
       [@yojson.option] [@key "responseStatusCode"]
-      responseStatusCode: option(float), /* Response code if intercepted at response stage or if redirect occurred while intercepting
+      responseStatusCode: option(Types.number), /* Response code if intercepted at response stage or if redirect occurred while intercepting
 request or auth retry occurred. */
       [@yojson.option] [@key "responseHeaders"]
       responseHeaders: option(Types.Network.Headers.t), /* Response headers if intercepted at the response stage or if redirect occurred while
@@ -1528,7 +1528,7 @@ are represented by the invalid cookie line string instead of a proper cookie. */
       resourceIPAddressSpace: Types.Network.IPAddressSpace.t, /* The IP address space of the resource. The address space can only be determined once the transport
 established the connection, so we can't send it in `requestWillBeSentExtraInfo`. */
       [@key "statusCode"]
-      statusCode: float, /* The status code of the response. This is useful in cases the request failed and no responseReceived
+      statusCode: Types.number, /* The status code of the response. This is useful in cases the request failed and no responseReceived
 event is triggered, which is the case for, e.g., CORS errors. This is also the correct status code
 for cached requests, where the status in responseReceived is a 200 and this will be 304. */
       [@yojson.option] [@key "headersText"]
@@ -1607,7 +1607,7 @@ preemptively (e.g. a cache hit). */
       [@yojson.option] [@key "issuerOrigin"]
       issuerOrigin: option(string), /* Origin of the issuer in case of a "Issuance" or "Redemption" operation. */
       [@yojson.option] [@key "issuedTokenCount"]
-      issuedTokenCount: option(float) /* The number of obtained Trust Tokens on a successful "Issuance" operation. */,
+      issuedTokenCount: option(Types.number) /* The number of obtained Trust Tokens on a successful "Issuance" operation. */,
     };
 
     [@deriving yojson]
@@ -2073,7 +2073,7 @@ module Page = {
       [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame that has scheduled a navigation. */
       [@key "delay"]
-      delay: float, /* Delay (in seconds) until the navigation is scheduled to begin. The navigation is not
+      delay: Types.number, /* Delay (in seconds) until the navigation is scheduled to begin. The navigation is not
 guaranteed to start. */
       [@key "reason"]
       reason: Types.Page.ClientNavigationReason.t, /* The reason for the navigation. */
@@ -2178,9 +2178,9 @@ guaranteed to start. */
       [@key "guid"]
       guid: string, /* Global unique identifier of the download. */
       [@key "totalBytes"]
-      totalBytes: float, /* Total expected bytes to download. */
+      totalBytes: Types.number, /* Total expected bytes to download. */
       [@key "receivedBytes"]
-      receivedBytes: float, /* Total bytes received. */
+      receivedBytes: Types.number, /* Total bytes received. */
       [@key "state"]
       state: downloadprogress_state /* Download status. */,
     };
@@ -2384,7 +2384,7 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
       [@key "metadata"]
       metadata: Types.Page.ScreencastFrameMetadata.t, /* Screencast frame metadata. */
       [@key "sessionId"]
-      sessionId: float /* Frame number. */,
+      sessionId: Types.number /* Frame number. */,
     };
 
     [@deriving yojson]
@@ -2519,7 +2519,7 @@ module Security = {
     [@deriving yojson]
     type result = {
       [@key "eventId"]
-      eventId: float, /* The ID of the event. */
+      eventId: Types.number, /* The ID of the event. */
       [@key "errorType"]
       errorType: string, /* The type of the error. */
       [@key "requestURL"]
@@ -2870,7 +2870,7 @@ module Target = {
       [@key "status"]
       status: string, /* Termination status type. */
       [@key "errorCode"]
-      errorCode: float /* Termination error code. */,
+      errorCode: Types.number /* Termination error code. */,
     };
 
     [@deriving yojson]
@@ -2911,7 +2911,7 @@ module Tethering = {
     [@deriving yojson]
     type result = {
       [@key "port"]
-      port: float, /* Port number that was successfully bound. */
+      port: Types.number, /* Port number that was successfully bound. */
       [@key "connectionId"]
       connectionId: string /* Connection id to be used. */,
     };
@@ -2934,12 +2934,12 @@ module Tracing = {
     [@deriving yojson]
     type result = {
       [@yojson.option] [@key "percentFull"]
-      percentFull: option(float), /* A number in range [0..1] that indicates the used size of event buffer as a fraction of its
+      percentFull: option(Types.number), /* A number in range [0..1] that indicates the used size of event buffer as a fraction of its
 total size. */
       [@yojson.option] [@key "eventCount"]
-      eventCount: option(float), /* An approximate number of events in the trace log. */
+      eventCount: option(Types.number), /* An approximate number of events in the trace log. */
       [@yojson.option] [@key "value"]
-      value: option(float) /* A number in range [0..1] that indicates the used size of event buffer as a fraction of its
+      value: option(Types.number) /* A number in range [0..1] that indicates the used size of event buffer as a fraction of its
 total size. */,
     };
 
@@ -3023,7 +3023,7 @@ module Fetch = {
       [@yojson.option] [@key "responseErrorReason"]
       responseErrorReason: option(Types.Network.ErrorReason.t), /* Response error if intercepted at response stage. */
       [@yojson.option] [@key "responseStatusCode"]
-      responseStatusCode: option(float), /* Response code if intercepted at response stage. */
+      responseStatusCode: option(Types.number), /* Response code if intercepted at response stage. */
       [@yojson.option] [@key "responseStatusText"]
       responseStatusText: option(string), /* Response status text if intercepted at response stage. */
       [@yojson.option] [@key "responseHeaders"]
@@ -3266,9 +3266,9 @@ module WebAudio = {
       [@key "destinationId"]
       destinationId: Types.WebAudio.GraphObjectId.t, /* No description provided */
       [@yojson.option] [@key "sourceOutputIndex"]
-      sourceOutputIndex: option(float), /* No description provided */
+      sourceOutputIndex: option(Types.number), /* No description provided */
       [@yojson.option] [@key "destinationInputIndex"]
-      destinationInputIndex: option(float) /* No description provided */,
+      destinationInputIndex: option(Types.number) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -3293,9 +3293,9 @@ module WebAudio = {
       [@key "destinationId"]
       destinationId: Types.WebAudio.GraphObjectId.t, /* No description provided */
       [@yojson.option] [@key "sourceOutputIndex"]
-      sourceOutputIndex: option(float), /* No description provided */
+      sourceOutputIndex: option(Types.number), /* No description provided */
       [@yojson.option] [@key "destinationInputIndex"]
-      destinationInputIndex: option(float) /* No description provided */,
+      destinationInputIndex: option(Types.number) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -3320,7 +3320,7 @@ module WebAudio = {
       [@key "destinationId"]
       destinationId: Types.WebAudio.GraphObjectId.t, /* No description provided */
       [@yojson.option] [@key "sourceOutputIndex"]
-      sourceOutputIndex: option(float) /* No description provided */,
+      sourceOutputIndex: option(Types.number) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -3345,7 +3345,7 @@ module WebAudio = {
       [@key "destinationId"]
       destinationId: Types.WebAudio.GraphObjectId.t, /* No description provided */
       [@yojson.option] [@key "sourceOutputIndex"]
-      sourceOutputIndex: option(float) /* No description provided */,
+      sourceOutputIndex: option(Types.number) /* No description provided */,
     };
 
     [@deriving yojson]
@@ -3613,13 +3613,13 @@ module Debugger = {
       [@key "url"]
       url: string, /* URL or name of the script parsed (if any). */
       [@key "startLine"]
-      startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
+      startLine: Types.number, /* Line offset of the script within the resource with given URL (for script tags). */
       [@key "startColumn"]
-      startColumn: float, /* Column offset of the script within the resource with given URL. */
+      startColumn: Types.number, /* Column offset of the script within the resource with given URL. */
       [@key "endLine"]
-      endLine: float, /* Last line of the script. */
+      endLine: Types.number, /* Last line of the script. */
       [@key "endColumn"]
-      endColumn: float, /* Length of the last line of the script. */
+      endColumn: Types.number, /* Length of the last line of the script. */
       [@key "executionContextId"]
       executionContextId: Types.Runtime.ExecutionContextId.t, /* Specifies script creation context. */
       [@key "hash"]
@@ -3633,11 +3633,11 @@ module Debugger = {
       [@yojson.option] [@key "isModule"]
       isModule: option(bool), /* True, if this script is ES6 module. */
       [@yojson.option] [@key "length"]
-      length: option(float), /* This script length. */
+      length: option(Types.number), /* This script length. */
       [@yojson.option] [@key "stackTrace"]
       stackTrace: option(Types.Runtime.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
       [@yojson.option] [@key "codeOffset"]
-      codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
+      codeOffset: option(Types.number), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
       [@yojson.option] [@key "scriptLanguage"]
       scriptLanguage: option(Types.Debugger.ScriptLanguage.t), /* The language of the script. */
       [@yojson.option] [@key "embedderName"]
@@ -3665,13 +3665,13 @@ module Debugger = {
       [@key "url"]
       url: string, /* URL or name of the script parsed (if any). */
       [@key "startLine"]
-      startLine: float, /* Line offset of the script within the resource with given URL (for script tags). */
+      startLine: Types.number, /* Line offset of the script within the resource with given URL (for script tags). */
       [@key "startColumn"]
-      startColumn: float, /* Column offset of the script within the resource with given URL. */
+      startColumn: Types.number, /* Column offset of the script within the resource with given URL. */
       [@key "endLine"]
-      endLine: float, /* Last line of the script. */
+      endLine: Types.number, /* Last line of the script. */
       [@key "endColumn"]
-      endColumn: float, /* Length of the last line of the script. */
+      endColumn: Types.number, /* Length of the last line of the script. */
       [@key "executionContextId"]
       executionContextId: Types.Runtime.ExecutionContextId.t, /* Specifies script creation context. */
       [@key "hash"]
@@ -3687,11 +3687,11 @@ module Debugger = {
       [@yojson.option] [@key "isModule"]
       isModule: option(bool), /* True, if this script is ES6 module. */
       [@yojson.option] [@key "length"]
-      length: option(float), /* This script length. */
+      length: option(Types.number), /* This script length. */
       [@yojson.option] [@key "stackTrace"]
       stackTrace: option(Types.Runtime.StackTrace.t), /* JavaScript top stack frame of where the script parsed event was triggered if available. */
       [@yojson.option] [@key "codeOffset"]
-      codeOffset: option(float), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
+      codeOffset: option(Types.number), /* If the scriptLanguage is WebAssembly, the code section offset in the module. */
       [@yojson.option] [@key "scriptLanguage"]
       scriptLanguage: option(Types.Debugger.ScriptLanguage.t), /* The language of the script. */
       [@yojson.option] [@key "debugSymbols"]
@@ -3737,7 +3737,7 @@ module HeapProfiler = {
     [@deriving yojson]
     type result = {
       [@key "statsUpdate"]
-      statsUpdate: list(float) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
+      statsUpdate: list(Types.number) /* An array of triplets. Each triplet describes a fragment. The first integer is the fragment
 index, the second integer is a total count of objects for the fragment, the third integer is
 a total size of the objects for the fragment. */,
     };
@@ -3760,9 +3760,9 @@ a total size of the objects for the fragment. */,
     [@deriving yojson]
     type result = {
       [@key "lastSeenObjectId"]
-      lastSeenObjectId: float, /* No description provided */
+      lastSeenObjectId: Types.number, /* No description provided */
       [@key "timestamp"]
-      timestamp: float /* No description provided */,
+      timestamp: Types.number /* No description provided */,
     };
 
     [@deriving yojson]
@@ -3781,9 +3781,9 @@ a total size of the objects for the fragment. */,
     [@deriving yojson]
     type result = {
       [@key "done"]
-      done_: float, /* No description provided */
+      done_: Types.number, /* No description provided */
       [@key "total"]
-      total: float, /* No description provided */
+      total: Types.number, /* No description provided */
       [@yojson.option] [@key "finished"]
       finished: option(bool) /* No description provided */,
     };
@@ -3873,7 +3873,7 @@ module Profiler = {
     [@deriving yojson]
     type result = {
       [@key "timestamp"]
-      timestamp: float, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
+      timestamp: Types.number, /* Monotonically increasing time (in seconds) when the coverage update was taken in the backend. */
       [@key "occasion"]
       occasion: string, /* Identifier for distinguishing coverage events. */
       [@key "result"]
@@ -4019,7 +4019,7 @@ on named context. */,
       [@key "reason"]
       reason: string, /* Reason describing why exception was revoked. */
       [@key "exceptionId"]
-      exceptionId: float /* The id of revoked exception, as reported in `exceptionThrown`. */,
+      exceptionId: Types.number /* The id of revoked exception, as reported in `exceptionThrown`. */,
     };
 
     [@deriving yojson]

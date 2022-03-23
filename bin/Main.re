@@ -48,8 +48,8 @@ let rec map_type =
   | (true, None) => failwith("Expected enums but didn't find any")
   | (false, enums) =>
     switch (prim) {
-    | "integer" => "float"
-    | "number" => "float"
+    | "integer" => in_types ? "number" : "Types.number"
+    | "number" => in_types ? "number" : "Types.number"
     | "boolean" => "bool"
     | "any" => "string"
     | "array" =>
@@ -682,6 +682,21 @@ let main = (paths, output) => {
     {ct|
       [@deriving yojson]
       type empty;
+
+      type number = [ `Int(int) | `Float(float) ];
+      let number_of_yojson =
+        fun
+        | `Float(f) when Float.is_integer(f) => `Int(int_of_float(f))
+        | `Float(f) => `Float(f)
+        | `Int(i) => `Int(i)
+        | _ => failwith("Not a number");
+
+      let yojson_of_number = number => {
+        switch (number) {
+          | `Float(f) => `Float(f)
+          | `Int(i) => `Int(i)
+        }
+      };
 
       type assoc = list((string, string));
       let assoc_of_yojson =
