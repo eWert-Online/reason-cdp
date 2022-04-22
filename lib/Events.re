@@ -2333,6 +2333,29 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
 
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
+  /* Fired when a prerender attempt is completed. */
+  module PrerenderAttemptCompleted = {
+    let name = "Page.prerenderAttemptCompleted";
+
+    [@deriving yojson]
+    type result = {
+      [@key "initiatingFrameId"]
+      initiatingFrameId: Types.Page.FrameId.t, /* The frame id of the frame initiating prerendering. */
+      [@key "prerenderingUrl"]
+      prerenderingUrl: string, /* No description provided */
+      [@key "finalStatus"]
+      finalStatus: Types.Page.PrerenderFinalStatus.t /* No description provided */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
   /* No description provided */
   module LoadEventFired = {
     let name = "Page.loadEventFired";

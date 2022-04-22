@@ -1442,16 +1442,10 @@ used when violation type is kDigitalAssetLinks. */,
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
       | `InvalidAttributionSourceEventId
-      | `InvalidAttributionData
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
-      | `AttributionTriggerDataTooLarge
-      | `AttributionEventSourceTriggerDataTooLarge
       | `InvalidAttributionSourceExpiry
       | `InvalidAttributionSourcePriority
-      | `InvalidEventSourceTriggerData
-      | `InvalidTriggerPriority
-      | `InvalidTriggerDedupKey
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -1526,6 +1520,48 @@ instead of "limited-quirks". */
       frameId: option(Page.FrameId.t) /* No description provided */,
     };
   }
+  and DeprecationIssueType: {
+    type _deprecationissuetype = [
+      | `AuthorizationCoveredByWildcard
+      | `CookieWithTruncatingChar
+      | `CrossOriginAccessBasedOnDocumentDomain
+      | `CrossOriginWindowAlert
+      | `CrossOriginWindowConfirm
+      | `DeprecationExample
+      | `DocumentDomainSettingWithoutOriginAgentClusterHeader
+      | `GeolocationInsecureOrigin
+      | `GeolocationInsecureOriginDeprecatedNotRemoved
+      | `GetUserMediaInsecureOrigin
+      | `LegacyConstraintGoogCpuOveruseDetection
+      | `LegacyConstraintGoogIPv6
+      | `LegacyConstraintGoogScreencastMinBitrate
+      | `LegacyConstraintGoogSuspendBelowMinBitrate
+      | `LocalCSSFileExtensionRejected
+      | `NotificationInsecureOrigin
+      | `ObsoleteWebRtcCipherSuite
+      | `PictureSourceSrc
+      | `PrefixedCancelAnimationFrame
+      | `PrefixedRequestAnimationFrame
+      | `RTCConstraintEnableDtlsSrtpFalse
+      | `RTCConstraintEnableDtlsSrtpTrue
+      | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
+      | `RTCPeerConnectionLegacyCreateWithMediaConstraints
+      | `RTPDataChannel
+      | `SharedArrayBufferConstructedWithoutIsolation
+      | `Untranslated
+      | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
+      | `WebCodecsVideoFrameDefaultTimestamp
+      | `XHRJSONEncodingDetection
+      | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
+    ];
+    let _deprecationissuetype_of_yojson:
+      Yojson.Basic.t => _deprecationissuetype;
+    let yojson_of__deprecationissuetype:
+      _deprecationissuetype => Yojson.Basic.t;
+    /* No description provided */
+    [@deriving yojson]
+    type t = _deprecationissuetype;
+  }
   and DeprecationIssueDetails: {
     /* This issue tracks information needed to print a deprecation message.
        The formatting is inherited from the old console.log version, see more at:
@@ -1544,8 +1580,10 @@ e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
 around January 2022. Please use Web Storage or Indexed Database
 instead. This standard was abandoned in January, 1970. See
 https://www.chromestatus.com/feature/5684870116278272 for more details." */
-      [@key "deprecationType"]
-      deprecationType: string /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */,
+      [@yojson.option] [@key "deprecationType"]
+      deprecationType: option(string), /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */
+      [@key "type"]
+      type_: DeprecationIssueType.t /* No description provided */,
     };
   }
   and ClientHintIssueReason: {
@@ -1573,6 +1611,11 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
     type _federatedauthrequestissuereason = [
       | `ApprovalDeclined
       | `TooManyRequests
+      | `ManifestListHttpNotFound
+      | `ManifestListNoResponse
+      | `ManifestListInvalidResponse
+      | `ManifestNotInManifestList
+      | `ManifestListTooBig
       | `ManifestHttpNotFound
       | `ManifestNoResponse
       | `ManifestInvalidResponse
@@ -2643,16 +2686,10 @@ used when violation type is kDigitalAssetLinks. */,
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
       | `InvalidAttributionSourceEventId
-      | `InvalidAttributionData
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
-      | `AttributionTriggerDataTooLarge
-      | `AttributionEventSourceTriggerDataTooLarge
       | `InvalidAttributionSourceExpiry
       | `InvalidAttributionSourcePriority
-      | `InvalidEventSourceTriggerData
-      | `InvalidTriggerPriority
-      | `InvalidTriggerDedupKey
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2665,31 +2702,19 @@ used when violation type is kDigitalAssetLinks. */,
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
       | `InvalidAttributionSourceEventId
-      | `InvalidAttributionData
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
-      | `AttributionTriggerDataTooLarge
-      | `AttributionEventSourceTriggerDataTooLarge
       | `InvalidAttributionSourceExpiry
       | `InvalidAttributionSourcePriority
-      | `InvalidEventSourceTriggerData
-      | `InvalidTriggerPriority
-      | `InvalidTriggerDedupKey
     ];
     let _attributionreportingissuetype_of_yojson =
       fun
       | `String("PermissionPolicyDisabled") => `PermissionPolicyDisabled
       | `String("InvalidAttributionSourceEventId") => `InvalidAttributionSourceEventId
-      | `String("InvalidAttributionData") => `InvalidAttributionData
       | `String("AttributionSourceUntrustworthyOrigin") => `AttributionSourceUntrustworthyOrigin
       | `String("AttributionUntrustworthyOrigin") => `AttributionUntrustworthyOrigin
-      | `String("AttributionTriggerDataTooLarge") => `AttributionTriggerDataTooLarge
-      | `String("AttributionEventSourceTriggerDataTooLarge") => `AttributionEventSourceTriggerDataTooLarge
       | `String("InvalidAttributionSourceExpiry") => `InvalidAttributionSourceExpiry
       | `String("InvalidAttributionSourcePriority") => `InvalidAttributionSourcePriority
-      | `String("InvalidEventSourceTriggerData") => `InvalidEventSourceTriggerData
-      | `String("InvalidTriggerPriority") => `InvalidTriggerPriority
-      | `String("InvalidTriggerDedupKey") => `InvalidTriggerDedupKey
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__attributionreportingissuetype =
@@ -2697,23 +2722,14 @@ used when violation type is kDigitalAssetLinks. */,
       | `PermissionPolicyDisabled => `String("PermissionPolicyDisabled")
       | `InvalidAttributionSourceEventId =>
         `String("InvalidAttributionSourceEventId")
-      | `InvalidAttributionData => `String("InvalidAttributionData")
       | `AttributionSourceUntrustworthyOrigin =>
         `String("AttributionSourceUntrustworthyOrigin")
       | `AttributionUntrustworthyOrigin =>
         `String("AttributionUntrustworthyOrigin")
-      | `AttributionTriggerDataTooLarge =>
-        `String("AttributionTriggerDataTooLarge")
-      | `AttributionEventSourceTriggerDataTooLarge =>
-        `String("AttributionEventSourceTriggerDataTooLarge")
       | `InvalidAttributionSourceExpiry =>
         `String("InvalidAttributionSourceExpiry")
       | `InvalidAttributionSourcePriority =>
-        `String("InvalidAttributionSourcePriority")
-      | `InvalidEventSourceTriggerData =>
-        `String("InvalidEventSourceTriggerData")
-      | `InvalidTriggerPriority => `String("InvalidTriggerPriority")
-      | `InvalidTriggerDedupKey => `String("InvalidTriggerDedupKey");
+        `String("InvalidAttributionSourcePriority");
     /* No description provided */
     [@deriving yojson]
     type t = _attributionreportingissuetype;
@@ -2848,6 +2864,171 @@ instead of "limited-quirks". */
       frameId: option(Page.FrameId.t) /* No description provided */,
     };
   }
+  and DeprecationIssueType: {
+    type _deprecationissuetype = [
+      | `AuthorizationCoveredByWildcard
+      | `CookieWithTruncatingChar
+      | `CrossOriginAccessBasedOnDocumentDomain
+      | `CrossOriginWindowAlert
+      | `CrossOriginWindowConfirm
+      | `DeprecationExample
+      | `DocumentDomainSettingWithoutOriginAgentClusterHeader
+      | `GeolocationInsecureOrigin
+      | `GeolocationInsecureOriginDeprecatedNotRemoved
+      | `GetUserMediaInsecureOrigin
+      | `LegacyConstraintGoogCpuOveruseDetection
+      | `LegacyConstraintGoogIPv6
+      | `LegacyConstraintGoogScreencastMinBitrate
+      | `LegacyConstraintGoogSuspendBelowMinBitrate
+      | `LocalCSSFileExtensionRejected
+      | `NotificationInsecureOrigin
+      | `ObsoleteWebRtcCipherSuite
+      | `PictureSourceSrc
+      | `PrefixedCancelAnimationFrame
+      | `PrefixedRequestAnimationFrame
+      | `RTCConstraintEnableDtlsSrtpFalse
+      | `RTCConstraintEnableDtlsSrtpTrue
+      | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
+      | `RTCPeerConnectionLegacyCreateWithMediaConstraints
+      | `RTPDataChannel
+      | `SharedArrayBufferConstructedWithoutIsolation
+      | `Untranslated
+      | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
+      | `WebCodecsVideoFrameDefaultTimestamp
+      | `XHRJSONEncodingDetection
+      | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
+    ];
+    let _deprecationissuetype_of_yojson:
+      Yojson.Basic.t => _deprecationissuetype;
+    let yojson_of__deprecationissuetype:
+      _deprecationissuetype => Yojson.Basic.t;
+    /* No description provided */
+    [@deriving yojson]
+    type t = _deprecationissuetype;
+  } = {
+    type _deprecationissuetype = [
+      | `AuthorizationCoveredByWildcard
+      | `CookieWithTruncatingChar
+      | `CrossOriginAccessBasedOnDocumentDomain
+      | `CrossOriginWindowAlert
+      | `CrossOriginWindowConfirm
+      | `DeprecationExample
+      | `DocumentDomainSettingWithoutOriginAgentClusterHeader
+      | `GeolocationInsecureOrigin
+      | `GeolocationInsecureOriginDeprecatedNotRemoved
+      | `GetUserMediaInsecureOrigin
+      | `LegacyConstraintGoogCpuOveruseDetection
+      | `LegacyConstraintGoogIPv6
+      | `LegacyConstraintGoogScreencastMinBitrate
+      | `LegacyConstraintGoogSuspendBelowMinBitrate
+      | `LocalCSSFileExtensionRejected
+      | `NotificationInsecureOrigin
+      | `ObsoleteWebRtcCipherSuite
+      | `PictureSourceSrc
+      | `PrefixedCancelAnimationFrame
+      | `PrefixedRequestAnimationFrame
+      | `RTCConstraintEnableDtlsSrtpFalse
+      | `RTCConstraintEnableDtlsSrtpTrue
+      | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
+      | `RTCPeerConnectionLegacyCreateWithMediaConstraints
+      | `RTPDataChannel
+      | `SharedArrayBufferConstructedWithoutIsolation
+      | `Untranslated
+      | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
+      | `WebCodecsVideoFrameDefaultTimestamp
+      | `XHRJSONEncodingDetection
+      | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
+    ];
+    let _deprecationissuetype_of_yojson =
+      fun
+      | `String("AuthorizationCoveredByWildcard") => `AuthorizationCoveredByWildcard
+      | `String("CookieWithTruncatingChar") => `CookieWithTruncatingChar
+      | `String("CrossOriginAccessBasedOnDocumentDomain") => `CrossOriginAccessBasedOnDocumentDomain
+      | `String("CrossOriginWindowAlert") => `CrossOriginWindowAlert
+      | `String("CrossOriginWindowConfirm") => `CrossOriginWindowConfirm
+      | `String("DeprecationExample") => `DeprecationExample
+      | `String("DocumentDomainSettingWithoutOriginAgentClusterHeader") => `DocumentDomainSettingWithoutOriginAgentClusterHeader
+      | `String("GeolocationInsecureOrigin") => `GeolocationInsecureOrigin
+      | `String("GeolocationInsecureOriginDeprecatedNotRemoved") => `GeolocationInsecureOriginDeprecatedNotRemoved
+      | `String("GetUserMediaInsecureOrigin") => `GetUserMediaInsecureOrigin
+      | `String("LegacyConstraintGoogCpuOveruseDetection") => `LegacyConstraintGoogCpuOveruseDetection
+      | `String("LegacyConstraintGoogIPv6") => `LegacyConstraintGoogIPv6
+      | `String("LegacyConstraintGoogScreencastMinBitrate") => `LegacyConstraintGoogScreencastMinBitrate
+      | `String("LegacyConstraintGoogSuspendBelowMinBitrate") => `LegacyConstraintGoogSuspendBelowMinBitrate
+      | `String("LocalCSSFileExtensionRejected") => `LocalCSSFileExtensionRejected
+      | `String("NotificationInsecureOrigin") => `NotificationInsecureOrigin
+      | `String("ObsoleteWebRtcCipherSuite") => `ObsoleteWebRtcCipherSuite
+      | `String("PictureSourceSrc") => `PictureSourceSrc
+      | `String("PrefixedCancelAnimationFrame") => `PrefixedCancelAnimationFrame
+      | `String("PrefixedRequestAnimationFrame") => `PrefixedRequestAnimationFrame
+      | `String("RTCConstraintEnableDtlsSrtpFalse") => `RTCConstraintEnableDtlsSrtpFalse
+      | `String("RTCConstraintEnableDtlsSrtpTrue") => `RTCConstraintEnableDtlsSrtpTrue
+      | `String("RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics") => `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
+      | `String("RTCPeerConnectionLegacyCreateWithMediaConstraints") => `RTCPeerConnectionLegacyCreateWithMediaConstraints
+      | `String("RTPDataChannel") => `RTPDataChannel
+      | `String("SharedArrayBufferConstructedWithoutIsolation") => `SharedArrayBufferConstructedWithoutIsolation
+      | `String("Untranslated") => `Untranslated
+      | `String("V8SharedArrayBufferConstructedInExtensionWithoutIsolation") => `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
+      | `String("WebCodecsVideoFrameDefaultTimestamp") => `WebCodecsVideoFrameDefaultTimestamp
+      | `String("XHRJSONEncodingDetection") => `XHRJSONEncodingDetection
+      | `String("XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload") => `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__deprecationissuetype =
+      fun
+      | `AuthorizationCoveredByWildcard =>
+        `String("AuthorizationCoveredByWildcard")
+      | `CookieWithTruncatingChar => `String("CookieWithTruncatingChar")
+      | `CrossOriginAccessBasedOnDocumentDomain =>
+        `String("CrossOriginAccessBasedOnDocumentDomain")
+      | `CrossOriginWindowAlert => `String("CrossOriginWindowAlert")
+      | `CrossOriginWindowConfirm => `String("CrossOriginWindowConfirm")
+      | `DeprecationExample => `String("DeprecationExample")
+      | `DocumentDomainSettingWithoutOriginAgentClusterHeader =>
+        `String("DocumentDomainSettingWithoutOriginAgentClusterHeader")
+      | `GeolocationInsecureOrigin => `String("GeolocationInsecureOrigin")
+      | `GeolocationInsecureOriginDeprecatedNotRemoved =>
+        `String("GeolocationInsecureOriginDeprecatedNotRemoved")
+      | `GetUserMediaInsecureOrigin => `String("GetUserMediaInsecureOrigin")
+      | `LegacyConstraintGoogCpuOveruseDetection =>
+        `String("LegacyConstraintGoogCpuOveruseDetection")
+      | `LegacyConstraintGoogIPv6 => `String("LegacyConstraintGoogIPv6")
+      | `LegacyConstraintGoogScreencastMinBitrate =>
+        `String("LegacyConstraintGoogScreencastMinBitrate")
+      | `LegacyConstraintGoogSuspendBelowMinBitrate =>
+        `String("LegacyConstraintGoogSuspendBelowMinBitrate")
+      | `LocalCSSFileExtensionRejected =>
+        `String("LocalCSSFileExtensionRejected")
+      | `NotificationInsecureOrigin => `String("NotificationInsecureOrigin")
+      | `ObsoleteWebRtcCipherSuite => `String("ObsoleteWebRtcCipherSuite")
+      | `PictureSourceSrc => `String("PictureSourceSrc")
+      | `PrefixedCancelAnimationFrame =>
+        `String("PrefixedCancelAnimationFrame")
+      | `PrefixedRequestAnimationFrame =>
+        `String("PrefixedRequestAnimationFrame")
+      | `RTCConstraintEnableDtlsSrtpFalse =>
+        `String("RTCConstraintEnableDtlsSrtpFalse")
+      | `RTCConstraintEnableDtlsSrtpTrue =>
+        `String("RTCConstraintEnableDtlsSrtpTrue")
+      | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics =>
+        `String("RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics")
+      | `RTCPeerConnectionLegacyCreateWithMediaConstraints =>
+        `String("RTCPeerConnectionLegacyCreateWithMediaConstraints")
+      | `RTPDataChannel => `String("RTPDataChannel")
+      | `SharedArrayBufferConstructedWithoutIsolation =>
+        `String("SharedArrayBufferConstructedWithoutIsolation")
+      | `Untranslated => `String("Untranslated")
+      | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation =>
+        `String("V8SharedArrayBufferConstructedInExtensionWithoutIsolation")
+      | `WebCodecsVideoFrameDefaultTimestamp =>
+        `String("WebCodecsVideoFrameDefaultTimestamp")
+      | `XHRJSONEncodingDetection => `String("XHRJSONEncodingDetection")
+      | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload =>
+        `String("XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload");
+    /* No description provided */
+    [@deriving yojson]
+    type t = _deprecationissuetype;
+  }
   and DeprecationIssueDetails: {
     /* This issue tracks information needed to print a deprecation message.
        The formatting is inherited from the old console.log version, see more at:
@@ -2866,8 +3047,10 @@ e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
 around January 2022. Please use Web Storage or Indexed Database
 instead. This standard was abandoned in January, 1970. See
 https://www.chromestatus.com/feature/5684870116278272 for more details." */
-      [@key "deprecationType"]
-      deprecationType: string /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */,
+      [@yojson.option] [@key "deprecationType"]
+      deprecationType: option(string), /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */
+      [@key "type"]
+      type_: DeprecationIssueType.t /* No description provided */,
     };
   } = {
     /* This issue tracks information needed to print a deprecation message.
@@ -2887,8 +3070,10 @@ e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
 around January 2022. Please use Web Storage or Indexed Database
 instead. This standard was abandoned in January, 1970. See
 https://www.chromestatus.com/feature/5684870116278272 for more details." */
-      [@key "deprecationType"]
-      deprecationType: string /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */,
+      [@yojson.option] [@key "deprecationType"]
+      deprecationType: option(string), /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */
+      [@key "type"]
+      type_: DeprecationIssueType.t /* No description provided */,
     };
   }
   and ClientHintIssueReason: {
@@ -2942,6 +3127,11 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
     type _federatedauthrequestissuereason = [
       | `ApprovalDeclined
       | `TooManyRequests
+      | `ManifestListHttpNotFound
+      | `ManifestListNoResponse
+      | `ManifestListInvalidResponse
+      | `ManifestNotInManifestList
+      | `ManifestListTooBig
       | `ManifestHttpNotFound
       | `ManifestNoResponse
       | `ManifestInvalidResponse
@@ -2976,6 +3166,11 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
     type _federatedauthrequestissuereason = [
       | `ApprovalDeclined
       | `TooManyRequests
+      | `ManifestListHttpNotFound
+      | `ManifestListNoResponse
+      | `ManifestListInvalidResponse
+      | `ManifestNotInManifestList
+      | `ManifestListTooBig
       | `ManifestHttpNotFound
       | `ManifestNoResponse
       | `ManifestInvalidResponse
@@ -3000,6 +3195,11 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       fun
       | `String("ApprovalDeclined") => `ApprovalDeclined
       | `String("TooManyRequests") => `TooManyRequests
+      | `String("ManifestListHttpNotFound") => `ManifestListHttpNotFound
+      | `String("ManifestListNoResponse") => `ManifestListNoResponse
+      | `String("ManifestListInvalidResponse") => `ManifestListInvalidResponse
+      | `String("ManifestNotInManifestList") => `ManifestNotInManifestList
+      | `String("ManifestListTooBig") => `ManifestListTooBig
       | `String("ManifestHttpNotFound") => `ManifestHttpNotFound
       | `String("ManifestNoResponse") => `ManifestNoResponse
       | `String("ManifestInvalidResponse") => `ManifestInvalidResponse
@@ -3025,6 +3225,11 @@ https://www.chromestatus.com/feature/5684870116278272 for more details." */
       fun
       | `ApprovalDeclined => `String("ApprovalDeclined")
       | `TooManyRequests => `String("TooManyRequests")
+      | `ManifestListHttpNotFound => `String("ManifestListHttpNotFound")
+      | `ManifestListNoResponse => `String("ManifestListNoResponse")
+      | `ManifestListInvalidResponse => `String("ManifestListInvalidResponse")
+      | `ManifestNotInManifestList => `String("ManifestNotInManifestList")
+      | `ManifestListTooBig => `String("ManifestListTooBig")
       | `ManifestHttpNotFound => `String("ManifestHttpNotFound")
       | `ManifestNoResponse => `String("ManifestNoResponse")
       | `ManifestInvalidResponse => `String("ManifestInvalidResponse")
@@ -7478,7 +7683,11 @@ A display feature that only splits content will have a 0 mask_length. */,
       [@key "model"]
       model: string, /* No description provided */
       [@key "mobile"]
-      mobile: bool /* No description provided */,
+      mobile: bool, /* No description provided */
+      [@yojson.option] [@key "bitness"]
+      bitness: option(string), /* No description provided */
+      [@yojson.option] [@key "wow64"]
+      wow64: option(bool) /* No description provided */,
     };
   }
   and DisabledImageType: {
@@ -7682,7 +7891,11 @@ A display feature that only splits content will have a 0 mask_length. */,
       [@key "model"]
       model: string, /* No description provided */
       [@key "mobile"]
-      mobile: bool /* No description provided */,
+      mobile: bool, /* No description provided */
+      [@yojson.option] [@key "bitness"]
+      bitness: option(string), /* No description provided */
+      [@yojson.option] [@key "wow64"]
+      wow64: option(bool) /* No description provided */,
     };
   } = {
     /* Used to specify User Agent Cient Hints to emulate. See https://wicg.github.io/ua-client-hints
@@ -7704,7 +7917,11 @@ A display feature that only splits content will have a 0 mask_length. */,
       [@key "model"]
       model: string, /* No description provided */
       [@key "mobile"]
-      mobile: bool /* No description provided */,
+      mobile: bool, /* No description provided */
+      [@yojson.option] [@key "bitness"]
+      bitness: option(string), /* No description provided */
+      [@yojson.option] [@key "wow64"]
+      wow64: option(bool) /* No description provided */,
     };
   }
   and DisabledImageType: {
@@ -13754,8 +13971,10 @@ and Page: {
       | `ch_device_memory
       | `ch_downlink
       | `ch_ect
+      | `ch_partitioned_cookies
       | `ch_prefers_color_scheme
       | `ch_rtt
+      | `ch_save_data
       | `ch_ua
       | `ch_ua_arch
       | `ch_ua_bitness
@@ -13771,7 +13990,6 @@ and Page: {
       | `ch_viewport_height
       | `ch_viewport_width
       | `ch_width
-      | `ch_partitioned_cookies
       | `clipboard_read
       | `clipboard_write
       | `cross_origin_isolated
@@ -14186,9 +14404,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@yojson.option] [@key "cursive"]
       cursive: option(string), /* The cursive font-family. */
       [@yojson.option] [@key "fantasy"]
-      fantasy: option(string), /* The fantasy font-family. */
-      [@yojson.option] [@key "pictograph"]
-      pictograph: option(string) /* The pictograph font-family. */,
+      fantasy: option(string) /* The fantasy font-family. */,
     };
   }
   and ScriptFontFamilies: {
@@ -14319,7 +14535,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `JavaScriptExecution
       | `RendererProcessKilled
       | `RendererProcessCrashed
-      | `GrantedMediaStreamAccess
       | `SchedulerTrackedFeatureUsed
       | `ConflictingBrowsingInstance
       | `CacheFlushed
@@ -14346,7 +14561,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ForegroundCacheLimit
       | `BrowsingInstanceNotSwapped
       | `BackForwardCacheDisabledForDelegate
-      | `OptInUnloadHeaderNotPresent
       | `UnloadHandlerExistsInMainFrame
       | `UnloadHandlerExistsInSubFrame
       | `ServiceWorkerUnregistration
@@ -14357,6 +14571,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `Unknown
       | `ActivationNavigationsDisallowedForBug1234857
       | `ErrorDocument
+      | `FencedFramesEmbedder
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -14475,6 +14690,16 @@ dependent on the reason:
       [@key "children"]
       children: list(BackForwardCacheNotRestoredExplanationTree.t) /* Array of children frame */,
     };
+  }
+  and PrerenderFinalStatus: {
+    type _prerenderfinalstatus = [ | `Activated];
+    let _prerenderfinalstatus_of_yojson:
+      Yojson.Basic.t => _prerenderfinalstatus;
+    let yojson_of__prerenderfinalstatus:
+      _prerenderfinalstatus => Yojson.Basic.t;
+    /* List of FinalStatus reasons for Prerender2. */
+    [@deriving yojson]
+    type t = _prerenderfinalstatus;
   };
 } = {
   module rec FrameId: {
@@ -14685,8 +14910,10 @@ dependent on the reason:
       | `ch_device_memory
       | `ch_downlink
       | `ch_ect
+      | `ch_partitioned_cookies
       | `ch_prefers_color_scheme
       | `ch_rtt
+      | `ch_save_data
       | `ch_ua
       | `ch_ua_arch
       | `ch_ua_bitness
@@ -14702,7 +14929,6 @@ dependent on the reason:
       | `ch_viewport_height
       | `ch_viewport_width
       | `ch_width
-      | `ch_partitioned_cookies
       | `clipboard_read
       | `clipboard_write
       | `cross_origin_isolated
@@ -14763,8 +14989,10 @@ dependent on the reason:
       | `ch_device_memory
       | `ch_downlink
       | `ch_ect
+      | `ch_partitioned_cookies
       | `ch_prefers_color_scheme
       | `ch_rtt
+      | `ch_save_data
       | `ch_ua
       | `ch_ua_arch
       | `ch_ua_bitness
@@ -14780,7 +15008,6 @@ dependent on the reason:
       | `ch_viewport_height
       | `ch_viewport_width
       | `ch_width
-      | `ch_partitioned_cookies
       | `clipboard_read
       | `clipboard_write
       | `cross_origin_isolated
@@ -14833,8 +15060,10 @@ dependent on the reason:
       | `String("ch-device-memory") => `ch_device_memory
       | `String("ch-downlink") => `ch_downlink
       | `String("ch-ect") => `ch_ect
+      | `String("ch-partitioned-cookies") => `ch_partitioned_cookies
       | `String("ch-prefers-color-scheme") => `ch_prefers_color_scheme
       | `String("ch-rtt") => `ch_rtt
+      | `String("ch-save-data") => `ch_save_data
       | `String("ch-ua") => `ch_ua
       | `String("ch-ua-arch") => `ch_ua_arch
       | `String("ch-ua-bitness") => `ch_ua_bitness
@@ -14850,7 +15079,6 @@ dependent on the reason:
       | `String("ch-viewport-height") => `ch_viewport_height
       | `String("ch-viewport-width") => `ch_viewport_width
       | `String("ch-width") => `ch_width
-      | `String("ch-partitioned-cookies") => `ch_partitioned_cookies
       | `String("clipboard-read") => `clipboard_read
       | `String("clipboard-write") => `clipboard_write
       | `String("cross-origin-isolated") => `cross_origin_isolated
@@ -14904,8 +15132,10 @@ dependent on the reason:
       | `ch_device_memory => `String("ch-device-memory")
       | `ch_downlink => `String("ch-downlink")
       | `ch_ect => `String("ch-ect")
+      | `ch_partitioned_cookies => `String("ch-partitioned-cookies")
       | `ch_prefers_color_scheme => `String("ch-prefers-color-scheme")
       | `ch_rtt => `String("ch-rtt")
+      | `ch_save_data => `String("ch-save-data")
       | `ch_ua => `String("ch-ua")
       | `ch_ua_arch => `String("ch-ua-arch")
       | `ch_ua_bitness => `String("ch-ua-bitness")
@@ -14921,7 +15151,6 @@ dependent on the reason:
       | `ch_viewport_height => `String("ch-viewport-height")
       | `ch_viewport_width => `String("ch-viewport-width")
       | `ch_width => `String("ch-width")
-      | `ch_partitioned_cookies => `String("ch-partitioned-cookies")
       | `clipboard_read => `String("clipboard-read")
       | `clipboard_write => `String("clipboard-write")
       | `cross_origin_isolated => `String("cross-origin-isolated")
@@ -15755,9 +15984,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@yojson.option] [@key "cursive"]
       cursive: option(string), /* The cursive font-family. */
       [@yojson.option] [@key "fantasy"]
-      fantasy: option(string), /* The fantasy font-family. */
-      [@yojson.option] [@key "pictograph"]
-      pictograph: option(string) /* The pictograph font-family. */,
+      fantasy: option(string) /* The fantasy font-family. */,
     };
   } = {
     /* Generic font families collection. */
@@ -15774,9 +16001,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@yojson.option] [@key "cursive"]
       cursive: option(string), /* The cursive font-family. */
       [@yojson.option] [@key "fantasy"]
-      fantasy: option(string), /* The fantasy font-family. */
-      [@yojson.option] [@key "pictograph"]
-      pictograph: option(string) /* The pictograph font-family. */,
+      fantasy: option(string) /* The fantasy font-family. */,
     };
   }
   and ScriptFontFamilies: {
@@ -16064,7 +16289,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `JavaScriptExecution
       | `RendererProcessKilled
       | `RendererProcessCrashed
-      | `GrantedMediaStreamAccess
       | `SchedulerTrackedFeatureUsed
       | `ConflictingBrowsingInstance
       | `CacheFlushed
@@ -16091,7 +16315,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ForegroundCacheLimit
       | `BrowsingInstanceNotSwapped
       | `BackForwardCacheDisabledForDelegate
-      | `OptInUnloadHeaderNotPresent
       | `UnloadHandlerExistsInMainFrame
       | `UnloadHandlerExistsInSubFrame
       | `ServiceWorkerUnregistration
@@ -16102,6 +16325,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `Unknown
       | `ActivationNavigationsDisallowedForBug1234857
       | `ErrorDocument
+      | `FencedFramesEmbedder
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -16198,7 +16422,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `JavaScriptExecution
       | `RendererProcessKilled
       | `RendererProcessCrashed
-      | `GrantedMediaStreamAccess
       | `SchedulerTrackedFeatureUsed
       | `ConflictingBrowsingInstance
       | `CacheFlushed
@@ -16225,7 +16448,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ForegroundCacheLimit
       | `BrowsingInstanceNotSwapped
       | `BackForwardCacheDisabledForDelegate
-      | `OptInUnloadHeaderNotPresent
       | `UnloadHandlerExistsInMainFrame
       | `UnloadHandlerExistsInSubFrame
       | `ServiceWorkerUnregistration
@@ -16236,6 +16458,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `Unknown
       | `ActivationNavigationsDisallowedForBug1234857
       | `ErrorDocument
+      | `FencedFramesEmbedder
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -16325,7 +16548,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("JavaScriptExecution") => `JavaScriptExecution
       | `String("RendererProcessKilled") => `RendererProcessKilled
       | `String("RendererProcessCrashed") => `RendererProcessCrashed
-      | `String("GrantedMediaStreamAccess") => `GrantedMediaStreamAccess
       | `String("SchedulerTrackedFeatureUsed") => `SchedulerTrackedFeatureUsed
       | `String("ConflictingBrowsingInstance") => `ConflictingBrowsingInstance
       | `String("CacheFlushed") => `CacheFlushed
@@ -16352,7 +16574,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("ForegroundCacheLimit") => `ForegroundCacheLimit
       | `String("BrowsingInstanceNotSwapped") => `BrowsingInstanceNotSwapped
       | `String("BackForwardCacheDisabledForDelegate") => `BackForwardCacheDisabledForDelegate
-      | `String("OptInUnloadHeaderNotPresent") => `OptInUnloadHeaderNotPresent
       | `String("UnloadHandlerExistsInMainFrame") => `UnloadHandlerExistsInMainFrame
       | `String("UnloadHandlerExistsInSubFrame") => `UnloadHandlerExistsInSubFrame
       | `String("ServiceWorkerUnregistration") => `ServiceWorkerUnregistration
@@ -16363,6 +16584,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("Unknown") => `Unknown
       | `String("ActivationNavigationsDisallowedForBug1234857") => `ActivationNavigationsDisallowedForBug1234857
       | `String("ErrorDocument") => `ErrorDocument
+      | `String("FencedFramesEmbedder") => `FencedFramesEmbedder
       | `String("WebSocket") => `WebSocket
       | `String("WebTransport") => `WebTransport
       | `String("WebRTC") => `WebRTC
@@ -16454,7 +16676,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `JavaScriptExecution => `String("JavaScriptExecution")
       | `RendererProcessKilled => `String("RendererProcessKilled")
       | `RendererProcessCrashed => `String("RendererProcessCrashed")
-      | `GrantedMediaStreamAccess => `String("GrantedMediaStreamAccess")
       | `SchedulerTrackedFeatureUsed => `String("SchedulerTrackedFeatureUsed")
       | `ConflictingBrowsingInstance => `String("ConflictingBrowsingInstance")
       | `CacheFlushed => `String("CacheFlushed")
@@ -16492,7 +16713,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `BrowsingInstanceNotSwapped => `String("BrowsingInstanceNotSwapped")
       | `BackForwardCacheDisabledForDelegate =>
         `String("BackForwardCacheDisabledForDelegate")
-      | `OptInUnloadHeaderNotPresent => `String("OptInUnloadHeaderNotPresent")
       | `UnloadHandlerExistsInMainFrame =>
         `String("UnloadHandlerExistsInMainFrame")
       | `UnloadHandlerExistsInSubFrame =>
@@ -16508,6 +16728,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ActivationNavigationsDisallowedForBug1234857 =>
         `String("ActivationNavigationsDisallowedForBug1234857")
       | `ErrorDocument => `String("ErrorDocument")
+      | `FencedFramesEmbedder => `String("FencedFramesEmbedder")
       | `WebSocket => `String("WebSocket")
       | `WebTransport => `String("WebTransport")
       | `WebRTC => `String("WebRTC")
@@ -16691,6 +16912,29 @@ dependent on the reason:
       [@key "children"]
       children: list(BackForwardCacheNotRestoredExplanationTree.t) /* Array of children frame */,
     };
+  }
+  and PrerenderFinalStatus: {
+    type _prerenderfinalstatus = [ | `Activated];
+    let _prerenderfinalstatus_of_yojson:
+      Yojson.Basic.t => _prerenderfinalstatus;
+    let yojson_of__prerenderfinalstatus:
+      _prerenderfinalstatus => Yojson.Basic.t;
+    /* List of FinalStatus reasons for Prerender2. */
+    [@deriving yojson]
+    type t = _prerenderfinalstatus;
+  } = {
+    type _prerenderfinalstatus = [ | `Activated];
+    let _prerenderfinalstatus_of_yojson =
+      fun
+      | `String("Activated") => `Activated
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__prerenderfinalstatus =
+      fun
+      | `Activated => `String("Activated");
+    /* List of FinalStatus reasons for Prerender2. */
+    [@deriving yojson]
+    type t = _prerenderfinalstatus;
   };
 }
 and Performance: {
@@ -19948,21 +20192,33 @@ the error log level into the PlayerError type. */
       value: string /* No description provided */,
     };
   }
+  and PlayerErrorSourceLocation: {
+    /* Represents logged source line numbers reported in an error.
+       NOTE: file and line are from chromium c++ implementation code, not js. */
+    [@deriving yojson]
+    type t = {
+      [@key "file"]
+      file: string, /* No description provided */
+      [@key "line"]
+      line: number /* No description provided */,
+    };
+  }
   and PlayerError: {
-    type _playererror_type = [ | `pipeline_error | `media_error];
-    let _playererror_type_of_yojson: Yojson.Basic.t => _playererror_type;
-    let yojson_of__playererror_type: _playererror_type => Yojson.Basic.t;
     /* Corresponds to kMediaError */
     [@deriving yojson]
     type t = {
-      [@key "type"]
-      type_: _playererror_type, /* No description provided */
-      [@key "errorCode"]
-      errorCode: string /* When this switches to using media::Status instead of PipelineStatus
-we can remove "errorCode" and replace it with the fields from
-a Status instance. This also seems like a duplicate of the error
-level enum - there is a todo bug to have that level removed and
-use this instead. (crbug.com/1068454) */,
+      [@key "errorType"]
+      errorType: string, /* No description provided */
+      [@key "code"]
+      code: number, /* Code is the numeric enum entry for a specific set of error codes, such
+as PipelineStatusCodes in media/base/pipeline_status.h */
+      [@key "stack"]
+      stack: list(PlayerErrorSourceLocation.t), /* A trace of where this error was caused / where it passed through. */
+      [@key "cause"]
+      cause: list(PlayerError.t), /* Errors potentially have a root cause error, ie, a DecoderError might be
+caused by an WindowsError */
+      [@key "data"]
+      data: assoc /* Extra data attached to an error, such as an HRESULT, Video Codec, etc. */,
     };
   };
 } = {
@@ -20077,45 +20333,60 @@ the error log level into the PlayerError type. */
       value: string /* No description provided */,
     };
   }
-  and PlayerError: {
-    type _playererror_type = [ | `pipeline_error | `media_error];
-    let _playererror_type_of_yojson: Yojson.Basic.t => _playererror_type;
-    let yojson_of__playererror_type: _playererror_type => Yojson.Basic.t;
-    /* Corresponds to kMediaError */
+  and PlayerErrorSourceLocation: {
+    /* Represents logged source line numbers reported in an error.
+       NOTE: file and line are from chromium c++ implementation code, not js. */
     [@deriving yojson]
     type t = {
-      [@key "type"]
-      type_: _playererror_type, /* No description provided */
-      [@key "errorCode"]
-      errorCode: string /* When this switches to using media::Status instead of PipelineStatus
-we can remove "errorCode" and replace it with the fields from
-a Status instance. This also seems like a duplicate of the error
-level enum - there is a todo bug to have that level removed and
-use this instead. (crbug.com/1068454) */,
+      [@key "file"]
+      file: string, /* No description provided */
+      [@key "line"]
+      line: number /* No description provided */,
     };
   } = {
-    type _playererror_type = [ | `pipeline_error | `media_error];
-    let _playererror_type_of_yojson =
-      fun
-      | `String("pipeline_error") => `pipeline_error
-      | `String("media_error") => `media_error
-      | `String(s) => failwith("unknown enum: " ++ s)
-      | _ => failwith("unknown enum type");
-    let yojson_of__playererror_type =
-      fun
-      | `pipeline_error => `String("pipeline_error")
-      | `media_error => `String("media_error");
+    /* Represents logged source line numbers reported in an error.
+       NOTE: file and line are from chromium c++ implementation code, not js. */
+    [@deriving yojson]
+    type t = {
+      [@key "file"]
+      file: string, /* No description provided */
+      [@key "line"]
+      line: number /* No description provided */,
+    };
+  }
+  and PlayerError: {
     /* Corresponds to kMediaError */
     [@deriving yojson]
     type t = {
-      [@key "type"]
-      type_: _playererror_type, /* No description provided */
-      [@key "errorCode"]
-      errorCode: string /* When this switches to using media::Status instead of PipelineStatus
-we can remove "errorCode" and replace it with the fields from
-a Status instance. This also seems like a duplicate of the error
-level enum - there is a todo bug to have that level removed and
-use this instead. (crbug.com/1068454) */,
+      [@key "errorType"]
+      errorType: string, /* No description provided */
+      [@key "code"]
+      code: number, /* Code is the numeric enum entry for a specific set of error codes, such
+as PipelineStatusCodes in media/base/pipeline_status.h */
+      [@key "stack"]
+      stack: list(PlayerErrorSourceLocation.t), /* A trace of where this error was caused / where it passed through. */
+      [@key "cause"]
+      cause: list(PlayerError.t), /* Errors potentially have a root cause error, ie, a DecoderError might be
+caused by an WindowsError */
+      [@key "data"]
+      data: assoc /* Extra data attached to an error, such as an HRESULT, Video Codec, etc. */,
+    };
+  } = {
+    /* Corresponds to kMediaError */
+    [@deriving yojson]
+    type t = {
+      [@key "errorType"]
+      errorType: string, /* No description provided */
+      [@key "code"]
+      code: number, /* Code is the numeric enum entry for a specific set of error codes, such
+as PipelineStatusCodes in media/base/pipeline_status.h */
+      [@key "stack"]
+      stack: list(PlayerErrorSourceLocation.t), /* A trace of where this error was caused / where it passed through. */
+      [@key "cause"]
+      cause: list(PlayerError.t), /* Errors potentially have a root cause error, ie, a DecoderError might be
+caused by an WindowsError */
+      [@key "data"]
+      data: assoc /* Extra data attached to an error, such as an HRESULT, Video Codec, etc. */,
     };
   };
 }
@@ -20353,13 +20624,20 @@ and Debugger: {
       [@key "location"]
       location: Location.t, /* Location in the source code. */
       [@key "url"]
-      url: string, /* JavaScript script name or url. */
+      url: string, /* JavaScript script name or url.
+Deprecated in favor of using the `location.scriptId` to resolve the URL via a previously
+sent `Debugger.scriptParsed` event. */
       [@key "scopeChain"]
       scopeChain: list(Scope.t), /* Scope chain for this call frame. */
       [@key "this"]
       this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
       [@yojson.option] [@key "returnValue"]
-      returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
+      returnValue: option(Runtime.RemoteObject.t), /* The value being returned, if the function is at return point. */
+      [@yojson.option] [@key "canBeRestarted"]
+      canBeRestarted: option(bool) /* Valid only while the VM is paused and indicates whether this frame
+can be restarted or not. Note that a `true` value here does not
+guarantee that Debugger#restartFrame with this CallFrameId will be
+successful, but it is very likely. */,
     };
   }
   and Scope: {
@@ -20544,13 +20822,20 @@ variables as its properties. */
       [@key "location"]
       location: Location.t, /* Location in the source code. */
       [@key "url"]
-      url: string, /* JavaScript script name or url. */
+      url: string, /* JavaScript script name or url.
+Deprecated in favor of using the `location.scriptId` to resolve the URL via a previously
+sent `Debugger.scriptParsed` event. */
       [@key "scopeChain"]
       scopeChain: list(Scope.t), /* Scope chain for this call frame. */
       [@key "this"]
       this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
       [@yojson.option] [@key "returnValue"]
-      returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
+      returnValue: option(Runtime.RemoteObject.t), /* The value being returned, if the function is at return point. */
+      [@yojson.option] [@key "canBeRestarted"]
+      canBeRestarted: option(bool) /* Valid only while the VM is paused and indicates whether this frame
+can be restarted or not. Note that a `true` value here does not
+guarantee that Debugger#restartFrame with this CallFrameId will be
+successful, but it is very likely. */,
     };
   } = {
     /* JavaScript call frame. Array of call frames form the call stack. */
@@ -20565,13 +20850,20 @@ variables as its properties. */
       [@key "location"]
       location: Location.t, /* Location in the source code. */
       [@key "url"]
-      url: string, /* JavaScript script name or url. */
+      url: string, /* JavaScript script name or url.
+Deprecated in favor of using the `location.scriptId` to resolve the URL via a previously
+sent `Debugger.scriptParsed` event. */
       [@key "scopeChain"]
       scopeChain: list(Scope.t), /* Scope chain for this call frame. */
       [@key "this"]
       this: Runtime.RemoteObject.t, /* `this` object for this call frame. */
       [@yojson.option] [@key "returnValue"]
-      returnValue: option(Runtime.RemoteObject.t) /* The value being returned, if the function is at return point. */,
+      returnValue: option(Runtime.RemoteObject.t), /* The value being returned, if the function is at return point. */
+      [@yojson.option] [@key "canBeRestarted"]
+      canBeRestarted: option(bool) /* Valid only while the VM is paused and indicates whether this frame
+can be restarted or not. Note that a `true` value here does not
+guarantee that Debugger#restartFrame with this CallFrameId will be
+successful, but it is very likely. */,
     };
   }
   and Scope: {
@@ -21255,6 +21547,46 @@ and Runtime: {
     [@deriving yojson]
     type t = string;
   }
+  and WebDriverValue: {
+    type _webdrivervalue_type = [
+      | `undefined
+      | `null
+      | `string
+      | `number
+      | `boolean
+      | `bigint
+      | `regexp
+      | `date
+      | `symbol
+      | `array
+      | `object_
+      | `function_
+      | `map
+      | `set
+      | `weakmap
+      | `weakset
+      | `error
+      | `proxy
+      | `promise
+      | `typedarray
+      | `arraybuffer
+      | `node
+      | `window
+    ];
+    let _webdrivervalue_type_of_yojson: Yojson.Basic.t => _webdrivervalue_type;
+    let yojson_of__webdrivervalue_type: _webdrivervalue_type => Yojson.Basic.t;
+    /* Represents the value serialiazed by the WebDriver BiDi specification
+       https://w3c.github.io/webdriver-bidi. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: _webdrivervalue_type, /* No description provided */
+      [@yojson.option] [@key "value"]
+      value: option(string), /* No description provided */
+      [@yojson.option] [@key "objectId"]
+      objectId: option(string) /* No description provided */,
+    };
+  }
   and RemoteObjectId: {
     /* Unique object identifier. */
     [@deriving yojson]
@@ -21322,6 +21654,8 @@ NOTE: If you change anything here, make sure to also update
 property. */
       [@yojson.option] [@key "description"]
       description: option(string), /* String representation of the object. */
+      [@yojson.option] [@key "webDriverValue"]
+      webDriverValue: option(WebDriverValue.t), /* WebDriver BiDi representation of the value. */
       [@yojson.option] [@key "objectId"]
       objectId: option(RemoteObjectId.t), /* Unique object identifier (for non-primitive values). */
       [@yojson.option] [@key "preview"]
@@ -21653,6 +21987,135 @@ initiated the async call. */
     [@deriving yojson]
     type t = string;
   }
+  and WebDriverValue: {
+    type _webdrivervalue_type = [
+      | `undefined
+      | `null
+      | `string
+      | `number
+      | `boolean
+      | `bigint
+      | `regexp
+      | `date
+      | `symbol
+      | `array
+      | `object_
+      | `function_
+      | `map
+      | `set
+      | `weakmap
+      | `weakset
+      | `error
+      | `proxy
+      | `promise
+      | `typedarray
+      | `arraybuffer
+      | `node
+      | `window
+    ];
+    let _webdrivervalue_type_of_yojson: Yojson.Basic.t => _webdrivervalue_type;
+    let yojson_of__webdrivervalue_type: _webdrivervalue_type => Yojson.Basic.t;
+    /* Represents the value serialiazed by the WebDriver BiDi specification
+       https://w3c.github.io/webdriver-bidi. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: _webdrivervalue_type, /* No description provided */
+      [@yojson.option] [@key "value"]
+      value: option(string), /* No description provided */
+      [@yojson.option] [@key "objectId"]
+      objectId: option(string) /* No description provided */,
+    };
+  } = {
+    type _webdrivervalue_type = [
+      | `undefined
+      | `null
+      | `string
+      | `number
+      | `boolean
+      | `bigint
+      | `regexp
+      | `date
+      | `symbol
+      | `array
+      | `object_
+      | `function_
+      | `map
+      | `set
+      | `weakmap
+      | `weakset
+      | `error
+      | `proxy
+      | `promise
+      | `typedarray
+      | `arraybuffer
+      | `node
+      | `window
+    ];
+    let _webdrivervalue_type_of_yojson =
+      fun
+      | `String("undefined") => `undefined
+      | `String("null") => `null
+      | `String("string") => `string
+      | `String("number") => `number
+      | `String("boolean") => `boolean
+      | `String("bigint") => `bigint
+      | `String("regexp") => `regexp
+      | `String("date") => `date
+      | `String("symbol") => `symbol
+      | `String("array") => `array
+      | `String("object") => `object_
+      | `String("function") => `function_
+      | `String("map") => `map
+      | `String("set") => `set
+      | `String("weakmap") => `weakmap
+      | `String("weakset") => `weakset
+      | `String("error") => `error
+      | `String("proxy") => `proxy
+      | `String("promise") => `promise
+      | `String("typedarray") => `typedarray
+      | `String("arraybuffer") => `arraybuffer
+      | `String("node") => `node
+      | `String("window") => `window
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__webdrivervalue_type =
+      fun
+      | `undefined => `String("undefined")
+      | `null => `String("null")
+      | `string => `String("string")
+      | `number => `String("number")
+      | `boolean => `String("boolean")
+      | `bigint => `String("bigint")
+      | `regexp => `String("regexp")
+      | `date => `String("date")
+      | `symbol => `String("symbol")
+      | `array => `String("array")
+      | `object_ => `String("object")
+      | `function_ => `String("function")
+      | `map => `String("map")
+      | `set => `String("set")
+      | `weakmap => `String("weakmap")
+      | `weakset => `String("weakset")
+      | `error => `String("error")
+      | `proxy => `String("proxy")
+      | `promise => `String("promise")
+      | `typedarray => `String("typedarray")
+      | `arraybuffer => `String("arraybuffer")
+      | `node => `String("node")
+      | `window => `String("window");
+    /* Represents the value serialiazed by the WebDriver BiDi specification
+       https://w3c.github.io/webdriver-bidi. */
+    [@deriving yojson]
+    type t = {
+      [@key "type"]
+      type_: _webdrivervalue_type, /* No description provided */
+      [@yojson.option] [@key "value"]
+      value: option(string), /* No description provided */
+      [@yojson.option] [@key "objectId"]
+      objectId: option(string) /* No description provided */,
+    };
+  }
   and RemoteObjectId: {
     /* Unique object identifier. */
     [@deriving yojson]
@@ -21729,6 +22192,8 @@ NOTE: If you change anything here, make sure to also update
 property. */
       [@yojson.option] [@key "description"]
       description: option(string), /* String representation of the object. */
+      [@yojson.option] [@key "webDriverValue"]
+      webDriverValue: option(WebDriverValue.t), /* WebDriver BiDi representation of the value. */
       [@yojson.option] [@key "objectId"]
       objectId: option(RemoteObjectId.t), /* Unique object identifier (for non-primitive values). */
       [@yojson.option] [@key "preview"]
@@ -21852,6 +22317,8 @@ NOTE: If you change anything here, make sure to also update
 property. */
       [@yojson.option] [@key "description"]
       description: option(string), /* String representation of the object. */
+      [@yojson.option] [@key "webDriverValue"]
+      webDriverValue: option(WebDriverValue.t), /* WebDriver BiDi representation of the value. */
       [@yojson.option] [@key "objectId"]
       objectId: option(RemoteObjectId.t), /* Unique object identifier (for non-primitive values). */
       [@yojson.option] [@key "preview"]

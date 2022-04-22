@@ -24403,11 +24403,11 @@ option, use with caution. */,
     module Response: {
       type result = {
         [@key "layoutViewport"]
-        layoutViewport: Types.Page.LayoutViewport.t, /* Deprecated metrics relating to the layout viewport. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssLayoutViewport` instead. */
+        layoutViewport: Types.Page.LayoutViewport.t, /* Deprecated metrics relating to the layout viewport. Is in device pixels. Use `cssLayoutViewport` instead. */
         [@key "visualViewport"]
-        visualViewport: Types.Page.VisualViewport.t, /* Deprecated metrics relating to the visual viewport. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssVisualViewport` instead. */
+        visualViewport: Types.Page.VisualViewport.t, /* Deprecated metrics relating to the visual viewport. Is in device pixels. Use `cssVisualViewport` instead. */
         [@key "contentSize"]
-        contentSize: Types.DOM.Rect.t, /* Deprecated size of scrollable area. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssContentSize` instead. */
+        contentSize: Types.DOM.Rect.t, /* Deprecated size of scrollable area. Is in DP. Use `cssContentSize` instead. */
         [@key "cssLayoutViewport"]
         cssLayoutViewport: Types.Page.LayoutViewport.t, /* Metrics relating to the layout viewport in CSS pixels. */
         [@key "cssVisualViewport"]
@@ -24433,11 +24433,11 @@ option, use with caution. */,
       [@deriving yojson]
       type result = {
         [@key "layoutViewport"]
-        layoutViewport: Types.Page.LayoutViewport.t, /* Deprecated metrics relating to the layout viewport. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssLayoutViewport` instead. */
+        layoutViewport: Types.Page.LayoutViewport.t, /* Deprecated metrics relating to the layout viewport. Is in device pixels. Use `cssLayoutViewport` instead. */
         [@key "visualViewport"]
-        visualViewport: Types.Page.VisualViewport.t, /* Deprecated metrics relating to the visual viewport. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssVisualViewport` instead. */
+        visualViewport: Types.Page.VisualViewport.t, /* Deprecated metrics relating to the visual viewport. Is in device pixels. Use `cssVisualViewport` instead. */
         [@key "contentSize"]
-        contentSize: Types.DOM.Rect.t, /* Deprecated size of scrollable area. Can be in DP or in CSS pixels depending on the `enable-use-zoom-for-dsf` flag. Use `cssContentSize` instead. */
+        contentSize: Types.DOM.Rect.t, /* Deprecated size of scrollable area. Is in DP. Use `cssContentSize` instead. */
         [@key "cssLayoutViewport"]
         cssLayoutViewport: Types.Page.LayoutViewport.t, /* Metrics relating to the layout viewport in CSS pixels. */
         [@key "cssVisualViewport"]
@@ -38598,7 +38598,9 @@ executionContextId or objectId should be specified. */
         objectGroup: option(string), /* Symbolic group name that can be used to release multiple objects. If objectGroup is not
 specified and objectId is, objectGroup will be inherited from object. */
         [@yojson.option] [@key "throwOnSideEffect"]
-        throwOnSideEffect: option(bool) /* Whether to throw an exception if side effect cannot be ruled out during evaluation. */,
+        throwOnSideEffect: option(bool), /* Whether to throw an exception if side effect cannot be ruled out during evaluation. */
+        [@yojson.option] [@key "generateWebDriverValue"]
+        generateWebDriverValue: option(bool) /* Whether the result should be serialized according to https://w3c.github.io/webdriver-bidi. */,
       };
       let make =
           (
@@ -38613,6 +38615,7 @@ specified and objectId is, objectGroup will be inherited from object. */
             ~executionContextId=?,
             ~objectGroup=?,
             ~throwOnSideEffect=?,
+            ~generateWebDriverValue=?,
             (),
           ) => {
         {
@@ -38627,6 +38630,7 @@ specified and objectId is, objectGroup will be inherited from object. */
           executionContextId,
           objectGroup,
           throwOnSideEffect,
+          generateWebDriverValue,
         };
       };
     };
@@ -39018,12 +39022,14 @@ which includes eval(), Function(), setTimeout() and setInterval()
 when called with non-callable arguments. This flag bypasses CSP for this
 evaluation and allows unsafe-eval. Defaults to true. */
         [@yojson.option] [@key "uniqueContextId"]
-        uniqueContextId: option(string) /* An alternative way to specify the execution context to evaluate in.
+        uniqueContextId: option(string), /* An alternative way to specify the execution context to evaluate in.
 Compared to contextId that may be reused across processes, this is guaranteed to be
 system-unique, so it can be used to prevent accidental evaluation of the expression
 in context different than intended (e.g. as a result of navigation across process
 boundaries).
-This is mutually exclusive with `contextId`. */,
+This is mutually exclusive with `contextId`. */
+        [@yojson.option] [@key "generateWebDriverValue"]
+        generateWebDriverValue: option(bool) /* Whether the result should be serialized according to https://w3c.github.io/webdriver-bidi. */,
       };
       let make =
           (
@@ -39042,6 +39048,7 @@ This is mutually exclusive with `contextId`. */,
             ~replMode=?,
             ~allowUnsafeEvalBlockedByCSP=?,
             ~uniqueContextId=?,
+            ~generateWebDriverValue=?,
             (),
           ) => {
         {
@@ -39060,6 +39067,7 @@ This is mutually exclusive with `contextId`. */,
           replMode,
           allowUnsafeEvalBlockedByCSP,
           uniqueContextId,
+          generateWebDriverValue,
         };
       };
     };
@@ -40265,6 +40273,88 @@ This parameter is mutually exclusive with `executionContextId`. */,
 
       let make = (~sessionId=?, ~params, id) => {
         {id, method: "Runtime.removeBinding", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* This method tries to lookup and populate exception details for a
+     JavaScript Error object.
+     Note that the stackTrace portion of the resulting exceptionDetails will
+     only be populated if the Runtime domain was enabled at the time when the
+     Error was thrown. */
+  module GetExceptionDetails = {
+    module Response: {
+      type result = {
+        [@yojson.option] [@key "exceptionDetails"]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* No description provided */,
+      };
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option] [@key "exceptionDetails"]
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "errorObjectId"]
+        errorObjectId: Types.Runtime.RemoteObjectId.t /* The error object for which to resolve the exception details. */,
+      };
+      let make = (~errorObjectId, ()) => {
+        {errorObjectId: errorObjectId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Runtime.getExceptionDetails", sessionId, params}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };
