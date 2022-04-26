@@ -14010,6 +14010,7 @@ and Page: {
       | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
+      | `local_fonts
       | `magnetometer
       | `microphone
       | `midi
@@ -14949,6 +14950,7 @@ dependent on the reason:
       | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
+      | `local_fonts
       | `magnetometer
       | `microphone
       | `midi
@@ -15028,6 +15030,7 @@ dependent on the reason:
       | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
+      | `local_fonts
       | `magnetometer
       | `microphone
       | `midi
@@ -15099,6 +15102,7 @@ dependent on the reason:
       | `String("interest-cohort") => `interest_cohort
       | `String("join-ad-interest-group") => `join_ad_interest_group
       | `String("keyboard-map") => `keyboard_map
+      | `String("local-fonts") => `local_fonts
       | `String("magnetometer") => `magnetometer
       | `String("microphone") => `microphone
       | `String("midi") => `midi
@@ -15174,6 +15178,7 @@ dependent on the reason:
       | `interest_cohort => `String("interest-cohort")
       | `join_ad_interest_group => `String("join-ad-interest-group")
       | `keyboard_map => `String("keyboard-map")
+      | `local_fonts => `String("local-fonts")
       | `magnetometer => `String("magnetometer")
       | `microphone => `String("microphone")
       | `midi => `String("midi")
