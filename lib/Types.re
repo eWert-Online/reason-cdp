@@ -1523,36 +1523,67 @@ instead of "limited-quirks". */
   and DeprecationIssueType: {
     type _deprecationissuetype = [
       | `AuthorizationCoveredByWildcard
+      | `BatteryStatusInsecureOrigin
+      | `CanRequestURLHTTPContainingNewline
+      | `ChromeLoadTimesConnectionInfo
+      | `ChromeLoadTimesFirstPaintAfterLoadTime
+      | `ChromeLoadTimesWasAlternateProtocolAvailable
       | `CookieWithTruncatingChar
       | `CrossOriginAccessBasedOnDocumentDomain
       | `CrossOriginWindowAlert
       | `CrossOriginWindowConfirm
+      | `CSSSelectorInternalMediaControlsOverlayCastButton
+      | `CustomCursorIntersectsViewport
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
+      | `EventPath
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
+      | `HostCandidateAttributeGetter
+      | `InsecurePrivateNetworkSubresourceRequest
       | `LegacyConstraintGoogCpuOveruseDetection
       | `LegacyConstraintGoogIPv6
       | `LegacyConstraintGoogScreencastMinBitrate
       | `LegacyConstraintGoogSuspendBelowMinBitrate
       | `LocalCSSFileExtensionRejected
+      | `MediaElementAudioSourceNode
+      | `MediaSourceAbortRemove
+      | `MediaSourceDurationTruncatingBuffered
+      | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
+      | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
+      | `PaymentRequestBasicCard
+      | `PaymentRequestShowWithoutGesture
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
+      | `PrefixedStorageInfo
+      | `PrefixedVideoDisplayingFullscreen
+      | `PrefixedVideoEnterFullscreen
+      | `PrefixedVideoEnterFullScreen
+      | `PrefixedVideoExitFullscreen
+      | `PrefixedVideoExitFullScreen
+      | `PrefixedVideoSupportsFullscreen
+      | `RangeExpand
+      | `RequestedSubresourceWithEmbeddedCredentials
       | `RTCConstraintEnableDtlsSrtpFalse
       | `RTCConstraintEnableDtlsSrtpTrue
       | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
       | `RTCPeerConnectionLegacyCreateWithMediaConstraints
+      | `RTCPeerConnectionSdpSemanticsPlanB
+      | `RtcpMuxPolicyNegotiate
       | `RTPDataChannel
+      | `SelectionAddRangeIntersect
       | `SharedArrayBufferConstructedWithoutIsolation
+      | `TextToSpeech_DisallowedByAutoplay
       | `Untranslated
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
       | `WebCodecsVideoFrameDefaultTimestamp
       | `XHRJSONEncodingDetection
       | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
+      | `XRSupportsSession
     ];
     let _deprecationissuetype_of_yojson:
       Yojson.Basic.t => _deprecationissuetype;
@@ -2867,36 +2898,67 @@ instead of "limited-quirks". */
   and DeprecationIssueType: {
     type _deprecationissuetype = [
       | `AuthorizationCoveredByWildcard
+      | `BatteryStatusInsecureOrigin
+      | `CanRequestURLHTTPContainingNewline
+      | `ChromeLoadTimesConnectionInfo
+      | `ChromeLoadTimesFirstPaintAfterLoadTime
+      | `ChromeLoadTimesWasAlternateProtocolAvailable
       | `CookieWithTruncatingChar
       | `CrossOriginAccessBasedOnDocumentDomain
       | `CrossOriginWindowAlert
       | `CrossOriginWindowConfirm
+      | `CSSSelectorInternalMediaControlsOverlayCastButton
+      | `CustomCursorIntersectsViewport
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
+      | `EventPath
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
+      | `HostCandidateAttributeGetter
+      | `InsecurePrivateNetworkSubresourceRequest
       | `LegacyConstraintGoogCpuOveruseDetection
       | `LegacyConstraintGoogIPv6
       | `LegacyConstraintGoogScreencastMinBitrate
       | `LegacyConstraintGoogSuspendBelowMinBitrate
       | `LocalCSSFileExtensionRejected
+      | `MediaElementAudioSourceNode
+      | `MediaSourceAbortRemove
+      | `MediaSourceDurationTruncatingBuffered
+      | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
+      | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
+      | `PaymentRequestBasicCard
+      | `PaymentRequestShowWithoutGesture
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
+      | `PrefixedStorageInfo
+      | `PrefixedVideoDisplayingFullscreen
+      | `PrefixedVideoEnterFullscreen
+      | `PrefixedVideoEnterFullScreen
+      | `PrefixedVideoExitFullscreen
+      | `PrefixedVideoExitFullScreen
+      | `PrefixedVideoSupportsFullscreen
+      | `RangeExpand
+      | `RequestedSubresourceWithEmbeddedCredentials
       | `RTCConstraintEnableDtlsSrtpFalse
       | `RTCConstraintEnableDtlsSrtpTrue
       | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
       | `RTCPeerConnectionLegacyCreateWithMediaConstraints
+      | `RTCPeerConnectionSdpSemanticsPlanB
+      | `RtcpMuxPolicyNegotiate
       | `RTPDataChannel
+      | `SelectionAddRangeIntersect
       | `SharedArrayBufferConstructedWithoutIsolation
+      | `TextToSpeech_DisallowedByAutoplay
       | `Untranslated
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
       | `WebCodecsVideoFrameDefaultTimestamp
       | `XHRJSONEncodingDetection
       | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
+      | `XRSupportsSession
     ];
     let _deprecationissuetype_of_yojson:
       Yojson.Basic.t => _deprecationissuetype;
@@ -2908,88 +2970,168 @@ instead of "limited-quirks". */
   } = {
     type _deprecationissuetype = [
       | `AuthorizationCoveredByWildcard
+      | `BatteryStatusInsecureOrigin
+      | `CanRequestURLHTTPContainingNewline
+      | `ChromeLoadTimesConnectionInfo
+      | `ChromeLoadTimesFirstPaintAfterLoadTime
+      | `ChromeLoadTimesWasAlternateProtocolAvailable
       | `CookieWithTruncatingChar
       | `CrossOriginAccessBasedOnDocumentDomain
       | `CrossOriginWindowAlert
       | `CrossOriginWindowConfirm
+      | `CSSSelectorInternalMediaControlsOverlayCastButton
+      | `CustomCursorIntersectsViewport
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
+      | `EventPath
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
+      | `HostCandidateAttributeGetter
+      | `InsecurePrivateNetworkSubresourceRequest
       | `LegacyConstraintGoogCpuOveruseDetection
       | `LegacyConstraintGoogIPv6
       | `LegacyConstraintGoogScreencastMinBitrate
       | `LegacyConstraintGoogSuspendBelowMinBitrate
       | `LocalCSSFileExtensionRejected
+      | `MediaElementAudioSourceNode
+      | `MediaSourceAbortRemove
+      | `MediaSourceDurationTruncatingBuffered
+      | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
+      | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
+      | `PaymentRequestBasicCard
+      | `PaymentRequestShowWithoutGesture
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
+      | `PrefixedStorageInfo
+      | `PrefixedVideoDisplayingFullscreen
+      | `PrefixedVideoEnterFullscreen
+      | `PrefixedVideoEnterFullScreen
+      | `PrefixedVideoExitFullscreen
+      | `PrefixedVideoExitFullScreen
+      | `PrefixedVideoSupportsFullscreen
+      | `RangeExpand
+      | `RequestedSubresourceWithEmbeddedCredentials
       | `RTCConstraintEnableDtlsSrtpFalse
       | `RTCConstraintEnableDtlsSrtpTrue
       | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
       | `RTCPeerConnectionLegacyCreateWithMediaConstraints
+      | `RTCPeerConnectionSdpSemanticsPlanB
+      | `RtcpMuxPolicyNegotiate
       | `RTPDataChannel
+      | `SelectionAddRangeIntersect
       | `SharedArrayBufferConstructedWithoutIsolation
+      | `TextToSpeech_DisallowedByAutoplay
       | `Untranslated
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
       | `WebCodecsVideoFrameDefaultTimestamp
       | `XHRJSONEncodingDetection
       | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
+      | `XRSupportsSession
     ];
     let _deprecationissuetype_of_yojson =
       fun
       | `String("AuthorizationCoveredByWildcard") => `AuthorizationCoveredByWildcard
+      | `String("BatteryStatusInsecureOrigin") => `BatteryStatusInsecureOrigin
+      | `String("CanRequestURLHTTPContainingNewline") => `CanRequestURLHTTPContainingNewline
+      | `String("ChromeLoadTimesConnectionInfo") => `ChromeLoadTimesConnectionInfo
+      | `String("ChromeLoadTimesFirstPaintAfterLoadTime") => `ChromeLoadTimesFirstPaintAfterLoadTime
+      | `String("ChromeLoadTimesWasAlternateProtocolAvailable") => `ChromeLoadTimesWasAlternateProtocolAvailable
       | `String("CookieWithTruncatingChar") => `CookieWithTruncatingChar
       | `String("CrossOriginAccessBasedOnDocumentDomain") => `CrossOriginAccessBasedOnDocumentDomain
       | `String("CrossOriginWindowAlert") => `CrossOriginWindowAlert
       | `String("CrossOriginWindowConfirm") => `CrossOriginWindowConfirm
+      | `String("CSSSelectorInternalMediaControlsOverlayCastButton") => `CSSSelectorInternalMediaControlsOverlayCastButton
+      | `String("CustomCursorIntersectsViewport") => `CustomCursorIntersectsViewport
       | `String("DeprecationExample") => `DeprecationExample
       | `String("DocumentDomainSettingWithoutOriginAgentClusterHeader") => `DocumentDomainSettingWithoutOriginAgentClusterHeader
+      | `String("EventPath") => `EventPath
       | `String("GeolocationInsecureOrigin") => `GeolocationInsecureOrigin
       | `String("GeolocationInsecureOriginDeprecatedNotRemoved") => `GeolocationInsecureOriginDeprecatedNotRemoved
       | `String("GetUserMediaInsecureOrigin") => `GetUserMediaInsecureOrigin
+      | `String("HostCandidateAttributeGetter") => `HostCandidateAttributeGetter
+      | `String("InsecurePrivateNetworkSubresourceRequest") => `InsecurePrivateNetworkSubresourceRequest
       | `String("LegacyConstraintGoogCpuOveruseDetection") => `LegacyConstraintGoogCpuOveruseDetection
       | `String("LegacyConstraintGoogIPv6") => `LegacyConstraintGoogIPv6
       | `String("LegacyConstraintGoogScreencastMinBitrate") => `LegacyConstraintGoogScreencastMinBitrate
       | `String("LegacyConstraintGoogSuspendBelowMinBitrate") => `LegacyConstraintGoogSuspendBelowMinBitrate
       | `String("LocalCSSFileExtensionRejected") => `LocalCSSFileExtensionRejected
+      | `String("MediaElementAudioSourceNode") => `MediaElementAudioSourceNode
+      | `String("MediaSourceAbortRemove") => `MediaSourceAbortRemove
+      | `String("MediaSourceDurationTruncatingBuffered") => `MediaSourceDurationTruncatingBuffered
+      | `String("NoSysexWebMIDIWithoutPermission") => `NoSysexWebMIDIWithoutPermission
       | `String("NotificationInsecureOrigin") => `NotificationInsecureOrigin
+      | `String("NotificationPermissionRequestedIframe") => `NotificationPermissionRequestedIframe
       | `String("ObsoleteWebRtcCipherSuite") => `ObsoleteWebRtcCipherSuite
+      | `String("PaymentRequestBasicCard") => `PaymentRequestBasicCard
+      | `String("PaymentRequestShowWithoutGesture") => `PaymentRequestShowWithoutGesture
       | `String("PictureSourceSrc") => `PictureSourceSrc
       | `String("PrefixedCancelAnimationFrame") => `PrefixedCancelAnimationFrame
       | `String("PrefixedRequestAnimationFrame") => `PrefixedRequestAnimationFrame
+      | `String("PrefixedStorageInfo") => `PrefixedStorageInfo
+      | `String("PrefixedVideoDisplayingFullscreen") => `PrefixedVideoDisplayingFullscreen
+      | `String("PrefixedVideoEnterFullscreen") => `PrefixedVideoEnterFullscreen
+      | `String("PrefixedVideoEnterFullScreen") => `PrefixedVideoEnterFullScreen
+      | `String("PrefixedVideoExitFullscreen") => `PrefixedVideoExitFullscreen
+      | `String("PrefixedVideoExitFullScreen") => `PrefixedVideoExitFullScreen
+      | `String("PrefixedVideoSupportsFullscreen") => `PrefixedVideoSupportsFullscreen
+      | `String("RangeExpand") => `RangeExpand
+      | `String("RequestedSubresourceWithEmbeddedCredentials") => `RequestedSubresourceWithEmbeddedCredentials
       | `String("RTCConstraintEnableDtlsSrtpFalse") => `RTCConstraintEnableDtlsSrtpFalse
       | `String("RTCConstraintEnableDtlsSrtpTrue") => `RTCConstraintEnableDtlsSrtpTrue
       | `String("RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics") => `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
       | `String("RTCPeerConnectionLegacyCreateWithMediaConstraints") => `RTCPeerConnectionLegacyCreateWithMediaConstraints
+      | `String("RTCPeerConnectionSdpSemanticsPlanB") => `RTCPeerConnectionSdpSemanticsPlanB
+      | `String("RtcpMuxPolicyNegotiate") => `RtcpMuxPolicyNegotiate
       | `String("RTPDataChannel") => `RTPDataChannel
+      | `String("SelectionAddRangeIntersect") => `SelectionAddRangeIntersect
       | `String("SharedArrayBufferConstructedWithoutIsolation") => `SharedArrayBufferConstructedWithoutIsolation
+      | `String("TextToSpeech_DisallowedByAutoplay") => `TextToSpeech_DisallowedByAutoplay
       | `String("Untranslated") => `Untranslated
       | `String("V8SharedArrayBufferConstructedInExtensionWithoutIsolation") => `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
       | `String("WebCodecsVideoFrameDefaultTimestamp") => `WebCodecsVideoFrameDefaultTimestamp
       | `String("XHRJSONEncodingDetection") => `XHRJSONEncodingDetection
       | `String("XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload") => `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
+      | `String("XRSupportsSession") => `XRSupportsSession
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__deprecationissuetype =
       fun
       | `AuthorizationCoveredByWildcard =>
         `String("AuthorizationCoveredByWildcard")
+      | `BatteryStatusInsecureOrigin => `String("BatteryStatusInsecureOrigin")
+      | `CanRequestURLHTTPContainingNewline =>
+        `String("CanRequestURLHTTPContainingNewline")
+      | `ChromeLoadTimesConnectionInfo =>
+        `String("ChromeLoadTimesConnectionInfo")
+      | `ChromeLoadTimesFirstPaintAfterLoadTime =>
+        `String("ChromeLoadTimesFirstPaintAfterLoadTime")
+      | `ChromeLoadTimesWasAlternateProtocolAvailable =>
+        `String("ChromeLoadTimesWasAlternateProtocolAvailable")
       | `CookieWithTruncatingChar => `String("CookieWithTruncatingChar")
       | `CrossOriginAccessBasedOnDocumentDomain =>
         `String("CrossOriginAccessBasedOnDocumentDomain")
       | `CrossOriginWindowAlert => `String("CrossOriginWindowAlert")
       | `CrossOriginWindowConfirm => `String("CrossOriginWindowConfirm")
+      | `CSSSelectorInternalMediaControlsOverlayCastButton =>
+        `String("CSSSelectorInternalMediaControlsOverlayCastButton")
+      | `CustomCursorIntersectsViewport =>
+        `String("CustomCursorIntersectsViewport")
       | `DeprecationExample => `String("DeprecationExample")
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader =>
         `String("DocumentDomainSettingWithoutOriginAgentClusterHeader")
+      | `EventPath => `String("EventPath")
       | `GeolocationInsecureOrigin => `String("GeolocationInsecureOrigin")
       | `GeolocationInsecureOriginDeprecatedNotRemoved =>
         `String("GeolocationInsecureOriginDeprecatedNotRemoved")
       | `GetUserMediaInsecureOrigin => `String("GetUserMediaInsecureOrigin")
+      | `HostCandidateAttributeGetter =>
+        `String("HostCandidateAttributeGetter")
+      | `InsecurePrivateNetworkSubresourceRequest =>
+        `String("InsecurePrivateNetworkSubresourceRequest")
       | `LegacyConstraintGoogCpuOveruseDetection =>
         `String("LegacyConstraintGoogCpuOveruseDetection")
       | `LegacyConstraintGoogIPv6 => `String("LegacyConstraintGoogIPv6")
@@ -2999,13 +3141,38 @@ instead of "limited-quirks". */
         `String("LegacyConstraintGoogSuspendBelowMinBitrate")
       | `LocalCSSFileExtensionRejected =>
         `String("LocalCSSFileExtensionRejected")
+      | `MediaElementAudioSourceNode => `String("MediaElementAudioSourceNode")
+      | `MediaSourceAbortRemove => `String("MediaSourceAbortRemove")
+      | `MediaSourceDurationTruncatingBuffered =>
+        `String("MediaSourceDurationTruncatingBuffered")
+      | `NoSysexWebMIDIWithoutPermission =>
+        `String("NoSysexWebMIDIWithoutPermission")
       | `NotificationInsecureOrigin => `String("NotificationInsecureOrigin")
+      | `NotificationPermissionRequestedIframe =>
+        `String("NotificationPermissionRequestedIframe")
       | `ObsoleteWebRtcCipherSuite => `String("ObsoleteWebRtcCipherSuite")
+      | `PaymentRequestBasicCard => `String("PaymentRequestBasicCard")
+      | `PaymentRequestShowWithoutGesture =>
+        `String("PaymentRequestShowWithoutGesture")
       | `PictureSourceSrc => `String("PictureSourceSrc")
       | `PrefixedCancelAnimationFrame =>
         `String("PrefixedCancelAnimationFrame")
       | `PrefixedRequestAnimationFrame =>
         `String("PrefixedRequestAnimationFrame")
+      | `PrefixedStorageInfo => `String("PrefixedStorageInfo")
+      | `PrefixedVideoDisplayingFullscreen =>
+        `String("PrefixedVideoDisplayingFullscreen")
+      | `PrefixedVideoEnterFullscreen =>
+        `String("PrefixedVideoEnterFullscreen")
+      | `PrefixedVideoEnterFullScreen =>
+        `String("PrefixedVideoEnterFullScreen")
+      | `PrefixedVideoExitFullscreen => `String("PrefixedVideoExitFullscreen")
+      | `PrefixedVideoExitFullScreen => `String("PrefixedVideoExitFullScreen")
+      | `PrefixedVideoSupportsFullscreen =>
+        `String("PrefixedVideoSupportsFullscreen")
+      | `RangeExpand => `String("RangeExpand")
+      | `RequestedSubresourceWithEmbeddedCredentials =>
+        `String("RequestedSubresourceWithEmbeddedCredentials")
       | `RTCConstraintEnableDtlsSrtpFalse =>
         `String("RTCConstraintEnableDtlsSrtpFalse")
       | `RTCConstraintEnableDtlsSrtpTrue =>
@@ -3014,9 +3181,15 @@ instead of "limited-quirks". */
         `String("RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics")
       | `RTCPeerConnectionLegacyCreateWithMediaConstraints =>
         `String("RTCPeerConnectionLegacyCreateWithMediaConstraints")
+      | `RTCPeerConnectionSdpSemanticsPlanB =>
+        `String("RTCPeerConnectionSdpSemanticsPlanB")
+      | `RtcpMuxPolicyNegotiate => `String("RtcpMuxPolicyNegotiate")
       | `RTPDataChannel => `String("RTPDataChannel")
+      | `SelectionAddRangeIntersect => `String("SelectionAddRangeIntersect")
       | `SharedArrayBufferConstructedWithoutIsolation =>
         `String("SharedArrayBufferConstructedWithoutIsolation")
+      | `TextToSpeech_DisallowedByAutoplay =>
+        `String("TextToSpeech_DisallowedByAutoplay")
       | `Untranslated => `String("Untranslated")
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation =>
         `String("V8SharedArrayBufferConstructedInExtensionWithoutIsolation")
@@ -3024,7 +3197,8 @@ instead of "limited-quirks". */
         `String("WebCodecsVideoFrameDefaultTimestamp")
       | `XHRJSONEncodingDetection => `String("XHRJSONEncodingDetection")
       | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload =>
-        `String("XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload");
+        `String("XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload")
+      | `XRSupportsSession => `String("XRSupportsSession");
     /* No description provided */
     [@deriving yojson]
     type t = _deprecationissuetype;
