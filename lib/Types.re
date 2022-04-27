@@ -14579,7 +14579,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@yojson.option] [@key "cursive"]
       cursive: option(string), /* The cursive font-family. */
       [@yojson.option] [@key "fantasy"]
-      fantasy: option(string) /* The fantasy font-family. */,
+      fantasy: option(string), /* The fantasy font-family. */
+      [@yojson.option] [@key "math"]
+      math: option(string) /* The math font-family. */,
     };
   }
   and ScriptFontFamilies: {
@@ -16163,7 +16165,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@yojson.option] [@key "cursive"]
       cursive: option(string), /* The cursive font-family. */
       [@yojson.option] [@key "fantasy"]
-      fantasy: option(string) /* The fantasy font-family. */,
+      fantasy: option(string), /* The fantasy font-family. */
+      [@yojson.option] [@key "math"]
+      math: option(string) /* The math font-family. */,
     };
   } = {
     /* Generic font families collection. */
@@ -16180,7 +16184,9 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       [@yojson.option] [@key "cursive"]
       cursive: option(string), /* The cursive font-family. */
       [@yojson.option] [@key "fantasy"]
-      fantasy: option(string) /* The fantasy font-family. */,
+      fantasy: option(string), /* The fantasy font-family. */
+      [@yojson.option] [@key "math"]
+      math: option(string) /* The math font-family. */,
     };
   }
   and ScriptFontFamilies: {
