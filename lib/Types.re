@@ -1578,7 +1578,6 @@ instead of "limited-quirks". */
       | `SelectionAddRangeIntersect
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
-      | `Untranslated
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
       | `WebCodecsVideoFrameDefaultTimestamp
       | `XHRJSONEncodingDetection
@@ -1595,24 +1594,13 @@ instead of "limited-quirks". */
   }
   and DeprecationIssueDetails: {
     /* This issue tracks information needed to print a deprecation message.
-       The formatting is inherited from the old console.log version, see more at:
-       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/deprecation.cc
-       TODO(crbug.com/1264960): Re-work format to add i18n support per:
-       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/public/devtools_protocol/README.md */
+       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/third_party/blink/renderer/core/frame/deprecation/README.md */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "affectedFrame"]
       affectedFrame: option(AffectedFrame.t), /* No description provided */
       [@key "sourceCodeLocation"]
       sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
-      [@yojson.option] [@key "message"]
-      message: option(string), /* The content of an untranslated deprecation issue,
-e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
-around January 2022. Please use Web Storage or Indexed Database
-instead. This standard was abandoned in January, 1970. See
-https://www.chromestatus.com/feature/5684870116278272 for more details." */
-      [@yojson.option] [@key "deprecationType"]
-      deprecationType: option(string), /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */
       [@key "type"]
       type_: DeprecationIssueType.t /* No description provided */,
     };
@@ -2953,7 +2941,6 @@ instead of "limited-quirks". */
       | `SelectionAddRangeIntersect
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
-      | `Untranslated
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
       | `WebCodecsVideoFrameDefaultTimestamp
       | `XHRJSONEncodingDetection
@@ -3025,7 +3012,6 @@ instead of "limited-quirks". */
       | `SelectionAddRangeIntersect
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
-      | `Untranslated
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
       | `WebCodecsVideoFrameDefaultTimestamp
       | `XHRJSONEncodingDetection
@@ -3090,7 +3076,6 @@ instead of "limited-quirks". */
       | `String("SelectionAddRangeIntersect") => `SelectionAddRangeIntersect
       | `String("SharedArrayBufferConstructedWithoutIsolation") => `SharedArrayBufferConstructedWithoutIsolation
       | `String("TextToSpeech_DisallowedByAutoplay") => `TextToSpeech_DisallowedByAutoplay
-      | `String("Untranslated") => `Untranslated
       | `String("V8SharedArrayBufferConstructedInExtensionWithoutIsolation") => `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
       | `String("WebCodecsVideoFrameDefaultTimestamp") => `WebCodecsVideoFrameDefaultTimestamp
       | `String("XHRJSONEncodingDetection") => `XHRJSONEncodingDetection
@@ -3190,7 +3175,6 @@ instead of "limited-quirks". */
         `String("SharedArrayBufferConstructedWithoutIsolation")
       | `TextToSpeech_DisallowedByAutoplay =>
         `String("TextToSpeech_DisallowedByAutoplay")
-      | `Untranslated => `String("Untranslated")
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation =>
         `String("V8SharedArrayBufferConstructedInExtensionWithoutIsolation")
       | `WebCodecsVideoFrameDefaultTimestamp =>
@@ -3205,47 +3189,25 @@ instead of "limited-quirks". */
   }
   and DeprecationIssueDetails: {
     /* This issue tracks information needed to print a deprecation message.
-       The formatting is inherited from the old console.log version, see more at:
-       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/deprecation.cc
-       TODO(crbug.com/1264960): Re-work format to add i18n support per:
-       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/public/devtools_protocol/README.md */
+       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/third_party/blink/renderer/core/frame/deprecation/README.md */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "affectedFrame"]
       affectedFrame: option(AffectedFrame.t), /* No description provided */
       [@key "sourceCodeLocation"]
       sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
-      [@yojson.option] [@key "message"]
-      message: option(string), /* The content of an untranslated deprecation issue,
-e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
-around January 2022. Please use Web Storage or Indexed Database
-instead. This standard was abandoned in January, 1970. See
-https://www.chromestatus.com/feature/5684870116278272 for more details." */
-      [@yojson.option] [@key "deprecationType"]
-      deprecationType: option(string), /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */
       [@key "type"]
       type_: DeprecationIssueType.t /* No description provided */,
     };
   } = {
     /* This issue tracks information needed to print a deprecation message.
-       The formatting is inherited from the old console.log version, see more at:
-       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/deprecation.cc
-       TODO(crbug.com/1264960): Re-work format to add i18n support per:
-       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/public/devtools_protocol/README.md */
+       https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/third_party/blink/renderer/core/frame/deprecation/README.md */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "affectedFrame"]
       affectedFrame: option(AffectedFrame.t), /* No description provided */
       [@key "sourceCodeLocation"]
       sourceCodeLocation: SourceCodeLocation.t, /* No description provided */
-      [@yojson.option] [@key "message"]
-      message: option(string), /* The content of an untranslated deprecation issue,
-e.g. "window.inefficientLegacyStorageMethod will be removed in M97,
-around January 2022. Please use Web Storage or Indexed Database
-instead. This standard was abandoned in January, 1970. See
-https://www.chromestatus.com/feature/5684870116278272 for more details." */
-      [@yojson.option] [@key "deprecationType"]
-      deprecationType: option(string), /* The id of an untranslated deprecation issue e.g. PrefixedStorageInfo. */
       [@key "type"]
       type_: DeprecationIssueType.t /* No description provided */,
     };
