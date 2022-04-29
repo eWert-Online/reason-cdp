@@ -1523,7 +1523,6 @@ instead of "limited-quirks". */
   and DeprecationIssueType: {
     type _deprecationissuetype = [
       | `AuthorizationCoveredByWildcard
-      | `BatteryStatusInsecureOrigin
       | `CanRequestURLHTTPContainingNewline
       | `ChromeLoadTimesConnectionInfo
       | `ChromeLoadTimesFirstPaintAfterLoadTime
@@ -2886,7 +2885,6 @@ instead of "limited-quirks". */
   and DeprecationIssueType: {
     type _deprecationissuetype = [
       | `AuthorizationCoveredByWildcard
-      | `BatteryStatusInsecureOrigin
       | `CanRequestURLHTTPContainingNewline
       | `ChromeLoadTimesConnectionInfo
       | `ChromeLoadTimesFirstPaintAfterLoadTime
@@ -2957,7 +2955,6 @@ instead of "limited-quirks". */
   } = {
     type _deprecationissuetype = [
       | `AuthorizationCoveredByWildcard
-      | `BatteryStatusInsecureOrigin
       | `CanRequestURLHTTPContainingNewline
       | `ChromeLoadTimesConnectionInfo
       | `ChromeLoadTimesFirstPaintAfterLoadTime
@@ -3021,7 +3018,6 @@ instead of "limited-quirks". */
     let _deprecationissuetype_of_yojson =
       fun
       | `String("AuthorizationCoveredByWildcard") => `AuthorizationCoveredByWildcard
-      | `String("BatteryStatusInsecureOrigin") => `BatteryStatusInsecureOrigin
       | `String("CanRequestURLHTTPContainingNewline") => `CanRequestURLHTTPContainingNewline
       | `String("ChromeLoadTimesConnectionInfo") => `ChromeLoadTimesConnectionInfo
       | `String("ChromeLoadTimesFirstPaintAfterLoadTime") => `ChromeLoadTimesFirstPaintAfterLoadTime
@@ -3087,7 +3083,6 @@ instead of "limited-quirks". */
       fun
       | `AuthorizationCoveredByWildcard =>
         `String("AuthorizationCoveredByWildcard")
-      | `BatteryStatusInsecureOrigin => `String("BatteryStatusInsecureOrigin")
       | `CanRequestURLHTTPContainingNewline =>
         `String("CanRequestURLHTTPContainingNewline")
       | `ChromeLoadTimesConnectionInfo =>
