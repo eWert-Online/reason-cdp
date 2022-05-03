@@ -1578,7 +1578,6 @@ instead of "limited-quirks". */
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
-      | `WebCodecsVideoFrameDefaultTimestamp
       | `XHRJSONEncodingDetection
       | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
       | `XRSupportsSession
@@ -2940,7 +2939,6 @@ instead of "limited-quirks". */
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
-      | `WebCodecsVideoFrameDefaultTimestamp
       | `XHRJSONEncodingDetection
       | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
       | `XRSupportsSession
@@ -3010,7 +3008,6 @@ instead of "limited-quirks". */
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
-      | `WebCodecsVideoFrameDefaultTimestamp
       | `XHRJSONEncodingDetection
       | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
       | `XRSupportsSession
@@ -3073,7 +3070,6 @@ instead of "limited-quirks". */
       | `String("SharedArrayBufferConstructedWithoutIsolation") => `SharedArrayBufferConstructedWithoutIsolation
       | `String("TextToSpeech_DisallowedByAutoplay") => `TextToSpeech_DisallowedByAutoplay
       | `String("V8SharedArrayBufferConstructedInExtensionWithoutIsolation") => `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
-      | `String("WebCodecsVideoFrameDefaultTimestamp") => `WebCodecsVideoFrameDefaultTimestamp
       | `String("XHRJSONEncodingDetection") => `XHRJSONEncodingDetection
       | `String("XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload") => `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
       | `String("XRSupportsSession") => `XRSupportsSession
@@ -3172,8 +3168,6 @@ instead of "limited-quirks". */
         `String("TextToSpeech_DisallowedByAutoplay")
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation =>
         `String("V8SharedArrayBufferConstructedInExtensionWithoutIsolation")
-      | `WebCodecsVideoFrameDefaultTimestamp =>
-        `String("WebCodecsVideoFrameDefaultTimestamp")
       | `XHRJSONEncodingDetection => `String("XHRJSONEncodingDetection")
       | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload =>
         `String("XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload")
