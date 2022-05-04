@@ -38601,7 +38601,9 @@ specified and objectId is, objectGroup will be inherited from object. */
         [@yojson.option] [@key "throwOnSideEffect"]
         throwOnSideEffect: option(bool), /* Whether to throw an exception if side effect cannot be ruled out during evaluation. */
         [@yojson.option] [@key "generateWebDriverValue"]
-        generateWebDriverValue: option(bool) /* Whether the result should be serialized according to https://w3c.github.io/webdriver-bidi. */,
+        generateWebDriverValue: option(bool) /* Whether the result should contain `webDriverValue`, serialized according to
+https://w3c.github.io/webdriver-bidi. This is mutually exclusive with `returnByValue`, but
+resulting `objectId` is still provided. */,
       };
       let make =
           (

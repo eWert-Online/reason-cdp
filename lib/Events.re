@@ -3646,7 +3646,7 @@ module Debugger = {
       [@key "executionContextId"]
       executionContextId: Types.Runtime.ExecutionContextId.t, /* Specifies script creation context. */
       [@key "hash"]
-      hash: string, /* Content hash of the script. */
+      hash: string, /* Content hash of the script, SHA-256. */
       [@yojson.option] [@key "executionContextAuxData"]
       executionContextAuxData: option(Types.assoc), /* Embedder-specific auxiliary data. */
       [@yojson.option] [@key "sourceMapURL"]
@@ -3698,7 +3698,7 @@ module Debugger = {
       [@key "executionContextId"]
       executionContextId: Types.Runtime.ExecutionContextId.t, /* Specifies script creation context. */
       [@key "hash"]
-      hash: string, /* Content hash of the script. */
+      hash: string, /* Content hash of the script, SHA-256. */
       [@yojson.option] [@key "executionContextAuxData"]
       executionContextAuxData: option(Types.assoc), /* Embedder-specific auxiliary data. */
       [@yojson.option] [@key "isLiveEdit"]
