@@ -1541,10 +1541,7 @@ instead of "limited-quirks". */
       | `GetUserMediaInsecureOrigin
       | `HostCandidateAttributeGetter
       | `InsecurePrivateNetworkSubresourceRequest
-      | `LegacyConstraintGoogCpuOveruseDetection
       | `LegacyConstraintGoogIPv6
-      | `LegacyConstraintGoogScreencastMinBitrate
-      | `LegacyConstraintGoogSuspendBelowMinBitrate
       | `LocalCSSFileExtensionRejected
       | `MediaElementAudioSourceNode
       | `MediaSourceAbortRemove
@@ -2901,10 +2898,7 @@ instead of "limited-quirks". */
       | `GetUserMediaInsecureOrigin
       | `HostCandidateAttributeGetter
       | `InsecurePrivateNetworkSubresourceRequest
-      | `LegacyConstraintGoogCpuOveruseDetection
       | `LegacyConstraintGoogIPv6
-      | `LegacyConstraintGoogScreencastMinBitrate
-      | `LegacyConstraintGoogSuspendBelowMinBitrate
       | `LocalCSSFileExtensionRejected
       | `MediaElementAudioSourceNode
       | `MediaSourceAbortRemove
@@ -2969,10 +2963,7 @@ instead of "limited-quirks". */
       | `GetUserMediaInsecureOrigin
       | `HostCandidateAttributeGetter
       | `InsecurePrivateNetworkSubresourceRequest
-      | `LegacyConstraintGoogCpuOveruseDetection
       | `LegacyConstraintGoogIPv6
-      | `LegacyConstraintGoogScreencastMinBitrate
-      | `LegacyConstraintGoogSuspendBelowMinBitrate
       | `LocalCSSFileExtensionRejected
       | `MediaElementAudioSourceNode
       | `MediaSourceAbortRemove
@@ -3030,10 +3021,7 @@ instead of "limited-quirks". */
       | `String("GetUserMediaInsecureOrigin") => `GetUserMediaInsecureOrigin
       | `String("HostCandidateAttributeGetter") => `HostCandidateAttributeGetter
       | `String("InsecurePrivateNetworkSubresourceRequest") => `InsecurePrivateNetworkSubresourceRequest
-      | `String("LegacyConstraintGoogCpuOveruseDetection") => `LegacyConstraintGoogCpuOveruseDetection
       | `String("LegacyConstraintGoogIPv6") => `LegacyConstraintGoogIPv6
-      | `String("LegacyConstraintGoogScreencastMinBitrate") => `LegacyConstraintGoogScreencastMinBitrate
-      | `String("LegacyConstraintGoogSuspendBelowMinBitrate") => `LegacyConstraintGoogSuspendBelowMinBitrate
       | `String("LocalCSSFileExtensionRejected") => `LocalCSSFileExtensionRejected
       | `String("MediaElementAudioSourceNode") => `MediaElementAudioSourceNode
       | `String("MediaSourceAbortRemove") => `MediaSourceAbortRemove
@@ -3104,13 +3092,7 @@ instead of "limited-quirks". */
         `String("HostCandidateAttributeGetter")
       | `InsecurePrivateNetworkSubresourceRequest =>
         `String("InsecurePrivateNetworkSubresourceRequest")
-      | `LegacyConstraintGoogCpuOveruseDetection =>
-        `String("LegacyConstraintGoogCpuOveruseDetection")
       | `LegacyConstraintGoogIPv6 => `String("LegacyConstraintGoogIPv6")
-      | `LegacyConstraintGoogScreencastMinBitrate =>
-        `String("LegacyConstraintGoogScreencastMinBitrate")
-      | `LegacyConstraintGoogSuspendBelowMinBitrate =>
-        `String("LegacyConstraintGoogSuspendBelowMinBitrate")
       | `LocalCSSFileExtensionRejected =>
         `String("LocalCSSFileExtensionRejected")
       | `MediaElementAudioSourceNode => `String("MediaElementAudioSourceNode")
