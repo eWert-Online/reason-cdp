@@ -11612,6 +11612,84 @@ module DOMStorage = {
       };
     };
   };
+  /* No description provided */
+  module GetStorageKeyForFrame = {
+    module Response: {
+      type result = {
+        [@key "storageKey"]
+        storageKey: Types.DOMStorage.SerializedStorageKey.t /* No description provided */,
+      };
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "storageKey"]
+        storageKey: Types.DOMStorage.SerializedStorageKey.t /* No description provided */,
+      };
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "frameId"]
+        frameId: Types.Page.FrameId.t /* No description provided */,
+      };
+      let make = (~frameId, ()) => {
+        {frameId: frameId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "DOMStorage.getStorageKeyForFrame", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
 };
 module Database = {
   /* Disables database tracking, prevents database events from being sent to the client. */

@@ -7575,12 +7575,19 @@ represented as a surrogate pair in UTF-16 have length 2. */,
   };
 }
 and DOMStorage: {
-  module rec StorageId: {
+  module rec SerializedStorageKey: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = string;
+  }
+  and StorageId: {
     /* DOM Storage identifier. */
     [@deriving yojson]
     type t = {
-      [@key "securityOrigin"]
-      securityOrigin: string, /* Security origin for the storage. */
+      [@yojson.option] [@key "securityOrigin"]
+      securityOrigin: option(string), /* Security origin for the storage. */
+      [@yojson.option] [@key "storageKey"]
+      storageKey: option(SerializedStorageKey.t), /* Represents a key by which DOM Storage keys its CachedStorageAreas */
       [@key "isLocalStorage"]
       isLocalStorage: bool /* Whether the storage is local storage (not session storage). */,
     };
@@ -7591,12 +7598,23 @@ and DOMStorage: {
     type t = list(string);
   };
 } = {
-  module rec StorageId: {
+  module rec SerializedStorageKey: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = string;
+  }
+  and StorageId: {
     /* DOM Storage identifier. */
     [@deriving yojson]
     type t = {
-      [@key "securityOrigin"]
-      securityOrigin: string, /* Security origin for the storage. */
+      [@yojson.option] [@key "securityOrigin"]
+      securityOrigin: option(string), /* Security origin for the storage. */
+      [@yojson.option] [@key "storageKey"]
+      storageKey: option(SerializedStorageKey.t), /* Represents a key by which DOM Storage keys its CachedStorageAreas */
       [@key "isLocalStorage"]
       isLocalStorage: bool /* Whether the storage is local storage (not session storage). */,
     };
@@ -7604,8 +7622,10 @@ and DOMStorage: {
     /* DOM Storage identifier. */
     [@deriving yojson]
     type t = {
-      [@key "securityOrigin"]
-      securityOrigin: string, /* Security origin for the storage. */
+      [@yojson.option] [@key "securityOrigin"]
+      securityOrigin: option(string), /* Security origin for the storage. */
+      [@yojson.option] [@key "storageKey"]
+      storageKey: option(SerializedStorageKey.t), /* Represents a key by which DOM Storage keys its CachedStorageAreas */
       [@key "isLocalStorage"]
       isLocalStorage: bool /* Whether the storage is local storage (not session storage). */,
     };
@@ -18087,7 +18107,12 @@ For cached script it is the last time the cache entry was validated. */
   };
 }
 and Storage: {
-  module rec StorageType: {
+  module rec SerializedStorageKey: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = string;
+  }
+  and StorageType: {
     type _storagetype = [
       | `appcache
       | `cookies
@@ -18186,7 +18211,16 @@ and Storage: {
     };
   };
 } = {
-  module rec StorageType: {
+  module rec SerializedStorageKey: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = string;
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = string;
+  }
+  and StorageType: {
     type _storagetype = [
       | `appcache
       | `cookies
