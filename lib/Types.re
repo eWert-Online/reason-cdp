@@ -1574,7 +1574,6 @@ instead of "limited-quirks". */
       | `RTCPeerConnectionSdpSemanticsPlanB
       | `RtcpMuxPolicyNegotiate
       | `RTPDataChannel
-      | `SelectionAddRangeIntersect
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
@@ -2935,7 +2934,6 @@ instead of "limited-quirks". */
       | `RTCPeerConnectionSdpSemanticsPlanB
       | `RtcpMuxPolicyNegotiate
       | `RTPDataChannel
-      | `SelectionAddRangeIntersect
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
@@ -3004,7 +3002,6 @@ instead of "limited-quirks". */
       | `RTCPeerConnectionSdpSemanticsPlanB
       | `RtcpMuxPolicyNegotiate
       | `RTPDataChannel
-      | `SelectionAddRangeIntersect
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
@@ -3066,7 +3063,6 @@ instead of "limited-quirks". */
       | `String("RTCPeerConnectionSdpSemanticsPlanB") => `RTCPeerConnectionSdpSemanticsPlanB
       | `String("RtcpMuxPolicyNegotiate") => `RtcpMuxPolicyNegotiate
       | `String("RTPDataChannel") => `RTPDataChannel
-      | `String("SelectionAddRangeIntersect") => `SelectionAddRangeIntersect
       | `String("SharedArrayBufferConstructedWithoutIsolation") => `SharedArrayBufferConstructedWithoutIsolation
       | `String("TextToSpeech_DisallowedByAutoplay") => `TextToSpeech_DisallowedByAutoplay
       | `String("V8SharedArrayBufferConstructedInExtensionWithoutIsolation") => `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
@@ -3161,7 +3157,6 @@ instead of "limited-quirks". */
         `String("RTCPeerConnectionSdpSemanticsPlanB")
       | `RtcpMuxPolicyNegotiate => `String("RtcpMuxPolicyNegotiate")
       | `RTPDataChannel => `String("RTPDataChannel")
-      | `SelectionAddRangeIntersect => `String("SelectionAddRangeIntersect")
       | `SharedArrayBufferConstructedWithoutIsolation =>
         `String("SharedArrayBufferConstructedWithoutIsolation")
       | `TextToSpeech_DisallowedByAutoplay =>
