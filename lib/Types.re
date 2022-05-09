@@ -1567,7 +1567,6 @@ instead of "limited-quirks". */
       | `RTCConstraintEnableDtlsSrtpFalse
       | `RTCConstraintEnableDtlsSrtpTrue
       | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
-      | `RTCPeerConnectionLegacyCreateWithMediaConstraints
       | `RTCPeerConnectionSdpSemanticsPlanB
       | `RtcpMuxPolicyNegotiate
       | `RTPDataChannel
@@ -2924,7 +2923,6 @@ instead of "limited-quirks". */
       | `RTCConstraintEnableDtlsSrtpFalse
       | `RTCConstraintEnableDtlsSrtpTrue
       | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
-      | `RTCPeerConnectionLegacyCreateWithMediaConstraints
       | `RTCPeerConnectionSdpSemanticsPlanB
       | `RtcpMuxPolicyNegotiate
       | `RTPDataChannel
@@ -2989,7 +2987,6 @@ instead of "limited-quirks". */
       | `RTCConstraintEnableDtlsSrtpFalse
       | `RTCConstraintEnableDtlsSrtpTrue
       | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
-      | `RTCPeerConnectionLegacyCreateWithMediaConstraints
       | `RTCPeerConnectionSdpSemanticsPlanB
       | `RtcpMuxPolicyNegotiate
       | `RTPDataChannel
@@ -3047,7 +3044,6 @@ instead of "limited-quirks". */
       | `String("RTCConstraintEnableDtlsSrtpFalse") => `RTCConstraintEnableDtlsSrtpFalse
       | `String("RTCConstraintEnableDtlsSrtpTrue") => `RTCConstraintEnableDtlsSrtpTrue
       | `String("RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics") => `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
-      | `String("RTCPeerConnectionLegacyCreateWithMediaConstraints") => `RTCPeerConnectionLegacyCreateWithMediaConstraints
       | `String("RTCPeerConnectionSdpSemanticsPlanB") => `RTCPeerConnectionSdpSemanticsPlanB
       | `String("RtcpMuxPolicyNegotiate") => `RtcpMuxPolicyNegotiate
       | `String("RTPDataChannel") => `RTPDataChannel
@@ -3133,8 +3129,6 @@ instead of "limited-quirks". */
         `String("RTCConstraintEnableDtlsSrtpTrue")
       | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics =>
         `String("RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics")
-      | `RTCPeerConnectionLegacyCreateWithMediaConstraints =>
-        `String("RTCPeerConnectionLegacyCreateWithMediaConstraints")
       | `RTCPeerConnectionSdpSemanticsPlanB =>
         `String("RTCPeerConnectionSdpSemanticsPlanB")
       | `RtcpMuxPolicyNegotiate => `String("RtcpMuxPolicyNegotiate")
