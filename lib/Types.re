@@ -1441,11 +1441,8 @@ used when violation type is kDigitalAssetLinks. */,
   and AttributionReportingIssueType: {
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
-      | `InvalidAttributionSourceEventId
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
-      | `InvalidAttributionSourceExpiry
-      | `InvalidAttributionSourcePriority
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2697,11 +2694,8 @@ used when violation type is kDigitalAssetLinks. */,
   and AttributionReportingIssueType: {
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
-      | `InvalidAttributionSourceEventId
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
-      | `InvalidAttributionSourceExpiry
-      | `InvalidAttributionSourcePriority
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2713,35 +2707,23 @@ used when violation type is kDigitalAssetLinks. */,
   } = {
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
-      | `InvalidAttributionSourceEventId
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
-      | `InvalidAttributionSourceExpiry
-      | `InvalidAttributionSourcePriority
     ];
     let _attributionreportingissuetype_of_yojson =
       fun
       | `String("PermissionPolicyDisabled") => `PermissionPolicyDisabled
-      | `String("InvalidAttributionSourceEventId") => `InvalidAttributionSourceEventId
       | `String("AttributionSourceUntrustworthyOrigin") => `AttributionSourceUntrustworthyOrigin
       | `String("AttributionUntrustworthyOrigin") => `AttributionUntrustworthyOrigin
-      | `String("InvalidAttributionSourceExpiry") => `InvalidAttributionSourceExpiry
-      | `String("InvalidAttributionSourcePriority") => `InvalidAttributionSourcePriority
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__attributionreportingissuetype =
       fun
       | `PermissionPolicyDisabled => `String("PermissionPolicyDisabled")
-      | `InvalidAttributionSourceEventId =>
-        `String("InvalidAttributionSourceEventId")
       | `AttributionSourceUntrustworthyOrigin =>
         `String("AttributionSourceUntrustworthyOrigin")
       | `AttributionUntrustworthyOrigin =>
-        `String("AttributionUntrustworthyOrigin")
-      | `InvalidAttributionSourceExpiry =>
-        `String("InvalidAttributionSourceExpiry")
-      | `InvalidAttributionSourcePriority =>
-        `String("InvalidAttributionSourcePriority");
+        `String("AttributionUntrustworthyOrigin");
     /* No description provided */
     [@deriving yojson]
     type t = _attributionreportingissuetype;
