@@ -1443,6 +1443,7 @@ used when violation type is kDigitalAssetLinks. */,
       | `PermissionPolicyDisabled
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
+      | `InvalidHeader
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2696,6 +2697,7 @@ used when violation type is kDigitalAssetLinks. */,
       | `PermissionPolicyDisabled
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
+      | `InvalidHeader
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2709,12 +2711,14 @@ used when violation type is kDigitalAssetLinks. */,
       | `PermissionPolicyDisabled
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
+      | `InvalidHeader
     ];
     let _attributionreportingissuetype_of_yojson =
       fun
       | `String("PermissionPolicyDisabled") => `PermissionPolicyDisabled
       | `String("AttributionSourceUntrustworthyOrigin") => `AttributionSourceUntrustworthyOrigin
       | `String("AttributionUntrustworthyOrigin") => `AttributionUntrustworthyOrigin
+      | `String("InvalidHeader") => `InvalidHeader
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__attributionreportingissuetype =
@@ -2723,7 +2727,8 @@ used when violation type is kDigitalAssetLinks. */,
       | `AttributionSourceUntrustworthyOrigin =>
         `String("AttributionSourceUntrustworthyOrigin")
       | `AttributionUntrustworthyOrigin =>
-        `String("AttributionUntrustworthyOrigin");
+        `String("AttributionUntrustworthyOrigin")
+      | `InvalidHeader => `String("InvalidHeader");
     /* No description provided */
     [@deriving yojson]
     type t = _attributionreportingissuetype;
