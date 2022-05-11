@@ -14798,7 +14798,41 @@ dependent on the reason:
     };
   }
   and PrerenderFinalStatus: {
-    type _prerenderfinalstatus = [ | `Activated];
+    type _prerenderfinalstatus = [
+      | `Activated
+      | `Destroyed
+      | `LowEndDevice
+      | `CrossOriginRedirect
+      | `CrossOriginNavigation
+      | `InvalidSchemeRedirect
+      | `InvalidSchemeNavigation
+      | `InProgressNavigation
+      | `NavigationRequestBlockedByCsp
+      | `MainFrameNavigation
+      | `MojoBinderPolicy
+      | `RendererProcessCrashed
+      | `RendererProcessKilled
+      | `Download
+      | `TriggerDestroyed
+      | `NavigationNotCommitted
+      | `NavigationBadHttpStatus
+      | `ClientCertRequested
+      | `NavigationRequestNetworkError
+      | `MaxNumOfRunningPrerendersExceeded
+      | `CancelAllHostsForTesting
+      | `DidFailLoad
+      | `Stop
+      | `SslCertificateError
+      | `LoginAuthRequested
+      | `UaChangeRequiresReload
+      | `BlockedByClient
+      | `AudioOutputDeviceRequested
+      | `MixedContent
+      | `TriggerBackgrounded
+      | `EmbedderTriggeredAndSameOriginRedirected
+      | `EmbedderTriggeredAndCrossOriginRedirected
+      | `EmbedderTriggeredAndDestroyed
+    ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
     let yojson_of__prerenderfinalstatus:
@@ -17028,7 +17062,41 @@ dependent on the reason:
     };
   }
   and PrerenderFinalStatus: {
-    type _prerenderfinalstatus = [ | `Activated];
+    type _prerenderfinalstatus = [
+      | `Activated
+      | `Destroyed
+      | `LowEndDevice
+      | `CrossOriginRedirect
+      | `CrossOriginNavigation
+      | `InvalidSchemeRedirect
+      | `InvalidSchemeNavigation
+      | `InProgressNavigation
+      | `NavigationRequestBlockedByCsp
+      | `MainFrameNavigation
+      | `MojoBinderPolicy
+      | `RendererProcessCrashed
+      | `RendererProcessKilled
+      | `Download
+      | `TriggerDestroyed
+      | `NavigationNotCommitted
+      | `NavigationBadHttpStatus
+      | `ClientCertRequested
+      | `NavigationRequestNetworkError
+      | `MaxNumOfRunningPrerendersExceeded
+      | `CancelAllHostsForTesting
+      | `DidFailLoad
+      | `Stop
+      | `SslCertificateError
+      | `LoginAuthRequested
+      | `UaChangeRequiresReload
+      | `BlockedByClient
+      | `AudioOutputDeviceRequested
+      | `MixedContent
+      | `TriggerBackgrounded
+      | `EmbedderTriggeredAndSameOriginRedirected
+      | `EmbedderTriggeredAndCrossOriginRedirected
+      | `EmbedderTriggeredAndDestroyed
+    ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
     let yojson_of__prerenderfinalstatus:
@@ -17037,15 +17105,119 @@ dependent on the reason:
     [@deriving yojson]
     type t = _prerenderfinalstatus;
   } = {
-    type _prerenderfinalstatus = [ | `Activated];
+    type _prerenderfinalstatus = [
+      | `Activated
+      | `Destroyed
+      | `LowEndDevice
+      | `CrossOriginRedirect
+      | `CrossOriginNavigation
+      | `InvalidSchemeRedirect
+      | `InvalidSchemeNavigation
+      | `InProgressNavigation
+      | `NavigationRequestBlockedByCsp
+      | `MainFrameNavigation
+      | `MojoBinderPolicy
+      | `RendererProcessCrashed
+      | `RendererProcessKilled
+      | `Download
+      | `TriggerDestroyed
+      | `NavigationNotCommitted
+      | `NavigationBadHttpStatus
+      | `ClientCertRequested
+      | `NavigationRequestNetworkError
+      | `MaxNumOfRunningPrerendersExceeded
+      | `CancelAllHostsForTesting
+      | `DidFailLoad
+      | `Stop
+      | `SslCertificateError
+      | `LoginAuthRequested
+      | `UaChangeRequiresReload
+      | `BlockedByClient
+      | `AudioOutputDeviceRequested
+      | `MixedContent
+      | `TriggerBackgrounded
+      | `EmbedderTriggeredAndSameOriginRedirected
+      | `EmbedderTriggeredAndCrossOriginRedirected
+      | `EmbedderTriggeredAndDestroyed
+    ];
     let _prerenderfinalstatus_of_yojson =
       fun
       | `String("Activated") => `Activated
+      | `String("Destroyed") => `Destroyed
+      | `String("LowEndDevice") => `LowEndDevice
+      | `String("CrossOriginRedirect") => `CrossOriginRedirect
+      | `String("CrossOriginNavigation") => `CrossOriginNavigation
+      | `String("InvalidSchemeRedirect") => `InvalidSchemeRedirect
+      | `String("InvalidSchemeNavigation") => `InvalidSchemeNavigation
+      | `String("InProgressNavigation") => `InProgressNavigation
+      | `String("NavigationRequestBlockedByCsp") => `NavigationRequestBlockedByCsp
+      | `String("MainFrameNavigation") => `MainFrameNavigation
+      | `String("MojoBinderPolicy") => `MojoBinderPolicy
+      | `String("RendererProcessCrashed") => `RendererProcessCrashed
+      | `String("RendererProcessKilled") => `RendererProcessKilled
+      | `String("Download") => `Download
+      | `String("TriggerDestroyed") => `TriggerDestroyed
+      | `String("NavigationNotCommitted") => `NavigationNotCommitted
+      | `String("NavigationBadHttpStatus") => `NavigationBadHttpStatus
+      | `String("ClientCertRequested") => `ClientCertRequested
+      | `String("NavigationRequestNetworkError") => `NavigationRequestNetworkError
+      | `String("MaxNumOfRunningPrerendersExceeded") => `MaxNumOfRunningPrerendersExceeded
+      | `String("CancelAllHostsForTesting") => `CancelAllHostsForTesting
+      | `String("DidFailLoad") => `DidFailLoad
+      | `String("Stop") => `Stop
+      | `String("SslCertificateError") => `SslCertificateError
+      | `String("LoginAuthRequested") => `LoginAuthRequested
+      | `String("UaChangeRequiresReload") => `UaChangeRequiresReload
+      | `String("BlockedByClient") => `BlockedByClient
+      | `String("AudioOutputDeviceRequested") => `AudioOutputDeviceRequested
+      | `String("MixedContent") => `MixedContent
+      | `String("TriggerBackgrounded") => `TriggerBackgrounded
+      | `String("EmbedderTriggeredAndSameOriginRedirected") => `EmbedderTriggeredAndSameOriginRedirected
+      | `String("EmbedderTriggeredAndCrossOriginRedirected") => `EmbedderTriggeredAndCrossOriginRedirected
+      | `String("EmbedderTriggeredAndDestroyed") => `EmbedderTriggeredAndDestroyed
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__prerenderfinalstatus =
       fun
-      | `Activated => `String("Activated");
+      | `Activated => `String("Activated")
+      | `Destroyed => `String("Destroyed")
+      | `LowEndDevice => `String("LowEndDevice")
+      | `CrossOriginRedirect => `String("CrossOriginRedirect")
+      | `CrossOriginNavigation => `String("CrossOriginNavigation")
+      | `InvalidSchemeRedirect => `String("InvalidSchemeRedirect")
+      | `InvalidSchemeNavigation => `String("InvalidSchemeNavigation")
+      | `InProgressNavigation => `String("InProgressNavigation")
+      | `NavigationRequestBlockedByCsp =>
+        `String("NavigationRequestBlockedByCsp")
+      | `MainFrameNavigation => `String("MainFrameNavigation")
+      | `MojoBinderPolicy => `String("MojoBinderPolicy")
+      | `RendererProcessCrashed => `String("RendererProcessCrashed")
+      | `RendererProcessKilled => `String("RendererProcessKilled")
+      | `Download => `String("Download")
+      | `TriggerDestroyed => `String("TriggerDestroyed")
+      | `NavigationNotCommitted => `String("NavigationNotCommitted")
+      | `NavigationBadHttpStatus => `String("NavigationBadHttpStatus")
+      | `ClientCertRequested => `String("ClientCertRequested")
+      | `NavigationRequestNetworkError =>
+        `String("NavigationRequestNetworkError")
+      | `MaxNumOfRunningPrerendersExceeded =>
+        `String("MaxNumOfRunningPrerendersExceeded")
+      | `CancelAllHostsForTesting => `String("CancelAllHostsForTesting")
+      | `DidFailLoad => `String("DidFailLoad")
+      | `Stop => `String("Stop")
+      | `SslCertificateError => `String("SslCertificateError")
+      | `LoginAuthRequested => `String("LoginAuthRequested")
+      | `UaChangeRequiresReload => `String("UaChangeRequiresReload")
+      | `BlockedByClient => `String("BlockedByClient")
+      | `AudioOutputDeviceRequested => `String("AudioOutputDeviceRequested")
+      | `MixedContent => `String("MixedContent")
+      | `TriggerBackgrounded => `String("TriggerBackgrounded")
+      | `EmbedderTriggeredAndSameOriginRedirected =>
+        `String("EmbedderTriggeredAndSameOriginRedirected")
+      | `EmbedderTriggeredAndCrossOriginRedirected =>
+        `String("EmbedderTriggeredAndCrossOriginRedirected")
+      | `EmbedderTriggeredAndDestroyed =>
+        `String("EmbedderTriggeredAndDestroyed");
     /* List of FinalStatus reasons for Prerender2. */
     [@deriving yojson]
     type t = _prerenderfinalstatus;
