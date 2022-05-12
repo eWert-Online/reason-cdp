@@ -33369,6 +33369,21 @@ module WebAuthn = {
       };
     };
 
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option] [@key "enableUI"]
+        enableUI: option(bool) /* Whether to enable the WebAuthn user interface. Enabling the UI is
+recommended for debugging and demo purposes, as it is closer to the real
+experience. Disabling the UI is recommended for automated testing.
+Supported at the embedder's discretion if UI is available.
+Defaults to false. */,
+      };
+      let make = (~enableUI=?, ()) => {
+        {enableUI: enableUI};
+      };
+    };
+
     module Request = {
       [@deriving yojson]
       type t = {
@@ -33376,10 +33391,11 @@ module WebAuthn = {
         [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
         method: string,
+        params: Params.t,
       };
 
-      let make = (~sessionId=?, id) => {
-        {id, method: "WebAuthn.enable", sessionId}
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "WebAuthn.enable", sessionId, params}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };
