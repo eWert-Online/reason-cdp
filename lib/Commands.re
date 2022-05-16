@@ -24924,7 +24924,8 @@ dialog. */,
         [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Frame id that has navigated (or failed to navigate) */
         [@yojson.option] [@key "loaderId"]
-        loaderId: option(Types.Network.LoaderId.t), /* Loader identifier. */
+        loaderId: option(Types.Network.LoaderId.t), /* Loader identifier. This is omitted in case of same-document navigation,
+as the previously committed loaderId would not change. */
         [@yojson.option] [@key "errorText"]
         errorText: option(string) /* User friendly error message, present if and only if navigation has failed. */,
       };
@@ -24948,7 +24949,8 @@ dialog. */,
         [@key "frameId"]
         frameId: Types.Page.FrameId.t, /* Frame id that has navigated (or failed to navigate) */
         [@yojson.option] [@key "loaderId"]
-        loaderId: option(Types.Network.LoaderId.t), /* Loader identifier. */
+        loaderId: option(Types.Network.LoaderId.t), /* Loader identifier. This is omitted in case of same-document navigation,
+as the previously committed loaderId would not change. */
         [@yojson.option] [@key "errorText"]
         errorText: option(string) /* User friendly error message, present if and only if navigation has failed. */,
       };
