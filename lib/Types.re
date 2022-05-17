@@ -5930,7 +5930,9 @@ The property is always undefined now. */
       [@yojson.option] [@key "isSVG"]
       isSVG: option(bool), /* Whether the node is SVG. */
       [@yojson.option] [@key "compatibilityMode"]
-      compatibilityMode: option(CompatibilityMode.t) /* No description provided */,
+      compatibilityMode: option(CompatibilityMode.t), /* No description provided */
+      [@yojson.option] [@key "assignedSlot"]
+      assignedSlot: option(BackendNode.t) /* No description provided */,
     };
   }
   and RGBA: {
@@ -6300,7 +6302,9 @@ The property is always undefined now. */
       [@yojson.option] [@key "isSVG"]
       isSVG: option(bool), /* Whether the node is SVG. */
       [@yojson.option] [@key "compatibilityMode"]
-      compatibilityMode: option(CompatibilityMode.t) /* No description provided */,
+      compatibilityMode: option(CompatibilityMode.t), /* No description provided */
+      [@yojson.option] [@key "assignedSlot"]
+      assignedSlot: option(BackendNode.t) /* No description provided */,
     };
   } = {
     /* DOM interaction is implemented in terms of mirror objects that represent the actual DOM nodes.
@@ -6368,7 +6372,9 @@ The property is always undefined now. */
       [@yojson.option] [@key "isSVG"]
       isSVG: option(bool), /* Whether the node is SVG. */
       [@yojson.option] [@key "compatibilityMode"]
-      compatibilityMode: option(CompatibilityMode.t) /* No description provided */,
+      compatibilityMode: option(CompatibilityMode.t), /* No description provided */
+      [@yojson.option] [@key "assignedSlot"]
+      assignedSlot: option(BackendNode.t) /* No description provided */,
     };
   }
   and RGBA: {
