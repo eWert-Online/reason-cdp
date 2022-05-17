@@ -14068,6 +14068,7 @@ and Page: {
       | `ambient_light_sensor
       | `attribution_reporting
       | `autoplay
+      | `bluetooth
       | `browsing_topics
       | `camera
       | `ch_dpr
@@ -15044,6 +15045,7 @@ dependent on the reason:
       | `ambient_light_sensor
       | `attribution_reporting
       | `autoplay
+      | `bluetooth
       | `browsing_topics
       | `camera
       | `ch_dpr
@@ -15124,6 +15126,7 @@ dependent on the reason:
       | `ambient_light_sensor
       | `attribution_reporting
       | `autoplay
+      | `bluetooth
       | `browsing_topics
       | `camera
       | `ch_dpr
@@ -15196,6 +15199,7 @@ dependent on the reason:
       | `String("ambient-light-sensor") => `ambient_light_sensor
       | `String("attribution-reporting") => `attribution_reporting
       | `String("autoplay") => `autoplay
+      | `String("bluetooth") => `bluetooth
       | `String("browsing-topics") => `browsing_topics
       | `String("camera") => `camera
       | `String("ch-dpr") => `ch_dpr
@@ -15269,6 +15273,7 @@ dependent on the reason:
       | `ambient_light_sensor => `String("ambient-light-sensor")
       | `attribution_reporting => `String("attribution-reporting")
       | `autoplay => `String("autoplay")
+      | `bluetooth => `String("bluetooth")
       | `browsing_topics => `String("browsing-topics")
       | `camera => `String("camera")
       | `ch_dpr => `String("ch-dpr")
