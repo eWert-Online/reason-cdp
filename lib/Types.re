@@ -1541,7 +1541,6 @@ instead of "limited-quirks". */
       | `InsecurePrivateNetworkSubresourceRequest
       | `LegacyConstraintGoogIPv6
       | `LocalCSSFileExtensionRejected
-      | `MediaElementAudioSourceNode
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
       | `NoSysexWebMIDIWithoutPermission
@@ -2886,7 +2885,6 @@ instead of "limited-quirks". */
       | `InsecurePrivateNetworkSubresourceRequest
       | `LegacyConstraintGoogIPv6
       | `LocalCSSFileExtensionRejected
-      | `MediaElementAudioSourceNode
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
       | `NoSysexWebMIDIWithoutPermission
@@ -2950,7 +2948,6 @@ instead of "limited-quirks". */
       | `InsecurePrivateNetworkSubresourceRequest
       | `LegacyConstraintGoogIPv6
       | `LocalCSSFileExtensionRejected
-      | `MediaElementAudioSourceNode
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
       | `NoSysexWebMIDIWithoutPermission
@@ -3007,7 +3004,6 @@ instead of "limited-quirks". */
       | `String("InsecurePrivateNetworkSubresourceRequest") => `InsecurePrivateNetworkSubresourceRequest
       | `String("LegacyConstraintGoogIPv6") => `LegacyConstraintGoogIPv6
       | `String("LocalCSSFileExtensionRejected") => `LocalCSSFileExtensionRejected
-      | `String("MediaElementAudioSourceNode") => `MediaElementAudioSourceNode
       | `String("MediaSourceAbortRemove") => `MediaSourceAbortRemove
       | `String("MediaSourceDurationTruncatingBuffered") => `MediaSourceDurationTruncatingBuffered
       | `String("NoSysexWebMIDIWithoutPermission") => `NoSysexWebMIDIWithoutPermission
@@ -3078,7 +3074,6 @@ instead of "limited-quirks". */
       | `LegacyConstraintGoogIPv6 => `String("LegacyConstraintGoogIPv6")
       | `LocalCSSFileExtensionRejected =>
         `String("LocalCSSFileExtensionRejected")
-      | `MediaElementAudioSourceNode => `String("MediaElementAudioSourceNode")
       | `MediaSourceAbortRemove => `String("MediaSourceAbortRemove")
       | `MediaSourceDurationTruncatingBuffered =>
         `String("MediaSourceDurationTruncatingBuffered")
