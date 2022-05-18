@@ -1548,7 +1548,6 @@ instead of "limited-quirks". */
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
       | `PaymentRequestBasicCard
-      | `PaymentRequestShowWithoutGesture
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2892,7 +2891,6 @@ instead of "limited-quirks". */
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
       | `PaymentRequestBasicCard
-      | `PaymentRequestShowWithoutGesture
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2955,7 +2953,6 @@ instead of "limited-quirks". */
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
       | `PaymentRequestBasicCard
-      | `PaymentRequestShowWithoutGesture
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -3011,7 +3008,6 @@ instead of "limited-quirks". */
       | `String("NotificationPermissionRequestedIframe") => `NotificationPermissionRequestedIframe
       | `String("ObsoleteWebRtcCipherSuite") => `ObsoleteWebRtcCipherSuite
       | `String("PaymentRequestBasicCard") => `PaymentRequestBasicCard
-      | `String("PaymentRequestShowWithoutGesture") => `PaymentRequestShowWithoutGesture
       | `String("PictureSourceSrc") => `PictureSourceSrc
       | `String("PrefixedCancelAnimationFrame") => `PrefixedCancelAnimationFrame
       | `String("PrefixedRequestAnimationFrame") => `PrefixedRequestAnimationFrame
@@ -3084,8 +3080,6 @@ instead of "limited-quirks". */
         `String("NotificationPermissionRequestedIframe")
       | `ObsoleteWebRtcCipherSuite => `String("ObsoleteWebRtcCipherSuite")
       | `PaymentRequestBasicCard => `String("PaymentRequestBasicCard")
-      | `PaymentRequestShowWithoutGesture =>
-        `String("PaymentRequestShowWithoutGesture")
       | `PictureSourceSrc => `String("PictureSourceSrc")
       | `PrefixedCancelAnimationFrame =>
         `String("PrefixedCancelAnimationFrame")
