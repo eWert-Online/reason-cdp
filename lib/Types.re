@@ -1530,7 +1530,6 @@ instead of "limited-quirks". */
       | `CrossOriginWindowAlert
       | `CrossOriginWindowConfirm
       | `CSSSelectorInternalMediaControlsOverlayCastButton
-      | `CustomCursorIntersectsViewport
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
@@ -2873,7 +2872,6 @@ instead of "limited-quirks". */
       | `CrossOriginWindowAlert
       | `CrossOriginWindowConfirm
       | `CSSSelectorInternalMediaControlsOverlayCastButton
-      | `CustomCursorIntersectsViewport
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
@@ -2935,7 +2933,6 @@ instead of "limited-quirks". */
       | `CrossOriginWindowAlert
       | `CrossOriginWindowConfirm
       | `CSSSelectorInternalMediaControlsOverlayCastButton
-      | `CustomCursorIntersectsViewport
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
@@ -2990,7 +2987,6 @@ instead of "limited-quirks". */
       | `String("CrossOriginWindowAlert") => `CrossOriginWindowAlert
       | `String("CrossOriginWindowConfirm") => `CrossOriginWindowConfirm
       | `String("CSSSelectorInternalMediaControlsOverlayCastButton") => `CSSSelectorInternalMediaControlsOverlayCastButton
-      | `String("CustomCursorIntersectsViewport") => `CustomCursorIntersectsViewport
       | `String("DeprecationExample") => `DeprecationExample
       | `String("DocumentDomainSettingWithoutOriginAgentClusterHeader") => `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `String("EventPath") => `EventPath
@@ -3053,8 +3049,6 @@ instead of "limited-quirks". */
       | `CrossOriginWindowConfirm => `String("CrossOriginWindowConfirm")
       | `CSSSelectorInternalMediaControlsOverlayCastButton =>
         `String("CSSSelectorInternalMediaControlsOverlayCastButton")
-      | `CustomCursorIntersectsViewport =>
-        `String("CustomCursorIntersectsViewport")
       | `DeprecationExample => `String("DeprecationExample")
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader =>
         `String("DocumentDomainSettingWithoutOriginAgentClusterHeader")
