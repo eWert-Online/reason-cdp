@@ -1564,7 +1564,6 @@ instead of "limited-quirks". */
       | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
       | `RTCPeerConnectionSdpSemanticsPlanB
       | `RtcpMuxPolicyNegotiate
-      | `RTPDataChannel
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
@@ -2906,7 +2905,6 @@ instead of "limited-quirks". */
       | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
       | `RTCPeerConnectionSdpSemanticsPlanB
       | `RtcpMuxPolicyNegotiate
-      | `RTPDataChannel
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
@@ -2967,7 +2965,6 @@ instead of "limited-quirks". */
       | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
       | `RTCPeerConnectionSdpSemanticsPlanB
       | `RtcpMuxPolicyNegotiate
-      | `RTPDataChannel
       | `SharedArrayBufferConstructedWithoutIsolation
       | `TextToSpeech_DisallowedByAutoplay
       | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
@@ -3021,7 +3018,6 @@ instead of "limited-quirks". */
       | `String("RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics") => `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
       | `String("RTCPeerConnectionSdpSemanticsPlanB") => `RTCPeerConnectionSdpSemanticsPlanB
       | `String("RtcpMuxPolicyNegotiate") => `RtcpMuxPolicyNegotiate
-      | `String("RTPDataChannel") => `RTPDataChannel
       | `String("SharedArrayBufferConstructedWithoutIsolation") => `SharedArrayBufferConstructedWithoutIsolation
       | `String("TextToSpeech_DisallowedByAutoplay") => `TextToSpeech_DisallowedByAutoplay
       | `String("V8SharedArrayBufferConstructedInExtensionWithoutIsolation") => `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
@@ -3102,7 +3098,6 @@ instead of "limited-quirks". */
       | `RTCPeerConnectionSdpSemanticsPlanB =>
         `String("RTCPeerConnectionSdpSemanticsPlanB")
       | `RtcpMuxPolicyNegotiate => `String("RtcpMuxPolicyNegotiate")
-      | `RTPDataChannel => `String("RTPDataChannel")
       | `SharedArrayBufferConstructedWithoutIsolation =>
         `String("SharedArrayBufferConstructedWithoutIsolation")
       | `TextToSpeech_DisallowedByAutoplay =>
