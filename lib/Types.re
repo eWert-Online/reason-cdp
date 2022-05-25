@@ -14059,6 +14059,7 @@ and Page: {
       | `ch_device_memory
       | `ch_downlink
       | `ch_ect
+      | `ch_partitioned_cookies
       | `ch_prefers_color_scheme
       | `ch_rtt
       | `ch_save_data
@@ -15035,6 +15036,7 @@ dependent on the reason:
       | `ch_device_memory
       | `ch_downlink
       | `ch_ect
+      | `ch_partitioned_cookies
       | `ch_prefers_color_scheme
       | `ch_rtt
       | `ch_save_data
@@ -15115,6 +15117,7 @@ dependent on the reason:
       | `ch_device_memory
       | `ch_downlink
       | `ch_ect
+      | `ch_partitioned_cookies
       | `ch_prefers_color_scheme
       | `ch_rtt
       | `ch_save_data
@@ -15187,6 +15190,7 @@ dependent on the reason:
       | `String("ch-device-memory") => `ch_device_memory
       | `String("ch-downlink") => `ch_downlink
       | `String("ch-ect") => `ch_ect
+      | `String("ch-partitioned-cookies") => `ch_partitioned_cookies
       | `String("ch-prefers-color-scheme") => `ch_prefers_color_scheme
       | `String("ch-rtt") => `ch_rtt
       | `String("ch-save-data") => `ch_save_data
@@ -15260,6 +15264,7 @@ dependent on the reason:
       | `ch_device_memory => `String("ch-device-memory")
       | `ch_downlink => `String("ch-downlink")
       | `ch_ect => `String("ch-ect")
+      | `ch_partitioned_cookies => `String("ch-partitioned-cookies")
       | `ch_prefers_color_scheme => `String("ch-prefers-color-scheme")
       | `ch_rtt => `String("ch-rtt")
       | `ch_save_data => `String("ch-save-data")
