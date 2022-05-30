@@ -14714,7 +14714,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ContentMediaDevicesDispatcherHost
       | `ContentWebBluetooth
       | `ContentWebUSB
-      | `ContentMediaSession
       | `ContentMediaSessionService
       | `ContentScreenReader
       | `EmbedderPopupBlockerTabHelper
@@ -16510,7 +16509,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ContentMediaDevicesDispatcherHost
       | `ContentWebBluetooth
       | `ContentWebUSB
-      | `ContentMediaSession
       | `ContentMediaSessionService
       | `ContentScreenReader
       | `EmbedderPopupBlockerTabHelper
@@ -16643,7 +16641,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `ContentMediaDevicesDispatcherHost
       | `ContentWebBluetooth
       | `ContentWebUSB
-      | `ContentMediaSession
       | `ContentMediaSessionService
       | `ContentScreenReader
       | `EmbedderPopupBlockerTabHelper
@@ -16769,7 +16766,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("ContentMediaDevicesDispatcherHost") => `ContentMediaDevicesDispatcherHost
       | `String("ContentWebBluetooth") => `ContentWebBluetooth
       | `String("ContentWebUSB") => `ContentWebUSB
-      | `String("ContentMediaSession") => `ContentMediaSession
       | `String("ContentMediaSessionService") => `ContentMediaSessionService
       | `String("ContentScreenReader") => `ContentScreenReader
       | `String("EmbedderPopupBlockerTabHelper") => `EmbedderPopupBlockerTabHelper
@@ -16928,7 +16924,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
         `String("ContentMediaDevicesDispatcherHost")
       | `ContentWebBluetooth => `String("ContentWebBluetooth")
       | `ContentWebUSB => `String("ContentWebUSB")
-      | `ContentMediaSession => `String("ContentMediaSession")
       | `ContentMediaSessionService => `String("ContentMediaSessionService")
       | `ContentScreenReader => `String("ContentScreenReader")
       | `EmbedderPopupBlockerTabHelper =>
