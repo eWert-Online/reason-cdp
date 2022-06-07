@@ -1455,7 +1455,7 @@ used when violation type is kDigitalAssetLinks. */,
   }
   and AttributionReportingIssueDetails: {
     /* Details for issues around "Attribution Reporting API" usage.
-       Explainer: https://github.com/WICG/conversion-measurement-api */
+       Explainer: https://github.com/WICG/attribution-reporting-api */
     [@deriving yojson]
     type t = {
       [@key "violationType"]
@@ -1546,7 +1546,6 @@ instead of "limited-quirks". */
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
-      | `PaymentRequestBasicCard
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2731,7 +2730,7 @@ used when violation type is kDigitalAssetLinks. */,
   }
   and AttributionReportingIssueDetails: {
     /* Details for issues around "Attribution Reporting API" usage.
-       Explainer: https://github.com/WICG/conversion-measurement-api */
+       Explainer: https://github.com/WICG/attribution-reporting-api */
     [@deriving yojson]
     type t = {
       [@key "violationType"]
@@ -2747,7 +2746,7 @@ used when violation type is kDigitalAssetLinks. */,
     };
   } = {
     /* Details for issues around "Attribution Reporting API" usage.
-       Explainer: https://github.com/WICG/conversion-measurement-api */
+       Explainer: https://github.com/WICG/attribution-reporting-api */
     [@deriving yojson]
     type t = {
       [@key "violationType"]
@@ -2887,7 +2886,6 @@ instead of "limited-quirks". */
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
-      | `PaymentRequestBasicCard
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2947,7 +2945,6 @@ instead of "limited-quirks". */
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
-      | `PaymentRequestBasicCard
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -3000,7 +2997,6 @@ instead of "limited-quirks". */
       | `String("NotificationInsecureOrigin") => `NotificationInsecureOrigin
       | `String("NotificationPermissionRequestedIframe") => `NotificationPermissionRequestedIframe
       | `String("ObsoleteWebRtcCipherSuite") => `ObsoleteWebRtcCipherSuite
-      | `String("PaymentRequestBasicCard") => `PaymentRequestBasicCard
       | `String("PictureSourceSrc") => `PictureSourceSrc
       | `String("PrefixedCancelAnimationFrame") => `PrefixedCancelAnimationFrame
       | `String("PrefixedRequestAnimationFrame") => `PrefixedRequestAnimationFrame
@@ -3069,7 +3065,6 @@ instead of "limited-quirks". */
       | `NotificationPermissionRequestedIframe =>
         `String("NotificationPermissionRequestedIframe")
       | `ObsoleteWebRtcCipherSuite => `String("ObsoleteWebRtcCipherSuite")
-      | `PaymentRequestBasicCard => `String("PaymentRequestBasicCard")
       | `PictureSourceSrc => `String("PictureSourceSrc")
       | `PrefixedCancelAnimationFrame =>
         `String("PrefixedCancelAnimationFrame")
@@ -10361,9 +10356,10 @@ the same request (but not for redirected requests). */,
     type _crossoriginopenerpolicyvalue = [
       | `SameOrigin
       | `SameOriginAllowPopups
+      | `RestrictProperties
       | `UnsafeNone
       | `SameOriginPlusCoep
-      | `SameOriginAllowPopupsPlusCoep
+      | `RestrictPropertiesPlusCoep
     ];
     let _crossoriginopenerpolicyvalue_of_yojson:
       Yojson.Basic.t => _crossoriginopenerpolicyvalue;
@@ -12767,9 +12763,10 @@ the same request (but not for redirected requests). */,
     type _crossoriginopenerpolicyvalue = [
       | `SameOrigin
       | `SameOriginAllowPopups
+      | `RestrictProperties
       | `UnsafeNone
       | `SameOriginPlusCoep
-      | `SameOriginAllowPopupsPlusCoep
+      | `RestrictPropertiesPlusCoep
     ];
     let _crossoriginopenerpolicyvalue_of_yojson:
       Yojson.Basic.t => _crossoriginopenerpolicyvalue;
@@ -12782,27 +12779,29 @@ the same request (but not for redirected requests). */,
     type _crossoriginopenerpolicyvalue = [
       | `SameOrigin
       | `SameOriginAllowPopups
+      | `RestrictProperties
       | `UnsafeNone
       | `SameOriginPlusCoep
-      | `SameOriginAllowPopupsPlusCoep
+      | `RestrictPropertiesPlusCoep
     ];
     let _crossoriginopenerpolicyvalue_of_yojson =
       fun
       | `String("SameOrigin") => `SameOrigin
       | `String("SameOriginAllowPopups") => `SameOriginAllowPopups
+      | `String("RestrictProperties") => `RestrictProperties
       | `String("UnsafeNone") => `UnsafeNone
       | `String("SameOriginPlusCoep") => `SameOriginPlusCoep
-      | `String("SameOriginAllowPopupsPlusCoep") => `SameOriginAllowPopupsPlusCoep
+      | `String("RestrictPropertiesPlusCoep") => `RestrictPropertiesPlusCoep
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__crossoriginopenerpolicyvalue =
       fun
       | `SameOrigin => `String("SameOrigin")
       | `SameOriginAllowPopups => `String("SameOriginAllowPopups")
+      | `RestrictProperties => `String("RestrictProperties")
       | `UnsafeNone => `String("UnsafeNone")
       | `SameOriginPlusCoep => `String("SameOriginPlusCoep")
-      | `SameOriginAllowPopupsPlusCoep =>
-        `String("SameOriginAllowPopupsPlusCoep");
+      | `RestrictPropertiesPlusCoep => `String("RestrictPropertiesPlusCoep");
     /* No description provided */
     [@deriving yojson]
     type t = _crossoriginopenerpolicyvalue;
@@ -14006,6 +14005,18 @@ and Page: {
       explanations: option(list(AdFrameExplanation.t)) /* No description provided */,
     };
   }
+  and AdScriptId: {
+    /* Identifies the bottom-most script which caused the frame to be labelled
+       as an ad. */
+    [@deriving yojson]
+    type t = {
+      [@key "scriptId"]
+      scriptId: Runtime.ScriptId.t, /* Script Id of the bottom-most script which caused the frame to be labelled
+as an ad. */
+      [@key "debuggerId"]
+      debuggerId: Runtime.UniqueDebuggerId.t /* Id of adScriptId's debugger. */,
+    };
+  }
   and SecureContextType: {
     type _securecontexttype = [
       | `Secure
@@ -14909,6 +14920,29 @@ dependent on the reason:
       adFrameType: AdFrameType.t, /* No description provided */
       [@yojson.option] [@key "explanations"]
       explanations: option(list(AdFrameExplanation.t)) /* No description provided */,
+    };
+  }
+  and AdScriptId: {
+    /* Identifies the bottom-most script which caused the frame to be labelled
+       as an ad. */
+    [@deriving yojson]
+    type t = {
+      [@key "scriptId"]
+      scriptId: Runtime.ScriptId.t, /* Script Id of the bottom-most script which caused the frame to be labelled
+as an ad. */
+      [@key "debuggerId"]
+      debuggerId: Runtime.UniqueDebuggerId.t /* Id of adScriptId's debugger. */,
+    };
+  } = {
+    /* Identifies the bottom-most script which caused the frame to be labelled
+       as an ad. */
+    [@deriving yojson]
+    type t = {
+      [@key "scriptId"]
+      scriptId: Runtime.ScriptId.t, /* Script Id of the bottom-most script which caused the frame to be labelled
+as an ad. */
+      [@key "debuggerId"]
+      debuggerId: Runtime.UniqueDebuggerId.t /* Id of adScriptId's debugger. */,
     };
   }
   and SecureContextType: {

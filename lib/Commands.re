@@ -35405,7 +35405,19 @@ of scripts is used as end of range. */
       };
     };
   };
-  /* Restarts particular call frame from the beginning. */
+  /* Restarts particular call frame from the beginning. The old, deprecated
+     behavior of `restartFrame` is to stay paused and allow further CDP commands
+     after a restart was scheduled. This can cause problems with restarting, so
+     we now continue execution immediatly after it has been scheduled until we
+     reach the beginning of the restarted frame.
+
+     To stay back-wards compatible, `restartFrame` now expects a `mode`
+     parameter to be present. If the `mode` parameter is missing, `restartFrame`
+     errors out.
+
+     The various return values are deprecated and `callFrames` is always empty.
+     Use the call frames from the `Debugger#paused` events instead, that fires
+     once V8 pauses at the beginning of the restarted function. */
   module RestartFrame = {
     module Response: {
       type result = {
@@ -35464,13 +35476,25 @@ of scripts is used as end of range. */
     };
 
     module Params = {
+      type restartframe_mode = [ | `StepInto];
+      let restartframe_mode_of_yojson =
+        fun
+        | `String("StepInto") => `StepInto
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_restartframe_mode =
+        fun
+        | `StepInto => `String("StepInto");
       [@deriving yojson]
       type t = {
         [@key "callFrameId"]
-        callFrameId: Types.Debugger.CallFrameId.t /* Call frame identifier to evaluate on. */,
+        callFrameId: Types.Debugger.CallFrameId.t, /* Call frame identifier to evaluate on. */
+        [@yojson.option] [@key "mode"]
+        mode: option(restartframe_mode) /* The `mode` parameter must be present and set to 'StepInto', otherwise
+`restartFrame` will error out. */,
       };
-      let make = (~callFrameId, ()) => {
-        {callFrameId: callFrameId};
+      let make = (~callFrameId, ~mode=?, ()) => {
+        {callFrameId, mode};
       };
     };
 
@@ -37691,18 +37715,26 @@ default value is 32768 bytes. */,
         reportProgress: option(bool), /* If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken
 when the tracking is stopped. */
         [@yojson.option] [@key "treatGlobalObjectsAsRoots"]
-        treatGlobalObjectsAsRoots: option(bool), /* No description provided */
+        treatGlobalObjectsAsRoots: option(bool), /* Deprecated in favor of `exposeInternals`. */
         [@yojson.option] [@key "captureNumericValue"]
-        captureNumericValue: option(bool) /* If true, numerical values are included in the snapshot */,
+        captureNumericValue: option(bool), /* If true, numerical values are included in the snapshot */
+        [@yojson.option] [@key "exposeInternals"]
+        exposeInternals: option(bool) /* If true, exposes internals of the snapshot. */,
       };
       let make =
           (
             ~reportProgress=?,
             ~treatGlobalObjectsAsRoots=?,
             ~captureNumericValue=?,
+            ~exposeInternals=?,
             (),
           ) => {
-        {reportProgress, treatGlobalObjectsAsRoots, captureNumericValue};
+        {
+          reportProgress,
+          treatGlobalObjectsAsRoots,
+          captureNumericValue,
+          exposeInternals,
+        };
       };
     };
 
@@ -37778,18 +37810,27 @@ when the tracking is stopped. */
         [@yojson.option] [@key "reportProgress"]
         reportProgress: option(bool), /* If true 'reportHeapSnapshotProgress' events will be generated while snapshot is being taken. */
         [@yojson.option] [@key "treatGlobalObjectsAsRoots"]
-        treatGlobalObjectsAsRoots: option(bool), /* If true, a raw snapshot without artificial roots will be generated */
+        treatGlobalObjectsAsRoots: option(bool), /* If true, a raw snapshot without artificial roots will be generated.
+Deprecated in favor of `exposeInternals`. */
         [@yojson.option] [@key "captureNumericValue"]
-        captureNumericValue: option(bool) /* If true, numerical values are included in the snapshot */,
+        captureNumericValue: option(bool), /* If true, numerical values are included in the snapshot */
+        [@yojson.option] [@key "exposeInternals"]
+        exposeInternals: option(bool) /* If true, exposes internals of the snapshot. */,
       };
       let make =
           (
             ~reportProgress=?,
             ~treatGlobalObjectsAsRoots=?,
             ~captureNumericValue=?,
+            ~exposeInternals=?,
             (),
           ) => {
-        {reportProgress, treatGlobalObjectsAsRoots, captureNumericValue};
+        {
+          reportProgress,
+          treatGlobalObjectsAsRoots,
+          captureNumericValue,
+          exposeInternals,
+        };
       };
     };
 

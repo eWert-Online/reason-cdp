@@ -1918,7 +1918,10 @@ module Page = {
       [@key "parentFrameId"]
       parentFrameId: Types.Page.FrameId.t, /* Parent frame identifier. */
       [@yojson.option] [@key "stack"]
-      stack: option(Types.Runtime.StackTrace.t) /* JavaScript stack trace of when frame was attached, only set if frame initiated from script. */,
+      stack: option(Types.Runtime.StackTrace.t), /* JavaScript stack trace of when frame was attached, only set if frame initiated from script. */
+      [@yojson.option] [@key "adScriptId"]
+      adScriptId: option(Types.Page.AdScriptId.t) /* Identifies the bottom-most script which caused the frame to be labelled
+as an ad. Only sent if frame is labelled as an ad and id is available. */,
     };
 
     [@deriving yojson]
