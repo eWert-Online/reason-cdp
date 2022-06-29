@@ -574,6 +574,22 @@ module DOM = {
 
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
+  /* Called when top layer elements are changed. */
+  module TopLayerElementsUpdated = {
+    let name = "DOM.topLayerElementsUpdated";
+
+    [@deriving yojson]
+    type result = Types.empty;
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
   /* Called when a pseudo element is removed from an element. */
   module PseudoElementRemoved = {
     let name = "DOM.pseudoElementRemoved";
@@ -1892,10 +1908,10 @@ module Page = {
     type result = {
       [@key "frameId"]
       frameId: Types.Page.FrameId.t, /* Id of the frame containing input node. */
-      [@key "backendNodeId"]
-      backendNodeId: Types.DOM.BackendNodeId.t, /* Input node id. */
       [@key "mode"]
-      mode: filechooseropened_mode /* Input mode. */,
+      mode: filechooseropened_mode, /* Input mode. */
+      [@yojson.option] [@key "backendNodeId"]
+      backendNodeId: option(Types.DOM.BackendNodeId.t) /* Input node id. Only present for file choosers opened via an <input type="file"> element. */,
     };
 
     [@deriving yojson]

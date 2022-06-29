@@ -1537,6 +1537,7 @@ instead of "limited-quirks". */
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
       | `HostCandidateAttributeGetter
+      | `IdentityInCanMakePaymentEvent
       | `InsecurePrivateNetworkSubresourceRequest
       | `LegacyConstraintGoogIPv6
       | `LocalCSSFileExtensionRejected
@@ -1546,6 +1547,7 @@ instead of "limited-quirks". */
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
+      | `OpenWebDatabaseInsecureContext
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2877,6 +2879,7 @@ instead of "limited-quirks". */
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
       | `HostCandidateAttributeGetter
+      | `IdentityInCanMakePaymentEvent
       | `InsecurePrivateNetworkSubresourceRequest
       | `LegacyConstraintGoogIPv6
       | `LocalCSSFileExtensionRejected
@@ -2886,6 +2889,7 @@ instead of "limited-quirks". */
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
+      | `OpenWebDatabaseInsecureContext
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2936,6 +2940,7 @@ instead of "limited-quirks". */
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
       | `HostCandidateAttributeGetter
+      | `IdentityInCanMakePaymentEvent
       | `InsecurePrivateNetworkSubresourceRequest
       | `LegacyConstraintGoogIPv6
       | `LocalCSSFileExtensionRejected
@@ -2945,6 +2950,7 @@ instead of "limited-quirks". */
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
+      | `OpenWebDatabaseInsecureContext
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2988,6 +2994,7 @@ instead of "limited-quirks". */
       | `String("GeolocationInsecureOriginDeprecatedNotRemoved") => `GeolocationInsecureOriginDeprecatedNotRemoved
       | `String("GetUserMediaInsecureOrigin") => `GetUserMediaInsecureOrigin
       | `String("HostCandidateAttributeGetter") => `HostCandidateAttributeGetter
+      | `String("IdentityInCanMakePaymentEvent") => `IdentityInCanMakePaymentEvent
       | `String("InsecurePrivateNetworkSubresourceRequest") => `InsecurePrivateNetworkSubresourceRequest
       | `String("LegacyConstraintGoogIPv6") => `LegacyConstraintGoogIPv6
       | `String("LocalCSSFileExtensionRejected") => `LocalCSSFileExtensionRejected
@@ -2997,6 +3004,7 @@ instead of "limited-quirks". */
       | `String("NotificationInsecureOrigin") => `NotificationInsecureOrigin
       | `String("NotificationPermissionRequestedIframe") => `NotificationPermissionRequestedIframe
       | `String("ObsoleteWebRtcCipherSuite") => `ObsoleteWebRtcCipherSuite
+      | `String("OpenWebDatabaseInsecureContext") => `OpenWebDatabaseInsecureContext
       | `String("PictureSourceSrc") => `PictureSourceSrc
       | `String("PrefixedCancelAnimationFrame") => `PrefixedCancelAnimationFrame
       | `String("PrefixedRequestAnimationFrame") => `PrefixedRequestAnimationFrame
@@ -3051,6 +3059,8 @@ instead of "limited-quirks". */
       | `GetUserMediaInsecureOrigin => `String("GetUserMediaInsecureOrigin")
       | `HostCandidateAttributeGetter =>
         `String("HostCandidateAttributeGetter")
+      | `IdentityInCanMakePaymentEvent =>
+        `String("IdentityInCanMakePaymentEvent")
       | `InsecurePrivateNetworkSubresourceRequest =>
         `String("InsecurePrivateNetworkSubresourceRequest")
       | `LegacyConstraintGoogIPv6 => `String("LegacyConstraintGoogIPv6")
@@ -3065,6 +3075,8 @@ instead of "limited-quirks". */
       | `NotificationPermissionRequestedIframe =>
         `String("NotificationPermissionRequestedIframe")
       | `ObsoleteWebRtcCipherSuite => `String("ObsoleteWebRtcCipherSuite")
+      | `OpenWebDatabaseInsecureContext =>
+        `String("OpenWebDatabaseInsecureContext")
       | `PictureSourceSrc => `String("PictureSourceSrc")
       | `PrefixedCancelAnimationFrame =>
         `String("PrefixedCancelAnimationFrame")
@@ -4186,6 +4198,8 @@ and CSS: {
     type t = {
       [@key "pseudoType"]
       pseudoType: DOM.PseudoType.t, /* Pseudo element type. */
+      [@yojson.option] [@key "pseudoIdentifier"]
+      pseudoIdentifier: option(string), /* Pseudo element custom ident. */
       [@key "matches"]
       matches: list(RuleMatch.t) /* Matches of CSS rules applicable to the pseudo style. */,
     };
@@ -4308,8 +4322,11 @@ The array enumerates container queries starting with the innermost one, going ou
       supports: option(list(CSSSupports.t)), /* @supports CSS at-rule array.
 The array enumerates @supports at-rules starting with the innermost one, going outwards. */
       [@yojson.option] [@key "layers"]
-      layers: option(list(CSSLayer.t)) /* Cascade layer array. Contains the layer hierarchy that this rule belongs to starting
-with the innermost layer and going outwards. */,
+      layers: option(list(CSSLayer.t)), /* Cascade layer array. Contains the layer hierarchy that this rule belongs to starting
+with the innermost layer and going outwards. */
+      [@yojson.option] [@key "scopes"]
+      scopes: option(list(CSSScope.t)) /* @scope CSS at-rule array.
+The array enumerates @scope at-rules starting with the innermost one, going outwards. */,
     };
   }
   and RuleUsage: {
@@ -4488,6 +4505,19 @@ available). */
       styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
     };
   }
+  and CSSScope: {
+    /* CSS Scope at-rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Scope rule text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+    };
+  }
   and CSSLayer: {
     /* CSS Layer at-rule descriptor. */
     [@deriving yojson]
@@ -4557,6 +4587,8 @@ A higher number has higher priority in the cascade order. */,
       fontWeight: string, /* The font-weight. */
       [@key "fontStretch"]
       fontStretch: string, /* The font-stretch. */
+      [@key "fontDisplay"]
+      fontDisplay: string, /* The font-display. */
       [@key "unicodeRange"]
       unicodeRange: string, /* The unicode-range. */
       [@key "src"]
@@ -4661,6 +4693,8 @@ stylesheet rules) this rule came from. */
     type t = {
       [@key "pseudoType"]
       pseudoType: DOM.PseudoType.t, /* Pseudo element type. */
+      [@yojson.option] [@key "pseudoIdentifier"]
+      pseudoIdentifier: option(string), /* Pseudo element custom ident. */
       [@key "matches"]
       matches: list(RuleMatch.t) /* Matches of CSS rules applicable to the pseudo style. */,
     };
@@ -4670,6 +4704,8 @@ stylesheet rules) this rule came from. */
     type t = {
       [@key "pseudoType"]
       pseudoType: DOM.PseudoType.t, /* Pseudo element type. */
+      [@yojson.option] [@key "pseudoIdentifier"]
+      pseudoIdentifier: option(string), /* Pseudo element custom ident. */
       [@key "matches"]
       matches: list(RuleMatch.t) /* Matches of CSS rules applicable to the pseudo style. */,
     };
@@ -4881,8 +4917,11 @@ The array enumerates container queries starting with the innermost one, going ou
       supports: option(list(CSSSupports.t)), /* @supports CSS at-rule array.
 The array enumerates @supports at-rules starting with the innermost one, going outwards. */
       [@yojson.option] [@key "layers"]
-      layers: option(list(CSSLayer.t)) /* Cascade layer array. Contains the layer hierarchy that this rule belongs to starting
-with the innermost layer and going outwards. */,
+      layers: option(list(CSSLayer.t)), /* Cascade layer array. Contains the layer hierarchy that this rule belongs to starting
+with the innermost layer and going outwards. */
+      [@yojson.option] [@key "scopes"]
+      scopes: option(list(CSSScope.t)) /* @scope CSS at-rule array.
+The array enumerates @scope at-rules starting with the innermost one, going outwards. */,
     };
   } = {
     /* CSS rule representation. */
@@ -4907,8 +4946,11 @@ The array enumerates container queries starting with the innermost one, going ou
       supports: option(list(CSSSupports.t)), /* @supports CSS at-rule array.
 The array enumerates @supports at-rules starting with the innermost one, going outwards. */
       [@yojson.option] [@key "layers"]
-      layers: option(list(CSSLayer.t)) /* Cascade layer array. Contains the layer hierarchy that this rule belongs to starting
-with the innermost layer and going outwards. */,
+      layers: option(list(CSSLayer.t)), /* Cascade layer array. Contains the layer hierarchy that this rule belongs to starting
+with the innermost layer and going outwards. */
+      [@yojson.option] [@key "scopes"]
+      scopes: option(list(CSSScope.t)) /* @scope CSS at-rule array.
+The array enumerates @scope at-rules starting with the innermost one, going outwards. */,
     };
   }
   and RuleUsage: {
@@ -5264,6 +5306,31 @@ available). */
       styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
     };
   }
+  and CSSScope: {
+    /* CSS Scope at-rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Scope rule text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+    };
+  } = {
+    /* CSS Scope at-rule descriptor. */
+    [@deriving yojson]
+    type t = {
+      [@key "text"]
+      text: string, /* Scope rule text. */
+      [@yojson.option] [@key "range"]
+      range: option(SourceRange.t), /* The associated rule header range in the enclosing stylesheet (if
+available). */
+      [@yojson.option] [@key "styleSheetId"]
+      styleSheetId: option(StyleSheetId.t) /* Identifier of the stylesheet containing this object (if exists). */,
+    };
+  }
   and CSSLayer: {
     /* CSS Layer at-rule descriptor. */
     [@deriving yojson]
@@ -5383,6 +5450,8 @@ A higher number has higher priority in the cascade order. */,
       fontWeight: string, /* The font-weight. */
       [@key "fontStretch"]
       fontStretch: string, /* The font-stretch. */
+      [@key "fontDisplay"]
+      fontDisplay: string, /* The font-display. */
       [@key "unicodeRange"]
       unicodeRange: string, /* The unicode-range. */
       [@key "src"]
@@ -5407,6 +5476,8 @@ A higher number has higher priority in the cascade order. */,
       fontWeight: string, /* The font-weight. */
       [@key "fontStretch"]
       fontStretch: string, /* The font-stretch. */
+      [@key "fontDisplay"]
+      fontDisplay: string, /* The font-display. */
       [@key "unicodeRange"]
       unicodeRange: string, /* The unicode-range. */
       [@key "src"]
@@ -5882,6 +5953,9 @@ fire DOM events for nodes known to the client. */
       value: option(string), /* `Attr`'s value. */
       [@yojson.option] [@key "pseudoType"]
       pseudoType: option(PseudoType.t), /* Pseudo element type for this node. */
+      [@yojson.option] [@key "pseudoIdentifier"]
+      pseudoIdentifier: option(string), /* Pseudo element identifier for this node. Only present if there is a
+valid pseudoType. */
       [@yojson.option] [@key "shadowRootType"]
       shadowRootType: option(ShadowRootType.t), /* Shadow root type. */
       [@yojson.option] [@key "frameId"]
@@ -6254,6 +6328,9 @@ fire DOM events for nodes known to the client. */
       value: option(string), /* `Attr`'s value. */
       [@yojson.option] [@key "pseudoType"]
       pseudoType: option(PseudoType.t), /* Pseudo element type for this node. */
+      [@yojson.option] [@key "pseudoIdentifier"]
+      pseudoIdentifier: option(string), /* Pseudo element identifier for this node. Only present if there is a
+valid pseudoType. */
       [@yojson.option] [@key "shadowRootType"]
       shadowRootType: option(ShadowRootType.t), /* Shadow root type. */
       [@yojson.option] [@key "frameId"]
@@ -6324,6 +6401,9 @@ fire DOM events for nodes known to the client. */
       value: option(string), /* `Attr`'s value. */
       [@yojson.option] [@key "pseudoType"]
       pseudoType: option(PseudoType.t), /* Pseudo element type for this node. */
+      [@yojson.option] [@key "pseudoIdentifier"]
+      pseudoIdentifier: option(string), /* Pseudo element identifier for this node. Only present if there is a
+valid pseudoType. */
       [@yojson.option] [@key "shadowRootType"]
       shadowRootType: option(ShadowRootType.t), /* Shadow root type. */
       [@yojson.option] [@key "frameId"]
@@ -6894,6 +6974,9 @@ getSnapshot was true. */
       contentDocumentIndex: option(RareIntegerData.t), /* The index of the document in the list of the snapshot documents. */
       [@yojson.option] [@key "pseudoType"]
       pseudoType: option(RareStringData.t), /* Type of a pseudo element node. */
+      [@yojson.option] [@key "pseudoIdentifier"]
+      pseudoIdentifier: option(RareStringData.t), /* Pseudo element identifier for this node. Only present if there is a
+valid pseudoType. */
       [@yojson.option] [@key "isClickable"]
       isClickable: option(RareBooleanData.t), /* Whether this DOM node responds to mouse clicks. This includes nodes that have had click
 event listeners attached via JavaScript as well as anchor tags that naturally navigate when
@@ -7374,6 +7457,9 @@ getSnapshot was true. */
       contentDocumentIndex: option(RareIntegerData.t), /* The index of the document in the list of the snapshot documents. */
       [@yojson.option] [@key "pseudoType"]
       pseudoType: option(RareStringData.t), /* Type of a pseudo element node. */
+      [@yojson.option] [@key "pseudoIdentifier"]
+      pseudoIdentifier: option(RareStringData.t), /* Pseudo element identifier for this node. Only present if there is a
+valid pseudoType. */
       [@yojson.option] [@key "isClickable"]
       isClickable: option(RareBooleanData.t), /* Whether this DOM node responds to mouse clicks. This includes nodes that have had click
 event listeners attached via JavaScript as well as anchor tags that naturally navigate when
@@ -7413,6 +7499,9 @@ clicked. */
       contentDocumentIndex: option(RareIntegerData.t), /* The index of the document in the list of the snapshot documents. */
       [@yojson.option] [@key "pseudoType"]
       pseudoType: option(RareStringData.t), /* Type of a pseudo element node. */
+      [@yojson.option] [@key "pseudoIdentifier"]
+      pseudoIdentifier: option(RareStringData.t), /* Pseudo element identifier for this node. Only present if there is a
+valid pseudoType. */
       [@yojson.option] [@key "isClickable"]
       isClickable: option(RareBooleanData.t), /* Whether this DOM node responds to mouse clicks. This includes nodes that have had click
 event listeners attached via JavaScript as well as anchor tags that naturally navigate when
@@ -14097,6 +14186,7 @@ as an ad. */
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
+      | `federated_credentials
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -14143,6 +14233,7 @@ as an ad. */
       | `Header
       | `IframeAttribute
       | `InFencedFrameTree
+      | `InIsolatedApp
     ];
     let _permissionspolicyblockreason_of_yojson:
       Yojson.Basic.t => _permissionspolicyblockreason;
@@ -15095,6 +15186,7 @@ as an ad. */
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
+      | `federated_credentials
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -15175,6 +15267,7 @@ as an ad. */
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
+      | `federated_credentials
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -15247,6 +15340,7 @@ as an ad. */
       | `String("encrypted-media") => `encrypted_media
       | `String("execution-while-out-of-viewport") => `execution_while_out_of_viewport
       | `String("execution-while-not-rendered") => `execution_while_not_rendered
+      | `String("federated-credentials") => `federated_credentials
       | `String("focus-without-user-activation") => `focus_without_user_activation
       | `String("fullscreen") => `fullscreen
       | `String("frobulate") => `frobulate
@@ -15322,6 +15416,7 @@ as an ad. */
         `String("execution-while-out-of-viewport")
       | `execution_while_not_rendered =>
         `String("execution-while-not-rendered")
+      | `federated_credentials => `String("federated-credentials")
       | `focus_without_user_activation =>
         `String("focus-without-user-activation")
       | `fullscreen => `String("fullscreen")
@@ -15364,6 +15459,7 @@ as an ad. */
       | `Header
       | `IframeAttribute
       | `InFencedFrameTree
+      | `InIsolatedApp
     ];
     let _permissionspolicyblockreason_of_yojson:
       Yojson.Basic.t => _permissionspolicyblockreason;
@@ -15377,19 +15473,22 @@ as an ad. */
       | `Header
       | `IframeAttribute
       | `InFencedFrameTree
+      | `InIsolatedApp
     ];
     let _permissionspolicyblockreason_of_yojson =
       fun
       | `String("Header") => `Header
       | `String("IframeAttribute") => `IframeAttribute
       | `String("InFencedFrameTree") => `InFencedFrameTree
+      | `String("InIsolatedApp") => `InIsolatedApp
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__permissionspolicyblockreason =
       fun
       | `Header => `String("Header")
       | `IframeAttribute => `String("IframeAttribute")
-      | `InFencedFrameTree => `String("InFencedFrameTree");
+      | `InFencedFrameTree => `String("InFencedFrameTree")
+      | `InIsolatedApp => `String("InIsolatedApp");
     /* Reason for a permissions policy feature to be disabled. */
     [@deriving yojson]
     type t = _permissionspolicyblockreason;
@@ -19144,6 +19243,9 @@ and Tracing: {
     type t = {
       [@yojson.option] [@key "recordMode"]
       recordMode: option(_traceconfig_recordmode), /* Controls how the trace buffer stores data. */
+      [@yojson.option] [@key "traceBufferSizeInKb"]
+      traceBufferSizeInKb: option(number), /* Size of the trace buffer in kilobytes. If not specified or zero is passed, a default value
+of 200 MB would be used. */
       [@yojson.option] [@key "enableSampling"]
       enableSampling: option(bool), /* Turns on JavaScript stack sampling. */
       [@yojson.option] [@key "enableSystrace"]
@@ -19227,6 +19329,9 @@ and Tracing: {
     type t = {
       [@yojson.option] [@key "recordMode"]
       recordMode: option(_traceconfig_recordmode), /* Controls how the trace buffer stores data. */
+      [@yojson.option] [@key "traceBufferSizeInKb"]
+      traceBufferSizeInKb: option(number), /* Size of the trace buffer in kilobytes. If not specified or zero is passed, a default value
+of 200 MB would be used. */
       [@yojson.option] [@key "enableSampling"]
       enableSampling: option(bool), /* Turns on JavaScript stack sampling. */
       [@yojson.option] [@key "enableSystrace"]
@@ -19268,6 +19373,9 @@ and Tracing: {
     type t = {
       [@yojson.option] [@key "recordMode"]
       recordMode: option(_traceconfig_recordmode), /* Controls how the trace buffer stores data. */
+      [@yojson.option] [@key "traceBufferSizeInKb"]
+      traceBufferSizeInKb: option(number), /* Size of the trace buffer in kilobytes. If not specified or zero is passed, a default value
+of 200 MB would be used. */
       [@yojson.option] [@key "enableSampling"]
       enableSampling: option(bool), /* Turns on JavaScript stack sampling. */
       [@yojson.option] [@key "enableSystrace"]

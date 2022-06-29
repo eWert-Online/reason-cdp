@@ -4881,6 +4881,88 @@ be ignored (as if the image had failed to load). */
       };
     };
   };
+  /* Modifies the expression of a scope at-rule. */
+  module SetScopeText = {
+    module Response: {
+      type result = {
+        [@key "scope"]
+        scope: Types.CSS.CSSScope.t /* The resulting CSS Scope rule after modification. */,
+      };
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "scope"]
+        scope: Types.CSS.CSSScope.t /* The resulting CSS Scope rule after modification. */,
+      };
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "styleSheetId"]
+        styleSheetId: Types.CSS.StyleSheetId.t, /* No description provided */
+        [@key "range"]
+        range: Types.CSS.SourceRange.t, /* No description provided */
+        [@key "text"]
+        text: string /* No description provided */,
+      };
+      let make = (~styleSheetId, ~range, ~text, ()) => {
+        {styleSheetId, range, text};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "CSS.setScopeText", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Modifies the rule selector. */
   module SetRuleSelector = {
     module Response: {
@@ -8399,6 +8481,74 @@ backendNodeIds. */,
 
       let make = (~sessionId=?, ~params, id) => {
         {id, method: "DOM.querySelectorAll", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Returns NodeIds of current top layer elements.
+     Top layer is rendered closest to the user within a viewport, therefore its elements always
+     appear on top of all other content. */
+  module GetTopLayerElements = {
+    module Response: {
+      type result = {
+        [@key "nodeIds"]
+        nodeIds: list(Types.DOM.NodeId.t) /* NodeIds of top layer elements */,
+      };
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "nodeIds"]
+        nodeIds: list(Types.DOM.NodeId.t) /* NodeIds of top layer elements */,
+      };
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+      };
+
+      let make = (~sessionId=?, id) => {
+        {id, method: "DOM.getTopLayerElements", sessionId}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };
@@ -36506,9 +36656,26 @@ stop on the breakpoint if this expression evaluates to true. */,
       };
     };
   };
-  /* Edits JavaScript source live. */
+  /* Edits JavaScript source live.
+
+     In general, functions that are currently on the stack can not be edited with
+     a single exception: If the edited function is the top-most stack frame and
+     that is the only activation of that function on the stack. In this case
+     the live edit will be successful and a `Debugger.restartFrame` for the
+     top-most function is automatically triggered. */
   module SetScriptSource = {
     module Response: {
+      type setscriptsource_status = [
+        | `Ok
+        | `CompileError
+        | `BlockedByActiveGenerator
+        | `BlockedByActiveFunction
+      ];
+      let setscriptsource_status_of_yojson:
+        Yojson.Basic.t => setscriptsource_status;
+      let yojson_of_setscriptsource_status:
+        setscriptsource_status => Yojson.Basic.t;
+
       type result = {
         [@yojson.option] [@key "callFrames"]
         callFrames: option(list(Types.Debugger.CallFrame.t)), /* New stack trace in case editing has happened while VM was stopped. */
@@ -36518,8 +36685,12 @@ stop on the breakpoint if this expression evaluates to true. */,
         asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
         [@yojson.option] [@key "asyncStackTraceId"]
         asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
+        [@key "status"]
+        status: setscriptsource_status, /* Whether the operation was successful or not. Only `Ok` denotes a
+successful live edit while the other enum variants denote why
+the live edit failed. */
         [@yojson.option] [@key "exceptionDetails"]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. */,
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. Only present when `status` is `CompileError`. */,
       };
 
       type error = {
@@ -36536,6 +36707,27 @@ stop on the breakpoint if this expression evaluates to true. */,
 
       let parse: string => t;
     } = {
+      type setscriptsource_status = [
+        | `Ok
+        | `CompileError
+        | `BlockedByActiveGenerator
+        | `BlockedByActiveFunction
+      ];
+      let setscriptsource_status_of_yojson =
+        fun
+        | `String("Ok") => `Ok
+        | `String("CompileError") => `CompileError
+        | `String("BlockedByActiveGenerator") => `BlockedByActiveGenerator
+        | `String("BlockedByActiveFunction") => `BlockedByActiveFunction
+        | `String(s) => failwith("unknown enum: " ++ s)
+        | _ => failwith("unknown enum type");
+      let yojson_of_setscriptsource_status =
+        fun
+        | `Ok => `String("Ok")
+        | `CompileError => `String("CompileError")
+        | `BlockedByActiveGenerator => `String("BlockedByActiveGenerator")
+        | `BlockedByActiveFunction => `String("BlockedByActiveFunction");
+
       [@deriving yojson]
       type result = {
         [@yojson.option] [@key "callFrames"]
@@ -36546,8 +36738,12 @@ stop on the breakpoint if this expression evaluates to true. */,
         asyncStackTrace: option(Types.Runtime.StackTrace.t), /* Async stack trace, if any. */
         [@yojson.option] [@key "asyncStackTraceId"]
         asyncStackTraceId: option(Types.Runtime.StackTraceId.t), /* Async stack trace, if any. */
+        [@key "status"]
+        status: setscriptsource_status, /* Whether the operation was successful or not. Only `Ok` denotes a
+successful live edit while the other enum variants denote why
+the live edit failed. */
         [@yojson.option] [@key "exceptionDetails"]
-        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. */,
+        exceptionDetails: option(Types.Runtime.ExceptionDetails.t) /* Exception details if any. Only present when `status` is `CompileError`. */,
       };
 
       [@deriving yojson]
@@ -36580,11 +36776,15 @@ stop on the breakpoint if this expression evaluates to true. */,
         [@key "scriptSource"]
         scriptSource: string, /* New content of the script. */
         [@yojson.option] [@key "dryRun"]
-        dryRun: option(bool) /* If true the change will not actually be applied. Dry run may be used to get result
-description without actually modifying the code. */,
+        dryRun: option(bool), /* If true the change will not actually be applied. Dry run may be used to get result
+description without actually modifying the code. */
+        [@yojson.option] [@key "allowTopFrameEditing"]
+        allowTopFrameEditing: option(bool) /* If true, then `scriptSource` is allowed to change the function on top of the stack
+as long as the top-most stack frame is the only activation of that function. */,
       };
-      let make = (~scriptId, ~scriptSource, ~dryRun=?, ()) => {
-        {scriptId, scriptSource, dryRun};
+      let make =
+          (~scriptId, ~scriptSource, ~dryRun=?, ~allowTopFrameEditing=?, ()) => {
+        {scriptId, scriptSource, dryRun, allowTopFrameEditing};
       };
     };
 
