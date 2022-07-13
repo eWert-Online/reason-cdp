@@ -3938,7 +3938,9 @@ be ignored (as if the image had failed to load). */
         inheritedPseudoElements:
           option(list(Types.CSS.InheritedPseudoElementMatches.t)), /* A chain of inherited pseudo element styles (from the immediate node parent up to the DOM tree root). */
         [@yojson.option] [@key "cssKeyframesRules"]
-        cssKeyframesRules: option(list(Types.CSS.CSSKeyframesRule.t)) /* A list of CSS keyframed animations matching this node. */,
+        cssKeyframesRules: option(list(Types.CSS.CSSKeyframesRule.t)), /* A list of CSS keyframed animations matching this node. */
+        [@yojson.option] [@key "parentLayoutNodeId"]
+        parentLayoutNodeId: option(Types.DOM.NodeId.t) /* Id of the first parent element that does not have display: contents. */,
       };
 
       type error = {
@@ -3971,7 +3973,9 @@ be ignored (as if the image had failed to load). */
         inheritedPseudoElements:
           option(list(Types.CSS.InheritedPseudoElementMatches.t)), /* A chain of inherited pseudo element styles (from the immediate node parent up to the DOM tree root). */
         [@yojson.option] [@key "cssKeyframesRules"]
-        cssKeyframesRules: option(list(Types.CSS.CSSKeyframesRule.t)) /* A list of CSS keyframed animations matching this node. */,
+        cssKeyframesRules: option(list(Types.CSS.CSSKeyframesRule.t)), /* A list of CSS keyframed animations matching this node. */
+        [@yojson.option] [@key "parentLayoutNodeId"]
+        parentLayoutNodeId: option(Types.DOM.NodeId.t) /* Id of the first parent element that does not have display: contents. */,
       };
 
       [@deriving yojson]
