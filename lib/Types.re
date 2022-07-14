@@ -14210,6 +14210,7 @@ as an ad. */
       | `screen_wake_lock
       | `serial
       | `shared_autofill
+      | `shared_storage
       | `storage_access_api
       | `sync_xhr
       | `trust_token_redemption
@@ -14917,8 +14918,6 @@ dependent on the reason:
       | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
       | `EmbedderTriggeredAndDestroyed
-      | `MemoryLimitExceeded
-      | `FailToGetMemoryUsage
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -15212,6 +15211,7 @@ as an ad. */
       | `screen_wake_lock
       | `serial
       | `shared_autofill
+      | `shared_storage
       | `storage_access_api
       | `sync_xhr
       | `trust_token_redemption
@@ -15293,6 +15293,7 @@ as an ad. */
       | `screen_wake_lock
       | `serial
       | `shared_autofill
+      | `shared_storage
       | `storage_access_api
       | `sync_xhr
       | `trust_token_redemption
@@ -15366,6 +15367,7 @@ as an ad. */
       | `String("screen-wake-lock") => `screen_wake_lock
       | `String("serial") => `serial
       | `String("shared-autofill") => `shared_autofill
+      | `String("shared-storage") => `shared_storage
       | `String("storage-access-api") => `storage_access_api
       | `String("sync-xhr") => `sync_xhr
       | `String("trust-token-redemption") => `trust_token_redemption
@@ -15443,6 +15445,7 @@ as an ad. */
       | `screen_wake_lock => `String("screen-wake-lock")
       | `serial => `String("serial")
       | `shared_autofill => `String("shared-autofill")
+      | `shared_storage => `String("shared-storage")
       | `storage_access_api => `String("storage-access-api")
       | `sync_xhr => `String("sync-xhr")
       | `trust_token_redemption => `String("trust-token-redemption")
@@ -17210,8 +17213,6 @@ dependent on the reason:
       | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
       | `EmbedderTriggeredAndDestroyed
-      | `MemoryLimitExceeded
-      | `FailToGetMemoryUsage
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17255,8 +17256,6 @@ dependent on the reason:
       | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
       | `EmbedderTriggeredAndDestroyed
-      | `MemoryLimitExceeded
-      | `FailToGetMemoryUsage
     ];
     let _prerenderfinalstatus_of_yojson =
       fun
@@ -17293,8 +17292,6 @@ dependent on the reason:
       | `String("EmbedderTriggeredAndSameOriginRedirected") => `EmbedderTriggeredAndSameOriginRedirected
       | `String("EmbedderTriggeredAndCrossOriginRedirected") => `EmbedderTriggeredAndCrossOriginRedirected
       | `String("EmbedderTriggeredAndDestroyed") => `EmbedderTriggeredAndDestroyed
-      | `String("MemoryLimitExceeded") => `MemoryLimitExceeded
-      | `String("FailToGetMemoryUsage") => `FailToGetMemoryUsage
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__prerenderfinalstatus =
@@ -17337,9 +17334,7 @@ dependent on the reason:
       | `EmbedderTriggeredAndCrossOriginRedirected =>
         `String("EmbedderTriggeredAndCrossOriginRedirected")
       | `EmbedderTriggeredAndDestroyed =>
-        `String("EmbedderTriggeredAndDestroyed")
-      | `MemoryLimitExceeded => `String("MemoryLimitExceeded")
-      | `FailToGetMemoryUsage => `String("FailToGetMemoryUsage");
+        `String("EmbedderTriggeredAndDestroyed");
     /* List of FinalStatus reasons for Prerender2. */
     [@deriving yojson]
     type t = _prerenderfinalstatus;
