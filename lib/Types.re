@@ -1533,6 +1533,7 @@ instead of "limited-quirks". */
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
+      | `ExpectCTHeader
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
@@ -2875,6 +2876,7 @@ instead of "limited-quirks". */
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
+      | `ExpectCTHeader
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
@@ -2936,6 +2938,7 @@ instead of "limited-quirks". */
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
+      | `ExpectCTHeader
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
@@ -2990,6 +2993,7 @@ instead of "limited-quirks". */
       | `String("DeprecationExample") => `DeprecationExample
       | `String("DocumentDomainSettingWithoutOriginAgentClusterHeader") => `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `String("EventPath") => `EventPath
+      | `String("ExpectCTHeader") => `ExpectCTHeader
       | `String("GeolocationInsecureOrigin") => `GeolocationInsecureOrigin
       | `String("GeolocationInsecureOriginDeprecatedNotRemoved") => `GeolocationInsecureOriginDeprecatedNotRemoved
       | `String("GetUserMediaInsecureOrigin") => `GetUserMediaInsecureOrigin
@@ -3053,6 +3057,7 @@ instead of "limited-quirks". */
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader =>
         `String("DocumentDomainSettingWithoutOriginAgentClusterHeader")
       | `EventPath => `String("EventPath")
+      | `ExpectCTHeader => `String("ExpectCTHeader")
       | `GeolocationInsecureOrigin => `String("GeolocationInsecureOrigin")
       | `GeolocationInsecureOriginDeprecatedNotRemoved =>
         `String("GeolocationInsecureOriginDeprecatedNotRemoved")
@@ -9531,6 +9536,7 @@ and Network: {
       | `TextTrack
       | `XHR
       | `Fetch
+      | `Prefetch
       | `EventSource
       | `WebSocket
       | `Manifest
@@ -10603,6 +10609,7 @@ the same request (but not for redirected requests). */,
       | `TextTrack
       | `XHR
       | `Fetch
+      | `Prefetch
       | `EventSource
       | `WebSocket
       | `Manifest
@@ -10628,6 +10635,7 @@ the same request (but not for redirected requests). */,
       | `TextTrack
       | `XHR
       | `Fetch
+      | `Prefetch
       | `EventSource
       | `WebSocket
       | `Manifest
@@ -10648,6 +10656,7 @@ the same request (but not for redirected requests). */,
       | `String("TextTrack") => `TextTrack
       | `String("XHR") => `XHR
       | `String("Fetch") => `Fetch
+      | `String("Prefetch") => `Prefetch
       | `String("EventSource") => `EventSource
       | `String("WebSocket") => `WebSocket
       | `String("Manifest") => `Manifest
@@ -10669,6 +10678,7 @@ the same request (but not for redirected requests). */,
       | `TextTrack => `String("TextTrack")
       | `XHR => `String("XHR")
       | `Fetch => `String("Fetch")
+      | `Prefetch => `String("Prefetch")
       | `EventSource => `String("EventSource")
       | `WebSocket => `String("WebSocket")
       | `Manifest => `String("Manifest")
