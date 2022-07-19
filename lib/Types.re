@@ -1533,7 +1533,6 @@ instead of "limited-quirks". */
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
-      | `ExpectCTHeader
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
@@ -2876,7 +2875,6 @@ instead of "limited-quirks". */
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
-      | `ExpectCTHeader
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
@@ -2938,7 +2936,6 @@ instead of "limited-quirks". */
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
-      | `ExpectCTHeader
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
@@ -2993,7 +2990,6 @@ instead of "limited-quirks". */
       | `String("DeprecationExample") => `DeprecationExample
       | `String("DocumentDomainSettingWithoutOriginAgentClusterHeader") => `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `String("EventPath") => `EventPath
-      | `String("ExpectCTHeader") => `ExpectCTHeader
       | `String("GeolocationInsecureOrigin") => `GeolocationInsecureOrigin
       | `String("GeolocationInsecureOriginDeprecatedNotRemoved") => `GeolocationInsecureOriginDeprecatedNotRemoved
       | `String("GetUserMediaInsecureOrigin") => `GetUserMediaInsecureOrigin
@@ -3057,7 +3053,6 @@ instead of "limited-quirks". */
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader =>
         `String("DocumentDomainSettingWithoutOriginAgentClusterHeader")
       | `EventPath => `String("EventPath")
-      | `ExpectCTHeader => `String("ExpectCTHeader")
       | `GeolocationInsecureOrigin => `String("GeolocationInsecureOrigin")
       | `GeolocationInsecureOriginDeprecatedNotRemoved =>
         `String("GeolocationInsecureOriginDeprecatedNotRemoved")
@@ -9816,7 +9811,13 @@ milliseconds since January 1, 1970, UTC, not the number of seconds. */
       [@key "signedCertificateTimestampList"]
       signedCertificateTimestampList: list(SignedCertificateTimestamp.t), /* List of signed certificate timestamps (SCTs). */
       [@key "certificateTransparencyCompliance"]
-      certificateTransparencyCompliance: CertificateTransparencyCompliance.t /* Whether the request complied with Certificate Transparency policy */,
+      certificateTransparencyCompliance: CertificateTransparencyCompliance.t, /* Whether the request complied with Certificate Transparency policy */
+      [@yojson.option] [@key "serverSignatureAlgorithm"]
+      serverSignatureAlgorithm: option(number), /* The signature algorithm used by the server in the TLS server signature,
+represented as a TLS SignatureScheme code point. Omitted if not
+applicable or not known. */
+      [@key "encryptedClientHello"]
+      encryptedClientHello: bool /* Whether the connection used Encrypted ClientHello */,
     };
   }
   and CertificateTransparencyCompliance: {
@@ -11291,7 +11292,13 @@ milliseconds since January 1, 1970, UTC, not the number of seconds. */
       [@key "signedCertificateTimestampList"]
       signedCertificateTimestampList: list(SignedCertificateTimestamp.t), /* List of signed certificate timestamps (SCTs). */
       [@key "certificateTransparencyCompliance"]
-      certificateTransparencyCompliance: CertificateTransparencyCompliance.t /* Whether the request complied with Certificate Transparency policy */,
+      certificateTransparencyCompliance: CertificateTransparencyCompliance.t, /* Whether the request complied with Certificate Transparency policy */
+      [@yojson.option] [@key "serverSignatureAlgorithm"]
+      serverSignatureAlgorithm: option(number), /* The signature algorithm used by the server in the TLS server signature,
+represented as a TLS SignatureScheme code point. Omitted if not
+applicable or not known. */
+      [@key "encryptedClientHello"]
+      encryptedClientHello: bool /* Whether the connection used Encrypted ClientHello */,
     };
   } = {
     /* Security details about a request. */
@@ -11322,7 +11329,13 @@ milliseconds since January 1, 1970, UTC, not the number of seconds. */
       [@key "signedCertificateTimestampList"]
       signedCertificateTimestampList: list(SignedCertificateTimestamp.t), /* List of signed certificate timestamps (SCTs). */
       [@key "certificateTransparencyCompliance"]
-      certificateTransparencyCompliance: CertificateTransparencyCompliance.t /* Whether the request complied with Certificate Transparency policy */,
+      certificateTransparencyCompliance: CertificateTransparencyCompliance.t, /* Whether the request complied with Certificate Transparency policy */
+      [@yojson.option] [@key "serverSignatureAlgorithm"]
+      serverSignatureAlgorithm: option(number), /* The signature algorithm used by the server in the TLS server signature,
+represented as a TLS SignatureScheme code point. Omitted if not
+applicable or not known. */
+      [@key "encryptedClientHello"]
+      encryptedClientHello: bool /* Whether the connection used Encrypted ClientHello */,
     };
   }
   and CertificateTransparencyCompliance: {
