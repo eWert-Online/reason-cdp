@@ -1533,6 +1533,7 @@ instead of "limited-quirks". */
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
+      | `ExpectCTHeader
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
@@ -2875,6 +2876,7 @@ instead of "limited-quirks". */
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
+      | `ExpectCTHeader
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
@@ -2936,6 +2938,7 @@ instead of "limited-quirks". */
       | `DeprecationExample
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `EventPath
+      | `ExpectCTHeader
       | `GeolocationInsecureOrigin
       | `GeolocationInsecureOriginDeprecatedNotRemoved
       | `GetUserMediaInsecureOrigin
@@ -2990,6 +2993,7 @@ instead of "limited-quirks". */
       | `String("DeprecationExample") => `DeprecationExample
       | `String("DocumentDomainSettingWithoutOriginAgentClusterHeader") => `DocumentDomainSettingWithoutOriginAgentClusterHeader
       | `String("EventPath") => `EventPath
+      | `String("ExpectCTHeader") => `ExpectCTHeader
       | `String("GeolocationInsecureOrigin") => `GeolocationInsecureOrigin
       | `String("GeolocationInsecureOriginDeprecatedNotRemoved") => `GeolocationInsecureOriginDeprecatedNotRemoved
       | `String("GetUserMediaInsecureOrigin") => `GetUserMediaInsecureOrigin
@@ -3053,6 +3057,7 @@ instead of "limited-quirks". */
       | `DocumentDomainSettingWithoutOriginAgentClusterHeader =>
         `String("DocumentDomainSettingWithoutOriginAgentClusterHeader")
       | `EventPath => `String("EventPath")
+      | `ExpectCTHeader => `String("ExpectCTHeader")
       | `GeolocationInsecureOrigin => `String("GeolocationInsecureOrigin")
       | `GeolocationInsecureOriginDeprecatedNotRemoved =>
         `String("GeolocationInsecureOriginDeprecatedNotRemoved")
@@ -21148,6 +21153,16 @@ variables as its properties. */
       type_: option(_breaklocation_type) /* No description provided */,
     };
   }
+  and WasmDisassemblyChunk: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "lines"]
+      lines: list(string), /* The next chunk of disassembled lines. */
+      [@key "bytecodeOffsets"]
+      bytecodeOffsets: list(number) /* The bytecode offsets describing the start of each line. */,
+    };
+  }
   and ScriptLanguage: {
     type _scriptlanguage = [ | `JavaScript | `WebAssembly];
     let _scriptlanguage_of_yojson: Yojson.Basic.t => _scriptlanguage;
@@ -21462,6 +21477,25 @@ variables as its properties. */
       columnNumber: option(number), /* Column number in the script (0-based). */
       [@yojson.option] [@key "type"]
       type_: option(_breaklocation_type) /* No description provided */,
+    };
+  }
+  and WasmDisassemblyChunk: {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "lines"]
+      lines: list(string), /* The next chunk of disassembled lines. */
+      [@key "bytecodeOffsets"]
+      bytecodeOffsets: list(number) /* The bytecode offsets describing the start of each line. */,
+    };
+  } = {
+    /* No description provided */
+    [@deriving yojson]
+    type t = {
+      [@key "lines"]
+      lines: list(string), /* The next chunk of disassembled lines. */
+      [@key "bytecodeOffsets"]
+      bytecodeOffsets: list(number) /* The bytecode offsets describing the start of each line. */,
     };
   }
   and ScriptLanguage: {

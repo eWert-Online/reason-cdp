@@ -35199,6 +35199,181 @@ of scripts is used as end of range. */
       };
     };
   };
+  /* No description provided */
+  module DisassembleWasmModule = {
+    module Response: {
+      type result = {
+        [@yojson.option] [@key "streamId"]
+        streamId: option(string), /* For large modules, return a stream from which additional chunks of
+disassembly can be read successively. */
+        [@key "totalNumberOfLines"]
+        totalNumberOfLines: Types.number, /* The total number of lines in the disassembly text. */
+        [@key "functionBodyOffsets"]
+        functionBodyOffsets: list(Types.number), /* The offsets of all function bodies plus one additional entry pointing
+one by past the end of the last function. */
+        [@key "chunk"]
+        chunk: Types.Debugger.WasmDisassemblyChunk.t /* The first chunk of disassembly. */,
+      };
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option] [@key "streamId"]
+        streamId: option(string), /* For large modules, return a stream from which additional chunks of
+disassembly can be read successively. */
+        [@key "totalNumberOfLines"]
+        totalNumberOfLines: Types.number, /* The total number of lines in the disassembly text. */
+        [@key "functionBodyOffsets"]
+        functionBodyOffsets: list(Types.number), /* The offsets of all function bodies plus one additional entry pointing
+one by past the end of the last function. */
+        [@key "chunk"]
+        chunk: Types.Debugger.WasmDisassemblyChunk.t /* The first chunk of disassembly. */,
+      };
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "scriptId"]
+        scriptId: Types.Runtime.ScriptId.t /* Id of the script to disassemble */,
+      };
+      let make = (~scriptId, ()) => {
+        {scriptId: scriptId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.disassembleWasmModule", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Disassemble the next chunk of lines for the module corresponding to the
+     stream. If disassembly is complete, this API will invalidate the streamId
+     and return an empty chunk. Any subsequent calls for the now invalid stream
+     will return errors. */
+  module NextWasmDisassemblyChunk = {
+    module Response: {
+      type result = {
+        [@key "chunk"]
+        chunk: Types.Debugger.WasmDisassemblyChunk.t /* The next chunk of disassembly. */,
+      };
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@key "chunk"]
+        chunk: Types.Debugger.WasmDisassemblyChunk.t /* The next chunk of disassembly. */,
+      };
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "streamId"]
+        streamId: string /* No description provided */,
+      };
+      let make = (~streamId, ()) => {
+        {streamId: streamId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Debugger.nextWasmDisassemblyChunk", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* This command is deprecated. Use getScriptSource instead. */
   module GetWasmBytecode = {
     module Response: {
