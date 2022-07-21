@@ -1544,6 +1544,8 @@ instead of "limited-quirks". */
       | `LocalCSSFileExtensionRejected
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
+      | `NavigateEventRestoreScroll
+      | `NavigateEventTransitionWhile
       | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
@@ -2887,6 +2889,8 @@ instead of "limited-quirks". */
       | `LocalCSSFileExtensionRejected
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
+      | `NavigateEventRestoreScroll
+      | `NavigateEventTransitionWhile
       | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
@@ -2949,6 +2953,8 @@ instead of "limited-quirks". */
       | `LocalCSSFileExtensionRejected
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
+      | `NavigateEventRestoreScroll
+      | `NavigateEventTransitionWhile
       | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
@@ -3004,6 +3010,8 @@ instead of "limited-quirks". */
       | `String("LocalCSSFileExtensionRejected") => `LocalCSSFileExtensionRejected
       | `String("MediaSourceAbortRemove") => `MediaSourceAbortRemove
       | `String("MediaSourceDurationTruncatingBuffered") => `MediaSourceDurationTruncatingBuffered
+      | `String("NavigateEventRestoreScroll") => `NavigateEventRestoreScroll
+      | `String("NavigateEventTransitionWhile") => `NavigateEventTransitionWhile
       | `String("NoSysexWebMIDIWithoutPermission") => `NoSysexWebMIDIWithoutPermission
       | `String("NotificationInsecureOrigin") => `NotificationInsecureOrigin
       | `String("NotificationPermissionRequestedIframe") => `NotificationPermissionRequestedIframe
@@ -3074,6 +3082,9 @@ instead of "limited-quirks". */
       | `MediaSourceAbortRemove => `String("MediaSourceAbortRemove")
       | `MediaSourceDurationTruncatingBuffered =>
         `String("MediaSourceDurationTruncatingBuffered")
+      | `NavigateEventRestoreScroll => `String("NavigateEventRestoreScroll")
+      | `NavigateEventTransitionWhile =>
+        `String("NavigateEventTransitionWhile")
       | `NoSysexWebMIDIWithoutPermission =>
         `String("NoSysexWebMIDIWithoutPermission")
       | `NotificationInsecureOrigin => `String("NotificationInsecureOrigin")
