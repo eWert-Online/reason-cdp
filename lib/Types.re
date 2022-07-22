@@ -223,6 +223,8 @@ module rec Accessibility: {
       ignoredReasons: option(list(AXProperty.t)), /* Collection of reasons why this node is hidden. */
       [@yojson.option] [@key "role"]
       role: option(AXValue.t), /* This `Node`'s role, whether explicit or implicit. */
+      [@yojson.option] [@key "chromeRole"]
+      chromeRole: option(AXValue.t), /* This `Node`'s Chrome raw role. */
       [@yojson.option] [@key "name"]
       name: option(AXValue.t), /* The accessible name for this `Node`. */
       [@yojson.option] [@key "description"]
@@ -763,6 +765,8 @@ module rec Accessibility: {
       ignoredReasons: option(list(AXProperty.t)), /* Collection of reasons why this node is hidden. */
       [@yojson.option] [@key "role"]
       role: option(AXValue.t), /* This `Node`'s role, whether explicit or implicit. */
+      [@yojson.option] [@key "chromeRole"]
+      chromeRole: option(AXValue.t), /* This `Node`'s Chrome raw role. */
       [@yojson.option] [@key "name"]
       name: option(AXValue.t), /* The accessible name for this `Node`. */
       [@yojson.option] [@key "description"]
@@ -792,6 +796,8 @@ module rec Accessibility: {
       ignoredReasons: option(list(AXProperty.t)), /* Collection of reasons why this node is hidden. */
       [@yojson.option] [@key "role"]
       role: option(AXValue.t), /* This `Node`'s role, whether explicit or implicit. */
+      [@yojson.option] [@key "chromeRole"]
+      chromeRole: option(AXValue.t), /* This `Node`'s Chrome raw role. */
       [@yojson.option] [@key "name"]
       name: option(AXValue.t), /* The accessible name for this `Node`. */
       [@yojson.option] [@key "description"]
@@ -1551,6 +1557,7 @@ instead of "limited-quirks". */
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
       | `OpenWebDatabaseInsecureContext
+      | `OverflowVisibleOnReplacedElement
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2896,6 +2903,7 @@ instead of "limited-quirks". */
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
       | `OpenWebDatabaseInsecureContext
+      | `OverflowVisibleOnReplacedElement
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2960,6 +2968,7 @@ instead of "limited-quirks". */
       | `NotificationPermissionRequestedIframe
       | `ObsoleteWebRtcCipherSuite
       | `OpenWebDatabaseInsecureContext
+      | `OverflowVisibleOnReplacedElement
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -3017,6 +3026,7 @@ instead of "limited-quirks". */
       | `String("NotificationPermissionRequestedIframe") => `NotificationPermissionRequestedIframe
       | `String("ObsoleteWebRtcCipherSuite") => `ObsoleteWebRtcCipherSuite
       | `String("OpenWebDatabaseInsecureContext") => `OpenWebDatabaseInsecureContext
+      | `String("OverflowVisibleOnReplacedElement") => `OverflowVisibleOnReplacedElement
       | `String("PictureSourceSrc") => `PictureSourceSrc
       | `String("PrefixedCancelAnimationFrame") => `PrefixedCancelAnimationFrame
       | `String("PrefixedRequestAnimationFrame") => `PrefixedRequestAnimationFrame
@@ -3093,6 +3103,8 @@ instead of "limited-quirks". */
       | `ObsoleteWebRtcCipherSuite => `String("ObsoleteWebRtcCipherSuite")
       | `OpenWebDatabaseInsecureContext =>
         `String("OpenWebDatabaseInsecureContext")
+      | `OverflowVisibleOnReplacedElement =>
+        `String("OverflowVisibleOnReplacedElement")
       | `PictureSourceSrc => `String("PictureSourceSrc")
       | `PrefixedCancelAnimationFrame =>
         `String("PrefixedCancelAnimationFrame")
