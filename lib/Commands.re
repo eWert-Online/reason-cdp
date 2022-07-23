@@ -35283,8 +35283,8 @@ disassembly can be read successively. */
         [@key "totalNumberOfLines"]
         totalNumberOfLines: Types.number, /* The total number of lines in the disassembly text. */
         [@key "functionBodyOffsets"]
-        functionBodyOffsets: list(Types.number), /* The offsets of all function bodies plus one additional entry pointing
-one by past the end of the last function. */
+        functionBodyOffsets: list(Types.number), /* The offsets of all function bodies, in the format [start1, end1,
+start2, end2, ...] where all ends are exclusive. */
         [@key "chunk"]
         chunk: Types.Debugger.WasmDisassemblyChunk.t /* The first chunk of disassembly. */,
       };
@@ -35311,8 +35311,8 @@ disassembly can be read successively. */
         [@key "totalNumberOfLines"]
         totalNumberOfLines: Types.number, /* The total number of lines in the disassembly text. */
         [@key "functionBodyOffsets"]
-        functionBodyOffsets: list(Types.number), /* The offsets of all function bodies plus one additional entry pointing
-one by past the end of the last function. */
+        functionBodyOffsets: list(Types.number), /* The offsets of all function bodies, in the format [start1, end1,
+start2, end2, ...] where all ends are exclusive. */
         [@key "chunk"]
         chunk: Types.Debugger.WasmDisassemblyChunk.t /* The first chunk of disassembly. */,
       };
