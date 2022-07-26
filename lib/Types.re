@@ -1449,7 +1449,10 @@ used when violation type is kDigitalAssetLinks. */,
       | `PermissionPolicyDisabled
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
+      | `UntrustworthyReportingOrigin
+      | `InsecureContext
       | `InvalidHeader
+      | `InvalidRegisterTriggerHeader
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -1467,7 +1470,7 @@ used when violation type is kDigitalAssetLinks. */,
       [@key "violationType"]
       violationType: AttributionReportingIssueType.t, /* No description provided */
       [@yojson.option] [@key "frame"]
-      frame: option(AffectedFrame.t), /* No description provided */
+      frame: option(AffectedFrame.t), /* TODO(apaseltiner): Remove this once it is no longer referenced by the frontend. */
       [@yojson.option] [@key "request"]
       request: option(AffectedRequest.t), /* No description provided */
       [@yojson.option] [@key "violatingNodeId"]
@@ -2704,7 +2707,10 @@ used when violation type is kDigitalAssetLinks. */,
       | `PermissionPolicyDisabled
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
+      | `UntrustworthyReportingOrigin
+      | `InsecureContext
       | `InvalidHeader
+      | `InvalidRegisterTriggerHeader
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2718,14 +2724,20 @@ used when violation type is kDigitalAssetLinks. */,
       | `PermissionPolicyDisabled
       | `AttributionSourceUntrustworthyOrigin
       | `AttributionUntrustworthyOrigin
+      | `UntrustworthyReportingOrigin
+      | `InsecureContext
       | `InvalidHeader
+      | `InvalidRegisterTriggerHeader
     ];
     let _attributionreportingissuetype_of_yojson =
       fun
       | `String("PermissionPolicyDisabled") => `PermissionPolicyDisabled
       | `String("AttributionSourceUntrustworthyOrigin") => `AttributionSourceUntrustworthyOrigin
       | `String("AttributionUntrustworthyOrigin") => `AttributionUntrustworthyOrigin
+      | `String("UntrustworthyReportingOrigin") => `UntrustworthyReportingOrigin
+      | `String("InsecureContext") => `InsecureContext
       | `String("InvalidHeader") => `InvalidHeader
+      | `String("InvalidRegisterTriggerHeader") => `InvalidRegisterTriggerHeader
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__attributionreportingissuetype =
@@ -2735,7 +2747,12 @@ used when violation type is kDigitalAssetLinks. */,
         `String("AttributionSourceUntrustworthyOrigin")
       | `AttributionUntrustworthyOrigin =>
         `String("AttributionUntrustworthyOrigin")
-      | `InvalidHeader => `String("InvalidHeader");
+      | `UntrustworthyReportingOrigin =>
+        `String("UntrustworthyReportingOrigin")
+      | `InsecureContext => `String("InsecureContext")
+      | `InvalidHeader => `String("InvalidHeader")
+      | `InvalidRegisterTriggerHeader =>
+        `String("InvalidRegisterTriggerHeader");
     /* No description provided */
     [@deriving yojson]
     type t = _attributionreportingissuetype;
@@ -2748,7 +2765,7 @@ used when violation type is kDigitalAssetLinks. */,
       [@key "violationType"]
       violationType: AttributionReportingIssueType.t, /* No description provided */
       [@yojson.option] [@key "frame"]
-      frame: option(AffectedFrame.t), /* No description provided */
+      frame: option(AffectedFrame.t), /* TODO(apaseltiner): Remove this once it is no longer referenced by the frontend. */
       [@yojson.option] [@key "request"]
       request: option(AffectedRequest.t), /* No description provided */
       [@yojson.option] [@key "violatingNodeId"]
@@ -2764,7 +2781,7 @@ used when violation type is kDigitalAssetLinks. */,
       [@key "violationType"]
       violationType: AttributionReportingIssueType.t, /* No description provided */
       [@yojson.option] [@key "frame"]
-      frame: option(AffectedFrame.t), /* No description provided */
+      frame: option(AffectedFrame.t), /* TODO(apaseltiner): Remove this once it is no longer referenced by the frontend. */
       [@yojson.option] [@key "request"]
       request: option(AffectedRequest.t), /* No description provided */
       [@yojson.option] [@key "violatingNodeId"]
@@ -14969,6 +14986,8 @@ dependent on the reason:
       | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
       | `EmbedderTriggeredAndDestroyed
+      | `MemoryLimitExceeded
+      | `FailToGetMemoryUsage
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17264,6 +17283,8 @@ dependent on the reason:
       | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
       | `EmbedderTriggeredAndDestroyed
+      | `MemoryLimitExceeded
+      | `FailToGetMemoryUsage
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17307,6 +17328,8 @@ dependent on the reason:
       | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
       | `EmbedderTriggeredAndDestroyed
+      | `MemoryLimitExceeded
+      | `FailToGetMemoryUsage
     ];
     let _prerenderfinalstatus_of_yojson =
       fun
@@ -17343,6 +17366,8 @@ dependent on the reason:
       | `String("EmbedderTriggeredAndSameOriginRedirected") => `EmbedderTriggeredAndSameOriginRedirected
       | `String("EmbedderTriggeredAndCrossOriginRedirected") => `EmbedderTriggeredAndCrossOriginRedirected
       | `String("EmbedderTriggeredAndDestroyed") => `EmbedderTriggeredAndDestroyed
+      | `String("MemoryLimitExceeded") => `MemoryLimitExceeded
+      | `String("FailToGetMemoryUsage") => `FailToGetMemoryUsage
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__prerenderfinalstatus =
@@ -17385,7 +17410,9 @@ dependent on the reason:
       | `EmbedderTriggeredAndCrossOriginRedirected =>
         `String("EmbedderTriggeredAndCrossOriginRedirected")
       | `EmbedderTriggeredAndDestroyed =>
-        `String("EmbedderTriggeredAndDestroyed");
+        `String("EmbedderTriggeredAndDestroyed")
+      | `MemoryLimitExceeded => `String("MemoryLimitExceeded")
+      | `FailToGetMemoryUsage => `String("FailToGetMemoryUsage");
     /* List of FinalStatus reasons for Prerender2. */
     [@deriving yojson]
     type t = _prerenderfinalstatus;
