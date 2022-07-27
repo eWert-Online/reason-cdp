@@ -1561,6 +1561,7 @@ instead of "limited-quirks". */
       | `ObsoleteWebRtcCipherSuite
       | `OpenWebDatabaseInsecureContext
       | `OverflowVisibleOnReplacedElement
+      | `PersistentQuotaType
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2921,6 +2922,7 @@ instead of "limited-quirks". */
       | `ObsoleteWebRtcCipherSuite
       | `OpenWebDatabaseInsecureContext
       | `OverflowVisibleOnReplacedElement
+      | `PersistentQuotaType
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -2986,6 +2988,7 @@ instead of "limited-quirks". */
       | `ObsoleteWebRtcCipherSuite
       | `OpenWebDatabaseInsecureContext
       | `OverflowVisibleOnReplacedElement
+      | `PersistentQuotaType
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
       | `PrefixedRequestAnimationFrame
@@ -3044,6 +3047,7 @@ instead of "limited-quirks". */
       | `String("ObsoleteWebRtcCipherSuite") => `ObsoleteWebRtcCipherSuite
       | `String("OpenWebDatabaseInsecureContext") => `OpenWebDatabaseInsecureContext
       | `String("OverflowVisibleOnReplacedElement") => `OverflowVisibleOnReplacedElement
+      | `String("PersistentQuotaType") => `PersistentQuotaType
       | `String("PictureSourceSrc") => `PictureSourceSrc
       | `String("PrefixedCancelAnimationFrame") => `PrefixedCancelAnimationFrame
       | `String("PrefixedRequestAnimationFrame") => `PrefixedRequestAnimationFrame
@@ -3122,6 +3126,7 @@ instead of "limited-quirks". */
         `String("OpenWebDatabaseInsecureContext")
       | `OverflowVisibleOnReplacedElement =>
         `String("OverflowVisibleOnReplacedElement")
+      | `PersistentQuotaType => `String("PersistentQuotaType")
       | `PictureSourceSrc => `String("PictureSourceSrc")
       | `PrefixedCancelAnimationFrame =>
         `String("PrefixedCancelAnimationFrame")

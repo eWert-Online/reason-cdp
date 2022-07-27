@@ -15103,8 +15103,11 @@ Security origin. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@key "securityOrigin"]
-        securityOrigin: string, /* No description provided */
+        [@yojson.option] [@key "securityOrigin"]
+        securityOrigin: option(string), /* At least and at most one of securityOrigin, storageKey must be specified.
+Security origin. */
+        [@yojson.option] [@key "storageKey"]
+        storageKey: option(string), /* Storage key. */
         [@key "databaseName"]
         databaseName: string, /* No description provided */
         [@key "objectStoreName"]
@@ -15113,8 +15116,15 @@ Security origin. */
         keyRange: Types.IndexedDB.KeyRange.t /* Range of entry keys to delete */,
       };
       let make =
-          (~securityOrigin, ~databaseName, ~objectStoreName, ~keyRange, ()) => {
-        {securityOrigin, databaseName, objectStoreName, keyRange};
+          (
+            ~securityOrigin=?,
+            ~storageKey=?,
+            ~databaseName,
+            ~objectStoreName,
+            ~keyRange,
+            (),
+          ) => {
+        {securityOrigin, storageKey, databaseName, objectStoreName, keyRange};
       };
     };
 
@@ -15428,15 +15438,25 @@ is true. */,
     module Params = {
       [@deriving yojson]
       type t = {
-        [@key "securityOrigin"]
-        securityOrigin: string, /* Security origin. */
+        [@yojson.option] [@key "securityOrigin"]
+        securityOrigin: option(string), /* At least and at most one of securityOrigin, storageKey must be specified.
+Security origin. */
+        [@yojson.option] [@key "storageKey"]
+        storageKey: option(string), /* Storage key. */
         [@key "databaseName"]
         databaseName: string, /* Database name. */
         [@key "objectStoreName"]
         objectStoreName: string /* Object store name. */,
       };
-      let make = (~securityOrigin, ~databaseName, ~objectStoreName, ()) => {
-        {securityOrigin, databaseName, objectStoreName};
+      let make =
+          (
+            ~securityOrigin=?,
+            ~storageKey=?,
+            ~databaseName,
+            ~objectStoreName,
+            (),
+          ) => {
+        {securityOrigin, storageKey, databaseName, objectStoreName};
       };
     };
 
