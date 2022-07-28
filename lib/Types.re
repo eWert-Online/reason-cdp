@@ -1447,12 +1447,11 @@ used when violation type is kDigitalAssetLinks. */,
   and AttributionReportingIssueType: {
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
-      | `AttributionSourceUntrustworthyOrigin
-      | `AttributionUntrustworthyOrigin
       | `UntrustworthyReportingOrigin
       | `InsecureContext
       | `InvalidHeader
       | `InvalidRegisterTriggerHeader
+      | `InvalidEligibleHeader
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -1469,8 +1468,6 @@ used when violation type is kDigitalAssetLinks. */,
     type t = {
       [@key "violationType"]
       violationType: AttributionReportingIssueType.t, /* No description provided */
-      [@yojson.option] [@key "frame"]
-      frame: option(AffectedFrame.t), /* TODO(apaseltiner): Remove this once it is no longer referenced by the frontend. */
       [@yojson.option] [@key "request"]
       request: option(AffectedRequest.t), /* No description provided */
       [@yojson.option] [@key "violatingNodeId"]
@@ -2706,12 +2703,11 @@ used when violation type is kDigitalAssetLinks. */,
   and AttributionReportingIssueType: {
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
-      | `AttributionSourceUntrustworthyOrigin
-      | `AttributionUntrustworthyOrigin
       | `UntrustworthyReportingOrigin
       | `InsecureContext
       | `InvalidHeader
       | `InvalidRegisterTriggerHeader
+      | `InvalidEligibleHeader
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2723,37 +2719,32 @@ used when violation type is kDigitalAssetLinks. */,
   } = {
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
-      | `AttributionSourceUntrustworthyOrigin
-      | `AttributionUntrustworthyOrigin
       | `UntrustworthyReportingOrigin
       | `InsecureContext
       | `InvalidHeader
       | `InvalidRegisterTriggerHeader
+      | `InvalidEligibleHeader
     ];
     let _attributionreportingissuetype_of_yojson =
       fun
       | `String("PermissionPolicyDisabled") => `PermissionPolicyDisabled
-      | `String("AttributionSourceUntrustworthyOrigin") => `AttributionSourceUntrustworthyOrigin
-      | `String("AttributionUntrustworthyOrigin") => `AttributionUntrustworthyOrigin
       | `String("UntrustworthyReportingOrigin") => `UntrustworthyReportingOrigin
       | `String("InsecureContext") => `InsecureContext
       | `String("InvalidHeader") => `InvalidHeader
       | `String("InvalidRegisterTriggerHeader") => `InvalidRegisterTriggerHeader
+      | `String("InvalidEligibleHeader") => `InvalidEligibleHeader
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__attributionreportingissuetype =
       fun
       | `PermissionPolicyDisabled => `String("PermissionPolicyDisabled")
-      | `AttributionSourceUntrustworthyOrigin =>
-        `String("AttributionSourceUntrustworthyOrigin")
-      | `AttributionUntrustworthyOrigin =>
-        `String("AttributionUntrustworthyOrigin")
       | `UntrustworthyReportingOrigin =>
         `String("UntrustworthyReportingOrigin")
       | `InsecureContext => `String("InsecureContext")
       | `InvalidHeader => `String("InvalidHeader")
       | `InvalidRegisterTriggerHeader =>
-        `String("InvalidRegisterTriggerHeader");
+        `String("InvalidRegisterTriggerHeader")
+      | `InvalidEligibleHeader => `String("InvalidEligibleHeader");
     /* No description provided */
     [@deriving yojson]
     type t = _attributionreportingissuetype;
@@ -2765,8 +2756,6 @@ used when violation type is kDigitalAssetLinks. */,
     type t = {
       [@key "violationType"]
       violationType: AttributionReportingIssueType.t, /* No description provided */
-      [@yojson.option] [@key "frame"]
-      frame: option(AffectedFrame.t), /* TODO(apaseltiner): Remove this once it is no longer referenced by the frontend. */
       [@yojson.option] [@key "request"]
       request: option(AffectedRequest.t), /* No description provided */
       [@yojson.option] [@key "violatingNodeId"]
@@ -2781,8 +2770,6 @@ used when violation type is kDigitalAssetLinks. */,
     type t = {
       [@key "violationType"]
       violationType: AttributionReportingIssueType.t, /* No description provided */
-      [@yojson.option] [@key "frame"]
-      frame: option(AffectedFrame.t), /* TODO(apaseltiner): Remove this once it is no longer referenced by the frontend. */
       [@yojson.option] [@key "request"]
       request: option(AffectedRequest.t), /* No description provided */
       [@yojson.option] [@key "violatingNodeId"]
