@@ -19200,6 +19200,23 @@ and Target: {
       browserContextId: option(Browser.BrowserContextID.t) /* No description provided */,
     };
   }
+  and FilterEntry: {
+    /* A filter used by target query/discovery/auto-attach operations. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "exclude"]
+      exclude: option(bool), /* If set, causes exclusion of mathcing targets from the list.
+The remainder of filter entries in the filter arrat are ignored. */
+      [@yojson.option] [@key "type"]
+      type_: option(string) /* If not present, matches any type. */,
+    };
+  }
+  and TargetFilter: {
+    /* If filter is not specified, the one assumed is [{type: "browser", exclude: true}, {}]
+       (i.e. include everything but browser). */
+    [@deriving yojson]
+    type t = list(FilterEntry.t);
+  }
   and RemoteLocation: {
     /* No description provided */
     [@deriving yojson]
@@ -19275,6 +19292,38 @@ and Target: {
       [@yojson.option] [@key "browserContextId"]
       browserContextId: option(Browser.BrowserContextID.t) /* No description provided */,
     };
+  }
+  and FilterEntry: {
+    /* A filter used by target query/discovery/auto-attach operations. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "exclude"]
+      exclude: option(bool), /* If set, causes exclusion of mathcing targets from the list.
+The remainder of filter entries in the filter arrat are ignored. */
+      [@yojson.option] [@key "type"]
+      type_: option(string) /* If not present, matches any type. */,
+    };
+  } = {
+    /* A filter used by target query/discovery/auto-attach operations. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "exclude"]
+      exclude: option(bool), /* If set, causes exclusion of mathcing targets from the list.
+The remainder of filter entries in the filter arrat are ignored. */
+      [@yojson.option] [@key "type"]
+      type_: option(string) /* If not present, matches any type. */,
+    };
+  }
+  and TargetFilter: {
+    /* If filter is not specified, the one assumed is [{type: "browser", exclude: true}, {}]
+       (i.e. include everything but browser). */
+    [@deriving yojson]
+    type t = list(FilterEntry.t);
+  } = {
+    /* If filter is not specified, the one assumed is [{type: "browser", exclude: true}, {}]
+       (i.e. include everything but browser). */
+    [@deriving yojson]
+    type t = list(FilterEntry.t);
   }
   and RemoteLocation: {
     /* No description provided */

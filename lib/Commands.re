@@ -31755,6 +31755,19 @@ false by default). */,
       };
     };
 
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@yojson.option] [@key "filter"]
+        filter: option(Types.Target.TargetFilter.t) /* Only targets matching filter will be reported. If filter is not specified
+and target discovery is currently enabled, a filter used for target discovery
+is used for consistency. */,
+      };
+      let make = (~filter=?, ()) => {
+        {filter: filter};
+      };
+    };
+
     module Request = {
       [@deriving yojson]
       type t = {
@@ -31762,10 +31775,11 @@ false by default). */,
         [@yojson.option]
         sessionId: option(Types.Target.SessionID.t),
         method: string,
+        params: Params.t,
       };
 
-      let make = (~sessionId=?, id) => {
-        {id, method: "Target.getTargets", sessionId}
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Target.getTargets", sessionId, params}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };
@@ -31906,12 +31920,15 @@ false by default). */,
         waitForDebuggerOnStart: bool, /* Whether to pause new targets when attaching to them. Use `Runtime.runIfWaitingForDebugger`
 to run paused targets. */
         [@yojson.option] [@key "flatten"]
-        flatten: option(bool) /* Enables "flat" access to the session via specifying sessionId attribute in the commands.
+        flatten: option(bool), /* Enables "flat" access to the session via specifying sessionId attribute in the commands.
 We plan to make this the default, deprecate non-flattened mode,
-and eventually retire it. See crbug.com/991325. */,
+and eventually retire it. See crbug.com/991325. */
+        [@yojson.option] [@key "filter"]
+        filter: option(Types.Target.TargetFilter.t) /* Only targets matching filter will be attached. */,
       };
-      let make = (~autoAttach, ~waitForDebuggerOnStart, ~flatten=?, ()) => {
-        {autoAttach, waitForDebuggerOnStart, flatten};
+      let make =
+          (~autoAttach, ~waitForDebuggerOnStart, ~flatten=?, ~filter=?, ()) => {
+        {autoAttach, waitForDebuggerOnStart, flatten, filter};
       };
     };
 
@@ -31986,11 +32003,13 @@ and eventually retire it. See crbug.com/991325. */,
         [@key "targetId"]
         targetId: Types.Target.TargetID.t, /* No description provided */
         [@key "waitForDebuggerOnStart"]
-        waitForDebuggerOnStart: bool /* Whether to pause new targets when attaching to them. Use `Runtime.runIfWaitingForDebugger`
-to run paused targets. */,
+        waitForDebuggerOnStart: bool, /* Whether to pause new targets when attaching to them. Use `Runtime.runIfWaitingForDebugger`
+to run paused targets. */
+        [@yojson.option] [@key "filter"]
+        filter: option(Types.Target.TargetFilter.t) /* Only targets matching filter will be attached. */,
       };
-      let make = (~targetId, ~waitForDebuggerOnStart, ()) => {
-        {targetId, waitForDebuggerOnStart};
+      let make = (~targetId, ~waitForDebuggerOnStart, ~filter=?, ()) => {
+        {targetId, waitForDebuggerOnStart, filter};
       };
     };
 
@@ -32060,10 +32079,13 @@ to run paused targets. */,
       [@deriving yojson]
       type t = {
         [@key "discover"]
-        discover: bool /* Whether to discover available targets. */,
+        discover: bool, /* Whether to discover available targets. */
+        [@yojson.option] [@key "filter"]
+        filter: option(Types.Target.TargetFilter.t) /* Only targets matching filter will be attached. If `discover` is false,
+`filter` must be omitted or empty. */,
       };
-      let make = (~discover, ()) => {
-        {discover: discover};
+      let make = (~discover, ~filter=?, ()) => {
+        {discover, filter};
       };
     };
 
