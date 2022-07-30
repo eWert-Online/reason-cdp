@@ -2733,6 +2733,8 @@ module Storage = {
     type result = {
       [@key "origin"]
       origin: string, /* Origin to update. */
+      [@key "storageKey"]
+      storageKey: string, /* Storage key to update. */
       [@key "databaseName"]
       databaseName: string, /* Database to update. */
       [@key "objectStoreName"]
@@ -2755,7 +2757,9 @@ module Storage = {
     [@deriving yojson]
     type result = {
       [@key "origin"]
-      origin: string /* Origin to update. */,
+      origin: string, /* Origin to update. */
+      [@key "storageKey"]
+      storageKey: string /* Storage key to update. */,
     };
 
     [@deriving yojson]

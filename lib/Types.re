@@ -19205,15 +19205,18 @@ and Target: {
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "exclude"]
-      exclude: option(bool), /* If set, causes exclusion of mathcing targets from the list.
-The remainder of filter entries in the filter arrat are ignored. */
+      exclude: option(bool), /* If set, causes exclusion of mathcing targets from the list. */
       [@yojson.option] [@key "type"]
       type_: option(string) /* If not present, matches any type. */,
     };
   }
   and TargetFilter: {
-    /* If filter is not specified, the one assumed is [{type: "browser", exclude: true}, {}]
-       (i.e. include everything but browser). */
+    /* The entries in TargetFilter are matched sequentially against targets and
+       the first entry that matches determines if the target is included or not,
+       depending on the value of `exclude` field in the entry.
+       If filter is not specified, the one assumed is
+       [{type: "browser", exclude: true}, {type: "tab", exclude: true}, {}]
+       (i.e. include everything but `browser` and `tab`). */
     [@deriving yojson]
     type t = list(FilterEntry.t);
   }
@@ -19298,8 +19301,7 @@ The remainder of filter entries in the filter arrat are ignored. */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "exclude"]
-      exclude: option(bool), /* If set, causes exclusion of mathcing targets from the list.
-The remainder of filter entries in the filter arrat are ignored. */
+      exclude: option(bool), /* If set, causes exclusion of mathcing targets from the list. */
       [@yojson.option] [@key "type"]
       type_: option(string) /* If not present, matches any type. */,
     };
@@ -19308,20 +19310,27 @@ The remainder of filter entries in the filter arrat are ignored. */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "exclude"]
-      exclude: option(bool), /* If set, causes exclusion of mathcing targets from the list.
-The remainder of filter entries in the filter arrat are ignored. */
+      exclude: option(bool), /* If set, causes exclusion of mathcing targets from the list. */
       [@yojson.option] [@key "type"]
       type_: option(string) /* If not present, matches any type. */,
     };
   }
   and TargetFilter: {
-    /* If filter is not specified, the one assumed is [{type: "browser", exclude: true}, {}]
-       (i.e. include everything but browser). */
+    /* The entries in TargetFilter are matched sequentially against targets and
+       the first entry that matches determines if the target is included or not,
+       depending on the value of `exclude` field in the entry.
+       If filter is not specified, the one assumed is
+       [{type: "browser", exclude: true}, {type: "tab", exclude: true}, {}]
+       (i.e. include everything but `browser` and `tab`). */
     [@deriving yojson]
     type t = list(FilterEntry.t);
   } = {
-    /* If filter is not specified, the one assumed is [{type: "browser", exclude: true}, {}]
-       (i.e. include everything but browser). */
+    /* The entries in TargetFilter are matched sequentially against targets and
+       the first entry that matches determines if the target is included or not,
+       depending on the value of `exclude` field in the entry.
+       If filter is not specified, the one assumed is
+       [{type: "browser", exclude: true}, {type: "tab", exclude: true}, {}]
+       (i.e. include everything but `browser` and `tab`). */
     [@deriving yojson]
     type t = list(FilterEntry.t);
   }

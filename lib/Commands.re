@@ -30226,6 +30226,78 @@ disabled (called without a quotaSize). */,
       };
     };
   };
+  /* Registers storage key to be notified when an update occurs to its IndexedDB. */
+  module TrackIndexedDBForStorageKey = {
+    module Response: {
+      type result = Types.assoc;
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "storageKey"]
+        storageKey: string /* Storage key. */,
+      };
+      let make = (~storageKey, ()) => {
+        {storageKey: storageKey};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Storage.trackIndexedDBForStorageKey", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Unregisters origin from receiving notifications for cache storage. */
   module UntrackCacheStorageForOrigin = {
     module Response: {
@@ -30370,6 +30442,83 @@ disabled (called without a quotaSize). */,
 
       let make = (~sessionId=?, ~params, id) => {
         {id, method: "Storage.untrackIndexedDBForOrigin", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Unregisters storage key from receiving notifications for IndexedDB. */
+  module UntrackIndexedDBForStorageKey = {
+    module Response: {
+      type result = Types.assoc;
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "storageKey"]
+        storageKey: string /* Storage key. */,
+      };
+      let make = (~storageKey, ()) => {
+        {storageKey: storageKey};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {
+          id,
+          method: "Storage.untrackIndexedDBForStorageKey",
+          sessionId,
+          params,
+        }
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };
