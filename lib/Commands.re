@@ -15618,11 +15618,14 @@ Security origin. */
     module Params = {
       [@deriving yojson]
       type t = {
-        [@key "securityOrigin"]
-        securityOrigin: string /* Security origin. */,
+        [@yojson.option] [@key "securityOrigin"]
+        securityOrigin: option(string), /* At least and at most one of securityOrigin, storageKey must be specified.
+Security origin. */
+        [@yojson.option] [@key "storageKey"]
+        storageKey: option(string) /* Storage key. */,
       };
-      let make = (~securityOrigin, ()) => {
-        {securityOrigin: securityOrigin};
+      let make = (~securityOrigin=?, ~storageKey=?, ()) => {
+        {securityOrigin, storageKey};
       };
     };
 

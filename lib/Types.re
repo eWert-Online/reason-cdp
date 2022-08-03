@@ -1093,6 +1093,7 @@ and Audits: {
       | `ExcludeSameSiteStrict
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
+      | `ExcludeDomainNonASCII
     ];
     let _cookieexclusionreason_of_yojson:
       Yojson.Basic.t => _cookieexclusionreason;
@@ -1113,6 +1114,7 @@ and Audits: {
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
       | `WarnAttributeValueExceedsMaxSize
+      | `WarnDomainNonASCII
     ];
     let _cookiewarningreason_of_yojson: Yojson.Basic.t => _cookiewarningreason;
     let yojson_of__cookiewarningreason: _cookiewarningreason => Yojson.Basic.t;
@@ -1833,6 +1835,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeSameSiteStrict
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
+      | `ExcludeDomainNonASCII
     ];
     let _cookieexclusionreason_of_yojson:
       Yojson.Basic.t => _cookieexclusionreason;
@@ -1849,6 +1852,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeSameSiteStrict
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
+      | `ExcludeDomainNonASCII
     ];
     let _cookieexclusionreason_of_yojson =
       fun
@@ -1858,6 +1862,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `String("ExcludeSameSiteStrict") => `ExcludeSameSiteStrict
       | `String("ExcludeInvalidSameParty") => `ExcludeInvalidSameParty
       | `String("ExcludeSamePartyCrossPartyContext") => `ExcludeSamePartyCrossPartyContext
+      | `String("ExcludeDomainNonASCII") => `ExcludeDomainNonASCII
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__cookieexclusionreason =
@@ -1869,7 +1874,8 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeSameSiteStrict => `String("ExcludeSameSiteStrict")
       | `ExcludeInvalidSameParty => `String("ExcludeInvalidSameParty")
       | `ExcludeSamePartyCrossPartyContext =>
-        `String("ExcludeSamePartyCrossPartyContext");
+        `String("ExcludeSamePartyCrossPartyContext")
+      | `ExcludeDomainNonASCII => `String("ExcludeDomainNonASCII");
     /* No description provided */
     [@deriving yojson]
     type t = _cookieexclusionreason;
@@ -1885,6 +1891,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
       | `WarnAttributeValueExceedsMaxSize
+      | `WarnDomainNonASCII
     ];
     let _cookiewarningreason_of_yojson: Yojson.Basic.t => _cookiewarningreason;
     let yojson_of__cookiewarningreason: _cookiewarningreason => Yojson.Basic.t;
@@ -1902,6 +1909,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
       | `WarnAttributeValueExceedsMaxSize
+      | `WarnDomainNonASCII
     ];
     let _cookiewarningreason_of_yojson =
       fun
@@ -1914,6 +1922,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `String("WarnSameSiteLaxCrossDowngradeStrict") => `WarnSameSiteLaxCrossDowngradeStrict
       | `String("WarnSameSiteLaxCrossDowngradeLax") => `WarnSameSiteLaxCrossDowngradeLax
       | `String("WarnAttributeValueExceedsMaxSize") => `WarnAttributeValueExceedsMaxSize
+      | `String("WarnDomainNonASCII") => `WarnDomainNonASCII
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__cookiewarningreason =
@@ -1934,7 +1943,8 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `WarnSameSiteLaxCrossDowngradeLax =>
         `String("WarnSameSiteLaxCrossDowngradeLax")
       | `WarnAttributeValueExceedsMaxSize =>
-        `String("WarnAttributeValueExceedsMaxSize");
+        `String("WarnAttributeValueExceedsMaxSize")
+      | `WarnDomainNonASCII => `String("WarnDomainNonASCII");
     /* No description provided */
     [@deriving yojson]
     type t = _cookiewarningreason;
