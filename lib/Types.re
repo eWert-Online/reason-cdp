@@ -1643,7 +1643,6 @@ instead of "limited-quirks". */
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
-      | `ClientMetadataMissingPrivacyPolicyUrl
       | `DisabledInSettings
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
@@ -3258,7 +3257,6 @@ instead of "limited-quirks". */
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
-      | `ClientMetadataMissingPrivacyPolicyUrl
       | `DisabledInSettings
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
@@ -3297,7 +3295,6 @@ instead of "limited-quirks". */
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
-      | `ClientMetadataMissingPrivacyPolicyUrl
       | `DisabledInSettings
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
@@ -3326,7 +3323,6 @@ instead of "limited-quirks". */
       | `String("ClientMetadataHttpNotFound") => `ClientMetadataHttpNotFound
       | `String("ClientMetadataNoResponse") => `ClientMetadataNoResponse
       | `String("ClientMetadataInvalidResponse") => `ClientMetadataInvalidResponse
-      | `String("ClientMetadataMissingPrivacyPolicyUrl") => `ClientMetadataMissingPrivacyPolicyUrl
       | `String("DisabledInSettings") => `DisabledInSettings
       | `String("ErrorFetchingSignin") => `ErrorFetchingSignin
       | `String("InvalidSigninResponse") => `InvalidSigninResponse
@@ -3357,8 +3353,6 @@ instead of "limited-quirks". */
       | `ClientMetadataNoResponse => `String("ClientMetadataNoResponse")
       | `ClientMetadataInvalidResponse =>
         `String("ClientMetadataInvalidResponse")
-      | `ClientMetadataMissingPrivacyPolicyUrl =>
-        `String("ClientMetadataMissingPrivacyPolicyUrl")
       | `DisabledInSettings => `String("DisabledInSettings")
       | `ErrorFetchingSignin => `String("ErrorFetchingSignin")
       | `InvalidSigninResponse => `String("InvalidSigninResponse")
