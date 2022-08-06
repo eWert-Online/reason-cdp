@@ -2363,7 +2363,10 @@ the page execution. Execution can be resumed via calling Page.handleJavaScriptDi
       [@key "prerenderingUrl"]
       prerenderingUrl: string, /* No description provided */
       [@key "finalStatus"]
-      finalStatus: Types.Page.PrerenderFinalStatus.t /* No description provided */,
+      finalStatus: Types.Page.PrerenderFinalStatus.t, /* No description provided */
+      [@yojson.option] [@key "reasonDetails"]
+      reasonDetails: option(string) /* This is used to give users more information about the cancellation details,
+and this will be formatted for display. */,
     };
 
     [@deriving yojson]

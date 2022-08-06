@@ -1455,6 +1455,7 @@ used when violation type is kDigitalAssetLinks. */,
       | `InvalidRegisterTriggerHeader
       | `InvalidEligibleHeader
       | `TooManyConcurrentRequests
+      | `SourceAndTriggerHeaders
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2719,6 +2720,7 @@ used when violation type is kDigitalAssetLinks. */,
       | `InvalidRegisterTriggerHeader
       | `InvalidEligibleHeader
       | `TooManyConcurrentRequests
+      | `SourceAndTriggerHeaders
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2736,6 +2738,7 @@ used when violation type is kDigitalAssetLinks. */,
       | `InvalidRegisterTriggerHeader
       | `InvalidEligibleHeader
       | `TooManyConcurrentRequests
+      | `SourceAndTriggerHeaders
     ];
     let _attributionreportingissuetype_of_yojson =
       fun
@@ -2746,6 +2749,7 @@ used when violation type is kDigitalAssetLinks. */,
       | `String("InvalidRegisterTriggerHeader") => `InvalidRegisterTriggerHeader
       | `String("InvalidEligibleHeader") => `InvalidEligibleHeader
       | `String("TooManyConcurrentRequests") => `TooManyConcurrentRequests
+      | `String("SourceAndTriggerHeaders") => `SourceAndTriggerHeaders
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__attributionreportingissuetype =
@@ -2758,7 +2762,8 @@ used when violation type is kDigitalAssetLinks. */,
       | `InvalidRegisterTriggerHeader =>
         `String("InvalidRegisterTriggerHeader")
       | `InvalidEligibleHeader => `String("InvalidEligibleHeader")
-      | `TooManyConcurrentRequests => `String("TooManyConcurrentRequests");
+      | `TooManyConcurrentRequests => `String("TooManyConcurrentRequests")
+      | `SourceAndTriggerHeaders => `String("SourceAndTriggerHeaders");
     /* No description provided */
     [@deriving yojson]
     type t = _attributionreportingissuetype;
