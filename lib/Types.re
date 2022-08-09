@@ -1456,6 +1456,8 @@ used when violation type is kDigitalAssetLinks. */,
       | `InvalidEligibleHeader
       | `TooManyConcurrentRequests
       | `SourceAndTriggerHeaders
+      | `SourceIgnored
+      | `TriggerIgnored
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2721,6 +2723,8 @@ used when violation type is kDigitalAssetLinks. */,
       | `InvalidEligibleHeader
       | `TooManyConcurrentRequests
       | `SourceAndTriggerHeaders
+      | `SourceIgnored
+      | `TriggerIgnored
     ];
     let _attributionreportingissuetype_of_yojson:
       Yojson.Basic.t => _attributionreportingissuetype;
@@ -2739,6 +2743,8 @@ used when violation type is kDigitalAssetLinks. */,
       | `InvalidEligibleHeader
       | `TooManyConcurrentRequests
       | `SourceAndTriggerHeaders
+      | `SourceIgnored
+      | `TriggerIgnored
     ];
     let _attributionreportingissuetype_of_yojson =
       fun
@@ -2750,6 +2756,8 @@ used when violation type is kDigitalAssetLinks. */,
       | `String("InvalidEligibleHeader") => `InvalidEligibleHeader
       | `String("TooManyConcurrentRequests") => `TooManyConcurrentRequests
       | `String("SourceAndTriggerHeaders") => `SourceAndTriggerHeaders
+      | `String("SourceIgnored") => `SourceIgnored
+      | `String("TriggerIgnored") => `TriggerIgnored
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__attributionreportingissuetype =
@@ -2763,7 +2771,9 @@ used when violation type is kDigitalAssetLinks. */,
         `String("InvalidRegisterTriggerHeader")
       | `InvalidEligibleHeader => `String("InvalidEligibleHeader")
       | `TooManyConcurrentRequests => `String("TooManyConcurrentRequests")
-      | `SourceAndTriggerHeaders => `String("SourceAndTriggerHeaders");
+      | `SourceAndTriggerHeaders => `String("SourceAndTriggerHeaders")
+      | `SourceIgnored => `String("SourceIgnored")
+      | `TriggerIgnored => `String("TriggerIgnored");
     /* No description provided */
     [@deriving yojson]
     type t = _attributionreportingissuetype;
