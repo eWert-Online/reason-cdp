@@ -14298,6 +14298,7 @@ as an ad. */
       | `storage_access_api
       | `sync_xhr
       | `trust_token_redemption
+      | `unload
       | `usb
       | `vertical_scroll
       | `web_share
@@ -15301,6 +15302,7 @@ as an ad. */
       | `storage_access_api
       | `sync_xhr
       | `trust_token_redemption
+      | `unload
       | `usb
       | `vertical_scroll
       | `web_share
@@ -15383,6 +15385,7 @@ as an ad. */
       | `storage_access_api
       | `sync_xhr
       | `trust_token_redemption
+      | `unload
       | `usb
       | `vertical_scroll
       | `web_share
@@ -15457,6 +15460,7 @@ as an ad. */
       | `String("storage-access-api") => `storage_access_api
       | `String("sync-xhr") => `sync_xhr
       | `String("trust-token-redemption") => `trust_token_redemption
+      | `String("unload") => `unload
       | `String("usb") => `usb
       | `String("vertical-scroll") => `vertical_scroll
       | `String("web-share") => `web_share
@@ -15535,6 +15539,7 @@ as an ad. */
       | `storage_access_api => `String("storage-access-api")
       | `sync_xhr => `String("sync-xhr")
       | `trust_token_redemption => `String("trust-token-redemption")
+      | `unload => `String("unload")
       | `usb => `String("usb")
       | `vertical_scroll => `String("vertical-scroll")
       | `web_share => `String("web-share")
