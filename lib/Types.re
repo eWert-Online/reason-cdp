@@ -4477,7 +4477,10 @@ stylesheet rules) this rule came from. */
       [@yojson.option] [@key "disabled"]
       disabled: option(bool), /* Whether the property is disabled by the user (present for source-based properties only). */
       [@yojson.option] [@key "range"]
-      range: option(SourceRange.t) /* The entire property range in the enclosing style declaration (if available). */,
+      range: option(SourceRange.t), /* The entire property range in the enclosing style declaration (if available). */
+      [@yojson.option] [@key "longhandProperties"]
+      longhandProperties: option(list(CSSProperty.t)) /* Parsed longhand components of this property if it is a shorthand.
+This field will be empty if the given property is not a shorthand. */,
     };
   }
   and CSSMedia: {
@@ -5164,7 +5167,10 @@ stylesheet rules) this rule came from. */
       [@yojson.option] [@key "disabled"]
       disabled: option(bool), /* Whether the property is disabled by the user (present for source-based properties only). */
       [@yojson.option] [@key "range"]
-      range: option(SourceRange.t) /* The entire property range in the enclosing style declaration (if available). */,
+      range: option(SourceRange.t), /* The entire property range in the enclosing style declaration (if available). */
+      [@yojson.option] [@key "longhandProperties"]
+      longhandProperties: option(list(CSSProperty.t)) /* Parsed longhand components of this property if it is a shorthand.
+This field will be empty if the given property is not a shorthand. */,
     };
   } = {
     /* CSS property declaration data. */
@@ -5185,7 +5191,10 @@ stylesheet rules) this rule came from. */
       [@yojson.option] [@key "disabled"]
       disabled: option(bool), /* Whether the property is disabled by the user (present for source-based properties only). */
       [@yojson.option] [@key "range"]
-      range: option(SourceRange.t) /* The entire property range in the enclosing style declaration (if available). */,
+      range: option(SourceRange.t), /* The entire property range in the enclosing style declaration (if available). */
+      [@yojson.option] [@key "longhandProperties"]
+      longhandProperties: option(list(CSSProperty.t)) /* Parsed longhand components of this property if it is a shorthand.
+This field will be empty if the given property is not a shorthand. */,
     };
   }
   and CSSMedia: {
