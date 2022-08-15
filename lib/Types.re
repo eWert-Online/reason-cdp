@@ -15011,9 +15011,9 @@ dependent on the reason:
       | `TriggerBackgrounded
       | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
-      | `EmbedderTriggeredAndDestroyed
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
+      | `DataSaverEnabled
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17312,9 +17312,9 @@ dependent on the reason:
       | `TriggerBackgrounded
       | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
-      | `EmbedderTriggeredAndDestroyed
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
+      | `DataSaverEnabled
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17357,9 +17357,9 @@ dependent on the reason:
       | `TriggerBackgrounded
       | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
-      | `EmbedderTriggeredAndDestroyed
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
+      | `DataSaverEnabled
     ];
     let _prerenderfinalstatus_of_yojson =
       fun
@@ -17395,9 +17395,9 @@ dependent on the reason:
       | `String("TriggerBackgrounded") => `TriggerBackgrounded
       | `String("EmbedderTriggeredAndSameOriginRedirected") => `EmbedderTriggeredAndSameOriginRedirected
       | `String("EmbedderTriggeredAndCrossOriginRedirected") => `EmbedderTriggeredAndCrossOriginRedirected
-      | `String("EmbedderTriggeredAndDestroyed") => `EmbedderTriggeredAndDestroyed
       | `String("MemoryLimitExceeded") => `MemoryLimitExceeded
       | `String("FailToGetMemoryUsage") => `FailToGetMemoryUsage
+      | `String("DataSaverEnabled") => `DataSaverEnabled
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__prerenderfinalstatus =
@@ -17439,10 +17439,9 @@ dependent on the reason:
         `String("EmbedderTriggeredAndSameOriginRedirected")
       | `EmbedderTriggeredAndCrossOriginRedirected =>
         `String("EmbedderTriggeredAndCrossOriginRedirected")
-      | `EmbedderTriggeredAndDestroyed =>
-        `String("EmbedderTriggeredAndDestroyed")
       | `MemoryLimitExceeded => `String("MemoryLimitExceeded")
-      | `FailToGetMemoryUsage => `String("FailToGetMemoryUsage");
+      | `FailToGetMemoryUsage => `String("FailToGetMemoryUsage")
+      | `DataSaverEnabled => `String("DataSaverEnabled");
     /* List of FinalStatus reasons for Prerender2. */
     [@deriving yojson]
     type t = _prerenderfinalstatus;
