@@ -14304,7 +14304,7 @@ as an ad. */
       | `serial
       | `shared_autofill
       | `shared_storage
-      | `storage_access_api
+      | `storage_access
       | `sync_xhr
       | `trust_token_redemption
       | `unload
@@ -15308,7 +15308,7 @@ as an ad. */
       | `serial
       | `shared_autofill
       | `shared_storage
-      | `storage_access_api
+      | `storage_access
       | `sync_xhr
       | `trust_token_redemption
       | `unload
@@ -15391,7 +15391,7 @@ as an ad. */
       | `serial
       | `shared_autofill
       | `shared_storage
-      | `storage_access_api
+      | `storage_access
       | `sync_xhr
       | `trust_token_redemption
       | `unload
@@ -15466,7 +15466,7 @@ as an ad. */
       | `String("serial") => `serial
       | `String("shared-autofill") => `shared_autofill
       | `String("shared-storage") => `shared_storage
-      | `String("storage-access-api") => `storage_access_api
+      | `String("storage-access") => `storage_access
       | `String("sync-xhr") => `sync_xhr
       | `String("trust-token-redemption") => `trust_token_redemption
       | `String("unload") => `unload
@@ -15545,7 +15545,7 @@ as an ad. */
       | `serial => `String("serial")
       | `shared_autofill => `String("shared-autofill")
       | `shared_storage => `String("shared-storage")
-      | `storage_access_api => `String("storage-access-api")
+      | `storage_access => `String("storage-access")
       | `sync_xhr => `String("sync-xhr")
       | `trust_token_redemption => `String("trust-token-redemption")
       | `unload => `String("unload")
