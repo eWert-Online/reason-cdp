@@ -15014,6 +15014,7 @@ dependent on the reason:
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
       | `DataSaverEnabled
+      | `HasEffectiveUrl
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17315,6 +17316,7 @@ dependent on the reason:
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
       | `DataSaverEnabled
+      | `HasEffectiveUrl
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17360,6 +17362,7 @@ dependent on the reason:
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
       | `DataSaverEnabled
+      | `HasEffectiveUrl
     ];
     let _prerenderfinalstatus_of_yojson =
       fun
@@ -17398,6 +17401,7 @@ dependent on the reason:
       | `String("MemoryLimitExceeded") => `MemoryLimitExceeded
       | `String("FailToGetMemoryUsage") => `FailToGetMemoryUsage
       | `String("DataSaverEnabled") => `DataSaverEnabled
+      | `String("HasEffectiveUrl") => `HasEffectiveUrl
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__prerenderfinalstatus =
@@ -17441,7 +17445,8 @@ dependent on the reason:
         `String("EmbedderTriggeredAndCrossOriginRedirected")
       | `MemoryLimitExceeded => `String("MemoryLimitExceeded")
       | `FailToGetMemoryUsage => `String("FailToGetMemoryUsage")
-      | `DataSaverEnabled => `String("DataSaverEnabled");
+      | `DataSaverEnabled => `String("DataSaverEnabled")
+      | `HasEffectiveUrl => `String("HasEffectiveUrl");
     /* List of FinalStatus reasons for Prerender2. */
     [@deriving yojson]
     type t = _prerenderfinalstatus;
