@@ -1633,7 +1633,7 @@ instead of "limited-quirks". */
   }
   and FederatedAuthRequestIssueReason: {
     type _federatedauthrequestissuereason = [
-      | `ApprovalDeclined
+      | `ShouldEmbargo
       | `TooManyRequests
       | `ManifestListHttpNotFound
       | `ManifestListNoResponse
@@ -1658,6 +1658,7 @@ instead of "limited-quirks". */
       | `IdTokenInvalidRequest
       | `ErrorIdToken
       | `Canceled
+      | `RpPageNotVisible
     ];
     let _federatedauthrequestissuereason_of_yojson:
       Yojson.Basic.t => _federatedauthrequestissuereason;
@@ -3259,7 +3260,7 @@ instead of "limited-quirks". */
   }
   and FederatedAuthRequestIssueReason: {
     type _federatedauthrequestissuereason = [
-      | `ApprovalDeclined
+      | `ShouldEmbargo
       | `TooManyRequests
       | `ManifestListHttpNotFound
       | `ManifestListNoResponse
@@ -3284,6 +3285,7 @@ instead of "limited-quirks". */
       | `IdTokenInvalidRequest
       | `ErrorIdToken
       | `Canceled
+      | `RpPageNotVisible
     ];
     let _federatedauthrequestissuereason_of_yojson:
       Yojson.Basic.t => _federatedauthrequestissuereason;
@@ -3297,7 +3299,7 @@ instead of "limited-quirks". */
     type t = _federatedauthrequestissuereason;
   } = {
     type _federatedauthrequestissuereason = [
-      | `ApprovalDeclined
+      | `ShouldEmbargo
       | `TooManyRequests
       | `ManifestListHttpNotFound
       | `ManifestListNoResponse
@@ -3322,10 +3324,11 @@ instead of "limited-quirks". */
       | `IdTokenInvalidRequest
       | `ErrorIdToken
       | `Canceled
+      | `RpPageNotVisible
     ];
     let _federatedauthrequestissuereason_of_yojson =
       fun
-      | `String("ApprovalDeclined") => `ApprovalDeclined
+      | `String("ShouldEmbargo") => `ShouldEmbargo
       | `String("TooManyRequests") => `TooManyRequests
       | `String("ManifestListHttpNotFound") => `ManifestListHttpNotFound
       | `String("ManifestListNoResponse") => `ManifestListNoResponse
@@ -3350,11 +3353,12 @@ instead of "limited-quirks". */
       | `String("IdTokenInvalidRequest") => `IdTokenInvalidRequest
       | `String("ErrorIdToken") => `ErrorIdToken
       | `String("Canceled") => `Canceled
+      | `String("RpPageNotVisible") => `RpPageNotVisible
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__federatedauthrequestissuereason =
       fun
-      | `ApprovalDeclined => `String("ApprovalDeclined")
+      | `ShouldEmbargo => `String("ShouldEmbargo")
       | `TooManyRequests => `String("TooManyRequests")
       | `ManifestListHttpNotFound => `String("ManifestListHttpNotFound")
       | `ManifestListNoResponse => `String("ManifestListNoResponse")
@@ -3379,7 +3383,8 @@ instead of "limited-quirks". */
       | `IdTokenInvalidResponse => `String("IdTokenInvalidResponse")
       | `IdTokenInvalidRequest => `String("IdTokenInvalidRequest")
       | `ErrorIdToken => `String("ErrorIdToken")
-      | `Canceled => `String("Canceled");
+      | `Canceled => `String("Canceled")
+      | `RpPageNotVisible => `String("RpPageNotVisible");
     /* Represents the failure reason when a federated authentication reason fails.
        Should be updated alongside RequestIdTokenStatus in
        third_party/blink/public/mojom/devtools/inspector_issue.mojom to include
