@@ -462,7 +462,7 @@ module DOM = {
       [@key "parentNodeId"]
       parentNodeId: Types.DOM.NodeId.t, /* Id of the node that has changed. */
       [@key "previousNodeId"]
-      previousNodeId: Types.DOM.NodeId.t, /* If of the previous siblint. */
+      previousNodeId: Types.DOM.NodeId.t, /* Id of the previous sibling. */
       [@key "node"]
       node: Types.DOM.Node.t /* Inserted node data. */,
     };
