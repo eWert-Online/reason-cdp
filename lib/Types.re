@@ -1449,6 +1449,7 @@ used when violation type is kDigitalAssetLinks. */,
   and AttributionReportingIssueType: {
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
+      | `PermissionPolicyNotDelegated
       | `UntrustworthyReportingOrigin
       | `InsecureContext
       | `InvalidHeader
@@ -2717,6 +2718,7 @@ used when violation type is kDigitalAssetLinks. */,
   and AttributionReportingIssueType: {
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
+      | `PermissionPolicyNotDelegated
       | `UntrustworthyReportingOrigin
       | `InsecureContext
       | `InvalidHeader
@@ -2737,6 +2739,7 @@ used when violation type is kDigitalAssetLinks. */,
   } = {
     type _attributionreportingissuetype = [
       | `PermissionPolicyDisabled
+      | `PermissionPolicyNotDelegated
       | `UntrustworthyReportingOrigin
       | `InsecureContext
       | `InvalidHeader
@@ -2750,6 +2753,7 @@ used when violation type is kDigitalAssetLinks. */,
     let _attributionreportingissuetype_of_yojson =
       fun
       | `String("PermissionPolicyDisabled") => `PermissionPolicyDisabled
+      | `String("PermissionPolicyNotDelegated") => `PermissionPolicyNotDelegated
       | `String("UntrustworthyReportingOrigin") => `UntrustworthyReportingOrigin
       | `String("InsecureContext") => `InsecureContext
       | `String("InvalidHeader") => `InvalidHeader
@@ -2764,6 +2768,8 @@ used when violation type is kDigitalAssetLinks. */,
     let yojson_of__attributionreportingissuetype =
       fun
       | `PermissionPolicyDisabled => `String("PermissionPolicyDisabled")
+      | `PermissionPolicyNotDelegated =>
+        `String("PermissionPolicyNotDelegated")
       | `UntrustworthyReportingOrigin =>
         `String("UntrustworthyReportingOrigin")
       | `InsecureContext => `String("InsecureContext")
