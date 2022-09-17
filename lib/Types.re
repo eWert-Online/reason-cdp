@@ -1553,7 +1553,6 @@ instead of "limited-quirks". */
       | `HostCandidateAttributeGetter
       | `IdentityInCanMakePaymentEvent
       | `InsecurePrivateNetworkSubresourceRequest
-      | `LegacyConstraintGoogIPv6
       | `LocalCSSFileExtensionRejected
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
@@ -2933,7 +2932,6 @@ instead of "limited-quirks". */
       | `HostCandidateAttributeGetter
       | `IdentityInCanMakePaymentEvent
       | `InsecurePrivateNetworkSubresourceRequest
-      | `LegacyConstraintGoogIPv6
       | `LocalCSSFileExtensionRejected
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
@@ -2999,7 +2997,6 @@ instead of "limited-quirks". */
       | `HostCandidateAttributeGetter
       | `IdentityInCanMakePaymentEvent
       | `InsecurePrivateNetworkSubresourceRequest
-      | `LegacyConstraintGoogIPv6
       | `LocalCSSFileExtensionRejected
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
@@ -3058,7 +3055,6 @@ instead of "limited-quirks". */
       | `String("HostCandidateAttributeGetter") => `HostCandidateAttributeGetter
       | `String("IdentityInCanMakePaymentEvent") => `IdentityInCanMakePaymentEvent
       | `String("InsecurePrivateNetworkSubresourceRequest") => `InsecurePrivateNetworkSubresourceRequest
-      | `String("LegacyConstraintGoogIPv6") => `LegacyConstraintGoogIPv6
       | `String("LocalCSSFileExtensionRejected") => `LocalCSSFileExtensionRejected
       | `String("MediaSourceAbortRemove") => `MediaSourceAbortRemove
       | `String("MediaSourceDurationTruncatingBuffered") => `MediaSourceDurationTruncatingBuffered
@@ -3130,7 +3126,6 @@ instead of "limited-quirks". */
         `String("IdentityInCanMakePaymentEvent")
       | `InsecurePrivateNetworkSubresourceRequest =>
         `String("InsecurePrivateNetworkSubresourceRequest")
-      | `LegacyConstraintGoogIPv6 => `String("LegacyConstraintGoogIPv6")
       | `LocalCSSFileExtensionRejected =>
         `String("LocalCSSFileExtensionRejected")
       | `MediaSourceAbortRemove => `String("MediaSourceAbortRemove")
