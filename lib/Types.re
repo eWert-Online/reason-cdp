@@ -15015,7 +15015,6 @@ dependent on the reason:
       | `AudioOutputDeviceRequested
       | `MixedContent
       | `TriggerBackgrounded
-      | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
@@ -17318,7 +17317,6 @@ dependent on the reason:
       | `AudioOutputDeviceRequested
       | `MixedContent
       | `TriggerBackgrounded
-      | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
@@ -17365,7 +17363,6 @@ dependent on the reason:
       | `AudioOutputDeviceRequested
       | `MixedContent
       | `TriggerBackgrounded
-      | `EmbedderTriggeredAndSameOriginRedirected
       | `EmbedderTriggeredAndCrossOriginRedirected
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
@@ -17405,7 +17402,6 @@ dependent on the reason:
       | `String("AudioOutputDeviceRequested") => `AudioOutputDeviceRequested
       | `String("MixedContent") => `MixedContent
       | `String("TriggerBackgrounded") => `TriggerBackgrounded
-      | `String("EmbedderTriggeredAndSameOriginRedirected") => `EmbedderTriggeredAndSameOriginRedirected
       | `String("EmbedderTriggeredAndCrossOriginRedirected") => `EmbedderTriggeredAndCrossOriginRedirected
       | `String("MemoryLimitExceeded") => `MemoryLimitExceeded
       | `String("FailToGetMemoryUsage") => `FailToGetMemoryUsage
@@ -17449,8 +17445,6 @@ dependent on the reason:
       | `AudioOutputDeviceRequested => `String("AudioOutputDeviceRequested")
       | `MixedContent => `String("MixedContent")
       | `TriggerBackgrounded => `String("TriggerBackgrounded")
-      | `EmbedderTriggeredAndSameOriginRedirected =>
-        `String("EmbedderTriggeredAndSameOriginRedirected")
       | `EmbedderTriggeredAndCrossOriginRedirected =>
         `String("EmbedderTriggeredAndCrossOriginRedirected")
       | `MemoryLimitExceeded => `String("MemoryLimitExceeded")
