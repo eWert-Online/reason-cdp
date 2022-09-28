@@ -1556,8 +1556,6 @@ instead of "limited-quirks". */
       | `LocalCSSFileExtensionRejected
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
-      | `NavigateEventRestoreScroll
-      | `NavigateEventTransitionWhile
       | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
@@ -1565,6 +1563,7 @@ instead of "limited-quirks". */
       | `OpenWebDatabaseInsecureContext
       | `OverflowVisibleOnReplacedElement
       | `PaymentInstruments
+      | `PaymentRequestCSPViolation
       | `PersistentQuotaType
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
@@ -2936,8 +2935,6 @@ instead of "limited-quirks". */
       | `LocalCSSFileExtensionRejected
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
-      | `NavigateEventRestoreScroll
-      | `NavigateEventTransitionWhile
       | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
@@ -2945,6 +2942,7 @@ instead of "limited-quirks". */
       | `OpenWebDatabaseInsecureContext
       | `OverflowVisibleOnReplacedElement
       | `PaymentInstruments
+      | `PaymentRequestCSPViolation
       | `PersistentQuotaType
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
@@ -3002,8 +3000,6 @@ instead of "limited-quirks". */
       | `LocalCSSFileExtensionRejected
       | `MediaSourceAbortRemove
       | `MediaSourceDurationTruncatingBuffered
-      | `NavigateEventRestoreScroll
-      | `NavigateEventTransitionWhile
       | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
@@ -3011,6 +3007,7 @@ instead of "limited-quirks". */
       | `OpenWebDatabaseInsecureContext
       | `OverflowVisibleOnReplacedElement
       | `PaymentInstruments
+      | `PaymentRequestCSPViolation
       | `PersistentQuotaType
       | `PictureSourceSrc
       | `PrefixedCancelAnimationFrame
@@ -3061,8 +3058,6 @@ instead of "limited-quirks". */
       | `String("LocalCSSFileExtensionRejected") => `LocalCSSFileExtensionRejected
       | `String("MediaSourceAbortRemove") => `MediaSourceAbortRemove
       | `String("MediaSourceDurationTruncatingBuffered") => `MediaSourceDurationTruncatingBuffered
-      | `String("NavigateEventRestoreScroll") => `NavigateEventRestoreScroll
-      | `String("NavigateEventTransitionWhile") => `NavigateEventTransitionWhile
       | `String("NoSysexWebMIDIWithoutPermission") => `NoSysexWebMIDIWithoutPermission
       | `String("NotificationInsecureOrigin") => `NotificationInsecureOrigin
       | `String("NotificationPermissionRequestedIframe") => `NotificationPermissionRequestedIframe
@@ -3070,6 +3065,7 @@ instead of "limited-quirks". */
       | `String("OpenWebDatabaseInsecureContext") => `OpenWebDatabaseInsecureContext
       | `String("OverflowVisibleOnReplacedElement") => `OverflowVisibleOnReplacedElement
       | `String("PaymentInstruments") => `PaymentInstruments
+      | `String("PaymentRequestCSPViolation") => `PaymentRequestCSPViolation
       | `String("PersistentQuotaType") => `PersistentQuotaType
       | `String("PictureSourceSrc") => `PictureSourceSrc
       | `String("PrefixedCancelAnimationFrame") => `PrefixedCancelAnimationFrame
@@ -3135,9 +3131,6 @@ instead of "limited-quirks". */
       | `MediaSourceAbortRemove => `String("MediaSourceAbortRemove")
       | `MediaSourceDurationTruncatingBuffered =>
         `String("MediaSourceDurationTruncatingBuffered")
-      | `NavigateEventRestoreScroll => `String("NavigateEventRestoreScroll")
-      | `NavigateEventTransitionWhile =>
-        `String("NavigateEventTransitionWhile")
       | `NoSysexWebMIDIWithoutPermission =>
         `String("NoSysexWebMIDIWithoutPermission")
       | `NotificationInsecureOrigin => `String("NotificationInsecureOrigin")
@@ -3149,6 +3142,7 @@ instead of "limited-quirks". */
       | `OverflowVisibleOnReplacedElement =>
         `String("OverflowVisibleOnReplacedElement")
       | `PaymentInstruments => `String("PaymentInstruments")
+      | `PaymentRequestCSPViolation => `String("PaymentRequestCSPViolation")
       | `PersistentQuotaType => `String("PersistentQuotaType")
       | `PictureSourceSrc => `String("PictureSourceSrc")
       | `PrefixedCancelAnimationFrame =>
@@ -19259,7 +19253,10 @@ and Target: {
       [@yojson.option] [@key "openerFrameId"]
       openerFrameId: option(Page.FrameId.t), /* Frame id of originating window (is only set if target has an opener). */
       [@yojson.option] [@key "browserContextId"]
-      browserContextId: option(Browser.BrowserContextID.t) /* No description provided */,
+      browserContextId: option(Browser.BrowserContextID.t), /* No description provided */
+      [@yojson.option] [@key "subtype"]
+      subtype: option(string) /* Provides additional details for specific target types. For example, for
+the type of "page", this may be set to "portal" or "prerender". */,
     };
   }
   and FilterEntry: {
@@ -19332,7 +19329,10 @@ and Target: {
       [@yojson.option] [@key "openerFrameId"]
       openerFrameId: option(Page.FrameId.t), /* Frame id of originating window (is only set if target has an opener). */
       [@yojson.option] [@key "browserContextId"]
-      browserContextId: option(Browser.BrowserContextID.t) /* No description provided */,
+      browserContextId: option(Browser.BrowserContextID.t), /* No description provided */
+      [@yojson.option] [@key "subtype"]
+      subtype: option(string) /* Provides additional details for specific target types. For example, for
+the type of "page", this may be set to "portal" or "prerender". */,
     };
   } = {
     /* No description provided */
@@ -19355,7 +19355,10 @@ and Target: {
       [@yojson.option] [@key "openerFrameId"]
       openerFrameId: option(Page.FrameId.t), /* Frame id of originating window (is only set if target has an opener). */
       [@yojson.option] [@key "browserContextId"]
-      browserContextId: option(Browser.BrowserContextID.t) /* No description provided */,
+      browserContextId: option(Browser.BrowserContextID.t), /* No description provided */
+      [@yojson.option] [@key "subtype"]
+      subtype: option(string) /* Provides additional details for specific target types. For example, for
+the type of "page", this may be set to "portal" or "prerender". */,
     };
   }
   and FilterEntry: {
