@@ -10025,6 +10025,25 @@ records. */,
     [@deriving yojson]
     type t = _trusttokenoperationtype;
   }
+  and AlternateProtocolUsage: {
+    type _alternateprotocolusage = [
+      | `alternativeJobWonWithoutRace
+      | `alternativeJobWonRace
+      | `mainJobWonRace
+      | `mappingMissing
+      | `broken
+      | `dnsAlpnH3JobWonWithoutRace
+      | `dnsAlpnH3JobWonRace
+      | `unspecifiedReason
+    ];
+    let _alternateprotocolusage_of_yojson:
+      Yojson.Basic.t => _alternateprotocolusage;
+    let yojson_of__alternateprotocolusage:
+      _alternateprotocolusage => Yojson.Basic.t;
+    /* The reason why Chrome uses a specific transport protocol for HTTP semantics. */
+    [@deriving yojson]
+    type t = _alternateprotocolusage;
+  }
   and Response: {
     /* HTTP response data. */
     [@deriving yojson]
@@ -10071,6 +10090,8 @@ records. */,
       cacheStorageCacheName: option(string), /* Cache Storage Cache Name. */
       [@yojson.option] [@key "protocol"]
       protocol: option(string), /* Protocol used to fetch this request. */
+      [@yojson.option] [@key "alternateProtocolUsage"]
+      alternateProtocolUsage: option(AlternateProtocolUsage.t), /* The reason why Chrome uses a specific transport protocol for HTTP semantics. */
       [@key "securityState"]
       securityState: Security.SecurityState.t, /* Security state of the request resource. */
       [@yojson.option] [@key "securityDetails"]
@@ -11809,6 +11830,62 @@ records. */,
     [@deriving yojson]
     type t = _trusttokenoperationtype;
   }
+  and AlternateProtocolUsage: {
+    type _alternateprotocolusage = [
+      | `alternativeJobWonWithoutRace
+      | `alternativeJobWonRace
+      | `mainJobWonRace
+      | `mappingMissing
+      | `broken
+      | `dnsAlpnH3JobWonWithoutRace
+      | `dnsAlpnH3JobWonRace
+      | `unspecifiedReason
+    ];
+    let _alternateprotocolusage_of_yojson:
+      Yojson.Basic.t => _alternateprotocolusage;
+    let yojson_of__alternateprotocolusage:
+      _alternateprotocolusage => Yojson.Basic.t;
+    /* The reason why Chrome uses a specific transport protocol for HTTP semantics. */
+    [@deriving yojson]
+    type t = _alternateprotocolusage;
+  } = {
+    type _alternateprotocolusage = [
+      | `alternativeJobWonWithoutRace
+      | `alternativeJobWonRace
+      | `mainJobWonRace
+      | `mappingMissing
+      | `broken
+      | `dnsAlpnH3JobWonWithoutRace
+      | `dnsAlpnH3JobWonRace
+      | `unspecifiedReason
+    ];
+    let _alternateprotocolusage_of_yojson =
+      fun
+      | `String("alternativeJobWonWithoutRace") => `alternativeJobWonWithoutRace
+      | `String("alternativeJobWonRace") => `alternativeJobWonRace
+      | `String("mainJobWonRace") => `mainJobWonRace
+      | `String("mappingMissing") => `mappingMissing
+      | `String("broken") => `broken
+      | `String("dnsAlpnH3JobWonWithoutRace") => `dnsAlpnH3JobWonWithoutRace
+      | `String("dnsAlpnH3JobWonRace") => `dnsAlpnH3JobWonRace
+      | `String("unspecifiedReason") => `unspecifiedReason
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__alternateprotocolusage =
+      fun
+      | `alternativeJobWonWithoutRace =>
+        `String("alternativeJobWonWithoutRace")
+      | `alternativeJobWonRace => `String("alternativeJobWonRace")
+      | `mainJobWonRace => `String("mainJobWonRace")
+      | `mappingMissing => `String("mappingMissing")
+      | `broken => `String("broken")
+      | `dnsAlpnH3JobWonWithoutRace => `String("dnsAlpnH3JobWonWithoutRace")
+      | `dnsAlpnH3JobWonRace => `String("dnsAlpnH3JobWonRace")
+      | `unspecifiedReason => `String("unspecifiedReason");
+    /* The reason why Chrome uses a specific transport protocol for HTTP semantics. */
+    [@deriving yojson]
+    type t = _alternateprotocolusage;
+  }
   and Response: {
     /* HTTP response data. */
     [@deriving yojson]
@@ -11855,6 +11932,8 @@ records. */,
       cacheStorageCacheName: option(string), /* Cache Storage Cache Name. */
       [@yojson.option] [@key "protocol"]
       protocol: option(string), /* Protocol used to fetch this request. */
+      [@yojson.option] [@key "alternateProtocolUsage"]
+      alternateProtocolUsage: option(AlternateProtocolUsage.t), /* The reason why Chrome uses a specific transport protocol for HTTP semantics. */
       [@key "securityState"]
       securityState: Security.SecurityState.t, /* Security state of the request resource. */
       [@yojson.option] [@key "securityDetails"]
@@ -11906,6 +11985,8 @@ records. */,
       cacheStorageCacheName: option(string), /* Cache Storage Cache Name. */
       [@yojson.option] [@key "protocol"]
       protocol: option(string), /* Protocol used to fetch this request. */
+      [@yojson.option] [@key "alternateProtocolUsage"]
+      alternateProtocolUsage: option(AlternateProtocolUsage.t), /* The reason why Chrome uses a specific transport protocol for HTTP semantics. */
       [@key "securityState"]
       securityState: Security.SecurityState.t, /* Security state of the request resource. */
       [@yojson.option] [@key "securityDetails"]
@@ -14258,6 +14339,7 @@ as an ad. */
       | `ch_downlink
       | `ch_ect
       | `ch_prefers_color_scheme
+      | `ch_prefers_reduced_motion
       | `ch_rtt
       | `ch_save_data
       | `ch_ua
@@ -14284,7 +14366,6 @@ as an ad. */
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
-      | `federated_credentials
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -14292,6 +14373,7 @@ as an ad. */
       | `geolocation
       | `gyroscope
       | `hid
+      | `identity_credential_get
       | `idle_detection
       | `interest_cohort
       | `join_ad_interest_group
@@ -15265,6 +15347,7 @@ as an ad. */
       | `ch_downlink
       | `ch_ect
       | `ch_prefers_color_scheme
+      | `ch_prefers_reduced_motion
       | `ch_rtt
       | `ch_save_data
       | `ch_ua
@@ -15291,7 +15374,6 @@ as an ad. */
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
-      | `federated_credentials
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -15299,6 +15381,7 @@ as an ad. */
       | `geolocation
       | `gyroscope
       | `hid
+      | `identity_credential_get
       | `idle_detection
       | `interest_cohort
       | `join_ad_interest_group
@@ -15348,6 +15431,7 @@ as an ad. */
       | `ch_downlink
       | `ch_ect
       | `ch_prefers_color_scheme
+      | `ch_prefers_reduced_motion
       | `ch_rtt
       | `ch_save_data
       | `ch_ua
@@ -15374,7 +15458,6 @@ as an ad. */
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
-      | `federated_credentials
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -15382,6 +15465,7 @@ as an ad. */
       | `geolocation
       | `gyroscope
       | `hid
+      | `identity_credential_get
       | `idle_detection
       | `interest_cohort
       | `join_ad_interest_group
@@ -15423,6 +15507,7 @@ as an ad. */
       | `String("ch-downlink") => `ch_downlink
       | `String("ch-ect") => `ch_ect
       | `String("ch-prefers-color-scheme") => `ch_prefers_color_scheme
+      | `String("ch-prefers-reduced-motion") => `ch_prefers_reduced_motion
       | `String("ch-rtt") => `ch_rtt
       | `String("ch-save-data") => `ch_save_data
       | `String("ch-ua") => `ch_ua
@@ -15449,7 +15534,6 @@ as an ad. */
       | `String("encrypted-media") => `encrypted_media
       | `String("execution-while-out-of-viewport") => `execution_while_out_of_viewport
       | `String("execution-while-not-rendered") => `execution_while_not_rendered
-      | `String("federated-credentials") => `federated_credentials
       | `String("focus-without-user-activation") => `focus_without_user_activation
       | `String("fullscreen") => `fullscreen
       | `String("frobulate") => `frobulate
@@ -15457,6 +15541,7 @@ as an ad. */
       | `String("geolocation") => `geolocation
       | `String("gyroscope") => `gyroscope
       | `String("hid") => `hid
+      | `String("identity-credential-get") => `identity_credential_get
       | `String("idle-detection") => `idle_detection
       | `String("interest-cohort") => `interest_cohort
       | `String("join-ad-interest-group") => `join_ad_interest_group
@@ -15499,6 +15584,7 @@ as an ad. */
       | `ch_downlink => `String("ch-downlink")
       | `ch_ect => `String("ch-ect")
       | `ch_prefers_color_scheme => `String("ch-prefers-color-scheme")
+      | `ch_prefers_reduced_motion => `String("ch-prefers-reduced-motion")
       | `ch_rtt => `String("ch-rtt")
       | `ch_save_data => `String("ch-save-data")
       | `ch_ua => `String("ch-ua")
@@ -15527,7 +15613,6 @@ as an ad. */
         `String("execution-while-out-of-viewport")
       | `execution_while_not_rendered =>
         `String("execution-while-not-rendered")
-      | `federated_credentials => `String("federated-credentials")
       | `focus_without_user_activation =>
         `String("focus-without-user-activation")
       | `fullscreen => `String("fullscreen")
@@ -15536,6 +15621,7 @@ as an ad. */
       | `geolocation => `String("geolocation")
       | `gyroscope => `String("gyroscope")
       | `hid => `String("hid")
+      | `identity_credential_get => `String("identity-credential-get")
       | `idle_detection => `String("idle-detection")
       | `interest_cohort => `String("interest-cohort")
       | `join_ad_interest_group => `String("join-ad-interest-group")
