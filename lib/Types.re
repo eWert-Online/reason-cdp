@@ -15104,6 +15104,7 @@ dependent on the reason:
       | `ActivatedBeforeStarted
       | `InactivePageRestriction
       | `StartFailed
+      | `TimeoutBackgrounded
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17412,6 +17413,7 @@ dependent on the reason:
       | `ActivatedBeforeStarted
       | `InactivePageRestriction
       | `StartFailed
+      | `TimeoutBackgrounded
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17460,6 +17462,7 @@ dependent on the reason:
       | `ActivatedBeforeStarted
       | `InactivePageRestriction
       | `StartFailed
+      | `TimeoutBackgrounded
     ];
     let _prerenderfinalstatus_of_yojson =
       fun
@@ -17501,6 +17504,7 @@ dependent on the reason:
       | `String("ActivatedBeforeStarted") => `ActivatedBeforeStarted
       | `String("InactivePageRestriction") => `InactivePageRestriction
       | `String("StartFailed") => `StartFailed
+      | `String("TimeoutBackgrounded") => `TimeoutBackgrounded
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__prerenderfinalstatus =
@@ -17546,7 +17550,8 @@ dependent on the reason:
       | `HasEffectiveUrl => `String("HasEffectiveUrl")
       | `ActivatedBeforeStarted => `String("ActivatedBeforeStarted")
       | `InactivePageRestriction => `String("InactivePageRestriction")
-      | `StartFailed => `String("StartFailed");
+      | `StartFailed => `String("StartFailed")
+      | `TimeoutBackgrounded => `String("TimeoutBackgrounded");
     /* List of FinalStatus reasons for Prerender2. */
     [@deriving yojson]
     type t = _prerenderfinalstatus;
