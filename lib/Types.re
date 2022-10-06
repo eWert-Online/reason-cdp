@@ -14373,7 +14373,7 @@ as an ad. */
       | `geolocation
       | `gyroscope
       | `hid
-      | `identity_credential_get
+      | `identity_credentials_get
       | `idle_detection
       | `interest_cohort
       | `join_ad_interest_group
@@ -15382,7 +15382,7 @@ as an ad. */
       | `geolocation
       | `gyroscope
       | `hid
-      | `identity_credential_get
+      | `identity_credentials_get
       | `idle_detection
       | `interest_cohort
       | `join_ad_interest_group
@@ -15466,7 +15466,7 @@ as an ad. */
       | `geolocation
       | `gyroscope
       | `hid
-      | `identity_credential_get
+      | `identity_credentials_get
       | `idle_detection
       | `interest_cohort
       | `join_ad_interest_group
@@ -15542,7 +15542,7 @@ as an ad. */
       | `String("geolocation") => `geolocation
       | `String("gyroscope") => `gyroscope
       | `String("hid") => `hid
-      | `String("identity-credential-get") => `identity_credential_get
+      | `String("identity-credentials-get") => `identity_credentials_get
       | `String("idle-detection") => `idle_detection
       | `String("interest-cohort") => `interest_cohort
       | `String("join-ad-interest-group") => `join_ad_interest_group
@@ -15622,7 +15622,7 @@ as an ad. */
       | `geolocation => `String("geolocation")
       | `gyroscope => `String("gyroscope")
       | `hid => `String("hid")
-      | `identity_credential_get => `String("identity-credential-get")
+      | `identity_credentials_get => `String("identity-credentials-get")
       | `idle_detection => `String("idle-detection")
       | `interest_cohort => `String("interest-cohort")
       | `join_ad_interest_group => `String("join-ad-interest-group")
