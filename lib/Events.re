@@ -3078,8 +3078,11 @@ module Fetch = {
       [@yojson.option] [@key "responseHeaders"]
       responseHeaders: option(list(Types.Fetch.HeaderEntry.t)), /* Response headers if intercepted at the response stage. */
       [@yojson.option] [@key "networkId"]
-      networkId: option(Types.Fetch.RequestId.t) /* If the intercepted request had a corresponding Network.requestWillBeSent event fired for it,
-then this networkId will be the same as the requestId present in the requestWillBeSent event. */,
+      networkId: option(Types.Network.RequestId.t), /* If the intercepted request had a corresponding Network.requestWillBeSent event fired for it,
+then this networkId will be the same as the requestId present in the requestWillBeSent event. */
+      [@yojson.option] [@key "redirectedRequestId"]
+      redirectedRequestId: option(Types.Fetch.RequestId.t) /* If the request is due to a redirect response from the server, the id of the request that
+has caused the redirect. */,
     };
 
     [@deriving yojson]
