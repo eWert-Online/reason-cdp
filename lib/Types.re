@@ -22032,36 +22032,6 @@ profile startTime. */,
       [@key "functions"]
       functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
     };
-  }
-  and TypeObject: {
-    /* Describes a type collected during runtime. */
-    [@deriving yojson]
-    type t = {
-      [@key "name"]
-      name: string /* Name of a type collected with type profiling. */,
-    };
-  }
-  and TypeProfileEntry: {
-    /* Source offset and types for a parameter or return value. */
-    [@deriving yojson]
-    type t = {
-      [@key "offset"]
-      offset: number, /* Source offset of the parameter or end of function for return values. */
-      [@key "types"]
-      types: list(TypeObject.t) /* The types for this parameter or return value. */,
-    };
-  }
-  and ScriptTypeProfile: {
-    /* Type profile data collected during runtime for a JavaScript script. */
-    [@deriving yojson]
-    type t = {
-      [@key "scriptId"]
-      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
-      [@key "url"]
-      url: string, /* JavaScript script name or url. */
-      [@key "entries"]
-      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
-    };
   };
 } = {
   module rec ProfileNode: {
@@ -22220,63 +22190,6 @@ profile startTime. */,
       url: string, /* JavaScript script name or url. */
       [@key "functions"]
       functions: list(FunctionCoverage.t) /* Functions contained in the script that has coverage data. */,
-    };
-  }
-  and TypeObject: {
-    /* Describes a type collected during runtime. */
-    [@deriving yojson]
-    type t = {
-      [@key "name"]
-      name: string /* Name of a type collected with type profiling. */,
-    };
-  } = {
-    /* Describes a type collected during runtime. */
-    [@deriving yojson]
-    type t = {
-      [@key "name"]
-      name: string /* Name of a type collected with type profiling. */,
-    };
-  }
-  and TypeProfileEntry: {
-    /* Source offset and types for a parameter or return value. */
-    [@deriving yojson]
-    type t = {
-      [@key "offset"]
-      offset: number, /* Source offset of the parameter or end of function for return values. */
-      [@key "types"]
-      types: list(TypeObject.t) /* The types for this parameter or return value. */,
-    };
-  } = {
-    /* Source offset and types for a parameter or return value. */
-    [@deriving yojson]
-    type t = {
-      [@key "offset"]
-      offset: number, /* Source offset of the parameter or end of function for return values. */
-      [@key "types"]
-      types: list(TypeObject.t) /* The types for this parameter or return value. */,
-    };
-  }
-  and ScriptTypeProfile: {
-    /* Type profile data collected during runtime for a JavaScript script. */
-    [@deriving yojson]
-    type t = {
-      [@key "scriptId"]
-      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
-      [@key "url"]
-      url: string, /* JavaScript script name or url. */
-      [@key "entries"]
-      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
-    };
-  } = {
-    /* Type profile data collected during runtime for a JavaScript script. */
-    [@deriving yojson]
-    type t = {
-      [@key "scriptId"]
-      scriptId: Runtime.ScriptId.t, /* JavaScript script id. */
-      [@key "url"]
-      url: string, /* JavaScript script name or url. */
-      [@key "entries"]
-      entries: list(TypeProfileEntry.t) /* Type profile entries for parameters and return values of the functions in the script. */,
     };
   };
 }

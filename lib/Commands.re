@@ -38951,66 +38951,6 @@ module Profiler = {
       };
     };
   };
-  /* Enable type profile. */
-  module StartTypeProfile = {
-    module Response: {
-      type result = Types.assoc;
-
-      type error = {
-        code: int,
-        message: string,
-      };
-
-      type t = {
-        id: int,
-        error: option(error),
-        sessionId: option(Types.Target.SessionID.t),
-        result: option(result),
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type error = {
-        code: int,
-        message: string,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        error: option(error),
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        [@yojson.option]
-        result: option(result),
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.startTypeProfile", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
   /* No description provided */
   module Stop = {
     module Response: {
@@ -39138,66 +39078,6 @@ module Profiler = {
       };
     };
   };
-  /* Disable type profile. Disabling releases type profile data collected so far. */
-  module StopTypeProfile = {
-    module Response: {
-      type result = Types.assoc;
-
-      type error = {
-        code: int,
-        message: string,
-      };
-
-      type t = {
-        id: int,
-        error: option(error),
-        sessionId: option(Types.Target.SessionID.t),
-        result: option(result),
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = Types.assoc;
-
-      [@deriving yojson]
-      type error = {
-        code: int,
-        message: string,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        error: option(error),
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        [@yojson.option]
-        result: option(result),
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.stopTypeProfile", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
   /* Collect coverage data for the current isolate, and resets execution counters. Precise code
      coverage needs to have started. */
   module TakePreciseCoverage = {
@@ -39264,72 +39144,6 @@ module Profiler = {
 
       let make = (~sessionId=?, id) => {
         {id, method: "Profiler.takePreciseCoverage", sessionId}
-        |> yojson_of_t
-        |> Yojson.Safe.to_string;
-      };
-    };
-  };
-  /* Collect type profile. */
-  module TakeTypeProfile = {
-    module Response: {
-      type result = {
-        [@key "result"]
-        result: list(Types.Profiler.ScriptTypeProfile.t) /* Type profile for all scripts since startTypeProfile() was turned on. */,
-      };
-
-      type error = {
-        code: int,
-        message: string,
-      };
-
-      type t = {
-        id: int,
-        error: option(error),
-        sessionId: option(Types.Target.SessionID.t),
-        result: option(result),
-      };
-
-      let parse: string => t;
-    } = {
-      [@deriving yojson]
-      type result = {
-        [@key "result"]
-        result: list(Types.Profiler.ScriptTypeProfile.t) /* Type profile for all scripts since startTypeProfile() was turned on. */,
-      };
-
-      [@deriving yojson]
-      type error = {
-        code: int,
-        message: string,
-      };
-
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        error: option(error),
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        [@yojson.option]
-        result: option(result),
-      };
-
-      let parse = response => {
-        response |> Yojson.Safe.from_string |> t_of_yojson;
-      };
-    };
-
-    module Request = {
-      [@deriving yojson]
-      type t = {
-        id: int,
-        [@yojson.option]
-        sessionId: option(Types.Target.SessionID.t),
-        method: string,
-      };
-
-      let make = (~sessionId=?, id) => {
-        {id, method: "Profiler.takeTypeProfile", sessionId}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };
