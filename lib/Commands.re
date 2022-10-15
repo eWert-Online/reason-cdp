@@ -24540,6 +24540,86 @@ option, use with caution. */,
       };
     };
   };
+  /* No description provided */
+  module GetAdScriptId = {
+    module Response: {
+      type result = {
+        [@yojson.option] [@key "adScriptId"]
+        adScriptId: option(Types.Page.AdScriptId.t) /* Identifies the bottom-most script which caused the frame to be labelled
+as an ad. Only sent if frame is labelled as an ad and id is available. */,
+      };
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = {
+        [@yojson.option] [@key "adScriptId"]
+        adScriptId: option(Types.Page.AdScriptId.t) /* Identifies the bottom-most script which caused the frame to be labelled
+as an ad. Only sent if frame is labelled as an ad and id is available. */,
+      };
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "frameId"]
+        frameId: Types.Page.FrameId.t /* No description provided */,
+      };
+      let make = (~frameId, ()) => {
+        {frameId: frameId};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Page.getAdScriptId", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Returns all browser cookies for the page and all of its subframes. Depending
      on the backend support, will return detailed cookie information in the
      `cookies` field. */

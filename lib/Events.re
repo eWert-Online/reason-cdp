@@ -1937,7 +1937,8 @@ module Page = {
       stack: option(Types.Runtime.StackTrace.t), /* JavaScript stack trace of when frame was attached, only set if frame initiated from script. */
       [@yojson.option] [@key "adScriptId"]
       adScriptId: option(Types.Page.AdScriptId.t) /* Identifies the bottom-most script which caused the frame to be labelled
-as an ad. Only sent if frame is labelled as an ad and id is available. */,
+as an ad. Only sent if frame is labelled as an ad and id is available.
+Deprecated: use Page.getAdScriptId instead. */,
     };
 
     [@deriving yojson]
