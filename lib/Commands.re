@@ -23682,7 +23682,9 @@ to false. */,
         [@yojson.option] [@key "fromSurface"]
         fromSurface: option(bool), /* Capture the screenshot from the surface, rather than the view. Defaults to true. */
         [@yojson.option] [@key "captureBeyondViewport"]
-        captureBeyondViewport: option(bool) /* Capture the screenshot beyond the viewport. Defaults to false. */,
+        captureBeyondViewport: option(bool), /* Capture the screenshot beyond the viewport. Defaults to false. */
+        [@yojson.option] [@key "optimizeForSpeed"]
+        optimizeForSpeed: option(bool) /* Optimize image encoding for speed, not for resulting size (defaults to false) */,
       };
       let make =
           (
@@ -23691,9 +23693,17 @@ to false. */,
             ~clip=?,
             ~fromSurface=?,
             ~captureBeyondViewport=?,
+            ~optimizeForSpeed=?,
             (),
           ) => {
-        {format, quality, clip, fromSurface, captureBeyondViewport};
+        {
+          format,
+          quality,
+          clip,
+          fromSurface,
+          captureBeyondViewport,
+          optimizeForSpeed,
+        };
       };
     };
 
