@@ -8198,7 +8198,7 @@ A display feature that only splits content will have a 0 mask_length. */,
 }
 and HeadlessExperimental: {
   module rec ScreenshotParams: {
-    type _screenshotparams_format = [ | `jpeg | `png];
+    type _screenshotparams_format = [ | `jpeg | `png | `webp];
     let _screenshotparams_format_of_yojson:
       Yojson.Basic.t => _screenshotparams_format;
     let yojson_of__screenshotparams_format:
@@ -8209,12 +8209,14 @@ and HeadlessExperimental: {
       [@yojson.option] [@key "format"]
       format: option(_screenshotparams_format), /* Image compression format (defaults to png). */
       [@yojson.option] [@key "quality"]
-      quality: option(number) /* Compression quality from range [0..100] (jpeg only). */,
+      quality: option(number), /* Compression quality from range [0..100] (jpeg only). */
+      [@yojson.option] [@key "optimizeForSpeed"]
+      optimizeForSpeed: option(bool) /* Optimize image encoding for speed, not for resulting size (defaults to false) */,
     };
   };
 } = {
   module rec ScreenshotParams: {
-    type _screenshotparams_format = [ | `jpeg | `png];
+    type _screenshotparams_format = [ | `jpeg | `png | `webp];
     let _screenshotparams_format_of_yojson:
       Yojson.Basic.t => _screenshotparams_format;
     let yojson_of__screenshotparams_format:
@@ -8225,27 +8227,33 @@ and HeadlessExperimental: {
       [@yojson.option] [@key "format"]
       format: option(_screenshotparams_format), /* Image compression format (defaults to png). */
       [@yojson.option] [@key "quality"]
-      quality: option(number) /* Compression quality from range [0..100] (jpeg only). */,
+      quality: option(number), /* Compression quality from range [0..100] (jpeg only). */
+      [@yojson.option] [@key "optimizeForSpeed"]
+      optimizeForSpeed: option(bool) /* Optimize image encoding for speed, not for resulting size (defaults to false) */,
     };
   } = {
-    type _screenshotparams_format = [ | `jpeg | `png];
+    type _screenshotparams_format = [ | `jpeg | `png | `webp];
     let _screenshotparams_format_of_yojson =
       fun
       | `String("jpeg") => `jpeg
       | `String("png") => `png
+      | `String("webp") => `webp
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__screenshotparams_format =
       fun
       | `jpeg => `String("jpeg")
-      | `png => `String("png");
+      | `png => `String("png")
+      | `webp => `String("webp");
     /* Encoding options for a screenshot. */
     [@deriving yojson]
     type t = {
       [@yojson.option] [@key "format"]
       format: option(_screenshotparams_format), /* Image compression format (defaults to png). */
       [@yojson.option] [@key "quality"]
-      quality: option(number) /* Compression quality from range [0..100] (jpeg only). */,
+      quality: option(number), /* Compression quality from range [0..100] (jpeg only). */
+      [@yojson.option] [@key "optimizeForSpeed"]
+      optimizeForSpeed: option(bool) /* Optimize image encoding for speed, not for resulting size (defaults to false) */,
     };
   };
 }
