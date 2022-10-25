@@ -15078,8 +15078,6 @@ dependent on the reason:
       | `Activated
       | `Destroyed
       | `LowEndDevice
-      | `CrossOriginRedirect
-      | `CrossOriginNavigation
       | `InvalidSchemeRedirect
       | `InvalidSchemeNavigation
       | `InProgressNavigation
@@ -15114,6 +15112,12 @@ dependent on the reason:
       | `InactivePageRestriction
       | `StartFailed
       | `TimeoutBackgrounded
+      | `CrossSiteRedirect
+      | `CrossSiteNavigation
+      | `SameSiteCrossOriginRedirect
+      | `SameSiteCrossOriginNavigation
+      | `SameSiteCrossOriginRedirectNotOptIn
+      | `SameSiteCrossOriginNavigationNotOptIn
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17391,8 +17395,6 @@ dependent on the reason:
       | `Activated
       | `Destroyed
       | `LowEndDevice
-      | `CrossOriginRedirect
-      | `CrossOriginNavigation
       | `InvalidSchemeRedirect
       | `InvalidSchemeNavigation
       | `InProgressNavigation
@@ -17427,6 +17429,12 @@ dependent on the reason:
       | `InactivePageRestriction
       | `StartFailed
       | `TimeoutBackgrounded
+      | `CrossSiteRedirect
+      | `CrossSiteNavigation
+      | `SameSiteCrossOriginRedirect
+      | `SameSiteCrossOriginNavigation
+      | `SameSiteCrossOriginRedirectNotOptIn
+      | `SameSiteCrossOriginNavigationNotOptIn
     ];
     let _prerenderfinalstatus_of_yojson:
       Yojson.Basic.t => _prerenderfinalstatus;
@@ -17440,8 +17448,6 @@ dependent on the reason:
       | `Activated
       | `Destroyed
       | `LowEndDevice
-      | `CrossOriginRedirect
-      | `CrossOriginNavigation
       | `InvalidSchemeRedirect
       | `InvalidSchemeNavigation
       | `InProgressNavigation
@@ -17476,14 +17482,18 @@ dependent on the reason:
       | `InactivePageRestriction
       | `StartFailed
       | `TimeoutBackgrounded
+      | `CrossSiteRedirect
+      | `CrossSiteNavigation
+      | `SameSiteCrossOriginRedirect
+      | `SameSiteCrossOriginNavigation
+      | `SameSiteCrossOriginRedirectNotOptIn
+      | `SameSiteCrossOriginNavigationNotOptIn
     ];
     let _prerenderfinalstatus_of_yojson =
       fun
       | `String("Activated") => `Activated
       | `String("Destroyed") => `Destroyed
       | `String("LowEndDevice") => `LowEndDevice
-      | `String("CrossOriginRedirect") => `CrossOriginRedirect
-      | `String("CrossOriginNavigation") => `CrossOriginNavigation
       | `String("InvalidSchemeRedirect") => `InvalidSchemeRedirect
       | `String("InvalidSchemeNavigation") => `InvalidSchemeNavigation
       | `String("InProgressNavigation") => `InProgressNavigation
@@ -17518,6 +17528,12 @@ dependent on the reason:
       | `String("InactivePageRestriction") => `InactivePageRestriction
       | `String("StartFailed") => `StartFailed
       | `String("TimeoutBackgrounded") => `TimeoutBackgrounded
+      | `String("CrossSiteRedirect") => `CrossSiteRedirect
+      | `String("CrossSiteNavigation") => `CrossSiteNavigation
+      | `String("SameSiteCrossOriginRedirect") => `SameSiteCrossOriginRedirect
+      | `String("SameSiteCrossOriginNavigation") => `SameSiteCrossOriginNavigation
+      | `String("SameSiteCrossOriginRedirectNotOptIn") => `SameSiteCrossOriginRedirectNotOptIn
+      | `String("SameSiteCrossOriginNavigationNotOptIn") => `SameSiteCrossOriginNavigationNotOptIn
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__prerenderfinalstatus =
@@ -17525,8 +17541,6 @@ dependent on the reason:
       | `Activated => `String("Activated")
       | `Destroyed => `String("Destroyed")
       | `LowEndDevice => `String("LowEndDevice")
-      | `CrossOriginRedirect => `String("CrossOriginRedirect")
-      | `CrossOriginNavigation => `String("CrossOriginNavigation")
       | `InvalidSchemeRedirect => `String("InvalidSchemeRedirect")
       | `InvalidSchemeNavigation => `String("InvalidSchemeNavigation")
       | `InProgressNavigation => `String("InProgressNavigation")
@@ -17564,7 +17578,16 @@ dependent on the reason:
       | `ActivatedBeforeStarted => `String("ActivatedBeforeStarted")
       | `InactivePageRestriction => `String("InactivePageRestriction")
       | `StartFailed => `String("StartFailed")
-      | `TimeoutBackgrounded => `String("TimeoutBackgrounded");
+      | `TimeoutBackgrounded => `String("TimeoutBackgrounded")
+      | `CrossSiteRedirect => `String("CrossSiteRedirect")
+      | `CrossSiteNavigation => `String("CrossSiteNavigation")
+      | `SameSiteCrossOriginRedirect => `String("SameSiteCrossOriginRedirect")
+      | `SameSiteCrossOriginNavigation =>
+        `String("SameSiteCrossOriginNavigation")
+      | `SameSiteCrossOriginRedirectNotOptIn =>
+        `String("SameSiteCrossOriginRedirectNotOptIn")
+      | `SameSiteCrossOriginNavigationNotOptIn =>
+        `String("SameSiteCrossOriginNavigationNotOptIn");
     /* List of FinalStatus reasons for Prerender2. */
     [@deriving yojson]
     type t = _prerenderfinalstatus;
@@ -18606,6 +18629,7 @@ and Storage: {
       | `service_workers
       | `cache_storage
       | `interest_groups
+      | `shared_storage
       | `all
       | `other
     ];
@@ -18691,6 +18715,28 @@ and Storage: {
       [@key "adComponents"]
       adComponents: list(InterestGroupAd.t) /* No description provided */,
     };
+  }
+  and SharedStorageEntry: {
+    /* Struct for a single key-value pair in an origin's shared storage. */
+    [@deriving yojson]
+    type t = {
+      [@key "key"]
+      key: string, /* No description provided */
+      [@key "value"]
+      value: string /* No description provided */,
+    };
+  }
+  and SharedStorageMetadata: {
+    /* Details for an origin's shared storage. */
+    [@deriving yojson]
+    type t = {
+      [@key "creationTime"]
+      creationTime: Network.TimeSinceEpoch.t, /* No description provided */
+      [@key "length"]
+      length: number, /* No description provided */
+      [@key "remainingBudget"]
+      remainingBudget: number /* No description provided */,
+    };
   };
 } = {
   module rec SerializedStorageKey: {
@@ -18714,6 +18760,7 @@ and Storage: {
       | `service_workers
       | `cache_storage
       | `interest_groups
+      | `shared_storage
       | `all
       | `other
     ];
@@ -18734,6 +18781,7 @@ and Storage: {
       | `service_workers
       | `cache_storage
       | `interest_groups
+      | `shared_storage
       | `all
       | `other
     ];
@@ -18749,6 +18797,7 @@ and Storage: {
       | `String("service_workers") => `service_workers
       | `String("cache_storage") => `cache_storage
       | `String("interest_groups") => `interest_groups
+      | `String("shared_storage") => `shared_storage
       | `String("all") => `all
       | `String("other") => `other
       | `String(s) => failwith("unknown enum: " ++ s)
@@ -18765,6 +18814,7 @@ and Storage: {
       | `service_workers => `String("service_workers")
       | `cache_storage => `String("cache_storage")
       | `interest_groups => `String("interest_groups")
+      | `shared_storage => `String("shared_storage")
       | `all => `String("all")
       | `other => `String("other");
     /* Enum of possible storage types. */
@@ -18930,6 +18980,48 @@ and Storage: {
       ads: list(InterestGroupAd.t), /* No description provided */
       [@key "adComponents"]
       adComponents: list(InterestGroupAd.t) /* No description provided */,
+    };
+  }
+  and SharedStorageEntry: {
+    /* Struct for a single key-value pair in an origin's shared storage. */
+    [@deriving yojson]
+    type t = {
+      [@key "key"]
+      key: string, /* No description provided */
+      [@key "value"]
+      value: string /* No description provided */,
+    };
+  } = {
+    /* Struct for a single key-value pair in an origin's shared storage. */
+    [@deriving yojson]
+    type t = {
+      [@key "key"]
+      key: string, /* No description provided */
+      [@key "value"]
+      value: string /* No description provided */,
+    };
+  }
+  and SharedStorageMetadata: {
+    /* Details for an origin's shared storage. */
+    [@deriving yojson]
+    type t = {
+      [@key "creationTime"]
+      creationTime: Network.TimeSinceEpoch.t, /* No description provided */
+      [@key "length"]
+      length: number, /* No description provided */
+      [@key "remainingBudget"]
+      remainingBudget: number /* No description provided */,
+    };
+  } = {
+    /* Details for an origin's shared storage. */
+    [@deriving yojson]
+    type t = {
+      [@key "creationTime"]
+      creationTime: Network.TimeSinceEpoch.t, /* No description provided */
+      [@key "length"]
+      length: number, /* No description provided */
+      [@key "remainingBudget"]
+      remainingBudget: number /* No description provided */,
     };
   };
 }
