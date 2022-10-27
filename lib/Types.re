@@ -14367,6 +14367,7 @@ as an ad. */
       | `ch_width
       | `clipboard_read
       | `clipboard_write
+      | `compute_pressure
       | `cross_origin_isolated
       | `direct_sockets
       | `display_capture
@@ -15382,6 +15383,7 @@ as an ad. */
       | `ch_width
       | `clipboard_read
       | `clipboard_write
+      | `compute_pressure
       | `cross_origin_isolated
       | `direct_sockets
       | `display_capture
@@ -15466,6 +15468,7 @@ as an ad. */
       | `ch_width
       | `clipboard_read
       | `clipboard_write
+      | `compute_pressure
       | `cross_origin_isolated
       | `direct_sockets
       | `display_capture
@@ -15542,6 +15545,7 @@ as an ad. */
       | `String("ch-width") => `ch_width
       | `String("clipboard-read") => `clipboard_read
       | `String("clipboard-write") => `clipboard_write
+      | `String("compute-pressure") => `compute_pressure
       | `String("cross-origin-isolated") => `cross_origin_isolated
       | `String("direct-sockets") => `direct_sockets
       | `String("display-capture") => `display_capture
@@ -15619,6 +15623,7 @@ as an ad. */
       | `ch_width => `String("ch-width")
       | `clipboard_read => `String("clipboard-read")
       | `clipboard_write => `String("clipboard-write")
+      | `compute_pressure => `String("compute-pressure")
       | `cross_origin_isolated => `String("cross-origin-isolated")
       | `direct_sockets => `String("direct-sockets")
       | `display_capture => `String("display-capture")
