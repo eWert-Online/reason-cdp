@@ -18727,6 +18727,33 @@ and Storage: {
       adComponents: list(InterestGroupAd.t) /* No description provided */,
     };
   }
+  and SharedStorageAccessType: {
+    type _sharedstorageaccesstype = [
+      | `documentAddModule
+      | `documentSelectURL
+      | `documentRun
+      | `documentSet
+      | `documentAppend
+      | `documentDelete
+      | `documentClear
+      | `workletSet
+      | `workletAppend
+      | `workletDelete
+      | `workletClear
+      | `workletGet
+      | `workletKeys
+      | `workletEntries
+      | `workletLength
+      | `workletRemainingBudget
+    ];
+    let _sharedstorageaccesstype_of_yojson:
+      Yojson.Basic.t => _sharedstorageaccesstype;
+    let yojson_of__sharedstorageaccesstype:
+      _sharedstorageaccesstype => Yojson.Basic.t;
+    /* Enum of shared storage access types. */
+    [@deriving yojson]
+    type t = _sharedstorageaccesstype;
+  }
   and SharedStorageEntry: {
     /* Struct for a single key-value pair in an origin's shared storage. */
     [@deriving yojson]
@@ -18747,6 +18774,66 @@ and Storage: {
       length: number, /* No description provided */
       [@key "remainingBudget"]
       remainingBudget: number /* No description provided */,
+    };
+  }
+  and SharedStorageReportingMetadata: {
+    /* Pair of reporting metadata details for a candidate URL for `selectURL()`. */
+    [@deriving yojson]
+    type t = {
+      [@key "eventType"]
+      eventType: string, /* No description provided */
+      [@key "reportingUrl"]
+      reportingUrl: string /* No description provided */,
+    };
+  }
+  and SharedStorageUrlWithMetadata: {
+    /* Bundles a candidate URL with its reporting metadata. */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* Spec of candidate URL. */
+      [@key "reportingMetadata"]
+      reportingMetadata: list(SharedStorageReportingMetadata.t) /* Any associated reporting metadata. */,
+    };
+  }
+  and SharedStorageAccessParams: {
+    /* Bundles the parameters for shared storage access events whose
+       presence/absence can vary according to SharedStorageAccessType. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "scriptSourceUrl"]
+      scriptSourceUrl: option(string), /* Spec of the module script URL.
+Present only for SharedStorageAccessType.documentAddModule. */
+      [@yojson.option] [@key "operationName"]
+      operationName: option(string), /* Name of the registered operation to be run.
+Present only for SharedStorageAccessType.documentRun and
+SharedStorageAccessType.documentSelectURL. */
+      [@yojson.option] [@key "serializedData"]
+      serializedData: option(string), /* The operation's serialized data in bytes (converted to a string).
+Present only for SharedStorageAccessType.documentRun and
+SharedStorageAccessType.documentSelectURL. */
+      [@yojson.option] [@key "urlsWithMetadata"]
+      urlsWithMetadata: option(list(SharedStorageUrlWithMetadata.t)), /* Array of candidate URLs' specs, along with any associated metadata.
+Present only for SharedStorageAccessType.documentSelectURL. */
+      [@yojson.option] [@key "key"]
+      key: option(string), /* Key for a specific entry in an origin's shared storage.
+Present only for SharedStorageAccessType.documentSet,
+SharedStorageAccessType.documentAppend,
+SharedStorageAccessType.documentDelete,
+SharedStorageAccessType.workletSet,
+SharedStorageAccessType.workletAppend,
+SharedStorageAccessType.workletDelete, and
+SharedStorageAccessType.workletGet. */
+      [@yojson.option] [@key "value"]
+      value: option(string), /* Value for a specific entry in an origin's shared storage.
+Present only for SharedStorageAccessType.documentSet,
+SharedStorageAccessType.documentAppend,
+SharedStorageAccessType.workletSet, and
+SharedStorageAccessType.workletAppend. */
+      [@yojson.option] [@key "ignoreIfPresent"]
+      ignoreIfPresent: option(bool) /* Whether or not to set an entry for a key if that key is already present.
+Present only for SharedStorageAccessType.documentSet and
+SharedStorageAccessType.workletSet. */,
     };
   };
 } = {
@@ -18993,6 +19080,93 @@ and Storage: {
       adComponents: list(InterestGroupAd.t) /* No description provided */,
     };
   }
+  and SharedStorageAccessType: {
+    type _sharedstorageaccesstype = [
+      | `documentAddModule
+      | `documentSelectURL
+      | `documentRun
+      | `documentSet
+      | `documentAppend
+      | `documentDelete
+      | `documentClear
+      | `workletSet
+      | `workletAppend
+      | `workletDelete
+      | `workletClear
+      | `workletGet
+      | `workletKeys
+      | `workletEntries
+      | `workletLength
+      | `workletRemainingBudget
+    ];
+    let _sharedstorageaccesstype_of_yojson:
+      Yojson.Basic.t => _sharedstorageaccesstype;
+    let yojson_of__sharedstorageaccesstype:
+      _sharedstorageaccesstype => Yojson.Basic.t;
+    /* Enum of shared storage access types. */
+    [@deriving yojson]
+    type t = _sharedstorageaccesstype;
+  } = {
+    type _sharedstorageaccesstype = [
+      | `documentAddModule
+      | `documentSelectURL
+      | `documentRun
+      | `documentSet
+      | `documentAppend
+      | `documentDelete
+      | `documentClear
+      | `workletSet
+      | `workletAppend
+      | `workletDelete
+      | `workletClear
+      | `workletGet
+      | `workletKeys
+      | `workletEntries
+      | `workletLength
+      | `workletRemainingBudget
+    ];
+    let _sharedstorageaccesstype_of_yojson =
+      fun
+      | `String("documentAddModule") => `documentAddModule
+      | `String("documentSelectURL") => `documentSelectURL
+      | `String("documentRun") => `documentRun
+      | `String("documentSet") => `documentSet
+      | `String("documentAppend") => `documentAppend
+      | `String("documentDelete") => `documentDelete
+      | `String("documentClear") => `documentClear
+      | `String("workletSet") => `workletSet
+      | `String("workletAppend") => `workletAppend
+      | `String("workletDelete") => `workletDelete
+      | `String("workletClear") => `workletClear
+      | `String("workletGet") => `workletGet
+      | `String("workletKeys") => `workletKeys
+      | `String("workletEntries") => `workletEntries
+      | `String("workletLength") => `workletLength
+      | `String("workletRemainingBudget") => `workletRemainingBudget
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__sharedstorageaccesstype =
+      fun
+      | `documentAddModule => `String("documentAddModule")
+      | `documentSelectURL => `String("documentSelectURL")
+      | `documentRun => `String("documentRun")
+      | `documentSet => `String("documentSet")
+      | `documentAppend => `String("documentAppend")
+      | `documentDelete => `String("documentDelete")
+      | `documentClear => `String("documentClear")
+      | `workletSet => `String("workletSet")
+      | `workletAppend => `String("workletAppend")
+      | `workletDelete => `String("workletDelete")
+      | `workletClear => `String("workletClear")
+      | `workletGet => `String("workletGet")
+      | `workletKeys => `String("workletKeys")
+      | `workletEntries => `String("workletEntries")
+      | `workletLength => `String("workletLength")
+      | `workletRemainingBudget => `String("workletRemainingBudget");
+    /* Enum of shared storage access types. */
+    [@deriving yojson]
+    type t = _sharedstorageaccesstype;
+  }
   and SharedStorageEntry: {
     /* Struct for a single key-value pair in an origin's shared storage. */
     [@deriving yojson]
@@ -19033,6 +19207,123 @@ and Storage: {
       length: number, /* No description provided */
       [@key "remainingBudget"]
       remainingBudget: number /* No description provided */,
+    };
+  }
+  and SharedStorageReportingMetadata: {
+    /* Pair of reporting metadata details for a candidate URL for `selectURL()`. */
+    [@deriving yojson]
+    type t = {
+      [@key "eventType"]
+      eventType: string, /* No description provided */
+      [@key "reportingUrl"]
+      reportingUrl: string /* No description provided */,
+    };
+  } = {
+    /* Pair of reporting metadata details for a candidate URL for `selectURL()`. */
+    [@deriving yojson]
+    type t = {
+      [@key "eventType"]
+      eventType: string, /* No description provided */
+      [@key "reportingUrl"]
+      reportingUrl: string /* No description provided */,
+    };
+  }
+  and SharedStorageUrlWithMetadata: {
+    /* Bundles a candidate URL with its reporting metadata. */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* Spec of candidate URL. */
+      [@key "reportingMetadata"]
+      reportingMetadata: list(SharedStorageReportingMetadata.t) /* Any associated reporting metadata. */,
+    };
+  } = {
+    /* Bundles a candidate URL with its reporting metadata. */
+    [@deriving yojson]
+    type t = {
+      [@key "url"]
+      url: string, /* Spec of candidate URL. */
+      [@key "reportingMetadata"]
+      reportingMetadata: list(SharedStorageReportingMetadata.t) /* Any associated reporting metadata. */,
+    };
+  }
+  and SharedStorageAccessParams: {
+    /* Bundles the parameters for shared storage access events whose
+       presence/absence can vary according to SharedStorageAccessType. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "scriptSourceUrl"]
+      scriptSourceUrl: option(string), /* Spec of the module script URL.
+Present only for SharedStorageAccessType.documentAddModule. */
+      [@yojson.option] [@key "operationName"]
+      operationName: option(string), /* Name of the registered operation to be run.
+Present only for SharedStorageAccessType.documentRun and
+SharedStorageAccessType.documentSelectURL. */
+      [@yojson.option] [@key "serializedData"]
+      serializedData: option(string), /* The operation's serialized data in bytes (converted to a string).
+Present only for SharedStorageAccessType.documentRun and
+SharedStorageAccessType.documentSelectURL. */
+      [@yojson.option] [@key "urlsWithMetadata"]
+      urlsWithMetadata: option(list(SharedStorageUrlWithMetadata.t)), /* Array of candidate URLs' specs, along with any associated metadata.
+Present only for SharedStorageAccessType.documentSelectURL. */
+      [@yojson.option] [@key "key"]
+      key: option(string), /* Key for a specific entry in an origin's shared storage.
+Present only for SharedStorageAccessType.documentSet,
+SharedStorageAccessType.documentAppend,
+SharedStorageAccessType.documentDelete,
+SharedStorageAccessType.workletSet,
+SharedStorageAccessType.workletAppend,
+SharedStorageAccessType.workletDelete, and
+SharedStorageAccessType.workletGet. */
+      [@yojson.option] [@key "value"]
+      value: option(string), /* Value for a specific entry in an origin's shared storage.
+Present only for SharedStorageAccessType.documentSet,
+SharedStorageAccessType.documentAppend,
+SharedStorageAccessType.workletSet, and
+SharedStorageAccessType.workletAppend. */
+      [@yojson.option] [@key "ignoreIfPresent"]
+      ignoreIfPresent: option(bool) /* Whether or not to set an entry for a key if that key is already present.
+Present only for SharedStorageAccessType.documentSet and
+SharedStorageAccessType.workletSet. */,
+    };
+  } = {
+    /* Bundles the parameters for shared storage access events whose
+       presence/absence can vary according to SharedStorageAccessType. */
+    [@deriving yojson]
+    type t = {
+      [@yojson.option] [@key "scriptSourceUrl"]
+      scriptSourceUrl: option(string), /* Spec of the module script URL.
+Present only for SharedStorageAccessType.documentAddModule. */
+      [@yojson.option] [@key "operationName"]
+      operationName: option(string), /* Name of the registered operation to be run.
+Present only for SharedStorageAccessType.documentRun and
+SharedStorageAccessType.documentSelectURL. */
+      [@yojson.option] [@key "serializedData"]
+      serializedData: option(string), /* The operation's serialized data in bytes (converted to a string).
+Present only for SharedStorageAccessType.documentRun and
+SharedStorageAccessType.documentSelectURL. */
+      [@yojson.option] [@key "urlsWithMetadata"]
+      urlsWithMetadata: option(list(SharedStorageUrlWithMetadata.t)), /* Array of candidate URLs' specs, along with any associated metadata.
+Present only for SharedStorageAccessType.documentSelectURL. */
+      [@yojson.option] [@key "key"]
+      key: option(string), /* Key for a specific entry in an origin's shared storage.
+Present only for SharedStorageAccessType.documentSet,
+SharedStorageAccessType.documentAppend,
+SharedStorageAccessType.documentDelete,
+SharedStorageAccessType.workletSet,
+SharedStorageAccessType.workletAppend,
+SharedStorageAccessType.workletDelete, and
+SharedStorageAccessType.workletGet. */
+      [@yojson.option] [@key "value"]
+      value: option(string), /* Value for a specific entry in an origin's shared storage.
+Present only for SharedStorageAccessType.documentSet,
+SharedStorageAccessType.documentAppend,
+SharedStorageAccessType.workletSet, and
+SharedStorageAccessType.workletAppend. */
+      [@yojson.option] [@key "ignoreIfPresent"]
+      ignoreIfPresent: option(bool) /* Whether or not to set an entry for a key if that key is already present.
+Present only for SharedStorageAccessType.documentSet and
+SharedStorageAccessType.workletSet. */,
     };
   };
 }

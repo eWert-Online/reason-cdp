@@ -2796,6 +2796,35 @@ module Storage = {
 
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
+  /* Shared storage was accessed by the associated page.
+     The following parameters are included in all events. */
+  module SharedStorageAccessed = {
+    let name = "Storage.sharedStorageAccessed";
+
+    [@deriving yojson]
+    type result = {
+      [@key "accessTime"]
+      accessTime: Types.Network.TimeSinceEpoch.t, /* Time of the access. */
+      [@key "type"]
+      type_: Types.Storage.SharedStorageAccessType.t, /* Enum value indicating the Shared Storage API method invoked. */
+      [@key "mainFrameId"]
+      mainFrameId: Types.Page.FrameId.t, /* DevTools Frame Token for the primary frame tree's root. */
+      [@key "ownerOrigin"]
+      ownerOrigin: string, /* Serialized origin for the context that invoked the Shared Storage API. */
+      [@key "params"]
+      params: Types.Storage.SharedStorageAccessParams.t /* The sub-parameters warapped by `params` are all optional and their
+presence/absence depends on `type`. */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
 };
 module Target = {
   /* Issued when attached to target because of auto-attach or `attachToTarget` command. */
