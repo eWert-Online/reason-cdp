@@ -14967,7 +14967,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
       | `OutstandingIndexedDBTransaction
-      | `RequestedNotificationsPermission
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
       | `RequestedVideoCapturePermission
@@ -16821,7 +16820,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
       | `OutstandingIndexedDBTransaction
-      | `RequestedNotificationsPermission
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
       | `RequestedVideoCapturePermission
@@ -16954,7 +16952,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
       | `OutstandingIndexedDBTransaction
-      | `RequestedNotificationsPermission
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
       | `RequestedVideoCapturePermission
@@ -17080,7 +17077,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("DedicatedWorkerOrWorklet") => `DedicatedWorkerOrWorklet
       | `String("OutstandingNetworkRequestOthers") => `OutstandingNetworkRequestOthers
       | `String("OutstandingIndexedDBTransaction") => `OutstandingIndexedDBTransaction
-      | `String("RequestedNotificationsPermission") => `RequestedNotificationsPermission
       | `String("RequestedMIDIPermission") => `RequestedMIDIPermission
       | `String("RequestedAudioCapturePermission") => `RequestedAudioCapturePermission
       | `String("RequestedVideoCapturePermission") => `RequestedVideoCapturePermission
@@ -17230,8 +17226,6 @@ Example URLs: http://www.google.com/file.html -> "google.com"
         `String("OutstandingNetworkRequestOthers")
       | `OutstandingIndexedDBTransaction =>
         `String("OutstandingIndexedDBTransaction")
-      | `RequestedNotificationsPermission =>
-        `String("RequestedNotificationsPermission")
       | `RequestedMIDIPermission => `String("RequestedMIDIPermission")
       | `RequestedAudioCapturePermission =>
         `String("RequestedAudioCapturePermission")
