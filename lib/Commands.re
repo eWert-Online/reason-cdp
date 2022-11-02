@@ -34382,6 +34382,88 @@ Defaults to false. */,
       };
     };
   };
+  /* Resets parameters isBogusSignature, isBadUV, isBadUP to false if they are not present. */
+  module SetResponseOverrideBits = {
+    module Response: {
+      type result = Types.assoc;
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "authenticatorId"]
+        authenticatorId: Types.WebAuthn.AuthenticatorId.t, /* No description provided */
+        [@yojson.option] [@key "isBogusSignature"]
+        isBogusSignature: option(bool), /* If isBogusSignature is set, overrides the signature in the authenticator response to be zero.
+Defaults to false. */
+        [@yojson.option] [@key "isBadUV"]
+        isBadUV: option(bool), /* If isBadUV is set, overrides the UV bit in the flags in the authenticator response to
+be zero. Defaults to false. */
+        [@yojson.option] [@key "isBadUP"]
+        isBadUP: option(bool) /* If isBadUP is set, overrides the UP bit in the flags in the authenticator response to
+be zero. Defaults to false. */,
+      };
+      let make =
+          (~authenticatorId, ~isBogusSignature=?, ~isBadUV=?, ~isBadUP=?, ()) => {
+        {authenticatorId, isBogusSignature, isBadUV, isBadUP};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "WebAuthn.setResponseOverrideBits", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Removes the given authenticator. */
   module RemoveVirtualAuthenticator = {
     module Response: {
