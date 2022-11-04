@@ -805,29 +805,6 @@ module Emulation = {
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
 };
-module HeadlessExperimental = {
-  /* Issued when the target starts or stops needing BeginFrames.
-     Deprecated. Issue beginFrame unconditionally instead and use result from
-     beginFrame to detect whether the frames were suppressed. */
-  module NeedsBeginFramesChanged = {
-    let name = "HeadlessExperimental.needsBeginFramesChanged";
-
-    [@deriving yojson]
-    type result = {
-      [@key "needsBeginFrames"]
-      needsBeginFrames: bool /* True if BeginFrames are needed, false otherwise. */,
-    };
-
-    [@deriving yojson]
-    type t = {
-      method: string,
-      params: result,
-      sessionId: Types.Target.SessionID.t,
-    };
-
-    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
-  };
-};
 module Input = {
   /* Emitted only when `Input.setInterceptDrags` is enabled. Use this data with `Input.dispatchDragEvent` to
      restore normal drag and drop behavior. */
@@ -1512,7 +1489,9 @@ the request and the ones not sent; the latter are distinguished by having blocke
       [@key "connectTiming"]
       connectTiming: Types.Network.ConnectTiming.t, /* Connection timing information for the request. */
       [@yojson.option] [@key "clientSecurityState"]
-      clientSecurityState: option(Types.Network.ClientSecurityState.t) /* The client security state set for the request. */,
+      clientSecurityState: option(Types.Network.ClientSecurityState.t), /* The client security state set for the request. */
+      [@yojson.option] [@key "siteHasCookieInOtherPartition"]
+      siteHasCookieInOtherPartition: option(bool) /* Whether the site has partitioned cookies stored in a partition different than the current one. */,
     };
 
     [@deriving yojson]
