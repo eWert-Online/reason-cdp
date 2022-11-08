@@ -9919,9 +9919,10 @@ successfully. */,
       };
     };
   };
-  /* Returns the container of the given node based on container query conditions.
-     If containerName is given, it will find the nearest container with a matching name;
-     otherwise it will find the nearest container regardless of its container name. */
+  /* Returns the query container of the given node based on container query
+     conditions: containerName, physical, and logical axes. If no axes are
+     provided, the style container is returned, which is the direct parent or the
+     closest element with a matching container-name. */
   module GetContainerForNode = {
     module Response: {
       type result = {
@@ -9977,10 +9978,15 @@ successfully. */,
         [@key "nodeId"]
         nodeId: Types.DOM.NodeId.t, /* No description provided */
         [@yojson.option] [@key "containerName"]
-        containerName: option(string) /* No description provided */,
+        containerName: option(string), /* No description provided */
+        [@yojson.option] [@key "physicalAxes"]
+        physicalAxes: option(Types.DOM.PhysicalAxes.t), /* No description provided */
+        [@yojson.option] [@key "logicalAxes"]
+        logicalAxes: option(Types.DOM.LogicalAxes.t) /* No description provided */,
       };
-      let make = (~nodeId, ~containerName=?, ()) => {
-        {nodeId, containerName};
+      let make =
+          (~nodeId, ~containerName=?, ~physicalAxes=?, ~logicalAxes=?, ()) => {
+        {nodeId, containerName, physicalAxes, logicalAxes};
       };
     };
 
@@ -31067,6 +31073,85 @@ disabled (called without a quotaSize). */,
 
       let make = (~sessionId=?, ~params, id) => {
         {id, method: "Storage.getSharedStorageEntries", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
+  /* Sets entry with `key` and `value` for a given origin's shared storage. */
+  module SetSharedStorageEntry = {
+    module Response: {
+      type result = Types.assoc;
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "ownerOrigin"]
+        ownerOrigin: string, /* No description provided */
+        [@key "key"]
+        key: string, /* No description provided */
+        [@key "value"]
+        value: string, /* No description provided */
+        [@yojson.option] [@key "ignoreIfPresent"]
+        ignoreIfPresent: option(bool) /* If `ignoreIfPresent` is included and true, then only sets the entry if
+`key` doesn't already exist. */,
+      };
+      let make = (~ownerOrigin, ~key, ~value, ~ignoreIfPresent=?, ()) => {
+        {ownerOrigin, key, value, ignoreIfPresent};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Storage.setSharedStorageEntry", sessionId, params}
         |> yojson_of_t
         |> Yojson.Safe.to_string;
       };

@@ -4554,7 +4554,11 @@ available). */
       [@yojson.option] [@key "styleSheetId"]
       styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
       [@yojson.option] [@key "name"]
-      name: option(string) /* Optional name for the container. */,
+      name: option(string), /* Optional name for the container. */
+      [@yojson.option] [@key "physicalAxes"]
+      physicalAxes: option(DOM.PhysicalAxes.t), /* Optional physical axes queried for the container. */
+      [@yojson.option] [@key "logicalAxes"]
+      logicalAxes: option(DOM.LogicalAxes.t) /* Optional logical axes queried for the container. */,
     };
   }
   and CSSSupports: {
@@ -5333,7 +5337,11 @@ available). */
       [@yojson.option] [@key "styleSheetId"]
       styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
       [@yojson.option] [@key "name"]
-      name: option(string) /* Optional name for the container. */,
+      name: option(string), /* Optional name for the container. */
+      [@yojson.option] [@key "physicalAxes"]
+      physicalAxes: option(DOM.PhysicalAxes.t), /* Optional physical axes queried for the container. */
+      [@yojson.option] [@key "logicalAxes"]
+      logicalAxes: option(DOM.LogicalAxes.t) /* Optional logical axes queried for the container. */,
     };
   } = {
     /* CSS container query rule descriptor. */
@@ -5347,7 +5355,11 @@ available). */
       [@yojson.option] [@key "styleSheetId"]
       styleSheetId: option(StyleSheetId.t), /* Identifier of the stylesheet containing this object (if exists). */
       [@yojson.option] [@key "name"]
-      name: option(string) /* Optional name for the container. */,
+      name: option(string), /* Optional name for the container. */
+      [@yojson.option] [@key "physicalAxes"]
+      physicalAxes: option(DOM.PhysicalAxes.t), /* Optional physical axes queried for the container. */
+      [@yojson.option] [@key "logicalAxes"]
+      logicalAxes: option(DOM.LogicalAxes.t) /* Optional logical axes queried for the container. */,
     };
   }
   and CSSSupports: {
@@ -5981,6 +5993,22 @@ and DOM: {
     [@deriving yojson]
     type t = _compatibilitymode;
   }
+  and PhysicalAxes: {
+    type _physicalaxes = [ | `Horizontal | `Vertical | `Both];
+    let _physicalaxes_of_yojson: Yojson.Basic.t => _physicalaxes;
+    let yojson_of__physicalaxes: _physicalaxes => Yojson.Basic.t;
+    /* ContainerSelector physical axes */
+    [@deriving yojson]
+    type t = _physicalaxes;
+  }
+  and LogicalAxes: {
+    type _logicalaxes = [ | `Inline | `Block | `Both];
+    let _logicalaxes_of_yojson: Yojson.Basic.t => _logicalaxes;
+    let yojson_of__logicalaxes: _logicalaxes => Yojson.Basic.t;
+    /* ContainerSelector logical axes */
+    [@deriving yojson]
+    type t = _logicalaxes;
+  }
   and Node: {
     /* DOM interaction is implemented in terms of mirror objects that represent the actual DOM nodes.
        DOMNode is a base node mirror type. */
@@ -6355,6 +6383,56 @@ The property is always undefined now. */
     /* Document compatibility mode. */
     [@deriving yojson]
     type t = _compatibilitymode;
+  }
+  and PhysicalAxes: {
+    type _physicalaxes = [ | `Horizontal | `Vertical | `Both];
+    let _physicalaxes_of_yojson: Yojson.Basic.t => _physicalaxes;
+    let yojson_of__physicalaxes: _physicalaxes => Yojson.Basic.t;
+    /* ContainerSelector physical axes */
+    [@deriving yojson]
+    type t = _physicalaxes;
+  } = {
+    type _physicalaxes = [ | `Horizontal | `Vertical | `Both];
+    let _physicalaxes_of_yojson =
+      fun
+      | `String("Horizontal") => `Horizontal
+      | `String("Vertical") => `Vertical
+      | `String("Both") => `Both
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__physicalaxes =
+      fun
+      | `Horizontal => `String("Horizontal")
+      | `Vertical => `String("Vertical")
+      | `Both => `String("Both");
+    /* ContainerSelector physical axes */
+    [@deriving yojson]
+    type t = _physicalaxes;
+  }
+  and LogicalAxes: {
+    type _logicalaxes = [ | `Inline | `Block | `Both];
+    let _logicalaxes_of_yojson: Yojson.Basic.t => _logicalaxes;
+    let yojson_of__logicalaxes: _logicalaxes => Yojson.Basic.t;
+    /* ContainerSelector logical axes */
+    [@deriving yojson]
+    type t = _logicalaxes;
+  } = {
+    type _logicalaxes = [ | `Inline | `Block | `Both];
+    let _logicalaxes_of_yojson =
+      fun
+      | `String("Inline") => `Inline
+      | `String("Block") => `Block
+      | `String("Both") => `Both
+      | `String(s) => failwith("unknown enum: " ++ s)
+      | _ => failwith("unknown enum type");
+    let yojson_of__logicalaxes =
+      fun
+      | `Inline => `String("Inline")
+      | `Block => `String("Block")
+      | `Both => `String("Both");
+    /* ContainerSelector logical axes */
+    [@deriving yojson]
+    type t = _logicalaxes;
   }
   and Node: {
     /* DOM interaction is implemented in terms of mirror objects that represent the actual DOM nodes.
