@@ -5961,11 +5961,11 @@ and DOM: {
       | `scrollbar_corner
       | `resizer
       | `input_list_button
-      | `page_transition
-      | `page_transition_container
-      | `page_transition_image_wrapper
-      | `page_transition_outgoing_image
-      | `page_transition_incoming_image
+      | `view_transition
+      | `view_transition_group
+      | `view_transition_image_pair
+      | `view_transition_old
+      | `view_transition_new
     ];
     let _pseudotype_of_yojson: Yojson.Basic.t => _pseudotype;
     let yojson_of__pseudotype: _pseudotype => Yojson.Basic.t;
@@ -6224,11 +6224,11 @@ The property is always undefined now. */
       | `scrollbar_corner
       | `resizer
       | `input_list_button
-      | `page_transition
-      | `page_transition_container
-      | `page_transition_image_wrapper
-      | `page_transition_outgoing_image
-      | `page_transition_incoming_image
+      | `view_transition
+      | `view_transition_group
+      | `view_transition_image_pair
+      | `view_transition_old
+      | `view_transition_new
     ];
     let _pseudotype_of_yojson: Yojson.Basic.t => _pseudotype;
     let yojson_of__pseudotype: _pseudotype => Yojson.Basic.t;
@@ -6257,11 +6257,11 @@ The property is always undefined now. */
       | `scrollbar_corner
       | `resizer
       | `input_list_button
-      | `page_transition
-      | `page_transition_container
-      | `page_transition_image_wrapper
-      | `page_transition_outgoing_image
-      | `page_transition_incoming_image
+      | `view_transition
+      | `view_transition_group
+      | `view_transition_image_pair
+      | `view_transition_old
+      | `view_transition_new
     ];
     let _pseudotype_of_yojson =
       fun
@@ -6285,11 +6285,11 @@ The property is always undefined now. */
       | `String("scrollbar-corner") => `scrollbar_corner
       | `String("resizer") => `resizer
       | `String("input-list-button") => `input_list_button
-      | `String("page-transition") => `page_transition
-      | `String("page-transition-container") => `page_transition_container
-      | `String("page-transition-image-wrapper") => `page_transition_image_wrapper
-      | `String("page-transition-outgoing-image") => `page_transition_outgoing_image
-      | `String("page-transition-incoming-image") => `page_transition_incoming_image
+      | `String("view-transition") => `view_transition
+      | `String("view-transition-group") => `view_transition_group
+      | `String("view-transition-image-pair") => `view_transition_image_pair
+      | `String("view-transition-old") => `view_transition_old
+      | `String("view-transition-new") => `view_transition_new
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__pseudotype =
@@ -6314,14 +6314,11 @@ The property is always undefined now. */
       | `scrollbar_corner => `String("scrollbar-corner")
       | `resizer => `String("resizer")
       | `input_list_button => `String("input-list-button")
-      | `page_transition => `String("page-transition")
-      | `page_transition_container => `String("page-transition-container")
-      | `page_transition_image_wrapper =>
-        `String("page-transition-image-wrapper")
-      | `page_transition_outgoing_image =>
-        `String("page-transition-outgoing-image")
-      | `page_transition_incoming_image =>
-        `String("page-transition-incoming-image");
+      | `view_transition => `String("view-transition")
+      | `view_transition_group => `String("view-transition-group")
+      | `view_transition_image_pair => `String("view-transition-image-pair")
+      | `view_transition_old => `String("view-transition-old")
+      | `view_transition_new => `String("view-transition-new");
     /* Pseudo element type. */
     [@deriving yojson]
     type t = _pseudotype;
