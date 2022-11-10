@@ -3830,6 +3830,8 @@ and Browser: {
       | `durableStorage
       | `flash
       | `geolocation
+      | `idleDetection
+      | `localFonts
       | `midi
       | `midiSysex
       | `nfc
@@ -3838,11 +3840,12 @@ and Browser: {
       | `periodicBackgroundSync
       | `protectedMediaIdentifier
       | `sensors
+      | `storageAccess
       | `videoCapture
       | `videoCapturePanTiltZoom
-      | `idleDetection
       | `wakeLockScreen
       | `wakeLockSystem
+      | `windowManagement
     ];
     let _permissiontype_of_yojson: Yojson.Basic.t => _permissiontype;
     let yojson_of__permissiontype: _permissiontype => Yojson.Basic.t;
@@ -4000,6 +4003,8 @@ Note that userVisibleOnly = true is the only currently supported type. */
       | `durableStorage
       | `flash
       | `geolocation
+      | `idleDetection
+      | `localFonts
       | `midi
       | `midiSysex
       | `nfc
@@ -4008,11 +4013,12 @@ Note that userVisibleOnly = true is the only currently supported type. */
       | `periodicBackgroundSync
       | `protectedMediaIdentifier
       | `sensors
+      | `storageAccess
       | `videoCapture
       | `videoCapturePanTiltZoom
-      | `idleDetection
       | `wakeLockScreen
       | `wakeLockSystem
+      | `windowManagement
     ];
     let _permissiontype_of_yojson: Yojson.Basic.t => _permissiontype;
     let yojson_of__permissiontype: _permissiontype => Yojson.Basic.t;
@@ -4031,6 +4037,8 @@ Note that userVisibleOnly = true is the only currently supported type. */
       | `durableStorage
       | `flash
       | `geolocation
+      | `idleDetection
+      | `localFonts
       | `midi
       | `midiSysex
       | `nfc
@@ -4039,11 +4047,12 @@ Note that userVisibleOnly = true is the only currently supported type. */
       | `periodicBackgroundSync
       | `protectedMediaIdentifier
       | `sensors
+      | `storageAccess
       | `videoCapture
       | `videoCapturePanTiltZoom
-      | `idleDetection
       | `wakeLockScreen
       | `wakeLockSystem
+      | `windowManagement
     ];
     let _permissiontype_of_yojson =
       fun
@@ -4057,6 +4066,8 @@ Note that userVisibleOnly = true is the only currently supported type. */
       | `String("durableStorage") => `durableStorage
       | `String("flash") => `flash
       | `String("geolocation") => `geolocation
+      | `String("idleDetection") => `idleDetection
+      | `String("localFonts") => `localFonts
       | `String("midi") => `midi
       | `String("midiSysex") => `midiSysex
       | `String("nfc") => `nfc
@@ -4065,11 +4076,12 @@ Note that userVisibleOnly = true is the only currently supported type. */
       | `String("periodicBackgroundSync") => `periodicBackgroundSync
       | `String("protectedMediaIdentifier") => `protectedMediaIdentifier
       | `String("sensors") => `sensors
+      | `String("storageAccess") => `storageAccess
       | `String("videoCapture") => `videoCapture
       | `String("videoCapturePanTiltZoom") => `videoCapturePanTiltZoom
-      | `String("idleDetection") => `idleDetection
       | `String("wakeLockScreen") => `wakeLockScreen
       | `String("wakeLockSystem") => `wakeLockSystem
+      | `String("windowManagement") => `windowManagement
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__permissiontype =
@@ -4084,6 +4096,8 @@ Note that userVisibleOnly = true is the only currently supported type. */
       | `durableStorage => `String("durableStorage")
       | `flash => `String("flash")
       | `geolocation => `String("geolocation")
+      | `idleDetection => `String("idleDetection")
+      | `localFonts => `String("localFonts")
       | `midi => `String("midi")
       | `midiSysex => `String("midiSysex")
       | `nfc => `String("nfc")
@@ -4092,11 +4106,12 @@ Note that userVisibleOnly = true is the only currently supported type. */
       | `periodicBackgroundSync => `String("periodicBackgroundSync")
       | `protectedMediaIdentifier => `String("protectedMediaIdentifier")
       | `sensors => `String("sensors")
+      | `storageAccess => `String("storageAccess")
       | `videoCapture => `String("videoCapture")
       | `videoCapturePanTiltZoom => `String("videoCapturePanTiltZoom")
-      | `idleDetection => `String("idleDetection")
       | `wakeLockScreen => `String("wakeLockScreen")
-      | `wakeLockSystem => `String("wakeLockSystem");
+      | `wakeLockSystem => `String("wakeLockSystem")
+      | `windowManagement => `String("windowManagement");
     /* No description provided */
     [@deriving yojson]
     type t = _permissiontype;

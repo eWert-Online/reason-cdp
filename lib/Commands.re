@@ -37600,8 +37600,8 @@ stop on the breakpoint if this expression evaluates to true. */,
       };
     };
   };
-  /* Defines pause on exceptions state. Can be set to stop on all exceptions, uncaught exceptions or
-     no exceptions. Initial pause on exceptions state is `none`. */
+  /* Defines pause on exceptions state. Can be set to stop on all exceptions, uncaught exceptions,
+     or caught exceptions, no exceptions. Initial pause on exceptions state is `none`. */
   module SetPauseOnExceptions = {
     module Response: {
       type result = Types.assoc;
@@ -37646,10 +37646,16 @@ stop on the breakpoint if this expression evaluates to true. */,
     };
 
     module Params = {
-      type setpauseonexceptions_state = [ | `none | `uncaught | `all];
+      type setpauseonexceptions_state = [
+        | `none
+        | `caught
+        | `uncaught
+        | `all
+      ];
       let setpauseonexceptions_state_of_yojson =
         fun
         | `String("none") => `none
+        | `String("caught") => `caught
         | `String("uncaught") => `uncaught
         | `String("all") => `all
         | `String(s) => failwith("unknown enum: " ++ s)
@@ -37657,6 +37663,7 @@ stop on the breakpoint if this expression evaluates to true. */,
       let yojson_of_setpauseonexceptions_state =
         fun
         | `none => `String("none")
+        | `caught => `String("caught")
         | `uncaught => `String("uncaught")
         | `all => `String("all");
       [@deriving yojson]
