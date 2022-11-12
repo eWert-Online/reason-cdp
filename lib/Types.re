@@ -5711,6 +5711,8 @@ and CacheStorage: {
       cacheId: CacheId.t, /* An opaque unique id of the cache. */
       [@key "securityOrigin"]
       securityOrigin: string, /* Security origin of the cache. */
+      [@key "storageKey"]
+      storageKey: string, /* Storage key of the cache. */
       [@key "cacheName"]
       cacheName: string /* The name of the cache. */,
     };
@@ -5839,6 +5841,8 @@ and CacheStorage: {
       cacheId: CacheId.t, /* An opaque unique id of the cache. */
       [@key "securityOrigin"]
       securityOrigin: string, /* Security origin of the cache. */
+      [@key "storageKey"]
+      storageKey: string, /* Storage key of the cache. */
       [@key "cacheName"]
       cacheName: string /* The name of the cache. */,
     };
@@ -5850,6 +5854,8 @@ and CacheStorage: {
       cacheId: CacheId.t, /* An opaque unique id of the cache. */
       [@key "securityOrigin"]
       securityOrigin: string, /* Security origin of the cache. */
+      [@key "storageKey"]
+      storageKey: string, /* Storage key of the cache. */
       [@key "cacheName"]
       cacheName: string /* The name of the cache. */,
     };
