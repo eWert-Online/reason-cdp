@@ -1094,6 +1094,7 @@ and Audits: {
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
+      | `ExcludeThirdPartyCookieBlockedInFirstPartySet
     ];
     let _cookieexclusionreason_of_yojson:
       Yojson.Basic.t => _cookieexclusionreason;
@@ -1839,6 +1840,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
+      | `ExcludeThirdPartyCookieBlockedInFirstPartySet
     ];
     let _cookieexclusionreason_of_yojson:
       Yojson.Basic.t => _cookieexclusionreason;
@@ -1856,6 +1858,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
+      | `ExcludeThirdPartyCookieBlockedInFirstPartySet
     ];
     let _cookieexclusionreason_of_yojson =
       fun
@@ -1866,6 +1869,7 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `String("ExcludeInvalidSameParty") => `ExcludeInvalidSameParty
       | `String("ExcludeSamePartyCrossPartyContext") => `ExcludeSamePartyCrossPartyContext
       | `String("ExcludeDomainNonASCII") => `ExcludeDomainNonASCII
+      | `String("ExcludeThirdPartyCookieBlockedInFirstPartySet") => `ExcludeThirdPartyCookieBlockedInFirstPartySet
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__cookieexclusionreason =
@@ -1878,7 +1882,9 @@ exception, CDP message, etc.) is referencing this issue. */,
       | `ExcludeInvalidSameParty => `String("ExcludeInvalidSameParty")
       | `ExcludeSamePartyCrossPartyContext =>
         `String("ExcludeSamePartyCrossPartyContext")
-      | `ExcludeDomainNonASCII => `String("ExcludeDomainNonASCII");
+      | `ExcludeDomainNonASCII => `String("ExcludeDomainNonASCII")
+      | `ExcludeThirdPartyCookieBlockedInFirstPartySet =>
+        `String("ExcludeThirdPartyCookieBlockedInFirstPartySet");
     /* No description provided */
     [@deriving yojson]
     type t = _cookieexclusionreason;
@@ -10333,6 +10339,7 @@ of the request to the endpoint that set the cookie. */
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyBlockedInFirstPartySet
       | `SyntaxError
       | `SchemeNotSupported
       | `OverwriteSecure
@@ -10364,6 +10371,7 @@ of the request to the endpoint that set the cookie. */
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyBlockedInFirstPartySet
       | `UnknownError
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
@@ -12363,6 +12371,7 @@ of the request to the endpoint that set the cookie. */
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyBlockedInFirstPartySet
       | `SyntaxError
       | `SchemeNotSupported
       | `OverwriteSecure
@@ -12391,6 +12400,7 @@ of the request to the endpoint that set the cookie. */
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyBlockedInFirstPartySet
       | `SyntaxError
       | `SchemeNotSupported
       | `OverwriteSecure
@@ -12412,6 +12422,7 @@ of the request to the endpoint that set the cookie. */
       | `String("SameSiteUnspecifiedTreatedAsLax") => `SameSiteUnspecifiedTreatedAsLax
       | `String("SameSiteNoneInsecure") => `SameSiteNoneInsecure
       | `String("UserPreferences") => `UserPreferences
+      | `String("ThirdPartyBlockedInFirstPartySet") => `ThirdPartyBlockedInFirstPartySet
       | `String("SyntaxError") => `SyntaxError
       | `String("SchemeNotSupported") => `SchemeNotSupported
       | `String("OverwriteSecure") => `OverwriteSecure
@@ -12435,6 +12446,8 @@ of the request to the endpoint that set the cookie. */
         `String("SameSiteUnspecifiedTreatedAsLax")
       | `SameSiteNoneInsecure => `String("SameSiteNoneInsecure")
       | `UserPreferences => `String("UserPreferences")
+      | `ThirdPartyBlockedInFirstPartySet =>
+        `String("ThirdPartyBlockedInFirstPartySet")
       | `SyntaxError => `String("SyntaxError")
       | `SchemeNotSupported => `String("SchemeNotSupported")
       | `OverwriteSecure => `String("OverwriteSecure")
@@ -12465,6 +12478,7 @@ of the request to the endpoint that set the cookie. */
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyBlockedInFirstPartySet
       | `UnknownError
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
@@ -12487,6 +12501,7 @@ of the request to the endpoint that set the cookie. */
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyBlockedInFirstPartySet
       | `UnknownError
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
@@ -12504,6 +12519,7 @@ of the request to the endpoint that set the cookie. */
       | `String("SameSiteUnspecifiedTreatedAsLax") => `SameSiteUnspecifiedTreatedAsLax
       | `String("SameSiteNoneInsecure") => `SameSiteNoneInsecure
       | `String("UserPreferences") => `UserPreferences
+      | `String("ThirdPartyBlockedInFirstPartySet") => `ThirdPartyBlockedInFirstPartySet
       | `String("UnknownError") => `UnknownError
       | `String("SchemefulSameSiteStrict") => `SchemefulSameSiteStrict
       | `String("SchemefulSameSiteLax") => `SchemefulSameSiteLax
@@ -12523,6 +12539,8 @@ of the request to the endpoint that set the cookie. */
         `String("SameSiteUnspecifiedTreatedAsLax")
       | `SameSiteNoneInsecure => `String("SameSiteNoneInsecure")
       | `UserPreferences => `String("UserPreferences")
+      | `ThirdPartyBlockedInFirstPartySet =>
+        `String("ThirdPartyBlockedInFirstPartySet")
       | `UnknownError => `String("UnknownError")
       | `SchemefulSameSiteStrict => `String("SchemefulSameSiteStrict")
       | `SchemefulSameSiteLax => `String("SchemefulSameSiteLax")
