@@ -27665,19 +27665,26 @@ available (otherwise deny). */
     };
 
     module Params = {
-      type setspctransactionmode_mode = [ | `none | `autoaccept | `autoreject];
+      type setspctransactionmode_mode = [
+        | `none
+        | `autoAccept
+        | `autoReject
+        | `autoOptOut
+      ];
       let setspctransactionmode_mode_of_yojson =
         fun
         | `String("none") => `none
-        | `String("autoaccept") => `autoaccept
-        | `String("autoreject") => `autoreject
+        | `String("autoAccept") => `autoAccept
+        | `String("autoReject") => `autoReject
+        | `String("autoOptOut") => `autoOptOut
         | `String(s) => failwith("unknown enum: " ++ s)
         | _ => failwith("unknown enum type");
       let yojson_of_setspctransactionmode_mode =
         fun
         | `none => `String("none")
-        | `autoaccept => `String("autoaccept")
-        | `autoreject => `String("autoreject");
+        | `autoAccept => `String("autoAccept")
+        | `autoReject => `String("autoReject")
+        | `autoOptOut => `String("autoOptOut");
       [@deriving yojson]
       type t = {
         [@key "mode"]
