@@ -2672,6 +2672,8 @@ module Storage = {
     type result = {
       [@key "origin"]
       origin: string, /* Origin to update. */
+      [@key "storageKey"]
+      storageKey: string, /* Storage key to update. */
       [@key "cacheName"]
       cacheName: string /* Name of cache in origin. */,
     };
@@ -2692,7 +2694,9 @@ module Storage = {
     [@deriving yojson]
     type result = {
       [@key "origin"]
-      origin: string /* Origin to update. */,
+      origin: string, /* Origin to update. */
+      [@key "storageKey"]
+      storageKey: string /* Storage key to update. */,
     };
 
     [@deriving yojson]
