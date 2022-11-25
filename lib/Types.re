@@ -3677,7 +3677,9 @@ and BackgroundService: {
       [@key "instanceId"]
       instanceId: string, /* An identifier that groups related events together. */
       [@key "eventMetadata"]
-      eventMetadata: list(EventMetadata.t) /* A list of event-specific information. */,
+      eventMetadata: list(EventMetadata.t), /* A list of event-specific information. */
+      [@key "storageKey"]
+      storageKey: string /* Storage key this event belongs to. */,
     };
   };
 } = {
@@ -3766,7 +3768,9 @@ and BackgroundService: {
       [@key "instanceId"]
       instanceId: string, /* An identifier that groups related events together. */
       [@key "eventMetadata"]
-      eventMetadata: list(EventMetadata.t) /* A list of event-specific information. */,
+      eventMetadata: list(EventMetadata.t), /* A list of event-specific information. */
+      [@key "storageKey"]
+      storageKey: string /* Storage key this event belongs to. */,
     };
   } = {
     /* No description provided */
@@ -3785,7 +3789,9 @@ and BackgroundService: {
       [@key "instanceId"]
       instanceId: string, /* An identifier that groups related events together. */
       [@key "eventMetadata"]
-      eventMetadata: list(EventMetadata.t) /* A list of event-specific information. */,
+      eventMetadata: list(EventMetadata.t), /* A list of event-specific information. */
+      [@key "storageKey"]
+      storageKey: string /* Storage key this event belongs to. */,
     };
   };
 }
