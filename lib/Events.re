@@ -3010,8 +3010,8 @@ total size. */,
 
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
-  /* Contains an bucket of collected trace events. When tracing is stopped collected events will be
-     send as a sequence of dataCollected events followed by tracingComplete event. */
+  /* Contains a bucket of collected trace events. When tracing is stopped collected events will be
+     sent as a sequence of dataCollected events followed by tracingComplete event. */
   module DataCollected = {
     let name = "Tracing.dataCollected";
 

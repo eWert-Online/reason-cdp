@@ -15117,6 +15117,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `InjectedStyleSheet
       | `KeepaliveRequest
       | `Dummy
+      | `AuthorizationHeader
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -16970,6 +16971,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `InjectedStyleSheet
       | `KeepaliveRequest
       | `Dummy
+      | `AuthorizationHeader
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -17102,6 +17104,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `InjectedStyleSheet
       | `KeepaliveRequest
       | `Dummy
+      | `AuthorizationHeader
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -17227,6 +17230,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("InjectedStyleSheet") => `InjectedStyleSheet
       | `String("KeepaliveRequest") => `KeepaliveRequest
       | `String("Dummy") => `Dummy
+      | `String("AuthorizationHeader") => `AuthorizationHeader
       | `String("ContentSecurityHandler") => `ContentSecurityHandler
       | `String("ContentWebAuthenticationAPI") => `ContentWebAuthenticationAPI
       | `String("ContentFileChooser") => `ContentFileChooser
@@ -17383,6 +17387,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `InjectedStyleSheet => `String("InjectedStyleSheet")
       | `KeepaliveRequest => `String("KeepaliveRequest")
       | `Dummy => `String("Dummy")
+      | `AuthorizationHeader => `String("AuthorizationHeader")
       | `ContentSecurityHandler => `String("ContentSecurityHandler")
       | `ContentWebAuthenticationAPI => `String("ContentWebAuthenticationAPI")
       | `ContentFileChooser => `String("ContentFileChooser")
@@ -18788,6 +18793,7 @@ and Storage: {
       | `join
       | `leave
       | `update
+      | `loaded
       | `bid
       | `win
     ];
@@ -19076,6 +19082,7 @@ SharedStorageAccessType.workletSet. */,
       | `join
       | `leave
       | `update
+      | `loaded
       | `bid
       | `win
     ];
@@ -19091,6 +19098,7 @@ SharedStorageAccessType.workletSet. */,
       | `join
       | `leave
       | `update
+      | `loaded
       | `bid
       | `win
     ];
@@ -19099,6 +19107,7 @@ SharedStorageAccessType.workletSet. */,
       | `String("join") => `join
       | `String("leave") => `leave
       | `String("update") => `update
+      | `String("loaded") => `loaded
       | `String("bid") => `bid
       | `String("win") => `win
       | `String(s) => failwith("unknown enum: " ++ s)
@@ -19108,6 +19117,7 @@ SharedStorageAccessType.workletSet. */,
       | `join => `String("join")
       | `leave => `String("leave")
       | `update => `String("update")
+      | `loaded => `String("loaded")
       | `bid => `String("bid")
       | `win => `String("win");
     /* Enum of interest group access types. */
