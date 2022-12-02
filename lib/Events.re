@@ -3419,6 +3419,50 @@ module WebAudio = {
     let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
   };
 };
+module WebAuthn = {
+  /* Triggered when a credential is added to an authenticator. */
+  module CredentialAdded = {
+    let name = "WebAuthn.credentialAdded";
+
+    [@deriving yojson]
+    type result = {
+      [@key "authenticatorId"]
+      authenticatorId: Types.WebAuthn.AuthenticatorId.t, /* No description provided */
+      [@key "credential"]
+      credential: Types.WebAuthn.Credential.t /* No description provided */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+  /* Triggered when a credential is used in a webauthn assertion. */
+  module CredentialAsserted = {
+    let name = "WebAuthn.credentialAsserted";
+
+    [@deriving yojson]
+    type result = {
+      [@key "authenticatorId"]
+      authenticatorId: Types.WebAuthn.AuthenticatorId.t, /* No description provided */
+      [@key "credential"]
+      credential: Types.WebAuthn.Credential.t /* No description provided */,
+    };
+
+    [@deriving yojson]
+    type t = {
+      method: string,
+      params: result,
+      sessionId: Types.Target.SessionID.t,
+    };
+
+    let parse = event => event |> Yojson.Safe.from_string |> t_of_yojson;
+  };
+};
 module Media = {
   /* This can be called multiple times, and can be used to set / override /
      remove player properties. A null propValue indicates removal. */
