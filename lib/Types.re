@@ -3866,7 +3866,7 @@ and Browser: {
     type t = _permissiontype;
   }
   and PermissionSetting: {
-    type _permissionsetting = [ | `granted | `denied];
+    type _permissionsetting = [ | `granted | `denied | `prompt];
     let _permissionsetting_of_yojson: Yojson.Basic.t => _permissionsetting;
     let yojson_of__permissionsetting: _permissionsetting => Yojson.Basic.t;
     /* No description provided */
@@ -4129,24 +4129,26 @@ Note that userVisibleOnly = true is the only currently supported type. */
     type t = _permissiontype;
   }
   and PermissionSetting: {
-    type _permissionsetting = [ | `granted | `denied];
+    type _permissionsetting = [ | `granted | `denied | `prompt];
     let _permissionsetting_of_yojson: Yojson.Basic.t => _permissionsetting;
     let yojson_of__permissionsetting: _permissionsetting => Yojson.Basic.t;
     /* No description provided */
     [@deriving yojson]
     type t = _permissionsetting;
   } = {
-    type _permissionsetting = [ | `granted | `denied];
+    type _permissionsetting = [ | `granted | `denied | `prompt];
     let _permissionsetting_of_yojson =
       fun
       | `String("granted") => `granted
       | `String("denied") => `denied
+      | `String("prompt") => `prompt
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__permissionsetting =
       fun
       | `granted => `String("granted")
-      | `denied => `String("denied");
+      | `denied => `String("denied")
+      | `prompt => `String("prompt");
     /* No description provided */
     [@deriving yojson]
     type t = _permissionsetting;
