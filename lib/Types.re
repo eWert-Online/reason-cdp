@@ -1636,14 +1636,14 @@ instead of "limited-quirks". */
     type _federatedauthrequestissuereason = [
       | `ShouldEmbargo
       | `TooManyRequests
-      | `ManifestListHttpNotFound
-      | `ManifestListNoResponse
-      | `ManifestListInvalidResponse
-      | `ManifestNotInManifestList
-      | `ManifestListTooBig
-      | `ManifestHttpNotFound
-      | `ManifestNoResponse
-      | `ManifestInvalidResponse
+      | `WellKnownHttpNotFound
+      | `WellKnownNoResponse
+      | `WellKnownInvalidResponse
+      | `ConfigNotInWellKnown
+      | `WellKnownTooBig
+      | `ConfigHttpNotFound
+      | `ConfigNoResponse
+      | `ConfigInvalidResponse
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
@@ -3268,14 +3268,14 @@ instead of "limited-quirks". */
     type _federatedauthrequestissuereason = [
       | `ShouldEmbargo
       | `TooManyRequests
-      | `ManifestListHttpNotFound
-      | `ManifestListNoResponse
-      | `ManifestListInvalidResponse
-      | `ManifestNotInManifestList
-      | `ManifestListTooBig
-      | `ManifestHttpNotFound
-      | `ManifestNoResponse
-      | `ManifestInvalidResponse
+      | `WellKnownHttpNotFound
+      | `WellKnownNoResponse
+      | `WellKnownInvalidResponse
+      | `ConfigNotInWellKnown
+      | `WellKnownTooBig
+      | `ConfigHttpNotFound
+      | `ConfigNoResponse
+      | `ConfigInvalidResponse
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
@@ -3307,14 +3307,14 @@ instead of "limited-quirks". */
     type _federatedauthrequestissuereason = [
       | `ShouldEmbargo
       | `TooManyRequests
-      | `ManifestListHttpNotFound
-      | `ManifestListNoResponse
-      | `ManifestListInvalidResponse
-      | `ManifestNotInManifestList
-      | `ManifestListTooBig
-      | `ManifestHttpNotFound
-      | `ManifestNoResponse
-      | `ManifestInvalidResponse
+      | `WellKnownHttpNotFound
+      | `WellKnownNoResponse
+      | `WellKnownInvalidResponse
+      | `ConfigNotInWellKnown
+      | `WellKnownTooBig
+      | `ConfigHttpNotFound
+      | `ConfigNoResponse
+      | `ConfigInvalidResponse
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
@@ -3336,14 +3336,14 @@ instead of "limited-quirks". */
       fun
       | `String("ShouldEmbargo") => `ShouldEmbargo
       | `String("TooManyRequests") => `TooManyRequests
-      | `String("ManifestListHttpNotFound") => `ManifestListHttpNotFound
-      | `String("ManifestListNoResponse") => `ManifestListNoResponse
-      | `String("ManifestListInvalidResponse") => `ManifestListInvalidResponse
-      | `String("ManifestNotInManifestList") => `ManifestNotInManifestList
-      | `String("ManifestListTooBig") => `ManifestListTooBig
-      | `String("ManifestHttpNotFound") => `ManifestHttpNotFound
-      | `String("ManifestNoResponse") => `ManifestNoResponse
-      | `String("ManifestInvalidResponse") => `ManifestInvalidResponse
+      | `String("WellKnownHttpNotFound") => `WellKnownHttpNotFound
+      | `String("WellKnownNoResponse") => `WellKnownNoResponse
+      | `String("WellKnownInvalidResponse") => `WellKnownInvalidResponse
+      | `String("ConfigNotInWellKnown") => `ConfigNotInWellKnown
+      | `String("WellKnownTooBig") => `WellKnownTooBig
+      | `String("ConfigHttpNotFound") => `ConfigHttpNotFound
+      | `String("ConfigNoResponse") => `ConfigNoResponse
+      | `String("ConfigInvalidResponse") => `ConfigInvalidResponse
       | `String("ClientMetadataHttpNotFound") => `ClientMetadataHttpNotFound
       | `String("ClientMetadataNoResponse") => `ClientMetadataNoResponse
       | `String("ClientMetadataInvalidResponse") => `ClientMetadataInvalidResponse
@@ -3366,14 +3366,14 @@ instead of "limited-quirks". */
       fun
       | `ShouldEmbargo => `String("ShouldEmbargo")
       | `TooManyRequests => `String("TooManyRequests")
-      | `ManifestListHttpNotFound => `String("ManifestListHttpNotFound")
-      | `ManifestListNoResponse => `String("ManifestListNoResponse")
-      | `ManifestListInvalidResponse => `String("ManifestListInvalidResponse")
-      | `ManifestNotInManifestList => `String("ManifestNotInManifestList")
-      | `ManifestListTooBig => `String("ManifestListTooBig")
-      | `ManifestHttpNotFound => `String("ManifestHttpNotFound")
-      | `ManifestNoResponse => `String("ManifestNoResponse")
-      | `ManifestInvalidResponse => `String("ManifestInvalidResponse")
+      | `WellKnownHttpNotFound => `String("WellKnownHttpNotFound")
+      | `WellKnownNoResponse => `String("WellKnownNoResponse")
+      | `WellKnownInvalidResponse => `String("WellKnownInvalidResponse")
+      | `ConfigNotInWellKnown => `String("ConfigNotInWellKnown")
+      | `WellKnownTooBig => `String("WellKnownTooBig")
+      | `ConfigHttpNotFound => `String("ConfigHttpNotFound")
+      | `ConfigNoResponse => `String("ConfigNoResponse")
+      | `ConfigInvalidResponse => `String("ConfigInvalidResponse")
       | `ClientMetadataHttpNotFound => `String("ClientMetadataHttpNotFound")
       | `ClientMetadataNoResponse => `String("ClientMetadataNoResponse")
       | `ClientMetadataInvalidResponse =>
@@ -8045,7 +8045,7 @@ A display feature that only splits content will have a 0 mask_length. */,
     };
   }
   and DisabledImageType: {
-    type _disabledimagetype = [ | `avif | `jxl | `webp];
+    type _disabledimagetype = [ | `avif | `webp];
     let _disabledimagetype_of_yojson: Yojson.Basic.t => _disabledimagetype;
     let yojson_of__disabledimagetype: _disabledimagetype => Yojson.Basic.t;
     /* Enum of image types that can be disabled. */
@@ -8279,25 +8279,23 @@ A display feature that only splits content will have a 0 mask_length. */,
     };
   }
   and DisabledImageType: {
-    type _disabledimagetype = [ | `avif | `jxl | `webp];
+    type _disabledimagetype = [ | `avif | `webp];
     let _disabledimagetype_of_yojson: Yojson.Basic.t => _disabledimagetype;
     let yojson_of__disabledimagetype: _disabledimagetype => Yojson.Basic.t;
     /* Enum of image types that can be disabled. */
     [@deriving yojson]
     type t = _disabledimagetype;
   } = {
-    type _disabledimagetype = [ | `avif | `jxl | `webp];
+    type _disabledimagetype = [ | `avif | `webp];
     let _disabledimagetype_of_yojson =
       fun
       | `String("avif") => `avif
-      | `String("jxl") => `jxl
       | `String("webp") => `webp
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__disabledimagetype =
       fun
       | `avif => `String("avif")
-      | `jxl => `String("jxl")
       | `webp => `String("webp");
     /* Enum of image types that can be disabled. */
     [@deriving yojson]
@@ -14520,6 +14518,7 @@ as an ad. */
       | `serial
       | `shared_autofill
       | `shared_storage
+      | `smart_card
       | `storage_access
       | `sync_xhr
       | `trust_token_redemption
@@ -15536,6 +15535,7 @@ as an ad. */
       | `serial
       | `shared_autofill
       | `shared_storage
+      | `smart_card
       | `storage_access
       | `sync_xhr
       | `trust_token_redemption
@@ -15621,6 +15621,7 @@ as an ad. */
       | `serial
       | `shared_autofill
       | `shared_storage
+      | `smart_card
       | `storage_access
       | `sync_xhr
       | `trust_token_redemption
@@ -15698,6 +15699,7 @@ as an ad. */
       | `String("serial") => `serial
       | `String("shared-autofill") => `shared_autofill
       | `String("shared-storage") => `shared_storage
+      | `String("smart-card") => `smart_card
       | `String("storage-access") => `storage_access
       | `String("sync-xhr") => `sync_xhr
       | `String("trust-token-redemption") => `trust_token_redemption
@@ -15779,6 +15781,7 @@ as an ad. */
       | `serial => `String("serial")
       | `shared_autofill => `String("shared-autofill")
       | `shared_storage => `String("shared-storage")
+      | `smart_card => `String("smart-card")
       | `storage_access => `String("storage-access")
       | `sync_xhr => `String("sync-xhr")
       | `trust_token_redemption => `String("trust-token-redemption")
