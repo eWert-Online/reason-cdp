@@ -1513,7 +1513,10 @@ instead of "limited-quirks". */
     };
   }
   and GenericIssueErrorType: {
-    type _genericissueerrortype = [ | `CrossOriginPortalPostMessageError];
+    type _genericissueerrortype = [
+      | `CrossOriginPortalPostMessageError
+      | `FormLabelForNameError
+    ];
     let _genericissueerrortype_of_yojson:
       Yojson.Basic.t => _genericissueerrortype;
     let yojson_of__genericissueerrortype:
@@ -1529,7 +1532,9 @@ instead of "limited-quirks". */
       [@key "errorType"]
       errorType: GenericIssueErrorType.t, /* Issues with the same errorType are aggregated in the frontend. */
       [@yojson.option] [@key "frameId"]
-      frameId: option(Page.FrameId.t) /* No description provided */,
+      frameId: option(Page.FrameId.t), /* No description provided */
+      [@yojson.option] [@key "violatingNodeId"]
+      violatingNodeId: option(DOM.BackendNodeId.t) /* No description provided */,
     };
   }
   and DeprecationIssueType: {
@@ -2874,7 +2879,10 @@ instead of "limited-quirks". */
     };
   }
   and GenericIssueErrorType: {
-    type _genericissueerrortype = [ | `CrossOriginPortalPostMessageError];
+    type _genericissueerrortype = [
+      | `CrossOriginPortalPostMessageError
+      | `FormLabelForNameError
+    ];
     let _genericissueerrortype_of_yojson:
       Yojson.Basic.t => _genericissueerrortype;
     let yojson_of__genericissueerrortype:
@@ -2883,16 +2891,21 @@ instead of "limited-quirks". */
     [@deriving yojson]
     type t = _genericissueerrortype;
   } = {
-    type _genericissueerrortype = [ | `CrossOriginPortalPostMessageError];
+    type _genericissueerrortype = [
+      | `CrossOriginPortalPostMessageError
+      | `FormLabelForNameError
+    ];
     let _genericissueerrortype_of_yojson =
       fun
       | `String("CrossOriginPortalPostMessageError") => `CrossOriginPortalPostMessageError
+      | `String("FormLabelForNameError") => `FormLabelForNameError
       | `String(s) => failwith("unknown enum: " ++ s)
       | _ => failwith("unknown enum type");
     let yojson_of__genericissueerrortype =
       fun
       | `CrossOriginPortalPostMessageError =>
-        `String("CrossOriginPortalPostMessageError");
+        `String("CrossOriginPortalPostMessageError")
+      | `FormLabelForNameError => `String("FormLabelForNameError");
     /* No description provided */
     [@deriving yojson]
     type t = _genericissueerrortype;
@@ -2904,7 +2917,9 @@ instead of "limited-quirks". */
       [@key "errorType"]
       errorType: GenericIssueErrorType.t, /* Issues with the same errorType are aggregated in the frontend. */
       [@yojson.option] [@key "frameId"]
-      frameId: option(Page.FrameId.t) /* No description provided */,
+      frameId: option(Page.FrameId.t), /* No description provided */
+      [@yojson.option] [@key "violatingNodeId"]
+      violatingNodeId: option(DOM.BackendNodeId.t) /* No description provided */,
     };
   } = {
     /* Depending on the concrete errorType, different properties are set. */
@@ -2913,7 +2928,9 @@ instead of "limited-quirks". */
       [@key "errorType"]
       errorType: GenericIssueErrorType.t, /* Issues with the same errorType are aggregated in the frontend. */
       [@yojson.option] [@key "frameId"]
-      frameId: option(Page.FrameId.t) /* No description provided */,
+      frameId: option(Page.FrameId.t), /* No description provided */
+      [@yojson.option] [@key "violatingNodeId"]
+      violatingNodeId: option(DOM.BackendNodeId.t) /* No description provided */,
     };
   }
   and DeprecationIssueType: {
@@ -15117,6 +15134,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `InjectedJavascript
       | `InjectedStyleSheet
       | `KeepaliveRequest
+      | `IndexedDBEvent
       | `Dummy
       | `AuthorizationHeader
       | `ContentSecurityHandler
@@ -16977,6 +16995,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `InjectedJavascript
       | `InjectedStyleSheet
       | `KeepaliveRequest
+      | `IndexedDBEvent
       | `Dummy
       | `AuthorizationHeader
       | `ContentSecurityHandler
@@ -17110,6 +17129,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `InjectedJavascript
       | `InjectedStyleSheet
       | `KeepaliveRequest
+      | `IndexedDBEvent
       | `Dummy
       | `AuthorizationHeader
       | `ContentSecurityHandler
@@ -17236,6 +17256,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `String("InjectedJavascript") => `InjectedJavascript
       | `String("InjectedStyleSheet") => `InjectedStyleSheet
       | `String("KeepaliveRequest") => `KeepaliveRequest
+      | `String("IndexedDBEvent") => `IndexedDBEvent
       | `String("Dummy") => `Dummy
       | `String("AuthorizationHeader") => `AuthorizationHeader
       | `String("ContentSecurityHandler") => `ContentSecurityHandler
@@ -17393,6 +17414,7 @@ Example URLs: http://www.google.com/file.html -> "google.com"
       | `InjectedJavascript => `String("InjectedJavascript")
       | `InjectedStyleSheet => `String("InjectedStyleSheet")
       | `KeepaliveRequest => `String("KeepaliveRequest")
+      | `IndexedDBEvent => `String("IndexedDBEvent")
       | `Dummy => `String("Dummy")
       | `AuthorizationHeader => `String("AuthorizationHeader")
       | `ContentSecurityHandler => `String("ContentSecurityHandler")

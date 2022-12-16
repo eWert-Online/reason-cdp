@@ -1554,6 +1554,7 @@ available, such as in the case of HTTP/2 or QUIC. */,
       | `ResourceExhausted
       | `AlreadyExists
       | `Unavailable
+      | `Unauthorized
       | `BadResponse
       | `InternalError
       | `UnknownError
@@ -1567,6 +1568,7 @@ available, such as in the case of HTTP/2 or QUIC. */,
       | `String("ResourceExhausted") => `ResourceExhausted
       | `String("AlreadyExists") => `AlreadyExists
       | `String("Unavailable") => `Unavailable
+      | `String("Unauthorized") => `Unauthorized
       | `String("BadResponse") => `BadResponse
       | `String("InternalError") => `InternalError
       | `String("UnknownError") => `UnknownError
@@ -1581,6 +1583,7 @@ available, such as in the case of HTTP/2 or QUIC. */,
       | `ResourceExhausted => `String("ResourceExhausted")
       | `AlreadyExists => `String("AlreadyExists")
       | `Unavailable => `String("Unavailable")
+      | `Unauthorized => `String("Unauthorized")
       | `BadResponse => `String("BadResponse")
       | `InternalError => `String("InternalError")
       | `UnknownError => `String("UnknownError")
