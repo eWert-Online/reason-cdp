@@ -32381,8 +32381,10 @@ not supported on MacOS yet, false by default). */
         [@yojson.option] [@key "newWindow"]
         newWindow: option(bool), /* Whether to create a new Window or Tab (chrome-only, false by default). */
         [@yojson.option] [@key "background"]
-        background: option(bool) /* Whether to create the target in background or foreground (chrome-only,
-false by default). */,
+        background: option(bool), /* Whether to create the target in background or foreground (chrome-only,
+false by default). */
+        [@yojson.option] [@key "forTab"]
+        forTab: option(bool) /* Whether to create the target of type "tab". */,
       };
       let make =
           (
@@ -32393,6 +32395,7 @@ false by default). */,
             ~enableBeginFrameControl=?,
             ~newWindow=?,
             ~background=?,
+            ~forTab=?,
             (),
           ) => {
         {
@@ -32403,6 +32406,7 @@ false by default). */,
           enableBeginFrameControl,
           newWindow,
           background,
+          forTab,
         };
       };
     };
