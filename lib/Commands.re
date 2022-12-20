@@ -31467,6 +31467,78 @@ disabled (called without a quotaSize). */,
       };
     };
   };
+  /* Resets the budget for `ownerOrigin` by clearing all budget withdrawals. */
+  module ResetSharedStorageBudget = {
+    module Response: {
+      type result = Types.assoc;
+
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      type t = {
+        id: int,
+        error: option(error),
+        sessionId: option(Types.Target.SessionID.t),
+        result: option(result),
+      };
+
+      let parse: string => t;
+    } = {
+      [@deriving yojson]
+      type result = Types.assoc;
+
+      [@deriving yojson]
+      type error = {
+        code: int,
+        message: string,
+      };
+
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        error: option(error),
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        [@yojson.option]
+        result: option(result),
+      };
+
+      let parse = response => {
+        response |> Yojson.Safe.from_string |> t_of_yojson;
+      };
+    };
+
+    module Params = {
+      [@deriving yojson]
+      type t = {
+        [@key "ownerOrigin"]
+        ownerOrigin: string /* No description provided */,
+      };
+      let make = (~ownerOrigin, ()) => {
+        {ownerOrigin: ownerOrigin};
+      };
+    };
+
+    module Request = {
+      [@deriving yojson]
+      type t = {
+        id: int,
+        [@yojson.option]
+        sessionId: option(Types.Target.SessionID.t),
+        method: string,
+        params: Params.t,
+      };
+
+      let make = (~sessionId=?, ~params, id) => {
+        {id, method: "Storage.resetSharedStorageBudget", sessionId, params}
+        |> yojson_of_t
+        |> Yojson.Safe.to_string;
+      };
+    };
+  };
   /* Enables/disables issuing of sharedStorageAccessed events. */
   module SetSharedStorageTracking = {
     module Response: {
