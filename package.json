@@ -1,7 +1,7 @@
 {
   "name": "cdp",
   "version": "0.0.1085790",
-  "description": "CDP for ReasonML",
+  "description": "Chrome Devtools Protocol Types for OCaml",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,29 +15,6 @@
     "url": "https://github.com/eWert-Online/reason-cdp/issues"
   },
   "keywords": [
-    "ocaml",
-    "reason",
-    "reasonml"
-  ],
-  "esy": {
-    "build": "dune build -p cdp",
-    "buildDev": "dune build --promote-install-files --root . --only-package cdp"
-  },
-  "scripts": {
-    "c": "rm ./lib/Types.re ./lib/Events.re ./lib/Commands.re",
-    "gen": "esy x cdp ./protocols/browser_protocol.json ./protocols/js_protocol.json ./lib",
-    "fmt": "esy refmt --in-place ./lib/Types.re ./lib/Events.re ./lib/Commands.re"
-  },
-  "dependencies": {
-    "@opam/reason": ">= 3.6.0 < 4.0.0",
-    "@opam/cmdliner": "1.0.4",
-    "@opam/fileutils": "0.6.3",
-    "@opam/ppx_yojson_conv": "v0.14.0",
-    "@opam/yojson": "1.7.0"
-  },
-  "devDependencies": {
-    "@opam/dune": "< 3.0.0",
-    "@opam/ocaml-lsp-server": "1.5.0",
-    "ocaml": "4.12.0"
-  }
+    "ocaml"
+  ]
 }

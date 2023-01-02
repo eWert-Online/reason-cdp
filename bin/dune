@@ -1,4 +1,5 @@
 (executable
+ (package cdp-generator)
  (name Main)
  (modules Main)
  (public_name cdp)
