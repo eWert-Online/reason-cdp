@@ -51,6 +51,10 @@ jobs:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
 
       - if: steps.git-check.outputs.modified == 'true'
+        name: Install dependencies
+        run: opam install . --locked --deps-only --with-test --yes
+
+      - if: steps.git-check.outputs.modified == 'true'
         name: Build OCaml bindings
         run: |
           rm ./lib/Types.ml ./lib/Events.ml ./lib/Commands.ml
