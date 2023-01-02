@@ -32,7 +32,7 @@ module Accessibility = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -76,7 +76,7 @@ module Accessibility = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -169,7 +169,7 @@ module Accessibility = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -243,7 +243,7 @@ module Accessibility = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -311,7 +311,7 @@ module Accessibility = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -386,7 +386,7 @@ module Accessibility = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -461,7 +461,7 @@ module Accessibility = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -556,7 +556,7 @@ module Accessibility = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -602,7 +602,7 @@ module Animation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -645,7 +645,7 @@ module Animation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -704,7 +704,7 @@ module Animation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -759,7 +759,7 @@ module Animation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -812,7 +812,7 @@ module Animation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -874,7 +874,7 @@ module Animation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -931,7 +931,7 @@ module Animation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -987,7 +987,7 @@ module Animation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1042,7 +1042,7 @@ module Animation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1100,7 +1100,7 @@ module Animation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1209,7 +1209,7 @@ module Audits = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1253,7 +1253,7 @@ module Audits = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -1297,7 +1297,7 @@ module Audits = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -1354,7 +1354,7 @@ module Audits = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1410,7 +1410,7 @@ module BackgroundService = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1464,7 +1464,7 @@ module BackgroundService = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1520,7 +1520,7 @@ module BackgroundService = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1574,7 +1574,7 @@ module BackgroundService = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1645,7 +1645,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1711,7 +1711,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1769,7 +1769,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1864,7 +1864,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1925,7 +1925,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -1969,7 +1969,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -2012,7 +2012,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -2055,7 +2055,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -2115,7 +2115,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -2168,7 +2168,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -2241,7 +2241,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -2307,7 +2307,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -2378,7 +2378,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -2457,7 +2457,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -2518,7 +2518,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -2580,7 +2580,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -2634,7 +2634,7 @@ module Browser = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -2710,7 +2710,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -2773,7 +2773,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -2843,7 +2843,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -2887,7 +2887,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -2931,7 +2931,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -2991,7 +2991,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3103,7 +3103,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3168,7 +3168,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3248,7 +3248,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3393,7 +3393,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3446,7 +3446,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -3511,7 +3511,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3572,7 +3572,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3638,7 +3638,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3697,7 +3697,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3756,7 +3756,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -3814,7 +3814,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3888,7 +3888,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -3956,7 +3956,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4026,7 +4026,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4094,7 +4094,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4162,7 +4162,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4232,7 +4232,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4300,7 +4300,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4365,7 +4365,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4409,7 +4409,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -4462,7 +4462,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -4521,7 +4521,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -4575,7 +4575,7 @@ module CSS = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4631,7 +4631,7 @@ module CacheStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4688,7 +4688,7 @@ module CacheStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4758,7 +4758,7 @@ module CacheStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4826,7 +4826,7 @@ module CacheStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4923,7 +4923,7 @@ module CacheStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -4985,7 +4985,7 @@ module Cast = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5029,7 +5029,7 @@ module Cast = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -5083,7 +5083,7 @@ module Cast = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5137,7 +5137,7 @@ module Cast = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5191,7 +5191,7 @@ module Cast = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5245,7 +5245,7 @@ module Cast = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5311,7 +5311,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5386,7 +5386,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5473,7 +5473,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5548,7 +5548,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5592,7 +5592,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -5646,7 +5646,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5716,7 +5716,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5781,7 +5781,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5849,7 +5849,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -5923,7 +5923,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6000,7 +6000,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6073,7 +6073,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6150,7 +6150,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6227,7 +6227,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6320,7 +6320,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6392,7 +6392,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6457,7 +6457,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6528,7 +6528,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6572,7 +6572,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -6615,7 +6615,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -6658,7 +6658,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -6701,7 +6701,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -6774,7 +6774,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6848,7 +6848,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6911,7 +6911,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -6983,7 +6983,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7052,7 +7052,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7116,7 +7116,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7171,7 +7171,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -7214,7 +7214,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -7270,7 +7270,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7324,7 +7324,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7394,7 +7394,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7460,7 +7460,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7542,7 +7542,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7599,7 +7599,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7667,7 +7667,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7734,7 +7734,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7787,7 +7787,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7855,7 +7855,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7918,7 +7918,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -7975,7 +7975,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8039,7 +8039,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8094,7 +8094,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8150,7 +8150,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8194,7 +8194,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -8268,7 +8268,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8353,7 +8353,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8425,7 +8425,7 @@ module DOM = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8511,7 +8511,7 @@ module DOMDebugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8568,7 +8568,7 @@ module DOMDebugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8625,7 +8625,7 @@ module DOMDebugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8684,7 +8684,7 @@ module DOMDebugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8742,7 +8742,7 @@ module DOMDebugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8796,7 +8796,7 @@ module DOMDebugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8858,7 +8858,7 @@ module DOMDebugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8920,7 +8920,7 @@ module DOMDebugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -8979,7 +8979,7 @@ module DOMDebugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -9041,7 +9041,7 @@ module DOMDebugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -9097,7 +9097,7 @@ module EventBreakpoints = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -9156,7 +9156,7 @@ module EventBreakpoints = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -9207,7 +9207,7 @@ module DOMSnapshot = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -9250,7 +9250,7 @@ module DOMSnapshot = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -9363,7 +9363,7 @@ module DOMSnapshot = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -9484,7 +9484,7 @@ module DOMSnapshot = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -9540,7 +9540,7 @@ module DOMStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -9584,7 +9584,7 @@ module DOMStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -9627,7 +9627,7 @@ module DOMStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -9689,7 +9689,7 @@ module DOMStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -9744,7 +9744,7 @@ module DOMStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -9800,7 +9800,7 @@ module DOMStorage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -9846,7 +9846,7 @@ module Database = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -9889,7 +9889,7 @@ module Database = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -9972,7 +9972,7 @@ module Database = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10035,7 +10035,7 @@ module Database = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10081,7 +10081,7 @@ module DeviceOrientation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -10139,7 +10139,7 @@ module DeviceOrientation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10199,7 +10199,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -10242,7 +10242,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -10285,7 +10285,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -10328,7 +10328,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -10382,7 +10382,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10445,7 +10445,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10502,7 +10502,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10562,7 +10562,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10711,7 +10711,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10771,7 +10771,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10826,7 +10826,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10904,7 +10904,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -10970,7 +10970,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11050,7 +11050,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11115,7 +11115,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11172,7 +11172,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11216,7 +11216,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -11270,7 +11270,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11324,7 +11324,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11380,7 +11380,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11444,7 +11444,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11546,7 +11546,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11605,7 +11605,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11662,7 +11662,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11718,7 +11718,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11772,7 +11772,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11827,7 +11827,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11900,7 +11900,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -11955,7 +11955,7 @@ module Emulation = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -12081,7 +12081,7 @@ module HeadlessExperimental = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -12125,7 +12125,7 @@ module HeadlessExperimental = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -12168,7 +12168,7 @@ module HeadlessExperimental = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -12223,7 +12223,7 @@ module IO = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -12314,7 +12314,7 @@ module IO = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -12375,7 +12375,7 @@ module IO = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -12443,7 +12443,7 @@ module IndexedDB = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -12507,7 +12507,7 @@ module IndexedDB = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -12576,7 +12576,7 @@ module IndexedDB = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -12625,7 +12625,7 @@ module IndexedDB = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -12668,7 +12668,7 @@ module IndexedDB = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -12772,7 +12772,7 @@ module IndexedDB = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -12859,7 +12859,7 @@ module IndexedDB = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -12934,7 +12934,7 @@ module IndexedDB = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13004,7 +13004,7 @@ module IndexedDB = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13099,7 +13099,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13275,7 +13275,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13329,7 +13329,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13398,7 +13398,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13586,7 +13586,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13681,7 +13681,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13797,7 +13797,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13852,7 +13852,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13906,7 +13906,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -13984,7 +13984,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -14117,7 +14117,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -14197,7 +14197,7 @@ module Input = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -14243,7 +14243,7 @@ module Inspector = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -14286,7 +14286,7 @@ module Inspector = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -14369,7 +14369,7 @@ module LayerTree = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -14413,7 +14413,7 @@ module LayerTree = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -14456,7 +14456,7 @@ module LayerTree = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -14519,7 +14519,7 @@ module LayerTree = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -14582,7 +14582,7 @@ module LayerTree = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -14664,7 +14664,7 @@ module LayerTree = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -14718,7 +14718,7 @@ module LayerTree = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -14798,7 +14798,7 @@ module LayerTree = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -14863,7 +14863,7 @@ module LayerTree = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -14909,7 +14909,7 @@ module Log = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -14952,7 +14952,7 @@ module Log = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -14996,7 +14996,7 @@ module Log = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15049,7 +15049,7 @@ module Log = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -15093,7 +15093,7 @@ module Log = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15155,7 +15155,7 @@ module Memory = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15198,7 +15198,7 @@ module Memory = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15241,7 +15241,7 @@ module Memory = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15296,7 +15296,7 @@ module Memory = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -15356,7 +15356,7 @@ module Memory = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -15422,7 +15422,7 @@ module Memory = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -15466,7 +15466,7 @@ module Memory = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15519,7 +15519,7 @@ module Memory = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15572,7 +15572,7 @@ module Memory = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15625,7 +15625,7 @@ module Memory = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15681,7 +15681,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -15725,7 +15725,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15777,7 +15777,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15831,7 +15831,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15885,7 +15885,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15928,7 +15928,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -15971,7 +15971,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -16090,7 +16090,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16166,7 +16166,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16210,7 +16210,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -16291,7 +16291,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16362,7 +16362,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16417,7 +16417,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -16479,7 +16479,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16548,7 +16548,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16616,7 +16616,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16684,7 +16684,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16753,7 +16753,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16824,7 +16824,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16885,7 +16885,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -16959,7 +16959,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17014,7 +17014,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17069,7 +17069,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17123,7 +17123,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17268,7 +17268,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17322,7 +17322,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17376,7 +17376,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17432,7 +17432,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17491,7 +17491,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17559,7 +17559,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17625,7 +17625,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17687,7 +17687,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17759,7 +17759,7 @@ module Network = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -17805,7 +17805,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -17848,7 +17848,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -17935,7 +17935,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18001,7 +18001,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18071,7 +18071,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18120,7 +18120,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -18188,7 +18188,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18261,7 +18261,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18322,7 +18322,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18387,7 +18387,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18457,7 +18457,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18519,7 +18519,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18572,7 +18572,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18630,7 +18630,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18688,7 +18688,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18742,7 +18742,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18799,7 +18799,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18856,7 +18856,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18914,7 +18914,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -18973,7 +18973,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19032,7 +19032,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19086,7 +19086,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19141,7 +19141,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19200,7 +19200,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19253,7 +19253,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19306,7 +19306,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19367,7 +19367,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19426,7 +19426,7 @@ module Overlay = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19491,7 +19491,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19570,7 +19570,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19619,7 +19619,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -19737,7 +19737,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19811,7 +19811,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -19855,7 +19855,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -19898,7 +19898,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -19941,7 +19941,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20020,7 +20020,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -20076,7 +20076,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -20120,7 +20120,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20163,7 +20163,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20229,7 +20229,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20281,7 +20281,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20337,7 +20337,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20410,7 +20410,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20484,7 +20484,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -20539,7 +20539,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20591,7 +20591,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20691,7 +20691,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20749,7 +20749,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20792,7 +20792,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20860,7 +20860,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -20915,7 +20915,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -20976,7 +20976,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21082,7 +21082,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21137,7 +21137,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21331,7 +21331,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21397,7 +21397,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21451,7 +21451,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21505,7 +21505,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21563,7 +21563,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21638,7 +21638,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21691,7 +21691,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21745,7 +21745,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21808,7 +21808,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -21871,7 +21871,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22005,7 +22005,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22060,7 +22060,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22122,7 +22122,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22179,7 +22179,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22234,7 +22234,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22312,7 +22312,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22372,7 +22372,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22427,7 +22427,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22499,7 +22499,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22584,7 +22584,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22628,7 +22628,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -22671,7 +22671,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -22714,7 +22714,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -22781,7 +22781,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22825,7 +22825,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -22883,7 +22883,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22942,7 +22942,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -22986,7 +22986,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -23057,7 +23057,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -23117,7 +23117,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -23161,7 +23161,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -23215,7 +23215,7 @@ module Page = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -23266,7 +23266,7 @@ module Performance = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -23335,7 +23335,7 @@ module Performance = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -23403,7 +23403,7 @@ module Performance = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -23456,7 +23456,7 @@ module Performance = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -23520,7 +23520,7 @@ module PerformanceTimeline = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -23566,7 +23566,7 @@ module Security = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -23609,7 +23609,7 @@ module Security = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -23663,7 +23663,7 @@ module Security = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -23725,7 +23725,7 @@ module Security = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -23781,7 +23781,7 @@ module Security = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -23845,7 +23845,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -23889,7 +23889,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -23947,7 +23947,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24003,7 +24003,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24052,7 +24052,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -24105,7 +24105,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24160,7 +24160,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24219,7 +24219,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24273,7 +24273,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24317,7 +24317,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -24370,7 +24370,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24424,7 +24424,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24478,7 +24478,7 @@ module ServiceWorker = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24543,7 +24543,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24599,7 +24599,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24655,7 +24655,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24721,7 +24721,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24780,7 +24780,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24837,7 +24837,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24917,7 +24917,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -24986,7 +24986,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25039,7 +25039,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25097,7 +25097,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25155,7 +25155,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25208,7 +25208,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25266,7 +25266,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25324,7 +25324,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25382,7 +25382,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25435,7 +25435,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25494,7 +25494,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -25559,7 +25559,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25623,7 +25623,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25676,7 +25676,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25739,7 +25739,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25802,7 +25802,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25866,7 +25866,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25921,7 +25921,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -25975,7 +25975,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26029,7 +26029,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26082,7 +26082,7 @@ module Storage = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26177,7 +26177,7 @@ module SystemInfo = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -26239,7 +26239,7 @@ module SystemInfo = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26292,7 +26292,7 @@ module SystemInfo = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -26347,7 +26347,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26418,7 +26418,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26471,7 +26471,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -26539,7 +26539,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26604,7 +26604,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26700,7 +26700,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26755,7 +26755,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -26867,7 +26867,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26925,7 +26925,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -26980,7 +26980,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27045,7 +27045,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27115,7 +27115,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27178,7 +27178,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27256,7 +27256,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27325,7 +27325,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27388,7 +27388,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27443,7 +27443,7 @@ module Target = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27498,7 +27498,7 @@ module Tethering = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27551,7 +27551,7 @@ module Tethering = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27597,7 +27597,7 @@ module Tracing = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -27651,7 +27651,7 @@ module Tracing = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -27704,7 +27704,7 @@ module Tracing = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27785,7 +27785,7 @@ module Tracing = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27912,7 +27912,7 @@ module Tracing = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -27958,7 +27958,7 @@ module Fetch = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -28027,7 +28027,7 @@ module Fetch = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28085,7 +28085,7 @@ module Fetch = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28179,7 +28179,7 @@ module Fetch = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28267,7 +28267,7 @@ module Fetch = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28326,7 +28326,7 @@ module Fetch = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28418,7 +28418,7 @@ module Fetch = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28492,7 +28492,7 @@ module Fetch = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28564,7 +28564,7 @@ module Fetch = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28610,7 +28610,7 @@ module WebAudio = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -28653,7 +28653,7 @@ module WebAudio = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -28715,7 +28715,7 @@ module WebAudio = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28781,7 +28781,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28825,7 +28825,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -28887,7 +28887,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -28963,7 +28963,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29017,7 +29017,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29078,7 +29078,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29145,7 +29145,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29208,7 +29208,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29265,7 +29265,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29319,7 +29319,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29377,7 +29377,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29433,7 +29433,7 @@ module WebAuthn = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29484,7 +29484,7 @@ module Media = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -29527,7 +29527,7 @@ module Media = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -29572,7 +29572,7 @@ module Console = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -29615,7 +29615,7 @@ module Console = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -29659,7 +29659,7 @@ module Console = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -29730,7 +29730,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29774,7 +29774,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -29844,7 +29844,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -29975,7 +29975,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30057,7 +30057,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30134,7 +30134,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30227,7 +30227,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30293,7 +30293,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30363,7 +30363,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30426,7 +30426,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30470,7 +30470,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -30526,7 +30526,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30580,7 +30580,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30689,7 +30689,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30754,7 +30754,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30827,7 +30827,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30885,7 +30885,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -30944,7 +30944,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31003,7 +31003,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31081,7 +31081,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31161,7 +31161,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31272,7 +31272,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31346,7 +31346,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31406,7 +31406,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31477,7 +31477,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31531,7 +31531,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31710,7 +31710,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31764,7 +31764,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31832,7 +31832,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31897,7 +31897,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -31941,7 +31941,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -31998,7 +31998,7 @@ module Debugger = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -32058,7 +32058,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -32107,7 +32107,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -32150,7 +32150,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -32193,7 +32193,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -32262,7 +32262,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -32331,7 +32331,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -32391,7 +32391,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -32489,7 +32489,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -32545,7 +32545,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -32603,7 +32603,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -32681,7 +32681,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -32767,7 +32767,7 @@ module HeapProfiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -32813,7 +32813,7 @@ module Profiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -32856,7 +32856,7 @@ module Profiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -32911,7 +32911,7 @@ module Profiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -32965,7 +32965,7 @@ module Profiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -33009,7 +33009,7 @@ module Profiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -33093,7 +33093,7 @@ module Profiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -33146,7 +33146,7 @@ module Profiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -33190,7 +33190,7 @@ module Profiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -33255,7 +33255,7 @@ module Profiler = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -33344,7 +33344,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -33523,7 +33523,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -33610,7 +33610,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -33654,7 +33654,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -33697,7 +33697,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -33742,7 +33742,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -33944,7 +33944,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -33990,7 +33990,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -34047,7 +34047,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -34171,7 +34171,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -34238,7 +34238,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -34308,7 +34308,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -34363,7 +34363,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -34417,7 +34417,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -34461,7 +34461,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -34587,7 +34587,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -34645,7 +34645,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -34698,7 +34698,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -34756,7 +34756,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -34806,7 +34806,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 
@@ -34888,7 +34888,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -34942,7 +34942,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -35015,7 +35015,7 @@ module Runtime = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
         params : Params.t;
       }
       [@@deriving yojson]
@@ -35070,7 +35070,7 @@ module Schema = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string;
+        method_ : string; [@key "method"]
       }
       [@@deriving yojson]
 

@@ -333,7 +333,7 @@ let get_event ~domain event =
       "  type result = " ^ result ^ " [@@deriving yojson]";
       "";
       "  type t = {";
-      "    method_: string;";
+      "    method_: string [@key \"method\"];";
       "    params: result;";
       "    sessionId: Types.Target.SessionID.t;";
       "  } [@@deriving yojson]";
@@ -479,7 +479,7 @@ let get_command ~domain command =
        {                                                           ";
       "      id: int;";
       "      sessionId: Types.Target.SessionID.t option [@yojson.option];";
-      "      method_: string;";
+      "      method_: string [@key \"method\"];";
       (match Option.is_some params with
       | true -> "params: Params.t;"
       | false -> "");
