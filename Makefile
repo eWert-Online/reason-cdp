@@ -19,6 +19,7 @@ install:
 	fi
 	opam install ./*.opam --locked --deps-only --with-test --with-doc --yes
 	opam lock .
+	opam install -y ocaml-lsp-server
 
 update:
 	opam update

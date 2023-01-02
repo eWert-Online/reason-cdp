@@ -10,8 +10,6 @@ depends: [
   "cmdliner"
   "dune" {>= "2.8"}
   "fileutils"
-  "ppx_yojson_conv"
-  "ocaml-lsp-server"
   "ocamlformat"
   "ocaml"
   "yojson"

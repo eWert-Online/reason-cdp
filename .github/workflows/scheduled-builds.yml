@@ -1,9 +1,6 @@
 name: Check CDP Versions
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     - cron: "0 * * * *"
 
