@@ -38,8 +38,8 @@ jobs:
           cd ..
           modified=$(npm version --no-git-tag-version "0.0.$cdp_version" &> /dev/null && echo true || echo false);
           echo "Modified $modified";
-          echo "::set-output name=cdp_version::$cdp_version";
-          echo "::set-output name=modified::$modified";
+          echo "cdp_version=$cdp_version" >> $GITHUB_OUTPUT
+          echo "modified=$modified" >> $GITHUB_OUTPUT
 
       - if: steps.git-check.outputs.modified == 'true'
         name: Use OCaml ${{ matrix.ocaml-compiler }}
