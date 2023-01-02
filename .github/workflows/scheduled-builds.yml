@@ -7,15 +7,22 @@ on:
 jobs:
   build:
     name: Trigger Protocol Build
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - ubuntu-latest
+        ocaml-compiler:
+          - 4.14.x
+    runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout Reason CDP
-        uses: actions/checkout@v2
+      - name: Checkout CDP
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Checkout devtools-protocol
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: ChromeDevTools/devtools-protocol
           path: devtools-protocol
@@ -35,27 +42,17 @@ jobs:
           echo "::set-output name=modified::$modified";
 
       - if: steps.git-check.outputs.modified == 'true'
-        uses: actions/setup-node@v2
+        name: Use OCaml ${{ matrix.ocaml-compiler }}
+        uses: ocaml/setup-ocaml@v2
         with:
-          node-version: 14
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
 
       - if: steps.git-check.outputs.modified == 'true'
-        name: Install esy
+        name: Build OCaml bindings
         run: |
-          npm install -g esy
-
-      - if: steps.git-check.outputs.modified == 'true'
-        uses: esy/github-action@master
-        with:
-          cache-key: ${{ matrix.os }}-${{ hashFiles('esy.lock/index.json') }}
-
-      - if: steps.git-check.outputs.modified == 'true'
-        name: Build Reason bindings
-        run: |
-          rm ./lib/Types.re ./lib/Events.re ./lib/Commands.re
-          esy x cdp ./devtools-protocol/json/browser_protocol.json ./devtools-protocol/json/js_protocol.json ./lib
-          esy refmt --in-place ./lib/Types.re ./lib/Events.re ./lib/Commands.re
-          esy
+          rm ./lib/Types.ml ./lib/Events.ml ./lib/Commands.ml
+          make generate
+          make test
 
       - if: steps.git-check.outputs.modified == 'true'
         name: Commit update

@@ -1,7 +1,6 @@
 (library
  (name cdp)
  (public_name cdp)
- (flags (:standard))
  (libraries yojson)
  (preprocess
   (pps ppx_yojson_conv)))

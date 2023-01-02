@@ -9,22 +9,24 @@
 
 (license MIT)
 
-(authors "Torben Ewert")
+(authors "Torben Ewert <torben@ewert-online.com>")
+
+(maintainers "Torben Ewert <torben@ewert-online.com>")
 
 (package
  (name "cdp")
  (synopsis "Chrome DevTools Protocol types")
+ (depends dune ppx_yojson_conv ocaml yojson))
+
+(package
+ (name "cdp-generator")
+ (synopsis "Chrome DevTools Protocol types generator")
  (depends
   cmdliner
   dune
   fileutils
   ppx_yojson_conv
-  (reason
-   (and
-    (>= 3.6.0)
-    (< 4.0.0)))
-  (ocaml
-   (and
-    (>= 4.10.0)
-    (< 5.0.0)))
+  ocaml-lsp-server
+  ocamlformat
+  ocaml
   yojson))
