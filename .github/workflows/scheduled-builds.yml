@@ -58,9 +58,9 @@ jobs:
         name: Build OCaml bindings
         run: |
           rm ./lib/Types.ml ./lib/Events.ml ./lib/Commands.ml
-          dune exec -- cdp ./devtools-protocol/json/browser_protocol.json ./devtools-protocol/json/js_protocol.json ./lib
-          ocamlformat --inplace ./lib/*.ml
-          dune build -p cdp
+          opam exec -- dune exec -- cdp ./devtools-protocol/json/browser_protocol.json ./devtools-protocol/json/js_protocol.json ./lib
+          opam exec -- ocamlformat --inplace ./lib/*.ml
+          opam exec -- dune build -p cdp
 
       - if: steps.git-check.outputs.modified == 'true'
         name: Commit update
