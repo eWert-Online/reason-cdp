@@ -4612,6 +4612,7 @@ and Browser : sig
       | `protectedMediaIdentifier
       | `sensors
       | `storageAccess
+      | `topLevelStorageAccess
       | `videoCapture
       | `videoCapturePanTiltZoom
       | `wakeLockScreen
@@ -4825,6 +4826,7 @@ end = struct
       | `protectedMediaIdentifier
       | `sensors
       | `storageAccess
+      | `topLevelStorageAccess
       | `videoCapture
       | `videoCapturePanTiltZoom
       | `wakeLockScreen
@@ -4859,6 +4861,7 @@ end = struct
       | `protectedMediaIdentifier
       | `sensors
       | `storageAccess
+      | `topLevelStorageAccess
       | `videoCapture
       | `videoCapturePanTiltZoom
       | `wakeLockScreen
@@ -4887,6 +4890,7 @@ end = struct
       | `String "protectedMediaIdentifier" -> `protectedMediaIdentifier
       | `String "sensors" -> `sensors
       | `String "storageAccess" -> `storageAccess
+      | `String "topLevelStorageAccess" -> `topLevelStorageAccess
       | `String "videoCapture" -> `videoCapture
       | `String "videoCapturePanTiltZoom" -> `videoCapturePanTiltZoom
       | `String "wakeLockScreen" -> `wakeLockScreen
@@ -4917,6 +4921,7 @@ end = struct
       | `protectedMediaIdentifier -> `String "protectedMediaIdentifier"
       | `sensors -> `String "sensors"
       | `storageAccess -> `String "storageAccess"
+      | `topLevelStorageAccess -> `String "topLevelStorageAccess"
       | `videoCapture -> `String "videoCapture"
       | `videoCapturePanTiltZoom -> `String "videoCapturePanTiltZoom"
       | `wakeLockScreen -> `String "wakeLockScreen"
