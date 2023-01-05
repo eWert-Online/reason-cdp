@@ -18597,12 +18597,14 @@ and Page : sig
       | `otp_credentials
       | `payment
       | `picture_in_picture
+      | `private_aggregation
       | `publickey_credentials_get
       | `run_ad_auction
       | `screen_wake_lock
       | `serial
       | `shared_autofill
       | `shared_storage
+      | `shared_storage_select_url
       | `smart_card
       | `storage_access
       | `sync_xhr
@@ -19752,12 +19754,14 @@ end = struct
       | `otp_credentials
       | `payment
       | `picture_in_picture
+      | `private_aggregation
       | `publickey_credentials_get
       | `run_ad_auction
       | `screen_wake_lock
       | `serial
       | `shared_autofill
       | `shared_storage
+      | `shared_storage_select_url
       | `smart_card
       | `storage_access
       | `sync_xhr
@@ -19842,12 +19846,14 @@ end = struct
       | `otp_credentials
       | `payment
       | `picture_in_picture
+      | `private_aggregation
       | `publickey_credentials_get
       | `run_ad_auction
       | `screen_wake_lock
       | `serial
       | `shared_autofill
       | `shared_storage
+      | `shared_storage_select_url
       | `smart_card
       | `storage_access
       | `sync_xhr
@@ -19921,12 +19927,14 @@ end = struct
       | `String "otp-credentials" -> `otp_credentials
       | `String "payment" -> `payment
       | `String "picture-in-picture" -> `picture_in_picture
+      | `String "private-aggregation" -> `private_aggregation
       | `String "publickey-credentials-get" -> `publickey_credentials_get
       | `String "run-ad-auction" -> `run_ad_auction
       | `String "screen-wake-lock" -> `screen_wake_lock
       | `String "serial" -> `serial
       | `String "shared-autofill" -> `shared_autofill
       | `String "shared-storage" -> `shared_storage
+      | `String "shared-storage-select-url" -> `shared_storage_select_url
       | `String "smart-card" -> `smart_card
       | `String "storage-access" -> `storage_access
       | `String "sync-xhr" -> `sync_xhr
@@ -20002,12 +20010,14 @@ end = struct
       | `otp_credentials -> `String "otp-credentials"
       | `payment -> `String "payment"
       | `picture_in_picture -> `String "picture-in-picture"
+      | `private_aggregation -> `String "private-aggregation"
       | `publickey_credentials_get -> `String "publickey-credentials-get"
       | `run_ad_auction -> `String "run-ad-auction"
       | `screen_wake_lock -> `String "screen-wake-lock"
       | `serial -> `String "serial"
       | `shared_autofill -> `String "shared-autofill"
       | `shared_storage -> `String "shared-storage"
+      | `shared_storage_select_url -> `String "shared-storage-select-url"
       | `smart_card -> `String "smart-card"
       | `storage_access -> `String "storage-access"
       | `sync_xhr -> `String "sync-xhr"
