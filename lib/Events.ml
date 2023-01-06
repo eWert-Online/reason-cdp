@@ -4707,6 +4707,9 @@ module Runtime = struct
     type result = {
       executionContextId : Types.Runtime.ExecutionContextId.t;
           [@key "executionContextId"] [@ocaml.doc "Id of the destroyed context"]
+      executionContextUniqueId : string;
+          [@key "executionContextUniqueId"]
+          [@ocaml.doc "Unique Id of the destroyed context"]
     }
     [@@deriving yojson]
 
