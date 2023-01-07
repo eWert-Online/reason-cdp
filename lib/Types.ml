@@ -1983,6 +1983,7 @@ and Audits : sig
       | `WellKnownHttpNotFound
       | `WellKnownNoResponse
       | `WellKnownInvalidResponse
+      | `WellKnownListEmpty
       | `ConfigNotInWellKnown
       | `WellKnownTooBig
       | `ConfigHttpNotFound
@@ -1997,6 +1998,7 @@ and Audits : sig
       | `AccountsHttpNotFound
       | `AccountsNoResponse
       | `AccountsInvalidResponse
+      | `AccountsListEmpty
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
       | `IdTokenInvalidResponse
@@ -3910,6 +3912,7 @@ end = struct
       | `WellKnownHttpNotFound
       | `WellKnownNoResponse
       | `WellKnownInvalidResponse
+      | `WellKnownListEmpty
       | `ConfigNotInWellKnown
       | `WellKnownTooBig
       | `ConfigHttpNotFound
@@ -3924,6 +3927,7 @@ end = struct
       | `AccountsHttpNotFound
       | `AccountsNoResponse
       | `AccountsInvalidResponse
+      | `AccountsListEmpty
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
       | `IdTokenInvalidResponse
@@ -3953,6 +3957,7 @@ end = struct
       | `WellKnownHttpNotFound
       | `WellKnownNoResponse
       | `WellKnownInvalidResponse
+      | `WellKnownListEmpty
       | `ConfigNotInWellKnown
       | `WellKnownTooBig
       | `ConfigHttpNotFound
@@ -3967,6 +3972,7 @@ end = struct
       | `AccountsHttpNotFound
       | `AccountsNoResponse
       | `AccountsInvalidResponse
+      | `AccountsListEmpty
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
       | `IdTokenInvalidResponse
@@ -3981,6 +3987,7 @@ end = struct
       | `String "WellKnownHttpNotFound" -> `WellKnownHttpNotFound
       | `String "WellKnownNoResponse" -> `WellKnownNoResponse
       | `String "WellKnownInvalidResponse" -> `WellKnownInvalidResponse
+      | `String "WellKnownListEmpty" -> `WellKnownListEmpty
       | `String "ConfigNotInWellKnown" -> `ConfigNotInWellKnown
       | `String "WellKnownTooBig" -> `WellKnownTooBig
       | `String "ConfigHttpNotFound" -> `ConfigHttpNotFound
@@ -3996,6 +4003,7 @@ end = struct
       | `String "AccountsHttpNotFound" -> `AccountsHttpNotFound
       | `String "AccountsNoResponse" -> `AccountsNoResponse
       | `String "AccountsInvalidResponse" -> `AccountsInvalidResponse
+      | `String "AccountsListEmpty" -> `AccountsListEmpty
       | `String "IdTokenHttpNotFound" -> `IdTokenHttpNotFound
       | `String "IdTokenNoResponse" -> `IdTokenNoResponse
       | `String "IdTokenInvalidResponse" -> `IdTokenInvalidResponse
@@ -4012,6 +4020,7 @@ end = struct
       | `WellKnownHttpNotFound -> `String "WellKnownHttpNotFound"
       | `WellKnownNoResponse -> `String "WellKnownNoResponse"
       | `WellKnownInvalidResponse -> `String "WellKnownInvalidResponse"
+      | `WellKnownListEmpty -> `String "WellKnownListEmpty"
       | `ConfigNotInWellKnown -> `String "ConfigNotInWellKnown"
       | `WellKnownTooBig -> `String "WellKnownTooBig"
       | `ConfigHttpNotFound -> `String "ConfigHttpNotFound"
@@ -4027,6 +4036,7 @@ end = struct
       | `AccountsHttpNotFound -> `String "AccountsHttpNotFound"
       | `AccountsNoResponse -> `String "AccountsNoResponse"
       | `AccountsInvalidResponse -> `String "AccountsInvalidResponse"
+      | `AccountsListEmpty -> `String "AccountsListEmpty"
       | `IdTokenHttpNotFound -> `String "IdTokenHttpNotFound"
       | `IdTokenNoResponse -> `String "IdTokenNoResponse"
       | `IdTokenInvalidResponse -> `String "IdTokenInvalidResponse"
