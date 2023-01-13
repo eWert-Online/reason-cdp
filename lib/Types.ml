@@ -1836,7 +1836,9 @@ and Audits : sig
 
   and GenericIssueErrorType : sig
     type _genericissueerrortype =
-      [ `CrossOriginPortalPostMessageError | `FormLabelForNameError ]
+      [ `CrossOriginPortalPostMessageError
+      | `FormLabelForNameError
+      | `FormDuplicateIdForInputError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3455,7 +3457,9 @@ end = struct
 
   and GenericIssueErrorType : sig
     type _genericissueerrortype =
-      [ `CrossOriginPortalPostMessageError | `FormLabelForNameError ]
+      [ `CrossOriginPortalPostMessageError
+      | `FormLabelForNameError
+      | `FormDuplicateIdForInputError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3467,12 +3471,15 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type _genericissueerrortype =
-      [ `CrossOriginPortalPostMessageError | `FormLabelForNameError ]
+      [ `CrossOriginPortalPostMessageError
+      | `FormLabelForNameError
+      | `FormDuplicateIdForInputError ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
           `CrossOriginPortalPostMessageError
       | `String "FormLabelForNameError" -> `FormLabelForNameError
+      | `String "FormDuplicateIdForInputError" -> `FormDuplicateIdForInputError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3480,6 +3487,7 @@ end = struct
       | `CrossOriginPortalPostMessageError ->
           `String "CrossOriginPortalPostMessageError"
       | `FormLabelForNameError -> `String "FormLabelForNameError"
+      | `FormDuplicateIdForInputError -> `String "FormDuplicateIdForInputError"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -18623,6 +18631,7 @@ and Page : sig
       | `usb
       | `vertical_scroll
       | `web_share
+      | `window_management
       | `window_placement
       | `xr_spatial_tracking ]
 
@@ -19780,6 +19789,7 @@ end = struct
       | `usb
       | `vertical_scroll
       | `web_share
+      | `window_management
       | `window_placement
       | `xr_spatial_tracking ]
 
@@ -19872,6 +19882,7 @@ end = struct
       | `usb
       | `vertical_scroll
       | `web_share
+      | `window_management
       | `window_placement
       | `xr_spatial_tracking ]
 
@@ -19953,6 +19964,7 @@ end = struct
       | `String "usb" -> `usb
       | `String "vertical-scroll" -> `vertical_scroll
       | `String "web-share" -> `web_share
+      | `String "window-management" -> `window_management
       | `String "window-placement" -> `window_placement
       | `String "xr-spatial-tracking" -> `xr_spatial_tracking
       | `String s -> failwith ("unknown enum: " ^ s)
@@ -20036,6 +20048,7 @@ end = struct
       | `usb -> `String "usb"
       | `vertical_scroll -> `String "vertical-scroll"
       | `web_share -> `String "web-share"
+      | `window_management -> `String "window-management"
       | `window_placement -> `String "window-placement"
       | `xr_spatial_tracking -> `String "xr-spatial-tracking"
 
