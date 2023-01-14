@@ -1838,7 +1838,8 @@ and Audits : sig
     type _genericissueerrortype =
       [ `CrossOriginPortalPostMessageError
       | `FormLabelForNameError
-      | `FormDuplicateIdForInputError ]
+      | `FormDuplicateIdForInputError
+      | `FormInputWithNoLabelError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3459,7 +3460,8 @@ end = struct
     type _genericissueerrortype =
       [ `CrossOriginPortalPostMessageError
       | `FormLabelForNameError
-      | `FormDuplicateIdForInputError ]
+      | `FormDuplicateIdForInputError
+      | `FormInputWithNoLabelError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3473,13 +3475,15 @@ end = struct
     type _genericissueerrortype =
       [ `CrossOriginPortalPostMessageError
       | `FormLabelForNameError
-      | `FormDuplicateIdForInputError ]
+      | `FormDuplicateIdForInputError
+      | `FormInputWithNoLabelError ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
           `CrossOriginPortalPostMessageError
       | `String "FormLabelForNameError" -> `FormLabelForNameError
       | `String "FormDuplicateIdForInputError" -> `FormDuplicateIdForInputError
+      | `String "FormInputWithNoLabelError" -> `FormInputWithNoLabelError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3488,6 +3492,7 @@ end = struct
           `String "CrossOriginPortalPostMessageError"
       | `FormLabelForNameError -> `String "FormLabelForNameError"
       | `FormDuplicateIdForInputError -> `String "FormDuplicateIdForInputError"
+      | `FormInputWithNoLabelError -> `String "FormInputWithNoLabelError"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
