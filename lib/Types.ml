@@ -1899,6 +1899,7 @@ and Audits : sig
       | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
+      | `ObsoleteCreateImageBitmapImageOrientationNone
       | `ObsoleteWebRtcCipherSuite
       | `OpenWebDatabaseInsecureContext
       | `OverflowVisibleOnReplacedElement
@@ -3564,6 +3565,7 @@ end = struct
       | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
+      | `ObsoleteCreateImageBitmapImageOrientationNone
       | `ObsoleteWebRtcCipherSuite
       | `OpenWebDatabaseInsecureContext
       | `OverflowVisibleOnReplacedElement
@@ -3630,6 +3632,7 @@ end = struct
       | `NoSysexWebMIDIWithoutPermission
       | `NotificationInsecureOrigin
       | `NotificationPermissionRequestedIframe
+      | `ObsoleteCreateImageBitmapImageOrientationNone
       | `ObsoleteWebRtcCipherSuite
       | `OpenWebDatabaseInsecureContext
       | `OverflowVisibleOnReplacedElement
@@ -3702,6 +3705,8 @@ end = struct
       | `String "NotificationInsecureOrigin" -> `NotificationInsecureOrigin
       | `String "NotificationPermissionRequestedIframe" ->
           `NotificationPermissionRequestedIframe
+      | `String "ObsoleteCreateImageBitmapImageOrientationNone" ->
+          `ObsoleteCreateImageBitmapImageOrientationNone
       | `String "ObsoleteWebRtcCipherSuite" -> `ObsoleteWebRtcCipherSuite
       | `String "OpenWebDatabaseInsecureContext" ->
           `OpenWebDatabaseInsecureContext
@@ -3790,6 +3795,8 @@ end = struct
       | `NotificationInsecureOrigin -> `String "NotificationInsecureOrigin"
       | `NotificationPermissionRequestedIframe ->
           `String "NotificationPermissionRequestedIframe"
+      | `ObsoleteCreateImageBitmapImageOrientationNone ->
+          `String "ObsoleteCreateImageBitmapImageOrientationNone"
       | `ObsoleteWebRtcCipherSuite -> `String "ObsoleteWebRtcCipherSuite"
       | `OpenWebDatabaseInsecureContext ->
           `String "OpenWebDatabaseInsecureContext"
@@ -10195,11 +10202,11 @@ and Emulation : sig
       brands : UserAgentBrandVersion.t list option;
           [@key "brands"]
           [@yojson.option]
-          [@ocaml.doc "No description provided"]
+          [@ocaml.doc "Brands appearing in Sec-CH-UA."]
       fullVersionList : UserAgentBrandVersion.t list option;
           [@key "fullVersionList"]
           [@yojson.option]
-          [@ocaml.doc "No description provided"]
+          [@ocaml.doc "Brands appearing in Sec-CH-UA-Full-Version-List."]
       fullVersion : string option;
           [@key "fullVersion"]
           [@yojson.option]
@@ -10430,11 +10437,11 @@ end = struct
       brands : UserAgentBrandVersion.t list option;
           [@key "brands"]
           [@yojson.option]
-          [@ocaml.doc "No description provided"]
+          [@ocaml.doc "Brands appearing in Sec-CH-UA."]
       fullVersionList : UserAgentBrandVersion.t list option;
           [@key "fullVersionList"]
           [@yojson.option]
-          [@ocaml.doc "No description provided"]
+          [@ocaml.doc "Brands appearing in Sec-CH-UA-Full-Version-List."]
       fullVersion : string option;
           [@key "fullVersion"]
           [@yojson.option]
@@ -10465,11 +10472,11 @@ end = struct
       brands : UserAgentBrandVersion.t list option;
           [@key "brands"]
           [@yojson.option]
-          [@ocaml.doc "No description provided"]
+          [@ocaml.doc "Brands appearing in Sec-CH-UA."]
       fullVersionList : UserAgentBrandVersion.t list option;
           [@key "fullVersionList"]
           [@yojson.option]
-          [@ocaml.doc "No description provided"]
+          [@ocaml.doc "Brands appearing in Sec-CH-UA-Full-Version-List."]
       fullVersion : string option;
           [@key "fullVersion"]
           [@yojson.option]
@@ -26492,6 +26499,13 @@ and WebAuthn : sig
              extension.\n\
              https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-minpinlength-extension\n\
              Defaults to false."]
+      hasPrf : bool option;
+          [@key "hasPrf"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the prf extension.\n\
+             https://w3c.github.io/webauthn/#prf-extension\n\
+             Defaults to false."]
       automaticPresenceSimulation : bool option;
           [@key "automaticPresenceSimulation"]
           [@yojson.option]
@@ -26686,6 +26700,13 @@ end = struct
              extension.\n\
              https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-minpinlength-extension\n\
              Defaults to false."]
+      hasPrf : bool option;
+          [@key "hasPrf"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the prf extension.\n\
+             https://w3c.github.io/webauthn/#prf-extension\n\
+             Defaults to false."]
       automaticPresenceSimulation : bool option;
           [@key "automaticPresenceSimulation"]
           [@yojson.option]
@@ -26742,6 +26763,13 @@ end = struct
             "If set to true, the authenticator will support the minPinLength \
              extension.\n\
              https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-minpinlength-extension\n\
+             Defaults to false."]
+      hasPrf : bool option;
+          [@key "hasPrf"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the prf extension.\n\
+             https://w3c.github.io/webauthn/#prf-extension\n\
              Defaults to false."]
       automaticPresenceSimulation : bool option;
           [@key "automaticPresenceSimulation"]
