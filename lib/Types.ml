@@ -19477,7 +19477,10 @@ and Page : sig
       | `EmbedderHostDisallowed
       | `ActivationNavigationDestroyedBeforeSuccess
       | `TabClosedByUserGesture
-      | `TabClosedWithoutUserGesture ]
+      | `TabClosedWithoutUserGesture
+      | `PrimaryMainFrameRendererProcessCrashed
+      | `PrimaryMainFrameRendererProcessKilled
+      | `ActivationFramePolicyNotCompatible ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -22049,7 +22052,10 @@ end = struct
       | `EmbedderHostDisallowed
       | `ActivationNavigationDestroyedBeforeSuccess
       | `TabClosedByUserGesture
-      | `TabClosedWithoutUserGesture ]
+      | `TabClosedWithoutUserGesture
+      | `PrimaryMainFrameRendererProcessCrashed
+      | `PrimaryMainFrameRendererProcessKilled
+      | `ActivationFramePolicyNotCompatible ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -22110,7 +22116,10 @@ end = struct
       | `EmbedderHostDisallowed
       | `ActivationNavigationDestroyedBeforeSuccess
       | `TabClosedByUserGesture
-      | `TabClosedWithoutUserGesture ]
+      | `TabClosedWithoutUserGesture
+      | `PrimaryMainFrameRendererProcessCrashed
+      | `PrimaryMainFrameRendererProcessKilled
+      | `ActivationFramePolicyNotCompatible ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -22171,6 +22180,12 @@ end = struct
           `ActivationNavigationDestroyedBeforeSuccess
       | `String "TabClosedByUserGesture" -> `TabClosedByUserGesture
       | `String "TabClosedWithoutUserGesture" -> `TabClosedWithoutUserGesture
+      | `String "PrimaryMainFrameRendererProcessCrashed" ->
+          `PrimaryMainFrameRendererProcessCrashed
+      | `String "PrimaryMainFrameRendererProcessKilled" ->
+          `PrimaryMainFrameRendererProcessKilled
+      | `String "ActivationFramePolicyNotCompatible" ->
+          `ActivationFramePolicyNotCompatible
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -22233,6 +22248,12 @@ end = struct
           `String "ActivationNavigationDestroyedBeforeSuccess"
       | `TabClosedByUserGesture -> `String "TabClosedByUserGesture"
       | `TabClosedWithoutUserGesture -> `String "TabClosedWithoutUserGesture"
+      | `PrimaryMainFrameRendererProcessCrashed ->
+          `String "PrimaryMainFrameRendererProcessCrashed"
+      | `PrimaryMainFrameRendererProcessKilled ->
+          `String "PrimaryMainFrameRendererProcessKilled"
+      | `ActivationFramePolicyNotCompatible ->
+          `String "ActivationFramePolicyNotCompatible"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
