@@ -12748,12 +12748,12 @@ and Network : sig
       _trusttokenparams_refreshpolicy -> Yojson.Basic.t
 
     type t = {
-      type_ : TrustTokenOperationType.t;
-          [@key "type"] [@ocaml.doc "No description provided"]
+      operation : TrustTokenOperationType.t;
+          [@key "operation"] [@ocaml.doc "No description provided"]
       refreshPolicy : _trusttokenparams_refreshpolicy;
           [@key "refreshPolicy"]
           [@ocaml.doc
-            "Only set for \"token-redemption\" type and determine whether\n\
+            "Only set for \"token-redemption\" operation and determine whether\n\
              to request a fresh SRR or use a still valid cached SRR."]
       issuers : string list option;
           [@key "issuers"]
@@ -14913,12 +14913,12 @@ end = struct
       _trusttokenparams_refreshpolicy -> Yojson.Basic.t
 
     type t = {
-      type_ : TrustTokenOperationType.t;
-          [@key "type"] [@ocaml.doc "No description provided"]
+      operation : TrustTokenOperationType.t;
+          [@key "operation"] [@ocaml.doc "No description provided"]
       refreshPolicy : _trusttokenparams_refreshpolicy;
           [@key "refreshPolicy"]
           [@ocaml.doc
-            "Only set for \"token-redemption\" type and determine whether\n\
+            "Only set for \"token-redemption\" operation and determine whether\n\
              to request a fresh SRR or use a still valid cached SRR."]
       issuers : string list option;
           [@key "issuers"]
@@ -14946,12 +14946,12 @@ end = struct
       | `Refresh -> `String "Refresh"
 
     type t = {
-      type_ : TrustTokenOperationType.t;
-          [@key "type"] [@ocaml.doc "No description provided"]
+      operation : TrustTokenOperationType.t;
+          [@key "operation"] [@ocaml.doc "No description provided"]
       refreshPolicy : _trusttokenparams_refreshpolicy;
           [@key "refreshPolicy"]
           [@ocaml.doc
-            "Only set for \"token-redemption\" type and determine whether\n\
+            "Only set for \"token-redemption\" operation and determine whether\n\
              to request a fresh SRR or use a still valid cached SRR."]
       issuers : string list option;
           [@key "issuers"]
