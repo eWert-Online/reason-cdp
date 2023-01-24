@@ -2230,7 +2230,7 @@ module Browser = struct
         delta : bool option;
             [@key "delta"]
             [@yojson.option]
-            [@ocaml.doc "If true, retrieve delta since last call."]
+            [@ocaml.doc "If true, retrieve delta since last delta call."]
       }
       [@@deriving yojson]
 
@@ -2296,7 +2296,7 @@ module Browser = struct
         delta : bool option;
             [@key "delta"]
             [@yojson.option]
-            [@ocaml.doc "If true, retrieve delta since last call."]
+            [@ocaml.doc "If true, retrieve delta since last delta call."]
       }
       [@@deriving yojson]
 
