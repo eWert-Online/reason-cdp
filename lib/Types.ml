@@ -1839,7 +1839,8 @@ and Audits : sig
       [ `CrossOriginPortalPostMessageError
       | `FormLabelForNameError
       | `FormDuplicateIdForInputError
-      | `FormInputWithNoLabelError ]
+      | `FormInputWithNoLabelError
+      | `FormAutocompleteAttributeEmptyError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3462,7 +3463,8 @@ end = struct
       [ `CrossOriginPortalPostMessageError
       | `FormLabelForNameError
       | `FormDuplicateIdForInputError
-      | `FormInputWithNoLabelError ]
+      | `FormInputWithNoLabelError
+      | `FormAutocompleteAttributeEmptyError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3477,7 +3479,8 @@ end = struct
       [ `CrossOriginPortalPostMessageError
       | `FormLabelForNameError
       | `FormDuplicateIdForInputError
-      | `FormInputWithNoLabelError ]
+      | `FormInputWithNoLabelError
+      | `FormAutocompleteAttributeEmptyError ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
@@ -3485,6 +3488,8 @@ end = struct
       | `String "FormLabelForNameError" -> `FormLabelForNameError
       | `String "FormDuplicateIdForInputError" -> `FormDuplicateIdForInputError
       | `String "FormInputWithNoLabelError" -> `FormInputWithNoLabelError
+      | `String "FormAutocompleteAttributeEmptyError" ->
+          `FormAutocompleteAttributeEmptyError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3494,6 +3499,8 @@ end = struct
       | `FormLabelForNameError -> `String "FormLabelForNameError"
       | `FormDuplicateIdForInputError -> `String "FormDuplicateIdForInputError"
       | `FormInputWithNoLabelError -> `String "FormInputWithNoLabelError"
+      | `FormAutocompleteAttributeEmptyError ->
+          `String "FormAutocompleteAttributeEmptyError"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
