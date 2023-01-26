@@ -1840,7 +1840,8 @@ and Audits : sig
       | `FormLabelForNameError
       | `FormDuplicateIdForInputError
       | `FormInputWithNoLabelError
-      | `FormAutocompleteAttributeEmptyError ]
+      | `FormAutocompleteAttributeEmptyError
+      | `FormEmptyIdAndNameAttributesForInputError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3464,7 +3465,8 @@ end = struct
       | `FormLabelForNameError
       | `FormDuplicateIdForInputError
       | `FormInputWithNoLabelError
-      | `FormAutocompleteAttributeEmptyError ]
+      | `FormAutocompleteAttributeEmptyError
+      | `FormEmptyIdAndNameAttributesForInputError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3480,7 +3482,8 @@ end = struct
       | `FormLabelForNameError
       | `FormDuplicateIdForInputError
       | `FormInputWithNoLabelError
-      | `FormAutocompleteAttributeEmptyError ]
+      | `FormAutocompleteAttributeEmptyError
+      | `FormEmptyIdAndNameAttributesForInputError ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
@@ -3490,6 +3493,8 @@ end = struct
       | `String "FormInputWithNoLabelError" -> `FormInputWithNoLabelError
       | `String "FormAutocompleteAttributeEmptyError" ->
           `FormAutocompleteAttributeEmptyError
+      | `String "FormEmptyIdAndNameAttributesForInputError" ->
+          `FormEmptyIdAndNameAttributesForInputError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3501,6 +3506,8 @@ end = struct
       | `FormInputWithNoLabelError -> `String "FormInputWithNoLabelError"
       | `FormAutocompleteAttributeEmptyError ->
           `String "FormAutocompleteAttributeEmptyError"
+      | `FormEmptyIdAndNameAttributesForInputError ->
+          `String "FormEmptyIdAndNameAttributesForInputError"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
