@@ -1697,6 +1697,19 @@ module Network = struct
             "Raw response header text as it was received over the wire. The \
              raw text may not always be\n\
              available, such as in the case of HTTP/2 or QUIC."]
+      cookiePartitionKey : string option;
+          [@key "cookiePartitionKey"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The cookie partition key that will be used to store partitioned \
+             cookies set in this response.\n\
+             Only sent when partitioned cookies are enabled."]
+      cookiePartitionKeyOpaque : bool option;
+          [@key "cookiePartitionKeyOpaque"]
+          [@yojson.option]
+          [@ocaml.doc
+            "True if partitioned cookies are enabled, but the partition key is \
+             not serializeable to string."]
     }
     [@@deriving yojson]
 

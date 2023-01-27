@@ -1918,6 +1918,7 @@ and Audits : sig
       | `PrefixedVideoExitFullscreen
       | `PrefixedVideoExitFullScreen
       | `PrefixedVideoSupportsFullscreen
+      | `PrivacySandboxExtensionsAPI
       | `RangeExpand
       | `RequestedSubresourceWithEmbeddedCredentials
       | `RTCConstraintEnableDtlsSrtpFalse
@@ -3596,6 +3597,7 @@ end = struct
       | `PrefixedVideoExitFullscreen
       | `PrefixedVideoExitFullScreen
       | `PrefixedVideoSupportsFullscreen
+      | `PrivacySandboxExtensionsAPI
       | `RangeExpand
       | `RequestedSubresourceWithEmbeddedCredentials
       | `RTCConstraintEnableDtlsSrtpFalse
@@ -3663,6 +3665,7 @@ end = struct
       | `PrefixedVideoExitFullscreen
       | `PrefixedVideoExitFullScreen
       | `PrefixedVideoSupportsFullscreen
+      | `PrivacySandboxExtensionsAPI
       | `RangeExpand
       | `RequestedSubresourceWithEmbeddedCredentials
       | `RTCConstraintEnableDtlsSrtpFalse
@@ -3742,6 +3745,7 @@ end = struct
       | `String "PrefixedVideoExitFullScreen" -> `PrefixedVideoExitFullScreen
       | `String "PrefixedVideoSupportsFullscreen" ->
           `PrefixedVideoSupportsFullscreen
+      | `String "PrivacySandboxExtensionsAPI" -> `PrivacySandboxExtensionsAPI
       | `String "RangeExpand" -> `RangeExpand
       | `String "RequestedSubresourceWithEmbeddedCredentials" ->
           `RequestedSubresourceWithEmbeddedCredentials
@@ -3832,6 +3836,7 @@ end = struct
       | `PrefixedVideoExitFullScreen -> `String "PrefixedVideoExitFullScreen"
       | `PrefixedVideoSupportsFullscreen ->
           `String "PrefixedVideoSupportsFullscreen"
+      | `PrivacySandboxExtensionsAPI -> `String "PrivacySandboxExtensionsAPI"
       | `RangeExpand -> `String "RangeExpand"
       | `RequestedSubresourceWithEmbeddedCredentials ->
           `String "RequestedSubresourceWithEmbeddedCredentials"
@@ -19494,7 +19499,9 @@ and Page : sig
       | `TabClosedWithoutUserGesture
       | `PrimaryMainFrameRendererProcessCrashed
       | `PrimaryMainFrameRendererProcessKilled
-      | `ActivationFramePolicyNotCompatible ]
+      | `ActivationFramePolicyNotCompatible
+      | `PreloadingDisabled
+      | `BatterySaverEnabled ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -22069,7 +22076,9 @@ end = struct
       | `TabClosedWithoutUserGesture
       | `PrimaryMainFrameRendererProcessCrashed
       | `PrimaryMainFrameRendererProcessKilled
-      | `ActivationFramePolicyNotCompatible ]
+      | `ActivationFramePolicyNotCompatible
+      | `PreloadingDisabled
+      | `BatterySaverEnabled ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -22133,7 +22142,9 @@ end = struct
       | `TabClosedWithoutUserGesture
       | `PrimaryMainFrameRendererProcessCrashed
       | `PrimaryMainFrameRendererProcessKilled
-      | `ActivationFramePolicyNotCompatible ]
+      | `ActivationFramePolicyNotCompatible
+      | `PreloadingDisabled
+      | `BatterySaverEnabled ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -22200,6 +22211,8 @@ end = struct
           `PrimaryMainFrameRendererProcessKilled
       | `String "ActivationFramePolicyNotCompatible" ->
           `ActivationFramePolicyNotCompatible
+      | `String "PreloadingDisabled" -> `PreloadingDisabled
+      | `String "BatterySaverEnabled" -> `BatterySaverEnabled
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -22268,6 +22281,8 @@ end = struct
           `String "PrimaryMainFrameRendererProcessKilled"
       | `ActivationFramePolicyNotCompatible ->
           `String "ActivationFramePolicyNotCompatible"
+      | `PreloadingDisabled -> `String "PreloadingDisabled"
+      | `BatterySaverEnabled -> `String "BatterySaverEnabled"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
