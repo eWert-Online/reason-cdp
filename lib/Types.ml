@@ -1841,7 +1841,8 @@ and Audits : sig
       | `FormDuplicateIdForInputError
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
-      | `FormEmptyIdAndNameAttributesForInputError ]
+      | `FormEmptyIdAndNameAttributesForInputError
+      | `FormAriaLabelledByToNonExistingId ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3467,7 +3468,8 @@ end = struct
       | `FormDuplicateIdForInputError
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
-      | `FormEmptyIdAndNameAttributesForInputError ]
+      | `FormEmptyIdAndNameAttributesForInputError
+      | `FormAriaLabelledByToNonExistingId ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3484,7 +3486,8 @@ end = struct
       | `FormDuplicateIdForInputError
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
-      | `FormEmptyIdAndNameAttributesForInputError ]
+      | `FormEmptyIdAndNameAttributesForInputError
+      | `FormAriaLabelledByToNonExistingId ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
@@ -3496,6 +3499,8 @@ end = struct
           `FormAutocompleteAttributeEmptyError
       | `String "FormEmptyIdAndNameAttributesForInputError" ->
           `FormEmptyIdAndNameAttributesForInputError
+      | `String "FormAriaLabelledByToNonExistingId" ->
+          `FormAriaLabelledByToNonExistingId
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3509,6 +3514,8 @@ end = struct
           `String "FormAutocompleteAttributeEmptyError"
       | `FormEmptyIdAndNameAttributesForInputError ->
           `String "FormEmptyIdAndNameAttributesForInputError"
+      | `FormAriaLabelledByToNonExistingId ->
+          `String "FormAriaLabelledByToNonExistingId"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
