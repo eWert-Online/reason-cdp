@@ -1842,7 +1842,8 @@ and Audits : sig
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
       | `FormEmptyIdAndNameAttributesForInputError
-      | `FormAriaLabelledByToNonExistingId ]
+      | `FormAriaLabelledByToNonExistingId
+      | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3469,7 +3470,8 @@ end = struct
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
       | `FormEmptyIdAndNameAttributesForInputError
-      | `FormAriaLabelledByToNonExistingId ]
+      | `FormAriaLabelledByToNonExistingId
+      | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3487,7 +3489,8 @@ end = struct
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
       | `FormEmptyIdAndNameAttributesForInputError
-      | `FormAriaLabelledByToNonExistingId ]
+      | `FormAriaLabelledByToNonExistingId
+      | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
@@ -3501,6 +3504,8 @@ end = struct
           `FormEmptyIdAndNameAttributesForInputError
       | `String "FormAriaLabelledByToNonExistingId" ->
           `FormAriaLabelledByToNonExistingId
+      | `String "FormInputAssignedAutocompleteValueToIdOrNameAttributeError" ->
+          `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3516,6 +3521,8 @@ end = struct
           `String "FormEmptyIdAndNameAttributesForInputError"
       | `FormAriaLabelledByToNonExistingId ->
           `String "FormAriaLabelledByToNonExistingId"
+      | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError ->
+          `String "FormInputAssignedAutocompleteValueToIdOrNameAttributeError"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
