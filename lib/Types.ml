@@ -19515,7 +19515,8 @@ and Page : sig
       | `PrimaryMainFrameRendererProcessKilled
       | `ActivationFramePolicyNotCompatible
       | `PreloadingDisabled
-      | `BatterySaverEnabled ]
+      | `BatterySaverEnabled
+      | `ActivatedDuringMainFrameNavigation ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -22092,7 +22093,8 @@ end = struct
       | `PrimaryMainFrameRendererProcessKilled
       | `ActivationFramePolicyNotCompatible
       | `PreloadingDisabled
-      | `BatterySaverEnabled ]
+      | `BatterySaverEnabled
+      | `ActivatedDuringMainFrameNavigation ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -22158,7 +22160,8 @@ end = struct
       | `PrimaryMainFrameRendererProcessKilled
       | `ActivationFramePolicyNotCompatible
       | `PreloadingDisabled
-      | `BatterySaverEnabled ]
+      | `BatterySaverEnabled
+      | `ActivatedDuringMainFrameNavigation ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -22227,6 +22230,8 @@ end = struct
           `ActivationFramePolicyNotCompatible
       | `String "PreloadingDisabled" -> `PreloadingDisabled
       | `String "BatterySaverEnabled" -> `BatterySaverEnabled
+      | `String "ActivatedDuringMainFrameNavigation" ->
+          `ActivatedDuringMainFrameNavigation
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -22297,6 +22302,8 @@ end = struct
           `String "ActivationFramePolicyNotCompatible"
       | `PreloadingDisabled -> `String "PreloadingDisabled"
       | `BatterySaverEnabled -> `String "BatterySaverEnabled"
+      | `ActivatedDuringMainFrameNavigation ->
+          `String "ActivatedDuringMainFrameNavigation"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
