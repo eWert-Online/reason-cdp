@@ -1843,7 +1843,8 @@ and Audits : sig
       | `FormAutocompleteAttributeEmptyError
       | `FormEmptyIdAndNameAttributesForInputError
       | `FormAriaLabelledByToNonExistingId
-      | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError ]
+      | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
+      | `FormLabelHasNeitherForNorNestedInput ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3471,7 +3472,8 @@ end = struct
       | `FormAutocompleteAttributeEmptyError
       | `FormEmptyIdAndNameAttributesForInputError
       | `FormAriaLabelledByToNonExistingId
-      | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError ]
+      | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
+      | `FormLabelHasNeitherForNorNestedInput ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3490,7 +3492,8 @@ end = struct
       | `FormAutocompleteAttributeEmptyError
       | `FormEmptyIdAndNameAttributesForInputError
       | `FormAriaLabelledByToNonExistingId
-      | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError ]
+      | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
+      | `FormLabelHasNeitherForNorNestedInput ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
@@ -3506,6 +3509,8 @@ end = struct
           `FormAriaLabelledByToNonExistingId
       | `String "FormInputAssignedAutocompleteValueToIdOrNameAttributeError" ->
           `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
+      | `String "FormLabelHasNeitherForNorNestedInput" ->
+          `FormLabelHasNeitherForNorNestedInput
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3523,6 +3528,8 @@ end = struct
           `String "FormAriaLabelledByToNonExistingId"
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError ->
           `String "FormInputAssignedAutocompleteValueToIdOrNameAttributeError"
+      | `FormLabelHasNeitherForNorNestedInput ->
+          `String "FormLabelHasNeitherForNorNestedInput"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
