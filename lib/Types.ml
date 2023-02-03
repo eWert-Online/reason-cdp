@@ -1844,7 +1844,8 @@ and Audits : sig
       | `FormEmptyIdAndNameAttributesForInputError
       | `FormAriaLabelledByToNonExistingId
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
-      | `FormLabelHasNeitherForNorNestedInput ]
+      | `FormLabelHasNeitherForNorNestedInput
+      | `FormLabelForMatchesNonExistingIdError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3473,7 +3474,8 @@ end = struct
       | `FormEmptyIdAndNameAttributesForInputError
       | `FormAriaLabelledByToNonExistingId
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
-      | `FormLabelHasNeitherForNorNestedInput ]
+      | `FormLabelHasNeitherForNorNestedInput
+      | `FormLabelForMatchesNonExistingIdError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3493,7 +3495,8 @@ end = struct
       | `FormEmptyIdAndNameAttributesForInputError
       | `FormAriaLabelledByToNonExistingId
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
-      | `FormLabelHasNeitherForNorNestedInput ]
+      | `FormLabelHasNeitherForNorNestedInput
+      | `FormLabelForMatchesNonExistingIdError ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
@@ -3511,6 +3514,8 @@ end = struct
           `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `String "FormLabelHasNeitherForNorNestedInput" ->
           `FormLabelHasNeitherForNorNestedInput
+      | `String "FormLabelForMatchesNonExistingIdError" ->
+          `FormLabelForMatchesNonExistingIdError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3530,6 +3535,8 @@ end = struct
           `String "FormInputAssignedAutocompleteValueToIdOrNameAttributeError"
       | `FormLabelHasNeitherForNorNestedInput ->
           `String "FormLabelHasNeitherForNorNestedInput"
+      | `FormLabelForMatchesNonExistingIdError ->
+          `String "FormLabelForMatchesNonExistingIdError"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
