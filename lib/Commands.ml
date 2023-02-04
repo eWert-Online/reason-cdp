@@ -23068,6 +23068,75 @@ module Page = struct
     end
   end
 
+  (* Extensions for Custom Handlers API:
+     https://html.spec.whatwg.org/multipage/system-state.html#rph-automation *)
+  module SetRPHRegistrationMode = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type setrphregistrationmode_mode = [ `none | `autoaccept | `autoreject ]
+
+      let setrphregistrationmode_mode_of_yojson = function
+        | `String "none" -> `none
+        | `String "autoaccept" -> `autoaccept
+        | `String "autoreject" -> `autoreject
+        | `String s -> failwith ("unknown enum: " ^ s)
+        | _ -> failwith "unknown enum type"
+
+      let yojson_of_setrphregistrationmode_mode = function
+        | `none -> `String "none"
+        | `autoaccept -> `String "autoaccept"
+        | `autoreject -> `String "autoreject"
+
+      type t = {
+        mode : setrphregistrationmode_mode;
+            [@key "mode"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~mode () = { mode }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Page.setRPHRegistrationMode"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Generates a report for testing. *)
   module GenerateTestReport = struct
     module Response : sig
