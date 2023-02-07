@@ -19282,6 +19282,18 @@ and Page : sig
        `Page.produceCompilationCache`"]
   end
 
+  and AutoResponseMode : sig
+    type _autoresponsemode = [ `none | `autoAccept | `autoReject | `autoOptOut ]
+
+    val _autoresponsemode_of_yojson : Yojson.Basic.t -> _autoresponsemode
+    val yojson_of__autoresponsemode : _autoresponsemode -> Yojson.Basic.t
+
+    type t = _autoresponsemode
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Enum of possible auto-reponse for permisison / prompt dialogs."]
+  end
+
   and NavigationType : sig
     type _navigationtype = [ `Navigation | `BackForwardCacheRestore ]
 
@@ -21338,6 +21350,39 @@ end = struct
     [@@ocaml.doc
       "Per-script compilation cache parameters for \
        `Page.produceCompilationCache`"]
+  end
+
+  and AutoResponseMode : sig
+    type _autoresponsemode = [ `none | `autoAccept | `autoReject | `autoOptOut ]
+
+    val _autoresponsemode_of_yojson : Yojson.Basic.t -> _autoresponsemode
+    val yojson_of__autoresponsemode : _autoresponsemode -> Yojson.Basic.t
+
+    type t = _autoresponsemode
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Enum of possible auto-reponse for permisison / prompt dialogs."]
+  end = struct
+    type _autoresponsemode = [ `none | `autoAccept | `autoReject | `autoOptOut ]
+
+    let _autoresponsemode_of_yojson = function
+      | `String "none" -> `none
+      | `String "autoAccept" -> `autoAccept
+      | `String "autoReject" -> `autoReject
+      | `String "autoOptOut" -> `autoOptOut
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__autoresponsemode = function
+      | `none -> `String "none"
+      | `autoAccept -> `String "autoAccept"
+      | `autoReject -> `String "autoReject"
+      | `autoOptOut -> `String "autoOptOut"
+
+    type t = _autoresponsemode
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Enum of possible auto-reponse for permisison / prompt dialogs."]
   end
 
   and NavigationType : sig

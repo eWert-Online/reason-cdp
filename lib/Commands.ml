@@ -20291,7 +20291,7 @@ module Page = struct
     end
   end
 
-  (* No description provided *)
+  (* Deprecated because it's not guaranteed that the returned icon is in fact the one used for PWA installation. *)
   module GetManifestIcons = struct
     module Response : sig
       type result = {
@@ -23027,25 +23027,8 @@ module Page = struct
     end
 
     module Params = struct
-      type setspctransactionmode_mode =
-        [ `none | `autoAccept | `autoReject | `autoOptOut ]
-
-      let setspctransactionmode_mode_of_yojson = function
-        | `String "none" -> `none
-        | `String "autoAccept" -> `autoAccept
-        | `String "autoReject" -> `autoReject
-        | `String "autoOptOut" -> `autoOptOut
-        | `String s -> failwith ("unknown enum: " ^ s)
-        | _ -> failwith "unknown enum type"
-
-      let yojson_of_setspctransactionmode_mode = function
-        | `none -> `String "none"
-        | `autoAccept -> `String "autoAccept"
-        | `autoReject -> `String "autoReject"
-        | `autoOptOut -> `String "autoOptOut"
-
       type t = {
-        mode : setspctransactionmode_mode;
+        mode : Types.Page.AutoResponseMode.t;
             [@key "mode"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
@@ -23099,22 +23082,8 @@ module Page = struct
     end
 
     module Params = struct
-      type setrphregistrationmode_mode = [ `none | `autoaccept | `autoreject ]
-
-      let setrphregistrationmode_mode_of_yojson = function
-        | `String "none" -> `none
-        | `String "autoaccept" -> `autoaccept
-        | `String "autoreject" -> `autoreject
-        | `String s -> failwith ("unknown enum: " ^ s)
-        | _ -> failwith "unknown enum type"
-
-      let yojson_of_setrphregistrationmode_mode = function
-        | `none -> `String "none"
-        | `autoaccept -> `String "autoaccept"
-        | `autoreject -> `String "autoreject"
-
       type t = {
-        mode : setrphregistrationmode_mode;
+        mode : Types.Page.AutoResponseMode.t;
             [@key "mode"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
