@@ -6011,7 +6011,8 @@ module DOM = struct
     end
   end
 
-  (* Returns the root DOM node (and optionally the subtree) to the caller. *)
+  (* Returns the root DOM node (and optionally the subtree) to the caller.
+     Implicitly enables the DOM domain events for the current target. *)
   module GetDocument = struct
     module Response : sig
       type result = {
