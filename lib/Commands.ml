@@ -156,7 +156,7 @@ module Accessibility = struct
             [@key "fetchRelatives"]
             [@yojson.option]
             [@ocaml.doc
-              "Whether to fetch this nodes ancestors, siblings and children. \
+              "Whether to fetch this node's ancestors, siblings and children. \
                Defaults to true."]
       }
       [@@deriving yojson]
@@ -3716,7 +3716,7 @@ module CSS = struct
             [@key "nodeIds"]
             [@ocaml.doc
               "The list of node Ids that have their tracked computed styles \
-               updated"]
+               updated."]
       }
 
       type error = { code : int; message : string }
@@ -3735,7 +3735,7 @@ module CSS = struct
             [@key "nodeIds"]
             [@ocaml.doc
               "The list of node Ids that have their tracked computed styles \
-               updated"]
+               updated."]
       }
       [@@deriving yojson]
 
@@ -4420,7 +4420,7 @@ module CSS = struct
   end
 
   (* Stop tracking rule usage and return the list of rules that were used since last call to
-     `takeCoverageDelta` (or since start of coverage instrumentation) *)
+     `takeCoverageDelta` (or since start of coverage instrumentation). *)
   module StopRuleUsageTracking = struct
     module Response : sig
       type result = {
@@ -4473,7 +4473,7 @@ module CSS = struct
   end
 
   (* Obtain list of rules that became used since last call to this method (or since start of coverage
-     instrumentation) *)
+     instrumentation). *)
   module TakeCoverageDelta = struct
     module Response : sig
       type result = {
@@ -11014,16 +11014,18 @@ module Emulation = struct
     module Params = struct
       type setemulatedvisiondeficiency_type =
         [ `none
-        | `achromatopsia
         | `blurredVision
+        | `reducedContrast
+        | `achromatopsia
         | `deuteranopia
         | `protanopia
         | `tritanopia ]
 
       let setemulatedvisiondeficiency_type_of_yojson = function
         | `String "none" -> `none
-        | `String "achromatopsia" -> `achromatopsia
         | `String "blurredVision" -> `blurredVision
+        | `String "reducedContrast" -> `reducedContrast
+        | `String "achromatopsia" -> `achromatopsia
         | `String "deuteranopia" -> `deuteranopia
         | `String "protanopia" -> `protanopia
         | `String "tritanopia" -> `tritanopia
@@ -11032,15 +11034,21 @@ module Emulation = struct
 
       let yojson_of_setemulatedvisiondeficiency_type = function
         | `none -> `String "none"
-        | `achromatopsia -> `String "achromatopsia"
         | `blurredVision -> `String "blurredVision"
+        | `reducedContrast -> `String "reducedContrast"
+        | `achromatopsia -> `String "achromatopsia"
         | `deuteranopia -> `String "deuteranopia"
         | `protanopia -> `String "protanopia"
         | `tritanopia -> `String "tritanopia"
 
       type t = {
         type_ : setemulatedvisiondeficiency_type;
-            [@key "type"] [@ocaml.doc "Vision deficiency to emulate."]
+            [@key "type"]
+            [@ocaml.doc
+              "Vision deficiency to emulate. Order: best-effort emulations \
+               come first, followed by any\n\
+               physiologically accurate emulations for medically recognized \
+               color vision deficiencies."]
       }
       [@@deriving yojson]
 
@@ -12784,7 +12792,7 @@ module IndexedDB = struct
     end
   end
 
-  (* Gets metadata of an object store *)
+  (* Gets metadata of an object store. *)
   module GetMetadata = struct
     module Response : sig
       type result = {
@@ -25543,6 +25551,72 @@ module Storage = struct
     end
   end
 
+  (* Removes all Trust Tokens issued by the provided issuerOrigin.
+     Leaves other stored data, including the issuer's Redemption Records, intact. *)
+  module ClearTrustTokens = struct
+    module Response : sig
+      type result = {
+        didDeleteTokens : bool;
+            [@key "didDeleteTokens"]
+            [@ocaml.doc "True if any tokens were deleted, false otherwise."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        didDeleteTokens : bool;
+            [@key "didDeleteTokens"]
+            [@ocaml.doc "True if any tokens were deleted, false otherwise."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        issuerOrigin : string;
+            [@key "issuerOrigin"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~issuerOrigin () = { issuerOrigin }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Storage.clearTrustTokens"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Gets details for a named interest group. *)
   module GetInterestGroupDetails = struct
     module Response : sig
@@ -31528,7 +31602,8 @@ module Debugger = struct
         [ `Ok
         | `CompileError
         | `BlockedByActiveGenerator
-        | `BlockedByActiveFunction ]
+        | `BlockedByActiveFunction
+        | `BlockedByTopLevelEsModuleChange ]
 
       val setscriptsource_status_of_yojson :
         Yojson.Basic.t -> setscriptsource_status
@@ -31586,13 +31661,16 @@ module Debugger = struct
         [ `Ok
         | `CompileError
         | `BlockedByActiveGenerator
-        | `BlockedByActiveFunction ]
+        | `BlockedByActiveFunction
+        | `BlockedByTopLevelEsModuleChange ]
 
       let setscriptsource_status_of_yojson = function
         | `String "Ok" -> `Ok
         | `String "CompileError" -> `CompileError
         | `String "BlockedByActiveGenerator" -> `BlockedByActiveGenerator
         | `String "BlockedByActiveFunction" -> `BlockedByActiveFunction
+        | `String "BlockedByTopLevelEsModuleChange" ->
+            `BlockedByTopLevelEsModuleChange
         | `String s -> failwith ("unknown enum: " ^ s)
         | _ -> failwith "unknown enum type"
 
@@ -31601,6 +31679,8 @@ module Debugger = struct
         | `CompileError -> `String "CompileError"
         | `BlockedByActiveGenerator -> `String "BlockedByActiveGenerator"
         | `BlockedByActiveFunction -> `String "BlockedByActiveFunction"
+        | `BlockedByTopLevelEsModuleChange ->
+            `String "BlockedByTopLevelEsModuleChange"
 
       type result = {
         callFrames : Types.Debugger.CallFrame.t list option;

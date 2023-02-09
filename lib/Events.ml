@@ -244,7 +244,7 @@ end
 
 module CSS = struct
   (* Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
-     web font *)
+     web font. *)
   module FontsUpdated = struct
     let name = "CSS.fontsUpdated"
 

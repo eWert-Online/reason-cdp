@@ -1877,76 +1877,6 @@ and Audits : sig
       "Depending on the concrete errorType, different properties are set."]
   end
 
-  and DeprecationIssueType : sig
-    type _deprecationissuetype =
-      [ `AuthorizationCoveredByWildcard
-      | `CanRequestURLHTTPContainingNewline
-      | `ChromeLoadTimesConnectionInfo
-      | `ChromeLoadTimesFirstPaintAfterLoadTime
-      | `ChromeLoadTimesWasAlternateProtocolAvailable
-      | `CookieWithTruncatingChar
-      | `CrossOriginAccessBasedOnDocumentDomain
-      | `CrossOriginWindowAlert
-      | `CrossOriginWindowConfirm
-      | `CSSSelectorInternalMediaControlsOverlayCastButton
-      | `DeprecationExample
-      | `DocumentDomainSettingWithoutOriginAgentClusterHeader
-      | `EventPath
-      | `ExpectCTHeader
-      | `GeolocationInsecureOrigin
-      | `GeolocationInsecureOriginDeprecatedNotRemoved
-      | `GetUserMediaInsecureOrigin
-      | `HostCandidateAttributeGetter
-      | `IdentityInCanMakePaymentEvent
-      | `InsecurePrivateNetworkSubresourceRequest
-      | `LocalCSSFileExtensionRejected
-      | `MediaSourceAbortRemove
-      | `MediaSourceDurationTruncatingBuffered
-      | `NoSysexWebMIDIWithoutPermission
-      | `NotificationInsecureOrigin
-      | `NotificationPermissionRequestedIframe
-      | `ObsoleteCreateImageBitmapImageOrientationNone
-      | `ObsoleteWebRtcCipherSuite
-      | `OpenWebDatabaseInsecureContext
-      | `OverflowVisibleOnReplacedElement
-      | `PaymentInstruments
-      | `PaymentRequestCSPViolation
-      | `PersistentQuotaType
-      | `PictureSourceSrc
-      | `PrefixedCancelAnimationFrame
-      | `PrefixedRequestAnimationFrame
-      | `PrefixedStorageInfo
-      | `PrefixedVideoDisplayingFullscreen
-      | `PrefixedVideoEnterFullscreen
-      | `PrefixedVideoEnterFullScreen
-      | `PrefixedVideoExitFullscreen
-      | `PrefixedVideoExitFullScreen
-      | `PrefixedVideoSupportsFullscreen
-      | `PrivacySandboxExtensionsAPI
-      | `RangeExpand
-      | `RequestedSubresourceWithEmbeddedCredentials
-      | `RTCConstraintEnableDtlsSrtpFalse
-      | `RTCConstraintEnableDtlsSrtpTrue
-      | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
-      | `RTCPeerConnectionSdpSemanticsPlanB
-      | `RtcpMuxPolicyNegotiate
-      | `SharedArrayBufferConstructedWithoutIsolation
-      | `TextToSpeech_DisallowedByAutoplay
-      | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
-      | `XHRJSONEncodingDetection
-      | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
-      | `XRSupportsSession ]
-
-    val _deprecationissuetype_of_yojson :
-      Yojson.Basic.t -> _deprecationissuetype
-
-    val yojson_of__deprecationissuetype :
-      _deprecationissuetype -> Yojson.Basic.t
-
-    type t = _deprecationissuetype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
   and DeprecationIssueDetails : sig
     type t = {
       affectedFrame : AffectedFrame.t option;
@@ -1955,8 +1885,11 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       sourceCodeLocation : SourceCodeLocation.t;
           [@key "sourceCodeLocation"] [@ocaml.doc "No description provided"]
-      type_ : DeprecationIssueType.t;
-          [@key "type"] [@ocaml.doc "No description provided"]
+      type_ : string;
+          [@key "type"]
+          [@ocaml.doc
+            "One of the deprecation names from \
+             third_party/blink/renderer/core/frame/deprecation/deprecation.json5"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -3580,318 +3513,6 @@ end = struct
       "Depending on the concrete errorType, different properties are set."]
   end
 
-  and DeprecationIssueType : sig
-    type _deprecationissuetype =
-      [ `AuthorizationCoveredByWildcard
-      | `CanRequestURLHTTPContainingNewline
-      | `ChromeLoadTimesConnectionInfo
-      | `ChromeLoadTimesFirstPaintAfterLoadTime
-      | `ChromeLoadTimesWasAlternateProtocolAvailable
-      | `CookieWithTruncatingChar
-      | `CrossOriginAccessBasedOnDocumentDomain
-      | `CrossOriginWindowAlert
-      | `CrossOriginWindowConfirm
-      | `CSSSelectorInternalMediaControlsOverlayCastButton
-      | `DeprecationExample
-      | `DocumentDomainSettingWithoutOriginAgentClusterHeader
-      | `EventPath
-      | `ExpectCTHeader
-      | `GeolocationInsecureOrigin
-      | `GeolocationInsecureOriginDeprecatedNotRemoved
-      | `GetUserMediaInsecureOrigin
-      | `HostCandidateAttributeGetter
-      | `IdentityInCanMakePaymentEvent
-      | `InsecurePrivateNetworkSubresourceRequest
-      | `LocalCSSFileExtensionRejected
-      | `MediaSourceAbortRemove
-      | `MediaSourceDurationTruncatingBuffered
-      | `NoSysexWebMIDIWithoutPermission
-      | `NotificationInsecureOrigin
-      | `NotificationPermissionRequestedIframe
-      | `ObsoleteCreateImageBitmapImageOrientationNone
-      | `ObsoleteWebRtcCipherSuite
-      | `OpenWebDatabaseInsecureContext
-      | `OverflowVisibleOnReplacedElement
-      | `PaymentInstruments
-      | `PaymentRequestCSPViolation
-      | `PersistentQuotaType
-      | `PictureSourceSrc
-      | `PrefixedCancelAnimationFrame
-      | `PrefixedRequestAnimationFrame
-      | `PrefixedStorageInfo
-      | `PrefixedVideoDisplayingFullscreen
-      | `PrefixedVideoEnterFullscreen
-      | `PrefixedVideoEnterFullScreen
-      | `PrefixedVideoExitFullscreen
-      | `PrefixedVideoExitFullScreen
-      | `PrefixedVideoSupportsFullscreen
-      | `PrivacySandboxExtensionsAPI
-      | `RangeExpand
-      | `RequestedSubresourceWithEmbeddedCredentials
-      | `RTCConstraintEnableDtlsSrtpFalse
-      | `RTCConstraintEnableDtlsSrtpTrue
-      | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
-      | `RTCPeerConnectionSdpSemanticsPlanB
-      | `RtcpMuxPolicyNegotiate
-      | `SharedArrayBufferConstructedWithoutIsolation
-      | `TextToSpeech_DisallowedByAutoplay
-      | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
-      | `XHRJSONEncodingDetection
-      | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
-      | `XRSupportsSession ]
-
-    val _deprecationissuetype_of_yojson :
-      Yojson.Basic.t -> _deprecationissuetype
-
-    val yojson_of__deprecationissuetype :
-      _deprecationissuetype -> Yojson.Basic.t
-
-    type t = _deprecationissuetype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type _deprecationissuetype =
-      [ `AuthorizationCoveredByWildcard
-      | `CanRequestURLHTTPContainingNewline
-      | `ChromeLoadTimesConnectionInfo
-      | `ChromeLoadTimesFirstPaintAfterLoadTime
-      | `ChromeLoadTimesWasAlternateProtocolAvailable
-      | `CookieWithTruncatingChar
-      | `CrossOriginAccessBasedOnDocumentDomain
-      | `CrossOriginWindowAlert
-      | `CrossOriginWindowConfirm
-      | `CSSSelectorInternalMediaControlsOverlayCastButton
-      | `DeprecationExample
-      | `DocumentDomainSettingWithoutOriginAgentClusterHeader
-      | `EventPath
-      | `ExpectCTHeader
-      | `GeolocationInsecureOrigin
-      | `GeolocationInsecureOriginDeprecatedNotRemoved
-      | `GetUserMediaInsecureOrigin
-      | `HostCandidateAttributeGetter
-      | `IdentityInCanMakePaymentEvent
-      | `InsecurePrivateNetworkSubresourceRequest
-      | `LocalCSSFileExtensionRejected
-      | `MediaSourceAbortRemove
-      | `MediaSourceDurationTruncatingBuffered
-      | `NoSysexWebMIDIWithoutPermission
-      | `NotificationInsecureOrigin
-      | `NotificationPermissionRequestedIframe
-      | `ObsoleteCreateImageBitmapImageOrientationNone
-      | `ObsoleteWebRtcCipherSuite
-      | `OpenWebDatabaseInsecureContext
-      | `OverflowVisibleOnReplacedElement
-      | `PaymentInstruments
-      | `PaymentRequestCSPViolation
-      | `PersistentQuotaType
-      | `PictureSourceSrc
-      | `PrefixedCancelAnimationFrame
-      | `PrefixedRequestAnimationFrame
-      | `PrefixedStorageInfo
-      | `PrefixedVideoDisplayingFullscreen
-      | `PrefixedVideoEnterFullscreen
-      | `PrefixedVideoEnterFullScreen
-      | `PrefixedVideoExitFullscreen
-      | `PrefixedVideoExitFullScreen
-      | `PrefixedVideoSupportsFullscreen
-      | `PrivacySandboxExtensionsAPI
-      | `RangeExpand
-      | `RequestedSubresourceWithEmbeddedCredentials
-      | `RTCConstraintEnableDtlsSrtpFalse
-      | `RTCConstraintEnableDtlsSrtpTrue
-      | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
-      | `RTCPeerConnectionSdpSemanticsPlanB
-      | `RtcpMuxPolicyNegotiate
-      | `SharedArrayBufferConstructedWithoutIsolation
-      | `TextToSpeech_DisallowedByAutoplay
-      | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
-      | `XHRJSONEncodingDetection
-      | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
-      | `XRSupportsSession ]
-
-    let _deprecationissuetype_of_yojson = function
-      | `String "AuthorizationCoveredByWildcard" ->
-          `AuthorizationCoveredByWildcard
-      | `String "CanRequestURLHTTPContainingNewline" ->
-          `CanRequestURLHTTPContainingNewline
-      | `String "ChromeLoadTimesConnectionInfo" ->
-          `ChromeLoadTimesConnectionInfo
-      | `String "ChromeLoadTimesFirstPaintAfterLoadTime" ->
-          `ChromeLoadTimesFirstPaintAfterLoadTime
-      | `String "ChromeLoadTimesWasAlternateProtocolAvailable" ->
-          `ChromeLoadTimesWasAlternateProtocolAvailable
-      | `String "CookieWithTruncatingChar" -> `CookieWithTruncatingChar
-      | `String "CrossOriginAccessBasedOnDocumentDomain" ->
-          `CrossOriginAccessBasedOnDocumentDomain
-      | `String "CrossOriginWindowAlert" -> `CrossOriginWindowAlert
-      | `String "CrossOriginWindowConfirm" -> `CrossOriginWindowConfirm
-      | `String "CSSSelectorInternalMediaControlsOverlayCastButton" ->
-          `CSSSelectorInternalMediaControlsOverlayCastButton
-      | `String "DeprecationExample" -> `DeprecationExample
-      | `String "DocumentDomainSettingWithoutOriginAgentClusterHeader" ->
-          `DocumentDomainSettingWithoutOriginAgentClusterHeader
-      | `String "EventPath" -> `EventPath
-      | `String "ExpectCTHeader" -> `ExpectCTHeader
-      | `String "GeolocationInsecureOrigin" -> `GeolocationInsecureOrigin
-      | `String "GeolocationInsecureOriginDeprecatedNotRemoved" ->
-          `GeolocationInsecureOriginDeprecatedNotRemoved
-      | `String "GetUserMediaInsecureOrigin" -> `GetUserMediaInsecureOrigin
-      | `String "HostCandidateAttributeGetter" -> `HostCandidateAttributeGetter
-      | `String "IdentityInCanMakePaymentEvent" ->
-          `IdentityInCanMakePaymentEvent
-      | `String "InsecurePrivateNetworkSubresourceRequest" ->
-          `InsecurePrivateNetworkSubresourceRequest
-      | `String "LocalCSSFileExtensionRejected" ->
-          `LocalCSSFileExtensionRejected
-      | `String "MediaSourceAbortRemove" -> `MediaSourceAbortRemove
-      | `String "MediaSourceDurationTruncatingBuffered" ->
-          `MediaSourceDurationTruncatingBuffered
-      | `String "NoSysexWebMIDIWithoutPermission" ->
-          `NoSysexWebMIDIWithoutPermission
-      | `String "NotificationInsecureOrigin" -> `NotificationInsecureOrigin
-      | `String "NotificationPermissionRequestedIframe" ->
-          `NotificationPermissionRequestedIframe
-      | `String "ObsoleteCreateImageBitmapImageOrientationNone" ->
-          `ObsoleteCreateImageBitmapImageOrientationNone
-      | `String "ObsoleteWebRtcCipherSuite" -> `ObsoleteWebRtcCipherSuite
-      | `String "OpenWebDatabaseInsecureContext" ->
-          `OpenWebDatabaseInsecureContext
-      | `String "OverflowVisibleOnReplacedElement" ->
-          `OverflowVisibleOnReplacedElement
-      | `String "PaymentInstruments" -> `PaymentInstruments
-      | `String "PaymentRequestCSPViolation" -> `PaymentRequestCSPViolation
-      | `String "PersistentQuotaType" -> `PersistentQuotaType
-      | `String "PictureSourceSrc" -> `PictureSourceSrc
-      | `String "PrefixedCancelAnimationFrame" -> `PrefixedCancelAnimationFrame
-      | `String "PrefixedRequestAnimationFrame" ->
-          `PrefixedRequestAnimationFrame
-      | `String "PrefixedStorageInfo" -> `PrefixedStorageInfo
-      | `String "PrefixedVideoDisplayingFullscreen" ->
-          `PrefixedVideoDisplayingFullscreen
-      | `String "PrefixedVideoEnterFullscreen" -> `PrefixedVideoEnterFullscreen
-      | `String "PrefixedVideoEnterFullScreen" -> `PrefixedVideoEnterFullScreen
-      | `String "PrefixedVideoExitFullscreen" -> `PrefixedVideoExitFullscreen
-      | `String "PrefixedVideoExitFullScreen" -> `PrefixedVideoExitFullScreen
-      | `String "PrefixedVideoSupportsFullscreen" ->
-          `PrefixedVideoSupportsFullscreen
-      | `String "PrivacySandboxExtensionsAPI" -> `PrivacySandboxExtensionsAPI
-      | `String "RangeExpand" -> `RangeExpand
-      | `String "RequestedSubresourceWithEmbeddedCredentials" ->
-          `RequestedSubresourceWithEmbeddedCredentials
-      | `String "RTCConstraintEnableDtlsSrtpFalse" ->
-          `RTCConstraintEnableDtlsSrtpFalse
-      | `String "RTCConstraintEnableDtlsSrtpTrue" ->
-          `RTCConstraintEnableDtlsSrtpTrue
-      | `String "RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics" ->
-          `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics
-      | `String "RTCPeerConnectionSdpSemanticsPlanB" ->
-          `RTCPeerConnectionSdpSemanticsPlanB
-      | `String "RtcpMuxPolicyNegotiate" -> `RtcpMuxPolicyNegotiate
-      | `String "SharedArrayBufferConstructedWithoutIsolation" ->
-          `SharedArrayBufferConstructedWithoutIsolation
-      | `String "TextToSpeech_DisallowedByAutoplay" ->
-          `TextToSpeech_DisallowedByAutoplay
-      | `String "V8SharedArrayBufferConstructedInExtensionWithoutIsolation" ->
-          `V8SharedArrayBufferConstructedInExtensionWithoutIsolation
-      | `String "XHRJSONEncodingDetection" -> `XHRJSONEncodingDetection
-      | `String "XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload" ->
-          `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload
-      | `String "XRSupportsSession" -> `XRSupportsSession
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__deprecationissuetype = function
-      | `AuthorizationCoveredByWildcard ->
-          `String "AuthorizationCoveredByWildcard"
-      | `CanRequestURLHTTPContainingNewline ->
-          `String "CanRequestURLHTTPContainingNewline"
-      | `ChromeLoadTimesConnectionInfo ->
-          `String "ChromeLoadTimesConnectionInfo"
-      | `ChromeLoadTimesFirstPaintAfterLoadTime ->
-          `String "ChromeLoadTimesFirstPaintAfterLoadTime"
-      | `ChromeLoadTimesWasAlternateProtocolAvailable ->
-          `String "ChromeLoadTimesWasAlternateProtocolAvailable"
-      | `CookieWithTruncatingChar -> `String "CookieWithTruncatingChar"
-      | `CrossOriginAccessBasedOnDocumentDomain ->
-          `String "CrossOriginAccessBasedOnDocumentDomain"
-      | `CrossOriginWindowAlert -> `String "CrossOriginWindowAlert"
-      | `CrossOriginWindowConfirm -> `String "CrossOriginWindowConfirm"
-      | `CSSSelectorInternalMediaControlsOverlayCastButton ->
-          `String "CSSSelectorInternalMediaControlsOverlayCastButton"
-      | `DeprecationExample -> `String "DeprecationExample"
-      | `DocumentDomainSettingWithoutOriginAgentClusterHeader ->
-          `String "DocumentDomainSettingWithoutOriginAgentClusterHeader"
-      | `EventPath -> `String "EventPath"
-      | `ExpectCTHeader -> `String "ExpectCTHeader"
-      | `GeolocationInsecureOrigin -> `String "GeolocationInsecureOrigin"
-      | `GeolocationInsecureOriginDeprecatedNotRemoved ->
-          `String "GeolocationInsecureOriginDeprecatedNotRemoved"
-      | `GetUserMediaInsecureOrigin -> `String "GetUserMediaInsecureOrigin"
-      | `HostCandidateAttributeGetter -> `String "HostCandidateAttributeGetter"
-      | `IdentityInCanMakePaymentEvent ->
-          `String "IdentityInCanMakePaymentEvent"
-      | `InsecurePrivateNetworkSubresourceRequest ->
-          `String "InsecurePrivateNetworkSubresourceRequest"
-      | `LocalCSSFileExtensionRejected ->
-          `String "LocalCSSFileExtensionRejected"
-      | `MediaSourceAbortRemove -> `String "MediaSourceAbortRemove"
-      | `MediaSourceDurationTruncatingBuffered ->
-          `String "MediaSourceDurationTruncatingBuffered"
-      | `NoSysexWebMIDIWithoutPermission ->
-          `String "NoSysexWebMIDIWithoutPermission"
-      | `NotificationInsecureOrigin -> `String "NotificationInsecureOrigin"
-      | `NotificationPermissionRequestedIframe ->
-          `String "NotificationPermissionRequestedIframe"
-      | `ObsoleteCreateImageBitmapImageOrientationNone ->
-          `String "ObsoleteCreateImageBitmapImageOrientationNone"
-      | `ObsoleteWebRtcCipherSuite -> `String "ObsoleteWebRtcCipherSuite"
-      | `OpenWebDatabaseInsecureContext ->
-          `String "OpenWebDatabaseInsecureContext"
-      | `OverflowVisibleOnReplacedElement ->
-          `String "OverflowVisibleOnReplacedElement"
-      | `PaymentInstruments -> `String "PaymentInstruments"
-      | `PaymentRequestCSPViolation -> `String "PaymentRequestCSPViolation"
-      | `PersistentQuotaType -> `String "PersistentQuotaType"
-      | `PictureSourceSrc -> `String "PictureSourceSrc"
-      | `PrefixedCancelAnimationFrame -> `String "PrefixedCancelAnimationFrame"
-      | `PrefixedRequestAnimationFrame ->
-          `String "PrefixedRequestAnimationFrame"
-      | `PrefixedStorageInfo -> `String "PrefixedStorageInfo"
-      | `PrefixedVideoDisplayingFullscreen ->
-          `String "PrefixedVideoDisplayingFullscreen"
-      | `PrefixedVideoEnterFullscreen -> `String "PrefixedVideoEnterFullscreen"
-      | `PrefixedVideoEnterFullScreen -> `String "PrefixedVideoEnterFullScreen"
-      | `PrefixedVideoExitFullscreen -> `String "PrefixedVideoExitFullscreen"
-      | `PrefixedVideoExitFullScreen -> `String "PrefixedVideoExitFullScreen"
-      | `PrefixedVideoSupportsFullscreen ->
-          `String "PrefixedVideoSupportsFullscreen"
-      | `PrivacySandboxExtensionsAPI -> `String "PrivacySandboxExtensionsAPI"
-      | `RangeExpand -> `String "RangeExpand"
-      | `RequestedSubresourceWithEmbeddedCredentials ->
-          `String "RequestedSubresourceWithEmbeddedCredentials"
-      | `RTCConstraintEnableDtlsSrtpFalse ->
-          `String "RTCConstraintEnableDtlsSrtpFalse"
-      | `RTCConstraintEnableDtlsSrtpTrue ->
-          `String "RTCConstraintEnableDtlsSrtpTrue"
-      | `RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics ->
-          `String "RTCPeerConnectionComplexPlanBSdpUsingDefaultSdpSemantics"
-      | `RTCPeerConnectionSdpSemanticsPlanB ->
-          `String "RTCPeerConnectionSdpSemanticsPlanB"
-      | `RtcpMuxPolicyNegotiate -> `String "RtcpMuxPolicyNegotiate"
-      | `SharedArrayBufferConstructedWithoutIsolation ->
-          `String "SharedArrayBufferConstructedWithoutIsolation"
-      | `TextToSpeech_DisallowedByAutoplay ->
-          `String "TextToSpeech_DisallowedByAutoplay"
-      | `V8SharedArrayBufferConstructedInExtensionWithoutIsolation ->
-          `String "V8SharedArrayBufferConstructedInExtensionWithoutIsolation"
-      | `XHRJSONEncodingDetection -> `String "XHRJSONEncodingDetection"
-      | `XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload ->
-          `String "XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload"
-      | `XRSupportsSession -> `String "XRSupportsSession"
-
-    type t = _deprecationissuetype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
   and DeprecationIssueDetails : sig
     type t = {
       affectedFrame : AffectedFrame.t option;
@@ -3900,8 +3521,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       sourceCodeLocation : SourceCodeLocation.t;
           [@key "sourceCodeLocation"] [@ocaml.doc "No description provided"]
-      type_ : DeprecationIssueType.t;
-          [@key "type"] [@ocaml.doc "No description provided"]
+      type_ : string;
+          [@key "type"]
+          [@ocaml.doc
+            "One of the deprecation names from \
+             third_party/blink/renderer/core/frame/deprecation/deprecation.json5"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -3915,8 +3539,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       sourceCodeLocation : SourceCodeLocation.t;
           [@key "sourceCodeLocation"] [@ocaml.doc "No description provided"]
-      type_ : DeprecationIssueType.t;
-          [@key "type"] [@ocaml.doc "No description provided"]
+      type_ : string;
+          [@key "type"]
+          [@ocaml.doc
+            "One of the deprecation names from \
+             third_party/blink/renderer/core/frame/deprecation/deprecation.json5"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
