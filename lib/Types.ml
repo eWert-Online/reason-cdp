@@ -19182,6 +19182,19 @@ and Page : sig
     [@@deriving yojson]
     [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
   end
+
+  and PrefetchStatus : sig
+    type _prefetchstatus =
+      [ `Running | `Ready | `Success | `Failure | `NotSupported ]
+
+    val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
+    val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
+
+    type t = _prefetchstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "List of Prefetch status, which refers to PreloadingTriggeringOutcome."]
+  end
 end = struct
   module rec FrameId : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "Unique frame identifier."]
@@ -22001,6 +22014,43 @@ end = struct
     type t = _prerenderfinalstatus
     [@@deriving yojson]
     [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
+  end
+
+  and PrefetchStatus : sig
+    type _prefetchstatus =
+      [ `Running | `Ready | `Success | `Failure | `NotSupported ]
+
+    val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
+    val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
+
+    type t = _prefetchstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "List of Prefetch status, which refers to PreloadingTriggeringOutcome."]
+  end = struct
+    type _prefetchstatus =
+      [ `Running | `Ready | `Success | `Failure | `NotSupported ]
+
+    let _prefetchstatus_of_yojson = function
+      | `String "Running" -> `Running
+      | `String "Ready" -> `Ready
+      | `String "Success" -> `Success
+      | `String "Failure" -> `Failure
+      | `String "NotSupported" -> `NotSupported
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__prefetchstatus = function
+      | `Running -> `String "Running"
+      | `Ready -> `String "Ready"
+      | `Success -> `String "Success"
+      | `Failure -> `String "Failure"
+      | `NotSupported -> `String "NotSupported"
+
+    type t = _prefetchstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "List of Prefetch status, which refers to PreloadingTriggeringOutcome."]
   end
 end
 
@@ -26922,6 +26972,65 @@ end = struct
              etc."]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaError"]
+  end
+end
+
+and DeviceAccess : sig
+  module rec RequestId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "Device request id."]
+  end
+
+  and DeviceId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "A device id."]
+  end
+
+  and PromptDevice : sig
+    type t = {
+      id : DeviceId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "Display name as it appears in a device request user prompt."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Device information displayed in a user prompt to select a device."]
+  end
+end = struct
+  module rec RequestId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "Device request id."]
+  end = struct
+    type t = string [@@deriving yojson] [@@ocaml.doc "Device request id."]
+  end
+
+  and DeviceId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "A device id."]
+  end = struct
+    type t = string [@@deriving yojson] [@@ocaml.doc "A device id."]
+  end
+
+  and PromptDevice : sig
+    type t = {
+      id : DeviceId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "Display name as it appears in a device request user prompt."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Device information displayed in a user prompt to select a device."]
+  end = struct
+    type t = {
+      id : DeviceId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "Display name as it appears in a device request user prompt."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Device information displayed in a user prompt to select a device."]
   end
 end
 

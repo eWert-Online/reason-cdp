@@ -29585,6 +29585,204 @@ module Media = struct
   end
 end
 
+module DeviceAccess = struct
+  (* Enable events in this domain. *)
+  module Enable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "DeviceAccess.enable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Disable events in this domain. *)
+  module Disable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "DeviceAccess.disable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Select a device in response to a DeviceAccess.deviceRequestPrompted event. *)
+  module SelectPrompt = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : Types.DeviceAccess.RequestId.t;
+            [@key "id"] [@ocaml.doc "No description provided"]
+        deviceId : Types.DeviceAccess.DeviceId.t;
+            [@key "deviceId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~id ~deviceId () = { id; deviceId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "DeviceAccess.selectPrompt"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Cancel a prompt in response to a DeviceAccess.deviceRequestPrompted event. *)
+  module CancelPrompt = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : Types.DeviceAccess.RequestId.t;
+            [@key "id"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~id () = { id }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "DeviceAccess.cancelPrompt"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+end
+
 module Console = struct
   (* Does nothing. *)
   module ClearMessages = struct

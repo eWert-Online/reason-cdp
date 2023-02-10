@@ -2652,6 +2652,32 @@ module Page = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
+  (* TODO(crbug/1384419): Create a dedicated domain for preloading.
+     Fired when a prefetch attempt is updated. *)
+  module PrefetchStatusUpdated = struct
+    let name = "Page.prefetchStatusUpdated"
+
+    type result = {
+      initiatingFrameId : Types.Page.FrameId.t;
+          [@key "initiatingFrameId"]
+          [@ocaml.doc "The frame id of the frame initiating prefetch."]
+      prefetchUrl : string;
+          [@key "prefetchUrl"] [@ocaml.doc "No description provided"]
+      status : Types.Page.PrefetchStatus.t;
+          [@key "status"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
   (* No description provided *)
   module LoadEventFired = struct
     let name = "Page.loadEventFired"
@@ -3982,6 +4008,31 @@ module Media = struct
     type result = {
       players : Types.Media.PlayerId.t list;
           [@key "players"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+end
+
+module DeviceAccess = struct
+  (* A device request opened a user prompt to select a device. Respond with the
+     selectPrompt or cancelPrompt command. *)
+  module DeviceRequestPrompted = struct
+    let name = "DeviceAccess.deviceRequestPrompted"
+
+    type result = {
+      id : Types.DeviceAccess.RequestId.t;
+          [@key "id"] [@ocaml.doc "No description provided"]
+      devices : Types.DeviceAccess.PromptDevice.t list;
+          [@key "devices"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 
