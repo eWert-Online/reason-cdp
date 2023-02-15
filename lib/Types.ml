@@ -27034,6 +27034,76 @@ end = struct
   end
 end
 
+and Preload : sig
+  module rec RuleSetId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
+  end
+
+  and RuleSet : sig
+    type t = {
+      id : RuleSetId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"]
+          [@ocaml.doc
+            "Identifies a document which the rule set is associated with."]
+      sourceText : string;
+          [@key "sourceText"]
+          [@ocaml.doc
+            "Source text of JSON representing the rule set. If it comes from\n\
+             <script> tag, it is the textContent of the node. Note that it is\n\
+             a JSON for valid case.\n\n\
+             See also:\n\
+             - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
+             - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
+  end
+end = struct
+  module rec RuleSetId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
+  end = struct
+    type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
+  end
+
+  and RuleSet : sig
+    type t = {
+      id : RuleSetId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"]
+          [@ocaml.doc
+            "Identifies a document which the rule set is associated with."]
+      sourceText : string;
+          [@key "sourceText"]
+          [@ocaml.doc
+            "Source text of JSON representing the rule set. If it comes from\n\
+             <script> tag, it is the textContent of the node. Note that it is\n\
+             a JSON for valid case.\n\n\
+             See also:\n\
+             - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
+             - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
+  end = struct
+    type t = {
+      id : RuleSetId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"]
+          [@ocaml.doc
+            "Identifies a document which the rule set is associated with."]
+      sourceText : string;
+          [@key "sourceText"]
+          [@ocaml.doc
+            "Source text of JSON representing the rule set. If it comes from\n\
+             <script> tag, it is the textContent of the node. Note that it is\n\
+             a JSON for valid case.\n\n\
+             See also:\n\
+             - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
+             - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
+  end
+end
+
 and Console : sig
   module rec ConsoleMessage : sig
     type _consolemessage_source =

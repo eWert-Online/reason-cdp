@@ -4047,6 +4047,48 @@ module DeviceAccess = struct
   end
 end
 
+module Preload = struct
+  (* Upsert. Currently, it is only emitted when a rule set added. *)
+  module RuleSetUpdated = struct
+    let name = "Preload.ruleSetUpdated"
+
+    type result = {
+      ruleSet : Types.Preload.RuleSet.t;
+          [@key "ruleSet"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
+  (* No description provided *)
+  module RuleSetRemoved = struct
+    let name = "Preload.ruleSetRemoved"
+
+    type result = {
+      id : Types.Preload.RuleSetId.t;
+          [@key "id"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+end
+
 module Console = struct
   (* Issued when new console message is added. *)
   module MessageAdded = struct
