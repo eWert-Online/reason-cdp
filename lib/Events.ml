@@ -2663,7 +2663,33 @@ module Page = struct
           [@ocaml.doc "The frame id of the frame initiating prefetch."]
       prefetchUrl : string;
           [@key "prefetchUrl"] [@ocaml.doc "No description provided"]
-      status : Types.Page.PrefetchStatus.t;
+      status : Types.Page.PreloadingStatus.t;
+          [@key "status"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
+  (* TODO(crbug/1384419): Create a dedicated domain for preloading.
+     Fired when a prerender attempt is updated. *)
+  module PrerenderStatusUpdated = struct
+    let name = "Page.prerenderStatusUpdated"
+
+    type result = {
+      initiatingFrameId : Types.Page.FrameId.t;
+          [@key "initiatingFrameId"]
+          [@ocaml.doc "The frame id of the frame initiating prerender."]
+      prerenderingUrl : string;
+          [@key "prerenderingUrl"] [@ocaml.doc "No description provided"]
+      status : Types.Page.PreloadingStatus.t;
           [@key "status"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]

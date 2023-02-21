@@ -19183,17 +19183,18 @@ and Page : sig
     [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
   end
 
-  and PrefetchStatus : sig
-    type _prefetchstatus =
-      [ `Running | `Ready | `Success | `Failure | `NotSupported ]
+  and PreloadingStatus : sig
+    type _preloadingstatus =
+      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
 
-    val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
-    val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
+    val _preloadingstatus_of_yojson : Yojson.Basic.t -> _preloadingstatus
+    val yojson_of__preloadingstatus : _preloadingstatus -> Yojson.Basic.t
 
-    type t = _prefetchstatus
+    type t = _preloadingstatus
     [@@deriving yojson]
     [@@ocaml.doc
-      "List of Prefetch status, which refers to PreloadingTriggeringOutcome."]
+      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
+       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
   end
 end = struct
   module rec FrameId : sig
@@ -22016,22 +22017,24 @@ end = struct
     [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
   end
 
-  and PrefetchStatus : sig
-    type _prefetchstatus =
-      [ `Running | `Ready | `Success | `Failure | `NotSupported ]
+  and PreloadingStatus : sig
+    type _preloadingstatus =
+      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
 
-    val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
-    val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
+    val _preloadingstatus_of_yojson : Yojson.Basic.t -> _preloadingstatus
+    val yojson_of__preloadingstatus : _preloadingstatus -> Yojson.Basic.t
 
-    type t = _prefetchstatus
+    type t = _preloadingstatus
     [@@deriving yojson]
     [@@ocaml.doc
-      "List of Prefetch status, which refers to PreloadingTriggeringOutcome."]
+      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
+       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
   end = struct
-    type _prefetchstatus =
-      [ `Running | `Ready | `Success | `Failure | `NotSupported ]
+    type _preloadingstatus =
+      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
 
-    let _prefetchstatus_of_yojson = function
+    let _preloadingstatus_of_yojson = function
+      | `String "Pending" -> `Pending
       | `String "Running" -> `Running
       | `String "Ready" -> `Ready
       | `String "Success" -> `Success
@@ -22040,17 +22043,19 @@ end = struct
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
-    let yojson_of__prefetchstatus = function
+    let yojson_of__preloadingstatus = function
+      | `Pending -> `String "Pending"
       | `Running -> `String "Running"
       | `Ready -> `String "Ready"
       | `Success -> `String "Success"
       | `Failure -> `String "Failure"
       | `NotSupported -> `String "NotSupported"
 
-    type t = _prefetchstatus
+    type t = _preloadingstatus
     [@@deriving yojson]
     [@@ocaml.doc
-      "List of Prefetch status, which refers to PreloadingTriggeringOutcome."]
+      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
+       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
   end
 end
 
