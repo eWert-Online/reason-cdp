@@ -1845,8 +1845,7 @@ and Audits : sig
       | `FormAriaLabelledByToNonExistingId
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `FormLabelHasNeitherForNorNestedInput
-      | `FormLabelForMatchesNonExistingIdError
-      | `FormHasPasswordFieldWithoutUsernameFieldError ]
+      | `FormLabelForMatchesNonExistingIdError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3409,8 +3408,7 @@ end = struct
       | `FormAriaLabelledByToNonExistingId
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `FormLabelHasNeitherForNorNestedInput
-      | `FormLabelForMatchesNonExistingIdError
-      | `FormHasPasswordFieldWithoutUsernameFieldError ]
+      | `FormLabelForMatchesNonExistingIdError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3431,8 +3429,7 @@ end = struct
       | `FormAriaLabelledByToNonExistingId
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `FormLabelHasNeitherForNorNestedInput
-      | `FormLabelForMatchesNonExistingIdError
-      | `FormHasPasswordFieldWithoutUsernameFieldError ]
+      | `FormLabelForMatchesNonExistingIdError ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
@@ -3452,8 +3449,6 @@ end = struct
           `FormLabelHasNeitherForNorNestedInput
       | `String "FormLabelForMatchesNonExistingIdError" ->
           `FormLabelForMatchesNonExistingIdError
-      | `String "FormHasPasswordFieldWithoutUsernameFieldError" ->
-          `FormHasPasswordFieldWithoutUsernameFieldError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3475,8 +3470,6 @@ end = struct
           `String "FormLabelHasNeitherForNorNestedInput"
       | `FormLabelForMatchesNonExistingIdError ->
           `String "FormLabelForMatchesNonExistingIdError"
-      | `FormHasPasswordFieldWithoutUsernameFieldError ->
-          `String "FormHasPasswordFieldWithoutUsernameFieldError"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
