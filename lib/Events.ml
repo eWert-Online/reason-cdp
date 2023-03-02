@@ -4115,6 +4115,24 @@ module Preload = struct
   end
 end
 
+module FedCm = struct
+  (* No description provided *)
+  module DialogShown = struct
+    let name = "FedCm.dialogShown"
+
+    type result = Types.empty [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+end
+
 module Console = struct
   (* Issued when new console message is added. *)
   module MessageAdded = struct
