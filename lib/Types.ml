@@ -19112,90 +19112,6 @@ and Page : sig
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
-
-  and PrerenderFinalStatus : sig
-    type _prerenderfinalstatus =
-      [ `Activated
-      | `Destroyed
-      | `LowEndDevice
-      | `InvalidSchemeRedirect
-      | `InvalidSchemeNavigation
-      | `InProgressNavigation
-      | `NavigationRequestBlockedByCsp
-      | `MainFrameNavigation
-      | `MojoBinderPolicy
-      | `RendererProcessCrashed
-      | `RendererProcessKilled
-      | `Download
-      | `TriggerDestroyed
-      | `NavigationNotCommitted
-      | `NavigationBadHttpStatus
-      | `ClientCertRequested
-      | `NavigationRequestNetworkError
-      | `MaxNumOfRunningPrerendersExceeded
-      | `CancelAllHostsForTesting
-      | `DidFailLoad
-      | `Stop
-      | `SslCertificateError
-      | `LoginAuthRequested
-      | `UaChangeRequiresReload
-      | `BlockedByClient
-      | `AudioOutputDeviceRequested
-      | `MixedContent
-      | `TriggerBackgrounded
-      | `EmbedderTriggeredAndCrossOriginRedirected
-      | `MemoryLimitExceeded
-      | `FailToGetMemoryUsage
-      | `DataSaverEnabled
-      | `HasEffectiveUrl
-      | `ActivatedBeforeStarted
-      | `InactivePageRestriction
-      | `StartFailed
-      | `TimeoutBackgrounded
-      | `CrossSiteRedirect
-      | `CrossSiteNavigation
-      | `SameSiteCrossOriginRedirect
-      | `SameSiteCrossOriginNavigation
-      | `SameSiteCrossOriginRedirectNotOptIn
-      | `SameSiteCrossOriginNavigationNotOptIn
-      | `ActivationNavigationParameterMismatch
-      | `ActivatedInBackground
-      | `EmbedderHostDisallowed
-      | `ActivationNavigationDestroyedBeforeSuccess
-      | `TabClosedByUserGesture
-      | `TabClosedWithoutUserGesture
-      | `PrimaryMainFrameRendererProcessCrashed
-      | `PrimaryMainFrameRendererProcessKilled
-      | `ActivationFramePolicyNotCompatible
-      | `PreloadingDisabled
-      | `BatterySaverEnabled
-      | `ActivatedDuringMainFrameNavigation
-      | `PreloadingUnsupportedByWebContents ]
-
-    val _prerenderfinalstatus_of_yojson :
-      Yojson.Basic.t -> _prerenderfinalstatus
-
-    val yojson_of__prerenderfinalstatus :
-      _prerenderfinalstatus -> Yojson.Basic.t
-
-    type t = _prerenderfinalstatus
-    [@@deriving yojson]
-    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
-  end
-
-  and PreloadingStatus : sig
-    type _preloadingstatus =
-      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
-
-    val _preloadingstatus_of_yojson : Yojson.Basic.t -> _preloadingstatus
-    val yojson_of__preloadingstatus : _preloadingstatus -> Yojson.Basic.t
-
-    type t = _preloadingstatus
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
-       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
-  end
 end = struct
   module rec FrameId : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "Unique frame identifier."]
@@ -21737,325 +21653,6 @@ end = struct
           [@key "children"] [@ocaml.doc "Array of children frame"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and PrerenderFinalStatus : sig
-    type _prerenderfinalstatus =
-      [ `Activated
-      | `Destroyed
-      | `LowEndDevice
-      | `InvalidSchemeRedirect
-      | `InvalidSchemeNavigation
-      | `InProgressNavigation
-      | `NavigationRequestBlockedByCsp
-      | `MainFrameNavigation
-      | `MojoBinderPolicy
-      | `RendererProcessCrashed
-      | `RendererProcessKilled
-      | `Download
-      | `TriggerDestroyed
-      | `NavigationNotCommitted
-      | `NavigationBadHttpStatus
-      | `ClientCertRequested
-      | `NavigationRequestNetworkError
-      | `MaxNumOfRunningPrerendersExceeded
-      | `CancelAllHostsForTesting
-      | `DidFailLoad
-      | `Stop
-      | `SslCertificateError
-      | `LoginAuthRequested
-      | `UaChangeRequiresReload
-      | `BlockedByClient
-      | `AudioOutputDeviceRequested
-      | `MixedContent
-      | `TriggerBackgrounded
-      | `EmbedderTriggeredAndCrossOriginRedirected
-      | `MemoryLimitExceeded
-      | `FailToGetMemoryUsage
-      | `DataSaverEnabled
-      | `HasEffectiveUrl
-      | `ActivatedBeforeStarted
-      | `InactivePageRestriction
-      | `StartFailed
-      | `TimeoutBackgrounded
-      | `CrossSiteRedirect
-      | `CrossSiteNavigation
-      | `SameSiteCrossOriginRedirect
-      | `SameSiteCrossOriginNavigation
-      | `SameSiteCrossOriginRedirectNotOptIn
-      | `SameSiteCrossOriginNavigationNotOptIn
-      | `ActivationNavigationParameterMismatch
-      | `ActivatedInBackground
-      | `EmbedderHostDisallowed
-      | `ActivationNavigationDestroyedBeforeSuccess
-      | `TabClosedByUserGesture
-      | `TabClosedWithoutUserGesture
-      | `PrimaryMainFrameRendererProcessCrashed
-      | `PrimaryMainFrameRendererProcessKilled
-      | `ActivationFramePolicyNotCompatible
-      | `PreloadingDisabled
-      | `BatterySaverEnabled
-      | `ActivatedDuringMainFrameNavigation
-      | `PreloadingUnsupportedByWebContents ]
-
-    val _prerenderfinalstatus_of_yojson :
-      Yojson.Basic.t -> _prerenderfinalstatus
-
-    val yojson_of__prerenderfinalstatus :
-      _prerenderfinalstatus -> Yojson.Basic.t
-
-    type t = _prerenderfinalstatus
-    [@@deriving yojson]
-    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
-  end = struct
-    type _prerenderfinalstatus =
-      [ `Activated
-      | `Destroyed
-      | `LowEndDevice
-      | `InvalidSchemeRedirect
-      | `InvalidSchemeNavigation
-      | `InProgressNavigation
-      | `NavigationRequestBlockedByCsp
-      | `MainFrameNavigation
-      | `MojoBinderPolicy
-      | `RendererProcessCrashed
-      | `RendererProcessKilled
-      | `Download
-      | `TriggerDestroyed
-      | `NavigationNotCommitted
-      | `NavigationBadHttpStatus
-      | `ClientCertRequested
-      | `NavigationRequestNetworkError
-      | `MaxNumOfRunningPrerendersExceeded
-      | `CancelAllHostsForTesting
-      | `DidFailLoad
-      | `Stop
-      | `SslCertificateError
-      | `LoginAuthRequested
-      | `UaChangeRequiresReload
-      | `BlockedByClient
-      | `AudioOutputDeviceRequested
-      | `MixedContent
-      | `TriggerBackgrounded
-      | `EmbedderTriggeredAndCrossOriginRedirected
-      | `MemoryLimitExceeded
-      | `FailToGetMemoryUsage
-      | `DataSaverEnabled
-      | `HasEffectiveUrl
-      | `ActivatedBeforeStarted
-      | `InactivePageRestriction
-      | `StartFailed
-      | `TimeoutBackgrounded
-      | `CrossSiteRedirect
-      | `CrossSiteNavigation
-      | `SameSiteCrossOriginRedirect
-      | `SameSiteCrossOriginNavigation
-      | `SameSiteCrossOriginRedirectNotOptIn
-      | `SameSiteCrossOriginNavigationNotOptIn
-      | `ActivationNavigationParameterMismatch
-      | `ActivatedInBackground
-      | `EmbedderHostDisallowed
-      | `ActivationNavigationDestroyedBeforeSuccess
-      | `TabClosedByUserGesture
-      | `TabClosedWithoutUserGesture
-      | `PrimaryMainFrameRendererProcessCrashed
-      | `PrimaryMainFrameRendererProcessKilled
-      | `ActivationFramePolicyNotCompatible
-      | `PreloadingDisabled
-      | `BatterySaverEnabled
-      | `ActivatedDuringMainFrameNavigation
-      | `PreloadingUnsupportedByWebContents ]
-
-    let _prerenderfinalstatus_of_yojson = function
-      | `String "Activated" -> `Activated
-      | `String "Destroyed" -> `Destroyed
-      | `String "LowEndDevice" -> `LowEndDevice
-      | `String "InvalidSchemeRedirect" -> `InvalidSchemeRedirect
-      | `String "InvalidSchemeNavigation" -> `InvalidSchemeNavigation
-      | `String "InProgressNavigation" -> `InProgressNavigation
-      | `String "NavigationRequestBlockedByCsp" ->
-          `NavigationRequestBlockedByCsp
-      | `String "MainFrameNavigation" -> `MainFrameNavigation
-      | `String "MojoBinderPolicy" -> `MojoBinderPolicy
-      | `String "RendererProcessCrashed" -> `RendererProcessCrashed
-      | `String "RendererProcessKilled" -> `RendererProcessKilled
-      | `String "Download" -> `Download
-      | `String "TriggerDestroyed" -> `TriggerDestroyed
-      | `String "NavigationNotCommitted" -> `NavigationNotCommitted
-      | `String "NavigationBadHttpStatus" -> `NavigationBadHttpStatus
-      | `String "ClientCertRequested" -> `ClientCertRequested
-      | `String "NavigationRequestNetworkError" ->
-          `NavigationRequestNetworkError
-      | `String "MaxNumOfRunningPrerendersExceeded" ->
-          `MaxNumOfRunningPrerendersExceeded
-      | `String "CancelAllHostsForTesting" -> `CancelAllHostsForTesting
-      | `String "DidFailLoad" -> `DidFailLoad
-      | `String "Stop" -> `Stop
-      | `String "SslCertificateError" -> `SslCertificateError
-      | `String "LoginAuthRequested" -> `LoginAuthRequested
-      | `String "UaChangeRequiresReload" -> `UaChangeRequiresReload
-      | `String "BlockedByClient" -> `BlockedByClient
-      | `String "AudioOutputDeviceRequested" -> `AudioOutputDeviceRequested
-      | `String "MixedContent" -> `MixedContent
-      | `String "TriggerBackgrounded" -> `TriggerBackgrounded
-      | `String "EmbedderTriggeredAndCrossOriginRedirected" ->
-          `EmbedderTriggeredAndCrossOriginRedirected
-      | `String "MemoryLimitExceeded" -> `MemoryLimitExceeded
-      | `String "FailToGetMemoryUsage" -> `FailToGetMemoryUsage
-      | `String "DataSaverEnabled" -> `DataSaverEnabled
-      | `String "HasEffectiveUrl" -> `HasEffectiveUrl
-      | `String "ActivatedBeforeStarted" -> `ActivatedBeforeStarted
-      | `String "InactivePageRestriction" -> `InactivePageRestriction
-      | `String "StartFailed" -> `StartFailed
-      | `String "TimeoutBackgrounded" -> `TimeoutBackgrounded
-      | `String "CrossSiteRedirect" -> `CrossSiteRedirect
-      | `String "CrossSiteNavigation" -> `CrossSiteNavigation
-      | `String "SameSiteCrossOriginRedirect" -> `SameSiteCrossOriginRedirect
-      | `String "SameSiteCrossOriginNavigation" ->
-          `SameSiteCrossOriginNavigation
-      | `String "SameSiteCrossOriginRedirectNotOptIn" ->
-          `SameSiteCrossOriginRedirectNotOptIn
-      | `String "SameSiteCrossOriginNavigationNotOptIn" ->
-          `SameSiteCrossOriginNavigationNotOptIn
-      | `String "ActivationNavigationParameterMismatch" ->
-          `ActivationNavigationParameterMismatch
-      | `String "ActivatedInBackground" -> `ActivatedInBackground
-      | `String "EmbedderHostDisallowed" -> `EmbedderHostDisallowed
-      | `String "ActivationNavigationDestroyedBeforeSuccess" ->
-          `ActivationNavigationDestroyedBeforeSuccess
-      | `String "TabClosedByUserGesture" -> `TabClosedByUserGesture
-      | `String "TabClosedWithoutUserGesture" -> `TabClosedWithoutUserGesture
-      | `String "PrimaryMainFrameRendererProcessCrashed" ->
-          `PrimaryMainFrameRendererProcessCrashed
-      | `String "PrimaryMainFrameRendererProcessKilled" ->
-          `PrimaryMainFrameRendererProcessKilled
-      | `String "ActivationFramePolicyNotCompatible" ->
-          `ActivationFramePolicyNotCompatible
-      | `String "PreloadingDisabled" -> `PreloadingDisabled
-      | `String "BatterySaverEnabled" -> `BatterySaverEnabled
-      | `String "ActivatedDuringMainFrameNavigation" ->
-          `ActivatedDuringMainFrameNavigation
-      | `String "PreloadingUnsupportedByWebContents" ->
-          `PreloadingUnsupportedByWebContents
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__prerenderfinalstatus = function
-      | `Activated -> `String "Activated"
-      | `Destroyed -> `String "Destroyed"
-      | `LowEndDevice -> `String "LowEndDevice"
-      | `InvalidSchemeRedirect -> `String "InvalidSchemeRedirect"
-      | `InvalidSchemeNavigation -> `String "InvalidSchemeNavigation"
-      | `InProgressNavigation -> `String "InProgressNavigation"
-      | `NavigationRequestBlockedByCsp ->
-          `String "NavigationRequestBlockedByCsp"
-      | `MainFrameNavigation -> `String "MainFrameNavigation"
-      | `MojoBinderPolicy -> `String "MojoBinderPolicy"
-      | `RendererProcessCrashed -> `String "RendererProcessCrashed"
-      | `RendererProcessKilled -> `String "RendererProcessKilled"
-      | `Download -> `String "Download"
-      | `TriggerDestroyed -> `String "TriggerDestroyed"
-      | `NavigationNotCommitted -> `String "NavigationNotCommitted"
-      | `NavigationBadHttpStatus -> `String "NavigationBadHttpStatus"
-      | `ClientCertRequested -> `String "ClientCertRequested"
-      | `NavigationRequestNetworkError ->
-          `String "NavigationRequestNetworkError"
-      | `MaxNumOfRunningPrerendersExceeded ->
-          `String "MaxNumOfRunningPrerendersExceeded"
-      | `CancelAllHostsForTesting -> `String "CancelAllHostsForTesting"
-      | `DidFailLoad -> `String "DidFailLoad"
-      | `Stop -> `String "Stop"
-      | `SslCertificateError -> `String "SslCertificateError"
-      | `LoginAuthRequested -> `String "LoginAuthRequested"
-      | `UaChangeRequiresReload -> `String "UaChangeRequiresReload"
-      | `BlockedByClient -> `String "BlockedByClient"
-      | `AudioOutputDeviceRequested -> `String "AudioOutputDeviceRequested"
-      | `MixedContent -> `String "MixedContent"
-      | `TriggerBackgrounded -> `String "TriggerBackgrounded"
-      | `EmbedderTriggeredAndCrossOriginRedirected ->
-          `String "EmbedderTriggeredAndCrossOriginRedirected"
-      | `MemoryLimitExceeded -> `String "MemoryLimitExceeded"
-      | `FailToGetMemoryUsage -> `String "FailToGetMemoryUsage"
-      | `DataSaverEnabled -> `String "DataSaverEnabled"
-      | `HasEffectiveUrl -> `String "HasEffectiveUrl"
-      | `ActivatedBeforeStarted -> `String "ActivatedBeforeStarted"
-      | `InactivePageRestriction -> `String "InactivePageRestriction"
-      | `StartFailed -> `String "StartFailed"
-      | `TimeoutBackgrounded -> `String "TimeoutBackgrounded"
-      | `CrossSiteRedirect -> `String "CrossSiteRedirect"
-      | `CrossSiteNavigation -> `String "CrossSiteNavigation"
-      | `SameSiteCrossOriginRedirect -> `String "SameSiteCrossOriginRedirect"
-      | `SameSiteCrossOriginNavigation ->
-          `String "SameSiteCrossOriginNavigation"
-      | `SameSiteCrossOriginRedirectNotOptIn ->
-          `String "SameSiteCrossOriginRedirectNotOptIn"
-      | `SameSiteCrossOriginNavigationNotOptIn ->
-          `String "SameSiteCrossOriginNavigationNotOptIn"
-      | `ActivationNavigationParameterMismatch ->
-          `String "ActivationNavigationParameterMismatch"
-      | `ActivatedInBackground -> `String "ActivatedInBackground"
-      | `EmbedderHostDisallowed -> `String "EmbedderHostDisallowed"
-      | `ActivationNavigationDestroyedBeforeSuccess ->
-          `String "ActivationNavigationDestroyedBeforeSuccess"
-      | `TabClosedByUserGesture -> `String "TabClosedByUserGesture"
-      | `TabClosedWithoutUserGesture -> `String "TabClosedWithoutUserGesture"
-      | `PrimaryMainFrameRendererProcessCrashed ->
-          `String "PrimaryMainFrameRendererProcessCrashed"
-      | `PrimaryMainFrameRendererProcessKilled ->
-          `String "PrimaryMainFrameRendererProcessKilled"
-      | `ActivationFramePolicyNotCompatible ->
-          `String "ActivationFramePolicyNotCompatible"
-      | `PreloadingDisabled -> `String "PreloadingDisabled"
-      | `BatterySaverEnabled -> `String "BatterySaverEnabled"
-      | `ActivatedDuringMainFrameNavigation ->
-          `String "ActivatedDuringMainFrameNavigation"
-      | `PreloadingUnsupportedByWebContents ->
-          `String "PreloadingUnsupportedByWebContents"
-
-    type t = _prerenderfinalstatus
-    [@@deriving yojson]
-    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
-  end
-
-  and PreloadingStatus : sig
-    type _preloadingstatus =
-      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
-
-    val _preloadingstatus_of_yojson : Yojson.Basic.t -> _preloadingstatus
-    val yojson_of__preloadingstatus : _preloadingstatus -> Yojson.Basic.t
-
-    type t = _preloadingstatus
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
-       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
-  end = struct
-    type _preloadingstatus =
-      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
-
-    let _preloadingstatus_of_yojson = function
-      | `String "Pending" -> `Pending
-      | `String "Running" -> `Running
-      | `String "Ready" -> `Ready
-      | `String "Success" -> `Success
-      | `String "Failure" -> `Failure
-      | `String "NotSupported" -> `NotSupported
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__preloadingstatus = function
-      | `Pending -> `String "Pending"
-      | `Running -> `String "Running"
-      | `Ready -> `String "Ready"
-      | `Success -> `String "Success"
-      | `Failure -> `String "Failure"
-      | `NotSupported -> `String "NotSupported"
-
-    type t = _preloadingstatus
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
-       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
   end
 end
 
@@ -27063,6 +26660,90 @@ and Preload : sig
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
   end
+
+  and PrerenderFinalStatus : sig
+    type _prerenderfinalstatus =
+      [ `Activated
+      | `Destroyed
+      | `LowEndDevice
+      | `InvalidSchemeRedirect
+      | `InvalidSchemeNavigation
+      | `InProgressNavigation
+      | `NavigationRequestBlockedByCsp
+      | `MainFrameNavigation
+      | `MojoBinderPolicy
+      | `RendererProcessCrashed
+      | `RendererProcessKilled
+      | `Download
+      | `TriggerDestroyed
+      | `NavigationNotCommitted
+      | `NavigationBadHttpStatus
+      | `ClientCertRequested
+      | `NavigationRequestNetworkError
+      | `MaxNumOfRunningPrerendersExceeded
+      | `CancelAllHostsForTesting
+      | `DidFailLoad
+      | `Stop
+      | `SslCertificateError
+      | `LoginAuthRequested
+      | `UaChangeRequiresReload
+      | `BlockedByClient
+      | `AudioOutputDeviceRequested
+      | `MixedContent
+      | `TriggerBackgrounded
+      | `EmbedderTriggeredAndCrossOriginRedirected
+      | `MemoryLimitExceeded
+      | `FailToGetMemoryUsage
+      | `DataSaverEnabled
+      | `HasEffectiveUrl
+      | `ActivatedBeforeStarted
+      | `InactivePageRestriction
+      | `StartFailed
+      | `TimeoutBackgrounded
+      | `CrossSiteRedirect
+      | `CrossSiteNavigation
+      | `SameSiteCrossOriginRedirect
+      | `SameSiteCrossOriginNavigation
+      | `SameSiteCrossOriginRedirectNotOptIn
+      | `SameSiteCrossOriginNavigationNotOptIn
+      | `ActivationNavigationParameterMismatch
+      | `ActivatedInBackground
+      | `EmbedderHostDisallowed
+      | `ActivationNavigationDestroyedBeforeSuccess
+      | `TabClosedByUserGesture
+      | `TabClosedWithoutUserGesture
+      | `PrimaryMainFrameRendererProcessCrashed
+      | `PrimaryMainFrameRendererProcessKilled
+      | `ActivationFramePolicyNotCompatible
+      | `PreloadingDisabled
+      | `BatterySaverEnabled
+      | `ActivatedDuringMainFrameNavigation
+      | `PreloadingUnsupportedByWebContents ]
+
+    val _prerenderfinalstatus_of_yojson :
+      Yojson.Basic.t -> _prerenderfinalstatus
+
+    val yojson_of__prerenderfinalstatus :
+      _prerenderfinalstatus -> Yojson.Basic.t
+
+    type t = _prerenderfinalstatus
+    [@@deriving yojson]
+    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
+  end
+
+  and PreloadingStatus : sig
+    type _preloadingstatus =
+      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
+
+    val _preloadingstatus_of_yojson : Yojson.Basic.t -> _preloadingstatus
+    val yojson_of__preloadingstatus : _preloadingstatus -> Yojson.Basic.t
+
+    type t = _preloadingstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
+       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
+  end
 end = struct
   module rec RuleSetId : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
@@ -27106,6 +26787,325 @@ end = struct
              - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
+  end
+
+  and PrerenderFinalStatus : sig
+    type _prerenderfinalstatus =
+      [ `Activated
+      | `Destroyed
+      | `LowEndDevice
+      | `InvalidSchemeRedirect
+      | `InvalidSchemeNavigation
+      | `InProgressNavigation
+      | `NavigationRequestBlockedByCsp
+      | `MainFrameNavigation
+      | `MojoBinderPolicy
+      | `RendererProcessCrashed
+      | `RendererProcessKilled
+      | `Download
+      | `TriggerDestroyed
+      | `NavigationNotCommitted
+      | `NavigationBadHttpStatus
+      | `ClientCertRequested
+      | `NavigationRequestNetworkError
+      | `MaxNumOfRunningPrerendersExceeded
+      | `CancelAllHostsForTesting
+      | `DidFailLoad
+      | `Stop
+      | `SslCertificateError
+      | `LoginAuthRequested
+      | `UaChangeRequiresReload
+      | `BlockedByClient
+      | `AudioOutputDeviceRequested
+      | `MixedContent
+      | `TriggerBackgrounded
+      | `EmbedderTriggeredAndCrossOriginRedirected
+      | `MemoryLimitExceeded
+      | `FailToGetMemoryUsage
+      | `DataSaverEnabled
+      | `HasEffectiveUrl
+      | `ActivatedBeforeStarted
+      | `InactivePageRestriction
+      | `StartFailed
+      | `TimeoutBackgrounded
+      | `CrossSiteRedirect
+      | `CrossSiteNavigation
+      | `SameSiteCrossOriginRedirect
+      | `SameSiteCrossOriginNavigation
+      | `SameSiteCrossOriginRedirectNotOptIn
+      | `SameSiteCrossOriginNavigationNotOptIn
+      | `ActivationNavigationParameterMismatch
+      | `ActivatedInBackground
+      | `EmbedderHostDisallowed
+      | `ActivationNavigationDestroyedBeforeSuccess
+      | `TabClosedByUserGesture
+      | `TabClosedWithoutUserGesture
+      | `PrimaryMainFrameRendererProcessCrashed
+      | `PrimaryMainFrameRendererProcessKilled
+      | `ActivationFramePolicyNotCompatible
+      | `PreloadingDisabled
+      | `BatterySaverEnabled
+      | `ActivatedDuringMainFrameNavigation
+      | `PreloadingUnsupportedByWebContents ]
+
+    val _prerenderfinalstatus_of_yojson :
+      Yojson.Basic.t -> _prerenderfinalstatus
+
+    val yojson_of__prerenderfinalstatus :
+      _prerenderfinalstatus -> Yojson.Basic.t
+
+    type t = _prerenderfinalstatus
+    [@@deriving yojson]
+    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
+  end = struct
+    type _prerenderfinalstatus =
+      [ `Activated
+      | `Destroyed
+      | `LowEndDevice
+      | `InvalidSchemeRedirect
+      | `InvalidSchemeNavigation
+      | `InProgressNavigation
+      | `NavigationRequestBlockedByCsp
+      | `MainFrameNavigation
+      | `MojoBinderPolicy
+      | `RendererProcessCrashed
+      | `RendererProcessKilled
+      | `Download
+      | `TriggerDestroyed
+      | `NavigationNotCommitted
+      | `NavigationBadHttpStatus
+      | `ClientCertRequested
+      | `NavigationRequestNetworkError
+      | `MaxNumOfRunningPrerendersExceeded
+      | `CancelAllHostsForTesting
+      | `DidFailLoad
+      | `Stop
+      | `SslCertificateError
+      | `LoginAuthRequested
+      | `UaChangeRequiresReload
+      | `BlockedByClient
+      | `AudioOutputDeviceRequested
+      | `MixedContent
+      | `TriggerBackgrounded
+      | `EmbedderTriggeredAndCrossOriginRedirected
+      | `MemoryLimitExceeded
+      | `FailToGetMemoryUsage
+      | `DataSaverEnabled
+      | `HasEffectiveUrl
+      | `ActivatedBeforeStarted
+      | `InactivePageRestriction
+      | `StartFailed
+      | `TimeoutBackgrounded
+      | `CrossSiteRedirect
+      | `CrossSiteNavigation
+      | `SameSiteCrossOriginRedirect
+      | `SameSiteCrossOriginNavigation
+      | `SameSiteCrossOriginRedirectNotOptIn
+      | `SameSiteCrossOriginNavigationNotOptIn
+      | `ActivationNavigationParameterMismatch
+      | `ActivatedInBackground
+      | `EmbedderHostDisallowed
+      | `ActivationNavigationDestroyedBeforeSuccess
+      | `TabClosedByUserGesture
+      | `TabClosedWithoutUserGesture
+      | `PrimaryMainFrameRendererProcessCrashed
+      | `PrimaryMainFrameRendererProcessKilled
+      | `ActivationFramePolicyNotCompatible
+      | `PreloadingDisabled
+      | `BatterySaverEnabled
+      | `ActivatedDuringMainFrameNavigation
+      | `PreloadingUnsupportedByWebContents ]
+
+    let _prerenderfinalstatus_of_yojson = function
+      | `String "Activated" -> `Activated
+      | `String "Destroyed" -> `Destroyed
+      | `String "LowEndDevice" -> `LowEndDevice
+      | `String "InvalidSchemeRedirect" -> `InvalidSchemeRedirect
+      | `String "InvalidSchemeNavigation" -> `InvalidSchemeNavigation
+      | `String "InProgressNavigation" -> `InProgressNavigation
+      | `String "NavigationRequestBlockedByCsp" ->
+          `NavigationRequestBlockedByCsp
+      | `String "MainFrameNavigation" -> `MainFrameNavigation
+      | `String "MojoBinderPolicy" -> `MojoBinderPolicy
+      | `String "RendererProcessCrashed" -> `RendererProcessCrashed
+      | `String "RendererProcessKilled" -> `RendererProcessKilled
+      | `String "Download" -> `Download
+      | `String "TriggerDestroyed" -> `TriggerDestroyed
+      | `String "NavigationNotCommitted" -> `NavigationNotCommitted
+      | `String "NavigationBadHttpStatus" -> `NavigationBadHttpStatus
+      | `String "ClientCertRequested" -> `ClientCertRequested
+      | `String "NavigationRequestNetworkError" ->
+          `NavigationRequestNetworkError
+      | `String "MaxNumOfRunningPrerendersExceeded" ->
+          `MaxNumOfRunningPrerendersExceeded
+      | `String "CancelAllHostsForTesting" -> `CancelAllHostsForTesting
+      | `String "DidFailLoad" -> `DidFailLoad
+      | `String "Stop" -> `Stop
+      | `String "SslCertificateError" -> `SslCertificateError
+      | `String "LoginAuthRequested" -> `LoginAuthRequested
+      | `String "UaChangeRequiresReload" -> `UaChangeRequiresReload
+      | `String "BlockedByClient" -> `BlockedByClient
+      | `String "AudioOutputDeviceRequested" -> `AudioOutputDeviceRequested
+      | `String "MixedContent" -> `MixedContent
+      | `String "TriggerBackgrounded" -> `TriggerBackgrounded
+      | `String "EmbedderTriggeredAndCrossOriginRedirected" ->
+          `EmbedderTriggeredAndCrossOriginRedirected
+      | `String "MemoryLimitExceeded" -> `MemoryLimitExceeded
+      | `String "FailToGetMemoryUsage" -> `FailToGetMemoryUsage
+      | `String "DataSaverEnabled" -> `DataSaverEnabled
+      | `String "HasEffectiveUrl" -> `HasEffectiveUrl
+      | `String "ActivatedBeforeStarted" -> `ActivatedBeforeStarted
+      | `String "InactivePageRestriction" -> `InactivePageRestriction
+      | `String "StartFailed" -> `StartFailed
+      | `String "TimeoutBackgrounded" -> `TimeoutBackgrounded
+      | `String "CrossSiteRedirect" -> `CrossSiteRedirect
+      | `String "CrossSiteNavigation" -> `CrossSiteNavigation
+      | `String "SameSiteCrossOriginRedirect" -> `SameSiteCrossOriginRedirect
+      | `String "SameSiteCrossOriginNavigation" ->
+          `SameSiteCrossOriginNavigation
+      | `String "SameSiteCrossOriginRedirectNotOptIn" ->
+          `SameSiteCrossOriginRedirectNotOptIn
+      | `String "SameSiteCrossOriginNavigationNotOptIn" ->
+          `SameSiteCrossOriginNavigationNotOptIn
+      | `String "ActivationNavigationParameterMismatch" ->
+          `ActivationNavigationParameterMismatch
+      | `String "ActivatedInBackground" -> `ActivatedInBackground
+      | `String "EmbedderHostDisallowed" -> `EmbedderHostDisallowed
+      | `String "ActivationNavigationDestroyedBeforeSuccess" ->
+          `ActivationNavigationDestroyedBeforeSuccess
+      | `String "TabClosedByUserGesture" -> `TabClosedByUserGesture
+      | `String "TabClosedWithoutUserGesture" -> `TabClosedWithoutUserGesture
+      | `String "PrimaryMainFrameRendererProcessCrashed" ->
+          `PrimaryMainFrameRendererProcessCrashed
+      | `String "PrimaryMainFrameRendererProcessKilled" ->
+          `PrimaryMainFrameRendererProcessKilled
+      | `String "ActivationFramePolicyNotCompatible" ->
+          `ActivationFramePolicyNotCompatible
+      | `String "PreloadingDisabled" -> `PreloadingDisabled
+      | `String "BatterySaverEnabled" -> `BatterySaverEnabled
+      | `String "ActivatedDuringMainFrameNavigation" ->
+          `ActivatedDuringMainFrameNavigation
+      | `String "PreloadingUnsupportedByWebContents" ->
+          `PreloadingUnsupportedByWebContents
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__prerenderfinalstatus = function
+      | `Activated -> `String "Activated"
+      | `Destroyed -> `String "Destroyed"
+      | `LowEndDevice -> `String "LowEndDevice"
+      | `InvalidSchemeRedirect -> `String "InvalidSchemeRedirect"
+      | `InvalidSchemeNavigation -> `String "InvalidSchemeNavigation"
+      | `InProgressNavigation -> `String "InProgressNavigation"
+      | `NavigationRequestBlockedByCsp ->
+          `String "NavigationRequestBlockedByCsp"
+      | `MainFrameNavigation -> `String "MainFrameNavigation"
+      | `MojoBinderPolicy -> `String "MojoBinderPolicy"
+      | `RendererProcessCrashed -> `String "RendererProcessCrashed"
+      | `RendererProcessKilled -> `String "RendererProcessKilled"
+      | `Download -> `String "Download"
+      | `TriggerDestroyed -> `String "TriggerDestroyed"
+      | `NavigationNotCommitted -> `String "NavigationNotCommitted"
+      | `NavigationBadHttpStatus -> `String "NavigationBadHttpStatus"
+      | `ClientCertRequested -> `String "ClientCertRequested"
+      | `NavigationRequestNetworkError ->
+          `String "NavigationRequestNetworkError"
+      | `MaxNumOfRunningPrerendersExceeded ->
+          `String "MaxNumOfRunningPrerendersExceeded"
+      | `CancelAllHostsForTesting -> `String "CancelAllHostsForTesting"
+      | `DidFailLoad -> `String "DidFailLoad"
+      | `Stop -> `String "Stop"
+      | `SslCertificateError -> `String "SslCertificateError"
+      | `LoginAuthRequested -> `String "LoginAuthRequested"
+      | `UaChangeRequiresReload -> `String "UaChangeRequiresReload"
+      | `BlockedByClient -> `String "BlockedByClient"
+      | `AudioOutputDeviceRequested -> `String "AudioOutputDeviceRequested"
+      | `MixedContent -> `String "MixedContent"
+      | `TriggerBackgrounded -> `String "TriggerBackgrounded"
+      | `EmbedderTriggeredAndCrossOriginRedirected ->
+          `String "EmbedderTriggeredAndCrossOriginRedirected"
+      | `MemoryLimitExceeded -> `String "MemoryLimitExceeded"
+      | `FailToGetMemoryUsage -> `String "FailToGetMemoryUsage"
+      | `DataSaverEnabled -> `String "DataSaverEnabled"
+      | `HasEffectiveUrl -> `String "HasEffectiveUrl"
+      | `ActivatedBeforeStarted -> `String "ActivatedBeforeStarted"
+      | `InactivePageRestriction -> `String "InactivePageRestriction"
+      | `StartFailed -> `String "StartFailed"
+      | `TimeoutBackgrounded -> `String "TimeoutBackgrounded"
+      | `CrossSiteRedirect -> `String "CrossSiteRedirect"
+      | `CrossSiteNavigation -> `String "CrossSiteNavigation"
+      | `SameSiteCrossOriginRedirect -> `String "SameSiteCrossOriginRedirect"
+      | `SameSiteCrossOriginNavigation ->
+          `String "SameSiteCrossOriginNavigation"
+      | `SameSiteCrossOriginRedirectNotOptIn ->
+          `String "SameSiteCrossOriginRedirectNotOptIn"
+      | `SameSiteCrossOriginNavigationNotOptIn ->
+          `String "SameSiteCrossOriginNavigationNotOptIn"
+      | `ActivationNavigationParameterMismatch ->
+          `String "ActivationNavigationParameterMismatch"
+      | `ActivatedInBackground -> `String "ActivatedInBackground"
+      | `EmbedderHostDisallowed -> `String "EmbedderHostDisallowed"
+      | `ActivationNavigationDestroyedBeforeSuccess ->
+          `String "ActivationNavigationDestroyedBeforeSuccess"
+      | `TabClosedByUserGesture -> `String "TabClosedByUserGesture"
+      | `TabClosedWithoutUserGesture -> `String "TabClosedWithoutUserGesture"
+      | `PrimaryMainFrameRendererProcessCrashed ->
+          `String "PrimaryMainFrameRendererProcessCrashed"
+      | `PrimaryMainFrameRendererProcessKilled ->
+          `String "PrimaryMainFrameRendererProcessKilled"
+      | `ActivationFramePolicyNotCompatible ->
+          `String "ActivationFramePolicyNotCompatible"
+      | `PreloadingDisabled -> `String "PreloadingDisabled"
+      | `BatterySaverEnabled -> `String "BatterySaverEnabled"
+      | `ActivatedDuringMainFrameNavigation ->
+          `String "ActivatedDuringMainFrameNavigation"
+      | `PreloadingUnsupportedByWebContents ->
+          `String "PreloadingUnsupportedByWebContents"
+
+    type t = _prerenderfinalstatus
+    [@@deriving yojson]
+    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
+  end
+
+  and PreloadingStatus : sig
+    type _preloadingstatus =
+      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
+
+    val _preloadingstatus_of_yojson : Yojson.Basic.t -> _preloadingstatus
+    val yojson_of__preloadingstatus : _preloadingstatus -> Yojson.Basic.t
+
+    type t = _preloadingstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
+       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
+  end = struct
+    type _preloadingstatus =
+      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
+
+    let _preloadingstatus_of_yojson = function
+      | `String "Pending" -> `Pending
+      | `String "Running" -> `Running
+      | `String "Ready" -> `Ready
+      | `String "Success" -> `Success
+      | `String "Failure" -> `Failure
+      | `String "NotSupported" -> `NotSupported
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__preloadingstatus = function
+      | `Pending -> `String "Pending"
+      | `Running -> `String "Running"
+      | `Ready -> `String "Ready"
+      | `Success -> `String "Success"
+      | `Failure -> `String "Failure"
+      | `NotSupported -> `String "NotSupported"
+
+    type t = _preloadingstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
+       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
   end
 end
 
