@@ -4111,6 +4111,27 @@ module Preload = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+
+  (* Send a list of sources for all preloading attempts. *)
+  module PreloadingAttemptSourcesUpdated = struct
+    let name = "Preload.preloadingAttemptSourcesUpdated"
+
+    type result = {
+      preloadingAttemptSources : Types.Preload.PreloadingAttemptSource.t list;
+          [@key "preloadingAttemptSources"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
 end
 
 module FedCm = struct

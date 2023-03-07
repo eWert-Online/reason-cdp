@@ -26661,6 +26661,78 @@ and Preload : sig
     [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
   end
 
+  and SpeculationAction : sig
+    type _speculationaction = [ `Prefetch | `Prerender ]
+
+    val _speculationaction_of_yojson : Yojson.Basic.t -> _speculationaction
+    val yojson_of__speculationaction : _speculationaction -> Yojson.Basic.t
+
+    type t = _speculationaction
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The type of preloading attempted. It corresponds to\n\
+       mojom::SpeculationAction (although PrefetchWithSubresources is omitted \
+       as it\n\
+       isn't being used by clients)."]
+  end
+
+  and SpeculationTargetHint : sig
+    type _speculationtargethint = [ `Blank | `Self ]
+
+    val _speculationtargethint_of_yojson :
+      Yojson.Basic.t -> _speculationtargethint
+
+    val yojson_of__speculationtargethint :
+      _speculationtargethint -> Yojson.Basic.t
+
+    type t = _speculationtargethint
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Corresponds to mojom::SpeculationTargetHint.\n\
+       See \
+       https://github.com/WICG/nav-speculation/blob/main/triggers.md#window-name-targeting-hints"]
+  end
+
+  and PreloadingAttemptKey : sig
+    type t = {
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"] [@ocaml.doc "No description provided"]
+      action : SpeculationAction.t;
+          [@key "action"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+      targetHint : SpeculationTargetHint.t option;
+          [@key "targetHint"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A key that identifies a preloading attempt.\n\n\
+       The url used is the url specified by the trigger (i.e. the initial \
+       URL), and\n\
+       not the final url that is navigated to. For example, prerendering allows\n\
+       same-origin main frame navigations during the attempt, but the attempt is\n\
+       still keyed with the initial URL."]
+  end
+
+  and PreloadingAttemptSource : sig
+    type t = {
+      key : PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
+      ruleSetIds : RuleSetId.t list;
+          [@key "ruleSetIds"] [@ocaml.doc "No description provided"]
+      nodeIds : DOM.BackendNodeId.t list;
+          [@key "nodeIds"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Lists sources for a preloading attempt, specifically the ids of rule sets\n\
+       that had a speculation rule that triggered the attempt, and the\n\
+       BackendNodeIds of <a href> or <area href> elements that triggered the\n\
+       attempt (in the case of attempts triggered by a document rule). It is\n\
+       possible for mulitple rule sets and links to trigger a single attempt."]
+  end
+
   and PrerenderFinalStatus : sig
     type _prerenderfinalstatus =
       [ `Activated
@@ -26787,6 +26859,153 @@ end = struct
              - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
+  end
+
+  and SpeculationAction : sig
+    type _speculationaction = [ `Prefetch | `Prerender ]
+
+    val _speculationaction_of_yojson : Yojson.Basic.t -> _speculationaction
+    val yojson_of__speculationaction : _speculationaction -> Yojson.Basic.t
+
+    type t = _speculationaction
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The type of preloading attempted. It corresponds to\n\
+       mojom::SpeculationAction (although PrefetchWithSubresources is omitted \
+       as it\n\
+       isn't being used by clients)."]
+  end = struct
+    type _speculationaction = [ `Prefetch | `Prerender ]
+
+    let _speculationaction_of_yojson = function
+      | `String "Prefetch" -> `Prefetch
+      | `String "Prerender" -> `Prerender
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__speculationaction = function
+      | `Prefetch -> `String "Prefetch"
+      | `Prerender -> `String "Prerender"
+
+    type t = _speculationaction
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The type of preloading attempted. It corresponds to\n\
+       mojom::SpeculationAction (although PrefetchWithSubresources is omitted \
+       as it\n\
+       isn't being used by clients)."]
+  end
+
+  and SpeculationTargetHint : sig
+    type _speculationtargethint = [ `Blank | `Self ]
+
+    val _speculationtargethint_of_yojson :
+      Yojson.Basic.t -> _speculationtargethint
+
+    val yojson_of__speculationtargethint :
+      _speculationtargethint -> Yojson.Basic.t
+
+    type t = _speculationtargethint
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Corresponds to mojom::SpeculationTargetHint.\n\
+       See \
+       https://github.com/WICG/nav-speculation/blob/main/triggers.md#window-name-targeting-hints"]
+  end = struct
+    type _speculationtargethint = [ `Blank | `Self ]
+
+    let _speculationtargethint_of_yojson = function
+      | `String "Blank" -> `Blank
+      | `String "Self" -> `Self
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__speculationtargethint = function
+      | `Blank -> `String "Blank"
+      | `Self -> `String "Self"
+
+    type t = _speculationtargethint
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Corresponds to mojom::SpeculationTargetHint.\n\
+       See \
+       https://github.com/WICG/nav-speculation/blob/main/triggers.md#window-name-targeting-hints"]
+  end
+
+  and PreloadingAttemptKey : sig
+    type t = {
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"] [@ocaml.doc "No description provided"]
+      action : SpeculationAction.t;
+          [@key "action"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+      targetHint : SpeculationTargetHint.t option;
+          [@key "targetHint"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A key that identifies a preloading attempt.\n\n\
+       The url used is the url specified by the trigger (i.e. the initial \
+       URL), and\n\
+       not the final url that is navigated to. For example, prerendering allows\n\
+       same-origin main frame navigations during the attempt, but the attempt is\n\
+       still keyed with the initial URL."]
+  end = struct
+    type t = {
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"] [@ocaml.doc "No description provided"]
+      action : SpeculationAction.t;
+          [@key "action"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+      targetHint : SpeculationTargetHint.t option;
+          [@key "targetHint"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A key that identifies a preloading attempt.\n\n\
+       The url used is the url specified by the trigger (i.e. the initial \
+       URL), and\n\
+       not the final url that is navigated to. For example, prerendering allows\n\
+       same-origin main frame navigations during the attempt, but the attempt is\n\
+       still keyed with the initial URL."]
+  end
+
+  and PreloadingAttemptSource : sig
+    type t = {
+      key : PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
+      ruleSetIds : RuleSetId.t list;
+          [@key "ruleSetIds"] [@ocaml.doc "No description provided"]
+      nodeIds : DOM.BackendNodeId.t list;
+          [@key "nodeIds"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Lists sources for a preloading attempt, specifically the ids of rule sets\n\
+       that had a speculation rule that triggered the attempt, and the\n\
+       BackendNodeIds of <a href> or <area href> elements that triggered the\n\
+       attempt (in the case of attempts triggered by a document rule). It is\n\
+       possible for mulitple rule sets and links to trigger a single attempt."]
+  end = struct
+    type t = {
+      key : PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
+      ruleSetIds : RuleSetId.t list;
+          [@key "ruleSetIds"] [@ocaml.doc "No description provided"]
+      nodeIds : DOM.BackendNodeId.t list;
+          [@key "nodeIds"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Lists sources for a preloading attempt, specifically the ids of rule sets\n\
+       that had a speculation rule that triggered the attempt, and the\n\
+       BackendNodeIds of <a href> or <area href> elements that triggered the\n\
+       attempt (in the case of attempts triggered by a document rule). It is\n\
+       possible for mulitple rule sets and links to trigger a single attempt."]
   end
 
   and PrerenderFinalStatus : sig
