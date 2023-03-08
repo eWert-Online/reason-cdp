@@ -1758,7 +1758,6 @@ and Audits : sig
   and AttributionReportingIssueType : sig
     type _attributionreportingissuetype =
       [ `PermissionPolicyDisabled
-      | `PermissionPolicyNotDelegated
       | `UntrustworthyReportingOrigin
       | `InsecureContext
       | `InvalidHeader
@@ -3228,7 +3227,6 @@ end = struct
   and AttributionReportingIssueType : sig
     type _attributionreportingissuetype =
       [ `PermissionPolicyDisabled
-      | `PermissionPolicyNotDelegated
       | `UntrustworthyReportingOrigin
       | `InsecureContext
       | `InvalidHeader
@@ -3250,7 +3248,6 @@ end = struct
   end = struct
     type _attributionreportingissuetype =
       [ `PermissionPolicyDisabled
-      | `PermissionPolicyNotDelegated
       | `UntrustworthyReportingOrigin
       | `InsecureContext
       | `InvalidHeader
@@ -3263,7 +3260,6 @@ end = struct
 
     let _attributionreportingissuetype_of_yojson = function
       | `String "PermissionPolicyDisabled" -> `PermissionPolicyDisabled
-      | `String "PermissionPolicyNotDelegated" -> `PermissionPolicyNotDelegated
       | `String "UntrustworthyReportingOrigin" -> `UntrustworthyReportingOrigin
       | `String "InsecureContext" -> `InsecureContext
       | `String "InvalidHeader" -> `InvalidHeader
@@ -3278,7 +3274,6 @@ end = struct
 
     let yojson_of__attributionreportingissuetype = function
       | `PermissionPolicyDisabled -> `String "PermissionPolicyDisabled"
-      | `PermissionPolicyNotDelegated -> `String "PermissionPolicyNotDelegated"
       | `UntrustworthyReportingOrigin -> `String "UntrustworthyReportingOrigin"
       | `InsecureContext -> `String "InsecureContext"
       | `InvalidHeader -> `String "InvalidHeader"

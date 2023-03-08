@@ -1,6 +1,6 @@
 {
   "name": "cdp",
-  "version": "0.0.1113774",
+  "version": "0.0.1114386",
   "description": "Chrome Devtools Protocol Types for OCaml",
   "license": "MIT",
   "repository": {
