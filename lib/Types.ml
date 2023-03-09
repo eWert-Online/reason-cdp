@@ -26770,7 +26770,6 @@ and Preload : sig
       | `CrossSiteRedirect
       | `CrossSiteNavigation
       | `SameSiteCrossOriginRedirect
-      | `SameSiteCrossOriginNavigation
       | `SameSiteCrossOriginRedirectNotOptIn
       | `SameSiteCrossOriginNavigationNotOptIn
       | `ActivationNavigationParameterMismatch
@@ -27045,7 +27044,6 @@ end = struct
       | `CrossSiteRedirect
       | `CrossSiteNavigation
       | `SameSiteCrossOriginRedirect
-      | `SameSiteCrossOriginNavigation
       | `SameSiteCrossOriginRedirectNotOptIn
       | `SameSiteCrossOriginNavigationNotOptIn
       | `ActivationNavigationParameterMismatch
@@ -27113,7 +27111,6 @@ end = struct
       | `CrossSiteRedirect
       | `CrossSiteNavigation
       | `SameSiteCrossOriginRedirect
-      | `SameSiteCrossOriginNavigation
       | `SameSiteCrossOriginRedirectNotOptIn
       | `SameSiteCrossOriginNavigationNotOptIn
       | `ActivationNavigationParameterMismatch
@@ -27175,8 +27172,6 @@ end = struct
       | `String "CrossSiteRedirect" -> `CrossSiteRedirect
       | `String "CrossSiteNavigation" -> `CrossSiteNavigation
       | `String "SameSiteCrossOriginRedirect" -> `SameSiteCrossOriginRedirect
-      | `String "SameSiteCrossOriginNavigation" ->
-          `SameSiteCrossOriginNavigation
       | `String "SameSiteCrossOriginRedirectNotOptIn" ->
           `SameSiteCrossOriginRedirectNotOptIn
       | `String "SameSiteCrossOriginNavigationNotOptIn" ->
@@ -27249,8 +27244,6 @@ end = struct
       | `CrossSiteRedirect -> `String "CrossSiteRedirect"
       | `CrossSiteNavigation -> `String "CrossSiteNavigation"
       | `SameSiteCrossOriginRedirect -> `String "SameSiteCrossOriginRedirect"
-      | `SameSiteCrossOriginNavigation ->
-          `String "SameSiteCrossOriginNavigation"
       | `SameSiteCrossOriginRedirectNotOptIn ->
           `String "SameSiteCrossOriginRedirectNotOptIn"
       | `SameSiteCrossOriginNavigationNotOptIn ->
