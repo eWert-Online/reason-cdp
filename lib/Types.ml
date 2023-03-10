@@ -27316,6 +27316,54 @@ end = struct
   end
 end
 
+and FedCm : sig
+  module rec Account : sig
+    type t = {
+      accountId : string;
+          [@key "accountId"] [@ocaml.doc "No description provided"]
+      email : string; [@key "email"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      givenName : string;
+          [@key "givenName"] [@ocaml.doc "No description provided"]
+      pictureUrl : string;
+          [@key "pictureUrl"] [@ocaml.doc "No description provided"]
+      idpConfigUrl : string;
+          [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
+  end
+end = struct
+  module rec Account : sig
+    type t = {
+      accountId : string;
+          [@key "accountId"] [@ocaml.doc "No description provided"]
+      email : string; [@key "email"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      givenName : string;
+          [@key "givenName"] [@ocaml.doc "No description provided"]
+      pictureUrl : string;
+          [@key "pictureUrl"] [@ocaml.doc "No description provided"]
+      idpConfigUrl : string;
+          [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
+  end = struct
+    type t = {
+      accountId : string;
+          [@key "accountId"] [@ocaml.doc "No description provided"]
+      email : string; [@key "email"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      givenName : string;
+          [@key "givenName"] [@ocaml.doc "No description provided"]
+      pictureUrl : string;
+          [@key "pictureUrl"] [@ocaml.doc "No description provided"]
+      idpConfigUrl : string;
+          [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
+  end
+end
+
 and Console : sig
   module rec ConsoleMessage : sig
     type _consolemessage_source =

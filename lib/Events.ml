@@ -4139,7 +4139,11 @@ module FedCm = struct
   module DialogShown = struct
     let name = "FedCm.dialogShown"
 
-    type result = Types.empty [@@deriving yojson]
+    type result = {
+      accounts : Types.FedCm.Account.t list;
+          [@key "accounts"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
 
     type t = {
       method_ : string; [@key "method"]
