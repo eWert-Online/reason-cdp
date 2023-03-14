@@ -4140,6 +4140,8 @@ module FedCm = struct
     let name = "FedCm.dialogShown"
 
     type result = {
+      dialogId : string;
+          [@key "dialogId"] [@ocaml.doc "No description provided"]
       accounts : Types.FedCm.Account.t list;
           [@key "accounts"] [@ocaml.doc "No description provided"]
     }

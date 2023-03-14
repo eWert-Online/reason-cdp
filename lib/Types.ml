@@ -1766,7 +1766,12 @@ and Audits : sig
       | `TooManyConcurrentRequests
       | `SourceAndTriggerHeaders
       | `SourceIgnored
-      | `TriggerIgnored ]
+      | `TriggerIgnored
+      | `OsSourceIgnored
+      | `OsTriggerIgnored
+      | `InvalidRegisterOsSourceHeader
+      | `InvalidRegisterOsTriggerHeader
+      | `WebAndOsHeaders ]
 
     val _attributionreportingissuetype_of_yojson :
       Yojson.Basic.t -> _attributionreportingissuetype
@@ -3235,7 +3240,12 @@ end = struct
       | `TooManyConcurrentRequests
       | `SourceAndTriggerHeaders
       | `SourceIgnored
-      | `TriggerIgnored ]
+      | `TriggerIgnored
+      | `OsSourceIgnored
+      | `OsTriggerIgnored
+      | `InvalidRegisterOsSourceHeader
+      | `InvalidRegisterOsTriggerHeader
+      | `WebAndOsHeaders ]
 
     val _attributionreportingissuetype_of_yojson :
       Yojson.Basic.t -> _attributionreportingissuetype
@@ -3256,7 +3266,12 @@ end = struct
       | `TooManyConcurrentRequests
       | `SourceAndTriggerHeaders
       | `SourceIgnored
-      | `TriggerIgnored ]
+      | `TriggerIgnored
+      | `OsSourceIgnored
+      | `OsTriggerIgnored
+      | `InvalidRegisterOsSourceHeader
+      | `InvalidRegisterOsTriggerHeader
+      | `WebAndOsHeaders ]
 
     let _attributionreportingissuetype_of_yojson = function
       | `String "PermissionPolicyDisabled" -> `PermissionPolicyDisabled
@@ -3269,6 +3284,13 @@ end = struct
       | `String "SourceAndTriggerHeaders" -> `SourceAndTriggerHeaders
       | `String "SourceIgnored" -> `SourceIgnored
       | `String "TriggerIgnored" -> `TriggerIgnored
+      | `String "OsSourceIgnored" -> `OsSourceIgnored
+      | `String "OsTriggerIgnored" -> `OsTriggerIgnored
+      | `String "InvalidRegisterOsSourceHeader" ->
+          `InvalidRegisterOsSourceHeader
+      | `String "InvalidRegisterOsTriggerHeader" ->
+          `InvalidRegisterOsTriggerHeader
+      | `String "WebAndOsHeaders" -> `WebAndOsHeaders
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3283,6 +3305,13 @@ end = struct
       | `SourceAndTriggerHeaders -> `String "SourceAndTriggerHeaders"
       | `SourceIgnored -> `String "SourceIgnored"
       | `TriggerIgnored -> `String "TriggerIgnored"
+      | `OsSourceIgnored -> `String "OsSourceIgnored"
+      | `OsTriggerIgnored -> `String "OsTriggerIgnored"
+      | `InvalidRegisterOsSourceHeader ->
+          `String "InvalidRegisterOsSourceHeader"
+      | `InvalidRegisterOsTriggerHeader ->
+          `String "InvalidRegisterOsTriggerHeader"
+      | `WebAndOsHeaders -> `String "WebAndOsHeaders"
 
     type t = _attributionreportingissuetype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -27317,7 +27346,20 @@ end = struct
 end
 
 and FedCm : sig
-  module rec Account : sig
+  module rec LoginState : sig
+    type _loginstate = [ `SignIn | `SignUp ]
+
+    val _loginstate_of_yojson : Yojson.Basic.t -> _loginstate
+    val yojson_of__loginstate : _loginstate -> Yojson.Basic.t
+
+    type t = _loginstate
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Whether this is a sign-up or sign-in action for this account, i.e.\n\
+       whether this account has ever been used to sign in to this RP before."]
+  end
+
+  and Account : sig
     type t = {
       accountId : string;
           [@key "accountId"] [@ocaml.doc "No description provided"]
@@ -27329,11 +27371,54 @@ and FedCm : sig
           [@key "pictureUrl"] [@ocaml.doc "No description provided"]
       idpConfigUrl : string;
           [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
+      idpSigninUrl : string;
+          [@key "idpSigninUrl"] [@ocaml.doc "No description provided"]
+      loginState : LoginState.t;
+          [@key "loginState"] [@ocaml.doc "No description provided"]
+      termsOfServiceUrl : string option;
+          [@key "termsOfServiceUrl"]
+          [@yojson.option]
+          [@ocaml.doc "These two are only set if the loginState is signUp"]
+      privacyPolicyUrl : string option;
+          [@key "privacyPolicyUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
   end
 end = struct
-  module rec Account : sig
+  module rec LoginState : sig
+    type _loginstate = [ `SignIn | `SignUp ]
+
+    val _loginstate_of_yojson : Yojson.Basic.t -> _loginstate
+    val yojson_of__loginstate : _loginstate -> Yojson.Basic.t
+
+    type t = _loginstate
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Whether this is a sign-up or sign-in action for this account, i.e.\n\
+       whether this account has ever been used to sign in to this RP before."]
+  end = struct
+    type _loginstate = [ `SignIn | `SignUp ]
+
+    let _loginstate_of_yojson = function
+      | `String "SignIn" -> `SignIn
+      | `String "SignUp" -> `SignUp
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__loginstate = function
+      | `SignIn -> `String "SignIn"
+      | `SignUp -> `String "SignUp"
+
+    type t = _loginstate
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Whether this is a sign-up or sign-in action for this account, i.e.\n\
+       whether this account has ever been used to sign in to this RP before."]
+  end
+
+  and Account : sig
     type t = {
       accountId : string;
           [@key "accountId"] [@ocaml.doc "No description provided"]
@@ -27345,6 +27430,18 @@ end = struct
           [@key "pictureUrl"] [@ocaml.doc "No description provided"]
       idpConfigUrl : string;
           [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
+      idpSigninUrl : string;
+          [@key "idpSigninUrl"] [@ocaml.doc "No description provided"]
+      loginState : LoginState.t;
+          [@key "loginState"] [@ocaml.doc "No description provided"]
+      termsOfServiceUrl : string option;
+          [@key "termsOfServiceUrl"]
+          [@yojson.option]
+          [@ocaml.doc "These two are only set if the loginState is signUp"]
+      privacyPolicyUrl : string option;
+          [@key "privacyPolicyUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
   end = struct
@@ -27359,6 +27456,18 @@ end = struct
           [@key "pictureUrl"] [@ocaml.doc "No description provided"]
       idpConfigUrl : string;
           [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
+      idpSigninUrl : string;
+          [@key "idpSigninUrl"] [@ocaml.doc "No description provided"]
+      loginState : LoginState.t;
+          [@key "loginState"] [@ocaml.doc "No description provided"]
+      termsOfServiceUrl : string option;
+          [@key "termsOfServiceUrl"]
+          [@yojson.option]
+          [@ocaml.doc "These two are only set if the loginState is signUp"]
+      privacyPolicyUrl : string option;
+          [@key "privacyPolicyUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
   end
