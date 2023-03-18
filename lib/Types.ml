@@ -5017,6 +5017,12 @@ and CSS : sig
              stylesheet rules) this rule came from."]
       selectorList : SelectorList.t;
           [@key "selectorList"] [@ocaml.doc "Rule selector data."]
+      nestingSelectors : string list option;
+          [@key "nestingSelectors"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Array of selectors from ancestor style rules, sorted by distance \
+             from the current rule."]
       origin : StyleSheetOrigin.t;
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
       style : CSSStyle.t;
@@ -5860,6 +5866,12 @@ end = struct
              stylesheet rules) this rule came from."]
       selectorList : SelectorList.t;
           [@key "selectorList"] [@ocaml.doc "Rule selector data."]
+      nestingSelectors : string list option;
+          [@key "nestingSelectors"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Array of selectors from ancestor style rules, sorted by distance \
+             from the current rule."]
       origin : StyleSheetOrigin.t;
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
       style : CSSStyle.t;
@@ -5912,6 +5924,12 @@ end = struct
              stylesheet rules) this rule came from."]
       selectorList : SelectorList.t;
           [@key "selectorList"] [@ocaml.doc "Rule selector data."]
+      nestingSelectors : string list option;
+          [@key "nestingSelectors"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Array of selectors from ancestor style rules, sorted by distance \
+             from the current rule."]
       origin : StyleSheetOrigin.t;
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
       style : CSSStyle.t;
