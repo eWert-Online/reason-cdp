@@ -26814,11 +26814,10 @@ and Preload : sig
       | `InactivePageRestriction
       | `StartFailed
       | `TimeoutBackgrounded
-      | `CrossSiteRedirect
-      | `CrossSiteNavigation
-      | `SameSiteCrossOriginRedirect
-      | `SameSiteCrossOriginRedirectNotOptIn
-      | `SameSiteCrossOriginNavigationNotOptIn
+      | `CrossSiteRedirectInInitialNavigation
+      | `CrossSiteNavigationInInitialNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
       | `ActivationNavigationParameterMismatch
       | `ActivatedInBackground
       | `EmbedderHostDisallowed
@@ -26831,7 +26830,11 @@ and Preload : sig
       | `PreloadingDisabled
       | `BatterySaverEnabled
       | `ActivatedDuringMainFrameNavigation
-      | `PreloadingUnsupportedByWebContents ]
+      | `PreloadingUnsupportedByWebContents
+      | `CrossSiteRedirectInMainFrameNavigation
+      | `CrossSiteNavigationInMainFrameNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -27088,11 +27091,10 @@ end = struct
       | `InactivePageRestriction
       | `StartFailed
       | `TimeoutBackgrounded
-      | `CrossSiteRedirect
-      | `CrossSiteNavigation
-      | `SameSiteCrossOriginRedirect
-      | `SameSiteCrossOriginRedirectNotOptIn
-      | `SameSiteCrossOriginNavigationNotOptIn
+      | `CrossSiteRedirectInInitialNavigation
+      | `CrossSiteNavigationInInitialNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
       | `ActivationNavigationParameterMismatch
       | `ActivatedInBackground
       | `EmbedderHostDisallowed
@@ -27105,7 +27107,11 @@ end = struct
       | `PreloadingDisabled
       | `BatterySaverEnabled
       | `ActivatedDuringMainFrameNavigation
-      | `PreloadingUnsupportedByWebContents ]
+      | `PreloadingUnsupportedByWebContents
+      | `CrossSiteRedirectInMainFrameNavigation
+      | `CrossSiteNavigationInMainFrameNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -27155,11 +27161,10 @@ end = struct
       | `InactivePageRestriction
       | `StartFailed
       | `TimeoutBackgrounded
-      | `CrossSiteRedirect
-      | `CrossSiteNavigation
-      | `SameSiteCrossOriginRedirect
-      | `SameSiteCrossOriginRedirectNotOptIn
-      | `SameSiteCrossOriginNavigationNotOptIn
+      | `CrossSiteRedirectInInitialNavigation
+      | `CrossSiteNavigationInInitialNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
       | `ActivationNavigationParameterMismatch
       | `ActivatedInBackground
       | `EmbedderHostDisallowed
@@ -27172,7 +27177,11 @@ end = struct
       | `PreloadingDisabled
       | `BatterySaverEnabled
       | `ActivatedDuringMainFrameNavigation
-      | `PreloadingUnsupportedByWebContents ]
+      | `PreloadingUnsupportedByWebContents
+      | `CrossSiteRedirectInMainFrameNavigation
+      | `CrossSiteNavigationInMainFrameNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -27216,13 +27225,14 @@ end = struct
       | `String "InactivePageRestriction" -> `InactivePageRestriction
       | `String "StartFailed" -> `StartFailed
       | `String "TimeoutBackgrounded" -> `TimeoutBackgrounded
-      | `String "CrossSiteRedirect" -> `CrossSiteRedirect
-      | `String "CrossSiteNavigation" -> `CrossSiteNavigation
-      | `String "SameSiteCrossOriginRedirect" -> `SameSiteCrossOriginRedirect
-      | `String "SameSiteCrossOriginRedirectNotOptIn" ->
-          `SameSiteCrossOriginRedirectNotOptIn
-      | `String "SameSiteCrossOriginNavigationNotOptIn" ->
-          `SameSiteCrossOriginNavigationNotOptIn
+      | `String "CrossSiteRedirectInInitialNavigation" ->
+          `CrossSiteRedirectInInitialNavigation
+      | `String "CrossSiteNavigationInInitialNavigation" ->
+          `CrossSiteNavigationInInitialNavigation
+      | `String "SameSiteCrossOriginRedirectNotOptInInInitialNavigation" ->
+          `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
+      | `String "SameSiteCrossOriginNavigationNotOptInInInitialNavigation" ->
+          `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
       | `String "ActivationNavigationParameterMismatch" ->
           `ActivationNavigationParameterMismatch
       | `String "ActivatedInBackground" -> `ActivatedInBackground
@@ -27243,6 +27253,14 @@ end = struct
           `ActivatedDuringMainFrameNavigation
       | `String "PreloadingUnsupportedByWebContents" ->
           `PreloadingUnsupportedByWebContents
+      | `String "CrossSiteRedirectInMainFrameNavigation" ->
+          `CrossSiteRedirectInMainFrameNavigation
+      | `String "CrossSiteNavigationInMainFrameNavigation" ->
+          `CrossSiteNavigationInMainFrameNavigation
+      | `String "SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation" ->
+          `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
+      | `String "SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation" ->
+          `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -27288,13 +27306,14 @@ end = struct
       | `InactivePageRestriction -> `String "InactivePageRestriction"
       | `StartFailed -> `String "StartFailed"
       | `TimeoutBackgrounded -> `String "TimeoutBackgrounded"
-      | `CrossSiteRedirect -> `String "CrossSiteRedirect"
-      | `CrossSiteNavigation -> `String "CrossSiteNavigation"
-      | `SameSiteCrossOriginRedirect -> `String "SameSiteCrossOriginRedirect"
-      | `SameSiteCrossOriginRedirectNotOptIn ->
-          `String "SameSiteCrossOriginRedirectNotOptIn"
-      | `SameSiteCrossOriginNavigationNotOptIn ->
-          `String "SameSiteCrossOriginNavigationNotOptIn"
+      | `CrossSiteRedirectInInitialNavigation ->
+          `String "CrossSiteRedirectInInitialNavigation"
+      | `CrossSiteNavigationInInitialNavigation ->
+          `String "CrossSiteNavigationInInitialNavigation"
+      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation ->
+          `String "SameSiteCrossOriginRedirectNotOptInInInitialNavigation"
+      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation ->
+          `String "SameSiteCrossOriginNavigationNotOptInInInitialNavigation"
       | `ActivationNavigationParameterMismatch ->
           `String "ActivationNavigationParameterMismatch"
       | `ActivatedInBackground -> `String "ActivatedInBackground"
@@ -27315,6 +27334,14 @@ end = struct
           `String "ActivatedDuringMainFrameNavigation"
       | `PreloadingUnsupportedByWebContents ->
           `String "PreloadingUnsupportedByWebContents"
+      | `CrossSiteRedirectInMainFrameNavigation ->
+          `String "CrossSiteRedirectInMainFrameNavigation"
+      | `CrossSiteNavigationInMainFrameNavigation ->
+          `String "CrossSiteNavigationInMainFrameNavigation"
+      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation ->
+          `String "SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation"
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation ->
+          `String "SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]

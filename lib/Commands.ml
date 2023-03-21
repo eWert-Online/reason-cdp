@@ -29901,16 +29901,33 @@ module FedCm = struct
       let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
     end
 
+    module Params = struct
+      type t = {
+        disableRejectionDelay : bool option;
+            [@key "disableRejectionDelay"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Allows callers to disable the promise rejection delay that would\n\
+               normally happen, if this is unimportant to what's being tested.\n\
+               (step 4 of \
+               https://fedidcg.github.io/FedCM/#browser-api-rp-sign-in)"]
+      }
+      [@@deriving yojson]
+
+      let make ?disableRejectionDelay () = { disableRejectionDelay }
+    end
+
     module Request = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
         method_ : string; [@key "method"]
+        params : Params.t;
       }
       [@@deriving yojson]
 
-      let make ?sessionId id =
-        { id; method_ = "FedCm.enable"; sessionId }
+      let make ?sessionId ~params id =
+        { id; method_ = "FedCm.enable"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
