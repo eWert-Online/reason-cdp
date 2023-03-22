@@ -4112,11 +4112,13 @@ module Preload = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
-  (* Send a list of sources for all preloading attempts. *)
+  (* Send a list of sources for all preloading attempts in a document. *)
   module PreloadingAttemptSourcesUpdated = struct
     let name = "Preload.preloadingAttemptSourcesUpdated"
 
     type result = {
+      loaderId : Types.Network.LoaderId.t;
+          [@key "loaderId"] [@ocaml.doc "No description provided"]
       preloadingAttemptSources : Types.Preload.PreloadingAttemptSource.t list;
           [@key "preloadingAttemptSources"]
           [@ocaml.doc "No description provided"]

@@ -1849,7 +1849,8 @@ and Audits : sig
       | `FormAriaLabelledByToNonExistingId
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `FormLabelHasNeitherForNorNestedInput
-      | `FormLabelForMatchesNonExistingIdError ]
+      | `FormLabelForMatchesNonExistingIdError
+      | `FormInputHasWrongButWellIntendedAutocompleteValueError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3432,7 +3433,8 @@ end = struct
       | `FormAriaLabelledByToNonExistingId
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `FormLabelHasNeitherForNorNestedInput
-      | `FormLabelForMatchesNonExistingIdError ]
+      | `FormLabelForMatchesNonExistingIdError
+      | `FormInputHasWrongButWellIntendedAutocompleteValueError ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3453,7 +3455,8 @@ end = struct
       | `FormAriaLabelledByToNonExistingId
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `FormLabelHasNeitherForNorNestedInput
-      | `FormLabelForMatchesNonExistingIdError ]
+      | `FormLabelForMatchesNonExistingIdError
+      | `FormInputHasWrongButWellIntendedAutocompleteValueError ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
@@ -3473,6 +3476,8 @@ end = struct
           `FormLabelHasNeitherForNorNestedInput
       | `String "FormLabelForMatchesNonExistingIdError" ->
           `FormLabelForMatchesNonExistingIdError
+      | `String "FormInputHasWrongButWellIntendedAutocompleteValueError" ->
+          `FormInputHasWrongButWellIntendedAutocompleteValueError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3494,6 +3499,8 @@ end = struct
           `String "FormLabelHasNeitherForNorNestedInput"
       | `FormLabelForMatchesNonExistingIdError ->
           `String "FormLabelForMatchesNonExistingIdError"
+      | `FormInputHasWrongButWellIntendedAutocompleteValueError ->
+          `String "FormInputHasWrongButWellIntendedAutocompleteValueError"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
