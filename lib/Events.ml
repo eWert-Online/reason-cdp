@@ -4034,6 +4034,8 @@ module Preload = struct
     let name = "Preload.prerenderAttemptCompleted"
 
     type result = {
+      key : Types.Preload.PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
       initiatingFrameId : Types.Page.FrameId.t;
           [@key "initiatingFrameId"]
           [@ocaml.doc "The frame id of the frame initiating prerendering."]
@@ -4067,6 +4069,8 @@ module Preload = struct
     let name = "Preload.prefetchStatusUpdated"
 
     type result = {
+      key : Types.Preload.PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
       initiatingFrameId : Types.Page.FrameId.t;
           [@key "initiatingFrameId"]
           [@ocaml.doc "The frame id of the frame initiating prefetch."]
@@ -4092,6 +4096,8 @@ module Preload = struct
     let name = "Preload.prerenderStatusUpdated"
 
     type result = {
+      key : Types.Preload.PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
       initiatingFrameId : Types.Page.FrameId.t;
           [@key "initiatingFrameId"]
           [@ocaml.doc "The frame id of the frame initiating prerender."]
