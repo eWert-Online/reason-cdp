@@ -26139,6 +26139,117 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+
+  (* Set tracking for a storage key's buckets. *)
+  module SetStorageBucketTracking = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        storageKey : string;
+            [@key "storageKey"] [@ocaml.doc "No description provided"]
+        enable : bool; [@key "enable"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~storageKey ~enable () = { storageKey; enable }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Storage.setStorageBucketTracking"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Deletes the Storage Bucket with the given storage key and bucket name. *)
+  module DeleteStorageBucket = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        storageKey : string;
+            [@key "storageKey"] [@ocaml.doc "No description provided"]
+        bucketName : string;
+            [@key "bucketName"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~storageKey ~bucketName () = { storageKey; bucketName }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Storage.deleteStorageBucket"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
 end
 
 module SystemInfo = struct
@@ -30064,10 +30175,14 @@ module FedCm = struct
       type t = {
         dialogId : string;
             [@key "dialogId"] [@ocaml.doc "No description provided"]
+        triggerCooldown : bool option;
+            [@key "triggerCooldown"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
-      let make ~dialogId () = { dialogId }
+      let make ~dialogId ?triggerCooldown () = { dialogId; triggerCooldown }
     end
 
     module Request = struct
@@ -30081,6 +30196,50 @@ module FedCm = struct
 
       let make ?sessionId ~params id =
         { id; method_ = "FedCm.dismissDialog"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Resets the cooldown time, if any, to allow the next FedCM call to show
+     a dialog even if one was recently dismissed by the user. *)
+  module ResetCooldown = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "FedCm.resetCooldown"; sessionId }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end

@@ -23001,6 +23001,7 @@ and Storage : sig
       | `cache_storage
       | `interest_groups
       | `shared_storage
+      | `storage_buckets
       | `all
       | `other ]
 
@@ -23237,6 +23238,38 @@ and Storage : sig
       "Bundles the parameters for shared storage access events whose\n\
        presence/absence can vary according to SharedStorageAccessType."]
   end
+
+  and StorageBucketsDurability : sig
+    type _storagebucketsdurability = [ `relaxed | `strict ]
+
+    val _storagebucketsdurability_of_yojson :
+      Yojson.Basic.t -> _storagebucketsdurability
+
+    val yojson_of__storagebucketsdurability :
+      _storagebucketsdurability -> Yojson.Basic.t
+
+    type t = _storagebucketsdurability
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and StorageBucketInfo : sig
+    type t = {
+      storageKey : SerializedStorageKey.t;
+          [@key "storageKey"] [@ocaml.doc "No description provided"]
+      id : string; [@key "id"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      isDefault : bool;
+          [@key "isDefault"] [@ocaml.doc "No description provided"]
+      expiration : Network.TimeSinceEpoch.t;
+          [@key "expiration"] [@ocaml.doc "No description provided"]
+      quota : number; [@key "quota"] [@ocaml.doc "Storage quota (bytes)."]
+      persistent : bool;
+          [@key "persistent"] [@ocaml.doc "No description provided"]
+      durability : StorageBucketsDurability.t;
+          [@key "durability"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
 end = struct
   module rec SerializedStorageKey : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -23257,6 +23290,7 @@ end = struct
       | `cache_storage
       | `interest_groups
       | `shared_storage
+      | `storage_buckets
       | `all
       | `other ]
 
@@ -23278,6 +23312,7 @@ end = struct
       | `cache_storage
       | `interest_groups
       | `shared_storage
+      | `storage_buckets
       | `all
       | `other ]
 
@@ -23293,6 +23328,7 @@ end = struct
       | `String "cache_storage" -> `cache_storage
       | `String "interest_groups" -> `interest_groups
       | `String "shared_storage" -> `shared_storage
+      | `String "storage_buckets" -> `storage_buckets
       | `String "all" -> `all
       | `String "other" -> `other
       | `String s -> failwith ("unknown enum: " ^ s)
@@ -23310,6 +23346,7 @@ end = struct
       | `cache_storage -> `String "cache_storage"
       | `interest_groups -> `String "interest_groups"
       | `shared_storage -> `String "shared_storage"
+      | `storage_buckets -> `String "storage_buckets"
       | `all -> `String "all"
       | `other -> `String "other"
 
@@ -23791,6 +23828,70 @@ end = struct
     [@@ocaml.doc
       "Bundles the parameters for shared storage access events whose\n\
        presence/absence can vary according to SharedStorageAccessType."]
+  end
+
+  and StorageBucketsDurability : sig
+    type _storagebucketsdurability = [ `relaxed | `strict ]
+
+    val _storagebucketsdurability_of_yojson :
+      Yojson.Basic.t -> _storagebucketsdurability
+
+    val yojson_of__storagebucketsdurability :
+      _storagebucketsdurability -> Yojson.Basic.t
+
+    type t = _storagebucketsdurability
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _storagebucketsdurability = [ `relaxed | `strict ]
+
+    let _storagebucketsdurability_of_yojson = function
+      | `String "relaxed" -> `relaxed
+      | `String "strict" -> `strict
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__storagebucketsdurability = function
+      | `relaxed -> `String "relaxed"
+      | `strict -> `String "strict"
+
+    type t = _storagebucketsdurability
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and StorageBucketInfo : sig
+    type t = {
+      storageKey : SerializedStorageKey.t;
+          [@key "storageKey"] [@ocaml.doc "No description provided"]
+      id : string; [@key "id"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      isDefault : bool;
+          [@key "isDefault"] [@ocaml.doc "No description provided"]
+      expiration : Network.TimeSinceEpoch.t;
+          [@key "expiration"] [@ocaml.doc "No description provided"]
+      quota : number; [@key "quota"] [@ocaml.doc "Storage quota (bytes)."]
+      persistent : bool;
+          [@key "persistent"] [@ocaml.doc "No description provided"]
+      durability : StorageBucketsDurability.t;
+          [@key "durability"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      storageKey : SerializedStorageKey.t;
+          [@key "storageKey"] [@ocaml.doc "No description provided"]
+      id : string; [@key "id"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      isDefault : bool;
+          [@key "isDefault"] [@ocaml.doc "No description provided"]
+      expiration : Network.TimeSinceEpoch.t;
+          [@key "expiration"] [@ocaml.doc "No description provided"]
+      quota : number; [@key "quota"] [@ocaml.doc "Storage quota (bytes)."]
+      persistent : bool;
+          [@key "persistent"] [@ocaml.doc "No description provided"]
+      durability : StorageBucketsDurability.t;
+          [@key "durability"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 end
 
@@ -26706,8 +26807,29 @@ and Preload : sig
              See also:\n\
              - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
              - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+      errorType : RuleSetErrorType.t option;
+          [@key "errorType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Error information\n`errorMessage` is null iff `errorType` is null."]
+      errorMessage : string option;
+          [@key "errorMessage"]
+          [@yojson.option]
+          [@ocaml.doc
+            "TODO(https://crbug.com/1425354): Replace this property with \
+             structured error."]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
+  end
+
+  and RuleSetErrorType : sig
+    type _ruleseterrortype = [ `SourceIsNotJsonObject | `InvalidRulesSkipped ]
+
+    val _ruleseterrortype_of_yojson : Yojson.Basic.t -> _ruleseterrortype
+    val yojson_of__ruleseterrortype : _ruleseterrortype -> Yojson.Basic.t
+
+    type t = _ruleseterrortype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
   and SpeculationAction : sig
@@ -26890,6 +27012,17 @@ end = struct
              See also:\n\
              - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
              - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+      errorType : RuleSetErrorType.t option;
+          [@key "errorType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Error information\n`errorMessage` is null iff `errorType` is null."]
+      errorMessage : string option;
+          [@key "errorMessage"]
+          [@yojson.option]
+          [@ocaml.doc
+            "TODO(https://crbug.com/1425354): Replace this property with \
+             structured error."]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
   end = struct
@@ -26908,8 +27041,44 @@ end = struct
              See also:\n\
              - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
              - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+      errorType : RuleSetErrorType.t option;
+          [@key "errorType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Error information\n`errorMessage` is null iff `errorType` is null."]
+      errorMessage : string option;
+          [@key "errorMessage"]
+          [@yojson.option]
+          [@ocaml.doc
+            "TODO(https://crbug.com/1425354): Replace this property with \
+             structured error."]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
+  end
+
+  and RuleSetErrorType : sig
+    type _ruleseterrortype = [ `SourceIsNotJsonObject | `InvalidRulesSkipped ]
+
+    val _ruleseterrortype_of_yojson : Yojson.Basic.t -> _ruleseterrortype
+    val yojson_of__ruleseterrortype : _ruleseterrortype -> Yojson.Basic.t
+
+    type t = _ruleseterrortype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _ruleseterrortype = [ `SourceIsNotJsonObject | `InvalidRulesSkipped ]
+
+    let _ruleseterrortype_of_yojson = function
+      | `String "SourceIsNotJsonObject" -> `SourceIsNotJsonObject
+      | `String "InvalidRulesSkipped" -> `InvalidRulesSkipped
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__ruleseterrortype = function
+      | `SourceIsNotJsonObject -> `String "SourceIsNotJsonObject"
+      | `InvalidRulesSkipped -> `String "InvalidRulesSkipped"
+
+    type t = _ruleseterrortype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
   and SpeculationAction : sig

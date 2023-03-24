@@ -3108,6 +3108,45 @@ module Storage = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+
+  (* No description provided *)
+  module StorageBucketCreatedOrUpdated = struct
+    let name = "Storage.storageBucketCreatedOrUpdated"
+
+    type result = {
+      bucket : Types.Storage.StorageBucketInfo.t;
+          [@key "bucket"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
+  (* No description provided *)
+  module StorageBucketDeleted = struct
+    let name = "Storage.storageBucketDeleted"
+
+    type result = {
+      bucketId : string; [@key "bucketId"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
 end
 
 module Target = struct
@@ -4152,6 +4191,15 @@ module FedCm = struct
           [@key "dialogId"] [@ocaml.doc "No description provided"]
       accounts : Types.FedCm.Account.t list;
           [@key "accounts"] [@ocaml.doc "No description provided"]
+      title : string;
+          [@key "title"]
+          [@ocaml.doc
+            "These exist primarily so that the caller can verify the\n\
+             RP context was used appropriately."]
+      subtitle : string option;
+          [@key "subtitle"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 
