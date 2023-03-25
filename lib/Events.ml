@@ -4275,7 +4275,8 @@ module Debugger = struct
       | `OOM
       | `other
       | `promiseRejection
-      | `XHR ]
+      | `XHR
+      | `step ]
 
     let paused_reason_of_yojson = function
       | `String "ambiguous" -> `ambiguous
@@ -4290,6 +4291,7 @@ module Debugger = struct
       | `String "other" -> `other
       | `String "promiseRejection" -> `promiseRejection
       | `String "XHR" -> `XHR
+      | `String "step" -> `step
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4306,6 +4308,7 @@ module Debugger = struct
       | `other -> `String "other"
       | `promiseRejection -> `String "promiseRejection"
       | `XHR -> `String "XHR"
+      | `step -> `String "step"
 
     type result = {
       callFrames : Types.Debugger.CallFrame.t list;
