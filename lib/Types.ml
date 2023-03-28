@@ -5463,6 +5463,35 @@ and CSS : sig
        fontVariationAxes."]
   end
 
+  and CSSTryRule : sig
+    type t = {
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      style : CSSStyle.t option;
+          [@key "style"]
+          [@yojson.option]
+          [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS try rule representation."]
+  end
+
+  and CSSPositionFallbackRule : sig
+    type t = {
+      name : Value.t; [@key "name"] [@ocaml.doc "No description provided"]
+      tryRules : CSSTryRule.t list;
+          [@key "tryRules"] [@ocaml.doc "List of keyframes."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "CSS position-fallback rule representation."]
+  end
+
   and CSSKeyframesRule : sig
     type t = {
       animationName : Value.t;
@@ -6735,6 +6764,60 @@ end = struct
        https://www.w3.org/TR/2008/REC-CSS2-20080411/fonts.html#font-descriptions\n\
        and additional information such as platformFontFamily and \
        fontVariationAxes."]
+  end
+
+  and CSSTryRule : sig
+    type t = {
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      style : CSSStyle.t option;
+          [@key "style"]
+          [@yojson.option]
+          [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS try rule representation."]
+  end = struct
+    type t = {
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      style : CSSStyle.t option;
+          [@key "style"]
+          [@yojson.option]
+          [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS try rule representation."]
+  end
+
+  and CSSPositionFallbackRule : sig
+    type t = {
+      name : Value.t; [@key "name"] [@ocaml.doc "No description provided"]
+      tryRules : CSSTryRule.t list;
+          [@key "tryRules"] [@ocaml.doc "List of keyframes."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "CSS position-fallback rule representation."]
+  end = struct
+    type t = {
+      name : Value.t; [@key "name"] [@ocaml.doc "No description provided"]
+      tryRules : CSSTryRule.t list;
+          [@key "tryRules"] [@ocaml.doc "List of keyframes."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "CSS position-fallback rule representation."]
   end
 
   and CSSKeyframesRule : sig

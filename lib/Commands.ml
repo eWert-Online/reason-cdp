@@ -3300,6 +3300,11 @@ module CSS = struct
             [@yojson.option]
             [@ocaml.doc
               "A list of CSS keyframed animations matching this node."]
+        cssPositionFallbackRules :
+          Types.CSS.CSSPositionFallbackRule.t list option;
+            [@key "cssPositionFallbackRules"]
+            [@yojson.option]
+            [@ocaml.doc "A list of CSS position fallbacks matching this node."]
         parentLayoutNodeId : Types.DOM.NodeId.t option;
             [@key "parentLayoutNodeId"]
             [@yojson.option]
@@ -3357,6 +3362,11 @@ module CSS = struct
             [@yojson.option]
             [@ocaml.doc
               "A list of CSS keyframed animations matching this node."]
+        cssPositionFallbackRules :
+          Types.CSS.CSSPositionFallbackRule.t list option;
+            [@key "cssPositionFallbackRules"]
+            [@yojson.option]
+            [@ocaml.doc "A list of CSS position fallbacks matching this node."]
         parentLayoutNodeId : Types.DOM.NodeId.t option;
             [@key "parentLayoutNodeId"]
             [@yojson.option]
