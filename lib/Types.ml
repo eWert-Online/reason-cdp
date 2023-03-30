@@ -1876,6 +1876,10 @@ and Audits : sig
           [@key "violatingNodeId"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      violatingNodeAttribute : string option;
+          [@key "violatingNodeAttribute"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -3520,6 +3524,10 @@ end = struct
           [@key "violatingNodeId"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      violatingNodeAttribute : string option;
+          [@key "violatingNodeAttribute"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -3536,6 +3544,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       violatingNodeId : DOM.BackendNodeId.t option;
           [@key "violatingNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      violatingNodeAttribute : string option;
+          [@key "violatingNodeAttribute"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
