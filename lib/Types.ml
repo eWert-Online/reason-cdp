@@ -5486,10 +5486,8 @@ and CSS : sig
              stylesheet rules) this rule came from."]
       origin : StyleSheetOrigin.t;
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
-      style : CSSStyle.t option;
-          [@key "style"]
-          [@yojson.option]
-          [@ocaml.doc "Associated style declaration."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS try rule representation."]
   end
@@ -6789,10 +6787,8 @@ end = struct
              stylesheet rules) this rule came from."]
       origin : StyleSheetOrigin.t;
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
-      style : CSSStyle.t option;
-          [@key "style"]
-          [@yojson.option]
-          [@ocaml.doc "Associated style declaration."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS try rule representation."]
   end = struct
@@ -6806,10 +6802,8 @@ end = struct
              stylesheet rules) this rule came from."]
       origin : StyleSheetOrigin.t;
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
-      style : CSSStyle.t option;
-          [@key "style"]
-          [@yojson.option]
-          [@ocaml.doc "Associated style declaration."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS try rule representation."]
   end
