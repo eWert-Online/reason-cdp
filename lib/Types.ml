@@ -1763,7 +1763,6 @@ and Audits : sig
       | `InvalidHeader
       | `InvalidRegisterTriggerHeader
       | `InvalidEligibleHeader
-      | `TooManyConcurrentRequests
       | `SourceAndTriggerHeaders
       | `SourceIgnored
       | `TriggerIgnored
@@ -3242,7 +3241,6 @@ end = struct
       | `InvalidHeader
       | `InvalidRegisterTriggerHeader
       | `InvalidEligibleHeader
-      | `TooManyConcurrentRequests
       | `SourceAndTriggerHeaders
       | `SourceIgnored
       | `TriggerIgnored
@@ -3268,7 +3266,6 @@ end = struct
       | `InvalidHeader
       | `InvalidRegisterTriggerHeader
       | `InvalidEligibleHeader
-      | `TooManyConcurrentRequests
       | `SourceAndTriggerHeaders
       | `SourceIgnored
       | `TriggerIgnored
@@ -3285,7 +3282,6 @@ end = struct
       | `String "InvalidHeader" -> `InvalidHeader
       | `String "InvalidRegisterTriggerHeader" -> `InvalidRegisterTriggerHeader
       | `String "InvalidEligibleHeader" -> `InvalidEligibleHeader
-      | `String "TooManyConcurrentRequests" -> `TooManyConcurrentRequests
       | `String "SourceAndTriggerHeaders" -> `SourceAndTriggerHeaders
       | `String "SourceIgnored" -> `SourceIgnored
       | `String "TriggerIgnored" -> `TriggerIgnored
@@ -3306,7 +3302,6 @@ end = struct
       | `InvalidHeader -> `String "InvalidHeader"
       | `InvalidRegisterTriggerHeader -> `String "InvalidRegisterTriggerHeader"
       | `InvalidEligibleHeader -> `String "InvalidEligibleHeader"
-      | `TooManyConcurrentRequests -> `String "TooManyConcurrentRequests"
       | `SourceAndTriggerHeaders -> `String "SourceAndTriggerHeaders"
       | `SourceIgnored -> `String "SourceIgnored"
       | `TriggerIgnored -> `String "TriggerIgnored"
