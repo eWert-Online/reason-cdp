@@ -1905,6 +1905,23 @@ and Audits : sig
        https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/third_party/blink/renderer/core/frame/deprecation/README.md"]
   end
 
+  and BounceTrackingIssueDetails : sig
+    type t = {
+      trackingSites : string list;
+          [@key "trackingSites"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about sites in the redirect chain of a finished \
+       navigation\n\
+       that may be flagged as trackers and have their state cleared if they \
+       don't\n\
+       receive a user interaction. Note that in this context 'site' means \
+       eTLD+1.\n\
+       For example, if the URL `https://example.test:80/bounce` was in the\n\
+       redirect chain, the site reported would be `example.test`."]
+  end
+
   and ClientHintIssueReason : sig
     type _clienthintissuereason =
       [ `MetaTagAllowListInvalidOrigin | `MetaTagModifiedHTML ]
@@ -2005,7 +2022,8 @@ and Audits : sig
       | `GenericIssue
       | `DeprecationIssue
       | `ClientHintIssue
-      | `FederatedAuthRequestIssue ]
+      | `FederatedAuthRequestIssue
+      | `BounceTrackingIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2085,6 +2103,10 @@ and Audits : sig
       federatedAuthRequestIssueDetails :
         FederatedAuthRequestIssueDetails.t option;
           [@key "federatedAuthRequestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      bounceTrackingIssueDetails : BounceTrackingIssueDetails.t option;
+          [@key "bounceTrackingIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -3589,6 +3611,38 @@ end = struct
        https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/frame/third_party/blink/renderer/core/frame/deprecation/README.md"]
   end
 
+  and BounceTrackingIssueDetails : sig
+    type t = {
+      trackingSites : string list;
+          [@key "trackingSites"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about sites in the redirect chain of a finished \
+       navigation\n\
+       that may be flagged as trackers and have their state cleared if they \
+       don't\n\
+       receive a user interaction. Note that in this context 'site' means \
+       eTLD+1.\n\
+       For example, if the URL `https://example.test:80/bounce` was in the\n\
+       redirect chain, the site reported would be `example.test`."]
+  end = struct
+    type t = {
+      trackingSites : string list;
+          [@key "trackingSites"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about sites in the redirect chain of a finished \
+       navigation\n\
+       that may be flagged as trackers and have their state cleared if they \
+       don't\n\
+       receive a user interaction. Note that in this context 'site' means \
+       eTLD+1.\n\
+       For example, if the URL `https://example.test:80/bounce` was in the\n\
+       redirect chain, the site reported would be `example.test`."]
+  end
+
   and ClientHintIssueReason : sig
     type _clienthintissuereason =
       [ `MetaTagAllowListInvalidOrigin | `MetaTagModifiedHTML ]
@@ -3828,7 +3882,8 @@ end = struct
       | `GenericIssue
       | `DeprecationIssue
       | `ClientHintIssue
-      | `FederatedAuthRequestIssue ]
+      | `FederatedAuthRequestIssue
+      | `BounceTrackingIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -3856,7 +3911,8 @@ end = struct
       | `GenericIssue
       | `DeprecationIssue
       | `ClientHintIssue
-      | `FederatedAuthRequestIssue ]
+      | `FederatedAuthRequestIssue
+      | `BounceTrackingIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -3875,6 +3931,7 @@ end = struct
       | `String "DeprecationIssue" -> `DeprecationIssue
       | `String "ClientHintIssue" -> `ClientHintIssue
       | `String "FederatedAuthRequestIssue" -> `FederatedAuthRequestIssue
+      | `String "BounceTrackingIssue" -> `BounceTrackingIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3895,6 +3952,7 @@ end = struct
       | `DeprecationIssue -> `String "DeprecationIssue"
       | `ClientHintIssue -> `String "ClientHintIssue"
       | `FederatedAuthRequestIssue -> `String "FederatedAuthRequestIssue"
+      | `BounceTrackingIssue -> `String "BounceTrackingIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -3973,6 +4031,10 @@ end = struct
           [@key "federatedAuthRequestIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      bounceTrackingIssueDetails : BounceTrackingIssueDetails.t option;
+          [@key "bounceTrackingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4046,6 +4108,10 @@ end = struct
       federatedAuthRequestIssueDetails :
         FederatedAuthRequestIssueDetails.t option;
           [@key "federatedAuthRequestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      bounceTrackingIssueDetails : BounceTrackingIssueDetails.t option;
+          [@key "bounceTrackingIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
