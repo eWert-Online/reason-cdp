@@ -5082,6 +5082,12 @@ and CSS : sig
           [@ocaml.doc
             "Column offset of the end of the stylesheet within the resource \
              (zero based)."]
+      loadingFailed : bool option;
+          [@key "loadingFailed"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the style sheet was loaded from a network resource, this \
+             indicates when the resource failed to load"]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS stylesheet metainformation."]
   end
@@ -5879,6 +5885,12 @@ end = struct
           [@ocaml.doc
             "Column offset of the end of the stylesheet within the resource \
              (zero based)."]
+      loadingFailed : bool option;
+          [@key "loadingFailed"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the style sheet was loaded from a network resource, this \
+             indicates when the resource failed to load"]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS stylesheet metainformation."]
   end = struct
@@ -5958,6 +5970,12 @@ end = struct
           [@ocaml.doc
             "Column offset of the end of the stylesheet within the resource \
              (zero based)."]
+      loadingFailed : bool option;
+          [@key "loadingFailed"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the style sheet was loaded from a network resource, this \
+             indicates when the resource failed to load"]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS stylesheet metainformation."]
   end
