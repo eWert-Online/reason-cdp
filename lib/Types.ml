@@ -1953,14 +1953,17 @@ and Audits : sig
       | `WellKnownNoResponse
       | `WellKnownInvalidResponse
       | `WellKnownListEmpty
+      | `WellKnownInvalidContentType
       | `ConfigNotInWellKnown
       | `WellKnownTooBig
       | `ConfigHttpNotFound
       | `ConfigNoResponse
       | `ConfigInvalidResponse
+      | `ConfigInvalidContentType
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
+      | `ClientMetadataInvalidContentType
       | `DisabledInSettings
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
@@ -1968,10 +1971,12 @@ and Audits : sig
       | `AccountsNoResponse
       | `AccountsInvalidResponse
       | `AccountsListEmpty
+      | `AccountsInvalidContentType
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
       | `IdTokenInvalidResponse
       | `IdTokenInvalidRequest
+      | `IdTokenInvalidContentType
       | `ErrorIdToken
       | `Canceled
       | `RpPageNotVisible ]
@@ -3699,14 +3704,17 @@ end = struct
       | `WellKnownNoResponse
       | `WellKnownInvalidResponse
       | `WellKnownListEmpty
+      | `WellKnownInvalidContentType
       | `ConfigNotInWellKnown
       | `WellKnownTooBig
       | `ConfigHttpNotFound
       | `ConfigNoResponse
       | `ConfigInvalidResponse
+      | `ConfigInvalidContentType
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
+      | `ClientMetadataInvalidContentType
       | `DisabledInSettings
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
@@ -3714,10 +3722,12 @@ end = struct
       | `AccountsNoResponse
       | `AccountsInvalidResponse
       | `AccountsListEmpty
+      | `AccountsInvalidContentType
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
       | `IdTokenInvalidResponse
       | `IdTokenInvalidRequest
+      | `IdTokenInvalidContentType
       | `ErrorIdToken
       | `Canceled
       | `RpPageNotVisible ]
@@ -3744,14 +3754,17 @@ end = struct
       | `WellKnownNoResponse
       | `WellKnownInvalidResponse
       | `WellKnownListEmpty
+      | `WellKnownInvalidContentType
       | `ConfigNotInWellKnown
       | `WellKnownTooBig
       | `ConfigHttpNotFound
       | `ConfigNoResponse
       | `ConfigInvalidResponse
+      | `ConfigInvalidContentType
       | `ClientMetadataHttpNotFound
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
+      | `ClientMetadataInvalidContentType
       | `DisabledInSettings
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
@@ -3759,10 +3772,12 @@ end = struct
       | `AccountsNoResponse
       | `AccountsInvalidResponse
       | `AccountsListEmpty
+      | `AccountsInvalidContentType
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
       | `IdTokenInvalidResponse
       | `IdTokenInvalidRequest
+      | `IdTokenInvalidContentType
       | `ErrorIdToken
       | `Canceled
       | `RpPageNotVisible ]
@@ -3774,15 +3789,19 @@ end = struct
       | `String "WellKnownNoResponse" -> `WellKnownNoResponse
       | `String "WellKnownInvalidResponse" -> `WellKnownInvalidResponse
       | `String "WellKnownListEmpty" -> `WellKnownListEmpty
+      | `String "WellKnownInvalidContentType" -> `WellKnownInvalidContentType
       | `String "ConfigNotInWellKnown" -> `ConfigNotInWellKnown
       | `String "WellKnownTooBig" -> `WellKnownTooBig
       | `String "ConfigHttpNotFound" -> `ConfigHttpNotFound
       | `String "ConfigNoResponse" -> `ConfigNoResponse
       | `String "ConfigInvalidResponse" -> `ConfigInvalidResponse
+      | `String "ConfigInvalidContentType" -> `ConfigInvalidContentType
       | `String "ClientMetadataHttpNotFound" -> `ClientMetadataHttpNotFound
       | `String "ClientMetadataNoResponse" -> `ClientMetadataNoResponse
       | `String "ClientMetadataInvalidResponse" ->
           `ClientMetadataInvalidResponse
+      | `String "ClientMetadataInvalidContentType" ->
+          `ClientMetadataInvalidContentType
       | `String "DisabledInSettings" -> `DisabledInSettings
       | `String "ErrorFetchingSignin" -> `ErrorFetchingSignin
       | `String "InvalidSigninResponse" -> `InvalidSigninResponse
@@ -3790,10 +3809,12 @@ end = struct
       | `String "AccountsNoResponse" -> `AccountsNoResponse
       | `String "AccountsInvalidResponse" -> `AccountsInvalidResponse
       | `String "AccountsListEmpty" -> `AccountsListEmpty
+      | `String "AccountsInvalidContentType" -> `AccountsInvalidContentType
       | `String "IdTokenHttpNotFound" -> `IdTokenHttpNotFound
       | `String "IdTokenNoResponse" -> `IdTokenNoResponse
       | `String "IdTokenInvalidResponse" -> `IdTokenInvalidResponse
       | `String "IdTokenInvalidRequest" -> `IdTokenInvalidRequest
+      | `String "IdTokenInvalidContentType" -> `IdTokenInvalidContentType
       | `String "ErrorIdToken" -> `ErrorIdToken
       | `String "Canceled" -> `Canceled
       | `String "RpPageNotVisible" -> `RpPageNotVisible
@@ -3807,15 +3828,19 @@ end = struct
       | `WellKnownNoResponse -> `String "WellKnownNoResponse"
       | `WellKnownInvalidResponse -> `String "WellKnownInvalidResponse"
       | `WellKnownListEmpty -> `String "WellKnownListEmpty"
+      | `WellKnownInvalidContentType -> `String "WellKnownInvalidContentType"
       | `ConfigNotInWellKnown -> `String "ConfigNotInWellKnown"
       | `WellKnownTooBig -> `String "WellKnownTooBig"
       | `ConfigHttpNotFound -> `String "ConfigHttpNotFound"
       | `ConfigNoResponse -> `String "ConfigNoResponse"
       | `ConfigInvalidResponse -> `String "ConfigInvalidResponse"
+      | `ConfigInvalidContentType -> `String "ConfigInvalidContentType"
       | `ClientMetadataHttpNotFound -> `String "ClientMetadataHttpNotFound"
       | `ClientMetadataNoResponse -> `String "ClientMetadataNoResponse"
       | `ClientMetadataInvalidResponse ->
           `String "ClientMetadataInvalidResponse"
+      | `ClientMetadataInvalidContentType ->
+          `String "ClientMetadataInvalidContentType"
       | `DisabledInSettings -> `String "DisabledInSettings"
       | `ErrorFetchingSignin -> `String "ErrorFetchingSignin"
       | `InvalidSigninResponse -> `String "InvalidSigninResponse"
@@ -3823,10 +3848,12 @@ end = struct
       | `AccountsNoResponse -> `String "AccountsNoResponse"
       | `AccountsInvalidResponse -> `String "AccountsInvalidResponse"
       | `AccountsListEmpty -> `String "AccountsListEmpty"
+      | `AccountsInvalidContentType -> `String "AccountsInvalidContentType"
       | `IdTokenHttpNotFound -> `String "IdTokenHttpNotFound"
       | `IdTokenNoResponse -> `String "IdTokenNoResponse"
       | `IdTokenInvalidResponse -> `String "IdTokenInvalidResponse"
       | `IdTokenInvalidRequest -> `String "IdTokenInvalidRequest"
+      | `IdTokenInvalidContentType -> `String "IdTokenInvalidContentType"
       | `ErrorIdToken -> `String "ErrorIdToken"
       | `Canceled -> `String "Canceled"
       | `RpPageNotVisible -> `String "RpPageNotVisible"
