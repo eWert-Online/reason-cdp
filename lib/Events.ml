@@ -4103,6 +4103,26 @@ module Preload = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
+  (* Fired when a preload enabled state is updated. *)
+  module PreloadEnabledStateUpdated = struct
+    let name = "Preload.preloadEnabledStateUpdated"
+
+    type result = {
+      state : Types.Preload.PreloadEnabledState.t;
+          [@key "state"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
   (* Fired when a prefetch attempt is updated. *)
   module PrefetchStatusUpdated = struct
     let name = "Preload.prefetchStatusUpdated"
