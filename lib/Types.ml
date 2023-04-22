@@ -27158,7 +27158,9 @@ and Preload : sig
       | `CrossSiteRedirectInMainFrameNavigation
       | `CrossSiteNavigationInMainFrameNavigation
       | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
-      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation ]
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
+      | `MemoryPressureOnTrigger
+      | `MemoryPressureAfterTriggered ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -27497,7 +27499,9 @@ end = struct
       | `CrossSiteRedirectInMainFrameNavigation
       | `CrossSiteNavigationInMainFrameNavigation
       | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
-      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation ]
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
+      | `MemoryPressureOnTrigger
+      | `MemoryPressureAfterTriggered ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -27567,7 +27571,9 @@ end = struct
       | `CrossSiteRedirectInMainFrameNavigation
       | `CrossSiteNavigationInMainFrameNavigation
       | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
-      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation ]
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
+      | `MemoryPressureOnTrigger
+      | `MemoryPressureAfterTriggered ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -27647,6 +27653,8 @@ end = struct
           `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
       | `String "SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation" ->
           `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
+      | `String "MemoryPressureOnTrigger" -> `MemoryPressureOnTrigger
+      | `String "MemoryPressureAfterTriggered" -> `MemoryPressureAfterTriggered
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -27728,6 +27736,8 @@ end = struct
           `String "SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation"
       | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation ->
           `String "SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation"
+      | `MemoryPressureOnTrigger -> `String "MemoryPressureOnTrigger"
+      | `MemoryPressureAfterTriggered -> `String "MemoryPressureAfterTriggered"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
