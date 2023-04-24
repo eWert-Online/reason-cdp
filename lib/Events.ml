@@ -4415,7 +4415,9 @@ module Debugger = struct
       executionContextAuxData : Types.assoc option;
           [@key "executionContextAuxData"]
           [@yojson.option]
-          [@ocaml.doc "Embedder-specific auxiliary data."]
+          [@ocaml.doc
+            "Embedder-specific auxiliary data likely matching {isDefault: \
+             boolean, type: 'default'|'isolated'|'worker', frameId: string}"]
       sourceMapURL : string option;
           [@key "sourceMapURL"]
           [@yojson.option]
@@ -4495,7 +4497,9 @@ module Debugger = struct
       executionContextAuxData : Types.assoc option;
           [@key "executionContextAuxData"]
           [@yojson.option]
-          [@ocaml.doc "Embedder-specific auxiliary data."]
+          [@ocaml.doc
+            "Embedder-specific auxiliary data likely matching {isDefault: \
+             boolean, type: 'default'|'isolated'|'worker', frameId: string}"]
       isLiveEdit : bool option;
           [@key "isLiveEdit"]
           [@yojson.option]

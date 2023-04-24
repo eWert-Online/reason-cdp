@@ -29756,7 +29756,9 @@ and Runtime : sig
       auxData : assoc option;
           [@key "auxData"]
           [@yojson.option]
-          [@ocaml.doc "Embedder-specific auxiliary data."]
+          [@ocaml.doc
+            "Embedder-specific auxiliary data likely matching {isDefault: \
+             boolean, type: 'default'|'isolated'|'worker', frameId: string}"]
     }
     [@@deriving yojson] [@@ocaml.doc "Description of an isolated world."]
   end
@@ -31012,7 +31014,9 @@ end = struct
       auxData : assoc option;
           [@key "auxData"]
           [@yojson.option]
-          [@ocaml.doc "Embedder-specific auxiliary data."]
+          [@ocaml.doc
+            "Embedder-specific auxiliary data likely matching {isDefault: \
+             boolean, type: 'default'|'isolated'|'worker', frameId: string}"]
     }
     [@@deriving yojson] [@@ocaml.doc "Description of an isolated world."]
   end = struct
@@ -31038,7 +31042,9 @@ end = struct
       auxData : assoc option;
           [@key "auxData"]
           [@yojson.option]
-          [@ocaml.doc "Embedder-specific auxiliary data."]
+          [@ocaml.doc
+            "Embedder-specific auxiliary data likely matching {isDefault: \
+             boolean, type: 'default'|'isolated'|'worker', frameId: string}"]
     }
     [@@deriving yojson] [@@ocaml.doc "Description of an isolated world."]
   end
