@@ -1770,7 +1770,8 @@ and Audits : sig
       | `OsTriggerIgnored
       | `InvalidRegisterOsSourceHeader
       | `InvalidRegisterOsTriggerHeader
-      | `WebAndOsHeaders ]
+      | `WebAndOsHeaders
+      | `NoWebOrOsSupport ]
 
     val _attributionreportingissuetype_of_yojson :
       Yojson.Basic.t -> _attributionreportingissuetype
@@ -3275,7 +3276,8 @@ end = struct
       | `OsTriggerIgnored
       | `InvalidRegisterOsSourceHeader
       | `InvalidRegisterOsTriggerHeader
-      | `WebAndOsHeaders ]
+      | `WebAndOsHeaders
+      | `NoWebOrOsSupport ]
 
     val _attributionreportingissuetype_of_yojson :
       Yojson.Basic.t -> _attributionreportingissuetype
@@ -3300,7 +3302,8 @@ end = struct
       | `OsTriggerIgnored
       | `InvalidRegisterOsSourceHeader
       | `InvalidRegisterOsTriggerHeader
-      | `WebAndOsHeaders ]
+      | `WebAndOsHeaders
+      | `NoWebOrOsSupport ]
 
     let _attributionreportingissuetype_of_yojson = function
       | `String "PermissionPolicyDisabled" -> `PermissionPolicyDisabled
@@ -3319,6 +3322,7 @@ end = struct
       | `String "InvalidRegisterOsTriggerHeader" ->
           `InvalidRegisterOsTriggerHeader
       | `String "WebAndOsHeaders" -> `WebAndOsHeaders
+      | `String "NoWebOrOsSupport" -> `NoWebOrOsSupport
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3339,6 +3343,7 @@ end = struct
       | `InvalidRegisterOsTriggerHeader ->
           `String "InvalidRegisterOsTriggerHeader"
       | `WebAndOsHeaders -> `String "WebAndOsHeaders"
+      | `NoWebOrOsSupport -> `String "NoWebOrOsSupport"
 
     type t = _attributionreportingissuetype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -18546,6 +18551,7 @@ and Page : sig
       | `payment
       | `picture_in_picture
       | `private_aggregation
+      | `private_state_token_redemption
       | `publickey_credentials_get
       | `run_ad_auction
       | `screen_wake_lock
@@ -18556,7 +18562,6 @@ and Page : sig
       | `smart_card
       | `storage_access
       | `sync_xhr
-      | `trust_token_redemption
       | `unload
       | `usb
       | `vertical_scroll
@@ -19653,6 +19658,7 @@ end = struct
       | `payment
       | `picture_in_picture
       | `private_aggregation
+      | `private_state_token_redemption
       | `publickey_credentials_get
       | `run_ad_auction
       | `screen_wake_lock
@@ -19663,7 +19669,6 @@ end = struct
       | `smart_card
       | `storage_access
       | `sync_xhr
-      | `trust_token_redemption
       | `unload
       | `usb
       | `vertical_scroll
@@ -19746,6 +19751,7 @@ end = struct
       | `payment
       | `picture_in_picture
       | `private_aggregation
+      | `private_state_token_redemption
       | `publickey_credentials_get
       | `run_ad_auction
       | `screen_wake_lock
@@ -19756,7 +19762,6 @@ end = struct
       | `smart_card
       | `storage_access
       | `sync_xhr
-      | `trust_token_redemption
       | `unload
       | `usb
       | `vertical_scroll
@@ -19828,6 +19833,8 @@ end = struct
       | `String "payment" -> `payment
       | `String "picture-in-picture" -> `picture_in_picture
       | `String "private-aggregation" -> `private_aggregation
+      | `String "private-state-token-redemption" ->
+          `private_state_token_redemption
       | `String "publickey-credentials-get" -> `publickey_credentials_get
       | `String "run-ad-auction" -> `run_ad_auction
       | `String "screen-wake-lock" -> `screen_wake_lock
@@ -19838,7 +19845,6 @@ end = struct
       | `String "smart-card" -> `smart_card
       | `String "storage-access" -> `storage_access
       | `String "sync-xhr" -> `sync_xhr
-      | `String "trust-token-redemption" -> `trust_token_redemption
       | `String "unload" -> `unload
       | `String "usb" -> `usb
       | `String "vertical-scroll" -> `vertical_scroll
@@ -19912,6 +19918,8 @@ end = struct
       | `payment -> `String "payment"
       | `picture_in_picture -> `String "picture-in-picture"
       | `private_aggregation -> `String "private-aggregation"
+      | `private_state_token_redemption ->
+          `String "private-state-token-redemption"
       | `publickey_credentials_get -> `String "publickey-credentials-get"
       | `run_ad_auction -> `String "run-ad-auction"
       | `screen_wake_lock -> `String "screen-wake-lock"
@@ -19922,7 +19930,6 @@ end = struct
       | `smart_card -> `String "smart-card"
       | `storage_access -> `String "storage-access"
       | `sync_xhr -> `String "sync-xhr"
-      | `trust_token_redemption -> `String "trust-token-redemption"
       | `unload -> `String "unload"
       | `usb -> `String "usb"
       | `vertical_scroll -> `String "vertical-scroll"
