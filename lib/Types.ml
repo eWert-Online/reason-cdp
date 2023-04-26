@@ -18551,6 +18551,7 @@ and Page : sig
       | `payment
       | `picture_in_picture
       | `private_aggregation
+      | `private_state_token_issuance
       | `private_state_token_redemption
       | `publickey_credentials_get
       | `run_ad_auction
@@ -19658,6 +19659,7 @@ end = struct
       | `payment
       | `picture_in_picture
       | `private_aggregation
+      | `private_state_token_issuance
       | `private_state_token_redemption
       | `publickey_credentials_get
       | `run_ad_auction
@@ -19751,6 +19753,7 @@ end = struct
       | `payment
       | `picture_in_picture
       | `private_aggregation
+      | `private_state_token_issuance
       | `private_state_token_redemption
       | `publickey_credentials_get
       | `run_ad_auction
@@ -19833,6 +19836,7 @@ end = struct
       | `String "payment" -> `payment
       | `String "picture-in-picture" -> `picture_in_picture
       | `String "private-aggregation" -> `private_aggregation
+      | `String "private-state-token-issuance" -> `private_state_token_issuance
       | `String "private-state-token-redemption" ->
           `private_state_token_redemption
       | `String "publickey-credentials-get" -> `publickey_credentials_get
@@ -19918,6 +19922,7 @@ end = struct
       | `payment -> `String "payment"
       | `picture_in_picture -> `String "picture-in-picture"
       | `private_aggregation -> `String "private-aggregation"
+      | `private_state_token_issuance -> `String "private-state-token-issuance"
       | `private_state_token_redemption ->
           `String "private-state-token-redemption"
       | `publickey_credentials_get -> `String "publickey-credentials-get"
