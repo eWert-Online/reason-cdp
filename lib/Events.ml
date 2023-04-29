@@ -3008,6 +3008,8 @@ module Storage = struct
       origin : string; [@key "origin"] [@ocaml.doc "Origin to update."]
       storageKey : string;
           [@key "storageKey"] [@ocaml.doc "Storage key to update."]
+      bucketId : string;
+          [@key "bucketId"] [@ocaml.doc "Storage bucket to update."]
       databaseName : string;
           [@key "databaseName"] [@ocaml.doc "Database to update."]
       objectStoreName : string;
@@ -3033,6 +3035,8 @@ module Storage = struct
       origin : string; [@key "origin"] [@ocaml.doc "Origin to update."]
       storageKey : string;
           [@key "storageKey"] [@ocaml.doc "Storage key to update."]
+      bucketId : string;
+          [@key "bucketId"] [@ocaml.doc "Storage bucket to update."]
     }
     [@@deriving yojson]
 
@@ -3114,8 +3118,8 @@ module Storage = struct
     let name = "Storage.storageBucketCreatedOrUpdated"
 
     type result = {
-      bucket : Types.Storage.StorageBucketInfo.t;
-          [@key "bucket"] [@ocaml.doc "No description provided"]
+      bucketInfo : Types.Storage.StorageBucketInfo.t;
+          [@key "bucketInfo"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 

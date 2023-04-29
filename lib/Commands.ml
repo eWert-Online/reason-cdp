@@ -12442,11 +12442,16 @@ module IndexedDB = struct
             [@key "securityOrigin"]
             [@yojson.option]
             [@ocaml.doc
-              "At least and at most one of securityOrigin, storageKey must be \
-               specified.\n\
+              "At least and at most one of securityOrigin, storageKey, or \
+               storageBucket must be specified.\n\
                Security origin."]
         storageKey : string option;
             [@key "storageKey"] [@yojson.option] [@ocaml.doc "Storage key."]
+        storageBucket : Types.Storage.StorageBucket.t option;
+            [@key "storageBucket"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Storage bucket. If not specified, it uses the default bucket."]
         databaseName : string;
             [@key "databaseName"] [@ocaml.doc "Database name."]
         objectStoreName : string;
@@ -12454,8 +12459,15 @@ module IndexedDB = struct
       }
       [@@deriving yojson]
 
-      let make ?securityOrigin ?storageKey ~databaseName ~objectStoreName () =
-        { securityOrigin; storageKey; databaseName; objectStoreName }
+      let make ?securityOrigin ?storageKey ?storageBucket ~databaseName
+          ~objectStoreName () =
+        {
+          securityOrigin;
+          storageKey;
+          storageBucket;
+          databaseName;
+          objectStoreName;
+        }
     end
 
     module Request = struct
@@ -12508,18 +12520,23 @@ module IndexedDB = struct
             [@key "securityOrigin"]
             [@yojson.option]
             [@ocaml.doc
-              "At least and at most one of securityOrigin, storageKey must be \
-               specified.\n\
+              "At least and at most one of securityOrigin, storageKey, or \
+               storageBucket must be specified.\n\
                Security origin."]
         storageKey : string option;
             [@key "storageKey"] [@yojson.option] [@ocaml.doc "Storage key."]
+        storageBucket : Types.Storage.StorageBucket.t option;
+            [@key "storageBucket"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Storage bucket. If not specified, it uses the default bucket."]
         databaseName : string;
             [@key "databaseName"] [@ocaml.doc "Database name."]
       }
       [@@deriving yojson]
 
-      let make ?securityOrigin ?storageKey ~databaseName () =
-        { securityOrigin; storageKey; databaseName }
+      let make ?securityOrigin ?storageKey ?storageBucket ~databaseName () =
+        { securityOrigin; storageKey; storageBucket; databaseName }
     end
 
     module Request = struct
@@ -12572,11 +12589,16 @@ module IndexedDB = struct
             [@key "securityOrigin"]
             [@yojson.option]
             [@ocaml.doc
-              "At least and at most one of securityOrigin, storageKey must be \
-               specified.\n\
+              "At least and at most one of securityOrigin, storageKey, or \
+               storageBucket must be specified.\n\
                Security origin."]
         storageKey : string option;
             [@key "storageKey"] [@yojson.option] [@ocaml.doc "Storage key."]
+        storageBucket : Types.Storage.StorageBucket.t option;
+            [@key "storageBucket"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Storage bucket. If not specified, it uses the default bucket."]
         databaseName : string;
             [@key "databaseName"] [@ocaml.doc "No description provided"]
         objectStoreName : string;
@@ -12586,9 +12608,16 @@ module IndexedDB = struct
       }
       [@@deriving yojson]
 
-      let make ?securityOrigin ?storageKey ~databaseName ~objectStoreName
-          ~keyRange () =
-        { securityOrigin; storageKey; databaseName; objectStoreName; keyRange }
+      let make ?securityOrigin ?storageKey ?storageBucket ~databaseName
+          ~objectStoreName ~keyRange () =
+        {
+          securityOrigin;
+          storageKey;
+          storageBucket;
+          databaseName;
+          objectStoreName;
+          keyRange;
+        }
     end
 
     module Request = struct
@@ -12751,11 +12780,16 @@ module IndexedDB = struct
             [@key "securityOrigin"]
             [@yojson.option]
             [@ocaml.doc
-              "At least and at most one of securityOrigin, storageKey must be \
-               specified.\n\
+              "At least and at most one of securityOrigin, storageKey, or \
+               storageBucket must be specified.\n\
                Security origin."]
         storageKey : string option;
             [@key "storageKey"] [@yojson.option] [@ocaml.doc "Storage key."]
+        storageBucket : Types.Storage.StorageBucket.t option;
+            [@key "storageBucket"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Storage bucket. If not specified, it uses the default bucket."]
         databaseName : string;
             [@key "databaseName"] [@ocaml.doc "Database name."]
         objectStoreName : string;
@@ -12773,11 +12807,12 @@ module IndexedDB = struct
       }
       [@@deriving yojson]
 
-      let make ?securityOrigin ?storageKey ~databaseName ~objectStoreName
-          ~indexName ~skipCount ~pageSize ?keyRange () =
+      let make ?securityOrigin ?storageKey ?storageBucket ~databaseName
+          ~objectStoreName ~indexName ~skipCount ~pageSize ?keyRange () =
         {
           securityOrigin;
           storageKey;
+          storageBucket;
           databaseName;
           objectStoreName;
           indexName;
@@ -12858,11 +12893,16 @@ module IndexedDB = struct
             [@key "securityOrigin"]
             [@yojson.option]
             [@ocaml.doc
-              "At least and at most one of securityOrigin, storageKey must be \
-               specified.\n\
+              "At least and at most one of securityOrigin, storageKey, or \
+               storageBucket must be specified.\n\
                Security origin."]
         storageKey : string option;
             [@key "storageKey"] [@yojson.option] [@ocaml.doc "Storage key."]
+        storageBucket : Types.Storage.StorageBucket.t option;
+            [@key "storageBucket"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Storage bucket. If not specified, it uses the default bucket."]
         databaseName : string;
             [@key "databaseName"] [@ocaml.doc "Database name."]
         objectStoreName : string;
@@ -12870,8 +12910,15 @@ module IndexedDB = struct
       }
       [@@deriving yojson]
 
-      let make ?securityOrigin ?storageKey ~databaseName ~objectStoreName () =
-        { securityOrigin; storageKey; databaseName; objectStoreName }
+      let make ?securityOrigin ?storageKey ?storageBucket ~databaseName
+          ~objectStoreName () =
+        {
+          securityOrigin;
+          storageKey;
+          storageBucket;
+          databaseName;
+          objectStoreName;
+        }
     end
 
     module Request = struct
@@ -12935,18 +12982,23 @@ module IndexedDB = struct
             [@key "securityOrigin"]
             [@yojson.option]
             [@ocaml.doc
-              "At least and at most one of securityOrigin, storageKey must be \
-               specified.\n\
+              "At least and at most one of securityOrigin, storageKey, or \
+               storageBucket must be specified.\n\
                Security origin."]
         storageKey : string option;
             [@key "storageKey"] [@yojson.option] [@ocaml.doc "Storage key."]
+        storageBucket : Types.Storage.StorageBucket.t option;
+            [@key "storageBucket"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Storage bucket. If not specified, it uses the default bucket."]
         databaseName : string;
             [@key "databaseName"] [@ocaml.doc "Database name."]
       }
       [@@deriving yojson]
 
-      let make ?securityOrigin ?storageKey ~databaseName () =
-        { securityOrigin; storageKey; databaseName }
+      let make ?securityOrigin ?storageKey ?storageBucket ~databaseName () =
+        { securityOrigin; storageKey; storageBucket; databaseName }
     end
 
     module Request = struct
@@ -13008,15 +13060,21 @@ module IndexedDB = struct
             [@key "securityOrigin"]
             [@yojson.option]
             [@ocaml.doc
-              "At least and at most one of securityOrigin, storageKey must be \
-               specified.\n\
+              "At least and at most one of securityOrigin, storageKey, or \
+               storageBucket must be specified.\n\
                Security origin."]
         storageKey : string option;
             [@key "storageKey"] [@yojson.option] [@ocaml.doc "Storage key."]
+        storageBucket : Types.Storage.StorageBucket.t option;
+            [@key "storageBucket"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Storage bucket. If not specified, it uses the default bucket."]
       }
       [@@deriving yojson]
 
-      let make ?securityOrigin ?storageKey () = { securityOrigin; storageKey }
+      let make ?securityOrigin ?storageKey ?storageBucket () =
+        { securityOrigin; storageKey; storageBucket }
     end
 
     module Request = struct
@@ -26236,14 +26294,12 @@ module Storage = struct
 
     module Params = struct
       type t = {
-        storageKey : string;
-            [@key "storageKey"] [@ocaml.doc "No description provided"]
-        bucketName : string;
-            [@key "bucketName"] [@ocaml.doc "No description provided"]
+        bucket : Types.Storage.StorageBucket.t;
+            [@key "bucket"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
-      let make ~storageKey ~bucketName () = { storageKey; bucketName }
+      let make ~bucket () = { bucket }
     end
 
     module Request = struct

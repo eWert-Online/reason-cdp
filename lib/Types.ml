@@ -23459,14 +23459,24 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
-  and StorageBucketInfo : sig
+  and StorageBucket : sig
     type t = {
       storageKey : SerializedStorageKey.t;
           [@key "storageKey"] [@ocaml.doc "No description provided"]
+      name : string option;
+          [@key "name"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If not specified, it is the default bucket of the storageKey."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and StorageBucketInfo : sig
+    type t = {
+      bucket : StorageBucket.t;
+          [@key "bucket"] [@ocaml.doc "No description provided"]
       id : string; [@key "id"] [@ocaml.doc "No description provided"]
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      isDefault : bool;
-          [@key "isDefault"] [@ocaml.doc "No description provided"]
       expiration : Network.TimeSinceEpoch.t;
           [@key "expiration"] [@ocaml.doc "No description provided"]
       quota : number; [@key "quota"] [@ocaml.doc "Storage quota (bytes)."]
@@ -24065,14 +24075,35 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
-  and StorageBucketInfo : sig
+  and StorageBucket : sig
     type t = {
       storageKey : SerializedStorageKey.t;
           [@key "storageKey"] [@ocaml.doc "No description provided"]
+      name : string option;
+          [@key "name"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If not specified, it is the default bucket of the storageKey."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      storageKey : SerializedStorageKey.t;
+          [@key "storageKey"] [@ocaml.doc "No description provided"]
+      name : string option;
+          [@key "name"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If not specified, it is the default bucket of the storageKey."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and StorageBucketInfo : sig
+    type t = {
+      bucket : StorageBucket.t;
+          [@key "bucket"] [@ocaml.doc "No description provided"]
       id : string; [@key "id"] [@ocaml.doc "No description provided"]
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      isDefault : bool;
-          [@key "isDefault"] [@ocaml.doc "No description provided"]
       expiration : Network.TimeSinceEpoch.t;
           [@key "expiration"] [@ocaml.doc "No description provided"]
       quota : number; [@key "quota"] [@ocaml.doc "Storage quota (bytes)."]
@@ -24084,12 +24115,9 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type t = {
-      storageKey : SerializedStorageKey.t;
-          [@key "storageKey"] [@ocaml.doc "No description provided"]
+      bucket : StorageBucket.t;
+          [@key "bucket"] [@ocaml.doc "No description provided"]
       id : string; [@key "id"] [@ocaml.doc "No description provided"]
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      isDefault : bool;
-          [@key "isDefault"] [@ocaml.doc "No description provided"]
       expiration : Network.TimeSinceEpoch.t;
           [@key "expiration"] [@ocaml.doc "No description provided"]
       quota : number; [@key "quota"] [@ocaml.doc "Storage quota (bytes)."]
@@ -27014,6 +27042,27 @@ and Preload : sig
              See also:\n\
              - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
              - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A speculation rule set is either added through an inline\n\
+             <script> tag or through an external resource via the\n\
+             'Speculation-Rules' HTTP header. For the first case, we include\n\
+             the BackendNodeId of the relevant <script> tag. For the second\n\
+             case, we include the external URL where the rule set was loaded\n\
+             from, and also RequestId if Network domain is enabled.\n\n\
+             See also:\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header"]
+      url : string option;
+          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
       errorType : RuleSetErrorType.t option;
           [@key "errorType"]
           [@yojson.option]
@@ -27236,6 +27285,27 @@ end = struct
              See also:\n\
              - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
              - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A speculation rule set is either added through an inline\n\
+             <script> tag or through an external resource via the\n\
+             'Speculation-Rules' HTTP header. For the first case, we include\n\
+             the BackendNodeId of the relevant <script> tag. For the second\n\
+             case, we include the external URL where the rule set was loaded\n\
+             from, and also RequestId if Network domain is enabled.\n\n\
+             See also:\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header"]
+      url : string option;
+          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
       errorType : RuleSetErrorType.t option;
           [@key "errorType"]
           [@yojson.option]
@@ -27265,6 +27335,27 @@ end = struct
              See also:\n\
              - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
              - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A speculation rule set is either added through an inline\n\
+             <script> tag or through an external resource via the\n\
+             'Speculation-Rules' HTTP header. For the first case, we include\n\
+             the BackendNodeId of the relevant <script> tag. For the second\n\
+             case, we include the external URL where the rule set was loaded\n\
+             from, and also RequestId if Network domain is enabled.\n\n\
+             See also:\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header"]
+      url : string option;
+          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
       errorType : RuleSetErrorType.t option;
           [@key "errorType"]
           [@yojson.option]
