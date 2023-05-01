@@ -29424,6 +29424,15 @@ and Runtime : sig
           [@key "objectId"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      weakLocalObjectReference : number option;
+          [@key "weakLocalObjectReference"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Set if value reference met more then once during serialization. \
+             In such\n\
+             case, value is provided only to one of the serialized values. \
+             Unique\n\
+             per value in the scope of one CDP call."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -30039,6 +30048,15 @@ end = struct
           [@key "objectId"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      weakLocalObjectReference : number option;
+          [@key "weakLocalObjectReference"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Set if value reference met more then once during serialization. \
+             In such\n\
+             case, value is provided only to one of the serialized values. \
+             Unique\n\
+             per value in the scope of one CDP call."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -30131,6 +30149,15 @@ end = struct
           [@key "objectId"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      weakLocalObjectReference : number option;
+          [@key "weakLocalObjectReference"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Set if value reference met more then once during serialization. \
+             In such\n\
+             case, value is provided only to one of the serialized values. \
+             Unique\n\
+             per value in the scope of one CDP call."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
