@@ -1762,7 +1762,6 @@ and Audits : sig
       | `InsecureContext
       | `InvalidHeader
       | `InvalidRegisterTriggerHeader
-      | `InvalidEligibleHeader
       | `SourceAndTriggerHeaders
       | `SourceIgnored
       | `TriggerIgnored
@@ -3268,7 +3267,6 @@ end = struct
       | `InsecureContext
       | `InvalidHeader
       | `InvalidRegisterTriggerHeader
-      | `InvalidEligibleHeader
       | `SourceAndTriggerHeaders
       | `SourceIgnored
       | `TriggerIgnored
@@ -3294,7 +3292,6 @@ end = struct
       | `InsecureContext
       | `InvalidHeader
       | `InvalidRegisterTriggerHeader
-      | `InvalidEligibleHeader
       | `SourceAndTriggerHeaders
       | `SourceIgnored
       | `TriggerIgnored
@@ -3311,7 +3308,6 @@ end = struct
       | `String "InsecureContext" -> `InsecureContext
       | `String "InvalidHeader" -> `InvalidHeader
       | `String "InvalidRegisterTriggerHeader" -> `InvalidRegisterTriggerHeader
-      | `String "InvalidEligibleHeader" -> `InvalidEligibleHeader
       | `String "SourceAndTriggerHeaders" -> `SourceAndTriggerHeaders
       | `String "SourceIgnored" -> `SourceIgnored
       | `String "TriggerIgnored" -> `TriggerIgnored
@@ -3332,7 +3328,6 @@ end = struct
       | `InsecureContext -> `String "InsecureContext"
       | `InvalidHeader -> `String "InvalidHeader"
       | `InvalidRegisterTriggerHeader -> `String "InvalidRegisterTriggerHeader"
-      | `InvalidEligibleHeader -> `String "InvalidEligibleHeader"
       | `SourceAndTriggerHeaders -> `String "SourceAndTriggerHeaders"
       | `SourceIgnored -> `String "SourceIgnored"
       | `TriggerIgnored -> `String "TriggerIgnored"
