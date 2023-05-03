@@ -29381,8 +29381,8 @@ and Runtime : sig
     [@@deriving yojson] [@@ocaml.doc "Unique script identifier."]
   end
 
-  and WebDriverValue : sig
-    type _webdrivervalue_type =
+  and DeepSerializedValue : sig
+    type _deepserializedvalue_type =
       [ `undefined
       | `null
       | `string
@@ -29407,11 +29407,14 @@ and Runtime : sig
       | `node
       | `window ]
 
-    val _webdrivervalue_type_of_yojson : Yojson.Basic.t -> _webdrivervalue_type
-    val yojson_of__webdrivervalue_type : _webdrivervalue_type -> Yojson.Basic.t
+    val _deepserializedvalue_type_of_yojson :
+      Yojson.Basic.t -> _deepserializedvalue_type
+
+    val yojson_of__deepserializedvalue_type :
+      _deepserializedvalue_type -> Yojson.Basic.t
 
     type t = {
-      type_ : _webdrivervalue_type;
+      type_ : _deepserializedvalue_type;
           [@key "type"] [@ocaml.doc "No description provided"]
       value : string option;
           [@key "value"] [@yojson.option] [@ocaml.doc "No description provided"]
@@ -29432,7 +29435,7 @@ and Runtime : sig
     [@@deriving yojson]
     [@@ocaml.doc
       "Represents the value serialiazed by the WebDriver BiDi specification\n\
-       https://w3c.github.io/webdriver-bidi."]
+       https://goo.gle/browser-automation-deepserialization."]
   end
 
   and RemoteObjectId : sig
@@ -29522,7 +29525,7 @@ and Runtime : sig
           [@key "description"]
           [@yojson.option]
           [@ocaml.doc "String representation of the object."]
-      webDriverValue : WebDriverValue.t option;
+      webDriverValue : DeepSerializedValue.t option;
           [@key "webDriverValue"]
           [@yojson.option]
           [@ocaml.doc "WebDriver BiDi representation of the value."]
@@ -30005,8 +30008,8 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Unique script identifier."]
   end
 
-  and WebDriverValue : sig
-    type _webdrivervalue_type =
+  and DeepSerializedValue : sig
+    type _deepserializedvalue_type =
       [ `undefined
       | `null
       | `string
@@ -30031,11 +30034,14 @@ end = struct
       | `node
       | `window ]
 
-    val _webdrivervalue_type_of_yojson : Yojson.Basic.t -> _webdrivervalue_type
-    val yojson_of__webdrivervalue_type : _webdrivervalue_type -> Yojson.Basic.t
+    val _deepserializedvalue_type_of_yojson :
+      Yojson.Basic.t -> _deepserializedvalue_type
+
+    val yojson_of__deepserializedvalue_type :
+      _deepserializedvalue_type -> Yojson.Basic.t
 
     type t = {
-      type_ : _webdrivervalue_type;
+      type_ : _deepserializedvalue_type;
           [@key "type"] [@ocaml.doc "No description provided"]
       value : string option;
           [@key "value"] [@yojson.option] [@ocaml.doc "No description provided"]
@@ -30056,9 +30062,9 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc
       "Represents the value serialiazed by the WebDriver BiDi specification\n\
-       https://w3c.github.io/webdriver-bidi."]
+       https://goo.gle/browser-automation-deepserialization."]
   end = struct
-    type _webdrivervalue_type =
+    type _deepserializedvalue_type =
       [ `undefined
       | `null
       | `string
@@ -30083,7 +30089,7 @@ end = struct
       | `node
       | `window ]
 
-    let _webdrivervalue_type_of_yojson = function
+    let _deepserializedvalue_type_of_yojson = function
       | `String "undefined" -> `undefined
       | `String "null" -> `null
       | `String "string" -> `string
@@ -30110,7 +30116,7 @@ end = struct
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
-    let yojson_of__webdrivervalue_type = function
+    let yojson_of__deepserializedvalue_type = function
       | `undefined -> `String "undefined"
       | `null -> `String "null"
       | `string -> `String "string"
@@ -30136,7 +30142,7 @@ end = struct
       | `window -> `String "window"
 
     type t = {
-      type_ : _webdrivervalue_type;
+      type_ : _deepserializedvalue_type;
           [@key "type"] [@ocaml.doc "No description provided"]
       value : string option;
           [@key "value"] [@yojson.option] [@ocaml.doc "No description provided"]
@@ -30157,7 +30163,7 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc
       "Represents the value serialiazed by the WebDriver BiDi specification\n\
-       https://w3c.github.io/webdriver-bidi."]
+       https://goo.gle/browser-automation-deepserialization."]
   end
 
   and RemoteObjectId : sig
@@ -30257,7 +30263,7 @@ end = struct
           [@key "description"]
           [@yojson.option]
           [@ocaml.doc "String representation of the object."]
-      webDriverValue : WebDriverValue.t option;
+      webDriverValue : DeepSerializedValue.t option;
           [@key "webDriverValue"]
           [@yojson.option]
           [@ocaml.doc "WebDriver BiDi representation of the value."]
@@ -30408,7 +30414,7 @@ end = struct
           [@key "description"]
           [@yojson.option]
           [@ocaml.doc "String representation of the object."]
-      webDriverValue : WebDriverValue.t option;
+      webDriverValue : DeepSerializedValue.t option;
           [@key "webDriverValue"]
           [@yojson.option]
           [@ocaml.doc "WebDriver BiDi representation of the value."]

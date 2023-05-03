@@ -34323,9 +34323,10 @@ module Runtime = struct
             [@ocaml.doc
               "Whether the result should contain `webDriverValue`, serialized \
                according to\n\
-               https://w3c.github.io/webdriver-bidi. This is mutually \
-               exclusive with `returnByValue`, but\n\
-               resulting `objectId` is still provided."]
+               https://goo.gle/browser-automation-deepserialization. This is \
+               mutually\n\
+               exclusive with `returnByValue`, but resulting `objectId` is \
+               still provided."]
       }
       [@@deriving yojson]
 
@@ -34742,7 +34743,7 @@ module Runtime = struct
             [@yojson.option]
             [@ocaml.doc
               "Whether the result should be serialized according to \
-               https://w3c.github.io/webdriver-bidi."]
+               https://goo.gle/browser-automation-deepserialization."]
       }
       [@@deriving yojson]
 
