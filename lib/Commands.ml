@@ -1366,6 +1366,70 @@ module Audits = struct
   end
 end
 
+module Autofill = struct
+  (* Trigger autofill on a form identified by the fieldId.
+     If the field and related form cannot be autofilled, returns an error. *)
+  module Trigger = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        fieldId : Types.DOM.BackendNodeId.t;
+            [@key "fieldId"]
+            [@ocaml.doc
+              "Identifies a field that serves as an anchor for autofill."]
+        card : Types.Autofill.CreditCard.t;
+            [@key "card"]
+            [@ocaml.doc
+              "Credit card information to fill out the form. Credit card data \
+               is not saved."]
+      }
+      [@@deriving yojson]
+
+      let make ~fieldId ~card () = { fieldId; card }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Autofill.trigger"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+end
+
 module BackgroundService = struct
   (* Enables event updates for the service. *)
   module StartObserving = struct

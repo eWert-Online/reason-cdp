@@ -4196,6 +4196,48 @@ end = struct
   end
 end
 
+and Autofill : sig
+  module rec CreditCard : sig
+    type t = {
+      number : string;
+          [@key "number"] [@ocaml.doc "16-digit credit card number."]
+      name : string; [@key "name"] [@ocaml.doc "Name of the credit card owner."]
+      expiryMonth : string;
+          [@key "expiryMonth"] [@ocaml.doc "2-digit expiry month."]
+      expiryYear : string;
+          [@key "expiryYear"] [@ocaml.doc "4-digit expiry year."]
+      cvc : string; [@key "cvc"] [@ocaml.doc "3-digit card verification code."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end = struct
+  module rec CreditCard : sig
+    type t = {
+      number : string;
+          [@key "number"] [@ocaml.doc "16-digit credit card number."]
+      name : string; [@key "name"] [@ocaml.doc "Name of the credit card owner."]
+      expiryMonth : string;
+          [@key "expiryMonth"] [@ocaml.doc "2-digit expiry month."]
+      expiryYear : string;
+          [@key "expiryYear"] [@ocaml.doc "4-digit expiry year."]
+      cvc : string; [@key "cvc"] [@ocaml.doc "3-digit card verification code."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      number : string;
+          [@key "number"] [@ocaml.doc "16-digit credit card number."]
+      name : string; [@key "name"] [@ocaml.doc "Name of the credit card owner."]
+      expiryMonth : string;
+          [@key "expiryMonth"] [@ocaml.doc "2-digit expiry month."]
+      expiryYear : string;
+          [@key "expiryYear"] [@ocaml.doc "4-digit expiry year."]
+      cvc : string; [@key "cvc"] [@ocaml.doc "3-digit card verification code."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end
+
 and BackgroundService : sig
   module rec ServiceName : sig
     type _servicename =
