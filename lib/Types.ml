@@ -1662,48 +1662,6 @@ and Audits : sig
        transferred to a context that is not cross-origin isolated."]
   end
 
-  and TwaQualityEnforcementViolationType : sig
-    type _twaqualityenforcementviolationtype =
-      [ `kHttpError | `kUnavailableOffline | `kDigitalAssetLinks ]
-
-    val _twaqualityenforcementviolationtype_of_yojson :
-      Yojson.Basic.t -> _twaqualityenforcementviolationtype
-
-    val yojson_of__twaqualityenforcementviolationtype :
-      _twaqualityenforcementviolationtype -> Yojson.Basic.t
-
-    type t = _twaqualityenforcementviolationtype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and TrustedWebActivityIssueDetails : sig
-    type t = {
-      url : string;
-          [@key "url"] [@ocaml.doc "The url that triggers the violation."]
-      violationType : TwaQualityEnforcementViolationType.t;
-          [@key "violationType"] [@ocaml.doc "No description provided"]
-      httpStatusCode : number option;
-          [@key "httpStatusCode"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      packageName : string option;
-          [@key "packageName"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The package name of the Trusted Web Activity client app. This \
-             field is\n\
-             only used when violation type is kDigitalAssetLinks."]
-      signature : string option;
-          [@key "signature"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The signature of the Trusted Web Activity client app. This field \
-             is only\n\
-             used when violation type is kDigitalAssetLinks."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
   and LowTextContrastIssueDetails : sig
     type t = {
       violatingNodeId : DOM.BackendNodeId.t;
@@ -2018,7 +1976,6 @@ and Audits : sig
       | `HeavyAdIssue
       | `ContentSecurityPolicyIssue
       | `SharedArrayBufferIssue
-      | `TrustedWebActivityIssue
       | `LowTextContrastIssue
       | `CorsIssue
       | `AttributionReportingIssue
@@ -2066,10 +2023,6 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       sharedArrayBufferIssueDetails : SharedArrayBufferIssueDetails.t option;
           [@key "sharedArrayBufferIssueDetails"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      twaQualityEnforcementDetails : TrustedWebActivityIssueDetails.t option;
-          [@key "twaQualityEnforcementDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       lowTextContrastIssueDetails : LowTextContrastIssueDetails.t option;
@@ -3076,92 +3029,6 @@ end = struct
        transferred to a context that is not cross-origin isolated."]
   end
 
-  and TwaQualityEnforcementViolationType : sig
-    type _twaqualityenforcementviolationtype =
-      [ `kHttpError | `kUnavailableOffline | `kDigitalAssetLinks ]
-
-    val _twaqualityenforcementviolationtype_of_yojson :
-      Yojson.Basic.t -> _twaqualityenforcementviolationtype
-
-    val yojson_of__twaqualityenforcementviolationtype :
-      _twaqualityenforcementviolationtype -> Yojson.Basic.t
-
-    type t = _twaqualityenforcementviolationtype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type _twaqualityenforcementviolationtype =
-      [ `kHttpError | `kUnavailableOffline | `kDigitalAssetLinks ]
-
-    let _twaqualityenforcementviolationtype_of_yojson = function
-      | `String "kHttpError" -> `kHttpError
-      | `String "kUnavailableOffline" -> `kUnavailableOffline
-      | `String "kDigitalAssetLinks" -> `kDigitalAssetLinks
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__twaqualityenforcementviolationtype = function
-      | `kHttpError -> `String "kHttpError"
-      | `kUnavailableOffline -> `String "kUnavailableOffline"
-      | `kDigitalAssetLinks -> `String "kDigitalAssetLinks"
-
-    type t = _twaqualityenforcementviolationtype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and TrustedWebActivityIssueDetails : sig
-    type t = {
-      url : string;
-          [@key "url"] [@ocaml.doc "The url that triggers the violation."]
-      violationType : TwaQualityEnforcementViolationType.t;
-          [@key "violationType"] [@ocaml.doc "No description provided"]
-      httpStatusCode : number option;
-          [@key "httpStatusCode"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      packageName : string option;
-          [@key "packageName"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The package name of the Trusted Web Activity client app. This \
-             field is\n\
-             only used when violation type is kDigitalAssetLinks."]
-      signature : string option;
-          [@key "signature"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The signature of the Trusted Web Activity client app. This field \
-             is only\n\
-             used when violation type is kDigitalAssetLinks."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type t = {
-      url : string;
-          [@key "url"] [@ocaml.doc "The url that triggers the violation."]
-      violationType : TwaQualityEnforcementViolationType.t;
-          [@key "violationType"] [@ocaml.doc "No description provided"]
-      httpStatusCode : number option;
-          [@key "httpStatusCode"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      packageName : string option;
-          [@key "packageName"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The package name of the Trusted Web Activity client app. This \
-             field is\n\
-             only used when violation type is kDigitalAssetLinks."]
-      signature : string option;
-          [@key "signature"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The signature of the Trusted Web Activity client app. This field \
-             is only\n\
-             used when violation type is kDigitalAssetLinks."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
   and LowTextContrastIssueDetails : sig
     type t = {
       violatingNodeId : DOM.BackendNodeId.t;
@@ -3900,7 +3767,6 @@ end = struct
       | `HeavyAdIssue
       | `ContentSecurityPolicyIssue
       | `SharedArrayBufferIssue
-      | `TrustedWebActivityIssue
       | `LowTextContrastIssue
       | `CorsIssue
       | `AttributionReportingIssue
@@ -3929,7 +3795,6 @@ end = struct
       | `HeavyAdIssue
       | `ContentSecurityPolicyIssue
       | `SharedArrayBufferIssue
-      | `TrustedWebActivityIssue
       | `LowTextContrastIssue
       | `CorsIssue
       | `AttributionReportingIssue
@@ -3948,7 +3813,6 @@ end = struct
       | `String "HeavyAdIssue" -> `HeavyAdIssue
       | `String "ContentSecurityPolicyIssue" -> `ContentSecurityPolicyIssue
       | `String "SharedArrayBufferIssue" -> `SharedArrayBufferIssue
-      | `String "TrustedWebActivityIssue" -> `TrustedWebActivityIssue
       | `String "LowTextContrastIssue" -> `LowTextContrastIssue
       | `String "CorsIssue" -> `CorsIssue
       | `String "AttributionReportingIssue" -> `AttributionReportingIssue
@@ -3969,7 +3833,6 @@ end = struct
       | `HeavyAdIssue -> `String "HeavyAdIssue"
       | `ContentSecurityPolicyIssue -> `String "ContentSecurityPolicyIssue"
       | `SharedArrayBufferIssue -> `String "SharedArrayBufferIssue"
-      | `TrustedWebActivityIssue -> `String "TrustedWebActivityIssue"
       | `LowTextContrastIssue -> `String "LowTextContrastIssue"
       | `CorsIssue -> `String "CorsIssue"
       | `AttributionReportingIssue -> `String "AttributionReportingIssue"
@@ -4014,10 +3877,6 @@ end = struct
           [@ocaml.doc "No description provided"]
       sharedArrayBufferIssueDetails : SharedArrayBufferIssueDetails.t option;
           [@key "sharedArrayBufferIssueDetails"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      twaQualityEnforcementDetails : TrustedWebActivityIssueDetails.t option;
-          [@key "twaQualityEnforcementDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       lowTextContrastIssueDetails : LowTextContrastIssueDetails.t option;
@@ -4093,10 +3952,6 @@ end = struct
           [@ocaml.doc "No description provided"]
       sharedArrayBufferIssueDetails : SharedArrayBufferIssueDetails.t option;
           [@key "sharedArrayBufferIssueDetails"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      twaQualityEnforcementDetails : TrustedWebActivityIssueDetails.t option;
-          [@key "twaQualityEnforcementDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       lowTextContrastIssueDetails : LowTextContrastIssueDetails.t option;
