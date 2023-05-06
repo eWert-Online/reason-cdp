@@ -29278,6 +29278,32 @@ and Runtime : sig
     [@@deriving yojson] [@@ocaml.doc "Unique script identifier."]
   end
 
+  and SerializationOptions : sig
+    type _serializationoptions_serialization = [ `deep | `json | `idOnly ]
+
+    val _serializationoptions_serialization_of_yojson :
+      Yojson.Basic.t -> _serializationoptions_serialization
+
+    val yojson_of__serializationoptions_serialization :
+      _serializationoptions_serialization -> Yojson.Basic.t
+
+    type t = {
+      serialization : _serializationoptions_serialization;
+          [@key "serialization"] [@ocaml.doc "No description provided"]
+      maxDepth : number option;
+          [@key "maxDepth"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Deep serialization depth. Default is full depth. Respected only \
+             in `deep` serialization mode."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents options for serialization. Overrides `generatePreview`, \
+       `returnByValue` and\n\
+       `generateWebDriverValue`."]
+  end
+
   and DeepSerializedValue : sig
     type _deepserializedvalue_type =
       [ `undefined
@@ -29329,10 +29355,7 @@ and Runtime : sig
              Unique\n\
              per value in the scope of one CDP call."]
     }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Represents the value serialiazed by the WebDriver BiDi specification\n\
-       https://goo.gle/browser-automation-deepserialization."]
+    [@@deriving yojson] [@@ocaml.doc "Represents deep serialized value."]
   end
 
   and RemoteObjectId : sig
@@ -29425,7 +29448,13 @@ and Runtime : sig
       webDriverValue : DeepSerializedValue.t option;
           [@key "webDriverValue"]
           [@yojson.option]
-          [@ocaml.doc "WebDriver BiDi representation of the value."]
+          [@ocaml.doc
+            "Deprecated. Use `deepSerializedValue` instead. WebDriver BiDi \
+             representation of the value."]
+      deepSerializedValue : DeepSerializedValue.t option;
+          [@key "deepSerializedValue"]
+          [@yojson.option]
+          [@ocaml.doc "Deep serialized value."]
       objectId : RemoteObjectId.t option;
           [@key "objectId"]
           [@yojson.option]
@@ -29905,6 +29934,62 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Unique script identifier."]
   end
 
+  and SerializationOptions : sig
+    type _serializationoptions_serialization = [ `deep | `json | `idOnly ]
+
+    val _serializationoptions_serialization_of_yojson :
+      Yojson.Basic.t -> _serializationoptions_serialization
+
+    val yojson_of__serializationoptions_serialization :
+      _serializationoptions_serialization -> Yojson.Basic.t
+
+    type t = {
+      serialization : _serializationoptions_serialization;
+          [@key "serialization"] [@ocaml.doc "No description provided"]
+      maxDepth : number option;
+          [@key "maxDepth"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Deep serialization depth. Default is full depth. Respected only \
+             in `deep` serialization mode."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents options for serialization. Overrides `generatePreview`, \
+       `returnByValue` and\n\
+       `generateWebDriverValue`."]
+  end = struct
+    type _serializationoptions_serialization = [ `deep | `json | `idOnly ]
+
+    let _serializationoptions_serialization_of_yojson = function
+      | `String "deep" -> `deep
+      | `String "json" -> `json
+      | `String "idOnly" -> `idOnly
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__serializationoptions_serialization = function
+      | `deep -> `String "deep"
+      | `json -> `String "json"
+      | `idOnly -> `String "idOnly"
+
+    type t = {
+      serialization : _serializationoptions_serialization;
+          [@key "serialization"] [@ocaml.doc "No description provided"]
+      maxDepth : number option;
+          [@key "maxDepth"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Deep serialization depth. Default is full depth. Respected only \
+             in `deep` serialization mode."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents options for serialization. Overrides `generatePreview`, \
+       `returnByValue` and\n\
+       `generateWebDriverValue`."]
+  end
+
   and DeepSerializedValue : sig
     type _deepserializedvalue_type =
       [ `undefined
@@ -29956,10 +30041,7 @@ end = struct
              Unique\n\
              per value in the scope of one CDP call."]
     }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Represents the value serialiazed by the WebDriver BiDi specification\n\
-       https://goo.gle/browser-automation-deepserialization."]
+    [@@deriving yojson] [@@ocaml.doc "Represents deep serialized value."]
   end = struct
     type _deepserializedvalue_type =
       [ `undefined
@@ -30057,10 +30139,7 @@ end = struct
              Unique\n\
              per value in the scope of one CDP call."]
     }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Represents the value serialiazed by the WebDriver BiDi specification\n\
-       https://goo.gle/browser-automation-deepserialization."]
+    [@@deriving yojson] [@@ocaml.doc "Represents deep serialized value."]
   end
 
   and RemoteObjectId : sig
@@ -30163,7 +30242,13 @@ end = struct
       webDriverValue : DeepSerializedValue.t option;
           [@key "webDriverValue"]
           [@yojson.option]
-          [@ocaml.doc "WebDriver BiDi representation of the value."]
+          [@ocaml.doc
+            "Deprecated. Use `deepSerializedValue` instead. WebDriver BiDi \
+             representation of the value."]
+      deepSerializedValue : DeepSerializedValue.t option;
+          [@key "deepSerializedValue"]
+          [@yojson.option]
+          [@ocaml.doc "Deep serialized value."]
       objectId : RemoteObjectId.t option;
           [@key "objectId"]
           [@yojson.option]
@@ -30314,7 +30399,13 @@ end = struct
       webDriverValue : DeepSerializedValue.t option;
           [@key "webDriverValue"]
           [@yojson.option]
-          [@ocaml.doc "WebDriver BiDi representation of the value."]
+          [@ocaml.doc
+            "Deprecated. Use `deepSerializedValue` instead. WebDriver BiDi \
+             representation of the value."]
+      deepSerializedValue : DeepSerializedValue.t option;
+          [@key "deepSerializedValue"]
+          [@yojson.option]
+          [@ocaml.doc "Deep serialized value."]
       objectId : RemoteObjectId.t option;
           [@key "objectId"]
           [@yojson.option]
