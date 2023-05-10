@@ -4213,6 +4213,8 @@ module FedCm = struct
     type result = {
       dialogId : string;
           [@key "dialogId"] [@ocaml.doc "No description provided"]
+      dialogType : Types.FedCm.DialogType.t;
+          [@key "dialogType"] [@ocaml.doc "No description provided"]
       accounts : Types.FedCm.Account.t list;
           [@key "accounts"] [@ocaml.doc "No description provided"]
       title : string;

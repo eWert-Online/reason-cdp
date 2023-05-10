@@ -27836,6 +27836,19 @@ and FedCm : sig
        whether this account has ever been used to sign in to this RP before."]
   end
 
+  and DialogType : sig
+    type _dialogtype = [ `AccountChooser | `AutoReauthn ]
+
+    val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
+    val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
+
+    type t = _dialogtype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Whether the dialog shown is an account chooser or an auto \
+       re-authentication dialog."]
+  end
+
   and Account : sig
     type t = {
       accountId : string;
@@ -27893,6 +27906,37 @@ end = struct
     [@@ocaml.doc
       "Whether this is a sign-up or sign-in action for this account, i.e.\n\
        whether this account has ever been used to sign in to this RP before."]
+  end
+
+  and DialogType : sig
+    type _dialogtype = [ `AccountChooser | `AutoReauthn ]
+
+    val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
+    val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
+
+    type t = _dialogtype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Whether the dialog shown is an account chooser or an auto \
+       re-authentication dialog."]
+  end = struct
+    type _dialogtype = [ `AccountChooser | `AutoReauthn ]
+
+    let _dialogtype_of_yojson = function
+      | `String "AccountChooser" -> `AccountChooser
+      | `String "AutoReauthn" -> `AutoReauthn
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__dialogtype = function
+      | `AccountChooser -> `String "AccountChooser"
+      | `AutoReauthn -> `String "AutoReauthn"
+
+    type t = _dialogtype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Whether the dialog shown is an account chooser or an auto \
+       re-authentication dialog."]
   end
 
   and Account : sig
