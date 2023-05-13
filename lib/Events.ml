@@ -4141,6 +4141,8 @@ module Preload = struct
           [@key "prefetchUrl"] [@ocaml.doc "No description provided"]
       status : Types.Preload.PreloadingStatus.t;
           [@key "status"] [@ocaml.doc "No description provided"]
+      prefetchStatus : Types.Preload.PrefetchStatus.t;
+          [@key "prefetchStatus"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 

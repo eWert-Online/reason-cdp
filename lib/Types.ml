@@ -27113,7 +27113,10 @@ and Preload : sig
       | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
       | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `MemoryPressureOnTrigger
-      | `MemoryPressureAfterTriggered ]
+      | `MemoryPressureAfterTriggered
+      | `SpeculationRuleRemoved
+      | `TriggerPageNavigated
+      | `OtherPrerenderedPageActivated ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -27153,6 +27156,46 @@ and Preload : sig
     [@@ocaml.doc
       "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
        status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
+  end
+
+  and PrefetchStatus : sig
+    type _prefetchstatus =
+      [ `PrefetchAllowed
+      | `PrefetchFailedIneligibleRedirect
+      | `PrefetchFailedInvalidRedirect
+      | `PrefetchFailedMIMENotSupported
+      | `PrefetchFailedNetError
+      | `PrefetchFailedNon2XX
+      | `PrefetchFailedPerPageLimitExceeded
+      | `PrefetchHeldback
+      | `PrefetchIneligibleRetryAfter
+      | `PrefetchIsPrivacyDecoy
+      | `PrefetchIsStale
+      | `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `PrefetchNotEligibleDataSaverEnabled
+      | `PrefetchNotEligibleExistingProxy
+      | `PrefetchNotEligibleHostIsNonUnique
+      | `PrefetchNotEligibleNonDefaultStoragePartition
+      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
+      | `PrefetchNotEligibleSchemeIsNotHttps
+      | `PrefetchNotEligibleUserHasCookies
+      | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotFinishedInTime
+      | `PrefetchNotStarted
+      | `PrefetchNotUsedCookiesChanged
+      | `PrefetchProxyNotAvailable
+      | `PrefetchResponseUsed
+      | `PrefetchSuccessfulButNotUsed
+      | `PrefetchNotUsedProbeFailed ]
+
+    val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
+    val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
+
+    type t = _prefetchstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
+       filter out the ones that aren't necessary to the developers."]
   end
 end = struct
   module rec RuleSetId : sig
@@ -27496,7 +27539,10 @@ end = struct
       | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
       | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `MemoryPressureOnTrigger
-      | `MemoryPressureAfterTriggered ]
+      | `MemoryPressureAfterTriggered
+      | `SpeculationRuleRemoved
+      | `TriggerPageNavigated
+      | `OtherPrerenderedPageActivated ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -27568,7 +27614,10 @@ end = struct
       | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
       | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `MemoryPressureOnTrigger
-      | `MemoryPressureAfterTriggered ]
+      | `MemoryPressureAfterTriggered
+      | `SpeculationRuleRemoved
+      | `TriggerPageNavigated
+      | `OtherPrerenderedPageActivated ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -27650,6 +27699,10 @@ end = struct
           `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `String "MemoryPressureOnTrigger" -> `MemoryPressureOnTrigger
       | `String "MemoryPressureAfterTriggered" -> `MemoryPressureAfterTriggered
+      | `String "SpeculationRuleRemoved" -> `SpeculationRuleRemoved
+      | `String "TriggerPageNavigated" -> `TriggerPageNavigated
+      | `String "OtherPrerenderedPageActivated" ->
+          `OtherPrerenderedPageActivated
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -27733,6 +27786,10 @@ end = struct
           `String "SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation"
       | `MemoryPressureOnTrigger -> `String "MemoryPressureOnTrigger"
       | `MemoryPressureAfterTriggered -> `String "MemoryPressureAfterTriggered"
+      | `SpeculationRuleRemoved -> `String "SpeculationRuleRemoved"
+      | `TriggerPageNavigated -> `String "TriggerPageNavigated"
+      | `OtherPrerenderedPageActivated ->
+          `String "OtherPrerenderedPageActivated"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
@@ -27819,6 +27876,169 @@ end = struct
     [@@ocaml.doc
       "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
        status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
+  end
+
+  and PrefetchStatus : sig
+    type _prefetchstatus =
+      [ `PrefetchAllowed
+      | `PrefetchFailedIneligibleRedirect
+      | `PrefetchFailedInvalidRedirect
+      | `PrefetchFailedMIMENotSupported
+      | `PrefetchFailedNetError
+      | `PrefetchFailedNon2XX
+      | `PrefetchFailedPerPageLimitExceeded
+      | `PrefetchHeldback
+      | `PrefetchIneligibleRetryAfter
+      | `PrefetchIsPrivacyDecoy
+      | `PrefetchIsStale
+      | `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `PrefetchNotEligibleDataSaverEnabled
+      | `PrefetchNotEligibleExistingProxy
+      | `PrefetchNotEligibleHostIsNonUnique
+      | `PrefetchNotEligibleNonDefaultStoragePartition
+      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
+      | `PrefetchNotEligibleSchemeIsNotHttps
+      | `PrefetchNotEligibleUserHasCookies
+      | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotFinishedInTime
+      | `PrefetchNotStarted
+      | `PrefetchNotUsedCookiesChanged
+      | `PrefetchProxyNotAvailable
+      | `PrefetchResponseUsed
+      | `PrefetchSuccessfulButNotUsed
+      | `PrefetchNotUsedProbeFailed ]
+
+    val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
+    val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
+
+    type t = _prefetchstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
+       filter out the ones that aren't necessary to the developers."]
+  end = struct
+    type _prefetchstatus =
+      [ `PrefetchAllowed
+      | `PrefetchFailedIneligibleRedirect
+      | `PrefetchFailedInvalidRedirect
+      | `PrefetchFailedMIMENotSupported
+      | `PrefetchFailedNetError
+      | `PrefetchFailedNon2XX
+      | `PrefetchFailedPerPageLimitExceeded
+      | `PrefetchHeldback
+      | `PrefetchIneligibleRetryAfter
+      | `PrefetchIsPrivacyDecoy
+      | `PrefetchIsStale
+      | `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `PrefetchNotEligibleDataSaverEnabled
+      | `PrefetchNotEligibleExistingProxy
+      | `PrefetchNotEligibleHostIsNonUnique
+      | `PrefetchNotEligibleNonDefaultStoragePartition
+      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
+      | `PrefetchNotEligibleSchemeIsNotHttps
+      | `PrefetchNotEligibleUserHasCookies
+      | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotFinishedInTime
+      | `PrefetchNotStarted
+      | `PrefetchNotUsedCookiesChanged
+      | `PrefetchProxyNotAvailable
+      | `PrefetchResponseUsed
+      | `PrefetchSuccessfulButNotUsed
+      | `PrefetchNotUsedProbeFailed ]
+
+    let _prefetchstatus_of_yojson = function
+      | `String "PrefetchAllowed" -> `PrefetchAllowed
+      | `String "PrefetchFailedIneligibleRedirect" ->
+          `PrefetchFailedIneligibleRedirect
+      | `String "PrefetchFailedInvalidRedirect" ->
+          `PrefetchFailedInvalidRedirect
+      | `String "PrefetchFailedMIMENotSupported" ->
+          `PrefetchFailedMIMENotSupported
+      | `String "PrefetchFailedNetError" -> `PrefetchFailedNetError
+      | `String "PrefetchFailedNon2XX" -> `PrefetchFailedNon2XX
+      | `String "PrefetchFailedPerPageLimitExceeded" ->
+          `PrefetchFailedPerPageLimitExceeded
+      | `String "PrefetchHeldback" -> `PrefetchHeldback
+      | `String "PrefetchIneligibleRetryAfter" -> `PrefetchIneligibleRetryAfter
+      | `String "PrefetchIsPrivacyDecoy" -> `PrefetchIsPrivacyDecoy
+      | `String "PrefetchIsStale" -> `PrefetchIsStale
+      | `String "PrefetchNotEligibleBrowserContextOffTheRecord" ->
+          `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `String "PrefetchNotEligibleDataSaverEnabled" ->
+          `PrefetchNotEligibleDataSaverEnabled
+      | `String "PrefetchNotEligibleExistingProxy" ->
+          `PrefetchNotEligibleExistingProxy
+      | `String "PrefetchNotEligibleHostIsNonUnique" ->
+          `PrefetchNotEligibleHostIsNonUnique
+      | `String "PrefetchNotEligibleNonDefaultStoragePartition" ->
+          `PrefetchNotEligibleNonDefaultStoragePartition
+      | `String "PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy" ->
+          `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
+      | `String "PrefetchNotEligibleSchemeIsNotHttps" ->
+          `PrefetchNotEligibleSchemeIsNotHttps
+      | `String "PrefetchNotEligibleUserHasCookies" ->
+          `PrefetchNotEligibleUserHasCookies
+      | `String "PrefetchNotEligibleUserHasServiceWorker" ->
+          `PrefetchNotEligibleUserHasServiceWorker
+      | `String "PrefetchNotFinishedInTime" -> `PrefetchNotFinishedInTime
+      | `String "PrefetchNotStarted" -> `PrefetchNotStarted
+      | `String "PrefetchNotUsedCookiesChanged" ->
+          `PrefetchNotUsedCookiesChanged
+      | `String "PrefetchProxyNotAvailable" -> `PrefetchProxyNotAvailable
+      | `String "PrefetchResponseUsed" -> `PrefetchResponseUsed
+      | `String "PrefetchSuccessfulButNotUsed" -> `PrefetchSuccessfulButNotUsed
+      | `String "PrefetchNotUsedProbeFailed" -> `PrefetchNotUsedProbeFailed
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__prefetchstatus = function
+      | `PrefetchAllowed -> `String "PrefetchAllowed"
+      | `PrefetchFailedIneligibleRedirect ->
+          `String "PrefetchFailedIneligibleRedirect"
+      | `PrefetchFailedInvalidRedirect ->
+          `String "PrefetchFailedInvalidRedirect"
+      | `PrefetchFailedMIMENotSupported ->
+          `String "PrefetchFailedMIMENotSupported"
+      | `PrefetchFailedNetError -> `String "PrefetchFailedNetError"
+      | `PrefetchFailedNon2XX -> `String "PrefetchFailedNon2XX"
+      | `PrefetchFailedPerPageLimitExceeded ->
+          `String "PrefetchFailedPerPageLimitExceeded"
+      | `PrefetchHeldback -> `String "PrefetchHeldback"
+      | `PrefetchIneligibleRetryAfter -> `String "PrefetchIneligibleRetryAfter"
+      | `PrefetchIsPrivacyDecoy -> `String "PrefetchIsPrivacyDecoy"
+      | `PrefetchIsStale -> `String "PrefetchIsStale"
+      | `PrefetchNotEligibleBrowserContextOffTheRecord ->
+          `String "PrefetchNotEligibleBrowserContextOffTheRecord"
+      | `PrefetchNotEligibleDataSaverEnabled ->
+          `String "PrefetchNotEligibleDataSaverEnabled"
+      | `PrefetchNotEligibleExistingProxy ->
+          `String "PrefetchNotEligibleExistingProxy"
+      | `PrefetchNotEligibleHostIsNonUnique ->
+          `String "PrefetchNotEligibleHostIsNonUnique"
+      | `PrefetchNotEligibleNonDefaultStoragePartition ->
+          `String "PrefetchNotEligibleNonDefaultStoragePartition"
+      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy ->
+          `String "PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy"
+      | `PrefetchNotEligibleSchemeIsNotHttps ->
+          `String "PrefetchNotEligibleSchemeIsNotHttps"
+      | `PrefetchNotEligibleUserHasCookies ->
+          `String "PrefetchNotEligibleUserHasCookies"
+      | `PrefetchNotEligibleUserHasServiceWorker ->
+          `String "PrefetchNotEligibleUserHasServiceWorker"
+      | `PrefetchNotFinishedInTime -> `String "PrefetchNotFinishedInTime"
+      | `PrefetchNotStarted -> `String "PrefetchNotStarted"
+      | `PrefetchNotUsedCookiesChanged ->
+          `String "PrefetchNotUsedCookiesChanged"
+      | `PrefetchProxyNotAvailable -> `String "PrefetchProxyNotAvailable"
+      | `PrefetchResponseUsed -> `String "PrefetchResponseUsed"
+      | `PrefetchSuccessfulButNotUsed -> `String "PrefetchSuccessfulButNotUsed"
+      | `PrefetchNotUsedProbeFailed -> `String "PrefetchNotUsedProbeFailed"
+
+    type t = _prefetchstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
+       filter out the ones that aren't necessary to the developers."]
   end
 end
 
