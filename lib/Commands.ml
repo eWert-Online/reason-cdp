@@ -1364,6 +1364,59 @@ module Audits = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+
+  (* Runs the form issues check for the target page. Found issues are reported
+     using Audits.issueAdded event. *)
+  module CheckFormsIssues = struct
+    module Response : sig
+      type result = {
+        formIssues : Types.Audits.GenericIssueDetails.t list;
+            [@key "formIssues"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        formIssues : Types.Audits.GenericIssueDetails.t list;
+            [@key "formIssues"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Audits.checkFormsIssues"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
 end
 
 module Autofill = struct
@@ -1403,6 +1456,10 @@ module Autofill = struct
             [@key "fieldId"]
             [@ocaml.doc
               "Identifies a field that serves as an anchor for autofill."]
+        frameId : Types.Page.FrameId.t option;
+            [@key "frameId"]
+            [@yojson.option]
+            [@ocaml.doc "Identifies the frame that field belongs to."]
         card : Types.Autofill.CreditCard.t;
             [@key "card"]
             [@ocaml.doc
@@ -1411,7 +1468,7 @@ module Autofill = struct
       }
       [@@deriving yojson]
 
-      let make ~fieldId ~card () = { fieldId; card }
+      let make ~fieldId ?frameId ~card () = { fieldId; frameId; card }
     end
 
     module Request = struct
