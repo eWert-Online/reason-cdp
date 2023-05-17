@@ -4170,6 +4170,10 @@ module Preload = struct
           [@key "prerenderingUrl"] [@ocaml.doc "No description provided"]
       status : Types.Preload.PreloadingStatus.t;
           [@key "status"] [@ocaml.doc "No description provided"]
+      prerenderStatus : Types.Preload.PrerenderFinalStatus.t option;
+          [@key "prerenderStatus"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 
