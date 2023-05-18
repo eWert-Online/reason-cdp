@@ -27177,6 +27177,8 @@ and Preload : sig
       | `PrefetchNotEligibleSchemeIsNotHttps
       | `PrefetchNotEligibleUserHasCookies
       | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotEligibleBatterySaverEnabled
+      | `PrefetchNotEligiblePreloadingDisabled
       | `PrefetchNotFinishedInTime
       | `PrefetchNotStarted
       | `PrefetchNotUsedCookiesChanged
@@ -27883,6 +27885,8 @@ end = struct
       | `PrefetchNotEligibleSchemeIsNotHttps
       | `PrefetchNotEligibleUserHasCookies
       | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotEligibleBatterySaverEnabled
+      | `PrefetchNotEligiblePreloadingDisabled
       | `PrefetchNotFinishedInTime
       | `PrefetchNotStarted
       | `PrefetchNotUsedCookiesChanged
@@ -27921,6 +27925,8 @@ end = struct
       | `PrefetchNotEligibleSchemeIsNotHttps
       | `PrefetchNotEligibleUserHasCookies
       | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotEligibleBatterySaverEnabled
+      | `PrefetchNotEligiblePreloadingDisabled
       | `PrefetchNotFinishedInTime
       | `PrefetchNotStarted
       | `PrefetchNotUsedCookiesChanged
@@ -27963,6 +27969,10 @@ end = struct
           `PrefetchNotEligibleUserHasCookies
       | `String "PrefetchNotEligibleUserHasServiceWorker" ->
           `PrefetchNotEligibleUserHasServiceWorker
+      | `String "PrefetchNotEligibleBatterySaverEnabled" ->
+          `PrefetchNotEligibleBatterySaverEnabled
+      | `String "PrefetchNotEligiblePreloadingDisabled" ->
+          `PrefetchNotEligiblePreloadingDisabled
       | `String "PrefetchNotFinishedInTime" -> `PrefetchNotFinishedInTime
       | `String "PrefetchNotStarted" -> `PrefetchNotStarted
       | `String "PrefetchNotUsedCookiesChanged" ->
@@ -28008,6 +28018,10 @@ end = struct
           `String "PrefetchNotEligibleUserHasCookies"
       | `PrefetchNotEligibleUserHasServiceWorker ->
           `String "PrefetchNotEligibleUserHasServiceWorker"
+      | `PrefetchNotEligibleBatterySaverEnabled ->
+          `String "PrefetchNotEligibleBatterySaverEnabled"
+      | `PrefetchNotEligiblePreloadingDisabled ->
+          `String "PrefetchNotEligiblePreloadingDisabled"
       | `PrefetchNotFinishedInTime -> `String "PrefetchNotFinishedInTime"
       | `PrefetchNotStarted -> `String "PrefetchNotStarted"
       | `PrefetchNotUsedCookiesChanged ->
