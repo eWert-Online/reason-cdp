@@ -1937,7 +1937,8 @@ and Audits : sig
       | `IdTokenInvalidContentType
       | `ErrorIdToken
       | `Canceled
-      | `RpPageNotVisible ]
+      | `RpPageNotVisible
+      | `SilentMediationFailure ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -3597,7 +3598,8 @@ end = struct
       | `IdTokenInvalidContentType
       | `ErrorIdToken
       | `Canceled
-      | `RpPageNotVisible ]
+      | `RpPageNotVisible
+      | `SilentMediationFailure ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -3647,7 +3649,8 @@ end = struct
       | `IdTokenInvalidContentType
       | `ErrorIdToken
       | `Canceled
-      | `RpPageNotVisible ]
+      | `RpPageNotVisible
+      | `SilentMediationFailure ]
 
     let _federatedauthrequestissuereason_of_yojson = function
       | `String "ShouldEmbargo" -> `ShouldEmbargo
@@ -3685,6 +3688,7 @@ end = struct
       | `String "ErrorIdToken" -> `ErrorIdToken
       | `String "Canceled" -> `Canceled
       | `String "RpPageNotVisible" -> `RpPageNotVisible
+      | `String "SilentMediationFailure" -> `SilentMediationFailure
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3724,6 +3728,7 @@ end = struct
       | `ErrorIdToken -> `String "ErrorIdToken"
       | `Canceled -> `String "Canceled"
       | `RpPageNotVisible -> `String "RpPageNotVisible"
+      | `SilentMediationFailure -> `String "SilentMediationFailure"
 
     type t = _federatedauthrequestissuereason
     [@@deriving yojson]
@@ -27164,6 +27169,7 @@ and Preload : sig
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
       | `PrefetchFailedPerPageLimitExceeded
+      | `PrefetchEvicted
       | `PrefetchHeldback
       | `PrefetchIneligibleRetryAfter
       | `PrefetchIsPrivacyDecoy
@@ -27872,6 +27878,7 @@ end = struct
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
       | `PrefetchFailedPerPageLimitExceeded
+      | `PrefetchEvicted
       | `PrefetchHeldback
       | `PrefetchIneligibleRetryAfter
       | `PrefetchIsPrivacyDecoy
@@ -27912,6 +27919,7 @@ end = struct
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
       | `PrefetchFailedPerPageLimitExceeded
+      | `PrefetchEvicted
       | `PrefetchHeldback
       | `PrefetchIneligibleRetryAfter
       | `PrefetchIsPrivacyDecoy
@@ -27947,6 +27955,7 @@ end = struct
       | `String "PrefetchFailedNon2XX" -> `PrefetchFailedNon2XX
       | `String "PrefetchFailedPerPageLimitExceeded" ->
           `PrefetchFailedPerPageLimitExceeded
+      | `String "PrefetchEvicted" -> `PrefetchEvicted
       | `String "PrefetchHeldback" -> `PrefetchHeldback
       | `String "PrefetchIneligibleRetryAfter" -> `PrefetchIneligibleRetryAfter
       | `String "PrefetchIsPrivacyDecoy" -> `PrefetchIsPrivacyDecoy
@@ -27996,6 +28005,7 @@ end = struct
       | `PrefetchFailedNon2XX -> `String "PrefetchFailedNon2XX"
       | `PrefetchFailedPerPageLimitExceeded ->
           `String "PrefetchFailedPerPageLimitExceeded"
+      | `PrefetchEvicted -> `String "PrefetchEvicted"
       | `PrefetchHeldback -> `String "PrefetchHeldback"
       | `PrefetchIneligibleRetryAfter -> `String "PrefetchIneligibleRetryAfter"
       | `PrefetchIsPrivacyDecoy -> `String "PrefetchIsPrivacyDecoy"
