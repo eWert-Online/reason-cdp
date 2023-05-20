@@ -2964,6 +2964,8 @@ module Storage = struct
       origin : string; [@key "origin"] [@ocaml.doc "Origin to update."]
       storageKey : string;
           [@key "storageKey"] [@ocaml.doc "Storage key to update."]
+      bucketId : string;
+          [@key "bucketId"] [@ocaml.doc "Storage bucket to update."]
       cacheName : string;
           [@key "cacheName"] [@ocaml.doc "Name of cache in origin."]
     }
@@ -2987,6 +2989,8 @@ module Storage = struct
       origin : string; [@key "origin"] [@ocaml.doc "Origin to update."]
       storageKey : string;
           [@key "storageKey"] [@ocaml.doc "Storage key to update."]
+      bucketId : string;
+          [@key "bucketId"] [@ocaml.doc "Storage bucket to update."]
     }
     [@@deriving yojson]
 
@@ -4112,8 +4116,12 @@ module Preload = struct
     let name = "Preload.preloadEnabledStateUpdated"
 
     type result = {
-      state : Types.Preload.PreloadEnabledState.t;
-          [@key "state"] [@ocaml.doc "No description provided"]
+      disabledByPreference : bool;
+          [@key "disabledByPreference"] [@ocaml.doc "No description provided"]
+      disabledByDataSaver : bool;
+          [@key "disabledByDataSaver"] [@ocaml.doc "No description provided"]
+      disabledByBatterySaver : bool;
+          [@key "disabledByBatterySaver"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 

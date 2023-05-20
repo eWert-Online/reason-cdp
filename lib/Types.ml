@@ -6959,6 +6959,10 @@ and CacheStorage : sig
           [@key "securityOrigin"] [@ocaml.doc "Security origin of the cache."]
       storageKey : string;
           [@key "storageKey"] [@ocaml.doc "Storage key of the cache."]
+      storageBucket : Storage.StorageBucket.t option;
+          [@key "storageBucket"]
+          [@yojson.option]
+          [@ocaml.doc "Storage bucket of the cache."]
       cacheName : string;
           [@key "cacheName"] [@ocaml.doc "The name of the cache."]
     }
@@ -7075,6 +7079,10 @@ end = struct
           [@key "securityOrigin"] [@ocaml.doc "Security origin of the cache."]
       storageKey : string;
           [@key "storageKey"] [@ocaml.doc "Storage key of the cache."]
+      storageBucket : Storage.StorageBucket.t option;
+          [@key "storageBucket"]
+          [@yojson.option]
+          [@ocaml.doc "Storage bucket of the cache."]
       cacheName : string;
           [@key "cacheName"] [@ocaml.doc "The name of the cache."]
     }
@@ -7087,6 +7095,10 @@ end = struct
           [@key "securityOrigin"] [@ocaml.doc "Security origin of the cache."]
       storageKey : string;
           [@key "storageKey"] [@ocaml.doc "Storage key of the cache."]
+      storageBucket : Storage.StorageBucket.t option;
+          [@key "storageBucket"]
+          [@yojson.option]
+          [@ocaml.doc "Storage bucket of the cache."]
       cacheName : string;
           [@key "cacheName"] [@ocaml.doc "The name of the cache."]
     }
@@ -27131,21 +27143,6 @@ and Preload : sig
     [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
   end
 
-  and PreloadEnabledState : sig
-    type _preloadenabledstate =
-      [ `Enabled
-      | `DisabledByDataSaver
-      | `DisabledByBatterySaver
-      | `DisabledByPreference
-      | `NotSupported ]
-
-    val _preloadenabledstate_of_yojson : Yojson.Basic.t -> _preloadenabledstate
-    val yojson_of__preloadenabledstate : _preloadenabledstate -> Yojson.Basic.t
-
-    type t = _preloadenabledstate
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
   and PreloadingStatus : sig
     type _preloadingstatus =
       [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
@@ -27785,47 +27782,6 @@ end = struct
     type t = _prerenderfinalstatus
     [@@deriving yojson]
     [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
-  end
-
-  and PreloadEnabledState : sig
-    type _preloadenabledstate =
-      [ `Enabled
-      | `DisabledByDataSaver
-      | `DisabledByBatterySaver
-      | `DisabledByPreference
-      | `NotSupported ]
-
-    val _preloadenabledstate_of_yojson : Yojson.Basic.t -> _preloadenabledstate
-    val yojson_of__preloadenabledstate : _preloadenabledstate -> Yojson.Basic.t
-
-    type t = _preloadenabledstate
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type _preloadenabledstate =
-      [ `Enabled
-      | `DisabledByDataSaver
-      | `DisabledByBatterySaver
-      | `DisabledByPreference
-      | `NotSupported ]
-
-    let _preloadenabledstate_of_yojson = function
-      | `String "Enabled" -> `Enabled
-      | `String "DisabledByDataSaver" -> `DisabledByDataSaver
-      | `String "DisabledByBatterySaver" -> `DisabledByBatterySaver
-      | `String "DisabledByPreference" -> `DisabledByPreference
-      | `String "NotSupported" -> `NotSupported
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__preloadenabledstate = function
-      | `Enabled -> `String "Enabled"
-      | `DisabledByDataSaver -> `String "DisabledByDataSaver"
-      | `DisabledByBatterySaver -> `String "DisabledByBatterySaver"
-      | `DisabledByPreference -> `String "DisabledByPreference"
-      | `NotSupported -> `String "NotSupported"
-
-    type t = _preloadenabledstate
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
   and PreloadingStatus : sig

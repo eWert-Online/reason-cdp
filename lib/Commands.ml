@@ -4933,15 +4933,21 @@ module CacheStorage = struct
             [@key "securityOrigin"]
             [@yojson.option]
             [@ocaml.doc
-              "At least and at most one of securityOrigin, storageKey must be \
-               specified.\n\
+              "At least and at most one of securityOrigin, storageKey, \
+               storageBucket must be specified.\n\
                Security origin."]
         storageKey : string option;
             [@key "storageKey"] [@yojson.option] [@ocaml.doc "Storage key."]
+        storageBucket : Types.Storage.StorageBucket.t option;
+            [@key "storageBucket"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Storage bucket. If not specified, it uses the default bucket."]
       }
       [@@deriving yojson]
 
-      let make ?securityOrigin ?storageKey () = { securityOrigin; storageKey }
+      let make ?securityOrigin ?storageKey ?storageBucket () =
+        { securityOrigin; storageKey; storageBucket }
     end
 
     module Request = struct
