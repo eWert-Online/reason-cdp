@@ -4918,11 +4918,38 @@ and CSS : sig
           [@key "range"]
           [@yojson.option]
           [@ocaml.doc "Value range in the underlying resource (if available)."]
+      specificity : Specificity.t option;
+          [@key "specificity"]
+          [@yojson.option]
+          [@ocaml.doc "Specificity of the selector."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
       "Data for a simple selector (these are delimited by commas in a selector \
        list)."]
+  end
+
+  and Specificity : sig
+    type t = {
+      a : number;
+          [@key "a"]
+          [@ocaml.doc
+            "The a component, which represents the number of ID selectors."]
+      b : number;
+          [@key "b"]
+          [@ocaml.doc
+            "The b component, which represents the number of class selectors, \
+             attributes selectors, and\n\
+             pseudo-classes."]
+      c : number;
+          [@key "c"]
+          [@ocaml.doc
+            "The c component, which represents the number of type selectors \
+             and pseudo-elements."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Specificity:\nhttps://drafts.csswg.org/selectors/#specificity-rules"]
   end
 
   and SelectorList : sig
@@ -5702,6 +5729,10 @@ end = struct
           [@key "range"]
           [@yojson.option]
           [@ocaml.doc "Value range in the underlying resource (if available)."]
+      specificity : Specificity.t option;
+          [@key "specificity"]
+          [@yojson.option]
+          [@ocaml.doc "Specificity of the selector."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -5714,11 +5745,59 @@ end = struct
           [@key "range"]
           [@yojson.option]
           [@ocaml.doc "Value range in the underlying resource (if available)."]
+      specificity : Specificity.t option;
+          [@key "specificity"]
+          [@yojson.option]
+          [@ocaml.doc "Specificity of the selector."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
       "Data for a simple selector (these are delimited by commas in a selector \
        list)."]
+  end
+
+  and Specificity : sig
+    type t = {
+      a : number;
+          [@key "a"]
+          [@ocaml.doc
+            "The a component, which represents the number of ID selectors."]
+      b : number;
+          [@key "b"]
+          [@ocaml.doc
+            "The b component, which represents the number of class selectors, \
+             attributes selectors, and\n\
+             pseudo-classes."]
+      c : number;
+          [@key "c"]
+          [@ocaml.doc
+            "The c component, which represents the number of type selectors \
+             and pseudo-elements."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Specificity:\nhttps://drafts.csswg.org/selectors/#specificity-rules"]
+  end = struct
+    type t = {
+      a : number;
+          [@key "a"]
+          [@ocaml.doc
+            "The a component, which represents the number of ID selectors."]
+      b : number;
+          [@key "b"]
+          [@ocaml.doc
+            "The b component, which represents the number of class selectors, \
+             attributes selectors, and\n\
+             pseudo-classes."]
+      c : number;
+          [@key "c"]
+          [@ocaml.doc
+            "The c component, which represents the number of type selectors \
+             and pseudo-elements."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Specificity:\nhttps://drafts.csswg.org/selectors/#specificity-rules"]
   end
 
   and SelectorList : sig
