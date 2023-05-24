@@ -12364,6 +12364,9 @@ and Network : sig
       pushEnd : number;
           [@key "pushEnd"]
           [@ocaml.doc "Time the server finished pushing request."]
+      receiveHeadersStart : number;
+          [@key "receiveHeadersStart"]
+          [@ocaml.doc "Started receiving response headers."]
       receiveHeadersEnd : number;
           [@key "receiveHeadersEnd"]
           [@ocaml.doc "Finished receiving response headers."]
@@ -14055,6 +14058,9 @@ end = struct
       pushEnd : number;
           [@key "pushEnd"]
           [@ocaml.doc "Time the server finished pushing request."]
+      receiveHeadersStart : number;
+          [@key "receiveHeadersStart"]
+          [@ocaml.doc "Started receiving response headers."]
       receiveHeadersEnd : number;
           [@key "receiveHeadersEnd"]
           [@ocaml.doc "Finished receiving response headers."]
@@ -14102,6 +14108,9 @@ end = struct
       pushEnd : number;
           [@key "pushEnd"]
           [@ocaml.doc "Time the server finished pushing request."]
+      receiveHeadersStart : number;
+          [@key "receiveHeadersStart"]
+          [@ocaml.doc "Started receiving response headers."]
       receiveHeadersEnd : number;
           [@key "receiveHeadersEnd"]
           [@ocaml.doc "Finished receiving response headers."]
