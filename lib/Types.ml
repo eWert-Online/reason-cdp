@@ -27218,7 +27218,8 @@ and Preload : sig
       | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
       | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `MemoryPressureOnTrigger
-      | `MemoryPressureAfterTriggered ]
+      | `MemoryPressureAfterTriggered
+      | `PrerenderingDisabledByDevTools ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -27629,7 +27630,8 @@ end = struct
       | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
       | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `MemoryPressureOnTrigger
-      | `MemoryPressureAfterTriggered ]
+      | `MemoryPressureAfterTriggered
+      | `PrerenderingDisabledByDevTools ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -27701,7 +27703,8 @@ end = struct
       | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
       | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `MemoryPressureOnTrigger
-      | `MemoryPressureAfterTriggered ]
+      | `MemoryPressureAfterTriggered
+      | `PrerenderingDisabledByDevTools ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -27783,6 +27786,8 @@ end = struct
           `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `String "MemoryPressureOnTrigger" -> `MemoryPressureOnTrigger
       | `String "MemoryPressureAfterTriggered" -> `MemoryPressureAfterTriggered
+      | `String "PrerenderingDisabledByDevTools" ->
+          `PrerenderingDisabledByDevTools
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -27866,6 +27871,8 @@ end = struct
           `String "SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation"
       | `MemoryPressureOnTrigger -> `String "MemoryPressureOnTrigger"
       | `MemoryPressureAfterTriggered -> `String "MemoryPressureAfterTriggered"
+      | `PrerenderingDisabledByDevTools ->
+          `String "PrerenderingDisabledByDevTools"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
