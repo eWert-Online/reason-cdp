@@ -1938,7 +1938,8 @@ and Audits : sig
       | `ErrorIdToken
       | `Canceled
       | `RpPageNotVisible
-      | `SilentMediationFailure ]
+      | `SilentMediationFailure
+      | `ThirdPartyCookiesBlocked ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -3599,7 +3600,8 @@ end = struct
       | `ErrorIdToken
       | `Canceled
       | `RpPageNotVisible
-      | `SilentMediationFailure ]
+      | `SilentMediationFailure
+      | `ThirdPartyCookiesBlocked ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -3650,7 +3652,8 @@ end = struct
       | `ErrorIdToken
       | `Canceled
       | `RpPageNotVisible
-      | `SilentMediationFailure ]
+      | `SilentMediationFailure
+      | `ThirdPartyCookiesBlocked ]
 
     let _federatedauthrequestissuereason_of_yojson = function
       | `String "ShouldEmbargo" -> `ShouldEmbargo
@@ -3689,6 +3692,7 @@ end = struct
       | `String "Canceled" -> `Canceled
       | `String "RpPageNotVisible" -> `RpPageNotVisible
       | `String "SilentMediationFailure" -> `SilentMediationFailure
+      | `String "ThirdPartyCookiesBlocked" -> `ThirdPartyCookiesBlocked
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3729,6 +3733,7 @@ end = struct
       | `Canceled -> `String "Canceled"
       | `RpPageNotVisible -> `String "RpPageNotVisible"
       | `SilentMediationFailure -> `String "SilentMediationFailure"
+      | `ThirdPartyCookiesBlocked -> `String "ThirdPartyCookiesBlocked"
 
     type t = _federatedauthrequestissuereason
     [@@deriving yojson]
@@ -19233,6 +19238,7 @@ and Page : sig
       | `ActivationNavigationsDisallowedForBug1234857
       | `ErrorDocument
       | `FencedFramesEmbedder
+      | `CookieDisabled
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -21275,6 +21281,7 @@ end = struct
       | `ActivationNavigationsDisallowedForBug1234857
       | `ErrorDocument
       | `FencedFramesEmbedder
+      | `CookieDisabled
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -21411,6 +21418,7 @@ end = struct
       | `ActivationNavigationsDisallowedForBug1234857
       | `ErrorDocument
       | `FencedFramesEmbedder
+      | `CookieDisabled
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -21553,6 +21561,7 @@ end = struct
           `ActivationNavigationsDisallowedForBug1234857
       | `String "ErrorDocument" -> `ErrorDocument
       | `String "FencedFramesEmbedder" -> `FencedFramesEmbedder
+      | `String "CookieDisabled" -> `CookieDisabled
       | `String "WebSocket" -> `WebSocket
       | `String "WebTransport" -> `WebTransport
       | `String "WebRTC" -> `WebRTC
@@ -21720,6 +21729,7 @@ end = struct
           `String "ActivationNavigationsDisallowedForBug1234857"
       | `ErrorDocument -> `String "ErrorDocument"
       | `FencedFramesEmbedder -> `String "FencedFramesEmbedder"
+      | `CookieDisabled -> `String "CookieDisabled"
       | `WebSocket -> `String "WebSocket"
       | `WebTransport -> `String "WebTransport"
       | `WebRTC -> `String "WebRTC"
