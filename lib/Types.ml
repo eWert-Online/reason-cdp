@@ -10466,7 +10466,8 @@ and HeadlessExperimental : sig
       quality : number option;
           [@key "quality"]
           [@yojson.option]
-          [@ocaml.doc "Compression quality from range [0..100] (jpeg only)."]
+          [@ocaml.doc
+            "Compression quality from range [0..100] (jpeg and webp only)."]
       optimizeForSpeed : bool option;
           [@key "optimizeForSpeed"]
           [@yojson.option]
@@ -10494,7 +10495,8 @@ end = struct
       quality : number option;
           [@key "quality"]
           [@yojson.option]
-          [@ocaml.doc "Compression quality from range [0..100] (jpeg only)."]
+          [@ocaml.doc
+            "Compression quality from range [0..100] (jpeg and webp only)."]
       optimizeForSpeed : bool option;
           [@key "optimizeForSpeed"]
           [@yojson.option]
@@ -10526,7 +10528,8 @@ end = struct
       quality : number option;
           [@key "quality"]
           [@yojson.option]
-          [@ocaml.doc "Compression quality from range [0..100] (jpeg only)."]
+          [@ocaml.doc
+            "Compression quality from range [0..100] (jpeg and webp only)."]
       optimizeForSpeed : bool option;
           [@key "optimizeForSpeed"]
           [@yojson.option]
