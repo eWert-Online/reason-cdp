@@ -13515,12 +13515,39 @@ and Network : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and ContentSecurityPolicySource : sig
+    type _contentsecuritypolicysource = [ `HTTP | `Meta ]
+
+    val _contentsecuritypolicysource_of_yojson :
+      Yojson.Basic.t -> _contentsecuritypolicysource
+
+    val yojson_of__contentsecuritypolicysource :
+      _contentsecuritypolicysource -> Yojson.Basic.t
+
+    type t = _contentsecuritypolicysource
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ContentSecurityPolicyStatus : sig
+    type t = {
+      effectiveDirectives : string;
+          [@key "effectiveDirectives"] [@ocaml.doc "No description provided"]
+      isEnforced : bool;
+          [@key "isEnforced"] [@ocaml.doc "No description provided"]
+      source : ContentSecurityPolicySource.t;
+          [@key "source"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and SecurityIsolationStatus : sig
     type t = {
       coop : CrossOriginOpenerPolicyStatus.t option;
           [@key "coop"] [@yojson.option] [@ocaml.doc "No description provided"]
       coep : CrossOriginEmbedderPolicyStatus.t option;
           [@key "coep"] [@yojson.option] [@ocaml.doc "No description provided"]
+      csp : ContentSecurityPolicyStatus.t list option;
+          [@key "csp"] [@yojson.option] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -16686,12 +16713,64 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and ContentSecurityPolicySource : sig
+    type _contentsecuritypolicysource = [ `HTTP | `Meta ]
+
+    val _contentsecuritypolicysource_of_yojson :
+      Yojson.Basic.t -> _contentsecuritypolicysource
+
+    val yojson_of__contentsecuritypolicysource :
+      _contentsecuritypolicysource -> Yojson.Basic.t
+
+    type t = _contentsecuritypolicysource
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _contentsecuritypolicysource = [ `HTTP | `Meta ]
+
+    let _contentsecuritypolicysource_of_yojson = function
+      | `String "HTTP" -> `HTTP
+      | `String "Meta" -> `Meta
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__contentsecuritypolicysource = function
+      | `HTTP -> `String "HTTP"
+      | `Meta -> `String "Meta"
+
+    type t = _contentsecuritypolicysource
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ContentSecurityPolicyStatus : sig
+    type t = {
+      effectiveDirectives : string;
+          [@key "effectiveDirectives"] [@ocaml.doc "No description provided"]
+      isEnforced : bool;
+          [@key "isEnforced"] [@ocaml.doc "No description provided"]
+      source : ContentSecurityPolicySource.t;
+          [@key "source"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      effectiveDirectives : string;
+          [@key "effectiveDirectives"] [@ocaml.doc "No description provided"]
+      isEnforced : bool;
+          [@key "isEnforced"] [@ocaml.doc "No description provided"]
+      source : ContentSecurityPolicySource.t;
+          [@key "source"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and SecurityIsolationStatus : sig
     type t = {
       coop : CrossOriginOpenerPolicyStatus.t option;
           [@key "coop"] [@yojson.option] [@ocaml.doc "No description provided"]
       coep : CrossOriginEmbedderPolicyStatus.t option;
           [@key "coep"] [@yojson.option] [@ocaml.doc "No description provided"]
+      csp : ContentSecurityPolicyStatus.t list option;
+          [@key "csp"] [@yojson.option] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -16700,6 +16779,8 @@ end = struct
           [@key "coop"] [@yojson.option] [@ocaml.doc "No description provided"]
       coep : CrossOriginEmbedderPolicyStatus.t option;
           [@key "coep"] [@yojson.option] [@ocaml.doc "No description provided"]
+      csp : ContentSecurityPolicyStatus.t list option;
+          [@key "csp"] [@yojson.option] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -19288,6 +19369,7 @@ and Page : sig
       | `IndexedDBEvent
       | `Dummy
       | `AuthorizationHeader
+      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21331,6 +21413,7 @@ end = struct
       | `IndexedDBEvent
       | `Dummy
       | `AuthorizationHeader
+      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21468,6 +21551,7 @@ end = struct
       | `IndexedDBEvent
       | `Dummy
       | `AuthorizationHeader
+      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21623,6 +21707,7 @@ end = struct
       | `String "IndexedDBEvent" -> `IndexedDBEvent
       | `String "Dummy" -> `Dummy
       | `String "AuthorizationHeader" -> `AuthorizationHeader
+      | `String "WebSerial" -> `WebSerial
       | `String "ContentSecurityHandler" -> `ContentSecurityHandler
       | `String "ContentWebAuthenticationAPI" -> `ContentWebAuthenticationAPI
       | `String "ContentFileChooser" -> `ContentFileChooser
@@ -21791,6 +21876,7 @@ end = struct
       | `IndexedDBEvent -> `String "IndexedDBEvent"
       | `Dummy -> `String "Dummy"
       | `AuthorizationHeader -> `String "AuthorizationHeader"
+      | `WebSerial -> `String "WebSerial"
       | `ContentSecurityHandler -> `String "ContentSecurityHandler"
       | `ContentWebAuthenticationAPI -> `String "ContentWebAuthenticationAPI"
       | `ContentFileChooser -> `String "ContentFileChooser"
