@@ -1970,6 +1970,49 @@ and Audits : sig
        features, encourage the use of new ones, and provide general guidance."]
   end
 
+  and FailedRequestInfo : sig
+    type t = {
+      url : string; [@key "url"] [@ocaml.doc "The URL that failed to load."]
+      failureMessage : string;
+          [@key "failureMessage"]
+          [@ocaml.doc "The failure message for the failed request."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and StyleSheetLoadingIssueReason : sig
+    type _stylesheetloadingissuereason = [ `LateImportRule | `RequestFailed ]
+
+    val _stylesheetloadingissuereason_of_yojson :
+      Yojson.Basic.t -> _stylesheetloadingissuereason
+
+    val yojson_of__stylesheetloadingissuereason :
+      _stylesheetloadingissuereason -> Yojson.Basic.t
+
+    type t = _stylesheetloadingissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and StylesheetLoadingIssueDetails : sig
+    type t = {
+      sourceCodeLocation : SourceCodeLocation.t;
+          [@key "sourceCodeLocation"]
+          [@ocaml.doc
+            "Source code position that referenced the failing stylesheet."]
+      styleSheetLoadingIssueReason : StyleSheetLoadingIssueReason.t;
+          [@key "styleSheetLoadingIssueReason"]
+          [@ocaml.doc "Reason why the stylesheet couldn't be loaded."]
+      failedRequestInfo : FailedRequestInfo.t option;
+          [@key "failedRequestInfo"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Contains additional info when the failure was due to a request."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns when a referenced stylesheet couldn't be loaded."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -1987,7 +2030,8 @@ and Audits : sig
       | `DeprecationIssue
       | `ClientHintIssue
       | `FederatedAuthRequestIssue
-      | `BounceTrackingIssue ]
+      | `BounceTrackingIssue
+      | `StylesheetLoadingIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2067,6 +2111,10 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       bounceTrackingIssueDetails : BounceTrackingIssueDetails.t option;
           [@key "bounceTrackingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
+          [@key "stylesheetLoadingIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -3769,6 +3817,90 @@ end = struct
        features, encourage the use of new ones, and provide general guidance."]
   end
 
+  and FailedRequestInfo : sig
+    type t = {
+      url : string; [@key "url"] [@ocaml.doc "The URL that failed to load."]
+      failureMessage : string;
+          [@key "failureMessage"]
+          [@ocaml.doc "The failure message for the failed request."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      url : string; [@key "url"] [@ocaml.doc "The URL that failed to load."]
+      failureMessage : string;
+          [@key "failureMessage"]
+          [@ocaml.doc "The failure message for the failed request."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and StyleSheetLoadingIssueReason : sig
+    type _stylesheetloadingissuereason = [ `LateImportRule | `RequestFailed ]
+
+    val _stylesheetloadingissuereason_of_yojson :
+      Yojson.Basic.t -> _stylesheetloadingissuereason
+
+    val yojson_of__stylesheetloadingissuereason :
+      _stylesheetloadingissuereason -> Yojson.Basic.t
+
+    type t = _stylesheetloadingissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _stylesheetloadingissuereason = [ `LateImportRule | `RequestFailed ]
+
+    let _stylesheetloadingissuereason_of_yojson = function
+      | `String "LateImportRule" -> `LateImportRule
+      | `String "RequestFailed" -> `RequestFailed
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__stylesheetloadingissuereason = function
+      | `LateImportRule -> `String "LateImportRule"
+      | `RequestFailed -> `String "RequestFailed"
+
+    type t = _stylesheetloadingissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and StylesheetLoadingIssueDetails : sig
+    type t = {
+      sourceCodeLocation : SourceCodeLocation.t;
+          [@key "sourceCodeLocation"]
+          [@ocaml.doc
+            "Source code position that referenced the failing stylesheet."]
+      styleSheetLoadingIssueReason : StyleSheetLoadingIssueReason.t;
+          [@key "styleSheetLoadingIssueReason"]
+          [@ocaml.doc "Reason why the stylesheet couldn't be loaded."]
+      failedRequestInfo : FailedRequestInfo.t option;
+          [@key "failedRequestInfo"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Contains additional info when the failure was due to a request."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns when a referenced stylesheet couldn't be loaded."]
+  end = struct
+    type t = {
+      sourceCodeLocation : SourceCodeLocation.t;
+          [@key "sourceCodeLocation"]
+          [@ocaml.doc
+            "Source code position that referenced the failing stylesheet."]
+      styleSheetLoadingIssueReason : StyleSheetLoadingIssueReason.t;
+          [@key "styleSheetLoadingIssueReason"]
+          [@ocaml.doc "Reason why the stylesheet couldn't be loaded."]
+      failedRequestInfo : FailedRequestInfo.t option;
+          [@key "failedRequestInfo"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Contains additional info when the failure was due to a request."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns when a referenced stylesheet couldn't be loaded."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -3786,7 +3918,8 @@ end = struct
       | `DeprecationIssue
       | `ClientHintIssue
       | `FederatedAuthRequestIssue
-      | `BounceTrackingIssue ]
+      | `BounceTrackingIssue
+      | `StylesheetLoadingIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -3814,7 +3947,8 @@ end = struct
       | `DeprecationIssue
       | `ClientHintIssue
       | `FederatedAuthRequestIssue
-      | `BounceTrackingIssue ]
+      | `BounceTrackingIssue
+      | `StylesheetLoadingIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -3833,6 +3967,7 @@ end = struct
       | `String "ClientHintIssue" -> `ClientHintIssue
       | `String "FederatedAuthRequestIssue" -> `FederatedAuthRequestIssue
       | `String "BounceTrackingIssue" -> `BounceTrackingIssue
+      | `String "StylesheetLoadingIssue" -> `StylesheetLoadingIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3853,6 +3988,7 @@ end = struct
       | `ClientHintIssue -> `String "ClientHintIssue"
       | `FederatedAuthRequestIssue -> `String "FederatedAuthRequestIssue"
       | `BounceTrackingIssue -> `String "BounceTrackingIssue"
+      | `StylesheetLoadingIssue -> `String "StylesheetLoadingIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -3931,6 +4067,10 @@ end = struct
           [@key "bounceTrackingIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
+          [@key "stylesheetLoadingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4004,6 +4144,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       bounceTrackingIssueDetails : BounceTrackingIssueDetails.t option;
           [@key "bounceTrackingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
+          [@key "stylesheetLoadingIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
