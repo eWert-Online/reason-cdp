@@ -1957,6 +1957,42 @@ and Audits : sig
        all cases except for success."]
   end
 
+  and FederatedAuthUserInfoRequestIssueDetails : sig
+    type t = {
+      federatedAuthUserInfoRequestIssueReason :
+        FederatedAuthUserInfoRequestIssueReason.t;
+          [@key "federatedAuthUserInfoRequestIssueReason"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and FederatedAuthUserInfoRequestIssueReason : sig
+    type _federatedauthuserinforequestissuereason =
+      [ `NotSameOrigin
+      | `NotIframe
+      | `NotPotentiallyTrustworthy
+      | `NoApiPermission
+      | `NotSignedInWithIdp
+      | `NoAccountSharingPermission
+      | `InvalidConfigOrWellKnown
+      | `InvalidAccountsResponse
+      | `NoReturningUserFromFetchedAccounts ]
+
+    val _federatedauthuserinforequestissuereason_of_yojson :
+      Yojson.Basic.t -> _federatedauthuserinforequestissuereason
+
+    val yojson_of__federatedauthuserinforequestissuereason :
+      _federatedauthuserinforequestissuereason -> Yojson.Basic.t
+
+    type t = _federatedauthuserinforequestissuereason
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the failure reason when a getUserInfo() call fails.\n\
+       Should be updated alongside FederatedAuthUserInfoRequestResult in\n\
+       third_party/blink/public/mojom/devtools/inspector_issue.mojom."]
+  end
+
   and ClientHintIssueDetails : sig
     type t = {
       sourceCodeLocation : SourceCodeLocation.t;
@@ -2031,7 +2067,8 @@ and Audits : sig
       | `ClientHintIssue
       | `FederatedAuthRequestIssue
       | `BounceTrackingIssue
-      | `StylesheetLoadingIssue ]
+      | `StylesheetLoadingIssue
+      | `FederatedAuthUserInfoRequestIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2115,6 +2152,11 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
           [@key "stylesheetLoadingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      federatedAuthUserInfoRequestIssueDetails :
+        FederatedAuthUserInfoRequestIssueDetails.t option;
+          [@key "federatedAuthUserInfoRequestIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -3793,6 +3835,94 @@ end = struct
        all cases except for success."]
   end
 
+  and FederatedAuthUserInfoRequestIssueDetails : sig
+    type t = {
+      federatedAuthUserInfoRequestIssueReason :
+        FederatedAuthUserInfoRequestIssueReason.t;
+          [@key "federatedAuthUserInfoRequestIssueReason"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      federatedAuthUserInfoRequestIssueReason :
+        FederatedAuthUserInfoRequestIssueReason.t;
+          [@key "federatedAuthUserInfoRequestIssueReason"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and FederatedAuthUserInfoRequestIssueReason : sig
+    type _federatedauthuserinforequestissuereason =
+      [ `NotSameOrigin
+      | `NotIframe
+      | `NotPotentiallyTrustworthy
+      | `NoApiPermission
+      | `NotSignedInWithIdp
+      | `NoAccountSharingPermission
+      | `InvalidConfigOrWellKnown
+      | `InvalidAccountsResponse
+      | `NoReturningUserFromFetchedAccounts ]
+
+    val _federatedauthuserinforequestissuereason_of_yojson :
+      Yojson.Basic.t -> _federatedauthuserinforequestissuereason
+
+    val yojson_of__federatedauthuserinforequestissuereason :
+      _federatedauthuserinforequestissuereason -> Yojson.Basic.t
+
+    type t = _federatedauthuserinforequestissuereason
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the failure reason when a getUserInfo() call fails.\n\
+       Should be updated alongside FederatedAuthUserInfoRequestResult in\n\
+       third_party/blink/public/mojom/devtools/inspector_issue.mojom."]
+  end = struct
+    type _federatedauthuserinforequestissuereason =
+      [ `NotSameOrigin
+      | `NotIframe
+      | `NotPotentiallyTrustworthy
+      | `NoApiPermission
+      | `NotSignedInWithIdp
+      | `NoAccountSharingPermission
+      | `InvalidConfigOrWellKnown
+      | `InvalidAccountsResponse
+      | `NoReturningUserFromFetchedAccounts ]
+
+    let _federatedauthuserinforequestissuereason_of_yojson = function
+      | `String "NotSameOrigin" -> `NotSameOrigin
+      | `String "NotIframe" -> `NotIframe
+      | `String "NotPotentiallyTrustworthy" -> `NotPotentiallyTrustworthy
+      | `String "NoApiPermission" -> `NoApiPermission
+      | `String "NotSignedInWithIdp" -> `NotSignedInWithIdp
+      | `String "NoAccountSharingPermission" -> `NoAccountSharingPermission
+      | `String "InvalidConfigOrWellKnown" -> `InvalidConfigOrWellKnown
+      | `String "InvalidAccountsResponse" -> `InvalidAccountsResponse
+      | `String "NoReturningUserFromFetchedAccounts" ->
+          `NoReturningUserFromFetchedAccounts
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__federatedauthuserinforequestissuereason = function
+      | `NotSameOrigin -> `String "NotSameOrigin"
+      | `NotIframe -> `String "NotIframe"
+      | `NotPotentiallyTrustworthy -> `String "NotPotentiallyTrustworthy"
+      | `NoApiPermission -> `String "NoApiPermission"
+      | `NotSignedInWithIdp -> `String "NotSignedInWithIdp"
+      | `NoAccountSharingPermission -> `String "NoAccountSharingPermission"
+      | `InvalidConfigOrWellKnown -> `String "InvalidConfigOrWellKnown"
+      | `InvalidAccountsResponse -> `String "InvalidAccountsResponse"
+      | `NoReturningUserFromFetchedAccounts ->
+          `String "NoReturningUserFromFetchedAccounts"
+
+    type t = _federatedauthuserinforequestissuereason
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the failure reason when a getUserInfo() call fails.\n\
+       Should be updated alongside FederatedAuthUserInfoRequestResult in\n\
+       third_party/blink/public/mojom/devtools/inspector_issue.mojom."]
+  end
+
   and ClientHintIssueDetails : sig
     type t = {
       sourceCodeLocation : SourceCodeLocation.t;
@@ -3919,7 +4049,8 @@ end = struct
       | `ClientHintIssue
       | `FederatedAuthRequestIssue
       | `BounceTrackingIssue
-      | `StylesheetLoadingIssue ]
+      | `StylesheetLoadingIssue
+      | `FederatedAuthUserInfoRequestIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -3948,7 +4079,8 @@ end = struct
       | `ClientHintIssue
       | `FederatedAuthRequestIssue
       | `BounceTrackingIssue
-      | `StylesheetLoadingIssue ]
+      | `StylesheetLoadingIssue
+      | `FederatedAuthUserInfoRequestIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -3968,6 +4100,8 @@ end = struct
       | `String "FederatedAuthRequestIssue" -> `FederatedAuthRequestIssue
       | `String "BounceTrackingIssue" -> `BounceTrackingIssue
       | `String "StylesheetLoadingIssue" -> `StylesheetLoadingIssue
+      | `String "FederatedAuthUserInfoRequestIssue" ->
+          `FederatedAuthUserInfoRequestIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3989,6 +4123,8 @@ end = struct
       | `FederatedAuthRequestIssue -> `String "FederatedAuthRequestIssue"
       | `BounceTrackingIssue -> `String "BounceTrackingIssue"
       | `StylesheetLoadingIssue -> `String "StylesheetLoadingIssue"
+      | `FederatedAuthUserInfoRequestIssue ->
+          `String "FederatedAuthUserInfoRequestIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -4071,6 +4207,11 @@ end = struct
           [@key "stylesheetLoadingIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      federatedAuthUserInfoRequestIssueDetails :
+        FederatedAuthUserInfoRequestIssueDetails.t option;
+          [@key "federatedAuthUserInfoRequestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4148,6 +4289,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
           [@key "stylesheetLoadingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      federatedAuthUserInfoRequestIssueDetails :
+        FederatedAuthUserInfoRequestIssueDetails.t option;
+          [@key "federatedAuthUserInfoRequestIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -18742,11 +18888,9 @@ and Page : sig
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
-      | `ch_ua_full
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
-      | `ch_ua_reduced
       | `ch_ua_wow64
       | `ch_viewport_height
       | `ch_viewport_width
@@ -19852,11 +19996,9 @@ end = struct
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
-      | `ch_ua_full
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
-      | `ch_ua_reduced
       | `ch_ua_wow64
       | `ch_viewport_height
       | `ch_viewport_width
@@ -19946,11 +20088,9 @@ end = struct
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
-      | `ch_ua_full
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
-      | `ch_ua_reduced
       | `ch_ua_wow64
       | `ch_viewport_height
       | `ch_viewport_width
@@ -20027,11 +20167,9 @@ end = struct
       | `String "ch-ua-platform" -> `ch_ua_platform
       | `String "ch-ua-model" -> `ch_ua_model
       | `String "ch-ua-mobile" -> `ch_ua_mobile
-      | `String "ch-ua-full" -> `ch_ua_full
       | `String "ch-ua-full-version" -> `ch_ua_full_version
       | `String "ch-ua-full-version-list" -> `ch_ua_full_version_list
       | `String "ch-ua-platform-version" -> `ch_ua_platform_version
-      | `String "ch-ua-reduced" -> `ch_ua_reduced
       | `String "ch-ua-wow64" -> `ch_ua_wow64
       | `String "ch-viewport-height" -> `ch_viewport_height
       | `String "ch-viewport-width" -> `ch_viewport_width
@@ -20113,11 +20251,9 @@ end = struct
       | `ch_ua_platform -> `String "ch-ua-platform"
       | `ch_ua_model -> `String "ch-ua-model"
       | `ch_ua_mobile -> `String "ch-ua-mobile"
-      | `ch_ua_full -> `String "ch-ua-full"
       | `ch_ua_full_version -> `String "ch-ua-full-version"
       | `ch_ua_full_version_list -> `String "ch-ua-full-version-list"
       | `ch_ua_platform_version -> `String "ch-ua-platform-version"
-      | `ch_ua_reduced -> `String "ch-ua-reduced"
       | `ch_ua_wow64 -> `String "ch-ua-wow64"
       | `ch_viewport_height -> `String "ch-viewport-height"
       | `ch_viewport_width -> `String "ch-viewport-width"
@@ -27462,7 +27598,8 @@ and Preload : sig
       | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `MemoryPressureOnTrigger
       | `MemoryPressureAfterTriggered
-      | `PrerenderingDisabledByDevTools ]
+      | `PrerenderingDisabledByDevTools
+      | `ResourceLoadBlockedByClient ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -27874,7 +28011,8 @@ end = struct
       | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `MemoryPressureOnTrigger
       | `MemoryPressureAfterTriggered
-      | `PrerenderingDisabledByDevTools ]
+      | `PrerenderingDisabledByDevTools
+      | `ResourceLoadBlockedByClient ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -27947,7 +28085,8 @@ end = struct
       | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
       | `MemoryPressureOnTrigger
       | `MemoryPressureAfterTriggered
-      | `PrerenderingDisabledByDevTools ]
+      | `PrerenderingDisabledByDevTools
+      | `ResourceLoadBlockedByClient ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -28031,6 +28170,7 @@ end = struct
       | `String "MemoryPressureAfterTriggered" -> `MemoryPressureAfterTriggered
       | `String "PrerenderingDisabledByDevTools" ->
           `PrerenderingDisabledByDevTools
+      | `String "ResourceLoadBlockedByClient" -> `ResourceLoadBlockedByClient
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -28116,6 +28256,7 @@ end = struct
       | `MemoryPressureAfterTriggered -> `String "MemoryPressureAfterTriggered"
       | `PrerenderingDisabledByDevTools ->
           `String "PrerenderingDisabledByDevTools"
+      | `ResourceLoadBlockedByClient -> `String "ResourceLoadBlockedByClient"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]

@@ -1733,6 +1733,7 @@ module Network = struct
     type trusttokenoperationdone_status =
       [ `Ok
       | `InvalidArgument
+      | `MissingIssuerKeys
       | `FailedPrecondition
       | `ResourceExhausted
       | `AlreadyExists
@@ -1746,6 +1747,7 @@ module Network = struct
     let trusttokenoperationdone_status_of_yojson = function
       | `String "Ok" -> `Ok
       | `String "InvalidArgument" -> `InvalidArgument
+      | `String "MissingIssuerKeys" -> `MissingIssuerKeys
       | `String "FailedPrecondition" -> `FailedPrecondition
       | `String "ResourceExhausted" -> `ResourceExhausted
       | `String "AlreadyExists" -> `AlreadyExists
@@ -1761,6 +1763,7 @@ module Network = struct
     let yojson_of_trusttokenoperationdone_status = function
       | `Ok -> `String "Ok"
       | `InvalidArgument -> `String "InvalidArgument"
+      | `MissingIssuerKeys -> `String "MissingIssuerKeys"
       | `FailedPrecondition -> `String "FailedPrecondition"
       | `ResourceExhausted -> `String "ResourceExhausted"
       | `AlreadyExists -> `String "AlreadyExists"
