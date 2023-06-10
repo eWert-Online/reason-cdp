@@ -19657,7 +19657,6 @@ and Page : sig
       | `IndexedDBEvent
       | `Dummy
       | `AuthorizationHeader
-      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21693,7 +21692,6 @@ end = struct
       | `IndexedDBEvent
       | `Dummy
       | `AuthorizationHeader
-      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21831,7 +21829,6 @@ end = struct
       | `IndexedDBEvent
       | `Dummy
       | `AuthorizationHeader
-      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21987,7 +21984,6 @@ end = struct
       | `String "IndexedDBEvent" -> `IndexedDBEvent
       | `String "Dummy" -> `Dummy
       | `String "AuthorizationHeader" -> `AuthorizationHeader
-      | `String "WebSerial" -> `WebSerial
       | `String "ContentSecurityHandler" -> `ContentSecurityHandler
       | `String "ContentWebAuthenticationAPI" -> `ContentWebAuthenticationAPI
       | `String "ContentFileChooser" -> `ContentFileChooser
@@ -22156,7 +22152,6 @@ end = struct
       | `IndexedDBEvent -> `String "IndexedDBEvent"
       | `Dummy -> `String "Dummy"
       | `AuthorizationHeader -> `String "AuthorizationHeader"
-      | `WebSerial -> `String "WebSerial"
       | `ContentSecurityHandler -> `String "ContentSecurityHandler"
       | `ContentWebAuthenticationAPI -> `String "ContentWebAuthenticationAPI"
       | `ContentFileChooser -> `String "ContentFileChooser"
