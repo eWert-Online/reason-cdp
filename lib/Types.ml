@@ -2012,6 +2012,10 @@ and Audits : sig
       failureMessage : string;
           [@key "failureMessage"]
           [@ocaml.doc "The failure message for the failed request."]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -3953,6 +3957,10 @@ end = struct
       failureMessage : string;
           [@key "failureMessage"]
           [@ocaml.doc "The failure message for the failed request."]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -3961,6 +3969,10 @@ end = struct
       failureMessage : string;
           [@key "failureMessage"]
           [@ocaml.doc "The failure message for the failed request."]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -19656,7 +19668,8 @@ and Page : sig
       | `KeepaliveRequest
       | `IndexedDBEvent
       | `Dummy
-      | `AuthorizationHeader
+      | `JsNetworkRequestReceivedCacheControlNoStoreResource
+      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21691,7 +21704,8 @@ end = struct
       | `KeepaliveRequest
       | `IndexedDBEvent
       | `Dummy
-      | `AuthorizationHeader
+      | `JsNetworkRequestReceivedCacheControlNoStoreResource
+      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21828,7 +21842,8 @@ end = struct
       | `KeepaliveRequest
       | `IndexedDBEvent
       | `Dummy
-      | `AuthorizationHeader
+      | `JsNetworkRequestReceivedCacheControlNoStoreResource
+      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21983,7 +21998,9 @@ end = struct
       | `String "KeepaliveRequest" -> `KeepaliveRequest
       | `String "IndexedDBEvent" -> `IndexedDBEvent
       | `String "Dummy" -> `Dummy
-      | `String "AuthorizationHeader" -> `AuthorizationHeader
+      | `String "JsNetworkRequestReceivedCacheControlNoStoreResource" ->
+          `JsNetworkRequestReceivedCacheControlNoStoreResource
+      | `String "WebSerial" -> `WebSerial
       | `String "ContentSecurityHandler" -> `ContentSecurityHandler
       | `String "ContentWebAuthenticationAPI" -> `ContentWebAuthenticationAPI
       | `String "ContentFileChooser" -> `ContentFileChooser
@@ -22151,7 +22168,9 @@ end = struct
       | `KeepaliveRequest -> `String "KeepaliveRequest"
       | `IndexedDBEvent -> `String "IndexedDBEvent"
       | `Dummy -> `String "Dummy"
-      | `AuthorizationHeader -> `String "AuthorizationHeader"
+      | `JsNetworkRequestReceivedCacheControlNoStoreResource ->
+          `String "JsNetworkRequestReceivedCacheControlNoStoreResource"
+      | `WebSerial -> `String "WebSerial"
       | `ContentSecurityHandler -> `String "ContentSecurityHandler"
       | `ContentWebAuthenticationAPI -> `String "ContentWebAuthenticationAPI"
       | `ContentFileChooser -> `String "ContentFileChooser"
