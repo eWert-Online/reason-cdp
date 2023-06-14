@@ -19669,7 +19669,6 @@ and Page : sig
       | `IndexedDBEvent
       | `Dummy
       | `JsNetworkRequestReceivedCacheControlNoStoreResource
-      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21705,7 +21704,6 @@ end = struct
       | `IndexedDBEvent
       | `Dummy
       | `JsNetworkRequestReceivedCacheControlNoStoreResource
-      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21843,7 +21841,6 @@ end = struct
       | `IndexedDBEvent
       | `Dummy
       | `JsNetworkRequestReceivedCacheControlNoStoreResource
-      | `WebSerial
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -22000,7 +21997,6 @@ end = struct
       | `String "Dummy" -> `Dummy
       | `String "JsNetworkRequestReceivedCacheControlNoStoreResource" ->
           `JsNetworkRequestReceivedCacheControlNoStoreResource
-      | `String "WebSerial" -> `WebSerial
       | `String "ContentSecurityHandler" -> `ContentSecurityHandler
       | `String "ContentWebAuthenticationAPI" -> `ContentWebAuthenticationAPI
       | `String "ContentFileChooser" -> `ContentFileChooser
@@ -22170,7 +22166,6 @@ end = struct
       | `Dummy -> `String "Dummy"
       | `JsNetworkRequestReceivedCacheControlNoStoreResource ->
           `String "JsNetworkRequestReceivedCacheControlNoStoreResource"
-      | `WebSerial -> `String "WebSerial"
       | `ContentSecurityHandler -> `String "ContentSecurityHandler"
       | `ContentWebAuthenticationAPI -> `String "ContentWebAuthenticationAPI"
       | `ContentFileChooser -> `String "ContentFileChooser"
