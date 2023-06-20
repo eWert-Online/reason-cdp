@@ -1,3 +1,5 @@
+open Ppx_yojson_conv_lib.Yojson_conv.Primitives
+
 module Accessibility = struct
   (* Disables the accessibility domain. *)
   module Disable = struct
@@ -1482,6 +1484,60 @@ module Autofill = struct
 
       let make ?sessionId ~params id =
         { id; method_ = "Autofill.trigger"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Set addresses so that developers can verify their forms implementation. *)
+  module SetAddresses = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        addresses : Types.Autofill.Address.t list;
+            [@key "addresses"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~addresses () = { addresses }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Autofill.setAddresses"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end

@@ -1,3 +1,5 @@
+open Ppx_yojson_conv_lib.Yojson_conv.Primitives
+
 module Accessibility = struct
   (* The loadComplete event mirrors the load complete event sent by the browser to assistive
      technology when the web page has finished loading. *)

@@ -1,3 +1,5 @@
+open Ppx_yojson_conv_lib.Yojson_conv.Primitives
+
 type empty [@@deriving yojson]
 type number = [ `Int of int | `Float of float ]
 
@@ -4377,6 +4379,26 @@ and Autofill : sig
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
+
+  and AddressField : sig
+    type t = {
+      name : string;
+          [@key "name"]
+          [@ocaml.doc "address field name, for example GIVEN_NAME."]
+      value : string;
+          [@key "value"] [@ocaml.doc "address field name, for example Jon Doe."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and Address : sig
+    type t = {
+      fields : AddressField.t list;
+          [@key "fields"]
+          [@ocaml.doc "fields and values defining a test address."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
 end = struct
   module rec CreditCard : sig
     type t = {
@@ -4400,6 +4422,42 @@ end = struct
       expiryYear : string;
           [@key "expiryYear"] [@ocaml.doc "4-digit expiry year."]
       cvc : string; [@key "cvc"] [@ocaml.doc "3-digit card verification code."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AddressField : sig
+    type t = {
+      name : string;
+          [@key "name"]
+          [@ocaml.doc "address field name, for example GIVEN_NAME."]
+      value : string;
+          [@key "value"] [@ocaml.doc "address field name, for example Jon Doe."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      name : string;
+          [@key "name"]
+          [@ocaml.doc "address field name, for example GIVEN_NAME."]
+      value : string;
+          [@key "value"] [@ocaml.doc "address field name, for example Jon Doe."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and Address : sig
+    type t = {
+      fields : AddressField.t list;
+          [@key "fields"]
+          [@ocaml.doc "fields and values defining a test address."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      fields : AddressField.t list;
+          [@key "fields"]
+          [@ocaml.doc "fields and values defining a test address."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -19669,6 +19727,9 @@ and Page : sig
       | `IndexedDBEvent
       | `Dummy
       | `JsNetworkRequestReceivedCacheControlNoStoreResource
+      | `WebRTCSticky
+      | `WebTransportSticky
+      | `WebSocketSticky
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21704,6 +21765,9 @@ end = struct
       | `IndexedDBEvent
       | `Dummy
       | `JsNetworkRequestReceivedCacheControlNoStoreResource
+      | `WebRTCSticky
+      | `WebTransportSticky
+      | `WebSocketSticky
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21841,6 +21905,9 @@ end = struct
       | `IndexedDBEvent
       | `Dummy
       | `JsNetworkRequestReceivedCacheControlNoStoreResource
+      | `WebRTCSticky
+      | `WebTransportSticky
+      | `WebSocketSticky
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21997,6 +22064,9 @@ end = struct
       | `String "Dummy" -> `Dummy
       | `String "JsNetworkRequestReceivedCacheControlNoStoreResource" ->
           `JsNetworkRequestReceivedCacheControlNoStoreResource
+      | `String "WebRTCSticky" -> `WebRTCSticky
+      | `String "WebTransportSticky" -> `WebTransportSticky
+      | `String "WebSocketSticky" -> `WebSocketSticky
       | `String "ContentSecurityHandler" -> `ContentSecurityHandler
       | `String "ContentWebAuthenticationAPI" -> `ContentWebAuthenticationAPI
       | `String "ContentFileChooser" -> `ContentFileChooser
@@ -22166,6 +22236,9 @@ end = struct
       | `Dummy -> `String "Dummy"
       | `JsNetworkRequestReceivedCacheControlNoStoreResource ->
           `String "JsNetworkRequestReceivedCacheControlNoStoreResource"
+      | `WebRTCSticky -> `String "WebRTCSticky"
+      | `WebTransportSticky -> `String "WebTransportSticky"
+      | `WebSocketSticky -> `String "WebSocketSticky"
       | `ContentSecurityHandler -> `String "ContentSecurityHandler"
       | `ContentWebAuthenticationAPI -> `String "ContentWebAuthenticationAPI"
       | `ContentFileChooser -> `String "ContentFileChooser"
