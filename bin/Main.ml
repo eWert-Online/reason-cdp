@@ -528,6 +528,11 @@ let main paths output =
   FileUtil.touch path_commands;
   let out_commands = open_out_bin path_commands in
   let write_commands s = output_string out_commands (s ^ "\n") in
+
+  write_commands "open Ppx_yojson_conv_lib.Yojson_conv.Primitives";
+  write_events "open Ppx_yojson_conv_lib.Yojson_conv.Primitives";
+  write_types "open Ppx_yojson_conv_lib.Yojson_conv.Primitives";
+
   write_types
     {ct|
       type empty [@@deriving yojson]
