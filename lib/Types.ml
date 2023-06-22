@@ -12987,7 +12987,11 @@ and Network : sig
       | `InsecurePrivateNetwork
       | `InvalidPrivateNetworkAccess
       | `UnexpectedPrivateNetworkAccess
-      | `NoCorsRedirectModeNotFollow ]
+      | `NoCorsRedirectModeNotFollow
+      | `PreflightMissingPrivateNetworkAccessId
+      | `PreflightMissingPrivateNetworkAccessName
+      | `PrivateNetworkAccessPermissionUnavailable
+      | `PrivateNetworkAccessPermissionDenied ]
 
     val _corserror_of_yojson : Yojson.Basic.t -> _corserror
     val yojson_of__corserror : _corserror -> Yojson.Basic.t
@@ -15028,7 +15032,11 @@ end = struct
       | `InsecurePrivateNetwork
       | `InvalidPrivateNetworkAccess
       | `UnexpectedPrivateNetworkAccess
-      | `NoCorsRedirectModeNotFollow ]
+      | `NoCorsRedirectModeNotFollow
+      | `PreflightMissingPrivateNetworkAccessId
+      | `PreflightMissingPrivateNetworkAccessName
+      | `PrivateNetworkAccessPermissionUnavailable
+      | `PrivateNetworkAccessPermissionDenied ]
 
     val _corserror_of_yojson : Yojson.Basic.t -> _corserror
     val yojson_of__corserror : _corserror -> Yojson.Basic.t
@@ -15066,7 +15074,11 @@ end = struct
       | `InsecurePrivateNetwork
       | `InvalidPrivateNetworkAccess
       | `UnexpectedPrivateNetworkAccess
-      | `NoCorsRedirectModeNotFollow ]
+      | `NoCorsRedirectModeNotFollow
+      | `PreflightMissingPrivateNetworkAccessId
+      | `PreflightMissingPrivateNetworkAccessName
+      | `PrivateNetworkAccessPermissionUnavailable
+      | `PrivateNetworkAccessPermissionDenied ]
 
     let _corserror_of_yojson = function
       | `String "DisallowedByMode" -> `DisallowedByMode
@@ -15113,6 +15125,14 @@ end = struct
       | `String "UnexpectedPrivateNetworkAccess" ->
           `UnexpectedPrivateNetworkAccess
       | `String "NoCorsRedirectModeNotFollow" -> `NoCorsRedirectModeNotFollow
+      | `String "PreflightMissingPrivateNetworkAccessId" ->
+          `PreflightMissingPrivateNetworkAccessId
+      | `String "PreflightMissingPrivateNetworkAccessName" ->
+          `PreflightMissingPrivateNetworkAccessName
+      | `String "PrivateNetworkAccessPermissionUnavailable" ->
+          `PrivateNetworkAccessPermissionUnavailable
+      | `String "PrivateNetworkAccessPermissionDenied" ->
+          `PrivateNetworkAccessPermissionDenied
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -15161,6 +15181,14 @@ end = struct
       | `UnexpectedPrivateNetworkAccess ->
           `String "UnexpectedPrivateNetworkAccess"
       | `NoCorsRedirectModeNotFollow -> `String "NoCorsRedirectModeNotFollow"
+      | `PreflightMissingPrivateNetworkAccessId ->
+          `String "PreflightMissingPrivateNetworkAccessId"
+      | `PreflightMissingPrivateNetworkAccessName ->
+          `String "PreflightMissingPrivateNetworkAccessName"
+      | `PrivateNetworkAccessPermissionUnavailable ->
+          `String "PrivateNetworkAccessPermissionUnavailable"
+      | `PrivateNetworkAccessPermissionDenied ->
+          `String "PrivateNetworkAccessPermissionDenied"
 
     type t = _corserror
     [@@deriving yojson] [@@ocaml.doc "The reason why request was blocked."]
@@ -19681,6 +19709,7 @@ and Page : sig
       | `ErrorDocument
       | `FencedFramesEmbedder
       | `CookieDisabled
+      | `HTTPAuthRequired
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -21719,6 +21748,7 @@ end = struct
       | `ErrorDocument
       | `FencedFramesEmbedder
       | `CookieDisabled
+      | `HTTPAuthRequired
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -21859,6 +21889,7 @@ end = struct
       | `ErrorDocument
       | `FencedFramesEmbedder
       | `CookieDisabled
+      | `HTTPAuthRequired
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -22005,6 +22036,7 @@ end = struct
       | `String "ErrorDocument" -> `ErrorDocument
       | `String "FencedFramesEmbedder" -> `FencedFramesEmbedder
       | `String "CookieDisabled" -> `CookieDisabled
+      | `String "HTTPAuthRequired" -> `HTTPAuthRequired
       | `String "WebSocket" -> `WebSocket
       | `String "WebTransport" -> `WebTransport
       | `String "WebRTC" -> `WebRTC
@@ -22177,6 +22209,7 @@ end = struct
       | `ErrorDocument -> `String "ErrorDocument"
       | `FencedFramesEmbedder -> `String "FencedFramesEmbedder"
       | `CookieDisabled -> `String "CookieDisabled"
+      | `HTTPAuthRequired -> `String "HTTPAuthRequired"
       | `WebSocket -> `String "WebSocket"
       | `WebTransport -> `String "WebTransport"
       | `WebRTC -> `String "WebRTC"
