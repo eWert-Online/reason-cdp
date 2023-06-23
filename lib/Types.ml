@@ -18986,6 +18986,7 @@ and Page : sig
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
+      | `ch_ua_form_factor
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
@@ -19721,14 +19722,12 @@ and Page : sig
       | `DocumentLoaded
       | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
-      | `OutstandingIndexedDBTransaction
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
       | `RequestedVideoCapturePermission
       | `RequestedBackForwardCacheBlockedSensors
       | `RequestedBackgroundWorkPermission
       | `BroadcastChannel
-      | `IndexedDBConnection
       | `WebXR
       | `SharedWorker
       | `WebLocks
@@ -20097,6 +20096,7 @@ end = struct
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
+      | `ch_ua_form_factor
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
@@ -20189,6 +20189,7 @@ end = struct
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
+      | `ch_ua_form_factor
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
@@ -20268,6 +20269,7 @@ end = struct
       | `String "ch-ua-platform" -> `ch_ua_platform
       | `String "ch-ua-model" -> `ch_ua_model
       | `String "ch-ua-mobile" -> `ch_ua_mobile
+      | `String "ch-ua-form-factor" -> `ch_ua_form_factor
       | `String "ch-ua-full-version" -> `ch_ua_full_version
       | `String "ch-ua-full-version-list" -> `ch_ua_full_version_list
       | `String "ch-ua-platform-version" -> `ch_ua_platform_version
@@ -20352,6 +20354,7 @@ end = struct
       | `ch_ua_platform -> `String "ch-ua-platform"
       | `ch_ua_model -> `String "ch-ua-model"
       | `ch_ua_mobile -> `String "ch-ua-mobile"
+      | `ch_ua_form_factor -> `String "ch-ua-form-factor"
       | `ch_ua_full_version -> `String "ch-ua-full-version"
       | `ch_ua_full_version_list -> `String "ch-ua-full-version-list"
       | `ch_ua_platform_version -> `String "ch-ua-platform-version"
@@ -21760,14 +21763,12 @@ end = struct
       | `DocumentLoaded
       | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
-      | `OutstandingIndexedDBTransaction
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
       | `RequestedVideoCapturePermission
       | `RequestedBackForwardCacheBlockedSensors
       | `RequestedBackgroundWorkPermission
       | `BroadcastChannel
-      | `IndexedDBConnection
       | `WebXR
       | `SharedWorker
       | `WebLocks
@@ -21901,14 +21902,12 @@ end = struct
       | `DocumentLoaded
       | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
-      | `OutstandingIndexedDBTransaction
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
       | `RequestedVideoCapturePermission
       | `RequestedBackForwardCacheBlockedSensors
       | `RequestedBackgroundWorkPermission
       | `BroadcastChannel
-      | `IndexedDBConnection
       | `WebXR
       | `SharedWorker
       | `WebLocks
@@ -22053,8 +22052,6 @@ end = struct
       | `String "DedicatedWorkerOrWorklet" -> `DedicatedWorkerOrWorklet
       | `String "OutstandingNetworkRequestOthers" ->
           `OutstandingNetworkRequestOthers
-      | `String "OutstandingIndexedDBTransaction" ->
-          `OutstandingIndexedDBTransaction
       | `String "RequestedMIDIPermission" -> `RequestedMIDIPermission
       | `String "RequestedAudioCapturePermission" ->
           `RequestedAudioCapturePermission
@@ -22065,7 +22062,6 @@ end = struct
       | `String "RequestedBackgroundWorkPermission" ->
           `RequestedBackgroundWorkPermission
       | `String "BroadcastChannel" -> `BroadcastChannel
-      | `String "IndexedDBConnection" -> `IndexedDBConnection
       | `String "WebXR" -> `WebXR
       | `String "SharedWorker" -> `SharedWorker
       | `String "WebLocks" -> `WebLocks
@@ -22226,8 +22222,6 @@ end = struct
       | `DedicatedWorkerOrWorklet -> `String "DedicatedWorkerOrWorklet"
       | `OutstandingNetworkRequestOthers ->
           `String "OutstandingNetworkRequestOthers"
-      | `OutstandingIndexedDBTransaction ->
-          `String "OutstandingIndexedDBTransaction"
       | `RequestedMIDIPermission -> `String "RequestedMIDIPermission"
       | `RequestedAudioCapturePermission ->
           `String "RequestedAudioCapturePermission"
@@ -22238,7 +22232,6 @@ end = struct
       | `RequestedBackgroundWorkPermission ->
           `String "RequestedBackgroundWorkPermission"
       | `BroadcastChannel -> `String "BroadcastChannel"
-      | `IndexedDBConnection -> `String "IndexedDBConnection"
       | `WebXR -> `String "WebXR"
       | `SharedWorker -> `String "SharedWorker"
       | `WebLocks -> `String "WebLocks"
@@ -30117,6 +30110,15 @@ and Runtime : sig
           [@ocaml.doc
             "Deep serialization depth. Default is full depth. Respected only \
              in `deep` serialization mode."]
+      additionalParameters : assoc option;
+          [@key "additionalParameters"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Embedder-specific parameters. For example if connected to V8 in \
+             Chrome these control DOM\n\
+             serialization via `maxNodeDepth: integer` and `includeShadowTree: \
+             \"none\" | \"open\" | \"all\"`.\n\
+             Values can be only of type string or integer."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -30773,6 +30775,15 @@ end = struct
           [@ocaml.doc
             "Deep serialization depth. Default is full depth. Respected only \
              in `deep` serialization mode."]
+      additionalParameters : assoc option;
+          [@key "additionalParameters"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Embedder-specific parameters. For example if connected to V8 in \
+             Chrome these control DOM\n\
+             serialization via `maxNodeDepth: integer` and `includeShadowTree: \
+             \"none\" | \"open\" | \"all\"`.\n\
+             Values can be only of type string or integer."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -30803,6 +30814,15 @@ end = struct
           [@ocaml.doc
             "Deep serialization depth. Default is full depth. Respected only \
              in `deep` serialization mode."]
+      additionalParameters : assoc option;
+          [@key "additionalParameters"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Embedder-specific parameters. For example if connected to V8 in \
+             Chrome these control DOM\n\
+             serialization via `maxNodeDepth: integer` and `includeShadowTree: \
+             \"none\" | \"open\" | \"all\"`.\n\
+             Values can be only of type string or integer."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
