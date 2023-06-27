@@ -4127,6 +4127,12 @@ module Preload = struct
           [@key "disabledByDataSaver"] [@ocaml.doc "No description provided"]
       disabledByBatterySaver : bool;
           [@key "disabledByBatterySaver"] [@ocaml.doc "No description provided"]
+      disabledByHoldbackPrefetchSpeculationRules : bool;
+          [@key "disabledByHoldbackPrefetchSpeculationRules"]
+          [@ocaml.doc "No description provided"]
+      disabledByHoldbackPrerenderSpeculationRules : bool;
+          [@key "disabledByHoldbackPrerenderSpeculationRules"]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 
@@ -4156,6 +4162,8 @@ module Preload = struct
           [@key "status"] [@ocaml.doc "No description provided"]
       prefetchStatus : Types.Preload.PrefetchStatus.t;
           [@key "prefetchStatus"] [@ocaml.doc "No description provided"]
+      requestId : Types.Network.RequestId.t;
+          [@key "requestId"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 
@@ -4182,6 +4190,14 @@ module Preload = struct
           [@key "prerenderStatus"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      disallowedMojoInterface : string option;
+          [@key "disallowedMojoInterface"]
+          [@yojson.option]
+          [@ocaml.doc
+            "This is used to give users more information about the name of \
+             Mojo interface\n\
+             that is incompatible with prerender and has caused the \
+             cancellation of the attempt."]
     }
     [@@deriving yojson]
 

@@ -19878,11 +19878,18 @@ module Page = struct
               "Specifies whether command line API should be available to the \
                script, defaults\n\
                to false."]
+        runImmediately : bool option;
+            [@key "runImmediately"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If true, runs the script immediately on existing execution \
+               contexts or worlds.\n\
+               Default: false."]
       }
       [@@deriving yojson]
 
-      let make ~source ?worldName ?includeCommandLineAPI () =
-        { source; worldName; includeCommandLineAPI }
+      let make ~source ?worldName ?includeCommandLineAPI ?runImmediately () =
+        { source; worldName; includeCommandLineAPI; runImmediately }
     end
 
     module Request = struct
