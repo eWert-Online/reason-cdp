@@ -1809,7 +1809,8 @@ and Audits : sig
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `FormLabelHasNeitherForNorNestedInput
       | `FormLabelForMatchesNonExistingIdError
-      | `FormInputHasWrongButWellIntendedAutocompleteValueError ]
+      | `FormInputHasWrongButWellIntendedAutocompleteValueError
+      | `ResponseWasBlockedByORB ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -1837,6 +1838,10 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       violatingNodeAttribute : string option;
           [@key "violatingNodeAttribute"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t option;
+          [@key "request"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -3425,7 +3430,8 @@ end = struct
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `FormLabelHasNeitherForNorNestedInput
       | `FormLabelForMatchesNonExistingIdError
-      | `FormInputHasWrongButWellIntendedAutocompleteValueError ]
+      | `FormInputHasWrongButWellIntendedAutocompleteValueError
+      | `ResponseWasBlockedByORB ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -3447,7 +3453,8 @@ end = struct
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
       | `FormLabelHasNeitherForNorNestedInput
       | `FormLabelForMatchesNonExistingIdError
-      | `FormInputHasWrongButWellIntendedAutocompleteValueError ]
+      | `FormInputHasWrongButWellIntendedAutocompleteValueError
+      | `ResponseWasBlockedByORB ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "CrossOriginPortalPostMessageError" ->
@@ -3469,6 +3476,7 @@ end = struct
           `FormLabelForMatchesNonExistingIdError
       | `String "FormInputHasWrongButWellIntendedAutocompleteValueError" ->
           `FormInputHasWrongButWellIntendedAutocompleteValueError
+      | `String "ResponseWasBlockedByORB" -> `ResponseWasBlockedByORB
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3492,6 +3500,7 @@ end = struct
           `String "FormLabelForMatchesNonExistingIdError"
       | `FormInputHasWrongButWellIntendedAutocompleteValueError ->
           `String "FormInputHasWrongButWellIntendedAutocompleteValueError"
+      | `ResponseWasBlockedByORB -> `String "ResponseWasBlockedByORB"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -3515,6 +3524,10 @@ end = struct
           [@key "violatingNodeAttribute"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t option;
+          [@key "request"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -3535,6 +3548,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       violatingNodeAttribute : string option;
           [@key "violatingNodeAttribute"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t option;
+          [@key "request"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
