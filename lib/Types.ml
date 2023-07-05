@@ -5486,8 +5486,30 @@ and CSS : sig
             "@scope CSS at-rule array.\n\
              The array enumerates @scope at-rules starting with the innermost \
              one, going outwards."]
+      ruleTypes : CSSRuleType.t list option;
+          [@key "ruleTypes"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The array keeps the types of ancestor CSSRules from the innermost \
+             going outwards."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS rule representation."]
+  end
+
+  and CSSRuleType : sig
+    type _cssruletype =
+      [ `MediaRule | `SupportsRule | `ContainerRule | `LayerRule | `ScopeRule ]
+
+    val _cssruletype_of_yojson : Yojson.Basic.t -> _cssruletype
+    val yojson_of__cssruletype : _cssruletype -> Yojson.Basic.t
+
+    type t = _cssruletype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Enum indicating the type of a CSS rule, used to represent the order of \
+       a style rule's ancestors.\n\
+       This list only contains rule types that are collected during the \
+       ancestor rule collection."]
   end
 
   and RuleUsage : sig
@@ -6426,6 +6448,12 @@ end = struct
             "@scope CSS at-rule array.\n\
              The array enumerates @scope at-rules starting with the innermost \
              one, going outwards."]
+      ruleTypes : CSSRuleType.t list option;
+          [@key "ruleTypes"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The array keeps the types of ancestor CSSRules from the innermost \
+             going outwards."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS rule representation."]
   end = struct
@@ -6484,8 +6512,57 @@ end = struct
             "@scope CSS at-rule array.\n\
              The array enumerates @scope at-rules starting with the innermost \
              one, going outwards."]
+      ruleTypes : CSSRuleType.t list option;
+          [@key "ruleTypes"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The array keeps the types of ancestor CSSRules from the innermost \
+             going outwards."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS rule representation."]
+  end
+
+  and CSSRuleType : sig
+    type _cssruletype =
+      [ `MediaRule | `SupportsRule | `ContainerRule | `LayerRule | `ScopeRule ]
+
+    val _cssruletype_of_yojson : Yojson.Basic.t -> _cssruletype
+    val yojson_of__cssruletype : _cssruletype -> Yojson.Basic.t
+
+    type t = _cssruletype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Enum indicating the type of a CSS rule, used to represent the order of \
+       a style rule's ancestors.\n\
+       This list only contains rule types that are collected during the \
+       ancestor rule collection."]
+  end = struct
+    type _cssruletype =
+      [ `MediaRule | `SupportsRule | `ContainerRule | `LayerRule | `ScopeRule ]
+
+    let _cssruletype_of_yojson = function
+      | `String "MediaRule" -> `MediaRule
+      | `String "SupportsRule" -> `SupportsRule
+      | `String "ContainerRule" -> `ContainerRule
+      | `String "LayerRule" -> `LayerRule
+      | `String "ScopeRule" -> `ScopeRule
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__cssruletype = function
+      | `MediaRule -> `String "MediaRule"
+      | `SupportsRule -> `String "SupportsRule"
+      | `ContainerRule -> `String "ContainerRule"
+      | `LayerRule -> `String "LayerRule"
+      | `ScopeRule -> `String "ScopeRule"
+
+    type t = _cssruletype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Enum indicating the type of a CSS rule, used to represent the order of \
+       a style rule's ancestors.\n\
+       This list only contains rule types that are collected during the \
+       ancestor rule collection."]
   end
 
   and RuleUsage : sig
