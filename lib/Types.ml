@@ -5498,7 +5498,12 @@ and CSS : sig
 
   and CSSRuleType : sig
     type _cssruletype =
-      [ `MediaRule | `SupportsRule | `ContainerRule | `LayerRule | `ScopeRule ]
+      [ `MediaRule
+      | `SupportsRule
+      | `ContainerRule
+      | `LayerRule
+      | `ScopeRule
+      | `StyleRule ]
 
     val _cssruletype_of_yojson : Yojson.Basic.t -> _cssruletype
     val yojson_of__cssruletype : _cssruletype -> Yojson.Basic.t
@@ -6524,7 +6529,12 @@ end = struct
 
   and CSSRuleType : sig
     type _cssruletype =
-      [ `MediaRule | `SupportsRule | `ContainerRule | `LayerRule | `ScopeRule ]
+      [ `MediaRule
+      | `SupportsRule
+      | `ContainerRule
+      | `LayerRule
+      | `ScopeRule
+      | `StyleRule ]
 
     val _cssruletype_of_yojson : Yojson.Basic.t -> _cssruletype
     val yojson_of__cssruletype : _cssruletype -> Yojson.Basic.t
@@ -6538,7 +6548,12 @@ end = struct
        ancestor rule collection."]
   end = struct
     type _cssruletype =
-      [ `MediaRule | `SupportsRule | `ContainerRule | `LayerRule | `ScopeRule ]
+      [ `MediaRule
+      | `SupportsRule
+      | `ContainerRule
+      | `LayerRule
+      | `ScopeRule
+      | `StyleRule ]
 
     let _cssruletype_of_yojson = function
       | `String "MediaRule" -> `MediaRule
@@ -6546,6 +6561,7 @@ end = struct
       | `String "ContainerRule" -> `ContainerRule
       | `String "LayerRule" -> `LayerRule
       | `String "ScopeRule" -> `ScopeRule
+      | `String "StyleRule" -> `StyleRule
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -6555,6 +6571,7 @@ end = struct
       | `ContainerRule -> `String "ContainerRule"
       | `LayerRule -> `String "LayerRule"
       | `ScopeRule -> `String "ScopeRule"
+      | `StyleRule -> `String "StyleRule"
 
     type t = _cssruletype
     [@@deriving yojson]
@@ -24065,6 +24082,110 @@ and Storage : sig
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
+
+  and AttributionReportingSourceType : sig
+    type _attributionreportingsourcetype = [ `navigation | `event ]
+
+    val _attributionreportingsourcetype_of_yojson :
+      Yojson.Basic.t -> _attributionreportingsourcetype
+
+    val yojson_of__attributionreportingsourcetype :
+      _attributionreportingsourcetype -> Yojson.Basic.t
+
+    type t = _attributionreportingsourcetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and UnsignedInt64AsBase10 : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and UnsignedInt128AsBase16 : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SignedInt64AsBase10 : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingFilterDataEntry : sig
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      values : string list;
+          [@key "values"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregationKeysEntry : sig
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      value : UnsignedInt128AsBase16.t;
+          [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingSourceRegistration : sig
+    type t = {
+      time : Network.TimeSinceEpoch.t;
+          [@key "time"] [@ocaml.doc "No description provided"]
+      expiry : number option;
+          [@key "expiry"] [@yojson.option] [@ocaml.doc "duration in seconds"]
+      eventReportWindow : number option;
+          [@key "eventReportWindow"]
+          [@yojson.option]
+          [@ocaml.doc "duration in seconds"]
+      aggregatableReportWindow : number option;
+          [@key "aggregatableReportWindow"]
+          [@yojson.option]
+          [@ocaml.doc "duration in seconds"]
+      type_ : AttributionReportingSourceType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      sourceOrigin : string;
+          [@key "sourceOrigin"] [@ocaml.doc "No description provided"]
+      reportingOrigin : string;
+          [@key "reportingOrigin"] [@ocaml.doc "No description provided"]
+      destinationSites : string list;
+          [@key "destinationSites"] [@ocaml.doc "No description provided"]
+      eventId : UnsignedInt64AsBase10.t;
+          [@key "eventId"] [@ocaml.doc "No description provided"]
+      priority : SignedInt64AsBase10.t;
+          [@key "priority"] [@ocaml.doc "No description provided"]
+      filterData : AttributionReportingFilterDataEntry.t list;
+          [@key "filterData"] [@ocaml.doc "No description provided"]
+      aggregationKeys : AttributionReportingAggregationKeysEntry.t list;
+          [@key "aggregationKeys"] [@ocaml.doc "No description provided"]
+      debugKey : UnsignedInt64AsBase10.t option;
+          [@key "debugKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingSourceRegistrationResult : sig
+    type _attributionreportingsourceregistrationresult =
+      [ `success
+      | `internalError
+      | `insufficientSourceCapacity
+      | `insufficientUniqueDestinationCapacity
+      | `excessiveReportingOrigins
+      | `prohibitedByBrowserPolicy
+      | `successNoised
+      | `destinationReportingLimitReached
+      | `destinationGlobalLimitReached
+      | `destinationBothLimitsReached ]
+
+    val _attributionreportingsourceregistrationresult_of_yojson :
+      Yojson.Basic.t -> _attributionreportingsourceregistrationresult
+
+    val yojson_of__attributionreportingsourceregistrationresult :
+      _attributionreportingsourceregistrationresult -> Yojson.Basic.t
+
+    type t = _attributionreportingsourceregistrationresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
 end = struct
   module rec SerializedStorageKey : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -24704,6 +24825,228 @@ end = struct
       durability : StorageBucketsDurability.t;
           [@key "durability"] [@ocaml.doc "No description provided"]
     }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingSourceType : sig
+    type _attributionreportingsourcetype = [ `navigation | `event ]
+
+    val _attributionreportingsourcetype_of_yojson :
+      Yojson.Basic.t -> _attributionreportingsourcetype
+
+    val yojson_of__attributionreportingsourcetype :
+      _attributionreportingsourcetype -> Yojson.Basic.t
+
+    type t = _attributionreportingsourcetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _attributionreportingsourcetype = [ `navigation | `event ]
+
+    let _attributionreportingsourcetype_of_yojson = function
+      | `String "navigation" -> `navigation
+      | `String "event" -> `event
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__attributionreportingsourcetype = function
+      | `navigation -> `String "navigation"
+      | `event -> `String "event"
+
+    type t = _attributionreportingsourcetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and UnsignedInt64AsBase10 : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and UnsignedInt128AsBase16 : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SignedInt64AsBase10 : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingFilterDataEntry : sig
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      values : string list;
+          [@key "values"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      values : string list;
+          [@key "values"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregationKeysEntry : sig
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      value : UnsignedInt128AsBase16.t;
+          [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      value : UnsignedInt128AsBase16.t;
+          [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingSourceRegistration : sig
+    type t = {
+      time : Network.TimeSinceEpoch.t;
+          [@key "time"] [@ocaml.doc "No description provided"]
+      expiry : number option;
+          [@key "expiry"] [@yojson.option] [@ocaml.doc "duration in seconds"]
+      eventReportWindow : number option;
+          [@key "eventReportWindow"]
+          [@yojson.option]
+          [@ocaml.doc "duration in seconds"]
+      aggregatableReportWindow : number option;
+          [@key "aggregatableReportWindow"]
+          [@yojson.option]
+          [@ocaml.doc "duration in seconds"]
+      type_ : AttributionReportingSourceType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      sourceOrigin : string;
+          [@key "sourceOrigin"] [@ocaml.doc "No description provided"]
+      reportingOrigin : string;
+          [@key "reportingOrigin"] [@ocaml.doc "No description provided"]
+      destinationSites : string list;
+          [@key "destinationSites"] [@ocaml.doc "No description provided"]
+      eventId : UnsignedInt64AsBase10.t;
+          [@key "eventId"] [@ocaml.doc "No description provided"]
+      priority : SignedInt64AsBase10.t;
+          [@key "priority"] [@ocaml.doc "No description provided"]
+      filterData : AttributionReportingFilterDataEntry.t list;
+          [@key "filterData"] [@ocaml.doc "No description provided"]
+      aggregationKeys : AttributionReportingAggregationKeysEntry.t list;
+          [@key "aggregationKeys"] [@ocaml.doc "No description provided"]
+      debugKey : UnsignedInt64AsBase10.t option;
+          [@key "debugKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      time : Network.TimeSinceEpoch.t;
+          [@key "time"] [@ocaml.doc "No description provided"]
+      expiry : number option;
+          [@key "expiry"] [@yojson.option] [@ocaml.doc "duration in seconds"]
+      eventReportWindow : number option;
+          [@key "eventReportWindow"]
+          [@yojson.option]
+          [@ocaml.doc "duration in seconds"]
+      aggregatableReportWindow : number option;
+          [@key "aggregatableReportWindow"]
+          [@yojson.option]
+          [@ocaml.doc "duration in seconds"]
+      type_ : AttributionReportingSourceType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      sourceOrigin : string;
+          [@key "sourceOrigin"] [@ocaml.doc "No description provided"]
+      reportingOrigin : string;
+          [@key "reportingOrigin"] [@ocaml.doc "No description provided"]
+      destinationSites : string list;
+          [@key "destinationSites"] [@ocaml.doc "No description provided"]
+      eventId : UnsignedInt64AsBase10.t;
+          [@key "eventId"] [@ocaml.doc "No description provided"]
+      priority : SignedInt64AsBase10.t;
+          [@key "priority"] [@ocaml.doc "No description provided"]
+      filterData : AttributionReportingFilterDataEntry.t list;
+          [@key "filterData"] [@ocaml.doc "No description provided"]
+      aggregationKeys : AttributionReportingAggregationKeysEntry.t list;
+          [@key "aggregationKeys"] [@ocaml.doc "No description provided"]
+      debugKey : UnsignedInt64AsBase10.t option;
+          [@key "debugKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingSourceRegistrationResult : sig
+    type _attributionreportingsourceregistrationresult =
+      [ `success
+      | `internalError
+      | `insufficientSourceCapacity
+      | `insufficientUniqueDestinationCapacity
+      | `excessiveReportingOrigins
+      | `prohibitedByBrowserPolicy
+      | `successNoised
+      | `destinationReportingLimitReached
+      | `destinationGlobalLimitReached
+      | `destinationBothLimitsReached ]
+
+    val _attributionreportingsourceregistrationresult_of_yojson :
+      Yojson.Basic.t -> _attributionreportingsourceregistrationresult
+
+    val yojson_of__attributionreportingsourceregistrationresult :
+      _attributionreportingsourceregistrationresult -> Yojson.Basic.t
+
+    type t = _attributionreportingsourceregistrationresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _attributionreportingsourceregistrationresult =
+      [ `success
+      | `internalError
+      | `insufficientSourceCapacity
+      | `insufficientUniqueDestinationCapacity
+      | `excessiveReportingOrigins
+      | `prohibitedByBrowserPolicy
+      | `successNoised
+      | `destinationReportingLimitReached
+      | `destinationGlobalLimitReached
+      | `destinationBothLimitsReached ]
+
+    let _attributionreportingsourceregistrationresult_of_yojson = function
+      | `String "success" -> `success
+      | `String "internalError" -> `internalError
+      | `String "insufficientSourceCapacity" -> `insufficientSourceCapacity
+      | `String "insufficientUniqueDestinationCapacity" ->
+          `insufficientUniqueDestinationCapacity
+      | `String "excessiveReportingOrigins" -> `excessiveReportingOrigins
+      | `String "prohibitedByBrowserPolicy" -> `prohibitedByBrowserPolicy
+      | `String "successNoised" -> `successNoised
+      | `String "destinationReportingLimitReached" ->
+          `destinationReportingLimitReached
+      | `String "destinationGlobalLimitReached" ->
+          `destinationGlobalLimitReached
+      | `String "destinationBothLimitsReached" -> `destinationBothLimitsReached
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__attributionreportingsourceregistrationresult = function
+      | `success -> `String "success"
+      | `internalError -> `String "internalError"
+      | `insufficientSourceCapacity -> `String "insufficientSourceCapacity"
+      | `insufficientUniqueDestinationCapacity ->
+          `String "insufficientUniqueDestinationCapacity"
+      | `excessiveReportingOrigins -> `String "excessiveReportingOrigins"
+      | `prohibitedByBrowserPolicy -> `String "prohibitedByBrowserPolicy"
+      | `successNoised -> `String "successNoised"
+      | `destinationReportingLimitReached ->
+          `String "destinationReportingLimitReached"
+      | `destinationGlobalLimitReached ->
+          `String "destinationGlobalLimitReached"
+      | `destinationBothLimitsReached -> `String "destinationBothLimitsReached"
+
+    type t = _attributionreportingsourceregistrationresult
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 end
