@@ -24175,7 +24175,8 @@ and Storage : sig
       | `successNoised
       | `destinationReportingLimitReached
       | `destinationGlobalLimitReached
-      | `destinationBothLimitsReached ]
+      | `destinationBothLimitsReached
+      | `reportingOriginsPerSiteLimitReached ]
 
     val _attributionreportingsourceregistrationresult_of_yojson :
       Yojson.Basic.t -> _attributionreportingsourceregistrationresult
@@ -24991,7 +24992,8 @@ end = struct
       | `successNoised
       | `destinationReportingLimitReached
       | `destinationGlobalLimitReached
-      | `destinationBothLimitsReached ]
+      | `destinationBothLimitsReached
+      | `reportingOriginsPerSiteLimitReached ]
 
     val _attributionreportingsourceregistrationresult_of_yojson :
       Yojson.Basic.t -> _attributionreportingsourceregistrationresult
@@ -25012,7 +25014,8 @@ end = struct
       | `successNoised
       | `destinationReportingLimitReached
       | `destinationGlobalLimitReached
-      | `destinationBothLimitsReached ]
+      | `destinationBothLimitsReached
+      | `reportingOriginsPerSiteLimitReached ]
 
     let _attributionreportingsourceregistrationresult_of_yojson = function
       | `String "success" -> `success
@@ -25028,6 +25031,8 @@ end = struct
       | `String "destinationGlobalLimitReached" ->
           `destinationGlobalLimitReached
       | `String "destinationBothLimitsReached" -> `destinationBothLimitsReached
+      | `String "reportingOriginsPerSiteLimitReached" ->
+          `reportingOriginsPerSiteLimitReached
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -25045,6 +25050,8 @@ end = struct
       | `destinationGlobalLimitReached ->
           `String "destinationGlobalLimitReached"
       | `destinationBothLimitsReached -> `String "destinationBothLimitsReached"
+      | `reportingOriginsPerSiteLimitReached ->
+          `String "reportingOriginsPerSiteLimitReached"
 
     type t = _attributionreportingsourceregistrationresult
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
