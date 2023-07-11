@@ -1730,7 +1730,8 @@ and Audits : sig
       | `InvalidRegisterOsSourceHeader
       | `InvalidRegisterOsTriggerHeader
       | `WebAndOsHeaders
-      | `NoWebOrOsSupport ]
+      | `NoWebOrOsSupport
+      | `NavigationRegistrationWithoutTransientUserActivation ]
 
     val _attributionreportingissuetype_of_yojson :
       Yojson.Basic.t -> _attributionreportingissuetype
@@ -3245,7 +3246,8 @@ end = struct
       | `InvalidRegisterOsSourceHeader
       | `InvalidRegisterOsTriggerHeader
       | `WebAndOsHeaders
-      | `NoWebOrOsSupport ]
+      | `NoWebOrOsSupport
+      | `NavigationRegistrationWithoutTransientUserActivation ]
 
     val _attributionreportingissuetype_of_yojson :
       Yojson.Basic.t -> _attributionreportingissuetype
@@ -3270,7 +3272,8 @@ end = struct
       | `InvalidRegisterOsSourceHeader
       | `InvalidRegisterOsTriggerHeader
       | `WebAndOsHeaders
-      | `NoWebOrOsSupport ]
+      | `NoWebOrOsSupport
+      | `NavigationRegistrationWithoutTransientUserActivation ]
 
     let _attributionreportingissuetype_of_yojson = function
       | `String "PermissionPolicyDisabled" -> `PermissionPolicyDisabled
@@ -3289,6 +3292,8 @@ end = struct
           `InvalidRegisterOsTriggerHeader
       | `String "WebAndOsHeaders" -> `WebAndOsHeaders
       | `String "NoWebOrOsSupport" -> `NoWebOrOsSupport
+      | `String "NavigationRegistrationWithoutTransientUserActivation" ->
+          `NavigationRegistrationWithoutTransientUserActivation
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3309,6 +3314,8 @@ end = struct
           `String "InvalidRegisterOsTriggerHeader"
       | `WebAndOsHeaders -> `String "WebAndOsHeaders"
       | `NoWebOrOsSupport -> `String "NoWebOrOsSupport"
+      | `NavigationRegistrationWithoutTransientUserActivation ->
+          `String "NavigationRegistrationWithoutTransientUserActivation"
 
     type t = _attributionreportingissuetype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]

@@ -14011,6 +14011,49 @@ module Input = struct
     end
   end
 
+  (* Cancels any active dragging in the page. *)
+  module CancelDragging = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Input.cancelDragging"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Emulates touch event from the mouse event parameters. *)
   module EmulateTouchFromMouseEvent = struct
     module Response : sig
