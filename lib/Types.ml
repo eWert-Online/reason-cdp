@@ -13861,7 +13861,7 @@ and Network : sig
   end
 
   and ContentEncoding : sig
-    type _contentencoding = [ `deflate | `gzip | `br ]
+    type _contentencoding = [ `deflate | `gzip | `br | `zstd ]
 
     val _contentencoding_of_yojson : Yojson.Basic.t -> _contentencoding
     val yojson_of__contentencoding : _contentencoding -> Yojson.Basic.t
@@ -16912,7 +16912,7 @@ end = struct
   end
 
   and ContentEncoding : sig
-    type _contentencoding = [ `deflate | `gzip | `br ]
+    type _contentencoding = [ `deflate | `gzip | `br | `zstd ]
 
     val _contentencoding_of_yojson : Yojson.Basic.t -> _contentencoding
     val yojson_of__contentencoding : _contentencoding -> Yojson.Basic.t
@@ -16921,12 +16921,13 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc "List of content encodings supported by the backend."]
   end = struct
-    type _contentencoding = [ `deflate | `gzip | `br ]
+    type _contentencoding = [ `deflate | `gzip | `br | `zstd ]
 
     let _contentencoding_of_yojson = function
       | `String "deflate" -> `deflate
       | `String "gzip" -> `gzip
       | `String "br" -> `br
+      | `String "zstd" -> `zstd
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -16934,6 +16935,7 @@ end = struct
       | `deflate -> `String "deflate"
       | `gzip -> `String "gzip"
       | `br -> `String "br"
+      | `zstd -> `String "zstd"
 
     type t = _contentencoding
     [@@deriving yojson]
