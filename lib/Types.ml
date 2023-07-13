@@ -19831,6 +19831,7 @@ and Page : sig
       | `FencedFramesEmbedder
       | `CookieDisabled
       | `HTTPAuthRequired
+      | `CookieFlushed
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -21872,6 +21873,7 @@ end = struct
       | `FencedFramesEmbedder
       | `CookieDisabled
       | `HTTPAuthRequired
+      | `CookieFlushed
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -22011,6 +22013,7 @@ end = struct
       | `FencedFramesEmbedder
       | `CookieDisabled
       | `HTTPAuthRequired
+      | `CookieFlushed
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -22156,6 +22159,7 @@ end = struct
       | `String "FencedFramesEmbedder" -> `FencedFramesEmbedder
       | `String "CookieDisabled" -> `CookieDisabled
       | `String "HTTPAuthRequired" -> `HTTPAuthRequired
+      | `String "CookieFlushed" -> `CookieFlushed
       | `String "WebSocket" -> `WebSocket
       | `String "WebTransport" -> `WebTransport
       | `String "WebRTC" -> `WebRTC
@@ -22326,6 +22330,7 @@ end = struct
       | `FencedFramesEmbedder -> `String "FencedFramesEmbedder"
       | `CookieDisabled -> `String "CookieDisabled"
       | `HTTPAuthRequired -> `String "HTTPAuthRequired"
+      | `CookieFlushed -> `String "CookieFlushed"
       | `WebSocket -> `String "WebSocket"
       | `WebTransport -> `String "WebTransport"
       | `WebRTC -> `String "WebRTC"
@@ -28160,7 +28165,8 @@ and Preload : sig
       | `MemoryPressureOnTrigger
       | `MemoryPressureAfterTriggered
       | `PrerenderingDisabledByDevTools
-      | `ResourceLoadBlockedByClient ]
+      | `ResourceLoadBlockedByClient
+      | `SpeculationRuleRemoved ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -28573,7 +28579,8 @@ end = struct
       | `MemoryPressureOnTrigger
       | `MemoryPressureAfterTriggered
       | `PrerenderingDisabledByDevTools
-      | `ResourceLoadBlockedByClient ]
+      | `ResourceLoadBlockedByClient
+      | `SpeculationRuleRemoved ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -28647,7 +28654,8 @@ end = struct
       | `MemoryPressureOnTrigger
       | `MemoryPressureAfterTriggered
       | `PrerenderingDisabledByDevTools
-      | `ResourceLoadBlockedByClient ]
+      | `ResourceLoadBlockedByClient
+      | `SpeculationRuleRemoved ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -28732,6 +28740,7 @@ end = struct
       | `String "PrerenderingDisabledByDevTools" ->
           `PrerenderingDisabledByDevTools
       | `String "ResourceLoadBlockedByClient" -> `ResourceLoadBlockedByClient
+      | `String "SpeculationRuleRemoved" -> `SpeculationRuleRemoved
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -28818,6 +28827,7 @@ end = struct
       | `PrerenderingDisabledByDevTools ->
           `String "PrerenderingDisabledByDevTools"
       | `ResourceLoadBlockedByClient -> `String "ResourceLoadBlockedByClient"
+      | `SpeculationRuleRemoved -> `String "SpeculationRuleRemoved"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
