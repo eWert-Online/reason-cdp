@@ -1092,13 +1092,6 @@ module Network = struct
       encodedDataLength : Types.number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request."]
-      shouldReportCorbBlocking : bool option;
-          [@key "shouldReportCorbBlocking"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Set when 1) response was blocked by Cross-Origin Read Blocking \
-             and also\n\
-             2) this needs to be reported to the DevTools console."]
     }
     [@@deriving yojson]
 
