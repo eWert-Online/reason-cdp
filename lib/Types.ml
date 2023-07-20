@@ -28166,7 +28166,8 @@ and Preload : sig
       | `MemoryPressureAfterTriggered
       | `PrerenderingDisabledByDevTools
       | `ResourceLoadBlockedByClient
-      | `SpeculationRuleRemoved ]
+      | `SpeculationRuleRemoved
+      | `ActivatedWithAuxiliaryBrowsingContexts ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -28580,7 +28581,8 @@ end = struct
       | `MemoryPressureAfterTriggered
       | `PrerenderingDisabledByDevTools
       | `ResourceLoadBlockedByClient
-      | `SpeculationRuleRemoved ]
+      | `SpeculationRuleRemoved
+      | `ActivatedWithAuxiliaryBrowsingContexts ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -28655,7 +28657,8 @@ end = struct
       | `MemoryPressureAfterTriggered
       | `PrerenderingDisabledByDevTools
       | `ResourceLoadBlockedByClient
-      | `SpeculationRuleRemoved ]
+      | `SpeculationRuleRemoved
+      | `ActivatedWithAuxiliaryBrowsingContexts ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -28741,6 +28744,8 @@ end = struct
           `PrerenderingDisabledByDevTools
       | `String "ResourceLoadBlockedByClient" -> `ResourceLoadBlockedByClient
       | `String "SpeculationRuleRemoved" -> `SpeculationRuleRemoved
+      | `String "ActivatedWithAuxiliaryBrowsingContexts" ->
+          `ActivatedWithAuxiliaryBrowsingContexts
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -28828,6 +28833,8 @@ end = struct
           `String "PrerenderingDisabledByDevTools"
       | `ResourceLoadBlockedByClient -> `String "ResourceLoadBlockedByClient"
       | `SpeculationRuleRemoved -> `String "SpeculationRuleRemoved"
+      | `ActivatedWithAuxiliaryBrowsingContexts ->
+          `String "ActivatedWithAuxiliaryBrowsingContexts"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
