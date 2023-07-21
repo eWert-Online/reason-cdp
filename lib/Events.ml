@@ -2126,7 +2126,7 @@ module Page = struct
           [@yojson.option]
           [@ocaml.doc
             "Input node id. Only present for file choosers opened via an \
-             <input type=\"file\"> element."]
+             `<input type=\"file\">` element."]
     }
     [@@deriving yojson]
 

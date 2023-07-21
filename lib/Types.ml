@@ -121,7 +121,7 @@ module rec Accessibility : sig
           [@key "nativeSource"]
           [@yojson.option]
           [@ocaml.doc
-            "The native markup source for this value, e.g. a <label> element."]
+            "The native markup source for this value, e.g. a `<label>` element."]
       nativeSourceValue : AXValue.t option;
           [@key "nativeSourceValue"]
           [@yojson.option]
@@ -539,7 +539,7 @@ end = struct
           [@key "nativeSource"]
           [@yojson.option]
           [@ocaml.doc
-            "The native markup source for this value, e.g. a <label> element."]
+            "The native markup source for this value, e.g. a `<label>` element."]
       nativeSourceValue : AXValue.t option;
           [@key "nativeSourceValue"]
           [@yojson.option]
@@ -581,7 +581,7 @@ end = struct
           [@key "nativeSource"]
           [@yojson.option]
           [@ocaml.doc
-            "The native markup source for this value, e.g. a <label> element."]
+            "The native markup source for this value, e.g. a `<label>` element."]
       nativeSourceValue : AXValue.t option;
           [@key "nativeSourceValue"]
           [@yojson.option]
@@ -5397,7 +5397,7 @@ and CSS : sig
             "Whether this stylesheet is mutable. Inline stylesheets become \
              mutable\n\
              after they have been modified via CSSOM API.\n\
-             <link> element's stylesheets become mutable only if DevTools \
+             `<link>` element's stylesheets become mutable only if DevTools \
              modifies them.\n\
              Constructed stylesheets (new CSSStyleSheet()) are mutable \
              immediately after creation."]
@@ -6279,7 +6279,7 @@ end = struct
             "Whether this stylesheet is mutable. Inline stylesheets become \
              mutable\n\
              after they have been modified via CSSOM API.\n\
-             <link> element's stylesheets become mutable only if DevTools \
+             `<link>` element's stylesheets become mutable only if DevTools \
              modifies them.\n\
              Constructed stylesheets (new CSSStyleSheet()) are mutable \
              immediately after creation."]
@@ -6364,7 +6364,7 @@ end = struct
             "Whether this stylesheet is mutable. Inline stylesheets become \
              mutable\n\
              after they have been modified via CSSOM API.\n\
-             <link> element's stylesheets become mutable only if DevTools \
+             `<link>` element's stylesheets become mutable only if DevTools \
              modifies them.\n\
              Constructed stylesheets (new CSSStyleSheet()) are mutable \
              immediately after creation."]
@@ -11025,8 +11025,8 @@ and IO : sig
     [@@deriving yojson]
     [@@ocaml.doc
       "This is either obtained from another method or specified as \
-       `blob:&lt;uuid&gt;` where\n\
-       `&lt;uuid&gt` is an UUID of a Blob."]
+       `blob:<uuid>` where\n\
+       `<uuid>` is an UUID of a Blob."]
   end
 end = struct
   module rec StreamHandle : sig
@@ -11034,15 +11034,15 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc
       "This is either obtained from another method or specified as \
-       `blob:&lt;uuid&gt;` where\n\
-       `&lt;uuid&gt` is an UUID of a Blob."]
+       `blob:<uuid>` where\n\
+       `<uuid>` is an UUID of a Blob."]
   end = struct
     type t = string
     [@@deriving yojson]
     [@@ocaml.doc
       "This is either obtained from another method or specified as \
-       `blob:&lt;uuid&gt;` where\n\
-       `&lt;uuid&gt` is an UUID of a Blob."]
+       `blob:<uuid>` where\n\
+       `<uuid>` is an UUID of a Blob."]
   end
 end
 
@@ -13792,7 +13792,7 @@ and Network : sig
           [@key "headerIntegrity"]
           [@ocaml.doc
             "Signed exchange header integrity hash in the form of \
-             \"sha256-<base64-hash-value>\"."]
+             `sha256-<base64-hash-value>`."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -16756,7 +16756,7 @@ end = struct
           [@key "headerIntegrity"]
           [@ocaml.doc
             "Signed exchange header integrity hash in the form of \
-             \"sha256-<base64-hash-value>\"."]
+             `sha256-<base64-hash-value>`."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -16777,7 +16777,7 @@ end = struct
           [@key "headerIntegrity"]
           [@ocaml.doc
             "Signed exchange header integrity hash in the form of \
-             \"sha256-<base64-hash-value>\"."]
+             `sha256-<base64-hash-value>`."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -27979,7 +27979,7 @@ and Preload : sig
           [@key "sourceText"]
           [@ocaml.doc
             "Source text of JSON representing the rule set. If it comes from\n\
-             <script> tag, it is the textContent of the node. Note that it is\n\
+             `<script>` tag, it is the textContent of the node. Note that it is\n\
              a JSON for valid case.\n\n\
              See also:\n\
              - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
@@ -27989,9 +27989,9 @@ and Preload : sig
           [@yojson.option]
           [@ocaml.doc
             "A speculation rule set is either added through an inline\n\
-             <script> tag or through an external resource via the\n\
+             `<script>` tag or through an external resource via the\n\
              'Speculation-Rules' HTTP header. For the first case, we include\n\
-             the BackendNodeId of the relevant <script> tag. For the second\n\
+             the BackendNodeId of the relevant `<script>` tag. For the second\n\
              case, we include the external URL where the rule set was loaded\n\
              from, and also RequestId if Network domain is enabled.\n\n\
              See also:\n\
@@ -28132,7 +28132,6 @@ and Preload : sig
       | `AudioOutputDeviceRequested
       | `MixedContent
       | `TriggerBackgrounded
-      | `EmbedderTriggeredAndCrossOriginRedirected
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
       | `DataSaverEnabled
@@ -28254,7 +28253,7 @@ end = struct
           [@key "sourceText"]
           [@ocaml.doc
             "Source text of JSON representing the rule set. If it comes from\n\
-             <script> tag, it is the textContent of the node. Note that it is\n\
+             `<script>` tag, it is the textContent of the node. Note that it is\n\
              a JSON for valid case.\n\n\
              See also:\n\
              - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
@@ -28264,9 +28263,9 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "A speculation rule set is either added through an inline\n\
-             <script> tag or through an external resource via the\n\
+             `<script>` tag or through an external resource via the\n\
              'Speculation-Rules' HTTP header. For the first case, we include\n\
-             the BackendNodeId of the relevant <script> tag. For the second\n\
+             the BackendNodeId of the relevant `<script>` tag. For the second\n\
              case, we include the external URL where the rule set was loaded\n\
              from, and also RequestId if Network domain is enabled.\n\n\
              See also:\n\
@@ -28304,7 +28303,7 @@ end = struct
           [@key "sourceText"]
           [@ocaml.doc
             "Source text of JSON representing the rule set. If it comes from\n\
-             <script> tag, it is the textContent of the node. Note that it is\n\
+             `<script>` tag, it is the textContent of the node. Note that it is\n\
              a JSON for valid case.\n\n\
              See also:\n\
              - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
@@ -28314,9 +28313,9 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "A speculation rule set is either added through an inline\n\
-             <script> tag or through an external resource via the\n\
+             `<script>` tag or through an external resource via the\n\
              'Speculation-Rules' HTTP header. For the first case, we include\n\
-             the BackendNodeId of the relevant <script> tag. For the second\n\
+             the BackendNodeId of the relevant `<script>` tag. For the second\n\
              case, we include the external URL where the rule set was loaded\n\
              from, and also RequestId if Network domain is enabled.\n\n\
              See also:\n\
@@ -28547,7 +28546,6 @@ end = struct
       | `AudioOutputDeviceRequested
       | `MixedContent
       | `TriggerBackgrounded
-      | `EmbedderTriggeredAndCrossOriginRedirected
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
       | `DataSaverEnabled
@@ -28623,7 +28621,6 @@ end = struct
       | `AudioOutputDeviceRequested
       | `MixedContent
       | `TriggerBackgrounded
-      | `EmbedderTriggeredAndCrossOriginRedirected
       | `MemoryLimitExceeded
       | `FailToGetMemoryUsage
       | `DataSaverEnabled
@@ -28692,8 +28689,6 @@ end = struct
       | `String "AudioOutputDeviceRequested" -> `AudioOutputDeviceRequested
       | `String "MixedContent" -> `MixedContent
       | `String "TriggerBackgrounded" -> `TriggerBackgrounded
-      | `String "EmbedderTriggeredAndCrossOriginRedirected" ->
-          `EmbedderTriggeredAndCrossOriginRedirected
       | `String "MemoryLimitExceeded" -> `MemoryLimitExceeded
       | `String "FailToGetMemoryUsage" -> `FailToGetMemoryUsage
       | `String "DataSaverEnabled" -> `DataSaverEnabled
@@ -28781,8 +28776,6 @@ end = struct
       | `AudioOutputDeviceRequested -> `String "AudioOutputDeviceRequested"
       | `MixedContent -> `String "MixedContent"
       | `TriggerBackgrounded -> `String "TriggerBackgrounded"
-      | `EmbedderTriggeredAndCrossOriginRedirected ->
-          `String "EmbedderTriggeredAndCrossOriginRedirected"
       | `MemoryLimitExceeded -> `String "MemoryLimitExceeded"
       | `FailToGetMemoryUsage -> `String "FailToGetMemoryUsage"
       | `DataSaverEnabled -> `String "DataSaverEnabled"
