@@ -1334,7 +1334,8 @@ and Audits : sig
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
       | `WarnAttributeValueExceedsMaxSize
-      | `WarnDomainNonASCII ]
+      | `WarnDomainNonASCII
+      | `WarnThirdPartyPhaseout ]
 
     val _cookiewarningreason_of_yojson : Yojson.Basic.t -> _cookiewarningreason
     val yojson_of__cookiewarningreason : _cookiewarningreason -> Yojson.Basic.t
@@ -2341,7 +2342,8 @@ end = struct
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
       | `WarnAttributeValueExceedsMaxSize
-      | `WarnDomainNonASCII ]
+      | `WarnDomainNonASCII
+      | `WarnThirdPartyPhaseout ]
 
     val _cookiewarningreason_of_yojson : Yojson.Basic.t -> _cookiewarningreason
     val yojson_of__cookiewarningreason : _cookiewarningreason -> Yojson.Basic.t
@@ -2359,7 +2361,8 @@ end = struct
       | `WarnSameSiteLaxCrossDowngradeStrict
       | `WarnSameSiteLaxCrossDowngradeLax
       | `WarnAttributeValueExceedsMaxSize
-      | `WarnDomainNonASCII ]
+      | `WarnDomainNonASCII
+      | `WarnThirdPartyPhaseout ]
 
     let _cookiewarningreason_of_yojson = function
       | `String "WarnSameSiteUnspecifiedCrossSiteContext" ->
@@ -2380,6 +2383,7 @@ end = struct
       | `String "WarnAttributeValueExceedsMaxSize" ->
           `WarnAttributeValueExceedsMaxSize
       | `String "WarnDomainNonASCII" -> `WarnDomainNonASCII
+      | `String "WarnThirdPartyPhaseout" -> `WarnThirdPartyPhaseout
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -2402,6 +2406,7 @@ end = struct
       | `WarnAttributeValueExceedsMaxSize ->
           `String "WarnAttributeValueExceedsMaxSize"
       | `WarnDomainNonASCII -> `String "WarnDomainNonASCII"
+      | `WarnThirdPartyPhaseout -> `String "WarnThirdPartyPhaseout"
 
     type t = _cookiewarningreason
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
