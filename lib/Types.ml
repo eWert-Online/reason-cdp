@@ -13498,7 +13498,8 @@ and Network : sig
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
       | `SamePartyConflictsWithOtherAttributes
-      | `NameValuePairExceedsMaxSize ]
+      | `NameValuePairExceedsMaxSize
+      | `DisallowedCharacter ]
 
     val _setcookieblockedreason_of_yojson :
       Yojson.Basic.t -> _setcookieblockedreason
@@ -16072,7 +16073,8 @@ end = struct
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
       | `SamePartyConflictsWithOtherAttributes
-      | `NameValuePairExceedsMaxSize ]
+      | `NameValuePairExceedsMaxSize
+      | `DisallowedCharacter ]
 
     val _setcookieblockedreason_of_yojson :
       Yojson.Basic.t -> _setcookieblockedreason
@@ -16104,7 +16106,8 @@ end = struct
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
       | `SamePartyConflictsWithOtherAttributes
-      | `NameValuePairExceedsMaxSize ]
+      | `NameValuePairExceedsMaxSize
+      | `DisallowedCharacter ]
 
     let _setcookieblockedreason_of_yojson = function
       | `String "SecureOnly" -> `SecureOnly
@@ -16131,6 +16134,7 @@ end = struct
       | `String "SamePartyConflictsWithOtherAttributes" ->
           `SamePartyConflictsWithOtherAttributes
       | `String "NameValuePairExceedsMaxSize" -> `NameValuePairExceedsMaxSize
+      | `String "DisallowedCharacter" -> `DisallowedCharacter
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -16159,6 +16163,7 @@ end = struct
       | `SamePartyConflictsWithOtherAttributes ->
           `String "SamePartyConflictsWithOtherAttributes"
       | `NameValuePairExceedsMaxSize -> `String "NameValuePairExceedsMaxSize"
+      | `DisallowedCharacter -> `String "DisallowedCharacter"
 
     type t = _setcookieblockedreason
     [@@deriving yojson]
