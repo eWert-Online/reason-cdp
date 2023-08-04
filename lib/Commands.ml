@@ -21670,13 +21670,19 @@ module Page = struct
             [@key "transferMode"]
             [@yojson.option]
             [@ocaml.doc "return as stream"]
+        generateTaggedPDF : bool option;
+            [@key "generateTaggedPDF"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Whether or not to generate tagged (accessible) PDF. Defaults to \
+               embedder choice."]
       }
       [@@deriving yojson]
 
       let make ?landscape ?displayHeaderFooter ?printBackground ?scale
           ?paperWidth ?paperHeight ?marginTop ?marginBottom ?marginLeft
           ?marginRight ?pageRanges ?headerTemplate ?footerTemplate
-          ?preferCSSPageSize ?transferMode () =
+          ?preferCSSPageSize ?transferMode ?generateTaggedPDF () =
         {
           landscape;
           displayHeaderFooter;
@@ -21693,6 +21699,7 @@ module Page = struct
           footerTemplate;
           preferCSSPageSize;
           transferMode;
+          generateTaggedPDF;
         }
     end
 

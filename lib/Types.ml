@@ -24200,7 +24200,8 @@ and Storage : sig
       | `destinationReportingLimitReached
       | `destinationGlobalLimitReached
       | `destinationBothLimitsReached
-      | `reportingOriginsPerSiteLimitReached ]
+      | `reportingOriginsPerSiteLimitReached
+      | `exceedsMaxChannelCapacity ]
 
     val _attributionreportingsourceregistrationresult_of_yojson :
       Yojson.Basic.t -> _attributionreportingsourceregistrationresult
@@ -25017,7 +25018,8 @@ end = struct
       | `destinationReportingLimitReached
       | `destinationGlobalLimitReached
       | `destinationBothLimitsReached
-      | `reportingOriginsPerSiteLimitReached ]
+      | `reportingOriginsPerSiteLimitReached
+      | `exceedsMaxChannelCapacity ]
 
     val _attributionreportingsourceregistrationresult_of_yojson :
       Yojson.Basic.t -> _attributionreportingsourceregistrationresult
@@ -25039,7 +25041,8 @@ end = struct
       | `destinationReportingLimitReached
       | `destinationGlobalLimitReached
       | `destinationBothLimitsReached
-      | `reportingOriginsPerSiteLimitReached ]
+      | `reportingOriginsPerSiteLimitReached
+      | `exceedsMaxChannelCapacity ]
 
     let _attributionreportingsourceregistrationresult_of_yojson = function
       | `String "success" -> `success
@@ -25057,6 +25060,7 @@ end = struct
       | `String "destinationBothLimitsReached" -> `destinationBothLimitsReached
       | `String "reportingOriginsPerSiteLimitReached" ->
           `reportingOriginsPerSiteLimitReached
+      | `String "exceedsMaxChannelCapacity" -> `exceedsMaxChannelCapacity
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -25076,6 +25080,7 @@ end = struct
       | `destinationBothLimitsReached -> `String "destinationBothLimitsReached"
       | `reportingOriginsPerSiteLimitReached ->
           `String "reportingOriginsPerSiteLimitReached"
+      | `exceedsMaxChannelCapacity -> `String "exceedsMaxChannelCapacity"
 
     type t = _attributionreportingsourceregistrationresult
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
