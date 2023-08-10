@@ -1311,7 +1311,8 @@ and Audits : sig
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
-      | `ExcludeThirdPartyCookieBlockedInFirstPartySet ]
+      | `ExcludeThirdPartyCookieBlockedInFirstPartySet
+      | `ExcludeThirdPartyPhaseout ]
 
     val _cookieexclusionreason_of_yojson :
       Yojson.Basic.t -> _cookieexclusionreason
@@ -2278,7 +2279,8 @@ end = struct
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
-      | `ExcludeThirdPartyCookieBlockedInFirstPartySet ]
+      | `ExcludeThirdPartyCookieBlockedInFirstPartySet
+      | `ExcludeThirdPartyPhaseout ]
 
     val _cookieexclusionreason_of_yojson :
       Yojson.Basic.t -> _cookieexclusionreason
@@ -2297,7 +2299,8 @@ end = struct
       | `ExcludeInvalidSameParty
       | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
-      | `ExcludeThirdPartyCookieBlockedInFirstPartySet ]
+      | `ExcludeThirdPartyCookieBlockedInFirstPartySet
+      | `ExcludeThirdPartyPhaseout ]
 
     let _cookieexclusionreason_of_yojson = function
       | `String "ExcludeSameSiteUnspecifiedTreatedAsLax" ->
@@ -2311,6 +2314,7 @@ end = struct
       | `String "ExcludeDomainNonASCII" -> `ExcludeDomainNonASCII
       | `String "ExcludeThirdPartyCookieBlockedInFirstPartySet" ->
           `ExcludeThirdPartyCookieBlockedInFirstPartySet
+      | `String "ExcludeThirdPartyPhaseout" -> `ExcludeThirdPartyPhaseout
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -2326,6 +2330,7 @@ end = struct
       | `ExcludeDomainNonASCII -> `String "ExcludeDomainNonASCII"
       | `ExcludeThirdPartyCookieBlockedInFirstPartySet ->
           `String "ExcludeThirdPartyCookieBlockedInFirstPartySet"
+      | `ExcludeThirdPartyPhaseout -> `String "ExcludeThirdPartyPhaseout"
 
     type t = _cookieexclusionreason
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
