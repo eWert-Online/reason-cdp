@@ -3541,6 +3541,16 @@ module CSS = struct
             [@key "cssPositionFallbackRules"]
             [@yojson.option]
             [@ocaml.doc "A list of CSS position fallbacks matching this node."]
+        cssPropertyRules : Types.CSS.CSSPropertyRule.t list option;
+            [@key "cssPropertyRules"]
+            [@yojson.option]
+            [@ocaml.doc "A list of CSS at-property rules matching this node."]
+        cssPropertyRegistrations :
+          Types.CSS.CSSPropertyRegistration.t list option;
+            [@key "cssPropertyRegistrations"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A list of CSS property registrations matching this node."]
         parentLayoutNodeId : Types.DOM.NodeId.t option;
             [@key "parentLayoutNodeId"]
             [@yojson.option]
@@ -3603,6 +3613,16 @@ module CSS = struct
             [@key "cssPositionFallbackRules"]
             [@yojson.option]
             [@ocaml.doc "A list of CSS position fallbacks matching this node."]
+        cssPropertyRules : Types.CSS.CSSPropertyRule.t list option;
+            [@key "cssPropertyRules"]
+            [@yojson.option]
+            [@ocaml.doc "A list of CSS at-property rules matching this node."]
+        cssPropertyRegistrations :
+          Types.CSS.CSSPropertyRegistration.t list option;
+            [@key "cssPropertyRegistrations"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A list of CSS property registrations matching this node."]
         parentLayoutNodeId : Types.DOM.NodeId.t option;
             [@key "parentLayoutNodeId"]
             [@yojson.option]

@@ -5961,6 +5961,42 @@ and CSS : sig
     [@@deriving yojson] [@@ocaml.doc "CSS keyframes rule representation."]
   end
 
+  and CSSPropertyRegistration : sig
+    type t = {
+      propertyName : string;
+          [@key "propertyName"] [@ocaml.doc "No description provided"]
+      initialValue : Value.t option;
+          [@key "initialValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      inherits : bool; [@key "inherits"] [@ocaml.doc "No description provided"]
+      syntax : string; [@key "syntax"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Representation of a custom property registration through \
+       CSS.registerProperty"]
+  end
+
+  and CSSPropertyRule : sig
+    type t = {
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      propertyName : Value.t;
+          [@key "propertyName"] [@ocaml.doc "Associated property name."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS property at-rule representation."]
+  end
+
   and CSSKeyframeRule : sig
     type t = {
       styleSheetId : StyleSheetId.t option;
@@ -7422,6 +7458,74 @@ end = struct
           [@key "keyframes"] [@ocaml.doc "List of keyframes."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS keyframes rule representation."]
+  end
+
+  and CSSPropertyRegistration : sig
+    type t = {
+      propertyName : string;
+          [@key "propertyName"] [@ocaml.doc "No description provided"]
+      initialValue : Value.t option;
+          [@key "initialValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      inherits : bool; [@key "inherits"] [@ocaml.doc "No description provided"]
+      syntax : string; [@key "syntax"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Representation of a custom property registration through \
+       CSS.registerProperty"]
+  end = struct
+    type t = {
+      propertyName : string;
+          [@key "propertyName"] [@ocaml.doc "No description provided"]
+      initialValue : Value.t option;
+          [@key "initialValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      inherits : bool; [@key "inherits"] [@ocaml.doc "No description provided"]
+      syntax : string; [@key "syntax"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Representation of a custom property registration through \
+       CSS.registerProperty"]
+  end
+
+  and CSSPropertyRule : sig
+    type t = {
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      propertyName : Value.t;
+          [@key "propertyName"] [@ocaml.doc "Associated property name."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS property at-rule representation."]
+  end = struct
+    type t = {
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      propertyName : Value.t;
+          [@key "propertyName"] [@ocaml.doc "Associated property name."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS property at-rule representation."]
   end
 
   and CSSKeyframeRule : sig
@@ -29090,7 +29194,7 @@ and FedCm : sig
   end
 
   and DialogType : sig
-    type _dialogtype = [ `AccountChooser | `AutoReauthn ]
+    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpSignin ]
 
     val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
     val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
@@ -29162,7 +29266,7 @@ end = struct
   end
 
   and DialogType : sig
-    type _dialogtype = [ `AccountChooser | `AutoReauthn ]
+    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpSignin ]
 
     val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
     val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
@@ -29173,17 +29277,19 @@ end = struct
       "Whether the dialog shown is an account chooser or an auto \
        re-authentication dialog."]
   end = struct
-    type _dialogtype = [ `AccountChooser | `AutoReauthn ]
+    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpSignin ]
 
     let _dialogtype_of_yojson = function
       | `String "AccountChooser" -> `AccountChooser
       | `String "AutoReauthn" -> `AutoReauthn
+      | `String "ConfirmIdpSignin" -> `ConfirmIdpSignin
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__dialogtype = function
       | `AccountChooser -> `String "AccountChooser"
       | `AutoReauthn -> `String "AutoReauthn"
+      | `ConfirmIdpSignin -> `String "ConfirmIdpSignin"
 
     type t = _dialogtype
     [@@deriving yojson]
