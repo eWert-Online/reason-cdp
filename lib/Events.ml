@@ -127,6 +127,35 @@ module Audits = struct
   end
 end
 
+module Autofill = struct
+  (* Emitted when an address form is filled. *)
+  module AddressFormFilled = struct
+    let name = "Autofill.addressFormFilled"
+
+    type result = {
+      filledFields : Types.Autofill.FilledField.t list;
+          [@key "filledFields"]
+          [@ocaml.doc "Information about the fields that were filled"]
+      addressUi : Types.Autofill.AddressUI.t;
+          [@key "addressUi"]
+          [@ocaml.doc
+            "An UI representation of the address used to fill the form.\n\
+             Consists of a 2D array where each child represents an \
+             address/profile line."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+end
+
 module BackgroundService = struct
   (* Called when the recording state for the service has been updated. *)
   module RecordingStateChanged = struct

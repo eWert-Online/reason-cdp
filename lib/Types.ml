@@ -4420,16 +4420,78 @@ and Autofill : sig
           [@key "name"]
           [@ocaml.doc "address field name, for example GIVEN_NAME."]
       value : string;
-          [@key "value"] [@ocaml.doc "address field name, for example Jon Doe."]
+          [@key "value"]
+          [@ocaml.doc "address field value, for example Jon Doe."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AddressFields : sig
+    type t = {
+      fields : AddressField.t list;
+          [@key "fields"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A list of address fields."]
   end
 
   and Address : sig
     type t = {
       fields : AddressField.t list;
-          [@key "fields"]
-          [@ocaml.doc "fields and values defining a test address."]
+          [@key "fields"] [@ocaml.doc "fields and values defining an address."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AddressUI : sig
+    type t = {
+      addressFields : AddressFields.t list;
+          [@key "addressFields"]
+          [@ocaml.doc
+            "A two dimension array containing the repesentation of values from \
+             an address profile."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Defines how an address can be displayed like in \
+       chrome://settings/addresses.\n\
+       Address UI is a two dimensional array, each inner array is an \"address \
+       information line\", and when rendered in a UI surface should be \
+       displayed as such.\n\
+       The following address UI for instance:\n\
+       [[{name: \"GIVE_NAME\", value: \"Jon\"}, {name: \"FAMILY_NAME\", value: \
+       \"Doe\"}], [{name: \"CITY\", value: \"Munich\"}, {name: \"ZIP\", value: \
+       \"81456\"}]]\n\
+       should allow the receiver to render:\n\
+       Jon Doe\n\
+       Munich 81456"]
+  end
+
+  and FillingStrategy : sig
+    type _fillingstrategy = [ `autocompleteAttribute | `autofillInferred ]
+
+    val _fillingstrategy_of_yojson : Yojson.Basic.t -> _fillingstrategy
+    val yojson_of__fillingstrategy : _fillingstrategy -> Yojson.Basic.t
+
+    type t = _fillingstrategy
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Specified whether a filled field was done so by using the html \
+       autocomplete attribute or autofill heuristics."]
+  end
+
+  and FilledField : sig
+    type t = {
+      htmlType : string;
+          [@key "htmlType"]
+          [@ocaml.doc "The type of the field, e.g text, password etc."]
+      id : string; [@key "id"] [@ocaml.doc "the html id"]
+      name : string; [@key "name"] [@ocaml.doc "the html name"]
+      value : string; [@key "value"] [@ocaml.doc "the field value"]
+      autofillType : string;
+          [@key "autofillType"]
+          [@ocaml.doc "The actual field type, e.g FAMILY_NAME"]
+      fillingStrategy : FillingStrategy.t;
+          [@key "fillingStrategy"] [@ocaml.doc "The filling strategy"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -4466,7 +4528,8 @@ end = struct
           [@key "name"]
           [@ocaml.doc "address field name, for example GIVEN_NAME."]
       value : string;
-          [@key "value"] [@ocaml.doc "address field name, for example Jon Doe."]
+          [@key "value"]
+          [@ocaml.doc "address field value, for example Jon Doe."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -4475,23 +4538,145 @@ end = struct
           [@key "name"]
           [@ocaml.doc "address field name, for example GIVEN_NAME."]
       value : string;
-          [@key "value"] [@ocaml.doc "address field name, for example Jon Doe."]
+          [@key "value"]
+          [@ocaml.doc "address field value, for example Jon Doe."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AddressFields : sig
+    type t = {
+      fields : AddressField.t list;
+          [@key "fields"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A list of address fields."]
+  end = struct
+    type t = {
+      fields : AddressField.t list;
+          [@key "fields"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A list of address fields."]
   end
 
   and Address : sig
     type t = {
       fields : AddressField.t list;
-          [@key "fields"]
-          [@ocaml.doc "fields and values defining a test address."]
+          [@key "fields"] [@ocaml.doc "fields and values defining an address."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type t = {
       fields : AddressField.t list;
-          [@key "fields"]
-          [@ocaml.doc "fields and values defining a test address."]
+          [@key "fields"] [@ocaml.doc "fields and values defining an address."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AddressUI : sig
+    type t = {
+      addressFields : AddressFields.t list;
+          [@key "addressFields"]
+          [@ocaml.doc
+            "A two dimension array containing the repesentation of values from \
+             an address profile."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Defines how an address can be displayed like in \
+       chrome://settings/addresses.\n\
+       Address UI is a two dimensional array, each inner array is an \"address \
+       information line\", and when rendered in a UI surface should be \
+       displayed as such.\n\
+       The following address UI for instance:\n\
+       [[{name: \"GIVE_NAME\", value: \"Jon\"}, {name: \"FAMILY_NAME\", value: \
+       \"Doe\"}], [{name: \"CITY\", value: \"Munich\"}, {name: \"ZIP\", value: \
+       \"81456\"}]]\n\
+       should allow the receiver to render:\n\
+       Jon Doe\n\
+       Munich 81456"]
+  end = struct
+    type t = {
+      addressFields : AddressFields.t list;
+          [@key "addressFields"]
+          [@ocaml.doc
+            "A two dimension array containing the repesentation of values from \
+             an address profile."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Defines how an address can be displayed like in \
+       chrome://settings/addresses.\n\
+       Address UI is a two dimensional array, each inner array is an \"address \
+       information line\", and when rendered in a UI surface should be \
+       displayed as such.\n\
+       The following address UI for instance:\n\
+       [[{name: \"GIVE_NAME\", value: \"Jon\"}, {name: \"FAMILY_NAME\", value: \
+       \"Doe\"}], [{name: \"CITY\", value: \"Munich\"}, {name: \"ZIP\", value: \
+       \"81456\"}]]\n\
+       should allow the receiver to render:\n\
+       Jon Doe\n\
+       Munich 81456"]
+  end
+
+  and FillingStrategy : sig
+    type _fillingstrategy = [ `autocompleteAttribute | `autofillInferred ]
+
+    val _fillingstrategy_of_yojson : Yojson.Basic.t -> _fillingstrategy
+    val yojson_of__fillingstrategy : _fillingstrategy -> Yojson.Basic.t
+
+    type t = _fillingstrategy
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Specified whether a filled field was done so by using the html \
+       autocomplete attribute or autofill heuristics."]
+  end = struct
+    type _fillingstrategy = [ `autocompleteAttribute | `autofillInferred ]
+
+    let _fillingstrategy_of_yojson = function
+      | `String "autocompleteAttribute" -> `autocompleteAttribute
+      | `String "autofillInferred" -> `autofillInferred
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__fillingstrategy = function
+      | `autocompleteAttribute -> `String "autocompleteAttribute"
+      | `autofillInferred -> `String "autofillInferred"
+
+    type t = _fillingstrategy
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Specified whether a filled field was done so by using the html \
+       autocomplete attribute or autofill heuristics."]
+  end
+
+  and FilledField : sig
+    type t = {
+      htmlType : string;
+          [@key "htmlType"]
+          [@ocaml.doc "The type of the field, e.g text, password etc."]
+      id : string; [@key "id"] [@ocaml.doc "the html id"]
+      name : string; [@key "name"] [@ocaml.doc "the html name"]
+      value : string; [@key "value"] [@ocaml.doc "the field value"]
+      autofillType : string;
+          [@key "autofillType"]
+          [@ocaml.doc "The actual field type, e.g FAMILY_NAME"]
+      fillingStrategy : FillingStrategy.t;
+          [@key "fillingStrategy"] [@ocaml.doc "The filling strategy"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      htmlType : string;
+          [@key "htmlType"]
+          [@ocaml.doc "The type of the field, e.g text, password etc."]
+      id : string; [@key "id"] [@ocaml.doc "the html id"]
+      name : string; [@key "name"] [@ocaml.doc "the html name"]
+      value : string; [@key "value"] [@ocaml.doc "the field value"]
+      autofillType : string;
+          [@key "autofillType"]
+          [@ocaml.doc "The actual field type, e.g FAMILY_NAME"]
+      fillingStrategy : FillingStrategy.t;
+          [@key "fillingStrategy"] [@ocaml.doc "The filling strategy"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
