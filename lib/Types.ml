@@ -19402,6 +19402,7 @@ and Page : sig
       | `ch_ect
       | `ch_prefers_color_scheme
       | `ch_prefers_reduced_motion
+      | `ch_prefers_reduced_transparency
       | `ch_rtt
       | `ch_save_data
       | `ch_ua
@@ -20513,6 +20514,7 @@ end = struct
       | `ch_ect
       | `ch_prefers_color_scheme
       | `ch_prefers_reduced_motion
+      | `ch_prefers_reduced_transparency
       | `ch_rtt
       | `ch_save_data
       | `ch_ua
@@ -20606,6 +20608,7 @@ end = struct
       | `ch_ect
       | `ch_prefers_color_scheme
       | `ch_prefers_reduced_motion
+      | `ch_prefers_reduced_transparency
       | `ch_rtt
       | `ch_save_data
       | `ch_ua
@@ -20686,6 +20689,8 @@ end = struct
       | `String "ch-ect" -> `ch_ect
       | `String "ch-prefers-color-scheme" -> `ch_prefers_color_scheme
       | `String "ch-prefers-reduced-motion" -> `ch_prefers_reduced_motion
+      | `String "ch-prefers-reduced-transparency" ->
+          `ch_prefers_reduced_transparency
       | `String "ch-rtt" -> `ch_rtt
       | `String "ch-save-data" -> `ch_save_data
       | `String "ch-ua" -> `ch_ua
@@ -20771,6 +20776,8 @@ end = struct
       | `ch_ect -> `String "ch-ect"
       | `ch_prefers_color_scheme -> `String "ch-prefers-color-scheme"
       | `ch_prefers_reduced_motion -> `String "ch-prefers-reduced-motion"
+      | `ch_prefers_reduced_transparency ->
+          `String "ch-prefers-reduced-transparency"
       | `ch_rtt -> `String "ch-rtt"
       | `ch_save_data -> `String "ch-save-data"
       | `ch_ua -> `String "ch-ua"
