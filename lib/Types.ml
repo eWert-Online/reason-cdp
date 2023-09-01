@@ -24451,6 +24451,14 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingEventReportWindows : sig
+    type t = {
+      start : number; [@key "start"] [@ocaml.doc "duration in seconds"]
+      ends : number list; [@key "ends"] [@ocaml.doc "duration in seconds"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingSourceRegistration : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
@@ -24460,7 +24468,13 @@ and Storage : sig
       eventReportWindow : number option;
           [@key "eventReportWindow"]
           [@yojson.option]
-          [@ocaml.doc "duration in seconds"]
+          [@ocaml.doc
+            "eventReportWindow and eventReportWindows are mutually exclusive\n\
+             duration in seconds"]
+      eventReportWindows : AttributionReportingEventReportWindows.t option;
+          [@key "eventReportWindows"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
       aggregatableReportWindow : number option;
           [@key "aggregatableReportWindow"]
           [@yojson.option]
@@ -25233,6 +25247,20 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingEventReportWindows : sig
+    type t = {
+      start : number; [@key "start"] [@ocaml.doc "duration in seconds"]
+      ends : number list; [@key "ends"] [@ocaml.doc "duration in seconds"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      start : number; [@key "start"] [@ocaml.doc "duration in seconds"]
+      ends : number list; [@key "ends"] [@ocaml.doc "duration in seconds"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingSourceRegistration : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
@@ -25242,7 +25270,13 @@ end = struct
       eventReportWindow : number option;
           [@key "eventReportWindow"]
           [@yojson.option]
-          [@ocaml.doc "duration in seconds"]
+          [@ocaml.doc
+            "eventReportWindow and eventReportWindows are mutually exclusive\n\
+             duration in seconds"]
+      eventReportWindows : AttributionReportingEventReportWindows.t option;
+          [@key "eventReportWindows"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
       aggregatableReportWindow : number option;
           [@key "aggregatableReportWindow"]
           [@yojson.option]
@@ -25278,7 +25312,13 @@ end = struct
       eventReportWindow : number option;
           [@key "eventReportWindow"]
           [@yojson.option]
-          [@ocaml.doc "duration in seconds"]
+          [@ocaml.doc
+            "eventReportWindow and eventReportWindows are mutually exclusive\n\
+             duration in seconds"]
+      eventReportWindows : AttributionReportingEventReportWindows.t option;
+          [@key "eventReportWindows"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
       aggregatableReportWindow : number option;
           [@key "aggregatableReportWindow"]
           [@yojson.option]
