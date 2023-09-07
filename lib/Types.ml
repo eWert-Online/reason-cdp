@@ -28489,7 +28489,6 @@ and Preload : sig
       | `MixedContent
       | `TriggerBackgrounded
       | `MemoryLimitExceeded
-      | `FailToGetMemoryUsage
       | `DataSaverEnabled
       | `HasEffectiveUrl
       | `ActivatedBeforeStarted
@@ -28903,7 +28902,6 @@ end = struct
       | `MixedContent
       | `TriggerBackgrounded
       | `MemoryLimitExceeded
-      | `FailToGetMemoryUsage
       | `DataSaverEnabled
       | `HasEffectiveUrl
       | `ActivatedBeforeStarted
@@ -28978,7 +28976,6 @@ end = struct
       | `MixedContent
       | `TriggerBackgrounded
       | `MemoryLimitExceeded
-      | `FailToGetMemoryUsage
       | `DataSaverEnabled
       | `HasEffectiveUrl
       | `ActivatedBeforeStarted
@@ -29046,7 +29043,6 @@ end = struct
       | `String "MixedContent" -> `MixedContent
       | `String "TriggerBackgrounded" -> `TriggerBackgrounded
       | `String "MemoryLimitExceeded" -> `MemoryLimitExceeded
-      | `String "FailToGetMemoryUsage" -> `FailToGetMemoryUsage
       | `String "DataSaverEnabled" -> `DataSaverEnabled
       | `String "HasEffectiveUrl" -> `HasEffectiveUrl
       | `String "ActivatedBeforeStarted" -> `ActivatedBeforeStarted
@@ -29133,7 +29129,6 @@ end = struct
       | `MixedContent -> `String "MixedContent"
       | `TriggerBackgrounded -> `String "TriggerBackgrounded"
       | `MemoryLimitExceeded -> `String "MemoryLimitExceeded"
-      | `FailToGetMemoryUsage -> `String "FailToGetMemoryUsage"
       | `DataSaverEnabled -> `String "DataSaverEnabled"
       | `HasEffectiveUrl -> `String "HasEffectiveUrl"
       | `ActivatedBeforeStarted -> `String "ActivatedBeforeStarted"
