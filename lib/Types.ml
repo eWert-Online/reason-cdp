@@ -30967,7 +30967,8 @@ and Runtime : sig
       | `typedarray
       | `arraybuffer
       | `node
-      | `window ]
+      | `window
+      | `generator ]
 
     val _deepserializedvalue_type_of_yojson :
       Yojson.Basic.t -> _deepserializedvalue_type
@@ -31671,7 +31672,8 @@ end = struct
       | `typedarray
       | `arraybuffer
       | `node
-      | `window ]
+      | `window
+      | `generator ]
 
     val _deepserializedvalue_type_of_yojson :
       Yojson.Basic.t -> _deepserializedvalue_type
@@ -31723,7 +31725,8 @@ end = struct
       | `typedarray
       | `arraybuffer
       | `node
-      | `window ]
+      | `window
+      | `generator ]
 
     let _deepserializedvalue_type_of_yojson = function
       | `String "undefined" -> `undefined
@@ -31749,6 +31752,7 @@ end = struct
       | `String "arraybuffer" -> `arraybuffer
       | `String "node" -> `node
       | `String "window" -> `window
+      | `String "generator" -> `generator
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -31776,6 +31780,7 @@ end = struct
       | `arraybuffer -> `String "arraybuffer"
       | `node -> `String "node"
       | `window -> `String "window"
+      | `generator -> `String "generator"
 
     type t = {
       type_ : _deepserializedvalue_type;
