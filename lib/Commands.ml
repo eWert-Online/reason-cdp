@@ -4182,6 +4182,76 @@ module CSS = struct
     end
   end
 
+  (* Modifies the property rule property name. *)
+  module SetPropertyRulePropertyName = struct
+    module Response : sig
+      type result = {
+        propertyName : Types.CSS.Value.t;
+            [@key "propertyName"]
+            [@ocaml.doc "The resulting key text after modification."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        propertyName : Types.CSS.Value.t;
+            [@key "propertyName"]
+            [@ocaml.doc "The resulting key text after modification."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        styleSheetId : Types.CSS.StyleSheetId.t;
+            [@key "styleSheetId"] [@ocaml.doc "No description provided"]
+        range : Types.CSS.SourceRange.t;
+            [@key "range"] [@ocaml.doc "No description provided"]
+        propertyName : string;
+            [@key "propertyName"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~styleSheetId ~range ~propertyName () =
+        { styleSheetId; range; propertyName }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "CSS.setPropertyRulePropertyName"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Modifies the keyframe rule key text. *)
   module SetKeyframeKey = struct
     module Response : sig

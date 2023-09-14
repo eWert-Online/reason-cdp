@@ -28477,7 +28477,6 @@ and Preload : sig
       | `NavigationBadHttpStatus
       | `ClientCertRequested
       | `NavigationRequestNetworkError
-      | `MaxNumOfRunningPrerendersExceeded
       | `CancelAllHostsForTesting
       | `DidFailLoad
       | `Stop
@@ -28521,7 +28520,10 @@ and Preload : sig
       | `PrerenderingDisabledByDevTools
       | `ResourceLoadBlockedByClient
       | `SpeculationRuleRemoved
-      | `ActivatedWithAuxiliaryBrowsingContexts ]
+      | `ActivatedWithAuxiliaryBrowsingContexts
+      | `MaxNumOfRunningEagerPrerendersExceeded
+      | `MaxNumOfRunningNonEagerPrerendersExceeded
+      | `MaxNumOfRunningEmbedderPrerendersExceeded ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -28890,7 +28892,6 @@ end = struct
       | `NavigationBadHttpStatus
       | `ClientCertRequested
       | `NavigationRequestNetworkError
-      | `MaxNumOfRunningPrerendersExceeded
       | `CancelAllHostsForTesting
       | `DidFailLoad
       | `Stop
@@ -28934,7 +28935,10 @@ end = struct
       | `PrerenderingDisabledByDevTools
       | `ResourceLoadBlockedByClient
       | `SpeculationRuleRemoved
-      | `ActivatedWithAuxiliaryBrowsingContexts ]
+      | `ActivatedWithAuxiliaryBrowsingContexts
+      | `MaxNumOfRunningEagerPrerendersExceeded
+      | `MaxNumOfRunningNonEagerPrerendersExceeded
+      | `MaxNumOfRunningEmbedderPrerendersExceeded ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -28964,7 +28968,6 @@ end = struct
       | `NavigationBadHttpStatus
       | `ClientCertRequested
       | `NavigationRequestNetworkError
-      | `MaxNumOfRunningPrerendersExceeded
       | `CancelAllHostsForTesting
       | `DidFailLoad
       | `Stop
@@ -29008,7 +29011,10 @@ end = struct
       | `PrerenderingDisabledByDevTools
       | `ResourceLoadBlockedByClient
       | `SpeculationRuleRemoved
-      | `ActivatedWithAuxiliaryBrowsingContexts ]
+      | `ActivatedWithAuxiliaryBrowsingContexts
+      | `MaxNumOfRunningEagerPrerendersExceeded
+      | `MaxNumOfRunningNonEagerPrerendersExceeded
+      | `MaxNumOfRunningEmbedderPrerendersExceeded ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -29030,8 +29036,6 @@ end = struct
       | `String "ClientCertRequested" -> `ClientCertRequested
       | `String "NavigationRequestNetworkError" ->
           `NavigationRequestNetworkError
-      | `String "MaxNumOfRunningPrerendersExceeded" ->
-          `MaxNumOfRunningPrerendersExceeded
       | `String "CancelAllHostsForTesting" -> `CancelAllHostsForTesting
       | `String "DidFailLoad" -> `DidFailLoad
       | `String "Stop" -> `Stop
@@ -29093,6 +29097,12 @@ end = struct
       | `String "SpeculationRuleRemoved" -> `SpeculationRuleRemoved
       | `String "ActivatedWithAuxiliaryBrowsingContexts" ->
           `ActivatedWithAuxiliaryBrowsingContexts
+      | `String "MaxNumOfRunningEagerPrerendersExceeded" ->
+          `MaxNumOfRunningEagerPrerendersExceeded
+      | `String "MaxNumOfRunningNonEagerPrerendersExceeded" ->
+          `MaxNumOfRunningNonEagerPrerendersExceeded
+      | `String "MaxNumOfRunningEmbedderPrerendersExceeded" ->
+          `MaxNumOfRunningEmbedderPrerendersExceeded
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -29116,8 +29126,6 @@ end = struct
       | `ClientCertRequested -> `String "ClientCertRequested"
       | `NavigationRequestNetworkError ->
           `String "NavigationRequestNetworkError"
-      | `MaxNumOfRunningPrerendersExceeded ->
-          `String "MaxNumOfRunningPrerendersExceeded"
       | `CancelAllHostsForTesting -> `String "CancelAllHostsForTesting"
       | `DidFailLoad -> `String "DidFailLoad"
       | `Stop -> `String "Stop"
@@ -29179,6 +29187,12 @@ end = struct
       | `SpeculationRuleRemoved -> `String "SpeculationRuleRemoved"
       | `ActivatedWithAuxiliaryBrowsingContexts ->
           `String "ActivatedWithAuxiliaryBrowsingContexts"
+      | `MaxNumOfRunningEagerPrerendersExceeded ->
+          `String "MaxNumOfRunningEagerPrerendersExceeded"
+      | `MaxNumOfRunningNonEagerPrerendersExceeded ->
+          `String "MaxNumOfRunningNonEagerPrerendersExceeded"
+      | `MaxNumOfRunningEmbedderPrerendersExceeded ->
+          `String "MaxNumOfRunningEmbedderPrerendersExceeded"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
