@@ -13780,6 +13780,7 @@ and Network : sig
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyPhaseout
       | `ThirdPartyBlockedInFirstPartySet
       | `SyntaxError
       | `SchemeNotSupported
@@ -13793,7 +13794,8 @@ and Network : sig
       | `SamePartyFromCrossPartyContext
       | `SamePartyConflictsWithOtherAttributes
       | `NameValuePairExceedsMaxSize
-      | `DisallowedCharacter ]
+      | `DisallowedCharacter
+      | `NoCookieContent ]
 
     val _setcookieblockedreason_of_yojson :
       Yojson.Basic.t -> _setcookieblockedreason
@@ -13817,6 +13819,7 @@ and Network : sig
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyPhaseout
       | `ThirdPartyBlockedInFirstPartySet
       | `UnknownError
       | `SchemefulSameSiteStrict
@@ -16355,6 +16358,7 @@ end = struct
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyPhaseout
       | `ThirdPartyBlockedInFirstPartySet
       | `SyntaxError
       | `SchemeNotSupported
@@ -16368,7 +16372,8 @@ end = struct
       | `SamePartyFromCrossPartyContext
       | `SamePartyConflictsWithOtherAttributes
       | `NameValuePairExceedsMaxSize
-      | `DisallowedCharacter ]
+      | `DisallowedCharacter
+      | `NoCookieContent ]
 
     val _setcookieblockedreason_of_yojson :
       Yojson.Basic.t -> _setcookieblockedreason
@@ -16388,6 +16393,7 @@ end = struct
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyPhaseout
       | `ThirdPartyBlockedInFirstPartySet
       | `SyntaxError
       | `SchemeNotSupported
@@ -16401,7 +16407,8 @@ end = struct
       | `SamePartyFromCrossPartyContext
       | `SamePartyConflictsWithOtherAttributes
       | `NameValuePairExceedsMaxSize
-      | `DisallowedCharacter ]
+      | `DisallowedCharacter
+      | `NoCookieContent ]
 
     let _setcookieblockedreason_of_yojson = function
       | `String "SecureOnly" -> `SecureOnly
@@ -16411,6 +16418,7 @@ end = struct
           `SameSiteUnspecifiedTreatedAsLax
       | `String "SameSiteNoneInsecure" -> `SameSiteNoneInsecure
       | `String "UserPreferences" -> `UserPreferences
+      | `String "ThirdPartyPhaseout" -> `ThirdPartyPhaseout
       | `String "ThirdPartyBlockedInFirstPartySet" ->
           `ThirdPartyBlockedInFirstPartySet
       | `String "SyntaxError" -> `SyntaxError
@@ -16429,6 +16437,7 @@ end = struct
           `SamePartyConflictsWithOtherAttributes
       | `String "NameValuePairExceedsMaxSize" -> `NameValuePairExceedsMaxSize
       | `String "DisallowedCharacter" -> `DisallowedCharacter
+      | `String "NoCookieContent" -> `NoCookieContent
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -16440,6 +16449,7 @@ end = struct
           `String "SameSiteUnspecifiedTreatedAsLax"
       | `SameSiteNoneInsecure -> `String "SameSiteNoneInsecure"
       | `UserPreferences -> `String "UserPreferences"
+      | `ThirdPartyPhaseout -> `String "ThirdPartyPhaseout"
       | `ThirdPartyBlockedInFirstPartySet ->
           `String "ThirdPartyBlockedInFirstPartySet"
       | `SyntaxError -> `String "SyntaxError"
@@ -16458,6 +16468,7 @@ end = struct
           `String "SamePartyConflictsWithOtherAttributes"
       | `NameValuePairExceedsMaxSize -> `String "NameValuePairExceedsMaxSize"
       | `DisallowedCharacter -> `String "DisallowedCharacter"
+      | `NoCookieContent -> `String "NoCookieContent"
 
     type t = _setcookieblockedreason
     [@@deriving yojson]
@@ -16475,6 +16486,7 @@ end = struct
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyPhaseout
       | `ThirdPartyBlockedInFirstPartySet
       | `UnknownError
       | `SchemefulSameSiteStrict
@@ -16500,6 +16512,7 @@ end = struct
       | `SameSiteUnspecifiedTreatedAsLax
       | `SameSiteNoneInsecure
       | `UserPreferences
+      | `ThirdPartyPhaseout
       | `ThirdPartyBlockedInFirstPartySet
       | `UnknownError
       | `SchemefulSameSiteStrict
@@ -16518,6 +16531,7 @@ end = struct
           `SameSiteUnspecifiedTreatedAsLax
       | `String "SameSiteNoneInsecure" -> `SameSiteNoneInsecure
       | `String "UserPreferences" -> `UserPreferences
+      | `String "ThirdPartyPhaseout" -> `ThirdPartyPhaseout
       | `String "ThirdPartyBlockedInFirstPartySet" ->
           `ThirdPartyBlockedInFirstPartySet
       | `String "UnknownError" -> `UnknownError
@@ -16541,6 +16555,7 @@ end = struct
           `String "SameSiteUnspecifiedTreatedAsLax"
       | `SameSiteNoneInsecure -> `String "SameSiteNoneInsecure"
       | `UserPreferences -> `String "UserPreferences"
+      | `ThirdPartyPhaseout -> `String "ThirdPartyPhaseout"
       | `ThirdPartyBlockedInFirstPartySet ->
           `String "ThirdPartyBlockedInFirstPartySet"
       | `UnknownError -> `String "UnknownError"
