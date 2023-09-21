@@ -28504,7 +28504,7 @@ and Preload : sig
       | `TriggerBackgrounded
       | `MemoryLimitExceeded
       | `DataSaverEnabled
-      | `HasEffectiveUrl
+      | `TriggerUrlHasEffectiveUrl
       | `ActivatedBeforeStarted
       | `InactivePageRestriction
       | `StartFailed
@@ -28538,7 +28538,10 @@ and Preload : sig
       | `ActivatedWithAuxiliaryBrowsingContexts
       | `MaxNumOfRunningEagerPrerendersExceeded
       | `MaxNumOfRunningNonEagerPrerendersExceeded
-      | `MaxNumOfRunningEmbedderPrerendersExceeded ]
+      | `MaxNumOfRunningEmbedderPrerendersExceeded
+      | `PrerenderingUrlHasEffectiveUrl
+      | `RedirectedPrerenderingUrlHasEffectiveUrl
+      | `ActivationUrlHasEffectiveUrl ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -28919,7 +28922,7 @@ end = struct
       | `TriggerBackgrounded
       | `MemoryLimitExceeded
       | `DataSaverEnabled
-      | `HasEffectiveUrl
+      | `TriggerUrlHasEffectiveUrl
       | `ActivatedBeforeStarted
       | `InactivePageRestriction
       | `StartFailed
@@ -28953,7 +28956,10 @@ end = struct
       | `ActivatedWithAuxiliaryBrowsingContexts
       | `MaxNumOfRunningEagerPrerendersExceeded
       | `MaxNumOfRunningNonEagerPrerendersExceeded
-      | `MaxNumOfRunningEmbedderPrerendersExceeded ]
+      | `MaxNumOfRunningEmbedderPrerendersExceeded
+      | `PrerenderingUrlHasEffectiveUrl
+      | `RedirectedPrerenderingUrlHasEffectiveUrl
+      | `ActivationUrlHasEffectiveUrl ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -28995,7 +29001,7 @@ end = struct
       | `TriggerBackgrounded
       | `MemoryLimitExceeded
       | `DataSaverEnabled
-      | `HasEffectiveUrl
+      | `TriggerUrlHasEffectiveUrl
       | `ActivatedBeforeStarted
       | `InactivePageRestriction
       | `StartFailed
@@ -29029,7 +29035,10 @@ end = struct
       | `ActivatedWithAuxiliaryBrowsingContexts
       | `MaxNumOfRunningEagerPrerendersExceeded
       | `MaxNumOfRunningNonEagerPrerendersExceeded
-      | `MaxNumOfRunningEmbedderPrerendersExceeded ]
+      | `MaxNumOfRunningEmbedderPrerendersExceeded
+      | `PrerenderingUrlHasEffectiveUrl
+      | `RedirectedPrerenderingUrlHasEffectiveUrl
+      | `ActivationUrlHasEffectiveUrl ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -29063,7 +29072,7 @@ end = struct
       | `String "TriggerBackgrounded" -> `TriggerBackgrounded
       | `String "MemoryLimitExceeded" -> `MemoryLimitExceeded
       | `String "DataSaverEnabled" -> `DataSaverEnabled
-      | `String "HasEffectiveUrl" -> `HasEffectiveUrl
+      | `String "TriggerUrlHasEffectiveUrl" -> `TriggerUrlHasEffectiveUrl
       | `String "ActivatedBeforeStarted" -> `ActivatedBeforeStarted
       | `String "InactivePageRestriction" -> `InactivePageRestriction
       | `String "StartFailed" -> `StartFailed
@@ -29118,6 +29127,11 @@ end = struct
           `MaxNumOfRunningNonEagerPrerendersExceeded
       | `String "MaxNumOfRunningEmbedderPrerendersExceeded" ->
           `MaxNumOfRunningEmbedderPrerendersExceeded
+      | `String "PrerenderingUrlHasEffectiveUrl" ->
+          `PrerenderingUrlHasEffectiveUrl
+      | `String "RedirectedPrerenderingUrlHasEffectiveUrl" ->
+          `RedirectedPrerenderingUrlHasEffectiveUrl
+      | `String "ActivationUrlHasEffectiveUrl" -> `ActivationUrlHasEffectiveUrl
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -29153,7 +29167,7 @@ end = struct
       | `TriggerBackgrounded -> `String "TriggerBackgrounded"
       | `MemoryLimitExceeded -> `String "MemoryLimitExceeded"
       | `DataSaverEnabled -> `String "DataSaverEnabled"
-      | `HasEffectiveUrl -> `String "HasEffectiveUrl"
+      | `TriggerUrlHasEffectiveUrl -> `String "TriggerUrlHasEffectiveUrl"
       | `ActivatedBeforeStarted -> `String "ActivatedBeforeStarted"
       | `InactivePageRestriction -> `String "InactivePageRestriction"
       | `StartFailed -> `String "StartFailed"
@@ -29208,6 +29222,11 @@ end = struct
           `String "MaxNumOfRunningNonEagerPrerendersExceeded"
       | `MaxNumOfRunningEmbedderPrerendersExceeded ->
           `String "MaxNumOfRunningEmbedderPrerendersExceeded"
+      | `PrerenderingUrlHasEffectiveUrl ->
+          `String "PrerenderingUrlHasEffectiveUrl"
+      | `RedirectedPrerenderingUrlHasEffectiveUrl ->
+          `String "RedirectedPrerenderingUrlHasEffectiveUrl"
+      | `ActivationUrlHasEffectiveUrl -> `String "ActivationUrlHasEffectiveUrl"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
