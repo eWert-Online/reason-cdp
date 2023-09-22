@@ -2063,6 +2063,40 @@ and Audits : sig
       "This issue warns when a referenced stylesheet couldn't be loaded."]
   end
 
+  and PropertyRuleIssueReason : sig
+    type _propertyruleissuereason =
+      [ `InvalidSyntax | `InvalidInitialValue | `InvalidInherits | `InvalidName ]
+
+    val _propertyruleissuereason_of_yojson :
+      Yojson.Basic.t -> _propertyruleissuereason
+
+    val yojson_of__propertyruleissuereason :
+      _propertyruleissuereason -> Yojson.Basic.t
+
+    type t = _propertyruleissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PropertyRuleIssueDetails : sig
+    type t = {
+      sourceCodeLocation : SourceCodeLocation.t;
+          [@key "sourceCodeLocation"]
+          [@ocaml.doc "Source code position of the property rule."]
+      propertyRuleIssueReason : PropertyRuleIssueReason.t;
+          [@key "propertyRuleIssueReason"]
+          [@ocaml.doc "Reason why the property rule was discarded."]
+      propertyValue : string option;
+          [@key "propertyValue"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The value of the property rule property that failed to parse"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about errors in property rules that lead to property\n\
+       registrations being ignored."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -2082,7 +2116,8 @@ and Audits : sig
       | `FederatedAuthRequestIssue
       | `BounceTrackingIssue
       | `StylesheetLoadingIssue
-      | `FederatedAuthUserInfoRequestIssue ]
+      | `FederatedAuthUserInfoRequestIssue
+      | `PropertyRuleIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2166,6 +2201,10 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
           [@key "stylesheetLoadingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      propertyRuleIssueDetails : PropertyRuleIssueDetails.t option;
+          [@key "propertyRuleIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       federatedAuthUserInfoRequestIssueDetails :
@@ -4079,6 +4118,78 @@ end = struct
       "This issue warns when a referenced stylesheet couldn't be loaded."]
   end
 
+  and PropertyRuleIssueReason : sig
+    type _propertyruleissuereason =
+      [ `InvalidSyntax | `InvalidInitialValue | `InvalidInherits | `InvalidName ]
+
+    val _propertyruleissuereason_of_yojson :
+      Yojson.Basic.t -> _propertyruleissuereason
+
+    val yojson_of__propertyruleissuereason :
+      _propertyruleissuereason -> Yojson.Basic.t
+
+    type t = _propertyruleissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _propertyruleissuereason =
+      [ `InvalidSyntax | `InvalidInitialValue | `InvalidInherits | `InvalidName ]
+
+    let _propertyruleissuereason_of_yojson = function
+      | `String "InvalidSyntax" -> `InvalidSyntax
+      | `String "InvalidInitialValue" -> `InvalidInitialValue
+      | `String "InvalidInherits" -> `InvalidInherits
+      | `String "InvalidName" -> `InvalidName
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__propertyruleissuereason = function
+      | `InvalidSyntax -> `String "InvalidSyntax"
+      | `InvalidInitialValue -> `String "InvalidInitialValue"
+      | `InvalidInherits -> `String "InvalidInherits"
+      | `InvalidName -> `String "InvalidName"
+
+    type t = _propertyruleissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PropertyRuleIssueDetails : sig
+    type t = {
+      sourceCodeLocation : SourceCodeLocation.t;
+          [@key "sourceCodeLocation"]
+          [@ocaml.doc "Source code position of the property rule."]
+      propertyRuleIssueReason : PropertyRuleIssueReason.t;
+          [@key "propertyRuleIssueReason"]
+          [@ocaml.doc "Reason why the property rule was discarded."]
+      propertyValue : string option;
+          [@key "propertyValue"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The value of the property rule property that failed to parse"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about errors in property rules that lead to property\n\
+       registrations being ignored."]
+  end = struct
+    type t = {
+      sourceCodeLocation : SourceCodeLocation.t;
+          [@key "sourceCodeLocation"]
+          [@ocaml.doc "Source code position of the property rule."]
+      propertyRuleIssueReason : PropertyRuleIssueReason.t;
+          [@key "propertyRuleIssueReason"]
+          [@ocaml.doc "Reason why the property rule was discarded."]
+      propertyValue : string option;
+          [@key "propertyValue"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The value of the property rule property that failed to parse"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about errors in property rules that lead to property\n\
+       registrations being ignored."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -4098,7 +4209,8 @@ end = struct
       | `FederatedAuthRequestIssue
       | `BounceTrackingIssue
       | `StylesheetLoadingIssue
-      | `FederatedAuthUserInfoRequestIssue ]
+      | `FederatedAuthUserInfoRequestIssue
+      | `PropertyRuleIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -4128,7 +4240,8 @@ end = struct
       | `FederatedAuthRequestIssue
       | `BounceTrackingIssue
       | `StylesheetLoadingIssue
-      | `FederatedAuthUserInfoRequestIssue ]
+      | `FederatedAuthUserInfoRequestIssue
+      | `PropertyRuleIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -4150,6 +4263,7 @@ end = struct
       | `String "StylesheetLoadingIssue" -> `StylesheetLoadingIssue
       | `String "FederatedAuthUserInfoRequestIssue" ->
           `FederatedAuthUserInfoRequestIssue
+      | `String "PropertyRuleIssue" -> `PropertyRuleIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4173,6 +4287,7 @@ end = struct
       | `StylesheetLoadingIssue -> `String "StylesheetLoadingIssue"
       | `FederatedAuthUserInfoRequestIssue ->
           `String "FederatedAuthUserInfoRequestIssue"
+      | `PropertyRuleIssue -> `String "PropertyRuleIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -4253,6 +4368,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
           [@key "stylesheetLoadingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      propertyRuleIssueDetails : PropertyRuleIssueDetails.t option;
+          [@key "propertyRuleIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       federatedAuthUserInfoRequestIssueDetails :
@@ -4337,6 +4456,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
           [@key "stylesheetLoadingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      propertyRuleIssueDetails : PropertyRuleIssueDetails.t option;
+          [@key "propertyRuleIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       federatedAuthUserInfoRequestIssueDetails :
@@ -24178,7 +24301,14 @@ and Storage : sig
 
   and InterestGroupAccessType : sig
     type _interestgroupaccesstype =
-      [ `join | `leave | `update | `loaded | `bid | `win ]
+      [ `join
+      | `leave
+      | `update
+      | `loaded
+      | `bid
+      | `win
+      | `additionalBid
+      | `additionalBidWin ]
 
     val _interestgroupaccesstype_of_yojson :
       Yojson.Basic.t -> _interestgroupaccesstype
@@ -24668,7 +24798,14 @@ end = struct
 
   and InterestGroupAccessType : sig
     type _interestgroupaccesstype =
-      [ `join | `leave | `update | `loaded | `bid | `win ]
+      [ `join
+      | `leave
+      | `update
+      | `loaded
+      | `bid
+      | `win
+      | `additionalBid
+      | `additionalBidWin ]
 
     val _interestgroupaccesstype_of_yojson :
       Yojson.Basic.t -> _interestgroupaccesstype
@@ -24680,7 +24817,14 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Enum of interest group access types."]
   end = struct
     type _interestgroupaccesstype =
-      [ `join | `leave | `update | `loaded | `bid | `win ]
+      [ `join
+      | `leave
+      | `update
+      | `loaded
+      | `bid
+      | `win
+      | `additionalBid
+      | `additionalBidWin ]
 
     let _interestgroupaccesstype_of_yojson = function
       | `String "join" -> `join
@@ -24689,6 +24833,8 @@ end = struct
       | `String "loaded" -> `loaded
       | `String "bid" -> `bid
       | `String "win" -> `win
+      | `String "additionalBid" -> `additionalBid
+      | `String "additionalBidWin" -> `additionalBidWin
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -24699,6 +24845,8 @@ end = struct
       | `loaded -> `String "loaded"
       | `bid -> `String "bid"
       | `win -> `String "win"
+      | `additionalBid -> `String "additionalBid"
+      | `additionalBidWin -> `String "additionalBidWin"
 
     type t = _interestgroupaccesstype
     [@@deriving yojson] [@@ocaml.doc "Enum of interest group access types."]
