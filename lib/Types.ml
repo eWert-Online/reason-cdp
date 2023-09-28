@@ -31134,9 +31134,8 @@ and Runtime : sig
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "Represents options for serialization. Overrides `generatePreview`, \
-       `returnByValue` and\n\
-       `generateWebDriverValue`."]
+      "Represents options for serialization. Overrides `generatePreview` and \
+       `returnByValue`."]
   end
 
   and DeepSerializedValue : sig
@@ -31281,12 +31280,6 @@ and Runtime : sig
           [@key "description"]
           [@yojson.option]
           [@ocaml.doc "String representation of the object."]
-      webDriverValue : DeepSerializedValue.t option;
-          [@key "webDriverValue"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Deprecated. Use `deepSerializedValue` instead. WebDriver BiDi \
-             representation of the value."]
       deepSerializedValue : DeepSerializedValue.t option;
           [@key "deepSerializedValue"]
           [@yojson.option]
@@ -31800,9 +31793,8 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "Represents options for serialization. Overrides `generatePreview`, \
-       `returnByValue` and\n\
-       `generateWebDriverValue`."]
+      "Represents options for serialization. Overrides `generatePreview` and \
+       `returnByValue`."]
   end = struct
     type _serializationoptions_serialization = [ `deep | `json | `idOnly ]
 
@@ -31839,9 +31831,8 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "Represents options for serialization. Overrides `generatePreview`, \
-       `returnByValue` and\n\
-       `generateWebDriverValue`."]
+      "Represents options for serialization. Overrides `generatePreview` and \
+       `returnByValue`."]
   end
 
   and DeepSerializedValue : sig
@@ -32097,12 +32088,6 @@ end = struct
           [@key "description"]
           [@yojson.option]
           [@ocaml.doc "String representation of the object."]
-      webDriverValue : DeepSerializedValue.t option;
-          [@key "webDriverValue"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Deprecated. Use `deepSerializedValue` instead. WebDriver BiDi \
-             representation of the value."]
       deepSerializedValue : DeepSerializedValue.t option;
           [@key "deepSerializedValue"]
           [@yojson.option]
@@ -32254,12 +32239,6 @@ end = struct
           [@key "description"]
           [@yojson.option]
           [@ocaml.doc "String representation of the object."]
-      webDriverValue : DeepSerializedValue.t option;
-          [@key "webDriverValue"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Deprecated. Use `deepSerializedValue` instead. WebDriver BiDi \
-             representation of the value."]
       deepSerializedValue : DeepSerializedValue.t option;
           [@key "deepSerializedValue"]
           [@yojson.option]

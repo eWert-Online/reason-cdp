@@ -35032,30 +35032,19 @@ module Runtime = struct
                navigation across process\n\
                boundaries).\n\
                This is mutually exclusive with `executionContextId`."]
-        generateWebDriverValue : bool option;
-            [@key "generateWebDriverValue"]
-            [@yojson.option]
-            [@ocaml.doc
-              "Deprecated. Use `serializationOptions: \
-               {serialization:\"deep\"}` instead.\n\
-               Whether the result should contain `webDriverValue`, serialized \
-               according to\n\
-               https://w3c.github.io/webdriver-bidi. This is mutually \
-               exclusive with `returnByValue`, but\n\
-               resulting `objectId` is still provided."]
         serializationOptions : Types.Runtime.SerializationOptions.t option;
             [@key "serializationOptions"]
             [@yojson.option]
             [@ocaml.doc
               "Specifies the result serialization. If provided, overrides\n\
-               `generatePreview`, `returnByValue` and `generateWebDriverValue`."]
+               `generatePreview` and `returnByValue`."]
       }
       [@@deriving yojson]
 
       let make ~functionDeclaration ?objectId ?arguments ?silent ?returnByValue
           ?generatePreview ?userGesture ?awaitPromise ?executionContextId
-          ?objectGroup ?throwOnSideEffect ?uniqueContextId
-          ?generateWebDriverValue ?serializationOptions () =
+          ?objectGroup ?throwOnSideEffect ?uniqueContextId ?serializationOptions
+          () =
         {
           functionDeclaration;
           objectId;
@@ -35069,7 +35058,6 @@ module Runtime = struct
           objectGroup;
           throwOnSideEffect;
           uniqueContextId;
-          generateWebDriverValue;
           serializationOptions;
         }
     end
@@ -35461,31 +35449,20 @@ module Runtime = struct
                navigation across process\n\
                boundaries).\n\
                This is mutually exclusive with `contextId`."]
-        generateWebDriverValue : bool option;
-            [@key "generateWebDriverValue"]
-            [@yojson.option]
-            [@ocaml.doc
-              "Deprecated. Use `serializationOptions: \
-               {serialization:\"deep\"}` instead.\n\
-               Whether the result should contain `webDriverValue`, serialized\n\
-               according to\n\
-               https://w3c.github.io/webdriver-bidi. This is mutually \
-               exclusive with `returnByValue`, but\n\
-               resulting `objectId` is still provided."]
         serializationOptions : Types.Runtime.SerializationOptions.t option;
             [@key "serializationOptions"]
             [@yojson.option]
             [@ocaml.doc
               "Specifies the result serialization. If provided, overrides\n\
-               `generatePreview`, `returnByValue` and `generateWebDriverValue`."]
+               `generatePreview` and `returnByValue`."]
       }
       [@@deriving yojson]
 
       let make ~expression ?objectGroup ?includeCommandLineAPI ?silent
           ?contextId ?returnByValue ?generatePreview ?userGesture ?awaitPromise
           ?throwOnSideEffect ?timeout ?disableBreaks ?replMode
-          ?allowUnsafeEvalBlockedByCSP ?uniqueContextId ?generateWebDriverValue
-          ?serializationOptions () =
+          ?allowUnsafeEvalBlockedByCSP ?uniqueContextId ?serializationOptions ()
+          =
         {
           expression;
           objectGroup;
@@ -35502,7 +35479,6 @@ module Runtime = struct
           replMode;
           allowUnsafeEvalBlockedByCSP;
           uniqueContextId;
-          generateWebDriverValue;
           serializationOptions;
         }
     end
