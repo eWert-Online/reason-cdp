@@ -24322,8 +24322,8 @@ and Storage : sig
 
   and InterestGroupAd : sig
     type t = {
-      renderUrl : string;
-          [@key "renderUrl"] [@ocaml.doc "No description provided"]
+      renderURL : string;
+          [@key "renderURL"] [@ocaml.doc "No description provided"]
       metadata : string option;
           [@key "metadata"]
           [@yojson.option]
@@ -24342,20 +24342,20 @@ and Storage : sig
           [@key "expirationTime"] [@ocaml.doc "No description provided"]
       joiningOrigin : string;
           [@key "joiningOrigin"] [@ocaml.doc "No description provided"]
-      biddingUrl : string option;
-          [@key "biddingUrl"]
+      biddingLogicURL : string option;
+          [@key "biddingLogicURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      biddingWasmHelperUrl : string option;
-          [@key "biddingWasmHelperUrl"]
+      biddingWasmHelperURL : string option;
+          [@key "biddingWasmHelperURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      updateUrl : string option;
-          [@key "updateUrl"]
+      updateURL : string option;
+          [@key "updateURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      trustedBiddingSignalsUrl : string option;
-          [@key "trustedBiddingSignalsUrl"]
+      trustedBiddingSignalsURL : string option;
+          [@key "trustedBiddingSignalsURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       trustedBiddingSignalsKeys : string list;
@@ -24854,8 +24854,8 @@ end = struct
 
   and InterestGroupAd : sig
     type t = {
-      renderUrl : string;
-          [@key "renderUrl"] [@ocaml.doc "No description provided"]
+      renderURL : string;
+          [@key "renderURL"] [@ocaml.doc "No description provided"]
       metadata : string option;
           [@key "metadata"]
           [@yojson.option]
@@ -24865,8 +24865,8 @@ end = struct
     [@@ocaml.doc "Ad advertising element inside an interest group."]
   end = struct
     type t = {
-      renderUrl : string;
-          [@key "renderUrl"] [@ocaml.doc "No description provided"]
+      renderURL : string;
+          [@key "renderURL"] [@ocaml.doc "No description provided"]
       metadata : string option;
           [@key "metadata"]
           [@yojson.option]
@@ -24885,20 +24885,20 @@ end = struct
           [@key "expirationTime"] [@ocaml.doc "No description provided"]
       joiningOrigin : string;
           [@key "joiningOrigin"] [@ocaml.doc "No description provided"]
-      biddingUrl : string option;
-          [@key "biddingUrl"]
+      biddingLogicURL : string option;
+          [@key "biddingLogicURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      biddingWasmHelperUrl : string option;
-          [@key "biddingWasmHelperUrl"]
+      biddingWasmHelperURL : string option;
+          [@key "biddingWasmHelperURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      updateUrl : string option;
-          [@key "updateUrl"]
+      updateURL : string option;
+          [@key "updateURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      trustedBiddingSignalsUrl : string option;
-          [@key "trustedBiddingSignalsUrl"]
+      trustedBiddingSignalsURL : string option;
+          [@key "trustedBiddingSignalsURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       trustedBiddingSignalsKeys : string list;
@@ -24923,20 +24923,20 @@ end = struct
           [@key "expirationTime"] [@ocaml.doc "No description provided"]
       joiningOrigin : string;
           [@key "joiningOrigin"] [@ocaml.doc "No description provided"]
-      biddingUrl : string option;
-          [@key "biddingUrl"]
+      biddingLogicURL : string option;
+          [@key "biddingLogicURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      biddingWasmHelperUrl : string option;
-          [@key "biddingWasmHelperUrl"]
+      biddingWasmHelperURL : string option;
+          [@key "biddingWasmHelperURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      updateUrl : string option;
-          [@key "updateUrl"]
+      updateURL : string option;
+          [@key "updateURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      trustedBiddingSignalsUrl : string option;
-          [@key "trustedBiddingSignalsUrl"]
+      trustedBiddingSignalsURL : string option;
+          [@key "trustedBiddingSignalsURL"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       trustedBiddingSignalsKeys : string list;

@@ -4131,41 +4131,6 @@ module Preload = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
-  (* Fired when a prerender attempt is completed. *)
-  module PrerenderAttemptCompleted = struct
-    let name = "Preload.prerenderAttemptCompleted"
-
-    type result = {
-      key : Types.Preload.PreloadingAttemptKey.t;
-          [@key "key"] [@ocaml.doc "No description provided"]
-      initiatingFrameId : Types.Page.FrameId.t;
-          [@key "initiatingFrameId"]
-          [@ocaml.doc "The frame id of the frame initiating prerendering."]
-      prerenderingUrl : string;
-          [@key "prerenderingUrl"] [@ocaml.doc "No description provided"]
-      finalStatus : Types.Preload.PrerenderFinalStatus.t;
-          [@key "finalStatus"] [@ocaml.doc "No description provided"]
-      disallowedApiMethod : string option;
-          [@key "disallowedApiMethod"]
-          [@yojson.option]
-          [@ocaml.doc
-            "This is used to give users more information about the name of the \
-             API call\n\
-             that is incompatible with prerender and has caused the \
-             cancellation of the attempt"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-
   (* Fired when a preload enabled state is updated. *)
   module PreloadEnabledStateUpdated = struct
     let name = "Preload.preloadEnabledStateUpdated"
