@@ -28628,7 +28628,6 @@ and Preload : sig
       | `LowEndDevice
       | `InvalidSchemeRedirect
       | `InvalidSchemeNavigation
-      | `InProgressNavigation
       | `NavigationRequestBlockedByCsp
       | `MainFrameNavigation
       | `MojoBinderPolicy
@@ -29046,7 +29045,6 @@ end = struct
       | `LowEndDevice
       | `InvalidSchemeRedirect
       | `InvalidSchemeNavigation
-      | `InProgressNavigation
       | `NavigationRequestBlockedByCsp
       | `MainFrameNavigation
       | `MojoBinderPolicy
@@ -29125,7 +29123,6 @@ end = struct
       | `LowEndDevice
       | `InvalidSchemeRedirect
       | `InvalidSchemeNavigation
-      | `InProgressNavigation
       | `NavigationRequestBlockedByCsp
       | `MainFrameNavigation
       | `MojoBinderPolicy
@@ -29194,7 +29191,6 @@ end = struct
       | `String "LowEndDevice" -> `LowEndDevice
       | `String "InvalidSchemeRedirect" -> `InvalidSchemeRedirect
       | `String "InvalidSchemeNavigation" -> `InvalidSchemeNavigation
-      | `String "InProgressNavigation" -> `InProgressNavigation
       | `String "NavigationRequestBlockedByCsp" ->
           `NavigationRequestBlockedByCsp
       | `String "MainFrameNavigation" -> `MainFrameNavigation
@@ -29289,7 +29285,6 @@ end = struct
       | `LowEndDevice -> `String "LowEndDevice"
       | `InvalidSchemeRedirect -> `String "InvalidSchemeRedirect"
       | `InvalidSchemeNavigation -> `String "InvalidSchemeNavigation"
-      | `InProgressNavigation -> `String "InProgressNavigation"
       | `NavigationRequestBlockedByCsp ->
           `String "NavigationRequestBlockedByCsp"
       | `MainFrameNavigation -> `String "MainFrameNavigation"
