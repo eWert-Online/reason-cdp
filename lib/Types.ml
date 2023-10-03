@@ -24308,7 +24308,8 @@ and Storage : sig
       | `bid
       | `win
       | `additionalBid
-      | `additionalBidWin ]
+      | `additionalBidWin
+      | `clear ]
 
     val _interestgroupaccesstype_of_yojson :
       Yojson.Basic.t -> _interestgroupaccesstype
@@ -24805,7 +24806,8 @@ end = struct
       | `bid
       | `win
       | `additionalBid
-      | `additionalBidWin ]
+      | `additionalBidWin
+      | `clear ]
 
     val _interestgroupaccesstype_of_yojson :
       Yojson.Basic.t -> _interestgroupaccesstype
@@ -24824,7 +24826,8 @@ end = struct
       | `bid
       | `win
       | `additionalBid
-      | `additionalBidWin ]
+      | `additionalBidWin
+      | `clear ]
 
     let _interestgroupaccesstype_of_yojson = function
       | `String "join" -> `join
@@ -24835,6 +24838,7 @@ end = struct
       | `String "win" -> `win
       | `String "additionalBid" -> `additionalBid
       | `String "additionalBidWin" -> `additionalBidWin
+      | `String "clear" -> `clear
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -24847,6 +24851,7 @@ end = struct
       | `win -> `String "win"
       | `additionalBid -> `String "additionalBid"
       | `additionalBidWin -> `String "additionalBidWin"
+      | `clear -> `String "clear"
 
     type t = _interestgroupaccesstype
     [@@deriving yojson] [@@ocaml.doc "Enum of interest group access types."]
@@ -29612,7 +29617,7 @@ and FedCm : sig
   end
 
   and DialogType : sig
-    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpSignin ]
+    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin ]
 
     val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
     val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
@@ -29636,8 +29641,8 @@ and FedCm : sig
           [@key "pictureUrl"] [@ocaml.doc "No description provided"]
       idpConfigUrl : string;
           [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
-      idpSigninUrl : string;
-          [@key "idpSigninUrl"] [@ocaml.doc "No description provided"]
+      idpLoginUrl : string;
+          [@key "idpLoginUrl"] [@ocaml.doc "No description provided"]
       loginState : LoginState.t;
           [@key "loginState"] [@ocaml.doc "No description provided"]
       termsOfServiceUrl : string option;
@@ -29684,7 +29689,7 @@ end = struct
   end
 
   and DialogType : sig
-    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpSignin ]
+    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin ]
 
     val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
     val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
@@ -29695,19 +29700,19 @@ end = struct
       "Whether the dialog shown is an account chooser or an auto \
        re-authentication dialog."]
   end = struct
-    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpSignin ]
+    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin ]
 
     let _dialogtype_of_yojson = function
       | `String "AccountChooser" -> `AccountChooser
       | `String "AutoReauthn" -> `AutoReauthn
-      | `String "ConfirmIdpSignin" -> `ConfirmIdpSignin
+      | `String "ConfirmIdpLogin" -> `ConfirmIdpLogin
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__dialogtype = function
       | `AccountChooser -> `String "AccountChooser"
       | `AutoReauthn -> `String "AutoReauthn"
-      | `ConfirmIdpSignin -> `String "ConfirmIdpSignin"
+      | `ConfirmIdpLogin -> `String "ConfirmIdpLogin"
 
     type t = _dialogtype
     [@@deriving yojson]
@@ -29728,8 +29733,8 @@ end = struct
           [@key "pictureUrl"] [@ocaml.doc "No description provided"]
       idpConfigUrl : string;
           [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
-      idpSigninUrl : string;
-          [@key "idpSigninUrl"] [@ocaml.doc "No description provided"]
+      idpLoginUrl : string;
+          [@key "idpLoginUrl"] [@ocaml.doc "No description provided"]
       loginState : LoginState.t;
           [@key "loginState"] [@ocaml.doc "No description provided"]
       termsOfServiceUrl : string option;
@@ -29754,8 +29759,8 @@ end = struct
           [@key "pictureUrl"] [@ocaml.doc "No description provided"]
       idpConfigUrl : string;
           [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
-      idpSigninUrl : string;
-          [@key "idpSigninUrl"] [@ocaml.doc "No description provided"]
+      idpLoginUrl : string;
+          [@key "idpLoginUrl"] [@ocaml.doc "No description provided"]
       loginState : LoginState.t;
           [@key "loginState"] [@ocaml.doc "No description provided"]
       termsOfServiceUrl : string option;

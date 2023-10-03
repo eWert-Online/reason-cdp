@@ -30919,9 +30919,9 @@ module FedCm = struct
     end
   end
 
-  (* Only valid if the dialog type is ConfirmIdpSignin. Acts as if the user had
+  (* Only valid if the dialog type is ConfirmIdpLogin. Acts as if the user had
      clicked the continue button. *)
-  module ConfirmIdpSignin = struct
+  module ConfirmIdpLogin = struct
     module Response : sig
       type result = Types.assoc
       type error = { code : int; message : string }
@@ -30969,7 +30969,7 @@ module FedCm = struct
       [@@deriving yojson]
 
       let make ?sessionId ~params id =
-        { id; method_ = "FedCm.confirmIdpSignin"; sessionId; params }
+        { id; method_ = "FedCm.confirmIdpLogin"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
