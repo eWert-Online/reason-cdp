@@ -1949,7 +1949,8 @@ and Audits : sig
       | `Canceled
       | `RpPageNotVisible
       | `SilentMediationFailure
-      | `ThirdPartyCookiesBlocked ]
+      | `ThirdPartyCookiesBlocked
+      | `NotSignedInWithIdp ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -3770,7 +3771,8 @@ end = struct
       | `Canceled
       | `RpPageNotVisible
       | `SilentMediationFailure
-      | `ThirdPartyCookiesBlocked ]
+      | `ThirdPartyCookiesBlocked
+      | `NotSignedInWithIdp ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -3822,7 +3824,8 @@ end = struct
       | `Canceled
       | `RpPageNotVisible
       | `SilentMediationFailure
-      | `ThirdPartyCookiesBlocked ]
+      | `ThirdPartyCookiesBlocked
+      | `NotSignedInWithIdp ]
 
     let _federatedauthrequestissuereason_of_yojson = function
       | `String "ShouldEmbargo" -> `ShouldEmbargo
@@ -3862,6 +3865,7 @@ end = struct
       | `String "RpPageNotVisible" -> `RpPageNotVisible
       | `String "SilentMediationFailure" -> `SilentMediationFailure
       | `String "ThirdPartyCookiesBlocked" -> `ThirdPartyCookiesBlocked
+      | `String "NotSignedInWithIdp" -> `NotSignedInWithIdp
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3903,6 +3907,7 @@ end = struct
       | `RpPageNotVisible -> `String "RpPageNotVisible"
       | `SilentMediationFailure -> `String "SilentMediationFailure"
       | `ThirdPartyCookiesBlocked -> `String "ThirdPartyCookiesBlocked"
+      | `NotSignedInWithIdp -> `String "NotSignedInWithIdp"
 
     type t = _federatedauthrequestissuereason
     [@@deriving yojson]
