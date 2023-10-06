@@ -24614,22 +24614,11 @@ and Storage : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
           [@key "time"] [@ocaml.doc "No description provided"]
-      expiry : number option;
-          [@key "expiry"] [@yojson.option] [@ocaml.doc "duration in seconds"]
-      eventReportWindow : number option;
-          [@key "eventReportWindow"]
-          [@yojson.option]
-          [@ocaml.doc
-            "eventReportWindow and eventReportWindows are mutually exclusive\n\
-             duration in seconds"]
-      eventReportWindows : AttributionReportingEventReportWindows.t option;
-          [@key "eventReportWindows"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      aggregatableReportWindow : number option;
-          [@key "aggregatableReportWindow"]
-          [@yojson.option]
-          [@ocaml.doc "duration in seconds"]
+      expiry : number; [@key "expiry"] [@ocaml.doc "duration in seconds"]
+      eventReportWindows : AttributionReportingEventReportWindows.t;
+          [@key "eventReportWindows"] [@ocaml.doc "No description provided"]
+      aggregatableReportWindow : number;
+          [@key "aggregatableReportWindow"] [@ocaml.doc "duration in seconds"]
       type_ : AttributionReportingSourceType.t;
           [@key "type"] [@ocaml.doc "No description provided"]
       sourceOrigin : string;
@@ -25438,22 +25427,11 @@ end = struct
     type t = {
       time : Network.TimeSinceEpoch.t;
           [@key "time"] [@ocaml.doc "No description provided"]
-      expiry : number option;
-          [@key "expiry"] [@yojson.option] [@ocaml.doc "duration in seconds"]
-      eventReportWindow : number option;
-          [@key "eventReportWindow"]
-          [@yojson.option]
-          [@ocaml.doc
-            "eventReportWindow and eventReportWindows are mutually exclusive\n\
-             duration in seconds"]
-      eventReportWindows : AttributionReportingEventReportWindows.t option;
-          [@key "eventReportWindows"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      aggregatableReportWindow : number option;
-          [@key "aggregatableReportWindow"]
-          [@yojson.option]
-          [@ocaml.doc "duration in seconds"]
+      expiry : number; [@key "expiry"] [@ocaml.doc "duration in seconds"]
+      eventReportWindows : AttributionReportingEventReportWindows.t;
+          [@key "eventReportWindows"] [@ocaml.doc "No description provided"]
+      aggregatableReportWindow : number;
+          [@key "aggregatableReportWindow"] [@ocaml.doc "duration in seconds"]
       type_ : AttributionReportingSourceType.t;
           [@key "type"] [@ocaml.doc "No description provided"]
       sourceOrigin : string;
@@ -25480,22 +25458,11 @@ end = struct
     type t = {
       time : Network.TimeSinceEpoch.t;
           [@key "time"] [@ocaml.doc "No description provided"]
-      expiry : number option;
-          [@key "expiry"] [@yojson.option] [@ocaml.doc "duration in seconds"]
-      eventReportWindow : number option;
-          [@key "eventReportWindow"]
-          [@yojson.option]
-          [@ocaml.doc
-            "eventReportWindow and eventReportWindows are mutually exclusive\n\
-             duration in seconds"]
-      eventReportWindows : AttributionReportingEventReportWindows.t option;
-          [@key "eventReportWindows"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      aggregatableReportWindow : number option;
-          [@key "aggregatableReportWindow"]
-          [@yojson.option]
-          [@ocaml.doc "duration in seconds"]
+      expiry : number; [@key "expiry"] [@ocaml.doc "duration in seconds"]
+      eventReportWindows : AttributionReportingEventReportWindows.t;
+          [@key "eventReportWindows"] [@ocaml.doc "No description provided"]
+      aggregatableReportWindow : number;
+          [@key "aggregatableReportWindow"] [@ocaml.doc "duration in seconds"]
       type_ : AttributionReportingSourceType.t;
           [@key "type"] [@ocaml.doc "No description provided"]
       sourceOrigin : string;
