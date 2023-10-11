@@ -28657,7 +28657,6 @@ and Preload : sig
       | `MemoryPressureOnTrigger
       | `MemoryPressureAfterTriggered
       | `PrerenderingDisabledByDevTools
-      | `ResourceLoadBlockedByClient
       | `SpeculationRuleRemoved
       | `ActivatedWithAuxiliaryBrowsingContexts
       | `MaxNumOfRunningEagerPrerendersExceeded
@@ -29074,7 +29073,6 @@ end = struct
       | `MemoryPressureOnTrigger
       | `MemoryPressureAfterTriggered
       | `PrerenderingDisabledByDevTools
-      | `ResourceLoadBlockedByClient
       | `SpeculationRuleRemoved
       | `ActivatedWithAuxiliaryBrowsingContexts
       | `MaxNumOfRunningEagerPrerendersExceeded
@@ -29152,7 +29150,6 @@ end = struct
       | `MemoryPressureOnTrigger
       | `MemoryPressureAfterTriggered
       | `PrerenderingDisabledByDevTools
-      | `ResourceLoadBlockedByClient
       | `SpeculationRuleRemoved
       | `ActivatedWithAuxiliaryBrowsingContexts
       | `MaxNumOfRunningEagerPrerendersExceeded
@@ -29238,7 +29235,6 @@ end = struct
       | `String "MemoryPressureAfterTriggered" -> `MemoryPressureAfterTriggered
       | `String "PrerenderingDisabledByDevTools" ->
           `PrerenderingDisabledByDevTools
-      | `String "ResourceLoadBlockedByClient" -> `ResourceLoadBlockedByClient
       | `String "SpeculationRuleRemoved" -> `SpeculationRuleRemoved
       | `String "ActivatedWithAuxiliaryBrowsingContexts" ->
           `ActivatedWithAuxiliaryBrowsingContexts
@@ -29332,7 +29328,6 @@ end = struct
       | `MemoryPressureAfterTriggered -> `String "MemoryPressureAfterTriggered"
       | `PrerenderingDisabledByDevTools ->
           `String "PrerenderingDisabledByDevTools"
-      | `ResourceLoadBlockedByClient -> `String "ResourceLoadBlockedByClient"
       | `SpeculationRuleRemoved -> `String "SpeculationRuleRemoved"
       | `ActivatedWithAuxiliaryBrowsingContexts ->
           `String "ActivatedWithAuxiliaryBrowsingContexts"
