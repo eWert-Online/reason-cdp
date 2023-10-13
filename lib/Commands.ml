@@ -20017,6 +20017,70 @@ module Overlay = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+
+  (* Show Window Controls Overlay for PWA *)
+  module SetShowWindowControlsOverlay = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        windowControlsOverlayConfig :
+          Types.Overlay.WindowControlsOverlayConfig.t option;
+            [@key "windowControlsOverlayConfig"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Window Controls Overlay data, null means hide Window Controls \
+               Overlay"]
+      }
+      [@@deriving yojson]
+
+      let make ?windowControlsOverlayConfig () = { windowControlsOverlayConfig }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Overlay.setShowWindowControlsOverlay";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
 end
 
 module Page = struct

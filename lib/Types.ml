@@ -18358,6 +18358,24 @@ and Overlay : sig
     [@@deriving yojson] [@@ocaml.doc "Configuration for dual screen hinge"]
   end
 
+  and WindowControlsOverlayConfig : sig
+    type t = {
+      showCSS : bool;
+          [@key "showCSS"]
+          [@ocaml.doc
+            "Whether the title bar CSS should be shown when emulating the \
+             Window Controls Overlay."]
+      selectedPlatform : string;
+          [@key "selectedPlatform"]
+          [@ocaml.doc "Seleted platforms to show the overlay."]
+      themeColor : string;
+          [@key "themeColor"]
+          [@ocaml.doc "The theme color defined in app manifest."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Configuration for Window Controls Overlay"]
+  end
+
   and ContainerQueryHighlightConfig : sig
     type t = {
       containerQueryContainerHighlightConfig :
@@ -19264,6 +19282,40 @@ end = struct
             "The content box highlight outline color (default: transparent)."]
     }
     [@@deriving yojson] [@@ocaml.doc "Configuration for dual screen hinge"]
+  end
+
+  and WindowControlsOverlayConfig : sig
+    type t = {
+      showCSS : bool;
+          [@key "showCSS"]
+          [@ocaml.doc
+            "Whether the title bar CSS should be shown when emulating the \
+             Window Controls Overlay."]
+      selectedPlatform : string;
+          [@key "selectedPlatform"]
+          [@ocaml.doc "Seleted platforms to show the overlay."]
+      themeColor : string;
+          [@key "themeColor"]
+          [@ocaml.doc "The theme color defined in app manifest."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Configuration for Window Controls Overlay"]
+  end = struct
+    type t = {
+      showCSS : bool;
+          [@key "showCSS"]
+          [@ocaml.doc
+            "Whether the title bar CSS should be shown when emulating the \
+             Window Controls Overlay."]
+      selectedPlatform : string;
+          [@key "selectedPlatform"]
+          [@ocaml.doc "Seleted platforms to show the overlay."]
+      themeColor : string;
+          [@key "themeColor"]
+          [@ocaml.doc "The theme color defined in app manifest."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Configuration for Window Controls Overlay"]
   end
 
   and ContainerQueryHighlightConfig : sig
