@@ -11606,6 +11606,206 @@ module Emulation = struct
     end
   end
 
+  (* No description provided *)
+  module GetOverriddenSensorInformation = struct
+    module Response : sig
+      type result = {
+        requestedSamplingFrequency : Types.number;
+            [@key "requestedSamplingFrequency"]
+            [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        requestedSamplingFrequency : Types.number;
+            [@key "requestedSamplingFrequency"]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        type_ : Types.Emulation.SensorType.t;
+            [@key "type"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~type_ () = { type_ }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Emulation.getOverriddenSensorInformation";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Overrides a platform sensor of a given type. If |enabled| is true, calls to
+     Sensor.start() will use a virtual sensor as backend rather than fetching
+     data from a real hardware sensor. Otherwise, existing virtual
+     sensor-backend Sensor objects will fire an error event and new calls to
+     Sensor.start() will attempt to use a real sensor instead. *)
+  module SetSensorOverrideEnabled = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        enabled : bool; [@key "enabled"] [@ocaml.doc "No description provided"]
+        type_ : Types.Emulation.SensorType.t;
+            [@key "type"] [@ocaml.doc "No description provided"]
+        metadata : Types.Emulation.SensorMetadata.t option;
+            [@key "metadata"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~enabled ~type_ ?metadata () = { enabled; type_; metadata }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Emulation.setSensorOverrideEnabled";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Updates the sensor readings reported by a sensor type previously overriden
+     by setSensorOverrideEnabled. *)
+  module SetSensorOverrideReadings = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        type_ : Types.Emulation.SensorType.t;
+            [@key "type"] [@ocaml.doc "No description provided"]
+        reading : Types.Emulation.SensorReading.t;
+            [@key "reading"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~type_ ~reading () = { type_; reading }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Emulation.setSensorOverrideReadings";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Overrides the Idle state. *)
   module SetIdleOverride = struct
     module Response : sig

@@ -1336,7 +1336,8 @@ and Audits : sig
       | `WarnSameSiteLaxCrossDowngradeLax
       | `WarnAttributeValueExceedsMaxSize
       | `WarnDomainNonASCII
-      | `WarnThirdPartyPhaseout ]
+      | `WarnThirdPartyPhaseout
+      | `WarnCrossSiteRedirectDowngradeChangesInclusion ]
 
     val _cookiewarningreason_of_yojson : Yojson.Basic.t -> _cookiewarningreason
     val yojson_of__cookiewarningreason : _cookiewarningreason -> Yojson.Basic.t
@@ -1890,6 +1891,23 @@ and Audits : sig
        redirect chain, the site reported would be `example.test`."]
   end
 
+  and CookieDeprecationMetadataIssueDetails : sig
+    type t = {
+      allowedSites : string list;
+          [@key "allowedSites"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about third-party sites that are accessing cookies on \
+       the\n\
+       current page, and have been permitted due to having a global metadata \
+       grant.\n\
+       Note that in this context 'site' means eTLD+1. For example, if the URL\n\
+       `https://example.test:80/web_page` was accessing cookies, the site \
+       reported\n\
+       would be `example.test`."]
+  end
+
   and ClientHintIssueReason : sig
     type _clienthintissuereason =
       [ `MetaTagAllowListInvalidOrigin | `MetaTagModifiedHTML ]
@@ -2116,6 +2134,7 @@ and Audits : sig
       | `ClientHintIssue
       | `FederatedAuthRequestIssue
       | `BounceTrackingIssue
+      | `CookieDeprecationMetadataIssue
       | `StylesheetLoadingIssue
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue ]
@@ -2198,6 +2217,11 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       bounceTrackingIssueDetails : BounceTrackingIssueDetails.t option;
           [@key "bounceTrackingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      cookieDeprecationMetadataIssueDetails :
+        CookieDeprecationMetadataIssueDetails.t option;
+          [@key "cookieDeprecationMetadataIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
@@ -2388,7 +2412,8 @@ end = struct
       | `WarnSameSiteLaxCrossDowngradeLax
       | `WarnAttributeValueExceedsMaxSize
       | `WarnDomainNonASCII
-      | `WarnThirdPartyPhaseout ]
+      | `WarnThirdPartyPhaseout
+      | `WarnCrossSiteRedirectDowngradeChangesInclusion ]
 
     val _cookiewarningreason_of_yojson : Yojson.Basic.t -> _cookiewarningreason
     val yojson_of__cookiewarningreason : _cookiewarningreason -> Yojson.Basic.t
@@ -2407,7 +2432,8 @@ end = struct
       | `WarnSameSiteLaxCrossDowngradeLax
       | `WarnAttributeValueExceedsMaxSize
       | `WarnDomainNonASCII
-      | `WarnThirdPartyPhaseout ]
+      | `WarnThirdPartyPhaseout
+      | `WarnCrossSiteRedirectDowngradeChangesInclusion ]
 
     let _cookiewarningreason_of_yojson = function
       | `String "WarnSameSiteUnspecifiedCrossSiteContext" ->
@@ -2429,6 +2455,8 @@ end = struct
           `WarnAttributeValueExceedsMaxSize
       | `String "WarnDomainNonASCII" -> `WarnDomainNonASCII
       | `String "WarnThirdPartyPhaseout" -> `WarnThirdPartyPhaseout
+      | `String "WarnCrossSiteRedirectDowngradeChangesInclusion" ->
+          `WarnCrossSiteRedirectDowngradeChangesInclusion
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -2452,6 +2480,8 @@ end = struct
           `String "WarnAttributeValueExceedsMaxSize"
       | `WarnDomainNonASCII -> `String "WarnDomainNonASCII"
       | `WarnThirdPartyPhaseout -> `String "WarnThirdPartyPhaseout"
+      | `WarnCrossSiteRedirectDowngradeChangesInclusion ->
+          `String "WarnCrossSiteRedirectDowngradeChangesInclusion"
 
     type t = _cookiewarningreason
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -3687,6 +3717,38 @@ end = struct
        redirect chain, the site reported would be `example.test`."]
   end
 
+  and CookieDeprecationMetadataIssueDetails : sig
+    type t = {
+      allowedSites : string list;
+          [@key "allowedSites"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about third-party sites that are accessing cookies on \
+       the\n\
+       current page, and have been permitted due to having a global metadata \
+       grant.\n\
+       Note that in this context 'site' means eTLD+1. For example, if the URL\n\
+       `https://example.test:80/web_page` was accessing cookies, the site \
+       reported\n\
+       would be `example.test`."]
+  end = struct
+    type t = {
+      allowedSites : string list;
+          [@key "allowedSites"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about third-party sites that are accessing cookies on \
+       the\n\
+       current page, and have been permitted due to having a global metadata \
+       grant.\n\
+       Note that in this context 'site' means eTLD+1. For example, if the URL\n\
+       `https://example.test:80/web_page` was accessing cookies, the site \
+       reported\n\
+       would be `example.test`."]
+  end
+
   and ClientHintIssueReason : sig
     type _clienthintissuereason =
       [ `MetaTagAllowListInvalidOrigin | `MetaTagModifiedHTML ]
@@ -4213,6 +4275,7 @@ end = struct
       | `ClientHintIssue
       | `FederatedAuthRequestIssue
       | `BounceTrackingIssue
+      | `CookieDeprecationMetadataIssue
       | `StylesheetLoadingIssue
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue ]
@@ -4244,6 +4307,7 @@ end = struct
       | `ClientHintIssue
       | `FederatedAuthRequestIssue
       | `BounceTrackingIssue
+      | `CookieDeprecationMetadataIssue
       | `StylesheetLoadingIssue
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue ]
@@ -4265,6 +4329,8 @@ end = struct
       | `String "ClientHintIssue" -> `ClientHintIssue
       | `String "FederatedAuthRequestIssue" -> `FederatedAuthRequestIssue
       | `String "BounceTrackingIssue" -> `BounceTrackingIssue
+      | `String "CookieDeprecationMetadataIssue" ->
+          `CookieDeprecationMetadataIssue
       | `String "StylesheetLoadingIssue" -> `StylesheetLoadingIssue
       | `String "FederatedAuthUserInfoRequestIssue" ->
           `FederatedAuthUserInfoRequestIssue
@@ -4289,6 +4355,8 @@ end = struct
       | `ClientHintIssue -> `String "ClientHintIssue"
       | `FederatedAuthRequestIssue -> `String "FederatedAuthRequestIssue"
       | `BounceTrackingIssue -> `String "BounceTrackingIssue"
+      | `CookieDeprecationMetadataIssue ->
+          `String "CookieDeprecationMetadataIssue"
       | `StylesheetLoadingIssue -> `String "StylesheetLoadingIssue"
       | `FederatedAuthUserInfoRequestIssue ->
           `String "FederatedAuthUserInfoRequestIssue"
@@ -4369,6 +4437,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       bounceTrackingIssueDetails : BounceTrackingIssueDetails.t option;
           [@key "bounceTrackingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      cookieDeprecationMetadataIssueDetails :
+        CookieDeprecationMetadataIssueDetails.t option;
+          [@key "cookieDeprecationMetadataIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
@@ -4457,6 +4530,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       bounceTrackingIssueDetails : BounceTrackingIssueDetails.t option;
           [@key "bounceTrackingIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      cookieDeprecationMetadataIssueDetails :
+        CookieDeprecationMetadataIssueDetails.t option;
+          [@key "cookieDeprecationMetadataIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       stylesheetLoadingIssueDetails : StylesheetLoadingIssueDetails.t option;
@@ -11055,6 +11133,88 @@ and Emulation : sig
        would normally use."]
   end
 
+  and SensorType : sig
+    type _sensortype =
+      [ `absolute_orientation
+      | `accelerometer
+      | `ambient_light
+      | `gravity
+      | `gyroscope
+      | `linear_acceleration
+      | `magnetometer
+      | `proximity
+      | `relative_orientation ]
+
+    val _sensortype_of_yojson : Yojson.Basic.t -> _sensortype
+    val yojson_of__sensortype : _sensortype -> Yojson.Basic.t
+
+    type t = _sensortype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Used to specify sensor types to emulate.\n\
+       See https://w3c.github.io/sensors/#automation for more information."]
+  end
+
+  and SensorMetadata : sig
+    type t = {
+      available : bool option;
+          [@key "available"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      minimumFrequency : number option;
+          [@key "minimumFrequency"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      maximumFrequency : number option;
+          [@key "maximumFrequency"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SensorReadingSingle : sig
+    type t = {
+      value : number; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SensorReadingXYZ : sig
+    type t = {
+      x : number; [@key "x"] [@ocaml.doc "No description provided"]
+      y : number; [@key "y"] [@ocaml.doc "No description provided"]
+      z : number; [@key "z"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SensorReadingQuaternion : sig
+    type t = {
+      x : number; [@key "x"] [@ocaml.doc "No description provided"]
+      y : number; [@key "y"] [@ocaml.doc "No description provided"]
+      z : number; [@key "z"] [@ocaml.doc "No description provided"]
+      w : number; [@key "w"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SensorReading : sig
+    type t = {
+      single : SensorReadingSingle.t option;
+          [@key "single"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      xyz : SensorReadingXYZ.t option;
+          [@key "xyz"] [@yojson.option] [@ocaml.doc "No description provided"]
+      quaternion : SensorReadingQuaternion.t option;
+          [@key "quaternion"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and DisabledImageType : sig
     type _disabledimagetype = [ `avif | `webp ]
 
@@ -11323,6 +11483,179 @@ end = struct
        https://wicg.github.io/ua-client-hints\n\
        Missing optional values will be filled in by the target with what it \
        would normally use."]
+  end
+
+  and SensorType : sig
+    type _sensortype =
+      [ `absolute_orientation
+      | `accelerometer
+      | `ambient_light
+      | `gravity
+      | `gyroscope
+      | `linear_acceleration
+      | `magnetometer
+      | `proximity
+      | `relative_orientation ]
+
+    val _sensortype_of_yojson : Yojson.Basic.t -> _sensortype
+    val yojson_of__sensortype : _sensortype -> Yojson.Basic.t
+
+    type t = _sensortype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Used to specify sensor types to emulate.\n\
+       See https://w3c.github.io/sensors/#automation for more information."]
+  end = struct
+    type _sensortype =
+      [ `absolute_orientation
+      | `accelerometer
+      | `ambient_light
+      | `gravity
+      | `gyroscope
+      | `linear_acceleration
+      | `magnetometer
+      | `proximity
+      | `relative_orientation ]
+
+    let _sensortype_of_yojson = function
+      | `String "absolute-orientation" -> `absolute_orientation
+      | `String "accelerometer" -> `accelerometer
+      | `String "ambient-light" -> `ambient_light
+      | `String "gravity" -> `gravity
+      | `String "gyroscope" -> `gyroscope
+      | `String "linear-acceleration" -> `linear_acceleration
+      | `String "magnetometer" -> `magnetometer
+      | `String "proximity" -> `proximity
+      | `String "relative-orientation" -> `relative_orientation
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__sensortype = function
+      | `absolute_orientation -> `String "absolute-orientation"
+      | `accelerometer -> `String "accelerometer"
+      | `ambient_light -> `String "ambient-light"
+      | `gravity -> `String "gravity"
+      | `gyroscope -> `String "gyroscope"
+      | `linear_acceleration -> `String "linear-acceleration"
+      | `magnetometer -> `String "magnetometer"
+      | `proximity -> `String "proximity"
+      | `relative_orientation -> `String "relative-orientation"
+
+    type t = _sensortype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Used to specify sensor types to emulate.\n\
+       See https://w3c.github.io/sensors/#automation for more information."]
+  end
+
+  and SensorMetadata : sig
+    type t = {
+      available : bool option;
+          [@key "available"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      minimumFrequency : number option;
+          [@key "minimumFrequency"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      maximumFrequency : number option;
+          [@key "maximumFrequency"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      available : bool option;
+          [@key "available"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      minimumFrequency : number option;
+          [@key "minimumFrequency"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      maximumFrequency : number option;
+          [@key "maximumFrequency"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SensorReadingSingle : sig
+    type t = {
+      value : number; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      value : number; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SensorReadingXYZ : sig
+    type t = {
+      x : number; [@key "x"] [@ocaml.doc "No description provided"]
+      y : number; [@key "y"] [@ocaml.doc "No description provided"]
+      z : number; [@key "z"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      x : number; [@key "x"] [@ocaml.doc "No description provided"]
+      y : number; [@key "y"] [@ocaml.doc "No description provided"]
+      z : number; [@key "z"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SensorReadingQuaternion : sig
+    type t = {
+      x : number; [@key "x"] [@ocaml.doc "No description provided"]
+      y : number; [@key "y"] [@ocaml.doc "No description provided"]
+      z : number; [@key "z"] [@ocaml.doc "No description provided"]
+      w : number; [@key "w"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      x : number; [@key "x"] [@ocaml.doc "No description provided"]
+      y : number; [@key "y"] [@ocaml.doc "No description provided"]
+      z : number; [@key "z"] [@ocaml.doc "No description provided"]
+      w : number; [@key "w"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SensorReading : sig
+    type t = {
+      single : SensorReadingSingle.t option;
+          [@key "single"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      xyz : SensorReadingXYZ.t option;
+          [@key "xyz"] [@yojson.option] [@ocaml.doc "No description provided"]
+      quaternion : SensorReadingQuaternion.t option;
+          [@key "quaternion"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      single : SensorReadingSingle.t option;
+          [@key "single"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      xyz : SensorReadingXYZ.t option;
+          [@key "xyz"] [@yojson.option] [@ocaml.doc "No description provided"]
+      quaternion : SensorReadingQuaternion.t option;
+          [@key "quaternion"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
   and DisabledImageType : sig
