@@ -20764,6 +20764,30 @@ and Page : sig
     [@@ocaml.doc "Types of not restored reasons for back-forward cache."]
   end
 
+  and BackForwardCacheBlockingDetails : sig
+    type t = {
+      url : string option;
+          [@key "url"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Url of the file where blockage happened. Optional because of \
+             tests."]
+      function_ : string option;
+          [@key "function"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Function name where blockage happened. Optional because of \
+             anonymous functions and tests."]
+      lineNumber : number;
+          [@key "lineNumber"]
+          [@ocaml.doc "Line number in the script (0-based)."]
+      columnNumber : number;
+          [@key "columnNumber"]
+          [@ocaml.doc "Column number in the script (0-based)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and BackForwardCacheNotRestoredExplanation : sig
     type t = {
       type_ : BackForwardCacheNotRestoredReasonType.t;
@@ -20777,6 +20801,10 @@ and Page : sig
             "Context associated with the reason. The meaning of this context is\n\
              dependent on the reason:\n\
              - EmbedderExtensionSentMessageToCachedFrame: the extension ID."]
+      details : BackForwardCacheBlockingDetails.t list option;
+          [@key "details"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -23305,6 +23333,52 @@ end = struct
     [@@ocaml.doc "Types of not restored reasons for back-forward cache."]
   end
 
+  and BackForwardCacheBlockingDetails : sig
+    type t = {
+      url : string option;
+          [@key "url"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Url of the file where blockage happened. Optional because of \
+             tests."]
+      function_ : string option;
+          [@key "function"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Function name where blockage happened. Optional because of \
+             anonymous functions and tests."]
+      lineNumber : number;
+          [@key "lineNumber"]
+          [@ocaml.doc "Line number in the script (0-based)."]
+      columnNumber : number;
+          [@key "columnNumber"]
+          [@ocaml.doc "Column number in the script (0-based)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      url : string option;
+          [@key "url"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Url of the file where blockage happened. Optional because of \
+             tests."]
+      function_ : string option;
+          [@key "function"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Function name where blockage happened. Optional because of \
+             anonymous functions and tests."]
+      lineNumber : number;
+          [@key "lineNumber"]
+          [@ocaml.doc "Line number in the script (0-based)."]
+      columnNumber : number;
+          [@key "columnNumber"]
+          [@ocaml.doc "Column number in the script (0-based)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and BackForwardCacheNotRestoredExplanation : sig
     type t = {
       type_ : BackForwardCacheNotRestoredReasonType.t;
@@ -23318,6 +23392,10 @@ end = struct
             "Context associated with the reason. The meaning of this context is\n\
              dependent on the reason:\n\
              - EmbedderExtensionSentMessageToCachedFrame: the extension ID."]
+      details : BackForwardCacheBlockingDetails.t list option;
+          [@key "details"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -23333,6 +23411,10 @@ end = struct
             "Context associated with the reason. The meaning of this context is\n\
              dependent on the reason:\n\
              - EmbedderExtensionSentMessageToCachedFrame: the extension ID."]
+      details : BackForwardCacheBlockingDetails.t list option;
+          [@key "details"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
