@@ -25077,6 +25077,19 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingTriggerDataMatching : sig
+    type _attributionreportingtriggerdatamatching = [ `exact | `modulus ]
+
+    val _attributionreportingtriggerdatamatching_of_yojson :
+      Yojson.Basic.t -> _attributionreportingtriggerdatamatching
+
+    val yojson_of__attributionreportingtriggerdatamatching :
+      _attributionreportingtriggerdatamatching -> Yojson.Basic.t
+
+    type t = _attributionreportingtriggerdatamatching
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingSourceRegistration : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
@@ -25106,6 +25119,8 @@ and Storage : sig
           [@key "debugKey"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      triggerDataMatching : AttributionReportingTriggerDataMatching.t;
+          [@key "triggerDataMatching"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -25890,6 +25905,34 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingTriggerDataMatching : sig
+    type _attributionreportingtriggerdatamatching = [ `exact | `modulus ]
+
+    val _attributionreportingtriggerdatamatching_of_yojson :
+      Yojson.Basic.t -> _attributionreportingtriggerdatamatching
+
+    val yojson_of__attributionreportingtriggerdatamatching :
+      _attributionreportingtriggerdatamatching -> Yojson.Basic.t
+
+    type t = _attributionreportingtriggerdatamatching
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _attributionreportingtriggerdatamatching = [ `exact | `modulus ]
+
+    let _attributionreportingtriggerdatamatching_of_yojson = function
+      | `String "exact" -> `exact
+      | `String "modulus" -> `modulus
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__attributionreportingtriggerdatamatching = function
+      | `exact -> `String "exact"
+      | `modulus -> `String "modulus"
+
+    type t = _attributionreportingtriggerdatamatching
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingSourceRegistration : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
@@ -25919,6 +25962,8 @@ end = struct
           [@key "debugKey"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      triggerDataMatching : AttributionReportingTriggerDataMatching.t;
+          [@key "triggerDataMatching"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -25950,6 +25995,8 @@ end = struct
           [@key "debugKey"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      triggerDataMatching : AttributionReportingTriggerDataMatching.t;
+          [@key "triggerDataMatching"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
