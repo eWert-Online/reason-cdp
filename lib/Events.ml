@@ -4213,6 +4213,10 @@ module Preload = struct
              Mojo interface\n\
              that is incompatible with prerender and has caused the \
              cancellation of the attempt."]
+      mismatchedHeaders : Types.Preload.PrerenderMismatchedHeaders.t list option;
+          [@key "mismatchedHeaders"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 

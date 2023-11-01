@@ -24485,6 +24485,10 @@ and ServiceWorker : sig
           [@key "targetId"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      routerRules : string option;
+          [@key "routerRules"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "ServiceWorker version."]
   end
@@ -24647,6 +24651,10 @@ end = struct
           [@key "targetId"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      routerRules : string option;
+          [@key "routerRules"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "ServiceWorker version."]
   end = struct
@@ -24679,6 +24687,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       targetId : Target.TargetID.t option;
           [@key "targetId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      routerRules : string option;
+          [@key "routerRules"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -29247,6 +29259,25 @@ and Preload : sig
       "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
        filter out the ones that aren't necessary to the developers."]
   end
+
+  and PrerenderMismatchedHeaders : sig
+    type t = {
+      headerName : string;
+          [@key "headerName"] [@ocaml.doc "No description provided"]
+      initialValue : string option;
+          [@key "initialValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      activationValue : string option;
+          [@key "activationValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Information of headers to be displayed when the header mismatch \
+       occurred."]
+  end
 end = struct
   module rec RuleSetId : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
@@ -30080,6 +30111,42 @@ end = struct
     [@@ocaml.doc
       "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
        filter out the ones that aren't necessary to the developers."]
+  end
+
+  and PrerenderMismatchedHeaders : sig
+    type t = {
+      headerName : string;
+          [@key "headerName"] [@ocaml.doc "No description provided"]
+      initialValue : string option;
+          [@key "initialValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      activationValue : string option;
+          [@key "activationValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Information of headers to be displayed when the header mismatch \
+       occurred."]
+  end = struct
+    type t = {
+      headerName : string;
+          [@key "headerName"] [@ocaml.doc "No description provided"]
+      initialValue : string option;
+          [@key "initialValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      activationValue : string option;
+          [@key "activationValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Information of headers to be displayed when the header mismatch \
+       occurred."]
   end
 end
 
