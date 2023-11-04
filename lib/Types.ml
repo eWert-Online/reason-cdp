@@ -1961,6 +1961,8 @@ and Audits : sig
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
       | `IdTokenInvalidResponse
+      | `IdTokenIdpErrorResponse
+      | `IdTokenCrossSiteIdpErrorResponse
       | `IdTokenInvalidRequest
       | `IdTokenInvalidContentType
       | `ErrorIdToken
@@ -3827,6 +3829,8 @@ end = struct
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
       | `IdTokenInvalidResponse
+      | `IdTokenIdpErrorResponse
+      | `IdTokenCrossSiteIdpErrorResponse
       | `IdTokenInvalidRequest
       | `IdTokenInvalidContentType
       | `ErrorIdToken
@@ -3880,6 +3884,8 @@ end = struct
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
       | `IdTokenInvalidResponse
+      | `IdTokenIdpErrorResponse
+      | `IdTokenCrossSiteIdpErrorResponse
       | `IdTokenInvalidRequest
       | `IdTokenInvalidContentType
       | `ErrorIdToken
@@ -3920,6 +3926,9 @@ end = struct
       | `String "IdTokenHttpNotFound" -> `IdTokenHttpNotFound
       | `String "IdTokenNoResponse" -> `IdTokenNoResponse
       | `String "IdTokenInvalidResponse" -> `IdTokenInvalidResponse
+      | `String "IdTokenIdpErrorResponse" -> `IdTokenIdpErrorResponse
+      | `String "IdTokenCrossSiteIdpErrorResponse" ->
+          `IdTokenCrossSiteIdpErrorResponse
       | `String "IdTokenInvalidRequest" -> `IdTokenInvalidRequest
       | `String "IdTokenInvalidContentType" -> `IdTokenInvalidContentType
       | `String "ErrorIdToken" -> `ErrorIdToken
@@ -3962,6 +3971,9 @@ end = struct
       | `IdTokenHttpNotFound -> `String "IdTokenHttpNotFound"
       | `IdTokenNoResponse -> `String "IdTokenNoResponse"
       | `IdTokenInvalidResponse -> `String "IdTokenInvalidResponse"
+      | `IdTokenIdpErrorResponse -> `String "IdTokenIdpErrorResponse"
+      | `IdTokenCrossSiteIdpErrorResponse ->
+          `String "IdTokenCrossSiteIdpErrorResponse"
       | `IdTokenInvalidRequest -> `String "IdTokenInvalidRequest"
       | `IdTokenInvalidContentType -> `String "IdTokenInvalidContentType"
       | `ErrorIdToken -> `String "ErrorIdToken"
@@ -5198,7 +5210,7 @@ and Browser : sig
     [@@deriving yojson]
     [@@ocaml.doc
       "Definition of PermissionDescriptor defined in the Permissions API:\n\
-       https://w3c.github.io/permissions/#dictdef-permissiondescriptor."]
+       https://w3c.github.io/permissions/#dom-permissiondescriptor."]
   end
 
   and BrowserCommandId : sig
@@ -5521,7 +5533,7 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc
       "Definition of PermissionDescriptor defined in the Permissions API:\n\
-       https://w3c.github.io/permissions/#dictdef-permissiondescriptor."]
+       https://w3c.github.io/permissions/#dom-permissiondescriptor."]
   end = struct
     type t = {
       name : string;
@@ -5557,7 +5569,7 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc
       "Definition of PermissionDescriptor defined in the Permissions API:\n\
-       https://w3c.github.io/permissions/#dictdef-permissiondescriptor."]
+       https://w3c.github.io/permissions/#dom-permissiondescriptor."]
   end
 
   and BrowserCommandId : sig
@@ -19992,6 +20004,7 @@ and Page : sig
       | `unload
       | `usb
       | `vertical_scroll
+      | `web_printing
       | `web_share
       | `window_management
       | `window_placement
@@ -21132,6 +21145,7 @@ end = struct
       | `unload
       | `usb
       | `vertical_scroll
+      | `web_printing
       | `web_share
       | `window_management
       | `window_placement
@@ -21226,6 +21240,7 @@ end = struct
       | `unload
       | `usb
       | `vertical_scroll
+      | `web_printing
       | `web_share
       | `window_management
       | `window_placement
@@ -21311,6 +21326,7 @@ end = struct
       | `String "unload" -> `unload
       | `String "usb" -> `usb
       | `String "vertical-scroll" -> `vertical_scroll
+      | `String "web-printing" -> `web_printing
       | `String "web-share" -> `web_share
       | `String "window-management" -> `window_management
       | `String "window-placement" -> `window_placement
@@ -21398,6 +21414,7 @@ end = struct
       | `unload -> `String "unload"
       | `usb -> `String "usb"
       | `vertical_scroll -> `String "vertical-scroll"
+      | `web_printing -> `String "web-printing"
       | `web_share -> `String "web-share"
       | `window_management -> `String "window-management"
       | `window_placement -> `String "window-placement"
