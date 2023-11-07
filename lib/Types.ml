@@ -25106,6 +25106,20 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingTriggerSpec : sig
+    type t = {
+      triggerData : number list;
+          [@key "triggerData"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+      eventReportWindows : AttributionReportingEventReportWindows.t;
+          [@key "eventReportWindows"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingTriggerDataMatching : sig
     type _attributionreportingtriggerdatamatching = [ `exact | `modulus ]
 
@@ -25124,8 +25138,8 @@ and Storage : sig
       time : Network.TimeSinceEpoch.t;
           [@key "time"] [@ocaml.doc "No description provided"]
       expiry : number; [@key "expiry"] [@ocaml.doc "duration in seconds"]
-      eventReportWindows : AttributionReportingEventReportWindows.t;
-          [@key "eventReportWindows"] [@ocaml.doc "No description provided"]
+      triggerSpecs : AttributionReportingTriggerSpec.t list;
+          [@key "triggerSpecs"] [@ocaml.doc "No description provided"]
       aggregatableReportWindow : number;
           [@key "aggregatableReportWindow"] [@ocaml.doc "duration in seconds"]
       type_ : AttributionReportingSourceType.t;
@@ -25934,6 +25948,32 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingTriggerSpec : sig
+    type t = {
+      triggerData : number list;
+          [@key "triggerData"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+      eventReportWindows : AttributionReportingEventReportWindows.t;
+          [@key "eventReportWindows"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      triggerData : number list;
+          [@key "triggerData"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+      eventReportWindows : AttributionReportingEventReportWindows.t;
+          [@key "eventReportWindows"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingTriggerDataMatching : sig
     type _attributionreportingtriggerdatamatching = [ `exact | `modulus ]
 
@@ -25967,8 +26007,8 @@ end = struct
       time : Network.TimeSinceEpoch.t;
           [@key "time"] [@ocaml.doc "No description provided"]
       expiry : number; [@key "expiry"] [@ocaml.doc "duration in seconds"]
-      eventReportWindows : AttributionReportingEventReportWindows.t;
-          [@key "eventReportWindows"] [@ocaml.doc "No description provided"]
+      triggerSpecs : AttributionReportingTriggerSpec.t list;
+          [@key "triggerSpecs"] [@ocaml.doc "No description provided"]
       aggregatableReportWindow : number;
           [@key "aggregatableReportWindow"] [@ocaml.doc "duration in seconds"]
       type_ : AttributionReportingSourceType.t;
@@ -26000,8 +26040,8 @@ end = struct
       time : Network.TimeSinceEpoch.t;
           [@key "time"] [@ocaml.doc "No description provided"]
       expiry : number; [@key "expiry"] [@ocaml.doc "duration in seconds"]
-      eventReportWindows : AttributionReportingEventReportWindows.t;
-          [@key "eventReportWindows"] [@ocaml.doc "No description provided"]
+      triggerSpecs : AttributionReportingTriggerSpec.t list;
+          [@key "triggerSpecs"] [@ocaml.doc "No description provided"]
       aggregatableReportWindow : number;
           [@key "aggregatableReportWindow"] [@ocaml.doc "duration in seconds"]
       type_ : AttributionReportingSourceType.t;
