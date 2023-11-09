@@ -31226,9 +31226,8 @@ module FedCm = struct
     end
   end
 
-  (* Only valid if the dialog type is ConfirmIdpLogin. Acts as if the user had
-     clicked the continue button. *)
-  module ConfirmIdpLogin = struct
+  (* No description provided *)
+  module ClickDialogButton = struct
     module Response : sig
       type result = Types.assoc
       type error = { code : int; message : string }
@@ -31260,10 +31259,12 @@ module FedCm = struct
       type t = {
         dialogId : string;
             [@key "dialogId"] [@ocaml.doc "No description provided"]
+        dialogButton : Types.FedCm.DialogButton.t;
+            [@key "dialogButton"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
-      let make ~dialogId () = { dialogId }
+      let make ~dialogId ~dialogButton () = { dialogId; dialogButton }
     end
 
     module Request = struct
@@ -31276,7 +31277,7 @@ module FedCm = struct
       [@@deriving yojson]
 
       let make ?sessionId ~params id =
-        { id; method_ = "FedCm.confirmIdpLogin"; sessionId; params }
+        { id; method_ = "FedCm.clickDialogButton"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end

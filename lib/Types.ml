@@ -30228,10 +30228,17 @@ and FedCm : sig
     val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
 
     type t = _dialogtype
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Whether the dialog shown is an account chooser or an auto \
-       re-authentication dialog."]
+    [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
+  end
+
+  and DialogButton : sig
+    type _dialogbutton = [ `ConfirmIdpLoginContinue ]
+
+    val _dialogbutton_of_yojson : Yojson.Basic.t -> _dialogbutton
+    val yojson_of__dialogbutton : _dialogbutton -> Yojson.Basic.t
+
+    type t = _dialogbutton
+    [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
   end
 
   and Account : sig
@@ -30300,10 +30307,7 @@ end = struct
     val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
 
     type t = _dialogtype
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Whether the dialog shown is an account chooser or an auto \
-       re-authentication dialog."]
+    [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
   end = struct
     type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin ]
 
@@ -30320,10 +30324,30 @@ end = struct
       | `ConfirmIdpLogin -> `String "ConfirmIdpLogin"
 
     type t = _dialogtype
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Whether the dialog shown is an account chooser or an auto \
-       re-authentication dialog."]
+    [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
+  end
+
+  and DialogButton : sig
+    type _dialogbutton = [ `ConfirmIdpLoginContinue ]
+
+    val _dialogbutton_of_yojson : Yojson.Basic.t -> _dialogbutton
+    val yojson_of__dialogbutton : _dialogbutton -> Yojson.Basic.t
+
+    type t = _dialogbutton
+    [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
+  end = struct
+    type _dialogbutton = [ `ConfirmIdpLoginContinue ]
+
+    let _dialogbutton_of_yojson = function
+      | `String "ConfirmIdpLoginContinue" -> `ConfirmIdpLoginContinue
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__dialogbutton = function
+      | `ConfirmIdpLoginContinue -> `String "ConfirmIdpLoginContinue"
+
+    type t = _dialogbutton
+    [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
   end
 
   and Account : sig
