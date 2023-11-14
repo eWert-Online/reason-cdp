@@ -6381,6 +6381,26 @@ and CSS : sig
        CSS.registerProperty"]
   end
 
+  and CSSFontPaletteValuesRule : sig
+    type t = {
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      fontPaletteName : Value.t;
+          [@key "fontPaletteName"] [@ocaml.doc "Associated font palette name."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "CSS font-palette-values rule representation."]
+  end
+
   and CSSPropertyRule : sig
     type t = {
       styleSheetId : StyleSheetId.t option;
@@ -7893,6 +7913,44 @@ end = struct
     [@@ocaml.doc
       "Representation of a custom property registration through \
        CSS.registerProperty"]
+  end
+
+  and CSSFontPaletteValuesRule : sig
+    type t = {
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      fontPaletteName : Value.t;
+          [@key "fontPaletteName"] [@ocaml.doc "Associated font palette name."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "CSS font-palette-values rule representation."]
+  end = struct
+    type t = {
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      fontPaletteName : Value.t;
+          [@key "fontPaletteName"] [@ocaml.doc "Associated font palette name."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "CSS font-palette-values rule representation."]
   end
 
   and CSSPropertyRule : sig

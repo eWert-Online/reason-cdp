@@ -3637,6 +3637,10 @@ module CSS = struct
             [@yojson.option]
             [@ocaml.doc
               "A list of CSS property registrations matching this node."]
+        cssFontPaletteValuesRule : Types.CSS.CSSFontPaletteValuesRule.t option;
+            [@key "cssFontPaletteValuesRule"]
+            [@yojson.option]
+            [@ocaml.doc "A font-palette-values rule matching this node."]
         parentLayoutNodeId : Types.DOM.NodeId.t option;
             [@key "parentLayoutNodeId"]
             [@yojson.option]
@@ -3709,6 +3713,10 @@ module CSS = struct
             [@yojson.option]
             [@ocaml.doc
               "A list of CSS property registrations matching this node."]
+        cssFontPaletteValuesRule : Types.CSS.CSSFontPaletteValuesRule.t option;
+            [@key "cssFontPaletteValuesRule"]
+            [@yojson.option]
+            [@ocaml.doc "A font-palette-values rule matching this node."]
         parentLayoutNodeId : Types.DOM.NodeId.t option;
             [@key "parentLayoutNodeId"]
             [@yojson.option]
