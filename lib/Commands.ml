@@ -12566,7 +12566,7 @@ module Emulation = struct
         acceptLanguage : string option;
             [@key "acceptLanguage"]
             [@yojson.option]
-            [@ocaml.doc "Browser langugage to emulate."]
+            [@ocaml.doc "Browser language to emulate."]
         platform : string option;
             [@key "platform"]
             [@yojson.option]
@@ -18326,7 +18326,7 @@ module Network = struct
         acceptLanguage : string option;
             [@key "acceptLanguage"]
             [@yojson.option]
-            [@ocaml.doc "Browser langugage to emulate."]
+            [@ocaml.doc "Browser language to emulate."]
         platform : string option;
             [@key "platform"]
             [@yojson.option]
