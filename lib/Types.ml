@@ -6259,6 +6259,9 @@ and CSS : sig
       familyName : string;
           [@key "familyName"]
           [@ocaml.doc "Font's family name reported by platform."]
+      postScriptName : string;
+          [@key "postScriptName"]
+          [@ocaml.doc "Font's PostScript name reported by platform."]
       isCustomFont : bool;
           [@key "isCustomFont"]
           [@ocaml.doc
@@ -7680,6 +7683,9 @@ end = struct
       familyName : string;
           [@key "familyName"]
           [@ocaml.doc "Font's family name reported by platform."]
+      postScriptName : string;
+          [@key "postScriptName"]
+          [@ocaml.doc "Font's PostScript name reported by platform."]
       isCustomFont : bool;
           [@key "isCustomFont"]
           [@ocaml.doc
@@ -7696,6 +7702,9 @@ end = struct
       familyName : string;
           [@key "familyName"]
           [@ocaml.doc "Font's family name reported by platform."]
+      postScriptName : string;
+          [@key "postScriptName"]
+          [@ocaml.doc "Font's PostScript name reported by platform."]
       isCustomFont : bool;
           [@key "isCustomFont"]
           [@ocaml.doc
