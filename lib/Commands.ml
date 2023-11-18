@@ -22167,13 +22167,19 @@ module Page = struct
             [@ocaml.doc
               "Whether or not to generate tagged (accessible) PDF. Defaults to \
                embedder choice."]
+        generateDocumentOutline : bool option;
+            [@key "generateDocumentOutline"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Whether or not to embed the document outline into the PDF."]
       }
       [@@deriving yojson]
 
       let make ?landscape ?displayHeaderFooter ?printBackground ?scale
           ?paperWidth ?paperHeight ?marginTop ?marginBottom ?marginLeft
           ?marginRight ?pageRanges ?headerTemplate ?footerTemplate
-          ?preferCSSPageSize ?transferMode ?generateTaggedPDF () =
+          ?preferCSSPageSize ?transferMode ?generateTaggedPDF
+          ?generateDocumentOutline () =
         {
           landscape;
           displayHeaderFooter;
@@ -22191,6 +22197,7 @@ module Page = struct
           preferCSSPageSize;
           transferMode;
           generateTaggedPDF;
+          generateDocumentOutline;
         }
     end
 
