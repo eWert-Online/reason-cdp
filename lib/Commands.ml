@@ -21355,60 +21355,6 @@ module Page = struct
     end
   end
 
-  (* Returns all browser cookies for the page and all of its subframes. Depending
-     on the backend support, will return detailed cookie information in the
-     `cookies` field. *)
-  module GetCookies = struct
-    module Response : sig
-      type result = {
-        cookies : Types.Network.Cookie.t list;
-            [@key "cookies"] [@ocaml.doc "Array of cookie objects."]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        cookies : Types.Network.Cookie.t list;
-            [@key "cookies"] [@ocaml.doc "Array of cookie objects."]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Page.getCookies"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-
   (* Returns present frame tree structure. *)
   module GetFrameTree = struct
     module Response : sig
