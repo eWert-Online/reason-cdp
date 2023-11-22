@@ -14049,6 +14049,14 @@ and Network : sig
        semantics."]
   end
 
+  and ServiceWorkerRouterInfo : sig
+    type t = {
+      ruleIdMatched : number;
+          [@key "ruleIdMatched"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and Response : sig
     type t = {
       url : string;
@@ -14112,6 +14120,11 @@ and Network : sig
           [@yojson.option]
           [@ocaml.doc
             "Specifies that the request was served from the prefetch cache."]
+      serviceWorkerRouterInfo : ServiceWorkerRouterInfo.t option;
+          [@key "serviceWorkerRouterInfo"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Infomation about how Service Worker Static Router was used."]
       encodedDataLength : number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request so far."]
@@ -16363,6 +16376,20 @@ end = struct
        semantics."]
   end
 
+  and ServiceWorkerRouterInfo : sig
+    type t = {
+      ruleIdMatched : number;
+          [@key "ruleIdMatched"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      ruleIdMatched : number;
+          [@key "ruleIdMatched"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and Response : sig
     type t = {
       url : string;
@@ -16426,6 +16453,11 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "Specifies that the request was served from the prefetch cache."]
+      serviceWorkerRouterInfo : ServiceWorkerRouterInfo.t option;
+          [@key "serviceWorkerRouterInfo"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Infomation about how Service Worker Static Router was used."]
       encodedDataLength : number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request so far."]
@@ -16527,6 +16559,11 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "Specifies that the request was served from the prefetch cache."]
+      serviceWorkerRouterInfo : ServiceWorkerRouterInfo.t option;
+          [@key "serviceWorkerRouterInfo"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Infomation about how Service Worker Static Router was used."]
       encodedDataLength : number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request so far."]
