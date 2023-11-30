@@ -20107,6 +20107,7 @@ and Page : sig
       | `sync_xhr
       | `unload
       | `usb
+      | `usb_unrestricted
       | `vertical_scroll
       | `web_printing
       | `web_share
@@ -21248,6 +21249,7 @@ end = struct
       | `sync_xhr
       | `unload
       | `usb
+      | `usb_unrestricted
       | `vertical_scroll
       | `web_printing
       | `web_share
@@ -21343,6 +21345,7 @@ end = struct
       | `sync_xhr
       | `unload
       | `usb
+      | `usb_unrestricted
       | `vertical_scroll
       | `web_printing
       | `web_share
@@ -21429,6 +21432,7 @@ end = struct
       | `String "sync-xhr" -> `sync_xhr
       | `String "unload" -> `unload
       | `String "usb" -> `usb
+      | `String "usb-unrestricted" -> `usb_unrestricted
       | `String "vertical-scroll" -> `vertical_scroll
       | `String "web-printing" -> `web_printing
       | `String "web-share" -> `web_share
@@ -21517,6 +21521,7 @@ end = struct
       | `sync_xhr -> `String "sync-xhr"
       | `unload -> `String "unload"
       | `usb -> `String "usb"
+      | `usb_unrestricted -> `String "usb-unrestricted"
       | `vertical_scroll -> `String "vertical-scroll"
       | `web_printing -> `String "web-printing"
       | `web_share -> `String "web-share"
@@ -30326,7 +30331,8 @@ and FedCm : sig
   end
 
   and DialogType : sig
-    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin ]
+    type _dialogtype =
+      [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin | `Error ]
 
     val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
     val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
@@ -30336,7 +30342,8 @@ and FedCm : sig
   end
 
   and DialogButton : sig
-    type _dialogbutton = [ `ConfirmIdpLoginContinue ]
+    type _dialogbutton =
+      [ `ConfirmIdpLoginContinue | `ErrorGotIt | `ErrorMoreDetails ]
 
     val _dialogbutton_of_yojson : Yojson.Basic.t -> _dialogbutton
     val yojson_of__dialogbutton : _dialogbutton -> Yojson.Basic.t
@@ -30405,7 +30412,8 @@ end = struct
   end
 
   and DialogType : sig
-    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin ]
+    type _dialogtype =
+      [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin | `Error ]
 
     val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
     val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
@@ -30413,12 +30421,14 @@ end = struct
     type t = _dialogtype
     [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
   end = struct
-    type _dialogtype = [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin ]
+    type _dialogtype =
+      [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin | `Error ]
 
     let _dialogtype_of_yojson = function
       | `String "AccountChooser" -> `AccountChooser
       | `String "AutoReauthn" -> `AutoReauthn
       | `String "ConfirmIdpLogin" -> `ConfirmIdpLogin
+      | `String "Error" -> `Error
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -30426,13 +30436,15 @@ end = struct
       | `AccountChooser -> `String "AccountChooser"
       | `AutoReauthn -> `String "AutoReauthn"
       | `ConfirmIdpLogin -> `String "ConfirmIdpLogin"
+      | `Error -> `String "Error"
 
     type t = _dialogtype
     [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
   end
 
   and DialogButton : sig
-    type _dialogbutton = [ `ConfirmIdpLoginContinue ]
+    type _dialogbutton =
+      [ `ConfirmIdpLoginContinue | `ErrorGotIt | `ErrorMoreDetails ]
 
     val _dialogbutton_of_yojson : Yojson.Basic.t -> _dialogbutton
     val yojson_of__dialogbutton : _dialogbutton -> Yojson.Basic.t
@@ -30440,15 +30452,20 @@ end = struct
     type t = _dialogbutton
     [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
   end = struct
-    type _dialogbutton = [ `ConfirmIdpLoginContinue ]
+    type _dialogbutton =
+      [ `ConfirmIdpLoginContinue | `ErrorGotIt | `ErrorMoreDetails ]
 
     let _dialogbutton_of_yojson = function
       | `String "ConfirmIdpLoginContinue" -> `ConfirmIdpLoginContinue
+      | `String "ErrorGotIt" -> `ErrorGotIt
+      | `String "ErrorMoreDetails" -> `ErrorMoreDetails
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__dialogbutton = function
       | `ConfirmIdpLoginContinue -> `String "ConfirmIdpLoginContinue"
+      | `ErrorGotIt -> `String "ErrorGotIt"
+      | `ErrorMoreDetails -> `String "ErrorMoreDetails"
 
     type t = _dialogbutton
     [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
