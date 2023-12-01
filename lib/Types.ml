@@ -28450,6 +28450,21 @@ and WebAuthn : sig
             "Sets whether User Verification succeeds or fails for an \
              authenticator.\n\
              Defaults to false."]
+      defaultBackupEligibility : bool option;
+          [@key "defaultBackupEligibility"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Credentials created by this authenticator will have the backup\n\
+             eligibility (BE) flag set to this value. Defaults to false.\n\
+             https://w3c.github.io/webauthn/#sctn-credential-backup"]
+      defaultBackupState : bool option;
+          [@key "defaultBackupState"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Credentials created by this authenticator will have the backup \
+             state\n\
+             (BS) flag set to this value. Defaults to false.\n\
+             https://w3c.github.io/webauthn/#sctn-credential-backup"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -28651,6 +28666,21 @@ end = struct
             "Sets whether User Verification succeeds or fails for an \
              authenticator.\n\
              Defaults to false."]
+      defaultBackupEligibility : bool option;
+          [@key "defaultBackupEligibility"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Credentials created by this authenticator will have the backup\n\
+             eligibility (BE) flag set to this value. Defaults to false.\n\
+             https://w3c.github.io/webauthn/#sctn-credential-backup"]
+      defaultBackupState : bool option;
+          [@key "defaultBackupState"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Credentials created by this authenticator will have the backup \
+             state\n\
+             (BS) flag set to this value. Defaults to false.\n\
+             https://w3c.github.io/webauthn/#sctn-credential-backup"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -28715,6 +28745,21 @@ end = struct
             "Sets whether User Verification succeeds or fails for an \
              authenticator.\n\
              Defaults to false."]
+      defaultBackupEligibility : bool option;
+          [@key "defaultBackupEligibility"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Credentials created by this authenticator will have the backup\n\
+             eligibility (BE) flag set to this value. Defaults to false.\n\
+             https://w3c.github.io/webauthn/#sctn-credential-backup"]
+      defaultBackupState : bool option;
+          [@key "defaultBackupState"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Credentials created by this authenticator will have the backup \
+             state\n\
+             (BS) flag set to this value. Defaults to false.\n\
+             https://w3c.github.io/webauthn/#sctn-credential-backup"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end

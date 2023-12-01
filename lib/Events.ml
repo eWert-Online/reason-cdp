@@ -4287,6 +4287,26 @@ module FedCm = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+
+  (* Triggered when a dialog is closed, either by user action, JS abort,
+     or a command below. *)
+  module DialogClosed = struct
+    let name = "FedCm.dialogClosed"
+
+    type result = {
+      dialogId : string; [@key "dialogId"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
 end
 
 module Console = struct
