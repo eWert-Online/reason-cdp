@@ -11164,12 +11164,19 @@ module Emulation = struct
               "If set, the display feature of a multi-segment screen. If not \
                set, multi-segment support\n\
                is turned-off."]
+        devicePosture : Types.Emulation.DevicePosture.t option;
+            [@key "devicePosture"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If set, the posture of a foldable device. If not set the \
+               posture is set\n\
+               to continuous."]
       }
       [@@deriving yojson]
 
       let make ~width ~height ~deviceScaleFactor ~mobile ?scale ?screenWidth
           ?screenHeight ?positionX ?positionY ?dontSetVisibleSize
-          ?screenOrientation ?viewport ?displayFeature () =
+          ?screenOrientation ?viewport ?displayFeature ?devicePosture () =
         {
           width;
           height;
@@ -11184,6 +11191,7 @@ module Emulation = struct
           screenOrientation;
           viewport;
           displayFeature;
+          devicePosture;
         }
     end
 

@@ -11137,6 +11137,19 @@ and Emulation : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and DevicePosture : sig
+    type _deviceposture_type = [ `continuous | `folded ]
+
+    val _deviceposture_type_of_yojson : Yojson.Basic.t -> _deviceposture_type
+    val yojson_of__deviceposture_type : _deviceposture_type -> Yojson.Basic.t
+
+    type t = {
+      type_ : _deviceposture_type;
+          [@key "type"] [@ocaml.doc "Current posture of the device"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and MediaFeature : sig
     type t = {
       name : string; [@key "name"] [@ocaml.doc "No description provided"]
@@ -11409,6 +11422,37 @@ end = struct
              displayed - this length along with the offset describes this area.\n\
              A display feature that only splits content will have a 0 \
              mask_length."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and DevicePosture : sig
+    type _deviceposture_type = [ `continuous | `folded ]
+
+    val _deviceposture_type_of_yojson : Yojson.Basic.t -> _deviceposture_type
+    val yojson_of__deviceposture_type : _deviceposture_type -> Yojson.Basic.t
+
+    type t = {
+      type_ : _deviceposture_type;
+          [@key "type"] [@ocaml.doc "Current posture of the device"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _deviceposture_type = [ `continuous | `folded ]
+
+    let _deviceposture_type_of_yojson = function
+      | `String "continuous" -> `continuous
+      | `String "folded" -> `folded
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__deviceposture_type = function
+      | `continuous -> `String "continuous"
+      | `folded -> `String "folded"
+
+    type t = {
+      type_ : _deviceposture_type;
+          [@key "type"] [@ocaml.doc "Current posture of the device"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
