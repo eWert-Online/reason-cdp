@@ -1439,6 +1439,7 @@ and Audits : sig
       | `Script
       | `ServiceWorker
       | `SharedWorker
+      | `SpeculationRules
       | `Stylesheet
       | `Track
       | `Video
@@ -2661,6 +2662,7 @@ end = struct
       | `Script
       | `ServiceWorker
       | `SharedWorker
+      | `SpeculationRules
       | `Stylesheet
       | `Track
       | `Video
@@ -2699,6 +2701,7 @@ end = struct
       | `Script
       | `ServiceWorker
       | `SharedWorker
+      | `SpeculationRules
       | `Stylesheet
       | `Track
       | `Video
@@ -2728,6 +2731,7 @@ end = struct
       | `String "Script" -> `Script
       | `String "ServiceWorker" -> `ServiceWorker
       | `String "SharedWorker" -> `SharedWorker
+      | `String "SpeculationRules" -> `SpeculationRules
       | `String "Stylesheet" -> `Stylesheet
       | `String "Track" -> `Track
       | `String "Video" -> `Video
@@ -2759,6 +2763,7 @@ end = struct
       | `Script -> `String "Script"
       | `ServiceWorker -> `String "ServiceWorker"
       | `SharedWorker -> `String "SharedWorker"
+      | `SpeculationRules -> `String "SpeculationRules"
       | `Stylesheet -> `String "Stylesheet"
       | `Track -> `String "Track"
       | `Video -> `String "Video"
