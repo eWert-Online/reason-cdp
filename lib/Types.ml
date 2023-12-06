@@ -29486,7 +29486,8 @@ and Preload : sig
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
       | `PrefetchFailedPerPageLimitExceeded
-      | `PrefetchEvicted
+      | `PrefetchEvictedAfterCandidateRemoved
+      | `PrefetchEvictedForNewerPrefetch
       | `PrefetchHeldback
       | `PrefetchIneligibleRetryAfter
       | `PrefetchIsPrivacyDecoy
@@ -30203,7 +30204,8 @@ end = struct
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
       | `PrefetchFailedPerPageLimitExceeded
-      | `PrefetchEvicted
+      | `PrefetchEvictedAfterCandidateRemoved
+      | `PrefetchEvictedForNewerPrefetch
       | `PrefetchHeldback
       | `PrefetchIneligibleRetryAfter
       | `PrefetchIsPrivacyDecoy
@@ -30244,7 +30246,8 @@ end = struct
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
       | `PrefetchFailedPerPageLimitExceeded
-      | `PrefetchEvicted
+      | `PrefetchEvictedAfterCandidateRemoved
+      | `PrefetchEvictedForNewerPrefetch
       | `PrefetchHeldback
       | `PrefetchIneligibleRetryAfter
       | `PrefetchIsPrivacyDecoy
@@ -30280,7 +30283,10 @@ end = struct
       | `String "PrefetchFailedNon2XX" -> `PrefetchFailedNon2XX
       | `String "PrefetchFailedPerPageLimitExceeded" ->
           `PrefetchFailedPerPageLimitExceeded
-      | `String "PrefetchEvicted" -> `PrefetchEvicted
+      | `String "PrefetchEvictedAfterCandidateRemoved" ->
+          `PrefetchEvictedAfterCandidateRemoved
+      | `String "PrefetchEvictedForNewerPrefetch" ->
+          `PrefetchEvictedForNewerPrefetch
       | `String "PrefetchHeldback" -> `PrefetchHeldback
       | `String "PrefetchIneligibleRetryAfter" -> `PrefetchIneligibleRetryAfter
       | `String "PrefetchIsPrivacyDecoy" -> `PrefetchIsPrivacyDecoy
@@ -30330,7 +30336,10 @@ end = struct
       | `PrefetchFailedNon2XX -> `String "PrefetchFailedNon2XX"
       | `PrefetchFailedPerPageLimitExceeded ->
           `String "PrefetchFailedPerPageLimitExceeded"
-      | `PrefetchEvicted -> `String "PrefetchEvicted"
+      | `PrefetchEvictedAfterCandidateRemoved ->
+          `String "PrefetchEvictedAfterCandidateRemoved"
+      | `PrefetchEvictedForNewerPrefetch ->
+          `String "PrefetchEvictedForNewerPrefetch"
       | `PrefetchHeldback -> `String "PrefetchHeldback"
       | `PrefetchIneligibleRetryAfter -> `String "PrefetchIneligibleRetryAfter"
       | `PrefetchIsPrivacyDecoy -> `String "PrefetchIsPrivacyDecoy"
