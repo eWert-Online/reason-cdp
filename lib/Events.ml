@@ -1033,6 +1033,12 @@ module Network = struct
           [@ocaml.doc
             "Actual bytes received (might be less than dataLength for \
              compressed encodings)."]
+      data : string option;
+          [@key "data"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Data that was received. (Encoded as a base64 string when passed \
+             over JSON)"]
     }
     [@@deriving yojson]
 

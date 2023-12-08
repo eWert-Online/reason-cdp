@@ -18367,6 +18367,77 @@ module Network = struct
     end
   end
 
+  (* Enables streaming of the response for the given requestId.
+     If enabled, the dataReceived event contains the data that was received during streaming. *)
+  module StreamResourceContent = struct
+    module Response : sig
+      type result = {
+        bufferedData : string;
+            [@key "bufferedData"]
+            [@ocaml.doc
+              "Data that has been buffered until streaming is enabled. \
+               (Encoded as a base64 string when passed over JSON)"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        bufferedData : string;
+            [@key "bufferedData"]
+            [@ocaml.doc
+              "Data that has been buffered until streaming is enabled. \
+               (Encoded as a base64 string when passed over JSON)"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        requestId : Types.Network.RequestId.t;
+            [@key "requestId"]
+            [@ocaml.doc "Identifier of the request to stream."]
+      }
+      [@@deriving yojson]
+
+      let make ~requestId () = { requestId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Network.streamResourceContent"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Returns information about the COEP/COOP isolation status. *)
   module GetSecurityIsolationStatus = struct
     module Response : sig
