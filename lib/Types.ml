@@ -20879,6 +20879,7 @@ and Page : sig
       | `WebRTCSticky
       | `WebTransportSticky
       | `WebSocketSticky
+      | `SmartCard
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -22963,6 +22964,7 @@ end = struct
       | `WebRTCSticky
       | `WebTransportSticky
       | `WebSocketSticky
+      | `SmartCard
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -23103,6 +23105,7 @@ end = struct
       | `WebRTCSticky
       | `WebTransportSticky
       | `WebSocketSticky
+      | `SmartCard
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -23261,6 +23264,7 @@ end = struct
       | `String "WebRTCSticky" -> `WebRTCSticky
       | `String "WebTransportSticky" -> `WebTransportSticky
       | `String "WebSocketSticky" -> `WebSocketSticky
+      | `String "SmartCard" -> `SmartCard
       | `String "ContentSecurityHandler" -> `ContentSecurityHandler
       | `String "ContentWebAuthenticationAPI" -> `ContentWebAuthenticationAPI
       | `String "ContentFileChooser" -> `ContentFileChooser
@@ -23432,6 +23436,7 @@ end = struct
       | `WebRTCSticky -> `String "WebRTCSticky"
       | `WebTransportSticky -> `String "WebTransportSticky"
       | `WebSocketSticky -> `String "WebSocketSticky"
+      | `SmartCard -> `String "SmartCard"
       | `ContentSecurityHandler -> `String "ContentSecurityHandler"
       | `ContentWebAuthenticationAPI -> `String "ContentWebAuthenticationAPI"
       | `ContentFileChooser -> `String "ContentFileChooser"
