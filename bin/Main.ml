@@ -10,18 +10,15 @@ let get_file_contents filename =
   data
 
 let map_reserved_words = function
-  | "open" -> "open_"
-  | "method" -> "method_"
-  | "new" -> "new_"
-  | "with" -> "with_"
-  | "module" -> "module_"
-  | "object" -> "object_"
-  | "function" -> "function_"
-  | "type" -> "type_"
-  | "end" -> "end_"
-  | "exception" -> "exception_"
-  | "done" -> "done_"
-  | "assert" -> "assert_"
+  | ( "and" | "as" | "assert" | "asr" | "begin" | "class" | "constraint" | "do"
+    | "done" | "downto" | "else" | "end" | "exception" | "external" | "false"
+    | "for" | "fun" | "function" | "functor" | "if" | "in" | "include"
+    | "inherit" | "initializer" | "land" | "lazy" | "let" | "lor" | "lsl"
+    | "lsr" | "lxor" | "match" | "method" | "mod" | "module" | "mutable" | "new"
+    | "nonrec" | "object" | "of" | "open" | "or" | "private" | "rec" | "sig"
+    | "struct" | "then" | "to" | "true" | "try" | "type" | "val" | "virtual"
+    | "when" | "while" | "with" ) as s ->
+      s ^ "_"
   | s -> s
 
 let rec map_type ?(key = "type") ?(additional_ref_path_segment = "") ~enums
