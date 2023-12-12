@@ -5139,6 +5139,7 @@ and Browser : sig
       | `audioCapture
       | `backgroundSync
       | `backgroundFetch
+      | `capturedSurfaceControl
       | `clipboardReadWrite
       | `clipboardSanitizedWrite
       | `displayCapture
@@ -5353,6 +5354,7 @@ end = struct
       | `audioCapture
       | `backgroundSync
       | `backgroundFetch
+      | `capturedSurfaceControl
       | `clipboardReadWrite
       | `clipboardSanitizedWrite
       | `displayCapture
@@ -5388,6 +5390,7 @@ end = struct
       | `audioCapture
       | `backgroundSync
       | `backgroundFetch
+      | `capturedSurfaceControl
       | `clipboardReadWrite
       | `clipboardSanitizedWrite
       | `displayCapture
@@ -5417,6 +5420,7 @@ end = struct
       | `String "audioCapture" -> `audioCapture
       | `String "backgroundSync" -> `backgroundSync
       | `String "backgroundFetch" -> `backgroundFetch
+      | `String "capturedSurfaceControl" -> `capturedSurfaceControl
       | `String "clipboardReadWrite" -> `clipboardReadWrite
       | `String "clipboardSanitizedWrite" -> `clipboardSanitizedWrite
       | `String "displayCapture" -> `displayCapture
@@ -5448,6 +5452,7 @@ end = struct
       | `audioCapture -> `String "audioCapture"
       | `backgroundSync -> `String "backgroundSync"
       | `backgroundFetch -> `String "backgroundFetch"
+      | `capturedSurfaceControl -> `String "capturedSurfaceControl"
       | `clipboardReadWrite -> `String "clipboardReadWrite"
       | `clipboardSanitizedWrite -> `String "clipboardSanitizedWrite"
       | `displayCapture -> `String "displayCapture"
@@ -20089,6 +20094,7 @@ and Page : sig
       | `bluetooth
       | `browsing_topics
       | `camera
+      | `captured_surface_control
       | `ch_dpr
       | `ch_device_memory
       | `ch_downlink
@@ -21232,6 +21238,7 @@ end = struct
       | `bluetooth
       | `browsing_topics
       | `camera
+      | `captured_surface_control
       | `ch_dpr
       | `ch_device_memory
       | `ch_downlink
@@ -21328,6 +21335,7 @@ end = struct
       | `bluetooth
       | `browsing_topics
       | `camera
+      | `captured_surface_control
       | `ch_dpr
       | `ch_device_memory
       | `ch_downlink
@@ -21411,6 +21419,7 @@ end = struct
       | `String "bluetooth" -> `bluetooth
       | `String "browsing-topics" -> `browsing_topics
       | `String "camera" -> `camera
+      | `String "captured-surface-control" -> `captured_surface_control
       | `String "ch-dpr" -> `ch_dpr
       | `String "ch-device-memory" -> `ch_device_memory
       | `String "ch-downlink" -> `ch_downlink
@@ -21500,6 +21509,7 @@ end = struct
       | `bluetooth -> `String "bluetooth"
       | `browsing_topics -> `String "browsing-topics"
       | `camera -> `String "camera"
+      | `captured_surface_control -> `String "captured-surface-control"
       | `ch_dpr -> `String "ch-dpr"
       | `ch_device_memory -> `String "ch-device-memory"
       | `ch_downlink -> `String "ch-downlink"
@@ -25252,6 +25262,28 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingFilterConfig : sig
+    type t = {
+      filterValues : AttributionReportingFilterDataEntry.t list;
+          [@key "filterValues"] [@ocaml.doc "No description provided"]
+      lookbackWindow : number option;
+          [@key "lookbackWindow"]
+          [@yojson.option]
+          [@ocaml.doc "duration in seconds"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingFilterPair : sig
+    type t = {
+      filters : AttributionReportingFilterConfig.t list;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+      notFilters : AttributionReportingFilterConfig.t list;
+          [@key "notFilters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingAggregationKeysEntry : sig
     type t = {
       key : string; [@key "key"] [@ocaml.doc "No description provided"]
@@ -25353,6 +25385,168 @@ and Storage : sig
       _attributionreportingsourceregistrationresult -> Yojson.Basic.t
 
     type t = _attributionreportingsourceregistrationresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingSourceRegistrationTimeConfig : sig
+    type _attributionreportingsourceregistrationtimeconfig =
+      [ `include_ | `exclude ]
+
+    val _attributionreportingsourceregistrationtimeconfig_of_yojson :
+      Yojson.Basic.t -> _attributionreportingsourceregistrationtimeconfig
+
+    val yojson_of__attributionreportingsourceregistrationtimeconfig :
+      _attributionreportingsourceregistrationtimeconfig -> Yojson.Basic.t
+
+    type t = _attributionreportingsourceregistrationtimeconfig
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableValueEntry : sig
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      value : number;
+          [@key "value"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingEventTriggerData : sig
+    type t = {
+      data : UnsignedInt64AsBase10.t;
+          [@key "data"] [@ocaml.doc "No description provided"]
+      priority : SignedInt64AsBase10.t;
+          [@key "priority"] [@ocaml.doc "No description provided"]
+      dedupKey : UnsignedInt64AsBase10.t option;
+          [@key "dedupKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableTriggerData : sig
+    type t = {
+      keyPiece : UnsignedInt128AsBase16.t;
+          [@key "keyPiece"] [@ocaml.doc "No description provided"]
+      sourceKeys : string list;
+          [@key "sourceKeys"] [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableDedupKey : sig
+    type t = {
+      dedupKey : UnsignedInt64AsBase10.t option;
+          [@key "dedupKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingTriggerRegistration : sig
+    type t = {
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+      debugKey : UnsignedInt64AsBase10.t option;
+          [@key "debugKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      aggregatableDedupKeys : AttributionReportingAggregatableDedupKey.t list;
+          [@key "aggregatableDedupKeys"] [@ocaml.doc "No description provided"]
+      eventTriggerData : AttributionReportingEventTriggerData.t list;
+          [@key "eventTriggerData"] [@ocaml.doc "No description provided"]
+      aggregatableTriggerData :
+        AttributionReportingAggregatableTriggerData.t list;
+          [@key "aggregatableTriggerData"]
+          [@ocaml.doc "No description provided"]
+      aggregatableValues : AttributionReportingAggregatableValueEntry.t list;
+          [@key "aggregatableValues"] [@ocaml.doc "No description provided"]
+      debugReporting : bool;
+          [@key "debugReporting"] [@ocaml.doc "No description provided"]
+      aggregationCoordinatorOrigin : string option;
+          [@key "aggregationCoordinatorOrigin"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      sourceRegistrationTimeConfig :
+        AttributionReportingSourceRegistrationTimeConfig.t;
+          [@key "sourceRegistrationTimeConfig"]
+          [@ocaml.doc "No description provided"]
+      triggerContextId : string option;
+          [@key "triggerContextId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingEventLevelResult : sig
+    type _attributionreportingeventlevelresult =
+      [ `success
+      | `successDroppedLowerPriority
+      | `internalError
+      | `noCapacityForAttributionDestination
+      | `noMatchingSources
+      | `deduplicated
+      | `excessiveAttributions
+      | `priorityTooLow
+      | `neverAttributedSource
+      | `excessiveReportingOrigins
+      | `noMatchingSourceFilterData
+      | `prohibitedByBrowserPolicy
+      | `noMatchingConfigurations
+      | `excessiveReports
+      | `falselyAttributedSource
+      | `reportWindowPassed
+      | `notRegistered
+      | `reportWindowNotStarted
+      | `noMatchingTriggerData ]
+
+    val _attributionreportingeventlevelresult_of_yojson :
+      Yojson.Basic.t -> _attributionreportingeventlevelresult
+
+    val yojson_of__attributionreportingeventlevelresult :
+      _attributionreportingeventlevelresult -> Yojson.Basic.t
+
+    type t = _attributionreportingeventlevelresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableResult : sig
+    type _attributionreportingaggregatableresult =
+      [ `success
+      | `internalError
+      | `noCapacityForAttributionDestination
+      | `noMatchingSources
+      | `excessiveAttributions
+      | `excessiveReportingOrigins
+      | `noHistograms
+      | `insufficientBudget
+      | `noMatchingSourceFilterData
+      | `notRegistered
+      | `prohibitedByBrowserPolicy
+      | `deduplicated
+      | `reportWindowPassed
+      | `excessiveReports ]
+
+    val _attributionreportingaggregatableresult_of_yojson :
+      Yojson.Basic.t -> _attributionreportingaggregatableresult
+
+    val yojson_of__attributionreportingaggregatableresult :
+      _attributionreportingaggregatableresult -> Yojson.Basic.t
+
+    type t = _attributionreportingaggregatableresult
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 end = struct
@@ -26081,6 +26275,46 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingFilterConfig : sig
+    type t = {
+      filterValues : AttributionReportingFilterDataEntry.t list;
+          [@key "filterValues"] [@ocaml.doc "No description provided"]
+      lookbackWindow : number option;
+          [@key "lookbackWindow"]
+          [@yojson.option]
+          [@ocaml.doc "duration in seconds"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      filterValues : AttributionReportingFilterDataEntry.t list;
+          [@key "filterValues"] [@ocaml.doc "No description provided"]
+      lookbackWindow : number option;
+          [@key "lookbackWindow"]
+          [@yojson.option]
+          [@ocaml.doc "duration in seconds"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingFilterPair : sig
+    type t = {
+      filters : AttributionReportingFilterConfig.t list;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+      notFilters : AttributionReportingFilterConfig.t list;
+          [@key "notFilters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      filters : AttributionReportingFilterConfig.t list;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+      notFilters : AttributionReportingFilterConfig.t list;
+          [@key "notFilters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingAggregationKeysEntry : sig
     type t = {
       key : string; [@key "key"] [@ocaml.doc "No description provided"]
@@ -26310,6 +26544,388 @@ end = struct
       | `exceedsMaxChannelCapacity -> `String "exceedsMaxChannelCapacity"
 
     type t = _attributionreportingsourceregistrationresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingSourceRegistrationTimeConfig : sig
+    type _attributionreportingsourceregistrationtimeconfig =
+      [ `include_ | `exclude ]
+
+    val _attributionreportingsourceregistrationtimeconfig_of_yojson :
+      Yojson.Basic.t -> _attributionreportingsourceregistrationtimeconfig
+
+    val yojson_of__attributionreportingsourceregistrationtimeconfig :
+      _attributionreportingsourceregistrationtimeconfig -> Yojson.Basic.t
+
+    type t = _attributionreportingsourceregistrationtimeconfig
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _attributionreportingsourceregistrationtimeconfig =
+      [ `include_ | `exclude ]
+
+    let _attributionreportingsourceregistrationtimeconfig_of_yojson = function
+      | `String "include" -> `include_
+      | `String "exclude" -> `exclude
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__attributionreportingsourceregistrationtimeconfig = function
+      | `include_ -> `String "include"
+      | `exclude -> `String "exclude"
+
+    type t = _attributionreportingsourceregistrationtimeconfig
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableValueEntry : sig
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      value : number;
+          [@key "value"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      value : number;
+          [@key "value"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingEventTriggerData : sig
+    type t = {
+      data : UnsignedInt64AsBase10.t;
+          [@key "data"] [@ocaml.doc "No description provided"]
+      priority : SignedInt64AsBase10.t;
+          [@key "priority"] [@ocaml.doc "No description provided"]
+      dedupKey : UnsignedInt64AsBase10.t option;
+          [@key "dedupKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      data : UnsignedInt64AsBase10.t;
+          [@key "data"] [@ocaml.doc "No description provided"]
+      priority : SignedInt64AsBase10.t;
+          [@key "priority"] [@ocaml.doc "No description provided"]
+      dedupKey : UnsignedInt64AsBase10.t option;
+          [@key "dedupKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableTriggerData : sig
+    type t = {
+      keyPiece : UnsignedInt128AsBase16.t;
+          [@key "keyPiece"] [@ocaml.doc "No description provided"]
+      sourceKeys : string list;
+          [@key "sourceKeys"] [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      keyPiece : UnsignedInt128AsBase16.t;
+          [@key "keyPiece"] [@ocaml.doc "No description provided"]
+      sourceKeys : string list;
+          [@key "sourceKeys"] [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableDedupKey : sig
+    type t = {
+      dedupKey : UnsignedInt64AsBase10.t option;
+          [@key "dedupKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      dedupKey : UnsignedInt64AsBase10.t option;
+          [@key "dedupKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingTriggerRegistration : sig
+    type t = {
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+      debugKey : UnsignedInt64AsBase10.t option;
+          [@key "debugKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      aggregatableDedupKeys : AttributionReportingAggregatableDedupKey.t list;
+          [@key "aggregatableDedupKeys"] [@ocaml.doc "No description provided"]
+      eventTriggerData : AttributionReportingEventTriggerData.t list;
+          [@key "eventTriggerData"] [@ocaml.doc "No description provided"]
+      aggregatableTriggerData :
+        AttributionReportingAggregatableTriggerData.t list;
+          [@key "aggregatableTriggerData"]
+          [@ocaml.doc "No description provided"]
+      aggregatableValues : AttributionReportingAggregatableValueEntry.t list;
+          [@key "aggregatableValues"] [@ocaml.doc "No description provided"]
+      debugReporting : bool;
+          [@key "debugReporting"] [@ocaml.doc "No description provided"]
+      aggregationCoordinatorOrigin : string option;
+          [@key "aggregationCoordinatorOrigin"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      sourceRegistrationTimeConfig :
+        AttributionReportingSourceRegistrationTimeConfig.t;
+          [@key "sourceRegistrationTimeConfig"]
+          [@ocaml.doc "No description provided"]
+      triggerContextId : string option;
+          [@key "triggerContextId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+      debugKey : UnsignedInt64AsBase10.t option;
+          [@key "debugKey"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      aggregatableDedupKeys : AttributionReportingAggregatableDedupKey.t list;
+          [@key "aggregatableDedupKeys"] [@ocaml.doc "No description provided"]
+      eventTriggerData : AttributionReportingEventTriggerData.t list;
+          [@key "eventTriggerData"] [@ocaml.doc "No description provided"]
+      aggregatableTriggerData :
+        AttributionReportingAggregatableTriggerData.t list;
+          [@key "aggregatableTriggerData"]
+          [@ocaml.doc "No description provided"]
+      aggregatableValues : AttributionReportingAggregatableValueEntry.t list;
+          [@key "aggregatableValues"] [@ocaml.doc "No description provided"]
+      debugReporting : bool;
+          [@key "debugReporting"] [@ocaml.doc "No description provided"]
+      aggregationCoordinatorOrigin : string option;
+          [@key "aggregationCoordinatorOrigin"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      sourceRegistrationTimeConfig :
+        AttributionReportingSourceRegistrationTimeConfig.t;
+          [@key "sourceRegistrationTimeConfig"]
+          [@ocaml.doc "No description provided"]
+      triggerContextId : string option;
+          [@key "triggerContextId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingEventLevelResult : sig
+    type _attributionreportingeventlevelresult =
+      [ `success
+      | `successDroppedLowerPriority
+      | `internalError
+      | `noCapacityForAttributionDestination
+      | `noMatchingSources
+      | `deduplicated
+      | `excessiveAttributions
+      | `priorityTooLow
+      | `neverAttributedSource
+      | `excessiveReportingOrigins
+      | `noMatchingSourceFilterData
+      | `prohibitedByBrowserPolicy
+      | `noMatchingConfigurations
+      | `excessiveReports
+      | `falselyAttributedSource
+      | `reportWindowPassed
+      | `notRegistered
+      | `reportWindowNotStarted
+      | `noMatchingTriggerData ]
+
+    val _attributionreportingeventlevelresult_of_yojson :
+      Yojson.Basic.t -> _attributionreportingeventlevelresult
+
+    val yojson_of__attributionreportingeventlevelresult :
+      _attributionreportingeventlevelresult -> Yojson.Basic.t
+
+    type t = _attributionreportingeventlevelresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _attributionreportingeventlevelresult =
+      [ `success
+      | `successDroppedLowerPriority
+      | `internalError
+      | `noCapacityForAttributionDestination
+      | `noMatchingSources
+      | `deduplicated
+      | `excessiveAttributions
+      | `priorityTooLow
+      | `neverAttributedSource
+      | `excessiveReportingOrigins
+      | `noMatchingSourceFilterData
+      | `prohibitedByBrowserPolicy
+      | `noMatchingConfigurations
+      | `excessiveReports
+      | `falselyAttributedSource
+      | `reportWindowPassed
+      | `notRegistered
+      | `reportWindowNotStarted
+      | `noMatchingTriggerData ]
+
+    let _attributionreportingeventlevelresult_of_yojson = function
+      | `String "success" -> `success
+      | `String "successDroppedLowerPriority" -> `successDroppedLowerPriority
+      | `String "internalError" -> `internalError
+      | `String "noCapacityForAttributionDestination" ->
+          `noCapacityForAttributionDestination
+      | `String "noMatchingSources" -> `noMatchingSources
+      | `String "deduplicated" -> `deduplicated
+      | `String "excessiveAttributions" -> `excessiveAttributions
+      | `String "priorityTooLow" -> `priorityTooLow
+      | `String "neverAttributedSource" -> `neverAttributedSource
+      | `String "excessiveReportingOrigins" -> `excessiveReportingOrigins
+      | `String "noMatchingSourceFilterData" -> `noMatchingSourceFilterData
+      | `String "prohibitedByBrowserPolicy" -> `prohibitedByBrowserPolicy
+      | `String "noMatchingConfigurations" -> `noMatchingConfigurations
+      | `String "excessiveReports" -> `excessiveReports
+      | `String "falselyAttributedSource" -> `falselyAttributedSource
+      | `String "reportWindowPassed" -> `reportWindowPassed
+      | `String "notRegistered" -> `notRegistered
+      | `String "reportWindowNotStarted" -> `reportWindowNotStarted
+      | `String "noMatchingTriggerData" -> `noMatchingTriggerData
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__attributionreportingeventlevelresult = function
+      | `success -> `String "success"
+      | `successDroppedLowerPriority -> `String "successDroppedLowerPriority"
+      | `internalError -> `String "internalError"
+      | `noCapacityForAttributionDestination ->
+          `String "noCapacityForAttributionDestination"
+      | `noMatchingSources -> `String "noMatchingSources"
+      | `deduplicated -> `String "deduplicated"
+      | `excessiveAttributions -> `String "excessiveAttributions"
+      | `priorityTooLow -> `String "priorityTooLow"
+      | `neverAttributedSource -> `String "neverAttributedSource"
+      | `excessiveReportingOrigins -> `String "excessiveReportingOrigins"
+      | `noMatchingSourceFilterData -> `String "noMatchingSourceFilterData"
+      | `prohibitedByBrowserPolicy -> `String "prohibitedByBrowserPolicy"
+      | `noMatchingConfigurations -> `String "noMatchingConfigurations"
+      | `excessiveReports -> `String "excessiveReports"
+      | `falselyAttributedSource -> `String "falselyAttributedSource"
+      | `reportWindowPassed -> `String "reportWindowPassed"
+      | `notRegistered -> `String "notRegistered"
+      | `reportWindowNotStarted -> `String "reportWindowNotStarted"
+      | `noMatchingTriggerData -> `String "noMatchingTriggerData"
+
+    type t = _attributionreportingeventlevelresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableResult : sig
+    type _attributionreportingaggregatableresult =
+      [ `success
+      | `internalError
+      | `noCapacityForAttributionDestination
+      | `noMatchingSources
+      | `excessiveAttributions
+      | `excessiveReportingOrigins
+      | `noHistograms
+      | `insufficientBudget
+      | `noMatchingSourceFilterData
+      | `notRegistered
+      | `prohibitedByBrowserPolicy
+      | `deduplicated
+      | `reportWindowPassed
+      | `excessiveReports ]
+
+    val _attributionreportingaggregatableresult_of_yojson :
+      Yojson.Basic.t -> _attributionreportingaggregatableresult
+
+    val yojson_of__attributionreportingaggregatableresult :
+      _attributionreportingaggregatableresult -> Yojson.Basic.t
+
+    type t = _attributionreportingaggregatableresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _attributionreportingaggregatableresult =
+      [ `success
+      | `internalError
+      | `noCapacityForAttributionDestination
+      | `noMatchingSources
+      | `excessiveAttributions
+      | `excessiveReportingOrigins
+      | `noHistograms
+      | `insufficientBudget
+      | `noMatchingSourceFilterData
+      | `notRegistered
+      | `prohibitedByBrowserPolicy
+      | `deduplicated
+      | `reportWindowPassed
+      | `excessiveReports ]
+
+    let _attributionreportingaggregatableresult_of_yojson = function
+      | `String "success" -> `success
+      | `String "internalError" -> `internalError
+      | `String "noCapacityForAttributionDestination" ->
+          `noCapacityForAttributionDestination
+      | `String "noMatchingSources" -> `noMatchingSources
+      | `String "excessiveAttributions" -> `excessiveAttributions
+      | `String "excessiveReportingOrigins" -> `excessiveReportingOrigins
+      | `String "noHistograms" -> `noHistograms
+      | `String "insufficientBudget" -> `insufficientBudget
+      | `String "noMatchingSourceFilterData" -> `noMatchingSourceFilterData
+      | `String "notRegistered" -> `notRegistered
+      | `String "prohibitedByBrowserPolicy" -> `prohibitedByBrowserPolicy
+      | `String "deduplicated" -> `deduplicated
+      | `String "reportWindowPassed" -> `reportWindowPassed
+      | `String "excessiveReports" -> `excessiveReports
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__attributionreportingaggregatableresult = function
+      | `success -> `String "success"
+      | `internalError -> `String "internalError"
+      | `noCapacityForAttributionDestination ->
+          `String "noCapacityForAttributionDestination"
+      | `noMatchingSources -> `String "noMatchingSources"
+      | `excessiveAttributions -> `String "excessiveAttributions"
+      | `excessiveReportingOrigins -> `String "excessiveReportingOrigins"
+      | `noHistograms -> `String "noHistograms"
+      | `insufficientBudget -> `String "insufficientBudget"
+      | `noMatchingSourceFilterData -> `String "noMatchingSourceFilterData"
+      | `notRegistered -> `String "notRegistered"
+      | `prohibitedByBrowserPolicy -> `String "prohibitedByBrowserPolicy"
+      | `deduplicated -> `String "deduplicated"
+      | `reportWindowPassed -> `String "reportWindowPassed"
+      | `excessiveReports -> `String "excessiveReports"
+
+    type t = _attributionreportingaggregatableresult
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 end

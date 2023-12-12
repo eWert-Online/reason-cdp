@@ -3189,8 +3189,7 @@ module Storage = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
-  (* TODO(crbug.com/1458532): Add other Attribution Reporting events, e.g.
-     trigger registration. *)
+  (* No description provided *)
   module AttributionReportingSourceRegistered = struct
     let name = "Storage.attributionReportingSourceRegistered"
 
@@ -3199,6 +3198,30 @@ module Storage = struct
           [@key "registration"] [@ocaml.doc "No description provided"]
       result : Types.Storage.AttributionReportingSourceRegistrationResult.t;
           [@key "result"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
+  (* No description provided *)
+  module AttributionReportingTriggerRegistered = struct
+    let name = "Storage.attributionReportingTriggerRegistered"
+
+    type result = {
+      registration : Types.Storage.AttributionReportingTriggerRegistration.t;
+          [@key "registration"] [@ocaml.doc "No description provided"]
+      eventLevel : Types.Storage.AttributionReportingEventLevelResult.t;
+          [@key "eventLevel"] [@ocaml.doc "No description provided"]
+      aggregatable : Types.Storage.AttributionReportingAggregatableResult.t;
+          [@key "aggregatable"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 

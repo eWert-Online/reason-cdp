@@ -3021,11 +3021,22 @@ module CSS = struct
             [@key "location"]
             [@ocaml.doc
               "Text position of a new rule in the target style sheet."]
+        nodeForPropertySyntaxValidation : Types.DOM.NodeId.t option;
+            [@key "nodeForPropertySyntaxValidation"]
+            [@yojson.option]
+            [@ocaml.doc
+              "NodeId for the DOM node in whose context custom property \
+               declarations for registered properties should be\n\
+               validated. If omitted, declarations in the new rule text can \
+               only be validated statically, which may produce\n\
+               incorrect results if the declaration contains a var() for \
+               example."]
       }
       [@@deriving yojson]
 
-      let make ~styleSheetId ~ruleText ~location () =
-        { styleSheetId; ruleText; location }
+      let make ~styleSheetId ~ruleText ~location
+          ?nodeForPropertySyntaxValidation () =
+        { styleSheetId; ruleText; location; nodeForPropertySyntaxValidation }
     end
 
     module Request = struct
@@ -4785,10 +4796,21 @@ module CSS = struct
       type t = {
         edits : Types.CSS.StyleDeclarationEdit.t list;
             [@key "edits"] [@ocaml.doc "No description provided"]
+        nodeForPropertySyntaxValidation : Types.DOM.NodeId.t option;
+            [@key "nodeForPropertySyntaxValidation"]
+            [@yojson.option]
+            [@ocaml.doc
+              "NodeId for the DOM node in whose context custom property \
+               declarations for registered properties should be\n\
+               validated. If omitted, declarations in the new rule text can \
+               only be validated statically, which may produce\n\
+               incorrect results if the declaration contains a var() for \
+               example."]
       }
       [@@deriving yojson]
 
-      let make ~edits () = { edits }
+      let make ~edits ?nodeForPropertySyntaxValidation () =
+        { edits; nodeForPropertySyntaxValidation }
     end
 
     module Request = struct
