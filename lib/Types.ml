@@ -20159,6 +20159,7 @@ and Page : sig
       | `shared_storage_select_url
       | `smart_card
       | `storage_access
+      | `sub_apps
       | `sync_xhr
       | `unload
       | `usb
@@ -21303,6 +21304,7 @@ end = struct
       | `shared_storage_select_url
       | `smart_card
       | `storage_access
+      | `sub_apps
       | `sync_xhr
       | `unload
       | `usb
@@ -21400,6 +21402,7 @@ end = struct
       | `shared_storage_select_url
       | `smart_card
       | `storage_access
+      | `sub_apps
       | `sync_xhr
       | `unload
       | `usb
@@ -21488,6 +21491,7 @@ end = struct
       | `String "shared-storage-select-url" -> `shared_storage_select_url
       | `String "smart-card" -> `smart_card
       | `String "storage-access" -> `storage_access
+      | `String "sub-apps" -> `sub_apps
       | `String "sync-xhr" -> `sync_xhr
       | `String "unload" -> `unload
       | `String "usb" -> `usb
@@ -21578,6 +21582,7 @@ end = struct
       | `shared_storage_select_url -> `String "shared-storage-select-url"
       | `smart_card -> `String "smart-card"
       | `storage_access -> `String "storage-access"
+      | `sub_apps -> `String "sub-apps"
       | `sync_xhr -> `String "sync-xhr"
       | `unload -> `String "unload"
       | `usb -> `String "usb"
