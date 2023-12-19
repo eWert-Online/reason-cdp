@@ -20150,6 +20150,7 @@ and Page : sig
       | `private_aggregation
       | `private_state_token_issuance
       | `private_state_token_redemption
+      | `publickey_credentials_create
       | `publickey_credentials_get
       | `run_ad_auction
       | `screen_wake_lock
@@ -20887,6 +20888,7 @@ and Page : sig
       | `WebTransportSticky
       | `WebSocketSticky
       | `SmartCard
+      | `LiveMediaStreamTrack
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -21295,6 +21297,7 @@ end = struct
       | `private_aggregation
       | `private_state_token_issuance
       | `private_state_token_redemption
+      | `publickey_credentials_create
       | `publickey_credentials_get
       | `run_ad_auction
       | `screen_wake_lock
@@ -21393,6 +21396,7 @@ end = struct
       | `private_aggregation
       | `private_state_token_issuance
       | `private_state_token_redemption
+      | `publickey_credentials_create
       | `publickey_credentials_get
       | `run_ad_auction
       | `screen_wake_lock
@@ -21482,6 +21486,7 @@ end = struct
       | `String "private-state-token-issuance" -> `private_state_token_issuance
       | `String "private-state-token-redemption" ->
           `private_state_token_redemption
+      | `String "publickey-credentials-create" -> `publickey_credentials_create
       | `String "publickey-credentials-get" -> `publickey_credentials_get
       | `String "run-ad-auction" -> `run_ad_auction
       | `String "screen-wake-lock" -> `screen_wake_lock
@@ -21573,6 +21578,7 @@ end = struct
       | `private_state_token_issuance -> `String "private-state-token-issuance"
       | `private_state_token_redemption ->
           `String "private-state-token-redemption"
+      | `publickey_credentials_create -> `String "publickey-credentials-create"
       | `publickey_credentials_get -> `String "publickey-credentials-get"
       | `run_ad_auction -> `String "run-ad-auction"
       | `screen_wake_lock -> `String "screen-wake-lock"
@@ -22980,6 +22986,7 @@ end = struct
       | `WebTransportSticky
       | `WebSocketSticky
       | `SmartCard
+      | `LiveMediaStreamTrack
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -23121,6 +23128,7 @@ end = struct
       | `WebTransportSticky
       | `WebSocketSticky
       | `SmartCard
+      | `LiveMediaStreamTrack
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -23280,6 +23288,7 @@ end = struct
       | `String "WebTransportSticky" -> `WebTransportSticky
       | `String "WebSocketSticky" -> `WebSocketSticky
       | `String "SmartCard" -> `SmartCard
+      | `String "LiveMediaStreamTrack" -> `LiveMediaStreamTrack
       | `String "ContentSecurityHandler" -> `ContentSecurityHandler
       | `String "ContentWebAuthenticationAPI" -> `ContentWebAuthenticationAPI
       | `String "ContentFileChooser" -> `ContentFileChooser
@@ -23452,6 +23461,7 @@ end = struct
       | `WebTransportSticky -> `String "WebTransportSticky"
       | `WebSocketSticky -> `String "WebSocketSticky"
       | `SmartCard -> `String "SmartCard"
+      | `LiveMediaStreamTrack -> `String "LiveMediaStreamTrack"
       | `ContentSecurityHandler -> `String "ContentSecurityHandler"
       | `ContentWebAuthenticationAPI -> `String "ContentWebAuthenticationAPI"
       | `ContentFileChooser -> `String "ContentFileChooser"
