@@ -4715,6 +4715,8 @@ and Autofill : sig
           [@ocaml.doc "The actual field type, e.g FAMILY_NAME"]
       fillingStrategy : FillingStrategy.t;
           [@key "fillingStrategy"] [@ocaml.doc "The filling strategy"]
+      fieldId : DOM.BackendNodeId.t;
+          [@key "fieldId"] [@ocaml.doc "The form field's DOM node"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -4885,6 +4887,8 @@ end = struct
           [@ocaml.doc "The actual field type, e.g FAMILY_NAME"]
       fillingStrategy : FillingStrategy.t;
           [@key "fillingStrategy"] [@ocaml.doc "The filling strategy"]
+      fieldId : DOM.BackendNodeId.t;
+          [@key "fieldId"] [@ocaml.doc "The form field's DOM node"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -4900,6 +4904,8 @@ end = struct
           [@ocaml.doc "The actual field type, e.g FAMILY_NAME"]
       fillingStrategy : FillingStrategy.t;
           [@key "fillingStrategy"] [@ocaml.doc "The filling strategy"]
+      fieldId : DOM.BackendNodeId.t;
+          [@key "fieldId"] [@ocaml.doc "The form field's DOM node"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
