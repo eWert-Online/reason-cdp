@@ -20895,6 +20895,7 @@ and Page : sig
       | `WebSocketSticky
       | `SmartCard
       | `LiveMediaStreamTrack
+      | `UnloadHandler
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -22993,6 +22994,7 @@ end = struct
       | `WebSocketSticky
       | `SmartCard
       | `LiveMediaStreamTrack
+      | `UnloadHandler
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -23135,6 +23137,7 @@ end = struct
       | `WebSocketSticky
       | `SmartCard
       | `LiveMediaStreamTrack
+      | `UnloadHandler
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -23295,6 +23298,7 @@ end = struct
       | `String "WebSocketSticky" -> `WebSocketSticky
       | `String "SmartCard" -> `SmartCard
       | `String "LiveMediaStreamTrack" -> `LiveMediaStreamTrack
+      | `String "UnloadHandler" -> `UnloadHandler
       | `String "ContentSecurityHandler" -> `ContentSecurityHandler
       | `String "ContentWebAuthenticationAPI" -> `ContentWebAuthenticationAPI
       | `String "ContentFileChooser" -> `ContentFileChooser
@@ -23468,6 +23472,7 @@ end = struct
       | `WebSocketSticky -> `String "WebSocketSticky"
       | `SmartCard -> `String "SmartCard"
       | `LiveMediaStreamTrack -> `String "LiveMediaStreamTrack"
+      | `UnloadHandler -> `String "UnloadHandler"
       | `ContentSecurityHandler -> `String "ContentSecurityHandler"
       | `ContentWebAuthenticationAPI -> `String "ContentWebAuthenticationAPI"
       | `ContentFileChooser -> `String "ContentFileChooser"
