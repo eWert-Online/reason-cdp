@@ -14138,6 +14138,10 @@ and Network : sig
       mimeType : string;
           [@key "mimeType"]
           [@ocaml.doc "Resource mimeType as determined by the browser."]
+      charset : string;
+          [@key "charset"]
+          [@ocaml.doc
+            "Resource charset as determined by the browser (if applicable)."]
       requestHeaders : Headers.t option;
           [@key "requestHeaders"]
           [@yojson.option]
@@ -16471,6 +16475,10 @@ end = struct
       mimeType : string;
           [@key "mimeType"]
           [@ocaml.doc "Resource mimeType as determined by the browser."]
+      charset : string;
+          [@key "charset"]
+          [@ocaml.doc
+            "Resource charset as determined by the browser (if applicable)."]
       requestHeaders : Headers.t option;
           [@key "requestHeaders"]
           [@yojson.option]
@@ -16577,6 +16585,10 @@ end = struct
       mimeType : string;
           [@key "mimeType"]
           [@ocaml.doc "Resource mimeType as determined by the browser."]
+      charset : string;
+          [@key "charset"]
+          [@ocaml.doc
+            "Resource charset as determined by the browser (if applicable)."]
       requestHeaders : Headers.t option;
           [@key "requestHeaders"]
           [@yojson.option]
