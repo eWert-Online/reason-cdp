@@ -3087,7 +3087,8 @@ module Storage = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
-  (* One of the interest groups was accessed by the associated page. *)
+  (* One of the interest groups was accessed. Note that these events are global
+     to all targets sharing an interest group store. *)
   module InterestGroupAccessed = struct
     let name = "Storage.interestGroupAccessed"
 
@@ -3099,6 +3100,92 @@ module Storage = struct
       ownerOrigin : string;
           [@key "ownerOrigin"] [@ocaml.doc "No description provided"]
       name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      componentSellerOrigin : string option;
+          [@key "componentSellerOrigin"]
+          [@yojson.option]
+          [@ocaml.doc
+            "For topLevelBid/topLevelAdditionalBid, and when appropriate,\n\
+             win and additionalBidWin"]
+      bid : Types.number option;
+          [@key "bid"]
+          [@yojson.option]
+          [@ocaml.doc
+            "For bid or somethingBid event, if done locally and not on a \
+             server."]
+      bidCurrency : string option;
+          [@key "bidCurrency"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      uniqueAuctionId : Types.Storage.InterestGroupAuctionId.t option;
+          [@key "uniqueAuctionId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "For non-global events --- links to interestGroupAuctionEvent"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
+  (* An auction involving interest groups is taking place. These events are
+     target-specific. *)
+  module InterestGroupAuctionEventOccurred = struct
+    let name = "Storage.interestGroupAuctionEventOccurred"
+
+    type result = {
+      eventTime : Types.Network.TimeSinceEpoch.t;
+          [@key "eventTime"] [@ocaml.doc "No description provided"]
+      type_ : Types.Storage.InterestGroupAuctionEventType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      uniqueAuctionId : Types.Storage.InterestGroupAuctionId.t;
+          [@key "uniqueAuctionId"] [@ocaml.doc "No description provided"]
+      parentAuctionId : Types.Storage.InterestGroupAuctionId.t option;
+          [@key "parentAuctionId"]
+          [@yojson.option]
+          [@ocaml.doc "Set for child auctions."]
+      auctionConfig : Types.assoc option;
+          [@key "auctionConfig"]
+          [@yojson.option]
+          [@ocaml.doc "Set for started and configResolved"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
+  (* Specifies which auctions a particular network fetch may be related to, and
+     in what role. Note that it is not ordered with respect to
+     Network.requestWillBeSent (but will happen before loadingFinished
+     loadingFailed). *)
+  module InterestGroupAuctionNetworkRequestCreated = struct
+    let name = "Storage.interestGroupAuctionNetworkRequestCreated"
+
+    type result = {
+      type_ : Types.Storage.InterestGroupAuctionFetchType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      requestId : Types.Network.RequestId.t;
+          [@key "requestId"] [@ocaml.doc "No description provided"]
+      auctions : Types.Storage.InterestGroupAuctionId.t list;
+          [@key "auctions"]
+          [@ocaml.doc
+            "This is the set of the auctions using the worklet that issued this\n\
+             request.  In the case of trusted signals, it's possible that only \
+             some of\n\
+             them actually care about the keys being queried."]
     }
     [@@deriving yojson]
 
