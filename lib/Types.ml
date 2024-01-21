@@ -1430,6 +1430,7 @@ and Audits : sig
       | `Frame
       | `Image
       | `Import
+      | `JSON
       | `Manifest
       | `Ping
       | `PluginData
@@ -2653,6 +2654,7 @@ end = struct
       | `Frame
       | `Image
       | `Import
+      | `JSON
       | `Manifest
       | `Ping
       | `PluginData
@@ -2692,6 +2694,7 @@ end = struct
       | `Frame
       | `Image
       | `Import
+      | `JSON
       | `Manifest
       | `Ping
       | `PluginData
@@ -2722,6 +2725,7 @@ end = struct
       | `String "Frame" -> `Frame
       | `String "Image" -> `Image
       | `String "Import" -> `Import
+      | `String "JSON" -> `JSON
       | `String "Manifest" -> `Manifest
       | `String "Ping" -> `Ping
       | `String "PluginData" -> `PluginData
@@ -2754,6 +2758,7 @@ end = struct
       | `Frame -> `String "Frame"
       | `Image -> `String "Image"
       | `Import -> `String "Import"
+      | `JSON -> `String "JSON"
       | `Manifest -> `String "Manifest"
       | `Ping -> `String "Ping"
       | `PluginData -> `String "PluginData"
