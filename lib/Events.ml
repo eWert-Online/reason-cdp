@@ -3167,38 +3167,6 @@ module Storage = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
-  (* Specifies which auctions a particular network fetch may be related to, and
-     in what role. Note that it is not ordered with respect to
-     Network.requestWillBeSent (but will happen before loadingFinished
-     loadingFailed). *)
-  module InterestGroupAuctionNetworkRequestCreated = struct
-    let name = "Storage.interestGroupAuctionNetworkRequestCreated"
-
-    type result = {
-      type_ : Types.Storage.InterestGroupAuctionFetchType.t;
-          [@key "type"] [@ocaml.doc "No description provided"]
-      requestId : Types.Network.RequestId.t;
-          [@key "requestId"] [@ocaml.doc "No description provided"]
-      auctions : Types.Storage.InterestGroupAuctionId.t list;
-          [@key "auctions"]
-          [@ocaml.doc
-            "This is the set of the auctions using the worklet that issued this\n\
-             request.  In the case of trusted signals, it's possible that only \
-             some of\n\
-             them actually care about the keys being queried."]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-
   (* Shared storage was accessed by the associated page.
      The following parameters are included in all events. *)
   module SharedStorageAccessed = struct
