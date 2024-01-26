@@ -25059,6 +25059,24 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "Enum of auction events."]
   end
 
+  and InterestGroupAuctionFetchType : sig
+    type _interestgroupauctionfetchtype =
+      [ `bidderJs
+      | `bidderWasm
+      | `sellerJs
+      | `bidderTrustedSignals
+      | `sellerTrustedSignals ]
+
+    val _interestgroupauctionfetchtype_of_yojson :
+      Yojson.Basic.t -> _interestgroupauctionfetchtype
+
+    val yojson_of__interestgroupauctionfetchtype :
+      _interestgroupauctionfetchtype -> Yojson.Basic.t
+
+    type t = _interestgroupauctionfetchtype
+    [@@deriving yojson] [@@ocaml.doc "Enum of network fetches auctions can do."]
+  end
+
   and InterestGroupAd : sig
     type t = {
       renderURL : string;
@@ -25841,6 +25859,50 @@ end = struct
 
     type t = _interestgroupauctioneventtype
     [@@deriving yojson] [@@ocaml.doc "Enum of auction events."]
+  end
+
+  and InterestGroupAuctionFetchType : sig
+    type _interestgroupauctionfetchtype =
+      [ `bidderJs
+      | `bidderWasm
+      | `sellerJs
+      | `bidderTrustedSignals
+      | `sellerTrustedSignals ]
+
+    val _interestgroupauctionfetchtype_of_yojson :
+      Yojson.Basic.t -> _interestgroupauctionfetchtype
+
+    val yojson_of__interestgroupauctionfetchtype :
+      _interestgroupauctionfetchtype -> Yojson.Basic.t
+
+    type t = _interestgroupauctionfetchtype
+    [@@deriving yojson] [@@ocaml.doc "Enum of network fetches auctions can do."]
+  end = struct
+    type _interestgroupauctionfetchtype =
+      [ `bidderJs
+      | `bidderWasm
+      | `sellerJs
+      | `bidderTrustedSignals
+      | `sellerTrustedSignals ]
+
+    let _interestgroupauctionfetchtype_of_yojson = function
+      | `String "bidderJs" -> `bidderJs
+      | `String "bidderWasm" -> `bidderWasm
+      | `String "sellerJs" -> `sellerJs
+      | `String "bidderTrustedSignals" -> `bidderTrustedSignals
+      | `String "sellerTrustedSignals" -> `sellerTrustedSignals
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__interestgroupauctionfetchtype = function
+      | `bidderJs -> `String "bidderJs"
+      | `bidderWasm -> `String "bidderWasm"
+      | `sellerJs -> `String "sellerJs"
+      | `bidderTrustedSignals -> `String "bidderTrustedSignals"
+      | `sellerTrustedSignals -> `String "sellerTrustedSignals"
+
+    type t = _interestgroupauctionfetchtype
+    [@@deriving yojson] [@@ocaml.doc "Enum of network fetches auctions can do."]
   end
 
   and InterestGroupAd : sig

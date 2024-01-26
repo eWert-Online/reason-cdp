@@ -26706,7 +26706,8 @@ module Storage = struct
     end
   end
 
-  (* Enables/Disables issuing of interestGroupAuctionEvent events. *)
+  (* Enables/Disables issuing of interestGroupAuctionEventOccurred and
+     interestGroupAuctionNetworkRequestCreated. *)
   module SetInterestGroupAuctionTracking = struct
     module Response : sig
       type result = Types.assoc
