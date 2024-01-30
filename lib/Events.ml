@@ -1643,13 +1643,13 @@ module Network = struct
           [@ocaml.doc
             "Request identifier. Used to match this information to an existing \
              requestWillBeSent event."]
-      associatedCookies : Types.Network.BlockedCookieWithReason.t list;
+      associatedCookies : Types.Network.AssociatedCookie.t list;
           [@key "associatedCookies"]
           [@ocaml.doc
             "A list of cookies potentially associated to the requested URL. \
              This includes both cookies sent with\n\
              the request and the ones not sent; the latter are distinguished \
-             by having blockedReason field set."]
+             by having blockedReasons field set."]
       headers : Types.Network.Headers.t;
           [@key "headers"]
           [@ocaml.doc "Raw request headers as they will be sent over the wire."]
@@ -1740,6 +1740,13 @@ module Network = struct
           [@ocaml.doc
             "True if partitioned cookies are enabled, but the partition key is \
              not serializeable to string."]
+      exemptedCookies : Types.Network.ExemptedSetCookieWithReason.t list option;
+          [@key "exemptedCookies"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A list of cookies which should have been blocked by 3PCD but are \
+             exempted and stored from\n\
+             the response with the corresponding reason."]
     }
     [@@deriving yojson]
 

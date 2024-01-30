@@ -14459,6 +14459,31 @@ and Network : sig
       "Types of reasons why a cookie may not be sent with a request."]
   end
 
+  and CookieExemptionReason : sig
+    type _cookieexemptionreason =
+      [ `None
+      | `UserSetting
+      | `TPCDMetadata
+      | `TPCDDeprecationTrial
+      | `TPCDHeuristics
+      | `EnterprisePolicy
+      | `StorageAccess
+      | `TopLevelStorageAccess
+      | `BrowserHeuristics ]
+
+    val _cookieexemptionreason_of_yojson :
+      Yojson.Basic.t -> _cookieexemptionreason
+
+    val yojson_of__cookieexemptionreason :
+      _cookieexemptionreason -> Yojson.Basic.t
+
+    type t = _cookieexemptionreason
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Types of reasons why a cookie should have been blocked by 3PCD but is \
+       exempted for the request."]
+  end
+
   and BlockedSetCookieWithReason : sig
     type t = {
       blockedReasons : SetCookieBlockedReason.t list;
@@ -14487,19 +14512,47 @@ and Network : sig
        reason."]
   end
 
-  and BlockedCookieWithReason : sig
+  and ExemptedSetCookieWithReason : sig
     type t = {
-      blockedReasons : CookieBlockedReason.t list;
-          [@key "blockedReasons"]
-          [@ocaml.doc "The reason(s) the cookie was blocked."]
+      exemptionReason : CookieExemptionReason.t;
+          [@key "exemptionReason"]
+          [@ocaml.doc "The reason the cookie was exempted."]
+      cookie : Cookie.t;
+          [@key "cookie"]
+          [@ocaml.doc "The cookie object representing the cookie."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A cookie should have been blocked by 3PCD but is exempted and stored \
+       from a response with the\n\
+       corresponding reason. A cookie could only have at most one exemption \
+       reason."]
+  end
+
+  and AssociatedCookie : sig
+    type t = {
       cookie : Cookie.t;
           [@key "cookie"]
           [@ocaml.doc
             "The cookie object representing the cookie which was not sent."]
+      blockedReasons : CookieBlockedReason.t list;
+          [@key "blockedReasons"]
+          [@ocaml.doc
+            "The reason(s) the cookie was blocked. If empty means the cookie \
+             is included."]
+      exemptionReason : CookieExemptionReason.t option;
+          [@key "exemptionReason"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The reason the cookie should have been blocked by 3PCD but is \
+             exempted. A cookie could\n\
+             only have at most one exemption reason."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "A cookie with was not sent with a request with the corresponding reason."]
+      "A cookie associated with the request which may or may not be sent with \
+       it.\n\
+       Includes the cookies itself and reasons for blocking or exemption."]
   end
 
   and CookieParam : sig
@@ -17227,6 +17280,72 @@ end = struct
       "Types of reasons why a cookie may not be sent with a request."]
   end
 
+  and CookieExemptionReason : sig
+    type _cookieexemptionreason =
+      [ `None
+      | `UserSetting
+      | `TPCDMetadata
+      | `TPCDDeprecationTrial
+      | `TPCDHeuristics
+      | `EnterprisePolicy
+      | `StorageAccess
+      | `TopLevelStorageAccess
+      | `BrowserHeuristics ]
+
+    val _cookieexemptionreason_of_yojson :
+      Yojson.Basic.t -> _cookieexemptionreason
+
+    val yojson_of__cookieexemptionreason :
+      _cookieexemptionreason -> Yojson.Basic.t
+
+    type t = _cookieexemptionreason
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Types of reasons why a cookie should have been blocked by 3PCD but is \
+       exempted for the request."]
+  end = struct
+    type _cookieexemptionreason =
+      [ `None
+      | `UserSetting
+      | `TPCDMetadata
+      | `TPCDDeprecationTrial
+      | `TPCDHeuristics
+      | `EnterprisePolicy
+      | `StorageAccess
+      | `TopLevelStorageAccess
+      | `BrowserHeuristics ]
+
+    let _cookieexemptionreason_of_yojson = function
+      | `String "None" -> `None
+      | `String "UserSetting" -> `UserSetting
+      | `String "TPCDMetadata" -> `TPCDMetadata
+      | `String "TPCDDeprecationTrial" -> `TPCDDeprecationTrial
+      | `String "TPCDHeuristics" -> `TPCDHeuristics
+      | `String "EnterprisePolicy" -> `EnterprisePolicy
+      | `String "StorageAccess" -> `StorageAccess
+      | `String "TopLevelStorageAccess" -> `TopLevelStorageAccess
+      | `String "BrowserHeuristics" -> `BrowserHeuristics
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__cookieexemptionreason = function
+      | `None -> `String "None"
+      | `UserSetting -> `String "UserSetting"
+      | `TPCDMetadata -> `String "TPCDMetadata"
+      | `TPCDDeprecationTrial -> `String "TPCDDeprecationTrial"
+      | `TPCDHeuristics -> `String "TPCDHeuristics"
+      | `EnterprisePolicy -> `String "EnterprisePolicy"
+      | `StorageAccess -> `String "StorageAccess"
+      | `TopLevelStorageAccess -> `String "TopLevelStorageAccess"
+      | `BrowserHeuristics -> `String "BrowserHeuristics"
+
+    type t = _cookieexemptionreason
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Types of reasons why a cookie should have been blocked by 3PCD but is \
+       exempted for the request."]
+  end
+
   and BlockedSetCookieWithReason : sig
     type t = {
       blockedReasons : SetCookieBlockedReason.t list;
@@ -17281,32 +17400,86 @@ end = struct
        reason."]
   end
 
-  and BlockedCookieWithReason : sig
+  and ExemptedSetCookieWithReason : sig
     type t = {
-      blockedReasons : CookieBlockedReason.t list;
-          [@key "blockedReasons"]
-          [@ocaml.doc "The reason(s) the cookie was blocked."]
+      exemptionReason : CookieExemptionReason.t;
+          [@key "exemptionReason"]
+          [@ocaml.doc "The reason the cookie was exempted."]
       cookie : Cookie.t;
           [@key "cookie"]
-          [@ocaml.doc
-            "The cookie object representing the cookie which was not sent."]
+          [@ocaml.doc "The cookie object representing the cookie."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "A cookie with was not sent with a request with the corresponding reason."]
+      "A cookie should have been blocked by 3PCD but is exempted and stored \
+       from a response with the\n\
+       corresponding reason. A cookie could only have at most one exemption \
+       reason."]
   end = struct
     type t = {
-      blockedReasons : CookieBlockedReason.t list;
-          [@key "blockedReasons"]
-          [@ocaml.doc "The reason(s) the cookie was blocked."]
+      exemptionReason : CookieExemptionReason.t;
+          [@key "exemptionReason"]
+          [@ocaml.doc "The reason the cookie was exempted."]
+      cookie : Cookie.t;
+          [@key "cookie"]
+          [@ocaml.doc "The cookie object representing the cookie."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A cookie should have been blocked by 3PCD but is exempted and stored \
+       from a response with the\n\
+       corresponding reason. A cookie could only have at most one exemption \
+       reason."]
+  end
+
+  and AssociatedCookie : sig
+    type t = {
       cookie : Cookie.t;
           [@key "cookie"]
           [@ocaml.doc
             "The cookie object representing the cookie which was not sent."]
+      blockedReasons : CookieBlockedReason.t list;
+          [@key "blockedReasons"]
+          [@ocaml.doc
+            "The reason(s) the cookie was blocked. If empty means the cookie \
+             is included."]
+      exemptionReason : CookieExemptionReason.t option;
+          [@key "exemptionReason"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The reason the cookie should have been blocked by 3PCD but is \
+             exempted. A cookie could\n\
+             only have at most one exemption reason."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "A cookie with was not sent with a request with the corresponding reason."]
+      "A cookie associated with the request which may or may not be sent with \
+       it.\n\
+       Includes the cookies itself and reasons for blocking or exemption."]
+  end = struct
+    type t = {
+      cookie : Cookie.t;
+          [@key "cookie"]
+          [@ocaml.doc
+            "The cookie object representing the cookie which was not sent."]
+      blockedReasons : CookieBlockedReason.t list;
+          [@key "blockedReasons"]
+          [@ocaml.doc
+            "The reason(s) the cookie was blocked. If empty means the cookie \
+             is included."]
+      exemptionReason : CookieExemptionReason.t option;
+          [@key "exemptionReason"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The reason the cookie should have been blocked by 3PCD but is \
+             exempted. A cookie could\n\
+             only have at most one exemption reason."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A cookie associated with the request which may or may not be sent with \
+       it.\n\
+       Includes the cookies itself and reasons for blocking or exemption."]
   end
 
   and CookieParam : sig
