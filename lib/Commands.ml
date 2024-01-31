@@ -16925,7 +16925,7 @@ module Network = struct
     end
   end
 
-  (* Deletes browser cookies with matching name and url or domain/path pair. *)
+  (* Deletes browser cookies with matching name and url or domain/path/partitionKey pair. *)
   module DeleteCookies = struct
     module Response : sig
       type result = Types.assoc
@@ -16975,10 +16975,18 @@ module Network = struct
             [@yojson.option]
             [@ocaml.doc
               "If specified, deletes only cookies with the exact path."]
+        partitionKey : string option;
+            [@key "partitionKey"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If specified, deletes only cookies with the the given name and \
+               partitionKey where domain\n\
+               matches provided URL."]
       }
       [@@deriving yojson]
 
-      let make ~name ?url ?domain ?path () = { name; url; domain; path }
+      let make ~name ?url ?domain ?path ?partitionKey () =
+        { name; url; domain; path; partitionKey }
     end
 
     module Request = struct
