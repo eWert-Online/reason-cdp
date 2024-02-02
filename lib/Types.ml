@@ -14469,7 +14469,7 @@ and Network : sig
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `BrowserHeuristics ]
+      | `CorsOptIn ]
 
     val _cookieexemptionreason_of_yojson :
       Yojson.Basic.t -> _cookieexemptionreason
@@ -17290,7 +17290,7 @@ end = struct
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `BrowserHeuristics ]
+      | `CorsOptIn ]
 
     val _cookieexemptionreason_of_yojson :
       Yojson.Basic.t -> _cookieexemptionreason
@@ -17313,7 +17313,7 @@ end = struct
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `BrowserHeuristics ]
+      | `CorsOptIn ]
 
     let _cookieexemptionreason_of_yojson = function
       | `String "None" -> `None
@@ -17324,7 +17324,7 @@ end = struct
       | `String "EnterprisePolicy" -> `EnterprisePolicy
       | `String "StorageAccess" -> `StorageAccess
       | `String "TopLevelStorageAccess" -> `TopLevelStorageAccess
-      | `String "BrowserHeuristics" -> `BrowserHeuristics
+      | `String "CorsOptIn" -> `CorsOptIn
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -17337,7 +17337,7 @@ end = struct
       | `EnterprisePolicy -> `String "EnterprisePolicy"
       | `StorageAccess -> `String "StorageAccess"
       | `TopLevelStorageAccess -> `String "TopLevelStorageAccess"
-      | `BrowserHeuristics -> `String "BrowserHeuristics"
+      | `CorsOptIn -> `String "CorsOptIn"
 
     type t = _cookieexemptionreason
     [@@deriving yojson]
