@@ -1014,7 +1014,12 @@ and Animation : sig
       playbackRate : number;
           [@key "playbackRate"] [@ocaml.doc "`Animation`'s playback rate."]
       startTime : number;
-          [@key "startTime"] [@ocaml.doc "`Animation`'s start time."]
+          [@key "startTime"]
+          [@ocaml.doc
+            "`Animation`'s start time.\n\
+             Milliseconds for time based animations and\n\
+             percentage [0 - 100] for scroll driven animations\n\
+             (i.e. when viewOrScrollTimeline exists)."]
       currentTime : number;
           [@key "currentTime"] [@ocaml.doc "`Animation`'s current time."]
       type_ : _animation_type;
@@ -1030,8 +1035,43 @@ and Animation : sig
             "A unique ID for `Animation` representing the sources that \
              triggered this CSS\n\
              animation/transition."]
+      viewOrScrollTimeline : ViewOrScrollTimeline.t option;
+          [@key "viewOrScrollTimeline"]
+          [@yojson.option]
+          [@ocaml.doc "View or scroll timeline"]
     }
     [@@deriving yojson] [@@ocaml.doc "Animation instance."]
+  end
+
+  and ViewOrScrollTimeline : sig
+    type t = {
+      sourceNodeId : DOM.BackendNodeId.t option;
+          [@key "sourceNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Scroll container node"]
+      startOffset : number option;
+          [@key "startOffset"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Represents the starting scroll position of the timeline\n\
+             as a length offset in pixels from scroll origin."]
+      endOffset : number option;
+          [@key "endOffset"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Represents the ending scroll position of the timeline\n\
+             as a length offset in pixels from scroll origin."]
+      subjectNodeId : DOM.BackendNodeId.t option;
+          [@key "subjectNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The element whose principal box's visibility in the\n\
+             scrollport defined the progress of the timeline.\n\
+             Does not exist for animations with ScrollTimeline"]
+      axis : DOM.ScrollOrientation.t;
+          [@key "axis"] [@ocaml.doc "Orientation of the scroll"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Timeline instance"]
   end
 
   and AnimationEffect : sig
@@ -1046,7 +1086,11 @@ and Animation : sig
           [@key "iterations"] [@ocaml.doc "`AnimationEffect`'s iterations."]
       duration : number;
           [@key "duration"]
-          [@ocaml.doc "`AnimationEffect`'s iteration duration."]
+          [@ocaml.doc
+            "`AnimationEffect`'s iteration duration.\n\
+             Milliseconds for time based animations and\n\
+             percentage [0 - 100] for scroll driven animations\n\
+             (i.e. when viewOrScrollTimeline exists)."]
       direction : string;
           [@key "direction"]
           [@ocaml.doc "`AnimationEffect`'s playback direction."]
@@ -1103,7 +1147,12 @@ end = struct
       playbackRate : number;
           [@key "playbackRate"] [@ocaml.doc "`Animation`'s playback rate."]
       startTime : number;
-          [@key "startTime"] [@ocaml.doc "`Animation`'s start time."]
+          [@key "startTime"]
+          [@ocaml.doc
+            "`Animation`'s start time.\n\
+             Milliseconds for time based animations and\n\
+             percentage [0 - 100] for scroll driven animations\n\
+             (i.e. when viewOrScrollTimeline exists)."]
       currentTime : number;
           [@key "currentTime"] [@ocaml.doc "`Animation`'s current time."]
       type_ : _animation_type;
@@ -1119,6 +1168,10 @@ end = struct
             "A unique ID for `Animation` representing the sources that \
              triggered this CSS\n\
              animation/transition."]
+      viewOrScrollTimeline : ViewOrScrollTimeline.t option;
+          [@key "viewOrScrollTimeline"]
+          [@yojson.option]
+          [@ocaml.doc "View or scroll timeline"]
     }
     [@@deriving yojson] [@@ocaml.doc "Animation instance."]
   end = struct
@@ -1147,7 +1200,12 @@ end = struct
       playbackRate : number;
           [@key "playbackRate"] [@ocaml.doc "`Animation`'s playback rate."]
       startTime : number;
-          [@key "startTime"] [@ocaml.doc "`Animation`'s start time."]
+          [@key "startTime"]
+          [@ocaml.doc
+            "`Animation`'s start time.\n\
+             Milliseconds for time based animations and\n\
+             percentage [0 - 100] for scroll driven animations\n\
+             (i.e. when viewOrScrollTimeline exists)."]
       currentTime : number;
           [@key "currentTime"] [@ocaml.doc "`Animation`'s current time."]
       type_ : _animation_type;
@@ -1163,8 +1221,72 @@ end = struct
             "A unique ID for `Animation` representing the sources that \
              triggered this CSS\n\
              animation/transition."]
+      viewOrScrollTimeline : ViewOrScrollTimeline.t option;
+          [@key "viewOrScrollTimeline"]
+          [@yojson.option]
+          [@ocaml.doc "View or scroll timeline"]
     }
     [@@deriving yojson] [@@ocaml.doc "Animation instance."]
+  end
+
+  and ViewOrScrollTimeline : sig
+    type t = {
+      sourceNodeId : DOM.BackendNodeId.t option;
+          [@key "sourceNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Scroll container node"]
+      startOffset : number option;
+          [@key "startOffset"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Represents the starting scroll position of the timeline\n\
+             as a length offset in pixels from scroll origin."]
+      endOffset : number option;
+          [@key "endOffset"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Represents the ending scroll position of the timeline\n\
+             as a length offset in pixels from scroll origin."]
+      subjectNodeId : DOM.BackendNodeId.t option;
+          [@key "subjectNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The element whose principal box's visibility in the\n\
+             scrollport defined the progress of the timeline.\n\
+             Does not exist for animations with ScrollTimeline"]
+      axis : DOM.ScrollOrientation.t;
+          [@key "axis"] [@ocaml.doc "Orientation of the scroll"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Timeline instance"]
+  end = struct
+    type t = {
+      sourceNodeId : DOM.BackendNodeId.t option;
+          [@key "sourceNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Scroll container node"]
+      startOffset : number option;
+          [@key "startOffset"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Represents the starting scroll position of the timeline\n\
+             as a length offset in pixels from scroll origin."]
+      endOffset : number option;
+          [@key "endOffset"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Represents the ending scroll position of the timeline\n\
+             as a length offset in pixels from scroll origin."]
+      subjectNodeId : DOM.BackendNodeId.t option;
+          [@key "subjectNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The element whose principal box's visibility in the\n\
+             scrollport defined the progress of the timeline.\n\
+             Does not exist for animations with ScrollTimeline"]
+      axis : DOM.ScrollOrientation.t;
+          [@key "axis"] [@ocaml.doc "Orientation of the scroll"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Timeline instance"]
   end
 
   and AnimationEffect : sig
@@ -1179,7 +1301,11 @@ end = struct
           [@key "iterations"] [@ocaml.doc "`AnimationEffect`'s iterations."]
       duration : number;
           [@key "duration"]
-          [@ocaml.doc "`AnimationEffect`'s iteration duration."]
+          [@ocaml.doc
+            "`AnimationEffect`'s iteration duration.\n\
+             Milliseconds for time based animations and\n\
+             percentage [0 - 100] for scroll driven animations\n\
+             (i.e. when viewOrScrollTimeline exists)."]
       direction : string;
           [@key "direction"]
           [@ocaml.doc "`AnimationEffect`'s playback direction."]
@@ -1208,7 +1334,11 @@ end = struct
           [@key "iterations"] [@ocaml.doc "`AnimationEffect`'s iterations."]
       duration : number;
           [@key "duration"]
-          [@ocaml.doc "`AnimationEffect`'s iteration duration."]
+          [@ocaml.doc
+            "`AnimationEffect`'s iteration duration.\n\
+             Milliseconds for time based animations and\n\
+             percentage [0 - 100] for scroll driven animations\n\
+             (i.e. when viewOrScrollTimeline exists)."]
       direction : string;
           [@key "direction"]
           [@ocaml.doc "`AnimationEffect`'s playback direction."]
@@ -8453,6 +8583,16 @@ and DOM : sig
     [@@deriving yojson] [@@ocaml.doc "ContainerSelector logical axes"]
   end
 
+  and ScrollOrientation : sig
+    type _scrollorientation = [ `horizontal | `vertical ]
+
+    val _scrollorientation_of_yojson : Yojson.Basic.t -> _scrollorientation
+    val yojson_of__scrollorientation : _scrollorientation -> Yojson.Basic.t
+
+    type t = _scrollorientation
+    [@@deriving yojson] [@@ocaml.doc "Physical scroll orientation"]
+  end
+
   and Node : sig
     type t = {
       nodeId : NodeId.t;
@@ -8926,6 +9066,31 @@ end = struct
 
     type t = _logicalaxes
     [@@deriving yojson] [@@ocaml.doc "ContainerSelector logical axes"]
+  end
+
+  and ScrollOrientation : sig
+    type _scrollorientation = [ `horizontal | `vertical ]
+
+    val _scrollorientation_of_yojson : Yojson.Basic.t -> _scrollorientation
+    val yojson_of__scrollorientation : _scrollorientation -> Yojson.Basic.t
+
+    type t = _scrollorientation
+    [@@deriving yojson] [@@ocaml.doc "Physical scroll orientation"]
+  end = struct
+    type _scrollorientation = [ `horizontal | `vertical ]
+
+    let _scrollorientation_of_yojson = function
+      | `String "horizontal" -> `horizontal
+      | `String "vertical" -> `vertical
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__scrollorientation = function
+      | `horizontal -> `String "horizontal"
+      | `vertical -> `String "vertical"
+
+    type t = _scrollorientation
+    [@@deriving yojson] [@@ocaml.doc "Physical scroll orientation"]
   end
 
   and Node : sig
