@@ -25510,10 +25510,22 @@ and Storage : sig
   and SharedStorageMetadata : sig
     type t = {
       creationTime : Network.TimeSinceEpoch.t;
-          [@key "creationTime"] [@ocaml.doc "No description provided"]
-      length : number; [@key "length"] [@ocaml.doc "No description provided"]
+          [@key "creationTime"]
+          [@ocaml.doc "Time when the origin's shared storage was last created."]
+      length : number;
+          [@key "length"]
+          [@ocaml.doc
+            "Number of key-value pairs stored in origin's shared storage."]
       remainingBudget : number;
-          [@key "remainingBudget"] [@ocaml.doc "No description provided"]
+          [@key "remainingBudget"]
+          [@ocaml.doc
+            "Current amount of bits of entropy remaining in the navigation \
+             budget."]
+      bytesUsed : number;
+          [@key "bytesUsed"]
+          [@ocaml.doc
+            "Total number of bytes stored as key-value pairs in origin's shared\n\
+             storage."]
     }
     [@@deriving yojson] [@@ocaml.doc "Details for an origin's shared storage."]
   end
@@ -26454,19 +26466,43 @@ end = struct
   and SharedStorageMetadata : sig
     type t = {
       creationTime : Network.TimeSinceEpoch.t;
-          [@key "creationTime"] [@ocaml.doc "No description provided"]
-      length : number; [@key "length"] [@ocaml.doc "No description provided"]
+          [@key "creationTime"]
+          [@ocaml.doc "Time when the origin's shared storage was last created."]
+      length : number;
+          [@key "length"]
+          [@ocaml.doc
+            "Number of key-value pairs stored in origin's shared storage."]
       remainingBudget : number;
-          [@key "remainingBudget"] [@ocaml.doc "No description provided"]
+          [@key "remainingBudget"]
+          [@ocaml.doc
+            "Current amount of bits of entropy remaining in the navigation \
+             budget."]
+      bytesUsed : number;
+          [@key "bytesUsed"]
+          [@ocaml.doc
+            "Total number of bytes stored as key-value pairs in origin's shared\n\
+             storage."]
     }
     [@@deriving yojson] [@@ocaml.doc "Details for an origin's shared storage."]
   end = struct
     type t = {
       creationTime : Network.TimeSinceEpoch.t;
-          [@key "creationTime"] [@ocaml.doc "No description provided"]
-      length : number; [@key "length"] [@ocaml.doc "No description provided"]
+          [@key "creationTime"]
+          [@ocaml.doc "Time when the origin's shared storage was last created."]
+      length : number;
+          [@key "length"]
+          [@ocaml.doc
+            "Number of key-value pairs stored in origin's shared storage."]
       remainingBudget : number;
-          [@key "remainingBudget"] [@ocaml.doc "No description provided"]
+          [@key "remainingBudget"]
+          [@ocaml.doc
+            "Current amount of bits of entropy remaining in the navigation \
+             budget."]
+      bytesUsed : number;
+          [@key "bytesUsed"]
+          [@ocaml.doc
+            "Total number of bytes stored as key-value pairs in origin's shared\n\
+             storage."]
     }
     [@@deriving yojson] [@@ocaml.doc "Details for an origin's shared storage."]
   end
