@@ -29723,6 +29723,22 @@ and WebAuthn : sig
             "The large blob associated with the credential.\n\
              See https://w3c.github.io/webauthn/#sctn-large-blob-extension \
              (Encoded as a base64 string when passed over JSON)"]
+      backupEligibility : bool option;
+          [@key "backupEligibility"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Assertions returned by this credential will have the backup \
+             eligibility\n\
+             (BE) flag set to this value. Defaults to the authenticator's\n\
+             defaultBackupEligibility value."]
+      backupState : bool option;
+          [@key "backupState"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Assertions returned by this credential will have the backup state \
+             (BS)\n\
+             flag set to this value. Defaults to the authenticator's\n\
+             defaultBackupState value."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -30018,6 +30034,22 @@ end = struct
             "The large blob associated with the credential.\n\
              See https://w3c.github.io/webauthn/#sctn-large-blob-extension \
              (Encoded as a base64 string when passed over JSON)"]
+      backupEligibility : bool option;
+          [@key "backupEligibility"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Assertions returned by this credential will have the backup \
+             eligibility\n\
+             (BE) flag set to this value. Defaults to the authenticator's\n\
+             defaultBackupEligibility value."]
+      backupState : bool option;
+          [@key "backupState"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Assertions returned by this credential will have the backup state \
+             (BS)\n\
+             flag set to this value. Defaults to the authenticator's\n\
+             defaultBackupState value."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -30058,6 +30090,22 @@ end = struct
             "The large blob associated with the credential.\n\
              See https://w3c.github.io/webauthn/#sctn-large-blob-extension \
              (Encoded as a base64 string when passed over JSON)"]
+      backupEligibility : bool option;
+          [@key "backupEligibility"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Assertions returned by this credential will have the backup \
+             eligibility\n\
+             (BE) flag set to this value. Defaults to the authenticator's\n\
+             defaultBackupEligibility value."]
+      backupState : bool option;
+          [@key "backupState"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Assertions returned by this credential will have the backup state \
+             (BS)\n\
+             flag set to this value. Defaults to the authenticator's\n\
+             defaultBackupState value."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
