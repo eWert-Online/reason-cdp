@@ -4850,6 +4850,8 @@ and Autofill : sig
           [@ocaml.doc "The actual field type, e.g FAMILY_NAME"]
       fillingStrategy : FillingStrategy.t;
           [@key "fillingStrategy"] [@ocaml.doc "The filling strategy"]
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "The frame the field belongs to"]
       fieldId : DOM.BackendNodeId.t;
           [@key "fieldId"] [@ocaml.doc "The form field's DOM node"]
     }
@@ -5022,6 +5024,8 @@ end = struct
           [@ocaml.doc "The actual field type, e.g FAMILY_NAME"]
       fillingStrategy : FillingStrategy.t;
           [@key "fillingStrategy"] [@ocaml.doc "The filling strategy"]
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "The frame the field belongs to"]
       fieldId : DOM.BackendNodeId.t;
           [@key "fieldId"] [@ocaml.doc "The form field's DOM node"]
     }
@@ -5039,6 +5043,8 @@ end = struct
           [@ocaml.doc "The actual field type, e.g FAMILY_NAME"]
       fillingStrategy : FillingStrategy.t;
           [@key "fillingStrategy"] [@ocaml.doc "The filling strategy"]
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "The frame the field belongs to"]
       fieldId : DOM.BackendNodeId.t;
           [@key "fieldId"] [@ocaml.doc "The form field's DOM node"]
     }
