@@ -25840,7 +25840,7 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
-  and AttributionReportingAggregatableValueEntry : sig
+  and AttributionReportingAggregatableValueDictEntry : sig
     type t = {
       key : string; [@key "key"] [@ocaml.doc "No description provided"]
       value : number;
@@ -25849,6 +25849,16 @@ and Storage : sig
             "number instead of integer because not all uint32 can be \
              represented by\n\
              int"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableValueEntry : sig
+    type t = {
+      values : AttributionReportingAggregatableValueDictEntry.t list;
+          [@key "values"] [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -27129,7 +27139,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
-  and AttributionReportingAggregatableValueEntry : sig
+  and AttributionReportingAggregatableValueDictEntry : sig
     type t = {
       key : string; [@key "key"] [@ocaml.doc "No description provided"]
       value : number;
@@ -27149,6 +27159,24 @@ end = struct
             "number instead of integer because not all uint32 can be \
              represented by\n\
              int"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableValueEntry : sig
+    type t = {
+      values : AttributionReportingAggregatableValueDictEntry.t list;
+          [@key "values"] [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      values : AttributionReportingAggregatableValueDictEntry.t list;
+          [@key "values"] [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
