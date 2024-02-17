@@ -5304,6 +5304,7 @@ and Browser : sig
       | `protectedMediaIdentifier
       | `sensors
       | `storageAccess
+      | `speakerSelection
       | `topLevelStorageAccess
       | `videoCapture
       | `videoCapturePanTiltZoom
@@ -5519,6 +5520,7 @@ end = struct
       | `protectedMediaIdentifier
       | `sensors
       | `storageAccess
+      | `speakerSelection
       | `topLevelStorageAccess
       | `videoCapture
       | `videoCapturePanTiltZoom
@@ -5555,6 +5557,7 @@ end = struct
       | `protectedMediaIdentifier
       | `sensors
       | `storageAccess
+      | `speakerSelection
       | `topLevelStorageAccess
       | `videoCapture
       | `videoCapturePanTiltZoom
@@ -5585,6 +5588,7 @@ end = struct
       | `String "protectedMediaIdentifier" -> `protectedMediaIdentifier
       | `String "sensors" -> `sensors
       | `String "storageAccess" -> `storageAccess
+      | `String "speakerSelection" -> `speakerSelection
       | `String "topLevelStorageAccess" -> `topLevelStorageAccess
       | `String "videoCapture" -> `videoCapture
       | `String "videoCapturePanTiltZoom" -> `videoCapturePanTiltZoom
@@ -5617,6 +5621,7 @@ end = struct
       | `protectedMediaIdentifier -> `String "protectedMediaIdentifier"
       | `sensors -> `String "sensors"
       | `storageAccess -> `String "storageAccess"
+      | `speakerSelection -> `String "speakerSelection"
       | `topLevelStorageAccess -> `String "topLevelStorageAccess"
       | `videoCapture -> `String "videoCapture"
       | `videoCapturePanTiltZoom -> `String "videoCapturePanTiltZoom"
@@ -14285,10 +14290,26 @@ and Network : sig
        semantics."]
   end
 
+  and ServiceWorkerRouterSource : sig
+    type _serviceworkerroutersource =
+      [ `network | `cache | `fetch_event | `race_network_and_fetch_handler ]
+
+    val _serviceworkerroutersource_of_yojson :
+      Yojson.Basic.t -> _serviceworkerroutersource
+
+    val yojson_of__serviceworkerroutersource :
+      _serviceworkerroutersource -> Yojson.Basic.t
+
+    type t = _serviceworkerroutersource
+    [@@deriving yojson] [@@ocaml.doc "Source of service worker router."]
+  end
+
   and ServiceWorkerRouterInfo : sig
     type t = {
       ruleIdMatched : number;
           [@key "ruleIdMatched"] [@ocaml.doc "No description provided"]
+      matchedSourceType : ServiceWorkerRouterSource.t;
+          [@key "matchedSourceType"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -16669,16 +16690,56 @@ end = struct
        semantics."]
   end
 
+  and ServiceWorkerRouterSource : sig
+    type _serviceworkerroutersource =
+      [ `network | `cache | `fetch_event | `race_network_and_fetch_handler ]
+
+    val _serviceworkerroutersource_of_yojson :
+      Yojson.Basic.t -> _serviceworkerroutersource
+
+    val yojson_of__serviceworkerroutersource :
+      _serviceworkerroutersource -> Yojson.Basic.t
+
+    type t = _serviceworkerroutersource
+    [@@deriving yojson] [@@ocaml.doc "Source of service worker router."]
+  end = struct
+    type _serviceworkerroutersource =
+      [ `network | `cache | `fetch_event | `race_network_and_fetch_handler ]
+
+    let _serviceworkerroutersource_of_yojson = function
+      | `String "network" -> `network
+      | `String "cache" -> `cache
+      | `String "fetch-event" -> `fetch_event
+      | `String "race-network-and-fetch-handler" ->
+          `race_network_and_fetch_handler
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__serviceworkerroutersource = function
+      | `network -> `String "network"
+      | `cache -> `String "cache"
+      | `fetch_event -> `String "fetch-event"
+      | `race_network_and_fetch_handler ->
+          `String "race-network-and-fetch-handler"
+
+    type t = _serviceworkerroutersource
+    [@@deriving yojson] [@@ocaml.doc "Source of service worker router."]
+  end
+
   and ServiceWorkerRouterInfo : sig
     type t = {
       ruleIdMatched : number;
           [@key "ruleIdMatched"] [@ocaml.doc "No description provided"]
+      matchedSourceType : ServiceWorkerRouterSource.t;
+          [@key "matchedSourceType"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type t = {
       ruleIdMatched : number;
           [@key "ruleIdMatched"] [@ocaml.doc "No description provided"]
+      matchedSourceType : ServiceWorkerRouterSource.t;
+          [@key "matchedSourceType"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -20526,6 +20587,7 @@ and Page : sig
       | `shared_storage
       | `shared_storage_select_url
       | `smart_card
+      | `speaker_selection
       | `storage_access
       | `sub_apps
       | `sync_xhr
@@ -21674,6 +21736,7 @@ end = struct
       | `shared_storage
       | `shared_storage_select_url
       | `smart_card
+      | `speaker_selection
       | `storage_access
       | `sub_apps
       | `sync_xhr
@@ -21773,6 +21836,7 @@ end = struct
       | `shared_storage
       | `shared_storage_select_url
       | `smart_card
+      | `speaker_selection
       | `storage_access
       | `sub_apps
       | `sync_xhr
@@ -21863,6 +21927,7 @@ end = struct
       | `String "shared-storage" -> `shared_storage
       | `String "shared-storage-select-url" -> `shared_storage_select_url
       | `String "smart-card" -> `smart_card
+      | `String "speaker-selection" -> `speaker_selection
       | `String "storage-access" -> `storage_access
       | `String "sub-apps" -> `sub_apps
       | `String "sync-xhr" -> `sync_xhr
@@ -21955,6 +22020,7 @@ end = struct
       | `shared_storage -> `String "shared-storage"
       | `shared_storage_select_url -> `String "shared-storage-select-url"
       | `smart_card -> `String "smart-card"
+      | `speaker_selection -> `String "speaker-selection"
       | `storage_access -> `String "storage-access"
       | `sub_apps -> `String "sub-apps"
       | `sync_xhr -> `String "sync-xhr"
