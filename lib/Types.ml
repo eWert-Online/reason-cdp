@@ -4805,8 +4805,8 @@ and Autofill : sig
       addressFields : AddressFields.t list;
           [@key "addressFields"]
           [@ocaml.doc
-            "A two dimension array containing the repesentation of values from \
-             an address profile."]
+            "A two dimension array containing the representation of values \
+             from an address profile."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4939,8 +4939,8 @@ end = struct
       addressFields : AddressFields.t list;
           [@key "addressFields"]
           [@ocaml.doc
-            "A two dimension array containing the repesentation of values from \
-             an address profile."]
+            "A two dimension array containing the representation of values \
+             from an address profile."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4961,8 +4961,8 @@ end = struct
       addressFields : AddressFields.t list;
           [@key "addressFields"]
           [@ocaml.doc
-            "A two dimension array containing the repesentation of values from \
-             an address profile."]
+            "A two dimension array containing the representation of values \
+             from an address profile."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -5937,7 +5937,7 @@ and CSS : sig
             "Stylesheet resource URL. Empty if this is a constructed \
              stylesheet created using\n\
              new CSSStyleSheet() (but non-empty if this is a constructed \
-             sylesheet imported\n\
+             stylesheet imported\n\
              as a CSS module script)."]
       sourceMapURL : string option;
           [@key "sourceMapURL"]
@@ -6878,7 +6878,7 @@ end = struct
             "Stylesheet resource URL. Empty if this is a constructed \
              stylesheet created using\n\
              new CSSStyleSheet() (but non-empty if this is a constructed \
-             sylesheet imported\n\
+             stylesheet imported\n\
              as a CSS module script)."]
       sourceMapURL : string option;
           [@key "sourceMapURL"]
@@ -6963,7 +6963,7 @@ end = struct
             "Stylesheet resource URL. Empty if this is a constructed \
              stylesheet created using\n\
              new CSSStyleSheet() (but non-empty if this is a constructed \
-             sylesheet imported\n\
+             stylesheet imported\n\
              as a CSS module script)."]
       sourceMapURL : string option;
           [@key "sourceMapURL"]
@@ -11381,7 +11381,7 @@ and Emulation : sig
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "Used to specify User Agent Cient Hints to emulate. See \
+      "Used to specify User Agent Client Hints to emulate. See \
        https://wicg.github.io/ua-client-hints"]
   end
 
@@ -11416,7 +11416,7 @@ and Emulation : sig
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "Used to specify User Agent Cient Hints to emulate. See \
+      "Used to specify User Agent Client Hints to emulate. See \
        https://wicg.github.io/ua-client-hints\n\
        Missing optional values will be filled in by the target with what it \
        would normally use."]
@@ -11720,7 +11720,7 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "Used to specify User Agent Cient Hints to emulate. See \
+      "Used to specify User Agent Client Hints to emulate. See \
        https://wicg.github.io/ua-client-hints"]
   end = struct
     type t = {
@@ -11729,7 +11729,7 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "Used to specify User Agent Cient Hints to emulate. See \
+      "Used to specify User Agent Client Hints to emulate. See \
        https://wicg.github.io/ua-client-hints"]
   end
 
@@ -11764,7 +11764,7 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "Used to specify User Agent Cient Hints to emulate. See \
+      "Used to specify User Agent Client Hints to emulate. See \
        https://wicg.github.io/ua-client-hints\n\
        Missing optional values will be filled in by the target with what it \
        would normally use."]
@@ -11799,7 +11799,7 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "Used to specify User Agent Cient Hints to emulate. See \
+      "Used to specify User Agent Client Hints to emulate. See \
        https://wicg.github.io/ua-client-hints\n\
        Missing optional values will be filled in by the target with what it \
        would normally use."]
@@ -14032,7 +14032,7 @@ and Network : sig
           [@ocaml.doc
             "True if this resource request is considered to be the 'same site' \
              as the\n\
-             request correspondinfg to the main frame."]
+             request corresponding to the main frame."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP request data."]
   end
@@ -14385,7 +14385,7 @@ and Network : sig
           [@key "serviceWorkerRouterInfo"]
           [@yojson.option]
           [@ocaml.doc
-            "Infomation about how Service Worker Static Router was used."]
+            "Information about how Service Worker Static Router was used."]
       encodedDataLength : number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request so far."]
@@ -15024,7 +15024,7 @@ and Network : sig
       errors : SignedExchangeError.t list option;
           [@key "errors"]
           [@yojson.option]
-          [@ocaml.doc "Errors occurred while handling the signed exchagne."]
+          [@ocaml.doc "Errors occurred while handling the signed exchange."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Information about a signed exchange response."]
@@ -15924,7 +15924,7 @@ end = struct
           [@ocaml.doc
             "True if this resource request is considered to be the 'same site' \
              as the\n\
-             request correspondinfg to the main frame."]
+             request corresponding to the main frame."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP request data."]
   end = struct
@@ -16019,7 +16019,7 @@ end = struct
           [@ocaml.doc
             "True if this resource request is considered to be the 'same site' \
              as the\n\
-             request correspondinfg to the main frame."]
+             request corresponding to the main frame."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP request data."]
   end
@@ -16815,7 +16815,7 @@ end = struct
           [@key "serviceWorkerRouterInfo"]
           [@yojson.option]
           [@ocaml.doc
-            "Infomation about how Service Worker Static Router was used."]
+            "Information about how Service Worker Static Router was used."]
       encodedDataLength : number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request so far."]
@@ -16925,7 +16925,7 @@ end = struct
           [@key "serviceWorkerRouterInfo"]
           [@yojson.option]
           [@ocaml.doc
-            "Infomation about how Service Worker Static Router was used."]
+            "Information about how Service Worker Static Router was used."]
       encodedDataLength : number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request so far."]
@@ -18261,7 +18261,7 @@ end = struct
       errors : SignedExchangeError.t list option;
           [@key "errors"]
           [@yojson.option]
-          [@ocaml.doc "Errors occurred while handling the signed exchagne."]
+          [@ocaml.doc "Errors occurred while handling the signed exchange."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Information about a signed exchange response."]
@@ -18283,7 +18283,7 @@ end = struct
       errors : SignedExchangeError.t list option;
           [@key "errors"]
           [@yojson.option]
-          [@ocaml.doc "Errors occurred while handling the signed exchagne."]
+          [@ocaml.doc "Errors occurred while handling the signed exchange."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Information about a signed exchange response."]
@@ -18878,7 +18878,7 @@ and Overlay : sig
     type t = {
       parentOutlineColor : DOM.RGBA.t;
           [@key "parentOutlineColor"]
-          [@ocaml.doc "the color to outline the givent element in."]
+          [@ocaml.doc "the color to outline the given element in."]
       childOutlineColor : DOM.RGBA.t;
           [@key "childOutlineColor"]
           [@ocaml.doc "the color to outline the child elements in."]
@@ -19298,7 +19298,7 @@ and Overlay : sig
              Window Controls Overlay."]
       selectedPlatform : string;
           [@key "selectedPlatform"]
-          [@ocaml.doc "Seleted platforms to show the overlay."]
+          [@ocaml.doc "Selected platforms to show the overlay."]
       themeColor : string;
           [@key "themeColor"]
           [@ocaml.doc "The theme color defined in app manifest."]
@@ -19390,7 +19390,7 @@ end = struct
     type t = {
       parentOutlineColor : DOM.RGBA.t;
           [@key "parentOutlineColor"]
-          [@ocaml.doc "the color to outline the givent element in."]
+          [@ocaml.doc "the color to outline the given element in."]
       childOutlineColor : DOM.RGBA.t;
           [@key "childOutlineColor"]
           [@ocaml.doc "the color to outline the child elements in."]
@@ -19402,7 +19402,7 @@ end = struct
     type t = {
       parentOutlineColor : DOM.RGBA.t;
           [@key "parentOutlineColor"]
-          [@ocaml.doc "the color to outline the givent element in."]
+          [@ocaml.doc "the color to outline the given element in."]
       childOutlineColor : DOM.RGBA.t;
           [@key "childOutlineColor"]
           [@ocaml.doc "the color to outline the child elements in."]
@@ -20224,7 +20224,7 @@ end = struct
              Window Controls Overlay."]
       selectedPlatform : string;
           [@key "selectedPlatform"]
-          [@ocaml.doc "Seleted platforms to show the overlay."]
+          [@ocaml.doc "Selected platforms to show the overlay."]
       themeColor : string;
           [@key "themeColor"]
           [@ocaml.doc "The theme color defined in app manifest."]
@@ -20240,7 +20240,7 @@ end = struct
              Window Controls Overlay."]
       selectedPlatform : string;
           [@key "selectedPlatform"]
-          [@ocaml.doc "Seleted platforms to show the overlay."]
+          [@ocaml.doc "Selected platforms to show the overlay."]
       themeColor : string;
           [@key "themeColor"]
           [@ocaml.doc "The theme color defined in app manifest."]
@@ -20948,7 +20948,7 @@ and Page : sig
       message : string; [@key "message"] [@ocaml.doc "Error message."]
       critical : number;
           [@key "critical"]
-          [@ocaml.doc "If criticial, this is a non-recoverable parse error."]
+          [@ocaml.doc "If critical, this is a non-recoverable parse error."]
       line : number; [@key "line"] [@ocaml.doc "Error line."]
       column : number; [@key "column"] [@ocaml.doc "Error column."]
     }
@@ -21198,7 +21198,7 @@ and Page : sig
     type t = _autoresponsemode
     [@@deriving yojson]
     [@@ocaml.doc
-      "Enum of possible auto-reponse for permisison / prompt dialogs."]
+      "Enum of possible auto-response for permission / prompt dialogs."]
   end
 
   and NavigationType : sig
@@ -21278,7 +21278,6 @@ and Page : sig
       | `SubresourceHasCacheControlNoCache
       | `ContainsPlugins
       | `DocumentLoaded
-      | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
@@ -22754,7 +22753,7 @@ end = struct
       message : string; [@key "message"] [@ocaml.doc "Error message."]
       critical : number;
           [@key "critical"]
-          [@ocaml.doc "If criticial, this is a non-recoverable parse error."]
+          [@ocaml.doc "If critical, this is a non-recoverable parse error."]
       line : number; [@key "line"] [@ocaml.doc "Error line."]
       column : number; [@key "column"] [@ocaml.doc "Error column."]
     }
@@ -22764,7 +22763,7 @@ end = struct
       message : string; [@key "message"] [@ocaml.doc "Error message."]
       critical : number;
           [@key "critical"]
-          [@ocaml.doc "If criticial, this is a non-recoverable parse error."]
+          [@ocaml.doc "If critical, this is a non-recoverable parse error."]
       line : number; [@key "line"] [@ocaml.doc "Error line."]
       column : number; [@key "column"] [@ocaml.doc "Error column."]
     }
@@ -23265,7 +23264,7 @@ end = struct
     type t = _autoresponsemode
     [@@deriving yojson]
     [@@ocaml.doc
-      "Enum of possible auto-reponse for permisison / prompt dialogs."]
+      "Enum of possible auto-response for permission / prompt dialogs."]
   end = struct
     type _autoresponsemode = [ `none | `autoAccept | `autoReject | `autoOptOut ]
 
@@ -23286,7 +23285,7 @@ end = struct
     type t = _autoresponsemode
     [@@deriving yojson]
     [@@ocaml.doc
-      "Enum of possible auto-reponse for permisison / prompt dialogs."]
+      "Enum of possible auto-response for permission / prompt dialogs."]
   end
 
   and NavigationType : sig
@@ -23381,7 +23380,6 @@ end = struct
       | `SubresourceHasCacheControlNoCache
       | `ContainsPlugins
       | `DocumentLoaded
-      | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
@@ -23524,7 +23522,6 @@ end = struct
       | `SubresourceHasCacheControlNoCache
       | `ContainsPlugins
       | `DocumentLoaded
-      | `DedicatedWorkerOrWorklet
       | `OutstandingNetworkRequestOthers
       | `RequestedMIDIPermission
       | `RequestedAudioCapturePermission
@@ -23677,7 +23674,6 @@ end = struct
           `SubresourceHasCacheControlNoCache
       | `String "ContainsPlugins" -> `ContainsPlugins
       | `String "DocumentLoaded" -> `DocumentLoaded
-      | `String "DedicatedWorkerOrWorklet" -> `DedicatedWorkerOrWorklet
       | `String "OutstandingNetworkRequestOthers" ->
           `OutstandingNetworkRequestOthers
       | `String "RequestedMIDIPermission" -> `RequestedMIDIPermission
@@ -23851,7 +23847,6 @@ end = struct
           `String "SubresourceHasCacheControlNoCache"
       | `ContainsPlugins -> `String "ContainsPlugins"
       | `DocumentLoaded -> `String "DocumentLoaded"
-      | `DedicatedWorkerOrWorklet -> `String "DedicatedWorkerOrWorklet"
       | `OutstandingNetworkRequestOthers ->
           `String "OutstandingNetworkRequestOthers"
       | `RequestedMIDIPermission -> `String "RequestedMIDIPermission"
@@ -24180,7 +24175,7 @@ and PerformanceTimeline : sig
           [@ocaml.doc
             "The event type, as specified in \
              https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype\n\
-             This determines which of the optional \"details\" fiedls is \
+             This determines which of the optional \"details\" fields is \
              present."]
       name : string;
           [@key "name"] [@ocaml.doc "Name may be empty depending on the type."]
@@ -24327,7 +24322,7 @@ end = struct
           [@ocaml.doc
             "The event type, as specified in \
              https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype\n\
-             This determines which of the optional \"details\" fiedls is \
+             This determines which of the optional \"details\" fields is \
              present."]
       name : string;
           [@key "name"] [@ocaml.doc "Name may be empty depending on the type."]
@@ -24362,7 +24357,7 @@ end = struct
           [@ocaml.doc
             "The event type, as specified in \
              https://w3c.github.io/performance-timeline/#dom-performanceentry-entrytype\n\
-             This determines which of the optional \"details\" fiedls is \
+             This determines which of the optional \"details\" fields is \
              present."]
       name : string;
           [@key "name"] [@ocaml.doc "Name may be empty depending on the type."]
@@ -24458,7 +24453,7 @@ and Security : sig
       certificateHasWeakSignature : bool;
           [@key "certificateHasWeakSignature"]
           [@ocaml.doc
-            "True if the certificate uses a weak signature aglorithm."]
+            "True if the certificate uses a weak signature algorithm."]
       certificateHasSha1Signature : bool;
           [@key "certificateHasSha1Signature"]
           [@ocaml.doc
@@ -24721,7 +24716,7 @@ end = struct
       certificateHasWeakSignature : bool;
           [@key "certificateHasWeakSignature"]
           [@ocaml.doc
-            "True if the certificate uses a weak signature aglorithm."]
+            "True if the certificate uses a weak signature algorithm."]
       certificateHasSha1Signature : bool;
           [@key "certificateHasSha1Signature"]
           [@ocaml.doc
@@ -24783,7 +24778,7 @@ end = struct
       certificateHasWeakSignature : bool;
           [@key "certificateHasWeakSignature"]
           [@ocaml.doc
-            "True if the certificate uses a weak signature aglorithm."]
+            "True if the certificate uses a weak signature algorithm."]
       certificateHasSha1Signature : bool;
           [@key "certificateHasSha1Signature"]
           [@ocaml.doc
@@ -28143,7 +28138,11 @@ and Target : sig
       targetId : TargetID.t;
           [@key "targetId"] [@ocaml.doc "No description provided"]
       type_ : string; [@key "type"] [@ocaml.doc "No description provided"]
-      title : string; [@key "title"] [@ocaml.doc "No description provided"]
+      title : string;
+          [@key "title"]
+          [@ocaml.doc
+            "List of types: \
+             https://source.chromium.org/chromium/chromium/src/+/main:content/browser/devtools/devtools_agent_host_impl.cc?ss=chromium&q=f:devtools%20-f:out%20%22::kTypeTab%5B%5D%22"]
       url : string; [@key "url"] [@ocaml.doc "No description provided"]
       attached : bool;
           [@key "attached"]
@@ -28182,7 +28181,7 @@ and Target : sig
           [@key "exclude"]
           [@yojson.option]
           [@ocaml.doc
-            "If set, causes exclusion of mathcing targets from the list."]
+            "If set, causes exclusion of matching targets from the list."]
       type_ : string option;
           [@key "type"]
           [@yojson.option]
@@ -28234,7 +28233,11 @@ end = struct
       targetId : TargetID.t;
           [@key "targetId"] [@ocaml.doc "No description provided"]
       type_ : string; [@key "type"] [@ocaml.doc "No description provided"]
-      title : string; [@key "title"] [@ocaml.doc "No description provided"]
+      title : string;
+          [@key "title"]
+          [@ocaml.doc
+            "List of types: \
+             https://source.chromium.org/chromium/chromium/src/+/main:content/browser/devtools/devtools_agent_host_impl.cc?ss=chromium&q=f:devtools%20-f:out%20%22::kTypeTab%5B%5D%22"]
       url : string; [@key "url"] [@ocaml.doc "No description provided"]
       attached : bool;
           [@key "attached"]
@@ -28270,7 +28273,11 @@ end = struct
       targetId : TargetID.t;
           [@key "targetId"] [@ocaml.doc "No description provided"]
       type_ : string; [@key "type"] [@ocaml.doc "No description provided"]
-      title : string; [@key "title"] [@ocaml.doc "No description provided"]
+      title : string;
+          [@key "title"]
+          [@ocaml.doc
+            "List of types: \
+             https://source.chromium.org/chromium/chromium/src/+/main:content/browser/devtools/devtools_agent_host_impl.cc?ss=chromium&q=f:devtools%20-f:out%20%22::kTypeTab%5B%5D%22"]
       url : string; [@key "url"] [@ocaml.doc "No description provided"]
       attached : bool;
           [@key "attached"]
@@ -28309,7 +28316,7 @@ end = struct
           [@key "exclude"]
           [@yojson.option]
           [@ocaml.doc
-            "If set, causes exclusion of mathcing targets from the list."]
+            "If set, causes exclusion of matching targets from the list."]
       type_ : string option;
           [@key "type"]
           [@yojson.option]
@@ -28324,7 +28331,7 @@ end = struct
           [@key "exclude"]
           [@yojson.option]
           [@ocaml.doc
-            "If set, causes exclusion of mathcing targets from the list."]
+            "If set, causes exclusion of matching targets from the list."]
       type_ : string option;
           [@key "type"]
           [@yojson.option]
@@ -30606,7 +30613,7 @@ and Preload : sig
           [@key "errorType"]
           [@yojson.option]
           [@ocaml.doc
-            "Error information\n`errorMessage` is null iff `errorType` is null."]
+            "Error information\n`errorMessage` is null if `errorType` is null."]
       errorMessage : string option;
           [@key "errorMessage"]
           [@yojson.option]
@@ -30696,7 +30703,7 @@ and Preload : sig
        that had a speculation rule that triggered the attempt, and the\n\
        BackendNodeIds of <a href> or <area href> elements that triggered the\n\
        attempt (in the case of attempts triggered by a document rule). It is\n\
-       possible for mulitple rule sets and links to trigger a single attempt."]
+       possible for multiple rule sets and links to trigger a single attempt."]
   end
 
   and PrerenderFinalStatus : sig
@@ -30902,7 +30909,7 @@ end = struct
           [@key "errorType"]
           [@yojson.option]
           [@ocaml.doc
-            "Error information\n`errorMessage` is null iff `errorType` is null."]
+            "Error information\n`errorMessage` is null if `errorType` is null."]
       errorMessage : string option;
           [@key "errorMessage"]
           [@yojson.option]
@@ -30952,7 +30959,7 @@ end = struct
           [@key "errorType"]
           [@yojson.option]
           [@ocaml.doc
-            "Error information\n`errorMessage` is null iff `errorType` is null."]
+            "Error information\n`errorMessage` is null if `errorType` is null."]
       errorMessage : string option;
           [@key "errorMessage"]
           [@yojson.option]
@@ -31116,7 +31123,7 @@ end = struct
        that had a speculation rule that triggered the attempt, and the\n\
        BackendNodeIds of <a href> or <area href> elements that triggered the\n\
        attempt (in the case of attempts triggered by a document rule). It is\n\
-       possible for mulitple rule sets and links to trigger a single attempt."]
+       possible for multiple rule sets and links to trigger a single attempt."]
   end = struct
     type t = {
       key : PreloadingAttemptKey.t;
@@ -31132,7 +31139,7 @@ end = struct
        that had a speculation rule that triggered the attempt, and the\n\
        BackendNodeIds of <a href> or <area href> elements that triggered the\n\
        attempt (in the case of attempts triggered by a document rule). It is\n\
-       possible for mulitple rule sets and links to trigger a single attempt."]
+       possible for multiple rule sets and links to trigger a single attempt."]
   end
 
   and PrerenderFinalStatus : sig

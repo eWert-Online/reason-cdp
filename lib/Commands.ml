@@ -234,7 +234,7 @@ module Accessibility = struct
             [@yojson.option]
             [@ocaml.doc
               "The frame for whose document the AX tree should be retrieved.\n\
-               If omited, the root frame is used."]
+               If omitted, the root frame is used."]
       }
       [@@deriving yojson]
 
@@ -476,7 +476,7 @@ module Accessibility = struct
 
   (* Query a DOM node's accessibility subtree for accessible name and role.
      This command computes the name and role for all nodes in the subtree, including those that are
-     ignored for accessibility, and returns those that mactch the specified name and role. If no DOM
+     ignored for accessibility, and returns those that match the specified name and role. If no DOM
      node is specified, or the DOM node does not exist, the command returns an error. If neither
      `accessibleName` or `role` is specified, it returns all the accessibility nodes in the subtree. *)
   module QueryAXTree = struct
@@ -2098,7 +2098,7 @@ module Browser = struct
                default Chrome behavior if\n\
                available (otherwise deny). |allowAndName| allows download and \
                names files according to\n\
-               their dowmload guids."]
+               their download guids."]
         browserContextId : Types.Browser.BrowserContextID.t option;
             [@key "browserContextId"]
             [@yojson.option]
@@ -6296,7 +6296,7 @@ module DOM = struct
       type t = {
         nodeId : Types.DOM.NodeId.t;
             [@key "nodeId"]
-            [@ocaml.doc "Id of the node to retrieve attibutes for."]
+            [@ocaml.doc "Id of the node to retrieve attributes for."]
       }
       [@@deriving yojson]
 
@@ -11782,7 +11782,7 @@ module Emulation = struct
     end
   end
 
-  (* Updates the sensor readings reported by a sensor type previously overriden
+  (* Updates the sensor readings reported by a sensor type previously overridden
      by setSensorOverrideEnabled. *)
   module SetSensorOverrideReadings = struct
     module Response : sig
@@ -12368,8 +12368,10 @@ module Emulation = struct
         timezoneId : string;
             [@key "timezoneId"]
             [@ocaml.doc
-              "The timezone identifier. If empty, disables the override and\n\
-               restores default host system timezone."]
+              "The timezone identifier. List of supported timezones:\n\
+               https://source.chromium.org/chromium/chromium/deps/icu.git/+/faee8bc70570192d82d2978a71e2a615788597d1:source/data/misc/metaZones.txt\n\
+               If empty, disables the override and restores default host \
+               system timezone."]
       }
       [@@deriving yojson]
 
@@ -12561,7 +12563,8 @@ module Emulation = struct
     end
   end
 
-  (* Allows overriding user agent with the given string. *)
+  (* Allows overriding user agent with the given string.
+     `userAgentMetadata` must be set for Client Hint headers to be sent. *)
   module SetUserAgentOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -13012,7 +13015,7 @@ module IO = struct
             [@key "offset"]
             [@yojson.option]
             [@ocaml.doc
-              "Seek to the specified offset before reading (if not specificed, \
+              "Seek to the specified offset before reading (if not specified, \
                proceed with offset\n\
                following the last read). Some types of streams may only \
                support sequential reads."]
@@ -14116,7 +14119,7 @@ module Input = struct
     end
   end
 
-  (* This method sets the current candidate text for ime.
+  (* This method sets the current candidate text for IME.
      Use imeCommitComposition to commit the final text.
      Use imeSetComposition with empty string as text to cancel composition. *)
   module ImeSetComposition = struct
@@ -19029,8 +19032,8 @@ module Overlay = struct
   end
 
   (* Highlights owner element of the frame with given id.
-     Deprecated: Doesn't work reliablity and cannot be fixed due to process
-     separatation (the owner node might be in a different process). Determine
+     Deprecated: Doesn't work reliably and cannot be fixed due to process
+     separation (the owner node might be in a different process). Determine
      the owner node in the client and use highlightNode. *)
   module HighlightFrame = struct
     module Response : sig
@@ -23765,7 +23768,7 @@ module Page = struct
   end
 
   (* Requests backend to produce compilation cache for the specified scripts.
-     `scripts` are appeneded to the list of scripts for which the cache
+     `scripts` are appended to the list of scripts for which the cache
      would be produced. The list may be reset during page navigation.
      When script with a matching URL is encountered, the cache is optionally
      produced upon backend discretion, based on internal heuristics.
@@ -27922,7 +27925,7 @@ module Target = struct
 
      Injected object will be available as `window[bindingName]`.
 
-     The object has the follwing API:
+     The object has the following API:
      - `binding.send(json)` - a method to send messages over the remote debugging protocol
      - `binding.onmessage = json => handleMessage(json)` - a callback that will be called for the protocol notifications and command responses. *)
   module ExposeDevToolsProtocol = struct

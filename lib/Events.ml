@@ -980,7 +980,7 @@ module LayerTree = struct
       layers : Types.LayerTree.Layer.t list option;
           [@key "layers"]
           [@yojson.option]
-          [@ocaml.doc "Layer tree, absent if not in the comspositing mode."]
+          [@ocaml.doc "Layer tree, absent if not in the compositing mode."]
     }
     [@@deriving yojson]
 
@@ -1089,7 +1089,10 @@ module Network = struct
       type_ : Types.Network.ResourceType.t;
           [@key "type"] [@ocaml.doc "Resource type."]
       errorText : string;
-          [@key "errorText"] [@ocaml.doc "User friendly error message."]
+          [@key "errorText"]
+          [@ocaml.doc
+            "Error message. List of network errors: \
+             https://cs.chromium.org/chromium/src/net/base/net_error_list.h"]
       canceled : bool option;
           [@key "canceled"]
           [@yojson.option]
@@ -1739,7 +1742,7 @@ module Network = struct
           [@yojson.option]
           [@ocaml.doc
             "True if partitioned cookies are enabled, but the partition key is \
-             not serializeable to string."]
+             not serializable to string."]
       exemptedCookies : Types.Network.ExemptedSetCookieWithReason.t list option;
           [@key "exemptedCookies"]
           [@yojson.option]
@@ -2569,8 +2572,8 @@ module Page = struct
       hasBrowserHandler : bool;
           [@key "hasBrowserHandler"]
           [@ocaml.doc
-            "True iff browser is capable showing or acting on the given \
-             dialog. When browser has no\n\
+            "True if browser is capable showing or acting on the given dialog. \
+             When browser has no\n\
              dialog handler for given target, calling alert while Page domain \
              is engaged will stall\n\
              the page execution. Execution can be resumed via calling \
@@ -2630,7 +2633,7 @@ module Page = struct
     type result = {
       loaderId : Types.Network.LoaderId.t;
           [@key "loaderId"]
-          [@ocaml.doc "The loader id for the associated navgation."]
+          [@ocaml.doc "The loader id for the associated navigation."]
       frameId : Types.Page.FrameId.t;
           [@key "frameId"] [@ocaml.doc "The frame id of the associated frame."]
       notRestoredExplanations :
@@ -3229,7 +3232,7 @@ module Storage = struct
       params : Types.Storage.SharedStorageAccessParams.t;
           [@key "params"]
           [@ocaml.doc
-            "The sub-parameters warapped by `params` are all optional and their\n\
+            "The sub-parameters wrapped by `params` are all optional and their\n\
              presence/absence depends on `type`."]
     }
     [@@deriving yojson]
