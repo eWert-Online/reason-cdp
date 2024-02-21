@@ -28137,12 +28137,12 @@ and Target : sig
     type t = {
       targetId : TargetID.t;
           [@key "targetId"] [@ocaml.doc "No description provided"]
-      type_ : string; [@key "type"] [@ocaml.doc "No description provided"]
-      title : string;
-          [@key "title"]
+      type_ : string;
+          [@key "type"]
           [@ocaml.doc
             "List of types: \
              https://source.chromium.org/chromium/chromium/src/+/main:content/browser/devtools/devtools_agent_host_impl.cc?ss=chromium&q=f:devtools%20-f:out%20%22::kTypeTab%5B%5D%22"]
+      title : string; [@key "title"] [@ocaml.doc "No description provided"]
       url : string; [@key "url"] [@ocaml.doc "No description provided"]
       attached : bool;
           [@key "attached"]
@@ -28232,12 +28232,12 @@ end = struct
     type t = {
       targetId : TargetID.t;
           [@key "targetId"] [@ocaml.doc "No description provided"]
-      type_ : string; [@key "type"] [@ocaml.doc "No description provided"]
-      title : string;
-          [@key "title"]
+      type_ : string;
+          [@key "type"]
           [@ocaml.doc
             "List of types: \
              https://source.chromium.org/chromium/chromium/src/+/main:content/browser/devtools/devtools_agent_host_impl.cc?ss=chromium&q=f:devtools%20-f:out%20%22::kTypeTab%5B%5D%22"]
+      title : string; [@key "title"] [@ocaml.doc "No description provided"]
       url : string; [@key "url"] [@ocaml.doc "No description provided"]
       attached : bool;
           [@key "attached"]
@@ -28272,12 +28272,12 @@ end = struct
     type t = {
       targetId : TargetID.t;
           [@key "targetId"] [@ocaml.doc "No description provided"]
-      type_ : string; [@key "type"] [@ocaml.doc "No description provided"]
-      title : string;
-          [@key "title"]
+      type_ : string;
+          [@key "type"]
           [@ocaml.doc
             "List of types: \
              https://source.chromium.org/chromium/chromium/src/+/main:content/browser/devtools/devtools_agent_host_impl.cc?ss=chromium&q=f:devtools%20-f:out%20%22::kTypeTab%5B%5D%22"]
+      title : string; [@key "title"] [@ocaml.doc "No description provided"]
       url : string; [@key "url"] [@ocaml.doc "No description provided"]
       attached : bool;
           [@key "attached"]
@@ -30613,7 +30613,7 @@ and Preload : sig
           [@key "errorType"]
           [@yojson.option]
           [@ocaml.doc
-            "Error information\n`errorMessage` is null if `errorType` is null."]
+            "Error information\n`errorMessage` is null iff `errorType` is null."]
       errorMessage : string option;
           [@key "errorMessage"]
           [@yojson.option]
@@ -30909,7 +30909,7 @@ end = struct
           [@key "errorType"]
           [@yojson.option]
           [@ocaml.doc
-            "Error information\n`errorMessage` is null if `errorType` is null."]
+            "Error information\n`errorMessage` is null iff `errorType` is null."]
       errorMessage : string option;
           [@key "errorMessage"]
           [@yojson.option]
@@ -30959,7 +30959,7 @@ end = struct
           [@key "errorType"]
           [@yojson.option]
           [@ocaml.doc
-            "Error information\n`errorMessage` is null if `errorType` is null."]
+            "Error information\n`errorMessage` is null iff `errorType` is null."]
       errorMessage : string option;
           [@key "errorMessage"]
           [@yojson.option]

@@ -2572,8 +2572,8 @@ module Page = struct
       hasBrowserHandler : bool;
           [@key "hasBrowserHandler"]
           [@ocaml.doc
-            "True if browser is capable showing or acting on the given dialog. \
-             When browser has no\n\
+            "True iff browser is capable showing or acting on the given \
+             dialog. When browser has no\n\
              dialog handler for given target, calling alert while Page domain \
              is engaged will stall\n\
              the page execution. Execution can be resumed via calling \
