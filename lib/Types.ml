@@ -1866,7 +1866,12 @@ and Audits : sig
       | `InvalidRegisterOsTriggerHeader
       | `WebAndOsHeaders
       | `NoWebOrOsSupport
-      | `NavigationRegistrationWithoutTransientUserActivation ]
+      | `NavigationRegistrationWithoutTransientUserActivation
+      | `InvalidInfoHeader
+      | `NoRegisterSourceHeader
+      | `NoRegisterTriggerHeader
+      | `NoRegisterOsSourceHeader
+      | `NoRegisterOsTriggerHeader ]
 
     val _attributionreportingissuetype_of_yojson :
       Yojson.Basic.t -> _attributionreportingissuetype
@@ -3469,7 +3474,12 @@ end = struct
       | `InvalidRegisterOsTriggerHeader
       | `WebAndOsHeaders
       | `NoWebOrOsSupport
-      | `NavigationRegistrationWithoutTransientUserActivation ]
+      | `NavigationRegistrationWithoutTransientUserActivation
+      | `InvalidInfoHeader
+      | `NoRegisterSourceHeader
+      | `NoRegisterTriggerHeader
+      | `NoRegisterOsSourceHeader
+      | `NoRegisterOsTriggerHeader ]
 
     val _attributionreportingissuetype_of_yojson :
       Yojson.Basic.t -> _attributionreportingissuetype
@@ -3495,7 +3505,12 @@ end = struct
       | `InvalidRegisterOsTriggerHeader
       | `WebAndOsHeaders
       | `NoWebOrOsSupport
-      | `NavigationRegistrationWithoutTransientUserActivation ]
+      | `NavigationRegistrationWithoutTransientUserActivation
+      | `InvalidInfoHeader
+      | `NoRegisterSourceHeader
+      | `NoRegisterTriggerHeader
+      | `NoRegisterOsSourceHeader
+      | `NoRegisterOsTriggerHeader ]
 
     let _attributionreportingissuetype_of_yojson = function
       | `String "PermissionPolicyDisabled" -> `PermissionPolicyDisabled
@@ -3516,6 +3531,11 @@ end = struct
       | `String "NoWebOrOsSupport" -> `NoWebOrOsSupport
       | `String "NavigationRegistrationWithoutTransientUserActivation" ->
           `NavigationRegistrationWithoutTransientUserActivation
+      | `String "InvalidInfoHeader" -> `InvalidInfoHeader
+      | `String "NoRegisterSourceHeader" -> `NoRegisterSourceHeader
+      | `String "NoRegisterTriggerHeader" -> `NoRegisterTriggerHeader
+      | `String "NoRegisterOsSourceHeader" -> `NoRegisterOsSourceHeader
+      | `String "NoRegisterOsTriggerHeader" -> `NoRegisterOsTriggerHeader
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3538,6 +3558,11 @@ end = struct
       | `NoWebOrOsSupport -> `String "NoWebOrOsSupport"
       | `NavigationRegistrationWithoutTransientUserActivation ->
           `String "NavigationRegistrationWithoutTransientUserActivation"
+      | `InvalidInfoHeader -> `String "InvalidInfoHeader"
+      | `NoRegisterSourceHeader -> `String "NoRegisterSourceHeader"
+      | `NoRegisterTriggerHeader -> `String "NoRegisterTriggerHeader"
+      | `NoRegisterOsSourceHeader -> `String "NoRegisterOsSourceHeader"
+      | `NoRegisterOsTriggerHeader -> `String "NoRegisterOsTriggerHeader"
 
     type t = _attributionreportingissuetype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
