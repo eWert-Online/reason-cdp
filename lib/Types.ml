@@ -21343,6 +21343,7 @@ and Page : sig
       | `SmartCard
       | `LiveMediaStreamTrack
       | `UnloadHandler
+      | `ParserAborted
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -23445,6 +23446,7 @@ end = struct
       | `SmartCard
       | `LiveMediaStreamTrack
       | `UnloadHandler
+      | `ParserAborted
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -23587,6 +23589,7 @@ end = struct
       | `SmartCard
       | `LiveMediaStreamTrack
       | `UnloadHandler
+      | `ParserAborted
       | `ContentSecurityHandler
       | `ContentWebAuthenticationAPI
       | `ContentFileChooser
@@ -23747,6 +23750,7 @@ end = struct
       | `String "SmartCard" -> `SmartCard
       | `String "LiveMediaStreamTrack" -> `LiveMediaStreamTrack
       | `String "UnloadHandler" -> `UnloadHandler
+      | `String "ParserAborted" -> `ParserAborted
       | `String "ContentSecurityHandler" -> `ContentSecurityHandler
       | `String "ContentWebAuthenticationAPI" -> `ContentWebAuthenticationAPI
       | `String "ContentFileChooser" -> `ContentFileChooser
@@ -23920,6 +23924,7 @@ end = struct
       | `SmartCard -> `String "SmartCard"
       | `LiveMediaStreamTrack -> `String "LiveMediaStreamTrack"
       | `UnloadHandler -> `String "UnloadHandler"
+      | `ParserAborted -> `String "ParserAborted"
       | `ContentSecurityHandler -> `String "ContentSecurityHandler"
       | `ContentWebAuthenticationAPI -> `String "ContentWebAuthenticationAPI"
       | `ContentFileChooser -> `String "ContentFileChooser"
