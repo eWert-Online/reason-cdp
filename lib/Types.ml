@@ -21294,6 +21294,7 @@ and Page : sig
       | `CookieDisabled
       | `HTTPAuthRequired
       | `CookieFlushed
+      | `BroadcastChannelOnMessage
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -23397,6 +23398,7 @@ end = struct
       | `CookieDisabled
       | `HTTPAuthRequired
       | `CookieFlushed
+      | `BroadcastChannelOnMessage
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -23540,6 +23542,7 @@ end = struct
       | `CookieDisabled
       | `HTTPAuthRequired
       | `CookieFlushed
+      | `BroadcastChannelOnMessage
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -23689,6 +23692,7 @@ end = struct
       | `String "CookieDisabled" -> `CookieDisabled
       | `String "HTTPAuthRequired" -> `HTTPAuthRequired
       | `String "CookieFlushed" -> `CookieFlushed
+      | `String "BroadcastChannelOnMessage" -> `BroadcastChannelOnMessage
       | `String "WebSocket" -> `WebSocket
       | `String "WebTransport" -> `WebTransport
       | `String "WebRTC" -> `WebRTC
@@ -23863,6 +23867,7 @@ end = struct
       | `CookieDisabled -> `String "CookieDisabled"
       | `HTTPAuthRequired -> `String "HTTPAuthRequired"
       | `CookieFlushed -> `String "CookieFlushed"
+      | `BroadcastChannelOnMessage -> `String "BroadcastChannelOnMessage"
       | `WebSocket -> `String "WebSocket"
       | `WebTransport -> `String "WebTransport"
       | `WebRTC -> `String "WebRTC"
