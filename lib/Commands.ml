@@ -17103,17 +17103,36 @@ module Network = struct
             [@key "connectionType"]
             [@yojson.option]
             [@ocaml.doc "Connection type if known."]
+        packetLoss : Types.number option;
+            [@key "packetLoss"]
+            [@yojson.option]
+            [@ocaml.doc
+              "WebRTC packet loss (percent, 0-100). 0 disables packet loss \
+               emulation, 100 drops all the packets."]
+        packetQueueLength : Types.number option;
+            [@key "packetQueueLength"]
+            [@yojson.option]
+            [@ocaml.doc
+              "WebRTC packet queue length (packet). 0 removes any queue length \
+               limitations."]
+        packetReordering : bool option;
+            [@key "packetReordering"]
+            [@yojson.option]
+            [@ocaml.doc "WebRTC packetReordering feature."]
       }
       [@@deriving yojson]
 
       let make ~offline ~latency ~downloadThroughput ~uploadThroughput
-          ?connectionType () =
+          ?connectionType ?packetLoss ?packetQueueLength ?packetReordering () =
         {
           offline;
           latency;
           downloadThroughput;
           uploadThroughput;
           connectionType;
+          packetLoss;
+          packetQueueLength;
+          packetReordering;
         }
     end
 
