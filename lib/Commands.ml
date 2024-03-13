@@ -26623,8 +26623,14 @@ module Storage = struct
   module GetInterestGroupDetails = struct
     module Response : sig
       type result = {
-        details : Types.Storage.InterestGroupDetails.t;
-            [@key "details"] [@ocaml.doc "No description provided"]
+        details : Types.assoc;
+            [@key "details"]
+            [@ocaml.doc
+              "This largely corresponds to:\n\
+               https://wicg.github.io/turtledove/#dictdef-generatebidinterestgroup\n\
+               but has absolute expirationTime instead of relative lifetimeMs \
+               and\n\
+               also adds joiningOrigin."]
       }
 
       type error = { code : int; message : string }
@@ -26639,8 +26645,14 @@ module Storage = struct
       val parse : string -> t
     end = struct
       type result = {
-        details : Types.Storage.InterestGroupDetails.t;
-            [@key "details"] [@ocaml.doc "No description provided"]
+        details : Types.assoc;
+            [@key "details"]
+            [@ocaml.doc
+              "This largely corresponds to:\n\
+               https://wicg.github.io/turtledove/#dictdef-generatebidinterestgroup\n\
+               but has absolute expirationTime instead of relative lifetimeMs \
+               and\n\
+               also adds joiningOrigin."]
       }
       [@@deriving yojson]
 

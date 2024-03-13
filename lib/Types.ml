@@ -20563,7 +20563,7 @@ and Page : sig
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
-      | `ch_ua_form_factor
+      | `ch_ua_form_factors
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
@@ -21713,7 +21713,7 @@ end = struct
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
-      | `ch_ua_form_factor
+      | `ch_ua_form_factors
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
@@ -21813,7 +21813,7 @@ end = struct
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
-      | `ch_ua_form_factor
+      | `ch_ua_form_factors
       | `ch_ua_full_version
       | `ch_ua_full_version_list
       | `ch_ua_platform_version
@@ -21901,7 +21901,7 @@ end = struct
       | `String "ch-ua-platform" -> `ch_ua_platform
       | `String "ch-ua-model" -> `ch_ua_model
       | `String "ch-ua-mobile" -> `ch_ua_mobile
-      | `String "ch-ua-form-factor" -> `ch_ua_form_factor
+      | `String "ch-ua-form-factors" -> `ch_ua_form_factors
       | `String "ch-ua-full-version" -> `ch_ua_full_version
       | `String "ch-ua-full-version-list" -> `ch_ua_full_version_list
       | `String "ch-ua-platform-version" -> `ch_ua_platform_version
@@ -21994,7 +21994,7 @@ end = struct
       | `ch_ua_platform -> `String "ch-ua-platform"
       | `ch_ua_model -> `String "ch-ua-model"
       | `ch_ua_mobile -> `String "ch-ua-mobile"
-      | `ch_ua_form_factor -> `String "ch-ua-form-factor"
+      | `ch_ua_form_factors -> `String "ch-ua-form-factors"
       | `ch_ua_full_version -> `String "ch-ua-full-version"
       | `ch_ua_full_version_list -> `String "ch-ua-full-version-list"
       | `ch_ua_platform_version -> `String "ch-ua-platform-version"
@@ -25517,59 +25517,6 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "Enum of network fetches auctions can do."]
   end
 
-  and InterestGroupAd : sig
-    type t = {
-      renderURL : string;
-          [@key "renderURL"] [@ocaml.doc "No description provided"]
-      metadata : string option;
-          [@key "metadata"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "Ad advertising element inside an interest group."]
-  end
-
-  and InterestGroupDetails : sig
-    type t = {
-      ownerOrigin : string;
-          [@key "ownerOrigin"] [@ocaml.doc "No description provided"]
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      expirationTime : Network.TimeSinceEpoch.t;
-          [@key "expirationTime"] [@ocaml.doc "No description provided"]
-      joiningOrigin : string;
-          [@key "joiningOrigin"] [@ocaml.doc "No description provided"]
-      biddingLogicURL : string option;
-          [@key "biddingLogicURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      biddingWasmHelperURL : string option;
-          [@key "biddingWasmHelperURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      updateURL : string option;
-          [@key "updateURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      trustedBiddingSignalsURL : string option;
-          [@key "trustedBiddingSignalsURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      trustedBiddingSignalsKeys : string list;
-          [@key "trustedBiddingSignalsKeys"]
-          [@ocaml.doc "No description provided"]
-      userBiddingSignals : string option;
-          [@key "userBiddingSignals"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      ads : InterestGroupAd.t list;
-          [@key "ads"] [@ocaml.doc "No description provided"]
-      adComponents : InterestGroupAd.t list;
-          [@key "adComponents"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "The full details of an interest group."]
-  end
-
   and SharedStorageAccessType : sig
     type _sharedstorageaccesstype =
       [ `documentAddModule
@@ -25587,7 +25534,11 @@ and Storage : sig
       | `workletKeys
       | `workletEntries
       | `workletLength
-      | `workletRemainingBudget ]
+      | `workletRemainingBudget
+      | `headerSet
+      | `headerAppend
+      | `headerDelete
+      | `headerClear ]
 
     val _sharedstorageaccesstype_of_yojson :
       Yojson.Basic.t -> _sharedstorageaccesstype
@@ -25694,8 +25645,11 @@ and Storage : sig
              SharedStorageAccessType.documentDelete,\n\
              SharedStorageAccessType.workletSet,\n\
              SharedStorageAccessType.workletAppend,\n\
-             SharedStorageAccessType.workletDelete, and\n\
-             SharedStorageAccessType.workletGet."]
+             SharedStorageAccessType.workletDelete,\n\
+             SharedStorageAccessType.workletGet,\n\
+             SharedStorageAccessType.headerSet,\n\
+             SharedStorageAccessType.headerAppend, and\n\
+             SharedStorageAccessType.headerDelete."]
       value : string option;
           [@key "value"]
           [@yojson.option]
@@ -25703,16 +25657,19 @@ and Storage : sig
             "Value for a specific entry in an origin's shared storage.\n\
              Present only for SharedStorageAccessType.documentSet,\n\
              SharedStorageAccessType.documentAppend,\n\
-             SharedStorageAccessType.workletSet, and\n\
-             SharedStorageAccessType.workletAppend."]
+             SharedStorageAccessType.workletSet,\n\
+             SharedStorageAccessType.workletAppend,\n\
+             SharedStorageAccessType.headerSet, and\n\
+             SharedStorageAccessType.headerAppend."]
       ignoreIfPresent : bool option;
           [@key "ignoreIfPresent"]
           [@yojson.option]
           [@ocaml.doc
             "Whether or not to set an entry for a key if that key is already \
              present.\n\
-             Present only for SharedStorageAccessType.documentSet and\n\
-             SharedStorageAccessType.workletSet."]
+             Present only for SharedStorageAccessType.documentSet,\n\
+             SharedStorageAccessType.workletSet, and\n\
+             SharedStorageAccessType.headerSet."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -26367,108 +26324,6 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Enum of network fetches auctions can do."]
   end
 
-  and InterestGroupAd : sig
-    type t = {
-      renderURL : string;
-          [@key "renderURL"] [@ocaml.doc "No description provided"]
-      metadata : string option;
-          [@key "metadata"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "Ad advertising element inside an interest group."]
-  end = struct
-    type t = {
-      renderURL : string;
-          [@key "renderURL"] [@ocaml.doc "No description provided"]
-      metadata : string option;
-          [@key "metadata"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "Ad advertising element inside an interest group."]
-  end
-
-  and InterestGroupDetails : sig
-    type t = {
-      ownerOrigin : string;
-          [@key "ownerOrigin"] [@ocaml.doc "No description provided"]
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      expirationTime : Network.TimeSinceEpoch.t;
-          [@key "expirationTime"] [@ocaml.doc "No description provided"]
-      joiningOrigin : string;
-          [@key "joiningOrigin"] [@ocaml.doc "No description provided"]
-      biddingLogicURL : string option;
-          [@key "biddingLogicURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      biddingWasmHelperURL : string option;
-          [@key "biddingWasmHelperURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      updateURL : string option;
-          [@key "updateURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      trustedBiddingSignalsURL : string option;
-          [@key "trustedBiddingSignalsURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      trustedBiddingSignalsKeys : string list;
-          [@key "trustedBiddingSignalsKeys"]
-          [@ocaml.doc "No description provided"]
-      userBiddingSignals : string option;
-          [@key "userBiddingSignals"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      ads : InterestGroupAd.t list;
-          [@key "ads"] [@ocaml.doc "No description provided"]
-      adComponents : InterestGroupAd.t list;
-          [@key "adComponents"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "The full details of an interest group."]
-  end = struct
-    type t = {
-      ownerOrigin : string;
-          [@key "ownerOrigin"] [@ocaml.doc "No description provided"]
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      expirationTime : Network.TimeSinceEpoch.t;
-          [@key "expirationTime"] [@ocaml.doc "No description provided"]
-      joiningOrigin : string;
-          [@key "joiningOrigin"] [@ocaml.doc "No description provided"]
-      biddingLogicURL : string option;
-          [@key "biddingLogicURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      biddingWasmHelperURL : string option;
-          [@key "biddingWasmHelperURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      updateURL : string option;
-          [@key "updateURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      trustedBiddingSignalsURL : string option;
-          [@key "trustedBiddingSignalsURL"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      trustedBiddingSignalsKeys : string list;
-          [@key "trustedBiddingSignalsKeys"]
-          [@ocaml.doc "No description provided"]
-      userBiddingSignals : string option;
-          [@key "userBiddingSignals"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      ads : InterestGroupAd.t list;
-          [@key "ads"] [@ocaml.doc "No description provided"]
-      adComponents : InterestGroupAd.t list;
-          [@key "adComponents"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "The full details of an interest group."]
-  end
-
   and SharedStorageAccessType : sig
     type _sharedstorageaccesstype =
       [ `documentAddModule
@@ -26486,7 +26341,11 @@ end = struct
       | `workletKeys
       | `workletEntries
       | `workletLength
-      | `workletRemainingBudget ]
+      | `workletRemainingBudget
+      | `headerSet
+      | `headerAppend
+      | `headerDelete
+      | `headerClear ]
 
     val _sharedstorageaccesstype_of_yojson :
       Yojson.Basic.t -> _sharedstorageaccesstype
@@ -26513,7 +26372,11 @@ end = struct
       | `workletKeys
       | `workletEntries
       | `workletLength
-      | `workletRemainingBudget ]
+      | `workletRemainingBudget
+      | `headerSet
+      | `headerAppend
+      | `headerDelete
+      | `headerClear ]
 
     let _sharedstorageaccesstype_of_yojson = function
       | `String "documentAddModule" -> `documentAddModule
@@ -26532,6 +26395,10 @@ end = struct
       | `String "workletEntries" -> `workletEntries
       | `String "workletLength" -> `workletLength
       | `String "workletRemainingBudget" -> `workletRemainingBudget
+      | `String "headerSet" -> `headerSet
+      | `String "headerAppend" -> `headerAppend
+      | `String "headerDelete" -> `headerDelete
+      | `String "headerClear" -> `headerClear
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26552,6 +26419,10 @@ end = struct
       | `workletEntries -> `String "workletEntries"
       | `workletLength -> `String "workletLength"
       | `workletRemainingBudget -> `String "workletRemainingBudget"
+      | `headerSet -> `String "headerSet"
+      | `headerAppend -> `String "headerAppend"
+      | `headerDelete -> `String "headerDelete"
+      | `headerClear -> `String "headerClear"
 
     type t = _sharedstorageaccesstype
     [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access types."]
@@ -26701,8 +26572,11 @@ end = struct
              SharedStorageAccessType.documentDelete,\n\
              SharedStorageAccessType.workletSet,\n\
              SharedStorageAccessType.workletAppend,\n\
-             SharedStorageAccessType.workletDelete, and\n\
-             SharedStorageAccessType.workletGet."]
+             SharedStorageAccessType.workletDelete,\n\
+             SharedStorageAccessType.workletGet,\n\
+             SharedStorageAccessType.headerSet,\n\
+             SharedStorageAccessType.headerAppend, and\n\
+             SharedStorageAccessType.headerDelete."]
       value : string option;
           [@key "value"]
           [@yojson.option]
@@ -26710,16 +26584,19 @@ end = struct
             "Value for a specific entry in an origin's shared storage.\n\
              Present only for SharedStorageAccessType.documentSet,\n\
              SharedStorageAccessType.documentAppend,\n\
-             SharedStorageAccessType.workletSet, and\n\
-             SharedStorageAccessType.workletAppend."]
+             SharedStorageAccessType.workletSet,\n\
+             SharedStorageAccessType.workletAppend,\n\
+             SharedStorageAccessType.headerSet, and\n\
+             SharedStorageAccessType.headerAppend."]
       ignoreIfPresent : bool option;
           [@key "ignoreIfPresent"]
           [@yojson.option]
           [@ocaml.doc
             "Whether or not to set an entry for a key if that key is already \
              present.\n\
-             Present only for SharedStorageAccessType.documentSet and\n\
-             SharedStorageAccessType.workletSet."]
+             Present only for SharedStorageAccessType.documentSet,\n\
+             SharedStorageAccessType.workletSet, and\n\
+             SharedStorageAccessType.headerSet."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -26763,8 +26640,11 @@ end = struct
              SharedStorageAccessType.documentDelete,\n\
              SharedStorageAccessType.workletSet,\n\
              SharedStorageAccessType.workletAppend,\n\
-             SharedStorageAccessType.workletDelete, and\n\
-             SharedStorageAccessType.workletGet."]
+             SharedStorageAccessType.workletDelete,\n\
+             SharedStorageAccessType.workletGet,\n\
+             SharedStorageAccessType.headerSet,\n\
+             SharedStorageAccessType.headerAppend, and\n\
+             SharedStorageAccessType.headerDelete."]
       value : string option;
           [@key "value"]
           [@yojson.option]
@@ -26772,16 +26652,19 @@ end = struct
             "Value for a specific entry in an origin's shared storage.\n\
              Present only for SharedStorageAccessType.documentSet,\n\
              SharedStorageAccessType.documentAppend,\n\
-             SharedStorageAccessType.workletSet, and\n\
-             SharedStorageAccessType.workletAppend."]
+             SharedStorageAccessType.workletSet,\n\
+             SharedStorageAccessType.workletAppend,\n\
+             SharedStorageAccessType.headerSet, and\n\
+             SharedStorageAccessType.headerAppend."]
       ignoreIfPresent : bool option;
           [@key "ignoreIfPresent"]
           [@yojson.option]
           [@ocaml.doc
             "Whether or not to set an entry for a key if that key is already \
              present.\n\
-             Present only for SharedStorageAccessType.documentSet and\n\
-             SharedStorageAccessType.workletSet."]
+             Present only for SharedStorageAccessType.documentSet,\n\
+             SharedStorageAccessType.workletSet, and\n\
+             SharedStorageAccessType.headerSet."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
