@@ -26050,6 +26050,27 @@ and Storage : sig
     type t = _attributionreportingaggregatableresult
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
+
+  and RelatedWebsiteSet : sig
+    type t = {
+      primarySites : string list;
+          [@key "primarySites"]
+          [@ocaml.doc
+            "The primary site of this set, along with the ccTLDs if there is \
+             any."]
+      associatedSites : string list;
+          [@key "associatedSites"]
+          [@ocaml.doc
+            "The associated sites of this set, along with the ccTLDs if there \
+             is any."]
+      serviceSites : string list;
+          [@key "serviceSites"]
+          [@ocaml.doc
+            "The service sites of this set, along with the ccTLDs if there is \
+             any."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A single Related Website Set object."]
+  end
 end = struct
   module rec SerializedStorageKey : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -27486,6 +27507,46 @@ end = struct
 
     type t = _attributionreportingaggregatableresult
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and RelatedWebsiteSet : sig
+    type t = {
+      primarySites : string list;
+          [@key "primarySites"]
+          [@ocaml.doc
+            "The primary site of this set, along with the ccTLDs if there is \
+             any."]
+      associatedSites : string list;
+          [@key "associatedSites"]
+          [@ocaml.doc
+            "The associated sites of this set, along with the ccTLDs if there \
+             is any."]
+      serviceSites : string list;
+          [@key "serviceSites"]
+          [@ocaml.doc
+            "The service sites of this set, along with the ccTLDs if there is \
+             any."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A single Related Website Set object."]
+  end = struct
+    type t = {
+      primarySites : string list;
+          [@key "primarySites"]
+          [@ocaml.doc
+            "The primary site of this set, along with the ccTLDs if there is \
+             any."]
+      associatedSites : string list;
+          [@key "associatedSites"]
+          [@ocaml.doc
+            "The associated sites of this set, along with the ccTLDs if there \
+             is any."]
+      serviceSites : string list;
+          [@key "serviceSites"]
+          [@ocaml.doc
+            "The service sites of this set, along with the ccTLDs if there is \
+             any."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A single Related Website Set object."]
   end
 end
 

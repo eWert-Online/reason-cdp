@@ -4020,6 +4020,72 @@ module CSS = struct
     end
   end
 
+  (* Given a CSS selector text and a style sheet ID, getLocationForSelector
+     returns an array of locations of the CSS selector in the style sheet. *)
+  module GetLocationForSelector = struct
+    module Response : sig
+      type result = {
+        ranges : Types.CSS.SourceRange.t list;
+            [@key "ranges"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        ranges : Types.CSS.SourceRange.t list;
+            [@key "ranges"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        styleSheetId : Types.CSS.StyleSheetId.t;
+            [@key "styleSheetId"] [@ocaml.doc "No description provided"]
+        selectorText : string;
+            [@key "selectorText"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~styleSheetId ~selectorText () = { styleSheetId; selectorText }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "CSS.getLocationForSelector"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Starts tracking the given computed styles for updates. The specified array of properties
      replaces the one previously specified. Pass empty array to disable tracking.
      Use takeComputedStyleUpdates to retrieve the list of nodes that had properties modified.
@@ -27490,6 +27556,59 @@ module Storage = struct
           sessionId;
           params;
         }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Returns the effective Related Website Sets in use by this profile for the browser
+     session. The effective Related Website Sets will not change during a browser session. *)
+  module GetRelatedWebsiteSets = struct
+    module Response : sig
+      type result = {
+        sets : Types.Storage.RelatedWebsiteSet.t list;
+            [@key "sets"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        sets : Types.Storage.RelatedWebsiteSet.t list;
+            [@key "sets"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Storage.getRelatedWebsiteSets"; sessionId }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
