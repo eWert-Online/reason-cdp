@@ -3638,6 +3638,12 @@ module CSS = struct
             [@key "cssPositionFallbackRules"]
             [@yojson.option]
             [@ocaml.doc "A list of CSS position fallbacks matching this node."]
+        cssPositionTryRules : Types.CSS.CSSPositionTryRule.t list option;
+            [@key "cssPositionTryRules"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A list of CSS @position-try rules matching this node, based on \
+               the position-try-options property."]
         cssPropertyRules : Types.CSS.CSSPropertyRule.t list option;
             [@key "cssPropertyRules"]
             [@yojson.option]
@@ -3714,6 +3720,12 @@ module CSS = struct
             [@key "cssPositionFallbackRules"]
             [@yojson.option]
             [@ocaml.doc "A list of CSS position fallbacks matching this node."]
+        cssPositionTryRules : Types.CSS.CSSPositionTryRule.t list option;
+            [@key "cssPositionTryRules"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A list of CSS @position-try rules matching this node, based on \
+               the position-try-options property."]
         cssPropertyRules : Types.CSS.CSSPropertyRule.t list option;
             [@key "cssPropertyRules"]
             [@yojson.option]

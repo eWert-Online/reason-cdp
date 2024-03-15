@@ -6544,6 +6544,24 @@ and CSS : sig
     [@@ocaml.doc "CSS position-fallback rule representation."]
   end
 
+  and CSSPositionTryRule : sig
+    type t = {
+      name : Value.t; [@key "name"] [@ocaml.doc "The prelude dashed-ident name"]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS @position-try rule representation."]
+  end
+
   and CSSKeyframesRule : sig
     type t = {
       animationName : Value.t;
@@ -8059,6 +8077,40 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc "CSS position-fallback rule representation."]
+  end
+
+  and CSSPositionTryRule : sig
+    type t = {
+      name : Value.t; [@key "name"] [@ocaml.doc "The prelude dashed-ident name"]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS @position-try rule representation."]
+  end = struct
+    type t = {
+      name : Value.t; [@key "name"] [@ocaml.doc "The prelude dashed-ident name"]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS @position-try rule representation."]
   end
 
   and CSSKeyframesRule : sig
@@ -25526,6 +25578,7 @@ and Storage : sig
       | `documentAppend
       | `documentDelete
       | `documentClear
+      | `documentGet
       | `workletSet
       | `workletAppend
       | `workletDelete
@@ -26354,6 +26407,7 @@ end = struct
       | `documentAppend
       | `documentDelete
       | `documentClear
+      | `documentGet
       | `workletSet
       | `workletAppend
       | `workletDelete
@@ -26385,6 +26439,7 @@ end = struct
       | `documentAppend
       | `documentDelete
       | `documentClear
+      | `documentGet
       | `workletSet
       | `workletAppend
       | `workletDelete
@@ -26407,6 +26462,7 @@ end = struct
       | `String "documentAppend" -> `documentAppend
       | `String "documentDelete" -> `documentDelete
       | `String "documentClear" -> `documentClear
+      | `String "documentGet" -> `documentGet
       | `String "workletSet" -> `workletSet
       | `String "workletAppend" -> `workletAppend
       | `String "workletDelete" -> `workletDelete
@@ -26431,6 +26487,7 @@ end = struct
       | `documentAppend -> `String "documentAppend"
       | `documentDelete -> `String "documentDelete"
       | `documentClear -> `String "documentClear"
+      | `documentGet -> `String "documentGet"
       | `workletSet -> `String "workletSet"
       | `workletAppend -> `String "workletAppend"
       | `workletDelete -> `String "workletDelete"
