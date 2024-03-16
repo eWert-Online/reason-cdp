@@ -14064,7 +14064,7 @@ and Network : sig
       postData : string option;
           [@key "postData"]
           [@yojson.option]
-          [@ocaml.doc "HTTP POST request data."]
+          [@ocaml.doc "HTTP POST request data.\nUse postDataEntries instead."]
       hasPostData : bool option;
           [@key "hasPostData"]
           [@yojson.option]
@@ -14076,8 +14076,7 @@ and Network : sig
           [@key "postDataEntries"]
           [@yojson.option]
           [@ocaml.doc
-            "Request body elements. This will be converted from base64 to \
-             binary"]
+            "Request body elements (post data broken into individual entries)."]
       mixedContentType : Security.MixedContentType.t option;
           [@key "mixedContentType"]
           [@yojson.option]
@@ -15956,7 +15955,7 @@ end = struct
       postData : string option;
           [@key "postData"]
           [@yojson.option]
-          [@ocaml.doc "HTTP POST request data."]
+          [@ocaml.doc "HTTP POST request data.\nUse postDataEntries instead."]
       hasPostData : bool option;
           [@key "hasPostData"]
           [@yojson.option]
@@ -15968,8 +15967,7 @@ end = struct
           [@key "postDataEntries"]
           [@yojson.option]
           [@ocaml.doc
-            "Request body elements. This will be converted from base64 to \
-             binary"]
+            "Request body elements (post data broken into individual entries)."]
       mixedContentType : Security.MixedContentType.t option;
           [@key "mixedContentType"]
           [@yojson.option]
@@ -16051,7 +16049,7 @@ end = struct
       postData : string option;
           [@key "postData"]
           [@yojson.option]
-          [@ocaml.doc "HTTP POST request data."]
+          [@ocaml.doc "HTTP POST request data.\nUse postDataEntries instead."]
       hasPostData : bool option;
           [@key "hasPostData"]
           [@yojson.option]
@@ -16063,8 +16061,7 @@ end = struct
           [@key "postDataEntries"]
           [@yojson.option]
           [@ocaml.doc
-            "Request body elements. This will be converted from base64 to \
-             binary"]
+            "Request body elements (post data broken into individual entries)."]
       mixedContentType : Security.MixedContentType.t option;
           [@key "mixedContentType"]
           [@yojson.option]
