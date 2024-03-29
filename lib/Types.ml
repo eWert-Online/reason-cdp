@@ -14457,6 +14457,11 @@ and Network : sig
           [@yojson.option]
           [@ocaml.doc
             "Specifies that the request was served from the prefetch cache."]
+      fromEarlyHints : bool option;
+          [@key "fromEarlyHints"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Specifies that the request was served from the prefetch cache."]
       serviceWorkerRouterInfo : ServiceWorkerRouterInfo.t option;
           [@key "serviceWorkerRouterInfo"]
           [@yojson.option]
@@ -16885,6 +16890,11 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "Specifies that the request was served from the prefetch cache."]
+      fromEarlyHints : bool option;
+          [@key "fromEarlyHints"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Specifies that the request was served from the prefetch cache."]
       serviceWorkerRouterInfo : ServiceWorkerRouterInfo.t option;
           [@key "serviceWorkerRouterInfo"]
           [@yojson.option]
@@ -16992,6 +17002,11 @@ end = struct
             "Specifies that the request was served from the ServiceWorker."]
       fromPrefetchCache : bool option;
           [@key "fromPrefetchCache"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Specifies that the request was served from the prefetch cache."]
+      fromEarlyHints : bool option;
+          [@key "fromEarlyHints"]
           [@yojson.option]
           [@ocaml.doc
             "Specifies that the request was served from the prefetch cache."]

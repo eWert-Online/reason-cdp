@@ -11270,7 +11270,8 @@ module Emulation = struct
             [@ocaml.doc
               "If set, the posture of a foldable device. If not set the \
                posture is set\n\
-               to continuous."]
+               to continuous.\n\
+               Deprecated, use Emulation.setDevicePostureOverride."]
       }
       [@@deriving yojson]
 
@@ -11311,6 +11312,112 @@ module Emulation = struct
           sessionId;
           params;
         }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Start reporting the given posture value to the Device Posture API.
+     This override can also be set in setDeviceMetricsOverride(). *)
+  module SetDevicePostureOverride = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        posture : Types.Emulation.DevicePosture.t;
+            [@key "posture"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~posture () = { posture }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Emulation.setDevicePostureOverride";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Clears a device posture override set with either setDeviceMetricsOverride()
+     or setDevicePostureOverride() and starts using posture information from the
+     platform again.
+     Does nothing if no override is set. *)
+  module ClearDevicePostureOverride = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Emulation.clearDevicePostureOverride"; sessionId }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
