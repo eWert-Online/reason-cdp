@@ -1763,6 +1763,35 @@ module Network = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
+  (* Fired when 103 Early Hints headers is received in addition to the common response.
+     Not every responseReceived event will have an responseReceivedEarlyHints fired.
+     Only one responseReceivedEarlyHints may be fired for eached responseReceived event. *)
+  module ResponseReceivedEarlyHints = struct
+    let name = "Network.responseReceivedEarlyHints"
+
+    type result = {
+      requestId : Types.Network.RequestId.t;
+          [@key "requestId"]
+          [@ocaml.doc
+            "Request identifier. Used to match this information to another \
+             responseReceived event."]
+      headers : Types.Network.Headers.t;
+          [@key "headers"]
+          [@ocaml.doc
+            "Raw response headers as they were received over the wire."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
   (* Fired exactly once for each Trust Token operation. Depending on
      the type of the operation and whether the operation succeeded or
      failed, the event is fired before the corresponding request was sent

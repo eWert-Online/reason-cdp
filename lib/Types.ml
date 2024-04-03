@@ -14790,6 +14790,11 @@ and Network : sig
       exemptionReason : CookieExemptionReason.t;
           [@key "exemptionReason"]
           [@ocaml.doc "The reason the cookie was exempted."]
+      cookieLine : string;
+          [@key "cookieLine"]
+          [@ocaml.doc
+            "The string representing this individual cookie as it would appear \
+             in the header."]
       cookie : Cookie.t;
           [@key "cookie"]
           [@ocaml.doc "The cookie object representing the cookie."]
@@ -17726,6 +17731,11 @@ end = struct
       exemptionReason : CookieExemptionReason.t;
           [@key "exemptionReason"]
           [@ocaml.doc "The reason the cookie was exempted."]
+      cookieLine : string;
+          [@key "cookieLine"]
+          [@ocaml.doc
+            "The string representing this individual cookie as it would appear \
+             in the header."]
       cookie : Cookie.t;
           [@key "cookie"]
           [@ocaml.doc "The cookie object representing the cookie."]
@@ -17741,6 +17751,11 @@ end = struct
       exemptionReason : CookieExemptionReason.t;
           [@key "exemptionReason"]
           [@ocaml.doc "The reason the cookie was exempted."]
+      cookieLine : string;
+          [@key "cookieLine"]
+          [@ocaml.doc
+            "The string representing this individual cookie as it would appear \
+             in the header."]
       cookie : Cookie.t;
           [@key "cookie"]
           [@ocaml.doc "The cookie object representing the cookie."]
