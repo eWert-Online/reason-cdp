@@ -32056,6 +32056,85 @@ end = struct
   end
 end
 
+and PWA : sig
+  module rec FileHandlerAccept : sig
+    type t = {
+      mediaType : string;
+          [@key "mediaType"]
+          [@ocaml.doc
+            "New name of the mimetype according to\n\
+             https://www.iana.org/assignments/media-types/media-types.xhtml"]
+      fileExtensions : string list;
+          [@key "fileExtensions"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The following types are the replica of\n\
+       https://crsrc.org/c/chrome/browser/web_applications/proto/web_app_os_integration_state.proto;drc=9910d3be894c8f142c977ba1023f30a656bc13fc;l=67"]
+  end
+
+  and FileHandler : sig
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      accepts : FileHandlerAccept.t list;
+          [@key "accepts"] [@ocaml.doc "No description provided"]
+      displayName : string;
+          [@key "displayName"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end = struct
+  module rec FileHandlerAccept : sig
+    type t = {
+      mediaType : string;
+          [@key "mediaType"]
+          [@ocaml.doc
+            "New name of the mimetype according to\n\
+             https://www.iana.org/assignments/media-types/media-types.xhtml"]
+      fileExtensions : string list;
+          [@key "fileExtensions"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The following types are the replica of\n\
+       https://crsrc.org/c/chrome/browser/web_applications/proto/web_app_os_integration_state.proto;drc=9910d3be894c8f142c977ba1023f30a656bc13fc;l=67"]
+  end = struct
+    type t = {
+      mediaType : string;
+          [@key "mediaType"]
+          [@ocaml.doc
+            "New name of the mimetype according to\n\
+             https://www.iana.org/assignments/media-types/media-types.xhtml"]
+      fileExtensions : string list;
+          [@key "fileExtensions"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The following types are the replica of\n\
+       https://crsrc.org/c/chrome/browser/web_applications/proto/web_app_os_integration_state.proto;drc=9910d3be894c8f142c977ba1023f30a656bc13fc;l=67"]
+  end
+
+  and FileHandler : sig
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      accepts : FileHandlerAccept.t list;
+          [@key "accepts"] [@ocaml.doc "No description provided"]
+      displayName : string;
+          [@key "displayName"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      accepts : FileHandlerAccept.t list;
+          [@key "accepts"] [@ocaml.doc "No description provided"]
+      displayName : string;
+          [@key "displayName"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end
+
 and Console : sig
   module rec ConsoleMessage : sig
     type _consolemessage_source =

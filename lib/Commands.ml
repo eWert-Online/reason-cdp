@@ -31967,6 +31967,80 @@ module FedCm = struct
   end
 end
 
+module PWA = struct
+  (* Returns the following OS state for the given manifest id. *)
+  module GetOsAppState = struct
+    module Response : sig
+      type result = {
+        badgeCount : Types.number;
+            [@key "badgeCount"] [@ocaml.doc "No description provided"]
+        fileHandlers : Types.PWA.FileHandler.t list;
+            [@key "fileHandlers"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        badgeCount : Types.number;
+            [@key "badgeCount"] [@ocaml.doc "No description provided"]
+        fileHandlers : Types.PWA.FileHandler.t list;
+            [@key "fileHandlers"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"]
+            [@ocaml.doc
+              "The id from the webapp's manifest file, commonly it's the url \
+               of the\n\
+               site installing the webapp. See\n\
+               https://web.dev/learn/pwa/web-app-manifest."]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId () = { manifestId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.getOsAppState"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+end
+
 module Console = struct
   (* Does nothing. *)
   module ClearMessages = struct
