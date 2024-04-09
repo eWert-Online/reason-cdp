@@ -8609,6 +8609,8 @@ and DOM : sig
       | `grammar_error
       | `highlight
       | `first_line_inherited
+      | `scroll_marker
+      | `scroll_markers
       | `scrollbar
       | `scrollbar_thumb
       | `scrollbar_button
@@ -8939,6 +8941,8 @@ end = struct
       | `grammar_error
       | `highlight
       | `first_line_inherited
+      | `scroll_marker
+      | `scroll_markers
       | `scrollbar
       | `scrollbar_thumb
       | `scrollbar_button
@@ -8972,6 +8976,8 @@ end = struct
       | `grammar_error
       | `highlight
       | `first_line_inherited
+      | `scroll_marker
+      | `scroll_markers
       | `scrollbar
       | `scrollbar_thumb
       | `scrollbar_button
@@ -8999,6 +9005,8 @@ end = struct
       | `String "grammar-error" -> `grammar_error
       | `String "highlight" -> `highlight
       | `String "first-line-inherited" -> `first_line_inherited
+      | `String "scroll-marker" -> `scroll_marker
+      | `String "scroll-markers" -> `scroll_markers
       | `String "scrollbar" -> `scrollbar
       | `String "scrollbar-thumb" -> `scrollbar_thumb
       | `String "scrollbar-button" -> `scrollbar_button
@@ -9028,6 +9036,8 @@ end = struct
       | `grammar_error -> `String "grammar-error"
       | `highlight -> `String "highlight"
       | `first_line_inherited -> `String "first-line-inherited"
+      | `scroll_marker -> `String "scroll-marker"
+      | `scroll_markers -> `String "scroll-markers"
       | `scrollbar -> `String "scrollbar"
       | `scrollbar_thumb -> `String "scrollbar-thumb"
       | `scrollbar_button -> `String "scrollbar-button"
