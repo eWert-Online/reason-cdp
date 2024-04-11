@@ -103,6 +103,26 @@ module Animation = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+
+  (* Event for animation that has been updated. *)
+  module AnimationUpdated = struct
+    let name = "Animation.animationUpdated"
+
+    type result = {
+      animation : Types.Animation.Animation.t;
+          [@key "animation"] [@ocaml.doc "Animation that was updated."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
 end
 
 module Audits = struct
