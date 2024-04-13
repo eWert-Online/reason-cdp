@@ -21349,7 +21349,11 @@ module Page = struct
     end
   end
 
-  (* No description provided *)
+  (* Gets the processed manifest for this current document.
+     This API always waits for the manifest to be loaded.
+     If manifestId is provided, and it does not match the manifest of the
+       current document, this API errors out.
+     If there isn’t a loaded page, this API errors out immediately. *)
   module GetAppManifest = struct
     module Response : sig
       type result = {
@@ -21361,7 +21365,10 @@ module Page = struct
         parsed : Types.Page.AppManifestParsedProperties.t option;
             [@key "parsed"]
             [@yojson.option]
-            [@ocaml.doc "Parsed manifest properties"]
+            [@ocaml.doc
+              "Parsed manifest properties. Deprecated, use manifest instead."]
+        manifest : Types.Page.WebAppManifest.t;
+            [@key "manifest"] [@ocaml.doc "No description provided"]
       }
 
       type error = { code : int; message : string }
@@ -21384,7 +21391,10 @@ module Page = struct
         parsed : Types.Page.AppManifestParsedProperties.t option;
             [@key "parsed"]
             [@yojson.option]
-            [@ocaml.doc "Parsed manifest properties"]
+            [@ocaml.doc
+              "Parsed manifest properties. Deprecated, use manifest instead."]
+        manifest : Types.Page.WebAppManifest.t;
+            [@key "manifest"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
@@ -21401,16 +21411,29 @@ module Page = struct
       let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
     end
 
+    module Params = struct
+      type t = {
+        manifestId : string option;
+            [@key "manifestId"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ?manifestId () = { manifestId }
+    end
+
     module Request = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
         method_ : string; [@key "method"]
+        params : Params.t;
       }
       [@@deriving yojson]
 
-      let make ?sessionId id =
-        { id; method_ = "Page.getAppManifest"; sessionId }
+      let make ?sessionId ~params id =
+        { id; method_ = "Page.getAppManifest"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end

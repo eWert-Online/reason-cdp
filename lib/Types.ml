@@ -2107,7 +2107,9 @@ and Audits : sig
       | `RpPageNotVisible
       | `SilentMediationFailure
       | `ThirdPartyCookiesBlocked
-      | `NotSignedInWithIdp ]
+      | `NotSignedInWithIdp
+      | `MissingTransientUserActivation
+      | `ReplacedByButtonMode ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4003,7 +4005,9 @@ end = struct
       | `RpPageNotVisible
       | `SilentMediationFailure
       | `ThirdPartyCookiesBlocked
-      | `NotSignedInWithIdp ]
+      | `NotSignedInWithIdp
+      | `MissingTransientUserActivation
+      | `ReplacedByButtonMode ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4058,7 +4062,9 @@ end = struct
       | `RpPageNotVisible
       | `SilentMediationFailure
       | `ThirdPartyCookiesBlocked
-      | `NotSignedInWithIdp ]
+      | `NotSignedInWithIdp
+      | `MissingTransientUserActivation
+      | `ReplacedByButtonMode ]
 
     let _federatedauthrequestissuereason_of_yojson = function
       | `String "ShouldEmbargo" -> `ShouldEmbargo
@@ -4102,6 +4108,9 @@ end = struct
       | `String "SilentMediationFailure" -> `SilentMediationFailure
       | `String "ThirdPartyCookiesBlocked" -> `ThirdPartyCookiesBlocked
       | `String "NotSignedInWithIdp" -> `NotSignedInWithIdp
+      | `String "MissingTransientUserActivation" ->
+          `MissingTransientUserActivation
+      | `String "ReplacedByButtonMode" -> `ReplacedByButtonMode
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4147,6 +4156,9 @@ end = struct
       | `SilentMediationFailure -> `String "SilentMediationFailure"
       | `ThirdPartyCookiesBlocked -> `String "ThirdPartyCookiesBlocked"
       | `NotSignedInWithIdp -> `String "NotSignedInWithIdp"
+      | `MissingTransientUserActivation ->
+          `String "MissingTransientUserActivation"
+      | `ReplacedByButtonMode -> `String "ReplacedByButtonMode"
 
     type t = _federatedauthrequestissuereason
     [@@deriving yojson]
@@ -21303,6 +21315,225 @@ and Page : sig
        `Page.produceCompilationCache`"]
   end
 
+  and FileFilter : sig
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      accepts : string list option;
+          [@key "accepts"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and FileHandler : sig
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      icons : ImageResource.t list option;
+          [@key "icons"] [@yojson.option] [@ocaml.doc "No description provided"]
+      accepts : FileFilter.t list option;
+          [@key "accepts"]
+          [@yojson.option]
+          [@ocaml.doc "Mimic a map, name is the key, accepts is the value."]
+      launchType : string;
+          [@key "launchType"]
+          [@ocaml.doc
+            "Won't repeat the enums, using string for easy comparison. Same as \
+             the\n\
+             other enums below."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ImageResource : sig
+    type t = {
+      url : string;
+          [@key "url"]
+          [@ocaml.doc
+            "The src field in the definition, but changing to url in favor of\n\
+             consistency."]
+      sizes : string option;
+          [@key "sizes"] [@yojson.option] [@ocaml.doc "No description provided"]
+      type_ : string option;
+          [@key "type"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "The image definition used in both icon and screenshot."]
+  end
+
+  and LaunchHandler : sig
+    type t = {
+      clientMode : string;
+          [@key "clientMode"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ProtocolHandler : sig
+    type t = {
+      protocol : string;
+          [@key "protocol"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and RelatedApplication : sig
+    type t = {
+      id : string option;
+          [@key "id"] [@yojson.option] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ScopeExtension : sig
+    type t = {
+      origin : string;
+          [@key "origin"]
+          [@ocaml.doc
+            "Instead of using tuple, this field always returns the serialized \
+             string\n\
+             for easy understanding and comparison."]
+      hasOriginWildcard : bool;
+          [@key "hasOriginWildcard"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and Screenshot : sig
+    type t = {
+      image : ImageResource.t;
+          [@key "image"] [@ocaml.doc "No description provided"]
+      formFactor : string;
+          [@key "formFactor"] [@ocaml.doc "No description provided"]
+      label : string option;
+          [@key "label"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ShareTarget : sig
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      method_ : string; [@key "method"] [@ocaml.doc "No description provided"]
+      enctype : string; [@key "enctype"] [@ocaml.doc "No description provided"]
+      title : string option;
+          [@key "title"]
+          [@yojson.option]
+          [@ocaml.doc "Embed the ShareTargetParams"]
+      text : string option;
+          [@key "text"] [@yojson.option] [@ocaml.doc "No description provided"]
+      url : string option;
+          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      files : FileFilter.t list option;
+          [@key "files"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and Shortcut : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and WebAppManifest : sig
+    type t = {
+      backgroundColor : string option;
+          [@key "backgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      description : string option;
+          [@key "description"]
+          [@yojson.option]
+          [@ocaml.doc "The extra description provided by the manifest."]
+      dir : string option;
+          [@key "dir"] [@yojson.option] [@ocaml.doc "No description provided"]
+      display : string option;
+          [@key "display"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      displayOverrides : string list option;
+          [@key "displayOverrides"]
+          [@yojson.option]
+          [@ocaml.doc "The overrided display mode controlled by the user."]
+      fileHandlers : FileHandler.t list option;
+          [@key "fileHandlers"]
+          [@yojson.option]
+          [@ocaml.doc "The handlers to open files."]
+      icons : ImageResource.t list option;
+          [@key "icons"] [@yojson.option] [@ocaml.doc "No description provided"]
+      id : string option;
+          [@key "id"] [@yojson.option] [@ocaml.doc "No description provided"]
+      lang : string option;
+          [@key "lang"] [@yojson.option] [@ocaml.doc "No description provided"]
+      launchHandler : LaunchHandler.t option;
+          [@key "launchHandler"]
+          [@yojson.option]
+          [@ocaml.doc
+            "TODO(crbug.com/1231886): This field is non-standard and part of a \
+             Chrome\n\
+             experiment. See:\n\
+             https://github.com/WICG/web-app-launch/blob/main/launch_handler.md"]
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      orientation : string option;
+          [@key "orientation"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      preferRelatedApplications : bool option;
+          [@key "preferRelatedApplications"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      protocolHandlers : ProtocolHandler.t list option;
+          [@key "protocolHandlers"]
+          [@yojson.option]
+          [@ocaml.doc "The handlers to open protocols."]
+      relatedApplications : RelatedApplication.t list option;
+          [@key "relatedApplications"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      scope : string option;
+          [@key "scope"] [@yojson.option] [@ocaml.doc "No description provided"]
+      scopeExtensions : ScopeExtension.t list option;
+          [@key "scopeExtensions"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Non-standard, see\n\
+             https://github.com/WICG/manifest-incubations/blob/gh-pages/scope_extensions-explainer.md"]
+      screenshots : Screenshot.t list option;
+          [@key "screenshots"]
+          [@yojson.option]
+          [@ocaml.doc "The screenshots used by chromium."]
+      shareTarget : ShareTarget.t option;
+          [@key "shareTarget"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      shortName : string option;
+          [@key "shortName"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      shortcuts : Shortcut.t list option;
+          [@key "shortcuts"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      startUrl : string option;
+          [@key "startUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      themeColor : string option;
+          [@key "themeColor"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AutoResponseMode : sig
     type _autoresponsemode = [ `none | `autoAccept | `autoReject | `autoOptOut ]
 
@@ -23369,6 +23600,422 @@ end = struct
     [@@ocaml.doc
       "Per-script compilation cache parameters for \
        `Page.produceCompilationCache`"]
+  end
+
+  and FileFilter : sig
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      accepts : string list option;
+          [@key "accepts"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      accepts : string list option;
+          [@key "accepts"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and FileHandler : sig
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      icons : ImageResource.t list option;
+          [@key "icons"] [@yojson.option] [@ocaml.doc "No description provided"]
+      accepts : FileFilter.t list option;
+          [@key "accepts"]
+          [@yojson.option]
+          [@ocaml.doc "Mimic a map, name is the key, accepts is the value."]
+      launchType : string;
+          [@key "launchType"]
+          [@ocaml.doc
+            "Won't repeat the enums, using string for easy comparison. Same as \
+             the\n\
+             other enums below."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      icons : ImageResource.t list option;
+          [@key "icons"] [@yojson.option] [@ocaml.doc "No description provided"]
+      accepts : FileFilter.t list option;
+          [@key "accepts"]
+          [@yojson.option]
+          [@ocaml.doc "Mimic a map, name is the key, accepts is the value."]
+      launchType : string;
+          [@key "launchType"]
+          [@ocaml.doc
+            "Won't repeat the enums, using string for easy comparison. Same as \
+             the\n\
+             other enums below."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ImageResource : sig
+    type t = {
+      url : string;
+          [@key "url"]
+          [@ocaml.doc
+            "The src field in the definition, but changing to url in favor of\n\
+             consistency."]
+      sizes : string option;
+          [@key "sizes"] [@yojson.option] [@ocaml.doc "No description provided"]
+      type_ : string option;
+          [@key "type"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "The image definition used in both icon and screenshot."]
+  end = struct
+    type t = {
+      url : string;
+          [@key "url"]
+          [@ocaml.doc
+            "The src field in the definition, but changing to url in favor of\n\
+             consistency."]
+      sizes : string option;
+          [@key "sizes"] [@yojson.option] [@ocaml.doc "No description provided"]
+      type_ : string option;
+          [@key "type"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "The image definition used in both icon and screenshot."]
+  end
+
+  and LaunchHandler : sig
+    type t = {
+      clientMode : string;
+          [@key "clientMode"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      clientMode : string;
+          [@key "clientMode"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ProtocolHandler : sig
+    type t = {
+      protocol : string;
+          [@key "protocol"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      protocol : string;
+          [@key "protocol"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and RelatedApplication : sig
+    type t = {
+      id : string option;
+          [@key "id"] [@yojson.option] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      id : string option;
+          [@key "id"] [@yojson.option] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ScopeExtension : sig
+    type t = {
+      origin : string;
+          [@key "origin"]
+          [@ocaml.doc
+            "Instead of using tuple, this field always returns the serialized \
+             string\n\
+             for easy understanding and comparison."]
+      hasOriginWildcard : bool;
+          [@key "hasOriginWildcard"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      origin : string;
+          [@key "origin"]
+          [@ocaml.doc
+            "Instead of using tuple, this field always returns the serialized \
+             string\n\
+             for easy understanding and comparison."]
+      hasOriginWildcard : bool;
+          [@key "hasOriginWildcard"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and Screenshot : sig
+    type t = {
+      image : ImageResource.t;
+          [@key "image"] [@ocaml.doc "No description provided"]
+      formFactor : string;
+          [@key "formFactor"] [@ocaml.doc "No description provided"]
+      label : string option;
+          [@key "label"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      image : ImageResource.t;
+          [@key "image"] [@ocaml.doc "No description provided"]
+      formFactor : string;
+          [@key "formFactor"] [@ocaml.doc "No description provided"]
+      label : string option;
+          [@key "label"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ShareTarget : sig
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      method_ : string; [@key "method"] [@ocaml.doc "No description provided"]
+      enctype : string; [@key "enctype"] [@ocaml.doc "No description provided"]
+      title : string option;
+          [@key "title"]
+          [@yojson.option]
+          [@ocaml.doc "Embed the ShareTargetParams"]
+      text : string option;
+          [@key "text"] [@yojson.option] [@ocaml.doc "No description provided"]
+      url : string option;
+          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      files : FileFilter.t list option;
+          [@key "files"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      method_ : string; [@key "method"] [@ocaml.doc "No description provided"]
+      enctype : string; [@key "enctype"] [@ocaml.doc "No description provided"]
+      title : string option;
+          [@key "title"]
+          [@yojson.option]
+          [@ocaml.doc "Embed the ShareTargetParams"]
+      text : string option;
+          [@key "text"] [@yojson.option] [@ocaml.doc "No description provided"]
+      url : string option;
+          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      files : FileFilter.t list option;
+          [@key "files"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and Shortcut : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and WebAppManifest : sig
+    type t = {
+      backgroundColor : string option;
+          [@key "backgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      description : string option;
+          [@key "description"]
+          [@yojson.option]
+          [@ocaml.doc "The extra description provided by the manifest."]
+      dir : string option;
+          [@key "dir"] [@yojson.option] [@ocaml.doc "No description provided"]
+      display : string option;
+          [@key "display"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      displayOverrides : string list option;
+          [@key "displayOverrides"]
+          [@yojson.option]
+          [@ocaml.doc "The overrided display mode controlled by the user."]
+      fileHandlers : FileHandler.t list option;
+          [@key "fileHandlers"]
+          [@yojson.option]
+          [@ocaml.doc "The handlers to open files."]
+      icons : ImageResource.t list option;
+          [@key "icons"] [@yojson.option] [@ocaml.doc "No description provided"]
+      id : string option;
+          [@key "id"] [@yojson.option] [@ocaml.doc "No description provided"]
+      lang : string option;
+          [@key "lang"] [@yojson.option] [@ocaml.doc "No description provided"]
+      launchHandler : LaunchHandler.t option;
+          [@key "launchHandler"]
+          [@yojson.option]
+          [@ocaml.doc
+            "TODO(crbug.com/1231886): This field is non-standard and part of a \
+             Chrome\n\
+             experiment. See:\n\
+             https://github.com/WICG/web-app-launch/blob/main/launch_handler.md"]
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      orientation : string option;
+          [@key "orientation"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      preferRelatedApplications : bool option;
+          [@key "preferRelatedApplications"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      protocolHandlers : ProtocolHandler.t list option;
+          [@key "protocolHandlers"]
+          [@yojson.option]
+          [@ocaml.doc "The handlers to open protocols."]
+      relatedApplications : RelatedApplication.t list option;
+          [@key "relatedApplications"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      scope : string option;
+          [@key "scope"] [@yojson.option] [@ocaml.doc "No description provided"]
+      scopeExtensions : ScopeExtension.t list option;
+          [@key "scopeExtensions"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Non-standard, see\n\
+             https://github.com/WICG/manifest-incubations/blob/gh-pages/scope_extensions-explainer.md"]
+      screenshots : Screenshot.t list option;
+          [@key "screenshots"]
+          [@yojson.option]
+          [@ocaml.doc "The screenshots used by chromium."]
+      shareTarget : ShareTarget.t option;
+          [@key "shareTarget"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      shortName : string option;
+          [@key "shortName"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      shortcuts : Shortcut.t list option;
+          [@key "shortcuts"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      startUrl : string option;
+          [@key "startUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      themeColor : string option;
+          [@key "themeColor"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      backgroundColor : string option;
+          [@key "backgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      description : string option;
+          [@key "description"]
+          [@yojson.option]
+          [@ocaml.doc "The extra description provided by the manifest."]
+      dir : string option;
+          [@key "dir"] [@yojson.option] [@ocaml.doc "No description provided"]
+      display : string option;
+          [@key "display"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      displayOverrides : string list option;
+          [@key "displayOverrides"]
+          [@yojson.option]
+          [@ocaml.doc "The overrided display mode controlled by the user."]
+      fileHandlers : FileHandler.t list option;
+          [@key "fileHandlers"]
+          [@yojson.option]
+          [@ocaml.doc "The handlers to open files."]
+      icons : ImageResource.t list option;
+          [@key "icons"] [@yojson.option] [@ocaml.doc "No description provided"]
+      id : string option;
+          [@key "id"] [@yojson.option] [@ocaml.doc "No description provided"]
+      lang : string option;
+          [@key "lang"] [@yojson.option] [@ocaml.doc "No description provided"]
+      launchHandler : LaunchHandler.t option;
+          [@key "launchHandler"]
+          [@yojson.option]
+          [@ocaml.doc
+            "TODO(crbug.com/1231886): This field is non-standard and part of a \
+             Chrome\n\
+             experiment. See:\n\
+             https://github.com/WICG/web-app-launch/blob/main/launch_handler.md"]
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      orientation : string option;
+          [@key "orientation"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      preferRelatedApplications : bool option;
+          [@key "preferRelatedApplications"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      protocolHandlers : ProtocolHandler.t list option;
+          [@key "protocolHandlers"]
+          [@yojson.option]
+          [@ocaml.doc "The handlers to open protocols."]
+      relatedApplications : RelatedApplication.t list option;
+          [@key "relatedApplications"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      scope : string option;
+          [@key "scope"] [@yojson.option] [@ocaml.doc "No description provided"]
+      scopeExtensions : ScopeExtension.t list option;
+          [@key "scopeExtensions"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Non-standard, see\n\
+             https://github.com/WICG/manifest-incubations/blob/gh-pages/scope_extensions-explainer.md"]
+      screenshots : Screenshot.t list option;
+          [@key "screenshots"]
+          [@yojson.option]
+          [@ocaml.doc "The screenshots used by chromium."]
+      shareTarget : ShareTarget.t option;
+          [@key "shareTarget"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      shortName : string option;
+          [@key "shortName"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      shortcuts : Shortcut.t list option;
+          [@key "shortcuts"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      startUrl : string option;
+          [@key "startUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      themeColor : string option;
+          [@key "themeColor"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
   and AutoResponseMode : sig
