@@ -17,14 +17,12 @@ install:
 	if ! [ -e _opam ]; then \
 		opam switch create . --empty ; \
 	fi
-	opam install ./*.opam --locked --deps-only --with-test --with-doc --yes
-	opam lock .
+	opam install ./*.opam --deps-only --with-test --with-doc --yes
 	opam install -y ocaml-lsp-server
 
 update:
 	opam update
 	opam upgrade
-	opam lock .
 
 fmt:
 	dune build @fmt --auto-promote --silent
