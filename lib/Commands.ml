@@ -1421,6 +1421,65 @@ module Audits = struct
   end
 end
 
+module Extensions = struct
+  (* Installs an unpacked extension from the filesystem similar to
+     --load-extension CLI flags. Returns extension ID once the extension
+     has been installed. *)
+  module LoadUnpacked = struct
+    module Response : sig
+      type result = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        path : string; [@key "path"] [@ocaml.doc "Absolute file path."]
+      }
+      [@@deriving yojson]
+
+      let make ~path () = { path }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Extensions.loadUnpacked"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+end
+
 module Autofill = struct
   (* Trigger autofill on a form identified by the fieldId.
      If the field and related form cannot be autofilled, returns an error. *)
@@ -21353,7 +21412,7 @@ module Page = struct
      This API always waits for the manifest to be loaded.
      If manifestId is provided, and it does not match the manifest of the
        current document, this API errors out.
-     If there isn’t a loaded page, this API errors out immediately. *)
+     If there is not a loaded page, this API errors out immediately. *)
   module GetAppManifest = struct
     module Response : sig
       type result = {
