@@ -1883,6 +1883,42 @@ and Audits : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and SharedDictionaryError : sig
+    type _shareddictionaryerror =
+      [ `UseErrorCrossOriginNoCorsRequest
+      | `UseErrorDictionaryLoadFailure
+      | `UseErrorMatchingDictionaryNotUsed
+      | `UseErrorUnexpectedContentDictionaryHeader
+      | `WriteErrorCossOriginNoCorsRequest
+      | `WriteErrorDisallowedBySettings
+      | `WriteErrorExpiredResponse
+      | `WriteErrorFeatureDisabled
+      | `WriteErrorInsufficientResources
+      | `WriteErrorInvalidMatchField
+      | `WriteErrorInvalidStructuredHeader
+      | `WriteErrorNavigationRequest
+      | `WriteErrorNoMatchField
+      | `WriteErrorNonListMatchDestField
+      | `WriteErrorNonSecureContext
+      | `WriteErrorNonStringIdField
+      | `WriteErrorNonStringInMatchDestList
+      | `WriteErrorNonStringMatchField
+      | `WriteErrorNonTokenTypeField
+      | `WriteErrorRequestAborted
+      | `WriteErrorShuttingDown
+      | `WriteErrorTooLongIdField
+      | `WriteErrorUnsupportedType ]
+
+    val _shareddictionaryerror_of_yojson :
+      Yojson.Basic.t -> _shareddictionaryerror
+
+    val yojson_of__shareddictionaryerror :
+      _shareddictionaryerror -> Yojson.Basic.t
+
+    type t = _shareddictionaryerror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingIssueDetails : sig
     type t = {
       violationType : AttributionReportingIssueType.t;
@@ -1934,6 +1970,16 @@ and Audits : sig
           [@key "location"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SharedDictionaryIssueDetails : sig
+    type t = {
+      sharedDictionaryError : SharedDictionaryError.t;
+          [@key "sharedDictionaryError"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -2278,7 +2324,8 @@ and Audits : sig
       | `CookieDeprecationMetadataIssue
       | `StylesheetLoadingIssue
       | `FederatedAuthUserInfoRequestIssue
-      | `PropertyRuleIssue ]
+      | `PropertyRuleIssue
+      | `SharedDictionaryIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2376,6 +2423,10 @@ and Audits : sig
       federatedAuthUserInfoRequestIssueDetails :
         FederatedAuthUserInfoRequestIssueDetails.t option;
           [@key "federatedAuthUserInfoRequestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      sharedDictionaryIssueDetails : SharedDictionaryIssueDetails.t option;
+          [@key "sharedDictionaryIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -3570,6 +3621,144 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and SharedDictionaryError : sig
+    type _shareddictionaryerror =
+      [ `UseErrorCrossOriginNoCorsRequest
+      | `UseErrorDictionaryLoadFailure
+      | `UseErrorMatchingDictionaryNotUsed
+      | `UseErrorUnexpectedContentDictionaryHeader
+      | `WriteErrorCossOriginNoCorsRequest
+      | `WriteErrorDisallowedBySettings
+      | `WriteErrorExpiredResponse
+      | `WriteErrorFeatureDisabled
+      | `WriteErrorInsufficientResources
+      | `WriteErrorInvalidMatchField
+      | `WriteErrorInvalidStructuredHeader
+      | `WriteErrorNavigationRequest
+      | `WriteErrorNoMatchField
+      | `WriteErrorNonListMatchDestField
+      | `WriteErrorNonSecureContext
+      | `WriteErrorNonStringIdField
+      | `WriteErrorNonStringInMatchDestList
+      | `WriteErrorNonStringMatchField
+      | `WriteErrorNonTokenTypeField
+      | `WriteErrorRequestAborted
+      | `WriteErrorShuttingDown
+      | `WriteErrorTooLongIdField
+      | `WriteErrorUnsupportedType ]
+
+    val _shareddictionaryerror_of_yojson :
+      Yojson.Basic.t -> _shareddictionaryerror
+
+    val yojson_of__shareddictionaryerror :
+      _shareddictionaryerror -> Yojson.Basic.t
+
+    type t = _shareddictionaryerror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _shareddictionaryerror =
+      [ `UseErrorCrossOriginNoCorsRequest
+      | `UseErrorDictionaryLoadFailure
+      | `UseErrorMatchingDictionaryNotUsed
+      | `UseErrorUnexpectedContentDictionaryHeader
+      | `WriteErrorCossOriginNoCorsRequest
+      | `WriteErrorDisallowedBySettings
+      | `WriteErrorExpiredResponse
+      | `WriteErrorFeatureDisabled
+      | `WriteErrorInsufficientResources
+      | `WriteErrorInvalidMatchField
+      | `WriteErrorInvalidStructuredHeader
+      | `WriteErrorNavigationRequest
+      | `WriteErrorNoMatchField
+      | `WriteErrorNonListMatchDestField
+      | `WriteErrorNonSecureContext
+      | `WriteErrorNonStringIdField
+      | `WriteErrorNonStringInMatchDestList
+      | `WriteErrorNonStringMatchField
+      | `WriteErrorNonTokenTypeField
+      | `WriteErrorRequestAborted
+      | `WriteErrorShuttingDown
+      | `WriteErrorTooLongIdField
+      | `WriteErrorUnsupportedType ]
+
+    let _shareddictionaryerror_of_yojson = function
+      | `String "UseErrorCrossOriginNoCorsRequest" ->
+          `UseErrorCrossOriginNoCorsRequest
+      | `String "UseErrorDictionaryLoadFailure" ->
+          `UseErrorDictionaryLoadFailure
+      | `String "UseErrorMatchingDictionaryNotUsed" ->
+          `UseErrorMatchingDictionaryNotUsed
+      | `String "UseErrorUnexpectedContentDictionaryHeader" ->
+          `UseErrorUnexpectedContentDictionaryHeader
+      | `String "WriteErrorCossOriginNoCorsRequest" ->
+          `WriteErrorCossOriginNoCorsRequest
+      | `String "WriteErrorDisallowedBySettings" ->
+          `WriteErrorDisallowedBySettings
+      | `String "WriteErrorExpiredResponse" -> `WriteErrorExpiredResponse
+      | `String "WriteErrorFeatureDisabled" -> `WriteErrorFeatureDisabled
+      | `String "WriteErrorInsufficientResources" ->
+          `WriteErrorInsufficientResources
+      | `String "WriteErrorInvalidMatchField" -> `WriteErrorInvalidMatchField
+      | `String "WriteErrorInvalidStructuredHeader" ->
+          `WriteErrorInvalidStructuredHeader
+      | `String "WriteErrorNavigationRequest" -> `WriteErrorNavigationRequest
+      | `String "WriteErrorNoMatchField" -> `WriteErrorNoMatchField
+      | `String "WriteErrorNonListMatchDestField" ->
+          `WriteErrorNonListMatchDestField
+      | `String "WriteErrorNonSecureContext" -> `WriteErrorNonSecureContext
+      | `String "WriteErrorNonStringIdField" -> `WriteErrorNonStringIdField
+      | `String "WriteErrorNonStringInMatchDestList" ->
+          `WriteErrorNonStringInMatchDestList
+      | `String "WriteErrorNonStringMatchField" ->
+          `WriteErrorNonStringMatchField
+      | `String "WriteErrorNonTokenTypeField" -> `WriteErrorNonTokenTypeField
+      | `String "WriteErrorRequestAborted" -> `WriteErrorRequestAborted
+      | `String "WriteErrorShuttingDown" -> `WriteErrorShuttingDown
+      | `String "WriteErrorTooLongIdField" -> `WriteErrorTooLongIdField
+      | `String "WriteErrorUnsupportedType" -> `WriteErrorUnsupportedType
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__shareddictionaryerror = function
+      | `UseErrorCrossOriginNoCorsRequest ->
+          `String "UseErrorCrossOriginNoCorsRequest"
+      | `UseErrorDictionaryLoadFailure ->
+          `String "UseErrorDictionaryLoadFailure"
+      | `UseErrorMatchingDictionaryNotUsed ->
+          `String "UseErrorMatchingDictionaryNotUsed"
+      | `UseErrorUnexpectedContentDictionaryHeader ->
+          `String "UseErrorUnexpectedContentDictionaryHeader"
+      | `WriteErrorCossOriginNoCorsRequest ->
+          `String "WriteErrorCossOriginNoCorsRequest"
+      | `WriteErrorDisallowedBySettings ->
+          `String "WriteErrorDisallowedBySettings"
+      | `WriteErrorExpiredResponse -> `String "WriteErrorExpiredResponse"
+      | `WriteErrorFeatureDisabled -> `String "WriteErrorFeatureDisabled"
+      | `WriteErrorInsufficientResources ->
+          `String "WriteErrorInsufficientResources"
+      | `WriteErrorInvalidMatchField -> `String "WriteErrorInvalidMatchField"
+      | `WriteErrorInvalidStructuredHeader ->
+          `String "WriteErrorInvalidStructuredHeader"
+      | `WriteErrorNavigationRequest -> `String "WriteErrorNavigationRequest"
+      | `WriteErrorNoMatchField -> `String "WriteErrorNoMatchField"
+      | `WriteErrorNonListMatchDestField ->
+          `String "WriteErrorNonListMatchDestField"
+      | `WriteErrorNonSecureContext -> `String "WriteErrorNonSecureContext"
+      | `WriteErrorNonStringIdField -> `String "WriteErrorNonStringIdField"
+      | `WriteErrorNonStringInMatchDestList ->
+          `String "WriteErrorNonStringInMatchDestList"
+      | `WriteErrorNonStringMatchField ->
+          `String "WriteErrorNonStringMatchField"
+      | `WriteErrorNonTokenTypeField -> `String "WriteErrorNonTokenTypeField"
+      | `WriteErrorRequestAborted -> `String "WriteErrorRequestAborted"
+      | `WriteErrorShuttingDown -> `String "WriteErrorShuttingDown"
+      | `WriteErrorTooLongIdField -> `String "WriteErrorTooLongIdField"
+      | `WriteErrorUnsupportedType -> `String "WriteErrorUnsupportedType"
+
+    type t = _shareddictionaryerror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingIssueDetails : sig
     type t = {
       violationType : AttributionReportingIssueType.t;
@@ -3670,6 +3859,24 @@ end = struct
           [@key "location"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SharedDictionaryIssueDetails : sig
+    type t = {
+      sharedDictionaryError : SharedDictionaryError.t;
+          [@key "sharedDictionaryError"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      sharedDictionaryError : SharedDictionaryError.t;
+          [@key "sharedDictionaryError"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -4467,7 +4674,8 @@ end = struct
       | `CookieDeprecationMetadataIssue
       | `StylesheetLoadingIssue
       | `FederatedAuthUserInfoRequestIssue
-      | `PropertyRuleIssue ]
+      | `PropertyRuleIssue
+      | `SharedDictionaryIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -4499,7 +4707,8 @@ end = struct
       | `CookieDeprecationMetadataIssue
       | `StylesheetLoadingIssue
       | `FederatedAuthUserInfoRequestIssue
-      | `PropertyRuleIssue ]
+      | `PropertyRuleIssue
+      | `SharedDictionaryIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -4524,6 +4733,7 @@ end = struct
       | `String "FederatedAuthUserInfoRequestIssue" ->
           `FederatedAuthUserInfoRequestIssue
       | `String "PropertyRuleIssue" -> `PropertyRuleIssue
+      | `String "SharedDictionaryIssue" -> `SharedDictionaryIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4550,6 +4760,7 @@ end = struct
       | `FederatedAuthUserInfoRequestIssue ->
           `String "FederatedAuthUserInfoRequestIssue"
       | `PropertyRuleIssue -> `String "PropertyRuleIssue"
+      | `SharedDictionaryIssue -> `String "SharedDictionaryIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -4646,6 +4857,10 @@ end = struct
           [@key "federatedAuthUserInfoRequestIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      sharedDictionaryIssueDetails : SharedDictionaryIssueDetails.t option;
+          [@key "sharedDictionaryIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4737,6 +4952,10 @@ end = struct
       federatedAuthUserInfoRequestIssueDetails :
         FederatedAuthUserInfoRequestIssueDetails.t option;
           [@key "federatedAuthUserInfoRequestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      sharedDictionaryIssueDetails : SharedDictionaryIssueDetails.t option;
+          [@key "sharedDictionaryIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
