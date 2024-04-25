@@ -21908,7 +21908,8 @@ and Page : sig
       | `EmbedderExtensions
       | `EmbedderExtensionMessaging
       | `EmbedderExtensionMessagingForOpenPort
-      | `EmbedderExtensionSentMessageToCachedFrame ]
+      | `EmbedderExtensionSentMessageToCachedFrame
+      | `RequestedByWebViewClient ]
 
     val _backforwardcachenotrestoredreason_of_yojson :
       Yojson.Basic.t -> _backforwardcachenotrestoredreason
@@ -24428,7 +24429,8 @@ end = struct
       | `EmbedderExtensions
       | `EmbedderExtensionMessaging
       | `EmbedderExtensionMessagingForOpenPort
-      | `EmbedderExtensionSentMessageToCachedFrame ]
+      | `EmbedderExtensionSentMessageToCachedFrame
+      | `RequestedByWebViewClient ]
 
     val _backforwardcachenotrestoredreason_of_yojson :
       Yojson.Basic.t -> _backforwardcachenotrestoredreason
@@ -24572,7 +24574,8 @@ end = struct
       | `EmbedderExtensions
       | `EmbedderExtensionMessaging
       | `EmbedderExtensionMessagingForOpenPort
-      | `EmbedderExtensionSentMessageToCachedFrame ]
+      | `EmbedderExtensionSentMessageToCachedFrame
+      | `RequestedByWebViewClient ]
 
     let _backforwardcachenotrestoredreason_of_yojson = function
       | `String "NotPrimaryMainFrame" -> `NotPrimaryMainFrame
@@ -24746,6 +24749,7 @@ end = struct
           `EmbedderExtensionMessagingForOpenPort
       | `String "EmbedderExtensionSentMessageToCachedFrame" ->
           `EmbedderExtensionSentMessageToCachedFrame
+      | `String "RequestedByWebViewClient" -> `RequestedByWebViewClient
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -24921,6 +24925,7 @@ end = struct
           `String "EmbedderExtensionMessagingForOpenPort"
       | `EmbedderExtensionSentMessageToCachedFrame ->
           `String "EmbedderExtensionSentMessageToCachedFrame"
+      | `RequestedByWebViewClient -> `String "RequestedByWebViewClient"
 
     type t = _backforwardcachenotrestoredreason
     [@@deriving yojson]

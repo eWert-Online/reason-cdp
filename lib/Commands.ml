@@ -7777,6 +7777,84 @@ module DOM = struct
     end
   end
 
+  (* Returns the NodeId of the matched element according to certain relations. *)
+  module GetElementByRelation = struct
+    module Response : sig
+      type result = {
+        nodeId : Types.DOM.NodeId.t;
+            [@key "nodeId"]
+            [@ocaml.doc "NodeId of the element matching the queried relation."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        nodeId : Types.DOM.NodeId.t;
+            [@key "nodeId"]
+            [@ocaml.doc "NodeId of the element matching the queried relation."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type getelementbyrelation_relation = [ `PopoverTarget ]
+
+      let getelementbyrelation_relation_of_yojson = function
+        | `String "PopoverTarget" -> `PopoverTarget
+        | `String s -> failwith ("unknown enum: " ^ s)
+        | _ -> failwith "unknown enum type"
+
+      let yojson_of_getelementbyrelation_relation = function
+        | `PopoverTarget -> `String "PopoverTarget"
+
+      type t = {
+        nodeId : Types.DOM.NodeId.t;
+            [@key "nodeId"]
+            [@ocaml.doc "Id of the node from which to query the relation."]
+        relation : getelementbyrelation_relation;
+            [@key "relation"] [@ocaml.doc "Type of relation to get."]
+      }
+      [@@deriving yojson]
+
+      let make ~nodeId ~relation () = { nodeId; relation }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "DOM.getElementByRelation"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Re-does the last undone action. *)
   module Redo = struct
     module Response : sig
