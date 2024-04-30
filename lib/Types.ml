@@ -14623,10 +14623,19 @@ and Network : sig
 
   and ServiceWorkerRouterInfo : sig
     type t = {
-      ruleIdMatched : number;
-          [@key "ruleIdMatched"] [@ocaml.doc "No description provided"]
-      matchedSourceType : ServiceWorkerRouterSource.t;
-          [@key "matchedSourceType"] [@ocaml.doc "No description provided"]
+      ruleIdMatched : number option;
+          [@key "ruleIdMatched"]
+          [@yojson.option]
+          [@ocaml.doc
+            "ID of the rule matched. If there is a matched rule, this field will\n\
+             be set, otherwiser no value will be set."]
+      matchedSourceType : ServiceWorkerRouterSource.t option;
+          [@key "matchedSourceType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The router source of the matched rule. If there is a matched \
+             rule, this\n\
+             field will be set, otherwise no value will be set."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -14707,7 +14716,13 @@ and Network : sig
           [@key "serviceWorkerRouterInfo"]
           [@yojson.option]
           [@ocaml.doc
-            "Information about how Service Worker Static Router was used."]
+            "Information about how ServiceWorker Static Router API was used. \
+             If this\n\
+             field is set with `matchedSourceType` field, a matching rule is \
+             found.\n\
+             If this field is set without `matchedSource`, no matching rule is \
+             found.\n\
+             Otherwise, the API is not used."]
       encodedDataLength : number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request so far."]
@@ -17053,18 +17068,36 @@ end = struct
 
   and ServiceWorkerRouterInfo : sig
     type t = {
-      ruleIdMatched : number;
-          [@key "ruleIdMatched"] [@ocaml.doc "No description provided"]
-      matchedSourceType : ServiceWorkerRouterSource.t;
-          [@key "matchedSourceType"] [@ocaml.doc "No description provided"]
+      ruleIdMatched : number option;
+          [@key "ruleIdMatched"]
+          [@yojson.option]
+          [@ocaml.doc
+            "ID of the rule matched. If there is a matched rule, this field will\n\
+             be set, otherwiser no value will be set."]
+      matchedSourceType : ServiceWorkerRouterSource.t option;
+          [@key "matchedSourceType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The router source of the matched rule. If there is a matched \
+             rule, this\n\
+             field will be set, otherwise no value will be set."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type t = {
-      ruleIdMatched : number;
-          [@key "ruleIdMatched"] [@ocaml.doc "No description provided"]
-      matchedSourceType : ServiceWorkerRouterSource.t;
-          [@key "matchedSourceType"] [@ocaml.doc "No description provided"]
+      ruleIdMatched : number option;
+          [@key "ruleIdMatched"]
+          [@yojson.option]
+          [@ocaml.doc
+            "ID of the rule matched. If there is a matched rule, this field will\n\
+             be set, otherwiser no value will be set."]
+      matchedSourceType : ServiceWorkerRouterSource.t option;
+          [@key "matchedSourceType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The router source of the matched rule. If there is a matched \
+             rule, this\n\
+             field will be set, otherwise no value will be set."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -17145,7 +17178,13 @@ end = struct
           [@key "serviceWorkerRouterInfo"]
           [@yojson.option]
           [@ocaml.doc
-            "Information about how Service Worker Static Router was used."]
+            "Information about how ServiceWorker Static Router API was used. \
+             If this\n\
+             field is set with `matchedSourceType` field, a matching rule is \
+             found.\n\
+             If this field is set without `matchedSource`, no matching rule is \
+             found.\n\
+             Otherwise, the API is not used."]
       encodedDataLength : number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request so far."]
@@ -17260,7 +17299,13 @@ end = struct
           [@key "serviceWorkerRouterInfo"]
           [@yojson.option]
           [@ocaml.doc
-            "Information about how Service Worker Static Router was used."]
+            "Information about how ServiceWorker Static Router API was used. \
+             If this\n\
+             field is set with `matchedSourceType` field, a matching rule is \
+             found.\n\
+             If this field is set without `matchedSource`, no matching rule is \
+             found.\n\
+             Otherwise, the API is not used."]
       encodedDataLength : number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request so far."]
@@ -20943,7 +20988,6 @@ and Page : sig
       | `web_printing
       | `web_share
       | `window_management
-      | `window_placement
       | `xr_spatial_tracking ]
 
     val _permissionspolicyfeature_of_yojson :
@@ -22313,7 +22357,6 @@ end = struct
       | `web_printing
       | `web_share
       | `window_management
-      | `window_placement
       | `xr_spatial_tracking ]
 
     val _permissionspolicyfeature_of_yojson :
@@ -22413,7 +22456,6 @@ end = struct
       | `web_printing
       | `web_share
       | `window_management
-      | `window_placement
       | `xr_spatial_tracking ]
 
     let _permissionspolicyfeature_of_yojson = function
@@ -22504,7 +22546,6 @@ end = struct
       | `String "web-printing" -> `web_printing
       | `String "web-share" -> `web_share
       | `String "window-management" -> `window_management
-      | `String "window-placement" -> `window_placement
       | `String "xr-spatial-tracking" -> `xr_spatial_tracking
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -22597,7 +22638,6 @@ end = struct
       | `web_printing -> `String "web-printing"
       | `web_share -> `String "web-share"
       | `window_management -> `String "window-management"
-      | `window_placement -> `String "window-placement"
       | `xr_spatial_tracking -> `String "xr-spatial-tracking"
 
     type t = _permissionspolicyfeature

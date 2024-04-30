@@ -32199,6 +32199,131 @@ module PWA = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+
+  (* Installs the given manifest identity, optionally using the given install_url
+     or IWA bundle location.
+
+     TODO(crbug.com/337872319) Support IWA to meet the following specific
+     requirement.
+     IWA-specific install description: If the manifest_id is isolated-app://,
+     install_url_or_bundle_url is required, and can be either an http(s) URL or
+     file:// URL pointing to a signed web bundle (.swbn). The .swbn file’s
+     signing key must correspond to manifest_id. If Chrome is not in IWA dev
+     mode, the installation will fail, regardless of the state of the allowlist. *)
+  module Install = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+        installUrlOrBundleUrl : string option;
+            [@key "installUrlOrBundleUrl"]
+            [@yojson.option]
+            [@ocaml.doc
+              "The location of the app or bundle overriding the one derived \
+               from the\n\
+               manifestId."]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId ?installUrlOrBundleUrl () =
+        { manifestId; installUrlOrBundleUrl }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.install"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Uninstals the given manifest_id and closes any opened app windows. *)
+  module Uninstall = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId () = { manifestId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.uninstall"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
 end
 
 module Console = struct
