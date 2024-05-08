@@ -31763,7 +31763,9 @@ and Preload : sig
       | `MaxNumOfRunningEmbedderPrerendersExceeded
       | `PrerenderingUrlHasEffectiveUrl
       | `RedirectedPrerenderingUrlHasEffectiveUrl
-      | `ActivationUrlHasEffectiveUrl ]
+      | `ActivationUrlHasEffectiveUrl
+      | `JavaScriptInterfaceAdded
+      | `JavaScriptInterfaceRemoved ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -32199,7 +32201,9 @@ end = struct
       | `MaxNumOfRunningEmbedderPrerendersExceeded
       | `PrerenderingUrlHasEffectiveUrl
       | `RedirectedPrerenderingUrlHasEffectiveUrl
-      | `ActivationUrlHasEffectiveUrl ]
+      | `ActivationUrlHasEffectiveUrl
+      | `JavaScriptInterfaceAdded
+      | `JavaScriptInterfaceRemoved ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -32276,7 +32280,9 @@ end = struct
       | `MaxNumOfRunningEmbedderPrerendersExceeded
       | `PrerenderingUrlHasEffectiveUrl
       | `RedirectedPrerenderingUrlHasEffectiveUrl
-      | `ActivationUrlHasEffectiveUrl ]
+      | `ActivationUrlHasEffectiveUrl
+      | `JavaScriptInterfaceAdded
+      | `JavaScriptInterfaceRemoved ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -32368,6 +32374,8 @@ end = struct
       | `String "RedirectedPrerenderingUrlHasEffectiveUrl" ->
           `RedirectedPrerenderingUrlHasEffectiveUrl
       | `String "ActivationUrlHasEffectiveUrl" -> `ActivationUrlHasEffectiveUrl
+      | `String "JavaScriptInterfaceAdded" -> `JavaScriptInterfaceAdded
+      | `String "JavaScriptInterfaceRemoved" -> `JavaScriptInterfaceRemoved
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -32461,6 +32469,8 @@ end = struct
       | `RedirectedPrerenderingUrlHasEffectiveUrl ->
           `String "RedirectedPrerenderingUrlHasEffectiveUrl"
       | `ActivationUrlHasEffectiveUrl -> `String "ActivationUrlHasEffectiveUrl"
+      | `JavaScriptInterfaceAdded -> `String "JavaScriptInterfaceAdded"
+      | `JavaScriptInterfaceRemoved -> `String "JavaScriptInterfaceRemoved"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
