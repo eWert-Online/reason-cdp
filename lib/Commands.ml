@@ -32324,6 +32324,76 @@ module PWA = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+
+  (* Launches the installed web app, or an url in the same web app instead of the
+     default start url if it is provided. Returns a tab / web contents based
+     Target.TargetID which can be used to attach to via Target.attachToTarget or
+     similar APIs. *)
+  module Launch = struct
+    module Response : sig
+      type result = {
+        targetId : Types.Target.TargetID.t;
+            [@key "targetId"]
+            [@ocaml.doc "ID of the tab target created as a result."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        targetId : Types.Target.TargetID.t;
+            [@key "targetId"]
+            [@ocaml.doc "ID of the tab target created as a result."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+        url : string option;
+            [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId ?url () = { manifestId; url }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.launch"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
 end
 
 module Console = struct
