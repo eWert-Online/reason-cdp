@@ -31765,7 +31765,8 @@ and Preload : sig
       | `RedirectedPrerenderingUrlHasEffectiveUrl
       | `ActivationUrlHasEffectiveUrl
       | `JavaScriptInterfaceAdded
-      | `JavaScriptInterfaceRemoved ]
+      | `JavaScriptInterfaceRemoved
+      | `AllPrerenderingCanceled ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -32203,7 +32204,8 @@ end = struct
       | `RedirectedPrerenderingUrlHasEffectiveUrl
       | `ActivationUrlHasEffectiveUrl
       | `JavaScriptInterfaceAdded
-      | `JavaScriptInterfaceRemoved ]
+      | `JavaScriptInterfaceRemoved
+      | `AllPrerenderingCanceled ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -32282,7 +32284,8 @@ end = struct
       | `RedirectedPrerenderingUrlHasEffectiveUrl
       | `ActivationUrlHasEffectiveUrl
       | `JavaScriptInterfaceAdded
-      | `JavaScriptInterfaceRemoved ]
+      | `JavaScriptInterfaceRemoved
+      | `AllPrerenderingCanceled ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -32376,6 +32379,7 @@ end = struct
       | `String "ActivationUrlHasEffectiveUrl" -> `ActivationUrlHasEffectiveUrl
       | `String "JavaScriptInterfaceAdded" -> `JavaScriptInterfaceAdded
       | `String "JavaScriptInterfaceRemoved" -> `JavaScriptInterfaceRemoved
+      | `String "AllPrerenderingCanceled" -> `AllPrerenderingCanceled
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -32471,6 +32475,7 @@ end = struct
       | `ActivationUrlHasEffectiveUrl -> `String "ActivationUrlHasEffectiveUrl"
       | `JavaScriptInterfaceAdded -> `String "JavaScriptInterfaceAdded"
       | `JavaScriptInterfaceRemoved -> `String "JavaScriptInterfaceRemoved"
+      | `AllPrerenderingCanceled -> `String "AllPrerenderingCanceled"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
