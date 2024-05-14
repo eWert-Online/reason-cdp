@@ -8835,6 +8835,7 @@ and DOM : sig
       | `marker
       | `backdrop
       | `selection
+      | `search_text
       | `target_text
       | `spelling_error
       | `grammar_error
@@ -9167,6 +9168,7 @@ end = struct
       | `marker
       | `backdrop
       | `selection
+      | `search_text
       | `target_text
       | `spelling_error
       | `grammar_error
@@ -9202,6 +9204,7 @@ end = struct
       | `marker
       | `backdrop
       | `selection
+      | `search_text
       | `target_text
       | `spelling_error
       | `grammar_error
@@ -9231,6 +9234,7 @@ end = struct
       | `String "marker" -> `marker
       | `String "backdrop" -> `backdrop
       | `String "selection" -> `selection
+      | `String "search-text" -> `search_text
       | `String "target-text" -> `target_text
       | `String "spelling-error" -> `spelling_error
       | `String "grammar-error" -> `grammar_error
@@ -9262,6 +9266,7 @@ end = struct
       | `marker -> `String "marker"
       | `backdrop -> `String "backdrop"
       | `selection -> `String "selection"
+      | `search_text -> `String "search-text"
       | `target_text -> `String "target-text"
       | `spelling_error -> `String "spelling-error"
       | `grammar_error -> `String "grammar-error"
