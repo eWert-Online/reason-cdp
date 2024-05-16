@@ -37723,7 +37723,8 @@ module Runtime = struct
                execution context. If omitted and `executionContextName` is not \
                set,\n\
                the binding is exposed to all execution contexts of the target.\n\
-               This parameter is mutually exclusive with `executionContextName`.\n\
+               This parameter is mutually exclusive with `executionContextName`\n\
+               and `executionContextUniqueId`.\n\
                Deprecated in favor of `executionContextName` due to an unclear \
                use case\n\
                and bugs in implementation (crbug.com/1169639). \
@@ -37738,12 +37739,26 @@ module Runtime = struct
                added.\n\
                See also `ExecutionContext.name` and `worldName` parameter to\n\
                `Page.addScriptToEvaluateOnNewDocument`.\n\
-               This parameter is mutually exclusive with `executionContextId`."]
+               This parameter is mutually exclusive with `executionContextId`\n\
+               and `executionContextUniqueId`."]
+        executionContextUniqueId :
+          Types.Runtime.ExecutionContextUniqueId.t option;
+            [@key "executionContextUniqueId"]
+            [@yojson.option]
+            [@ocaml.doc
+              "This parameter is mutually exclusive with `executionContextId`\n\
+               and `executionContextName`."]
       }
       [@@deriving yojson]
 
-      let make ~name ?executionContextId ?executionContextName () =
-        { name; executionContextId; executionContextName }
+      let make ~name ?executionContextId ?executionContextName
+          ?executionContextUniqueId () =
+        {
+          name;
+          executionContextId;
+          executionContextName;
+          executionContextUniqueId;
+        }
     end
 
     module Request = struct

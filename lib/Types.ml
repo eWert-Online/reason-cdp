@@ -15003,7 +15003,8 @@ and Network : sig
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `CorsOptIn ]
+      | `CorsOptIn
+      | `Scheme ]
 
     val _cookieexemptionreason_of_yojson :
       Yojson.Basic.t -> _cookieexemptionreason
@@ -17907,7 +17908,8 @@ end = struct
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `CorsOptIn ]
+      | `CorsOptIn
+      | `Scheme ]
 
     val _cookieexemptionreason_of_yojson :
       Yojson.Basic.t -> _cookieexemptionreason
@@ -17930,7 +17932,8 @@ end = struct
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `CorsOptIn ]
+      | `CorsOptIn
+      | `Scheme ]
 
     let _cookieexemptionreason_of_yojson = function
       | `String "None" -> `None
@@ -17942,6 +17945,7 @@ end = struct
       | `String "StorageAccess" -> `StorageAccess
       | `String "TopLevelStorageAccess" -> `TopLevelStorageAccess
       | `String "CorsOptIn" -> `CorsOptIn
+      | `String "Scheme" -> `Scheme
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -17955,6 +17959,7 @@ end = struct
       | `StorageAccess -> `String "StorageAccess"
       | `TopLevelStorageAccess -> `String "TopLevelStorageAccess"
       | `CorsOptIn -> `String "CorsOptIn"
+      | `Scheme -> `String "Scheme"
 
     type t = _cookieexemptionreason
     [@@deriving yojson]
@@ -34898,6 +34903,14 @@ and Runtime : sig
     [@@deriving yojson] [@@ocaml.doc "Id of an execution context."]
   end
 
+  and ExecutionContextUniqueId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Id of an execution context that is unique across processes\n\
+       (unlike ExecutionContextId)."]
+  end
+
   and ExecutionContextDescription : sig
     type t = {
       id : ExecutionContextId.t;
@@ -34910,7 +34923,7 @@ and Runtime : sig
       name : string;
           [@key "name"]
           [@ocaml.doc "Human readable name describing given context."]
-      uniqueId : string;
+      uniqueId : ExecutionContextUniqueId.t;
           [@key "uniqueId"]
           [@ocaml.doc
             "A system-unique execution context identifier. Unlike the id, this \
@@ -36247,6 +36260,20 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Id of an execution context."]
   end
 
+  and ExecutionContextUniqueId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Id of an execution context that is unique across processes\n\
+       (unlike ExecutionContextId)."]
+  end = struct
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Id of an execution context that is unique across processes\n\
+       (unlike ExecutionContextId)."]
+  end
+
   and ExecutionContextDescription : sig
     type t = {
       id : ExecutionContextId.t;
@@ -36259,7 +36286,7 @@ end = struct
       name : string;
           [@key "name"]
           [@ocaml.doc "Human readable name describing given context."]
-      uniqueId : string;
+      uniqueId : ExecutionContextUniqueId.t;
           [@key "uniqueId"]
           [@ocaml.doc
             "A system-unique execution context identifier. Unlike the id, this \
@@ -36287,7 +36314,7 @@ end = struct
       name : string;
           [@key "name"]
           [@ocaml.doc "Human readable name describing given context."]
-      uniqueId : string;
+      uniqueId : ExecutionContextUniqueId.t;
           [@key "uniqueId"]
           [@ocaml.doc
             "A system-unique execution context identifier. Unlike the id, this \
