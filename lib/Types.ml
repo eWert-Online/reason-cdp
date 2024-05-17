@@ -2078,6 +2078,10 @@ and Audits : sig
     type t = {
       allowedSites : string list;
           [@key "allowedSites"] [@ocaml.doc "No description provided"]
+      optOutPercentage : number;
+          [@key "optOutPercentage"] [@ocaml.doc "No description provided"]
+      isOptOutTopLevel : bool;
+          [@key "isOptOutTopLevel"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4097,6 +4101,10 @@ end = struct
     type t = {
       allowedSites : string list;
           [@key "allowedSites"] [@ocaml.doc "No description provided"]
+      optOutPercentage : number;
+          [@key "optOutPercentage"] [@ocaml.doc "No description provided"]
+      isOptOutTopLevel : bool;
+          [@key "isOptOutTopLevel"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4112,6 +4120,10 @@ end = struct
     type t = {
       allowedSites : string list;
           [@key "allowedSites"] [@ocaml.doc "No description provided"]
+      optOutPercentage : number;
+          [@key "optOutPercentage"] [@ocaml.doc "No description provided"]
+      isOptOutTopLevel : bool;
+          [@key "isOptOutTopLevel"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
