@@ -34915,14 +34915,6 @@ and Runtime : sig
     [@@deriving yojson] [@@ocaml.doc "Id of an execution context."]
   end
 
-  and ExecutionContextUniqueId : sig
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Id of an execution context that is unique across processes\n\
-       (unlike ExecutionContextId)."]
-  end
-
   and ExecutionContextDescription : sig
     type t = {
       id : ExecutionContextId.t;
@@ -34935,7 +34927,7 @@ and Runtime : sig
       name : string;
           [@key "name"]
           [@ocaml.doc "Human readable name describing given context."]
-      uniqueId : ExecutionContextUniqueId.t;
+      uniqueId : string;
           [@key "uniqueId"]
           [@ocaml.doc
             "A system-unique execution context identifier. Unlike the id, this \
@@ -36272,20 +36264,6 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Id of an execution context."]
   end
 
-  and ExecutionContextUniqueId : sig
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Id of an execution context that is unique across processes\n\
-       (unlike ExecutionContextId)."]
-  end = struct
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Id of an execution context that is unique across processes\n\
-       (unlike ExecutionContextId)."]
-  end
-
   and ExecutionContextDescription : sig
     type t = {
       id : ExecutionContextId.t;
@@ -36298,7 +36276,7 @@ end = struct
       name : string;
           [@key "name"]
           [@ocaml.doc "Human readable name describing given context."]
-      uniqueId : ExecutionContextUniqueId.t;
+      uniqueId : string;
           [@key "uniqueId"]
           [@ocaml.doc
             "A system-unique execution context identifier. Unlike the id, this \
@@ -36326,7 +36304,7 @@ end = struct
       name : string;
           [@key "name"]
           [@ocaml.doc "Human readable name describing given context."]
-      uniqueId : ExecutionContextUniqueId.t;
+      uniqueId : string;
           [@key "uniqueId"]
           [@ocaml.doc
             "A system-unique execution context identifier. Unlike the id, this \

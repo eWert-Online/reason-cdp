@@ -5020,9 +5020,6 @@ module Runtime = struct
       executionContextId : Types.Runtime.ExecutionContextId.t;
           [@key "executionContextId"]
           [@ocaml.doc "Identifier of the context where the call was made."]
-      executionContextUniqueId : Types.Runtime.ExecutionContextUniqueId.t;
-          [@key "executionContextUniqueId"]
-          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 
@@ -5110,9 +5107,6 @@ module Runtime = struct
       executionContextId : Types.Runtime.ExecutionContextId.t;
           [@key "executionContextId"]
           [@ocaml.doc "Identifier of the context where the call was made."]
-      executionContextUniqueId : Types.Runtime.ExecutionContextUniqueId.t;
-          [@key "executionContextUniqueId"]
-          [@ocaml.doc "No description provided"]
       timestamp : Types.Runtime.Timestamp.t;
           [@key "timestamp"] [@ocaml.doc "Call timestamp."]
       stackTrace : Types.Runtime.StackTrace.t option;
@@ -5221,7 +5215,7 @@ module Runtime = struct
     type result = {
       executionContextId : Types.Runtime.ExecutionContextId.t;
           [@key "executionContextId"] [@ocaml.doc "Id of the destroyed context"]
-      executionContextUniqueId : Types.Runtime.ExecutionContextUniqueId.t;
+      executionContextUniqueId : string;
           [@key "executionContextUniqueId"]
           [@ocaml.doc "Unique Id of the destroyed context"]
     }
