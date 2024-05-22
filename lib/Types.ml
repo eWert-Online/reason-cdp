@@ -2159,7 +2159,8 @@ and Audits : sig
       | `ThirdPartyCookiesBlocked
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
-      | `ReplacedByButtonMode ]
+      | `ReplacedByButtonMode
+      | `RelyingPartyOriginIsOpaque ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4226,7 +4227,8 @@ end = struct
       | `ThirdPartyCookiesBlocked
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
-      | `ReplacedByButtonMode ]
+      | `ReplacedByButtonMode
+      | `RelyingPartyOriginIsOpaque ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4283,7 +4285,8 @@ end = struct
       | `ThirdPartyCookiesBlocked
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
-      | `ReplacedByButtonMode ]
+      | `ReplacedByButtonMode
+      | `RelyingPartyOriginIsOpaque ]
 
     let _federatedauthrequestissuereason_of_yojson = function
       | `String "ShouldEmbargo" -> `ShouldEmbargo
@@ -4330,6 +4333,7 @@ end = struct
       | `String "MissingTransientUserActivation" ->
           `MissingTransientUserActivation
       | `String "ReplacedByButtonMode" -> `ReplacedByButtonMode
+      | `String "RelyingPartyOriginIsOpaque" -> `RelyingPartyOriginIsOpaque
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4378,6 +4382,7 @@ end = struct
       | `MissingTransientUserActivation ->
           `String "MissingTransientUserActivation"
       | `ReplacedByButtonMode -> `String "ReplacedByButtonMode"
+      | `RelyingPartyOriginIsOpaque -> `String "RelyingPartyOriginIsOpaque"
 
     type t = _federatedauthrequestissuereason
     [@@deriving yojson]
