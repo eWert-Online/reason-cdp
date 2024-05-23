@@ -2082,6 +2082,8 @@ and Audits : sig
           [@key "optOutPercentage"] [@ocaml.doc "No description provided"]
       isOptOutTopLevel : bool;
           [@key "isOptOutTopLevel"] [@ocaml.doc "No description provided"]
+      operation : CookieOperation.t;
+          [@key "operation"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4106,6 +4108,8 @@ end = struct
           [@key "optOutPercentage"] [@ocaml.doc "No description provided"]
       isOptOutTopLevel : bool;
           [@key "isOptOutTopLevel"] [@ocaml.doc "No description provided"]
+      operation : CookieOperation.t;
+          [@key "operation"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4125,6 +4129,8 @@ end = struct
           [@key "optOutPercentage"] [@ocaml.doc "No description provided"]
       isOptOutTopLevel : bool;
           [@key "isOptOutTopLevel"] [@ocaml.doc "No description provided"]
+      operation : CookieOperation.t;
+          [@key "operation"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -14260,6 +14266,15 @@ and Network : sig
       workerRespondWithSettled : number;
           [@key "workerRespondWithSettled"]
           [@ocaml.doc "Settled fetch event respondWith promise."]
+      workerRouterEvaluationStart : number option;
+          [@key "workerRouterEvaluationStart"]
+          [@yojson.option]
+          [@ocaml.doc "Started ServiceWorker static routing source evaluation."]
+      workerCacheLookupStart : number option;
+          [@key "workerCacheLookupStart"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Started cache lookup when the source was evaluated to `cache`."]
       sendStart : number;
           [@key "sendStart"] [@ocaml.doc "Started sending request."]
       sendEnd : number;
@@ -14658,6 +14673,10 @@ and Network : sig
             "The router source of the matched rule. If there is a matched \
              rule, this\n\
              field will be set, otherwise no value will be set."]
+      actualSourceType : ServiceWorkerRouterSource.t option;
+          [@key "actualSourceType"]
+          [@yojson.option]
+          [@ocaml.doc "The actual router source used."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -16100,6 +16119,15 @@ end = struct
       workerRespondWithSettled : number;
           [@key "workerRespondWithSettled"]
           [@ocaml.doc "Settled fetch event respondWith promise."]
+      workerRouterEvaluationStart : number option;
+          [@key "workerRouterEvaluationStart"]
+          [@yojson.option]
+          [@ocaml.doc "Started ServiceWorker static routing source evaluation."]
+      workerCacheLookupStart : number option;
+          [@key "workerCacheLookupStart"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Started cache lookup when the source was evaluated to `cache`."]
       sendStart : number;
           [@key "sendStart"] [@ocaml.doc "Started sending request."]
       sendEnd : number;
@@ -16150,6 +16178,15 @@ end = struct
       workerRespondWithSettled : number;
           [@key "workerRespondWithSettled"]
           [@ocaml.doc "Settled fetch event respondWith promise."]
+      workerRouterEvaluationStart : number option;
+          [@key "workerRouterEvaluationStart"]
+          [@yojson.option]
+          [@ocaml.doc "Started ServiceWorker static routing source evaluation."]
+      workerCacheLookupStart : number option;
+          [@key "workerCacheLookupStart"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Started cache lookup when the source was evaluated to `cache`."]
       sendStart : number;
           [@key "sendStart"] [@ocaml.doc "Started sending request."]
       sendEnd : number;
@@ -17104,6 +17141,10 @@ end = struct
             "The router source of the matched rule. If there is a matched \
              rule, this\n\
              field will be set, otherwise no value will be set."]
+      actualSourceType : ServiceWorkerRouterSource.t option;
+          [@key "actualSourceType"]
+          [@yojson.option]
+          [@ocaml.doc "The actual router source used."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -17121,6 +17162,10 @@ end = struct
             "The router source of the matched rule. If there is a matched \
              rule, this\n\
              field will be set, otherwise no value will be set."]
+      actualSourceType : ServiceWorkerRouterSource.t option;
+          [@key "actualSourceType"]
+          [@yojson.option]
+          [@ocaml.doc "The actual router source used."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
