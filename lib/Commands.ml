@@ -9114,6 +9114,82 @@ module DOM = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+
+  (* Returns the target anchor element of the given anchor query according to
+     https://www.w3.org/TR/css-anchor-position-1/#target. *)
+  module GetAnchorElement = struct
+    module Response : sig
+      type result = {
+        nodeId : Types.DOM.NodeId.t;
+            [@key "nodeId"]
+            [@ocaml.doc "The anchor element of the given anchor query."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        nodeId : Types.DOM.NodeId.t;
+            [@key "nodeId"]
+            [@ocaml.doc "The anchor element of the given anchor query."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        nodeId : Types.DOM.NodeId.t;
+            [@key "nodeId"]
+            [@ocaml.doc
+              "Id of the positioned element from which to find the anchor."]
+        anchorSpecifier : string option;
+            [@key "anchorSpecifier"]
+            [@yojson.option]
+            [@ocaml.doc
+              "An optional anchor specifier, as defined in\n\
+               https://www.w3.org/TR/css-anchor-position-1/#anchor-specifier.\n\
+               If not provided, it will return the implicit anchor element for\n\
+               the given positioned element."]
+      }
+      [@@deriving yojson]
+
+      let make ~nodeId ?anchorSpecifier () = { nodeId; anchorSpecifier }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "DOM.getAnchorElement"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
 end
 
 module DOMDebugger = struct
