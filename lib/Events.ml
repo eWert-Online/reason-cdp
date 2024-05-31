@@ -1826,7 +1826,7 @@ module Network = struct
       | `FailedPrecondition
       | `ResourceExhausted
       | `AlreadyExists
-      | `Unavailable
+      | `ResourceLimited
       | `Unauthorized
       | `BadResponse
       | `InternalError
@@ -1840,7 +1840,7 @@ module Network = struct
       | `String "FailedPrecondition" -> `FailedPrecondition
       | `String "ResourceExhausted" -> `ResourceExhausted
       | `String "AlreadyExists" -> `AlreadyExists
-      | `String "Unavailable" -> `Unavailable
+      | `String "ResourceLimited" -> `ResourceLimited
       | `String "Unauthorized" -> `Unauthorized
       | `String "BadResponse" -> `BadResponse
       | `String "InternalError" -> `InternalError
@@ -1856,7 +1856,7 @@ module Network = struct
       | `FailedPrecondition -> `String "FailedPrecondition"
       | `ResourceExhausted -> `String "ResourceExhausted"
       | `AlreadyExists -> `String "AlreadyExists"
-      | `Unavailable -> `String "Unavailable"
+      | `ResourceLimited -> `String "ResourceLimited"
       | `Unauthorized -> `String "Unauthorized"
       | `BadResponse -> `String "BadResponse"
       | `InternalError -> `String "InternalError"
