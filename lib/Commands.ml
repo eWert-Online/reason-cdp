@@ -32411,9 +32411,8 @@ module PWA = struct
   end
 
   (* Launches the installed web app, or an url in the same web app instead of the
-     default start url if it is provided. Returns a tab / web contents based
-     Target.TargetID which can be used to attach to via Target.attachToTarget or
-     similar APIs. *)
+     default start url if it is provided. Returns a page Target.TargetID which
+     can be used to attach to via Target.attachToTarget or similar APIs. *)
   module Launch = struct
     module Response : sig
       type result = {
@@ -32482,16 +32481,15 @@ module PWA = struct
 
   (* Opens one or more local files from an installed web app identified by its
      manifestId. The web app needs to have file handlers registered to process
-     the files. The API returns one or more tabs / web contents' based
-     Target.TargetIDs which can be used to attach to via Target.attachToTarget or
-     similar APIs.
+     the files. The API returns one or more page Target.TargetIDs which can be
+     used to attach to via Target.attachToTarget or similar APIs.
      If some files in the parameters cannot be handled by the web app, they will
      be ignored. If none of the files can be handled, this API returns an error.
      If no files provided as the parameter, this API also returns an error.
 
      According to the definition of the file handlers in the manifest file, one
-     Target.TargetID may represent a tab handling one or more files. The order of
-     the returned Target.TargetIDs is also not guaranteed.
+     Target.TargetID may represent a page handling one or more files. The order
+     of the returned Target.TargetIDs is not guaranteed.
 
      TODO(crbug.com/339454034): Check the existences of the input files. *)
   module LaunchFilesInApp = struct
@@ -32556,6 +32554,62 @@ module PWA = struct
 
       let make ?sessionId ~params id =
         { id; method_ = "PWA.launchFilesInApp"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Opens the current page in its web app identified by the manifest id, needs
+     to be called on a page target. This function returns immediately without
+     waiting for the app finishing loading. *)
+  module OpenCurrentPageInApp = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId () = { manifestId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.openCurrentPageInApp"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
