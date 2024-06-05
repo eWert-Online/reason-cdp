@@ -1630,6 +1630,8 @@ and Audits : sig
       | `CoopSandboxedIFrameCannotNavigateToCoopPage
       | `CorpNotSameOrigin
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoep
+      | `CorpNotSameOriginAfterDefaultedToSameOriginByDip
+      | `CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
       | `CorpNotSameSite ]
 
     val _blockedbyresponsereason_of_yojson :
@@ -3051,6 +3053,8 @@ end = struct
       | `CoopSandboxedIFrameCannotNavigateToCoopPage
       | `CorpNotSameOrigin
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoep
+      | `CorpNotSameOriginAfterDefaultedToSameOriginByDip
+      | `CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
       | `CorpNotSameSite ]
 
     val _blockedbyresponsereason_of_yojson :
@@ -3070,6 +3074,8 @@ end = struct
       | `CoopSandboxedIFrameCannotNavigateToCoopPage
       | `CorpNotSameOrigin
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoep
+      | `CorpNotSameOriginAfterDefaultedToSameOriginByDip
+      | `CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
       | `CorpNotSameSite ]
 
     let _blockedbyresponsereason_of_yojson = function
@@ -3080,6 +3086,10 @@ end = struct
       | `String "CorpNotSameOrigin" -> `CorpNotSameOrigin
       | `String "CorpNotSameOriginAfterDefaultedToSameOriginByCoep" ->
           `CorpNotSameOriginAfterDefaultedToSameOriginByCoep
+      | `String "CorpNotSameOriginAfterDefaultedToSameOriginByDip" ->
+          `CorpNotSameOriginAfterDefaultedToSameOriginByDip
+      | `String "CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip" ->
+          `CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
       | `String "CorpNotSameSite" -> `CorpNotSameSite
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -3092,6 +3102,10 @@ end = struct
       | `CorpNotSameOrigin -> `String "CorpNotSameOrigin"
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoep ->
           `String "CorpNotSameOriginAfterDefaultedToSameOriginByCoep"
+      | `CorpNotSameOriginAfterDefaultedToSameOriginByDip ->
+          `String "CorpNotSameOriginAfterDefaultedToSameOriginByDip"
+      | `CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip ->
+          `String "CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip"
       | `CorpNotSameSite -> `String "CorpNotSameSite"
 
     type t = _blockedbyresponsereason
@@ -14499,6 +14513,8 @@ and Network : sig
       | `coop_sandboxed_iframe_cannot_navigate_to_coop_page
       | `corp_not_same_origin
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep
+      | `corp_not_same_origin_after_defaulted_to_same_origin_by_dip
+      | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep_and_dip
       | `corp_not_same_site ]
 
     val _blockedreason_of_yojson : Yojson.Basic.t -> _blockedreason
@@ -16627,6 +16643,8 @@ end = struct
       | `coop_sandboxed_iframe_cannot_navigate_to_coop_page
       | `corp_not_same_origin
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep
+      | `corp_not_same_origin_after_defaulted_to_same_origin_by_dip
+      | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep_and_dip
       | `corp_not_same_site ]
 
     val _blockedreason_of_yojson : Yojson.Basic.t -> _blockedreason
@@ -16647,6 +16665,8 @@ end = struct
       | `coop_sandboxed_iframe_cannot_navigate_to_coop_page
       | `corp_not_same_origin
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep
+      | `corp_not_same_origin_after_defaulted_to_same_origin_by_dip
+      | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep_and_dip
       | `corp_not_same_site ]
 
     let _blockedreason_of_yojson = function
@@ -16664,6 +16684,12 @@ end = struct
       | `String "corp-not-same-origin" -> `corp_not_same_origin
       | `String "corp-not-same-origin-after-defaulted-to-same-origin-by-coep" ->
           `corp_not_same_origin_after_defaulted_to_same_origin_by_coep
+      | `String "corp-not-same-origin-after-defaulted-to-same-origin-by-dip" ->
+          `corp_not_same_origin_after_defaulted_to_same_origin_by_dip
+      | `String
+          "corp-not-same-origin-after-defaulted-to-same-origin-by-coep-and-dip"
+        ->
+          `corp_not_same_origin_after_defaulted_to_same_origin_by_coep_and_dip
       | `String "corp-not-same-site" -> `corp_not_same_site
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -16683,6 +16709,11 @@ end = struct
       | `corp_not_same_origin -> `String "corp-not-same-origin"
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep ->
           `String "corp-not-same-origin-after-defaulted-to-same-origin-by-coep"
+      | `corp_not_same_origin_after_defaulted_to_same_origin_by_dip ->
+          `String "corp-not-same-origin-after-defaulted-to-same-origin-by-dip"
+      | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep_and_dip ->
+          `String
+            "corp-not-same-origin-after-defaulted-to-same-origin-by-coep-and-dip"
       | `corp_not_same_site -> `String "corp-not-same-site"
 
     type t = _blockedreason
