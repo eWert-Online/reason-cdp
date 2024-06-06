@@ -17376,13 +17376,14 @@ module Network = struct
             [@yojson.option]
             [@ocaml.doc
               "If specified, deletes only cookies with the exact path."]
-        partitionKey : string option;
+        partitionKey : Types.Network.CookiePartitionKey.t option;
             [@key "partitionKey"]
             [@yojson.option]
             [@ocaml.doc
               "If specified, deletes only cookies with the the given name and \
-               partitionKey where domain\n\
-               matches provided URL."]
+               partitionKey where\n\
+               where all partition key attributes match the cookie partition \
+               key attribute."]
       }
       [@@deriving yojson]
 
@@ -18479,14 +18480,12 @@ module Network = struct
                legacy cookie scope for the port.\n\
                This is a temporary ability and it will be removed in the \
                future."]
-        partitionKey : string option;
+        partitionKey : Types.Network.CookiePartitionKey.t option;
             [@key "partitionKey"]
             [@yojson.option]
             [@ocaml.doc
-              "Cookie partition key. The site of the top-level URL the browser \
-               was visiting at the start\n\
-               of the request to the endpoint that set the cookie.\n\
-               If not set, the cookie will be set as not partitioned."]
+              "Cookie partition key. If not set, the cookie will be set as not \
+               partitioned."]
       }
       [@@deriving yojson]
 

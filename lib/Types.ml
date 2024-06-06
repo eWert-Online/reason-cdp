@@ -14930,6 +14930,27 @@ and Network : sig
     [@@deriving yojson] [@@ocaml.doc "Information about the request initiator."]
   end
 
+  and CookiePartitionKey : sig
+    type t = {
+      topLevelSite : string;
+          [@key "topLevelSite"]
+          [@ocaml.doc
+            "The site of the top-level URL the browser was visiting at the start\n\
+             of the request to the endpoint that set the cookie."]
+      hasCrossSiteAncestor : bool;
+          [@key "hasCrossSiteAncestor"]
+          [@ocaml.doc
+            "Indicates if the cookie has any ancestors that are cross-site to \
+             the topLevelSite."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "cookiePartitionKey object\n\
+       The representation of the components of the key that are created by the \
+       cookiePartitionKey class contained in \
+       net/cookies/cookie_partition_key.h."]
+  end
+
   and Cookie : sig
     type t = {
       name : string; [@key "name"] [@ocaml.doc "Cookie name."]
@@ -14965,13 +14986,10 @@ and Network : sig
              An unspecified port value allows protocol clients to emulate \
              legacy cookie scope for the port.\n\
              This is a temporary ability and it will be removed in the future."]
-      partitionKey : string option;
+      partitionKey : CookiePartitionKey.t option;
           [@key "partitionKey"]
           [@yojson.option]
-          [@ocaml.doc
-            "Cookie partition key. The site of the top-level URL the browser \
-             was visiting at the start\n\
-             of the request to the endpoint that set the cookie."]
+          [@ocaml.doc "Cookie partition key."]
       partitionKeyOpaque : bool option;
           [@key "partitionKeyOpaque"]
           [@yojson.option]
@@ -15198,14 +15216,12 @@ and Network : sig
              An unspecified port value allows protocol clients to emulate \
              legacy cookie scope for the port.\n\
              This is a temporary ability and it will be removed in the future."]
-      partitionKey : string option;
+      partitionKey : CookiePartitionKey.t option;
           [@key "partitionKey"]
           [@yojson.option]
           [@ocaml.doc
-            "Cookie partition key. The site of the top-level URL the browser \
-             was visiting at the start\n\
-             of the request to the endpoint that set the cookie.\n\
-             If not set, the cookie will be set as not partitioned."]
+            "Cookie partition key. If not set, the cookie will be set as not \
+             partitioned."]
     }
     [@@deriving yojson] [@@ocaml.doc "Cookie parameter object"]
   end
@@ -17670,6 +17686,46 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Information about the request initiator."]
   end
 
+  and CookiePartitionKey : sig
+    type t = {
+      topLevelSite : string;
+          [@key "topLevelSite"]
+          [@ocaml.doc
+            "The site of the top-level URL the browser was visiting at the start\n\
+             of the request to the endpoint that set the cookie."]
+      hasCrossSiteAncestor : bool;
+          [@key "hasCrossSiteAncestor"]
+          [@ocaml.doc
+            "Indicates if the cookie has any ancestors that are cross-site to \
+             the topLevelSite."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "cookiePartitionKey object\n\
+       The representation of the components of the key that are created by the \
+       cookiePartitionKey class contained in \
+       net/cookies/cookie_partition_key.h."]
+  end = struct
+    type t = {
+      topLevelSite : string;
+          [@key "topLevelSite"]
+          [@ocaml.doc
+            "The site of the top-level URL the browser was visiting at the start\n\
+             of the request to the endpoint that set the cookie."]
+      hasCrossSiteAncestor : bool;
+          [@key "hasCrossSiteAncestor"]
+          [@ocaml.doc
+            "Indicates if the cookie has any ancestors that are cross-site to \
+             the topLevelSite."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "cookiePartitionKey object\n\
+       The representation of the components of the key that are created by the \
+       cookiePartitionKey class contained in \
+       net/cookies/cookie_partition_key.h."]
+  end
+
   and Cookie : sig
     type t = {
       name : string; [@key "name"] [@ocaml.doc "Cookie name."]
@@ -17705,13 +17761,10 @@ end = struct
              An unspecified port value allows protocol clients to emulate \
              legacy cookie scope for the port.\n\
              This is a temporary ability and it will be removed in the future."]
-      partitionKey : string option;
+      partitionKey : CookiePartitionKey.t option;
           [@key "partitionKey"]
           [@yojson.option]
-          [@ocaml.doc
-            "Cookie partition key. The site of the top-level URL the browser \
-             was visiting at the start\n\
-             of the request to the endpoint that set the cookie."]
+          [@ocaml.doc "Cookie partition key."]
       partitionKeyOpaque : bool option;
           [@key "partitionKeyOpaque"]
           [@yojson.option]
@@ -17753,13 +17806,10 @@ end = struct
              An unspecified port value allows protocol clients to emulate \
              legacy cookie scope for the port.\n\
              This is a temporary ability and it will be removed in the future."]
-      partitionKey : string option;
+      partitionKey : CookiePartitionKey.t option;
           [@key "partitionKey"]
           [@yojson.option]
-          [@ocaml.doc
-            "Cookie partition key. The site of the top-level URL the browser \
-             was visiting at the start\n\
-             of the request to the endpoint that set the cookie."]
+          [@ocaml.doc "Cookie partition key."]
       partitionKeyOpaque : bool option;
           [@key "partitionKeyOpaque"]
           [@yojson.option]
@@ -18258,14 +18308,12 @@ end = struct
              An unspecified port value allows protocol clients to emulate \
              legacy cookie scope for the port.\n\
              This is a temporary ability and it will be removed in the future."]
-      partitionKey : string option;
+      partitionKey : CookiePartitionKey.t option;
           [@key "partitionKey"]
           [@yojson.option]
           [@ocaml.doc
-            "Cookie partition key. The site of the top-level URL the browser \
-             was visiting at the start\n\
-             of the request to the endpoint that set the cookie.\n\
-             If not set, the cookie will be set as not partitioned."]
+            "Cookie partition key. If not set, the cookie will be set as not \
+             partitioned."]
     }
     [@@deriving yojson] [@@ocaml.doc "Cookie parameter object"]
   end = struct
@@ -18319,14 +18367,12 @@ end = struct
              An unspecified port value allows protocol clients to emulate \
              legacy cookie scope for the port.\n\
              This is a temporary ability and it will be removed in the future."]
-      partitionKey : string option;
+      partitionKey : CookiePartitionKey.t option;
           [@key "partitionKey"]
           [@yojson.option]
           [@ocaml.doc
-            "Cookie partition key. The site of the top-level URL the browser \
-             was visiting at the start\n\
-             of the request to the endpoint that set the cookie.\n\
-             If not set, the cookie will be set as not partitioned."]
+            "Cookie partition key. If not set, the cookie will be set as not \
+             partitioned."]
     }
     [@@deriving yojson] [@@ocaml.doc "Cookie parameter object"]
   end
@@ -21043,6 +21089,7 @@ and Page : sig
       | `clipboard_write
       | `compute_pressure
       | `cross_origin_isolated
+      | `deferred_fetch
       | `direct_sockets
       | `display_capture
       | `document_domain
@@ -22412,6 +22459,7 @@ end = struct
       | `clipboard_write
       | `compute_pressure
       | `cross_origin_isolated
+      | `deferred_fetch
       | `direct_sockets
       | `display_capture
       | `document_domain
@@ -22511,6 +22559,7 @@ end = struct
       | `clipboard_write
       | `compute_pressure
       | `cross_origin_isolated
+      | `deferred_fetch
       | `direct_sockets
       | `display_capture
       | `document_domain
@@ -22598,6 +22647,7 @@ end = struct
       | `String "clipboard-write" -> `clipboard_write
       | `String "compute-pressure" -> `compute_pressure
       | `String "cross-origin-isolated" -> `cross_origin_isolated
+      | `String "deferred-fetch" -> `deferred_fetch
       | `String "direct-sockets" -> `direct_sockets
       | `String "display-capture" -> `display_capture
       | `String "document-domain" -> `document_domain
@@ -22690,6 +22740,7 @@ end = struct
       | `clipboard_write -> `String "clipboard-write"
       | `compute_pressure -> `String "compute-pressure"
       | `cross_origin_isolated -> `String "cross-origin-isolated"
+      | `deferred_fetch -> `String "deferred-fetch"
       | `direct_sockets -> `String "direct-sockets"
       | `display_capture -> `String "display-capture"
       | `document_domain -> `String "document-domain"

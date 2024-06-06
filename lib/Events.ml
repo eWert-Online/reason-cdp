@@ -1750,7 +1750,7 @@ module Network = struct
             "Raw response header text as it was received over the wire. The \
              raw text may not always be\n\
              available, such as in the case of HTTP/2 or QUIC."]
-      cookiePartitionKey : string option;
+      cookiePartitionKey : Types.Network.CookiePartitionKey.t option;
           [@key "cookiePartitionKey"]
           [@yojson.option]
           [@ocaml.doc
