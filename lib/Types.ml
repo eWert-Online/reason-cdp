@@ -2164,7 +2164,8 @@ and Audits : sig
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
       | `ReplacedByButtonMode
-      | `RelyingPartyOriginIsOpaque ]
+      | `RelyingPartyOriginIsOpaque
+      | `TypeNotMatching ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4248,7 +4249,8 @@ end = struct
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
       | `ReplacedByButtonMode
-      | `RelyingPartyOriginIsOpaque ]
+      | `RelyingPartyOriginIsOpaque
+      | `TypeNotMatching ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4306,7 +4308,8 @@ end = struct
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
       | `ReplacedByButtonMode
-      | `RelyingPartyOriginIsOpaque ]
+      | `RelyingPartyOriginIsOpaque
+      | `TypeNotMatching ]
 
     let _federatedauthrequestissuereason_of_yojson = function
       | `String "ShouldEmbargo" -> `ShouldEmbargo
@@ -4354,6 +4357,7 @@ end = struct
           `MissingTransientUserActivation
       | `String "ReplacedByButtonMode" -> `ReplacedByButtonMode
       | `String "RelyingPartyOriginIsOpaque" -> `RelyingPartyOriginIsOpaque
+      | `String "TypeNotMatching" -> `TypeNotMatching
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4403,6 +4407,7 @@ end = struct
           `String "MissingTransientUserActivation"
       | `ReplacedByButtonMode -> `String "ReplacedByButtonMode"
       | `RelyingPartyOriginIsOpaque -> `String "RelyingPartyOriginIsOpaque"
+      | `TypeNotMatching -> `String "TypeNotMatching"
 
     type t = _federatedauthrequestissuereason
     [@@deriving yojson]
@@ -22028,6 +22033,11 @@ and Page : sig
       | `HTTPAuthRequired
       | `CookieFlushed
       | `BroadcastChannelOnMessage
+      | `WebViewSettingsChanged
+      | `WebViewJavaScriptObjectChanged
+      | `WebViewMessageListenerInjected
+      | `WebViewSafeBrowsingAllowlistChanged
+      | `WebViewDocumentStartJavascriptChanged
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -24549,6 +24559,11 @@ end = struct
       | `HTTPAuthRequired
       | `CookieFlushed
       | `BroadcastChannelOnMessage
+      | `WebViewSettingsChanged
+      | `WebViewJavaScriptObjectChanged
+      | `WebViewMessageListenerInjected
+      | `WebViewSafeBrowsingAllowlistChanged
+      | `WebViewDocumentStartJavascriptChanged
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -24694,6 +24709,11 @@ end = struct
       | `HTTPAuthRequired
       | `CookieFlushed
       | `BroadcastChannelOnMessage
+      | `WebViewSettingsChanged
+      | `WebViewJavaScriptObjectChanged
+      | `WebViewMessageListenerInjected
+      | `WebViewSafeBrowsingAllowlistChanged
+      | `WebViewDocumentStartJavascriptChanged
       | `WebSocket
       | `WebTransport
       | `WebRTC
@@ -24845,6 +24865,15 @@ end = struct
       | `String "HTTPAuthRequired" -> `HTTPAuthRequired
       | `String "CookieFlushed" -> `CookieFlushed
       | `String "BroadcastChannelOnMessage" -> `BroadcastChannelOnMessage
+      | `String "WebViewSettingsChanged" -> `WebViewSettingsChanged
+      | `String "WebViewJavaScriptObjectChanged" ->
+          `WebViewJavaScriptObjectChanged
+      | `String "WebViewMessageListenerInjected" ->
+          `WebViewMessageListenerInjected
+      | `String "WebViewSafeBrowsingAllowlistChanged" ->
+          `WebViewSafeBrowsingAllowlistChanged
+      | `String "WebViewDocumentStartJavascriptChanged" ->
+          `WebViewDocumentStartJavascriptChanged
       | `String "WebSocket" -> `WebSocket
       | `String "WebTransport" -> `WebTransport
       | `String "WebRTC" -> `WebRTC
@@ -25021,6 +25050,15 @@ end = struct
       | `HTTPAuthRequired -> `String "HTTPAuthRequired"
       | `CookieFlushed -> `String "CookieFlushed"
       | `BroadcastChannelOnMessage -> `String "BroadcastChannelOnMessage"
+      | `WebViewSettingsChanged -> `String "WebViewSettingsChanged"
+      | `WebViewJavaScriptObjectChanged ->
+          `String "WebViewJavaScriptObjectChanged"
+      | `WebViewMessageListenerInjected ->
+          `String "WebViewMessageListenerInjected"
+      | `WebViewSafeBrowsingAllowlistChanged ->
+          `String "WebViewSafeBrowsingAllowlistChanged"
+      | `WebViewDocumentStartJavascriptChanged ->
+          `String "WebViewDocumentStartJavascriptChanged"
       | `WebSocket -> `String "WebSocket"
       | `WebTransport -> `String "WebTransport"
       | `WebRTC -> `String "WebRTC"

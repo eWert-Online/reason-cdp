@@ -17382,8 +17382,8 @@ module Network = struct
             [@ocaml.doc
               "If specified, deletes only cookies with the the given name and \
                partitionKey where\n\
-               where all partition key attributes match the cookie partition \
-               key attribute."]
+               all partition key attributes match the cookie partition key \
+               attribute."]
       }
       [@@deriving yojson]
 
