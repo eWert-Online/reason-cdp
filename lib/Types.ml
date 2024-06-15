@@ -229,7 +229,8 @@ module rec Accessibility : sig
       | `errormessage
       | `flowto
       | `labelledby
-      | `owns ]
+      | `owns
+      | `url ]
 
     val _axpropertyname_of_yojson : Yojson.Basic.t -> _axpropertyname
     val yojson_of__axpropertyname : _axpropertyname -> Yojson.Basic.t
@@ -732,7 +733,8 @@ end = struct
       | `errormessage
       | `flowto
       | `labelledby
-      | `owns ]
+      | `owns
+      | `url ]
 
     val _axpropertyname_of_yojson : Yojson.Basic.t -> _axpropertyname
     val yojson_of__axpropertyname : _axpropertyname -> Yojson.Basic.t
@@ -787,7 +789,8 @@ end = struct
       | `errormessage
       | `flowto
       | `labelledby
-      | `owns ]
+      | `owns
+      | `url ]
 
     let _axpropertyname_of_yojson = function
       | `String "busy" -> `busy
@@ -829,6 +832,7 @@ end = struct
       | `String "flowto" -> `flowto
       | `String "labelledby" -> `labelledby
       | `String "owns" -> `owns
+      | `String "url" -> `url
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -872,6 +876,7 @@ end = struct
       | `flowto -> `String "flowto"
       | `labelledby -> `String "labelledby"
       | `owns -> `String "owns"
+      | `url -> `String "url"
 
     type t = _axpropertyname
     [@@deriving yojson]
@@ -27061,7 +27066,8 @@ and Storage : sig
       | `destinationBothLimitsReached
       | `reportingOriginsPerSiteLimitReached
       | `exceedsMaxChannelCapacity
-      | `exceedsMaxTriggerStateCardinality ]
+      | `exceedsMaxTriggerStateCardinality
+      | `destinationPerDayReportingLimitReached ]
 
     val _attributionreportingsourceregistrationresult_of_yojson :
       Yojson.Basic.t -> _attributionreportingsourceregistrationresult
@@ -28241,7 +28247,8 @@ end = struct
       | `destinationBothLimitsReached
       | `reportingOriginsPerSiteLimitReached
       | `exceedsMaxChannelCapacity
-      | `exceedsMaxTriggerStateCardinality ]
+      | `exceedsMaxTriggerStateCardinality
+      | `destinationPerDayReportingLimitReached ]
 
     val _attributionreportingsourceregistrationresult_of_yojson :
       Yojson.Basic.t -> _attributionreportingsourceregistrationresult
@@ -28265,7 +28272,8 @@ end = struct
       | `destinationBothLimitsReached
       | `reportingOriginsPerSiteLimitReached
       | `exceedsMaxChannelCapacity
-      | `exceedsMaxTriggerStateCardinality ]
+      | `exceedsMaxTriggerStateCardinality
+      | `destinationPerDayReportingLimitReached ]
 
     let _attributionreportingsourceregistrationresult_of_yojson = function
       | `String "success" -> `success
@@ -28286,6 +28294,8 @@ end = struct
       | `String "exceedsMaxChannelCapacity" -> `exceedsMaxChannelCapacity
       | `String "exceedsMaxTriggerStateCardinality" ->
           `exceedsMaxTriggerStateCardinality
+      | `String "destinationPerDayReportingLimitReached" ->
+          `destinationPerDayReportingLimitReached
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -28308,6 +28318,8 @@ end = struct
       | `exceedsMaxChannelCapacity -> `String "exceedsMaxChannelCapacity"
       | `exceedsMaxTriggerStateCardinality ->
           `String "exceedsMaxTriggerStateCardinality"
+      | `destinationPerDayReportingLimitReached ->
+          `String "destinationPerDayReportingLimitReached"
 
     type t = _attributionreportingsourceregistrationresult
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
