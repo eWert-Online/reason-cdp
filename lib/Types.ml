@@ -5659,6 +5659,12 @@ and Browser : sig
           [@ocaml.doc
             "For \"clipboard\" permission, may specify \
              allowWithoutSanitization."]
+      allowWithoutGesture : bool option;
+          [@key "allowWithoutGesture"]
+          [@yojson.option]
+          [@ocaml.doc
+            "For \"fullscreen\" permission, must specify \
+             allowWithoutGesture:true."]
       panTiltZoom : bool option;
           [@key "panTiltZoom"]
           [@yojson.option]
@@ -5990,6 +5996,12 @@ end = struct
           [@ocaml.doc
             "For \"clipboard\" permission, may specify \
              allowWithoutSanitization."]
+      allowWithoutGesture : bool option;
+          [@key "allowWithoutGesture"]
+          [@yojson.option]
+          [@ocaml.doc
+            "For \"fullscreen\" permission, must specify \
+             allowWithoutGesture:true."]
       panTiltZoom : bool option;
           [@key "panTiltZoom"]
           [@yojson.option]
@@ -6026,6 +6038,12 @@ end = struct
           [@ocaml.doc
             "For \"clipboard\" permission, may specify \
              allowWithoutSanitization."]
+      allowWithoutGesture : bool option;
+          [@key "allowWithoutGesture"]
+          [@yojson.option]
+          [@ocaml.doc
+            "For \"fullscreen\" permission, must specify \
+             allowWithoutGesture:true."]
       panTiltZoom : bool option;
           [@key "panTiltZoom"]
           [@yojson.option]

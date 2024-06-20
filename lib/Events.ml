@@ -1907,22 +1907,6 @@ module Network = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
-  (* Fired once security policy has been updated. *)
-  module PolicyUpdated = struct
-    let name = "Network.policyUpdated"
-
-    type result = Types.empty [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-
   (* Fired once when parsing the .wbn file has succeeded.
      The event contains the information about the web bundle contents. *)
   module SubresourceWebBundleMetadataReceived = struct
