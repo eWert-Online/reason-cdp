@@ -2146,7 +2146,9 @@ and Audits : sig
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
       | `ClientMetadataInvalidContentType
+      | `IdpNotPotentiallyTrustworthy
       | `DisabledInSettings
+      | `DisabledInFlags
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -2169,6 +2171,7 @@ and Audits : sig
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
       | `ReplacedByButtonMode
+      | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching ]
 
@@ -4231,7 +4234,9 @@ end = struct
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
       | `ClientMetadataInvalidContentType
+      | `IdpNotPotentiallyTrustworthy
       | `DisabledInSettings
+      | `DisabledInFlags
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -4254,6 +4259,7 @@ end = struct
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
       | `ReplacedByButtonMode
+      | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching ]
 
@@ -4290,7 +4296,9 @@ end = struct
       | `ClientMetadataNoResponse
       | `ClientMetadataInvalidResponse
       | `ClientMetadataInvalidContentType
+      | `IdpNotPotentiallyTrustworthy
       | `DisabledInSettings
+      | `DisabledInFlags
       | `ErrorFetchingSignin
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
@@ -4313,6 +4321,7 @@ end = struct
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
       | `ReplacedByButtonMode
+      | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching ]
 
@@ -4336,7 +4345,9 @@ end = struct
           `ClientMetadataInvalidResponse
       | `String "ClientMetadataInvalidContentType" ->
           `ClientMetadataInvalidContentType
+      | `String "IdpNotPotentiallyTrustworthy" -> `IdpNotPotentiallyTrustworthy
       | `String "DisabledInSettings" -> `DisabledInSettings
+      | `String "DisabledInFlags" -> `DisabledInFlags
       | `String "ErrorFetchingSignin" -> `ErrorFetchingSignin
       | `String "InvalidSigninResponse" -> `InvalidSigninResponse
       | `String "AccountsHttpNotFound" -> `AccountsHttpNotFound
@@ -4361,6 +4372,7 @@ end = struct
       | `String "MissingTransientUserActivation" ->
           `MissingTransientUserActivation
       | `String "ReplacedByButtonMode" -> `ReplacedByButtonMode
+      | `String "InvalidFieldsSpecified" -> `InvalidFieldsSpecified
       | `String "RelyingPartyOriginIsOpaque" -> `RelyingPartyOriginIsOpaque
       | `String "TypeNotMatching" -> `TypeNotMatching
       | `String s -> failwith ("unknown enum: " ^ s)
@@ -4386,7 +4398,9 @@ end = struct
           `String "ClientMetadataInvalidResponse"
       | `ClientMetadataInvalidContentType ->
           `String "ClientMetadataInvalidContentType"
+      | `IdpNotPotentiallyTrustworthy -> `String "IdpNotPotentiallyTrustworthy"
       | `DisabledInSettings -> `String "DisabledInSettings"
+      | `DisabledInFlags -> `String "DisabledInFlags"
       | `ErrorFetchingSignin -> `String "ErrorFetchingSignin"
       | `InvalidSigninResponse -> `String "InvalidSigninResponse"
       | `AccountsHttpNotFound -> `String "AccountsHttpNotFound"
@@ -4411,6 +4425,7 @@ end = struct
       | `MissingTransientUserActivation ->
           `String "MissingTransientUserActivation"
       | `ReplacedByButtonMode -> `String "ReplacedByButtonMode"
+      | `InvalidFieldsSpecified -> `String "InvalidFieldsSpecified"
       | `RelyingPartyOriginIsOpaque -> `String "RelyingPartyOriginIsOpaque"
       | `TypeNotMatching -> `String "TypeNotMatching"
 
