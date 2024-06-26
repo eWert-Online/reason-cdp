@@ -32355,7 +32355,7 @@ module PWA = struct
     end
   end
 
-  (* Uninstals the given manifest_id and closes any opened app windows. *)
+  (* Uninstalls the given manifest_id and closes any opened app windows. *)
   module Uninstall = struct
     module Response : sig
       type result = Types.assoc
@@ -32484,7 +32484,7 @@ module PWA = struct
      used to attach to via Target.attachToTarget or similar APIs.
      If some files in the parameters cannot be handled by the web app, they will
      be ignored. If none of the files can be handled, this API returns an error.
-     If no files provided as the parameter, this API also returns an error.
+     If no files are provided as the parameter, this API also returns an error.
 
      According to the definition of the file handlers in the manifest file, one
      Target.TargetID may represent a page handling one or more files. The order
@@ -32559,7 +32559,7 @@ module PWA = struct
 
   (* Opens the current page in its web app identified by the manifest id, needs
      to be called on a page target. This function returns immediately without
-     waiting for the app finishing loading. *)
+     waiting for the app to finish loading. *)
   module OpenCurrentPageInApp = struct
     module Response : sig
       type result = Types.assoc
@@ -32609,6 +32609,88 @@ module PWA = struct
 
       let make ?sessionId ~params id =
         { id; method_ = "PWA.openCurrentPageInApp"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Changes user settings of the web app identified by its manifestId. If the
+     app was not installed, this command returns an error. Unset parameters will
+     be ignored; unrecognized values will cause an error.
+
+     Unlike the ones defined in the manifest files of the web apps, these
+     settings are provided by the browser and controlled by the users, they
+     impact the way the browser handling the web apps.
+
+     See the comment of each parameter. *)
+  module ChangeAppUserSettings = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+        linkCapturing : bool option;
+            [@key "linkCapturing"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If user allows the links clicked on by the user in the app's \
+               scope, or\n\
+               extended scope if the manifest has scope extensions and the flags\n\
+               `DesktopPWAsLinkCapturingWithScopeExtensions` and\n\
+               `WebAppEnableScopeExtensions` are enabled.\n\n\
+               Note, the API does not support resetting the linkCapturing to the\n\
+               initial value, uninstalling and installing the web app again \
+               will reset\n\
+               it.\n\n\
+               TODO(crbug.com/339453269): Setting this value on ChromeOS is not\n\
+               supported yet."]
+        displayMode : Types.PWA.DisplayMode.t option;
+            [@key "displayMode"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId ?linkCapturing ?displayMode () =
+        { manifestId; linkCapturing; displayMode }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.changeAppUserSettings"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end

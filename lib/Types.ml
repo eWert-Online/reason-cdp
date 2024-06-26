@@ -33256,6 +33256,17 @@ and PWA : sig
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
+
+  and DisplayMode : sig
+    type _displaymode = [ `standalone | `browser ]
+
+    val _displaymode_of_yojson : Yojson.Basic.t -> _displaymode
+    val yojson_of__displaymode : _displaymode -> Yojson.Basic.t
+
+    type t = _displaymode
+    [@@deriving yojson]
+    [@@ocaml.doc "If user prefers opening the app in browser or an app window."]
+  end
 end = struct
   module rec FileHandlerAccept : sig
     type t = {
@@ -33305,6 +33316,33 @@ end = struct
           [@key "displayName"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and DisplayMode : sig
+    type _displaymode = [ `standalone | `browser ]
+
+    val _displaymode_of_yojson : Yojson.Basic.t -> _displaymode
+    val yojson_of__displaymode : _displaymode -> Yojson.Basic.t
+
+    type t = _displaymode
+    [@@deriving yojson]
+    [@@ocaml.doc "If user prefers opening the app in browser or an app window."]
+  end = struct
+    type _displaymode = [ `standalone | `browser ]
+
+    let _displaymode_of_yojson = function
+      | `String "standalone" -> `standalone
+      | `String "browser" -> `browser
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__displaymode = function
+      | `standalone -> `String "standalone"
+      | `browser -> `String "browser"
+
+    type t = _displaymode
+    [@@deriving yojson]
+    [@@ocaml.doc "If user prefers opening the app in browser or an app window."]
   end
 end
 
