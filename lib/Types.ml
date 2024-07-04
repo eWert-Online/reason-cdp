@@ -6869,6 +6869,7 @@ and CSS : sig
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
       style : CSSStyle.t;
           [@key "style"] [@ocaml.doc "Associated style declaration."]
+      active : bool; [@key "active"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS @position-try rule representation."]
   end
@@ -8404,6 +8405,7 @@ end = struct
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
       style : CSSStyle.t;
           [@key "style"] [@ocaml.doc "Associated style declaration."]
+      active : bool; [@key "active"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS @position-try rule representation."]
   end = struct
@@ -8420,6 +8422,7 @@ end = struct
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
       style : CSSStyle.t;
           [@key "style"] [@ocaml.doc "Associated style declaration."]
+      active : bool; [@key "active"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS @position-try rule representation."]
   end
