@@ -21136,6 +21136,7 @@ and Page : sig
       | `compute_pressure
       | `cross_origin_isolated
       | `deferred_fetch
+      | `digital_credentials_get
       | `direct_sockets
       | `display_capture
       | `document_domain
@@ -22511,6 +22512,7 @@ end = struct
       | `compute_pressure
       | `cross_origin_isolated
       | `deferred_fetch
+      | `digital_credentials_get
       | `direct_sockets
       | `display_capture
       | `document_domain
@@ -22611,6 +22613,7 @@ end = struct
       | `compute_pressure
       | `cross_origin_isolated
       | `deferred_fetch
+      | `digital_credentials_get
       | `direct_sockets
       | `display_capture
       | `document_domain
@@ -22699,6 +22702,7 @@ end = struct
       | `String "compute-pressure" -> `compute_pressure
       | `String "cross-origin-isolated" -> `cross_origin_isolated
       | `String "deferred-fetch" -> `deferred_fetch
+      | `String "digital-credentials-get" -> `digital_credentials_get
       | `String "direct-sockets" -> `direct_sockets
       | `String "display-capture" -> `display_capture
       | `String "document-domain" -> `document_domain
@@ -22792,6 +22796,7 @@ end = struct
       | `compute_pressure -> `String "compute-pressure"
       | `cross_origin_isolated -> `String "cross-origin-isolated"
       | `deferred_fetch -> `String "deferred-fetch"
+      | `digital_credentials_get -> `String "digital-credentials-get"
       | `direct_sockets -> `String "direct-sockets"
       | `display_capture -> `String "display-capture"
       | `document_domain -> `String "document-domain"
