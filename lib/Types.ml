@@ -12532,6 +12532,128 @@ end = struct
   end
 end
 
+and FileSystem : sig
+  module rec File : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      lastModified : Network.TimeSinceEpoch.t;
+          [@key "lastModified"] [@ocaml.doc "Timestamp"]
+      size : number; [@key "size"] [@ocaml.doc "Size in bytes"]
+      type_ : string; [@key "type"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and Directory : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      nestedDirectories : string list;
+          [@key "nestedDirectories"] [@ocaml.doc "No description provided"]
+      nestedFiles : File.t list;
+          [@key "nestedFiles"]
+          [@ocaml.doc "Files that are directly nested under this directory."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and BucketFileSystemLocator : sig
+    type t = {
+      storageKey : Storage.SerializedStorageKey.t;
+          [@key "storageKey"] [@ocaml.doc "Storage key"]
+      bucketName : string option;
+          [@key "bucketName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Bucket name. Not passing a `bucketName` will retrieve the default \
+             Bucket. \
+             (https://developer.mozilla.org/en-US/docs/Web/API/Storage_API#storage_buckets)"]
+      pathComponents : string list;
+          [@key "pathComponents"]
+          [@ocaml.doc
+            "Path to the directory using each path component as an array item."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end = struct
+  module rec File : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      lastModified : Network.TimeSinceEpoch.t;
+          [@key "lastModified"] [@ocaml.doc "Timestamp"]
+      size : number; [@key "size"] [@ocaml.doc "Size in bytes"]
+      type_ : string; [@key "type"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      lastModified : Network.TimeSinceEpoch.t;
+          [@key "lastModified"] [@ocaml.doc "Timestamp"]
+      size : number; [@key "size"] [@ocaml.doc "Size in bytes"]
+      type_ : string; [@key "type"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and Directory : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      nestedDirectories : string list;
+          [@key "nestedDirectories"] [@ocaml.doc "No description provided"]
+      nestedFiles : File.t list;
+          [@key "nestedFiles"]
+          [@ocaml.doc "Files that are directly nested under this directory."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      nestedDirectories : string list;
+          [@key "nestedDirectories"] [@ocaml.doc "No description provided"]
+      nestedFiles : File.t list;
+          [@key "nestedFiles"]
+          [@ocaml.doc "Files that are directly nested under this directory."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and BucketFileSystemLocator : sig
+    type t = {
+      storageKey : Storage.SerializedStorageKey.t;
+          [@key "storageKey"] [@ocaml.doc "Storage key"]
+      bucketName : string option;
+          [@key "bucketName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Bucket name. Not passing a `bucketName` will retrieve the default \
+             Bucket. \
+             (https://developer.mozilla.org/en-US/docs/Web/API/Storage_API#storage_buckets)"]
+      pathComponents : string list;
+          [@key "pathComponents"]
+          [@ocaml.doc
+            "Path to the directory using each path component as an array item."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      storageKey : Storage.SerializedStorageKey.t;
+          [@key "storageKey"] [@ocaml.doc "Storage key"]
+      bucketName : string option;
+          [@key "bucketName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Bucket name. Not passing a `bucketName` will retrieve the default \
+             Bucket. \
+             (https://developer.mozilla.org/en-US/docs/Web/API/Storage_API#storage_buckets)"]
+      pathComponents : string list;
+          [@key "pathComponents"]
+          [@ocaml.doc
+            "Path to the directory using each path component as an array item."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end
+
 and IndexedDB : sig
   module rec DatabaseWithObjectStores : sig
     type t = {
@@ -27143,6 +27265,8 @@ and Storage : sig
             "number instead of integer because not all uint32 can be \
              represented by\n\
              int"]
+      filteringId : UnsignedInt64AsBase10.t;
+          [@key "filteringId"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -27215,6 +27339,9 @@ and Storage : sig
           [@ocaml.doc "No description provided"]
       aggregatableValues : AttributionReportingAggregatableValueEntry.t list;
           [@key "aggregatableValues"] [@ocaml.doc "No description provided"]
+      aggregatableFilteringIdMaxBytes : number;
+          [@key "aggregatableFilteringIdMaxBytes"]
+          [@ocaml.doc "No description provided"]
       debugReporting : bool;
           [@key "debugReporting"] [@ocaml.doc "No description provided"]
       aggregationCoordinatorOrigin : string option;
@@ -28405,6 +28532,8 @@ end = struct
             "number instead of integer because not all uint32 can be \
              represented by\n\
              int"]
+      filteringId : UnsignedInt64AsBase10.t;
+          [@key "filteringId"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -28416,6 +28545,8 @@ end = struct
             "number instead of integer because not all uint32 can be \
              represented by\n\
              int"]
+      filteringId : UnsignedInt64AsBase10.t;
+          [@key "filteringId"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -28530,6 +28661,9 @@ end = struct
           [@ocaml.doc "No description provided"]
       aggregatableValues : AttributionReportingAggregatableValueEntry.t list;
           [@key "aggregatableValues"] [@ocaml.doc "No description provided"]
+      aggregatableFilteringIdMaxBytes : number;
+          [@key "aggregatableFilteringIdMaxBytes"]
+          [@ocaml.doc "No description provided"]
       debugReporting : bool;
           [@key "debugReporting"] [@ocaml.doc "No description provided"]
       aggregationCoordinatorOrigin : string option;
@@ -28564,6 +28698,9 @@ end = struct
           [@ocaml.doc "No description provided"]
       aggregatableValues : AttributionReportingAggregatableValueEntry.t list;
           [@key "aggregatableValues"] [@ocaml.doc "No description provided"]
+      aggregatableFilteringIdMaxBytes : number;
+          [@key "aggregatableFilteringIdMaxBytes"]
+          [@ocaml.doc "No description provided"]
       debugReporting : bool;
           [@key "debugReporting"] [@ocaml.doc "No description provided"]
       aggregationCoordinatorOrigin : string option;
