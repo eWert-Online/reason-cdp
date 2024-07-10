@@ -1993,8 +1993,7 @@ and Audits : sig
 
   and GenericIssueErrorType : sig
     type _genericissueerrortype =
-      [ `CrossOriginPortalPostMessageError
-      | `FormLabelForNameError
+      [ `FormLabelForNameError
       | `FormDuplicateIdForInputError
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
@@ -3913,8 +3912,7 @@ end = struct
 
   and GenericIssueErrorType : sig
     type _genericissueerrortype =
-      [ `CrossOriginPortalPostMessageError
-      | `FormLabelForNameError
+      [ `FormLabelForNameError
       | `FormDuplicateIdForInputError
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
@@ -3936,8 +3934,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type _genericissueerrortype =
-      [ `CrossOriginPortalPostMessageError
-      | `FormLabelForNameError
+      [ `FormLabelForNameError
       | `FormDuplicateIdForInputError
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
@@ -3950,8 +3947,6 @@ end = struct
       | `ResponseWasBlockedByORB ]
 
     let _genericissueerrortype_of_yojson = function
-      | `String "CrossOriginPortalPostMessageError" ->
-          `CrossOriginPortalPostMessageError
       | `String "FormLabelForNameError" -> `FormLabelForNameError
       | `String "FormDuplicateIdForInputError" -> `FormDuplicateIdForInputError
       | `String "FormInputWithNoLabelError" -> `FormInputWithNoLabelError
@@ -3974,8 +3969,6 @@ end = struct
       | _ -> failwith "unknown enum type"
 
     let yojson_of__genericissueerrortype = function
-      | `CrossOriginPortalPostMessageError ->
-          `String "CrossOriginPortalPostMessageError"
       | `FormLabelForNameError -> `String "FormLabelForNameError"
       | `FormDuplicateIdForInputError -> `String "FormDuplicateIdForInputError"
       | `FormInputWithNoLabelError -> `String "FormInputWithNoLabelError"
@@ -22231,7 +22224,6 @@ and Page : sig
       | `Printing
       | `WebDatabase
       | `PictureInPicture
-      | `Portal
       | `SpeechRecognizer
       | `IdleManager
       | `PaymentManager
@@ -24761,7 +24753,6 @@ end = struct
       | `Printing
       | `WebDatabase
       | `PictureInPicture
-      | `Portal
       | `SpeechRecognizer
       | `IdleManager
       | `PaymentManager
@@ -24911,7 +24902,6 @@ end = struct
       | `Printing
       | `WebDatabase
       | `PictureInPicture
-      | `Portal
       | `SpeechRecognizer
       | `IdleManager
       | `PaymentManager
@@ -25081,7 +25071,6 @@ end = struct
       | `String "Printing" -> `Printing
       | `String "WebDatabase" -> `WebDatabase
       | `String "PictureInPicture" -> `PictureInPicture
-      | `String "Portal" -> `Portal
       | `String "SpeechRecognizer" -> `SpeechRecognizer
       | `String "IdleManager" -> `IdleManager
       | `String "PaymentManager" -> `PaymentManager
@@ -25266,7 +25255,6 @@ end = struct
       | `Printing -> `String "Printing"
       | `WebDatabase -> `String "WebDatabase"
       | `PictureInPicture -> `String "PictureInPicture"
-      | `Portal -> `String "Portal"
       | `SpeechRecognizer -> `String "SpeechRecognizer"
       | `IdleManager -> `String "IdleManager"
       | `PaymentManager -> `String "PaymentManager"
@@ -29542,8 +29530,7 @@ and Target : sig
           [@ocaml.doc
             "Provides additional details for specific target types. For \
              example, for\n\
-             the type of \"page\", this may be set to \"portal\" or \
-             \"prerender\"."]
+             the type of \"page\", this may be set to \"prerender\"."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -29637,8 +29624,7 @@ end = struct
           [@ocaml.doc
             "Provides additional details for specific target types. For \
              example, for\n\
-             the type of \"page\", this may be set to \"portal\" or \
-             \"prerender\"."]
+             the type of \"page\", this may be set to \"prerender\"."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -29677,8 +29663,7 @@ end = struct
           [@ocaml.doc
             "Provides additional details for specific target types. For \
              example, for\n\
-             the type of \"page\", this may be set to \"portal\" or \
-             \"prerender\"."]
+             the type of \"page\", this may be set to \"prerender\"."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -32148,7 +32133,8 @@ and Preload : sig
       | `ActivationUrlHasEffectiveUrl
       | `JavaScriptInterfaceAdded
       | `JavaScriptInterfaceRemoved
-      | `AllPrerenderingCanceled ]
+      | `AllPrerenderingCanceled
+      | `WindowClosed ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -32587,7 +32573,8 @@ end = struct
       | `ActivationUrlHasEffectiveUrl
       | `JavaScriptInterfaceAdded
       | `JavaScriptInterfaceRemoved
-      | `AllPrerenderingCanceled ]
+      | `AllPrerenderingCanceled
+      | `WindowClosed ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -32667,7 +32654,8 @@ end = struct
       | `ActivationUrlHasEffectiveUrl
       | `JavaScriptInterfaceAdded
       | `JavaScriptInterfaceRemoved
-      | `AllPrerenderingCanceled ]
+      | `AllPrerenderingCanceled
+      | `WindowClosed ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -32762,6 +32750,7 @@ end = struct
       | `String "JavaScriptInterfaceAdded" -> `JavaScriptInterfaceAdded
       | `String "JavaScriptInterfaceRemoved" -> `JavaScriptInterfaceRemoved
       | `String "AllPrerenderingCanceled" -> `AllPrerenderingCanceled
+      | `String "WindowClosed" -> `WindowClosed
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -32858,6 +32847,7 @@ end = struct
       | `JavaScriptInterfaceAdded -> `String "JavaScriptInterfaceAdded"
       | `JavaScriptInterfaceRemoved -> `String "JavaScriptInterfaceRemoved"
       | `AllPrerenderingCanceled -> `String "AllPrerenderingCanceled"
+      | `WindowClosed -> `String "WindowClosed"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
