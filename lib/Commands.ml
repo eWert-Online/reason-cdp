@@ -3703,6 +3703,13 @@ module CSS = struct
             [@ocaml.doc
               "A list of CSS @position-try rules matching this node, based on \
                the position-try-fallbacks property."]
+        activePositionFallbackIndex : Types.number option;
+            [@key "activePositionFallbackIndex"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Index of the active fallback in the applied \
+               position-try-fallback property,\n\
+               will not be set if there is no active position-try fallback."]
         cssPropertyRules : Types.CSS.CSSPropertyRule.t list option;
             [@key "cssPropertyRules"]
             [@yojson.option]
@@ -3785,6 +3792,13 @@ module CSS = struct
             [@ocaml.doc
               "A list of CSS @position-try rules matching this node, based on \
                the position-try-fallbacks property."]
+        activePositionFallbackIndex : Types.number option;
+            [@key "activePositionFallbackIndex"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Index of the active fallback in the applied \
+               position-try-fallback property,\n\
+               will not be set if there is no active position-try fallback."]
         cssPropertyRules : Types.CSS.CSSPropertyRule.t list option;
             [@key "cssPropertyRules"]
             [@yojson.option]

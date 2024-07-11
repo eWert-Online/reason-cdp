@@ -15682,7 +15682,8 @@ and Network : sig
       | `RestrictProperties
       | `UnsafeNone
       | `SameOriginPlusCoep
-      | `RestrictPropertiesPlusCoep ]
+      | `RestrictPropertiesPlusCoep
+      | `NoopenerAllowPopups ]
 
     val _crossoriginopenerpolicyvalue_of_yojson :
       Yojson.Basic.t -> _crossoriginopenerpolicyvalue
@@ -19158,7 +19159,8 @@ end = struct
       | `RestrictProperties
       | `UnsafeNone
       | `SameOriginPlusCoep
-      | `RestrictPropertiesPlusCoep ]
+      | `RestrictPropertiesPlusCoep
+      | `NoopenerAllowPopups ]
 
     val _crossoriginopenerpolicyvalue_of_yojson :
       Yojson.Basic.t -> _crossoriginopenerpolicyvalue
@@ -19175,7 +19177,8 @@ end = struct
       | `RestrictProperties
       | `UnsafeNone
       | `SameOriginPlusCoep
-      | `RestrictPropertiesPlusCoep ]
+      | `RestrictPropertiesPlusCoep
+      | `NoopenerAllowPopups ]
 
     let _crossoriginopenerpolicyvalue_of_yojson = function
       | `String "SameOrigin" -> `SameOrigin
@@ -19184,6 +19187,7 @@ end = struct
       | `String "UnsafeNone" -> `UnsafeNone
       | `String "SameOriginPlusCoep" -> `SameOriginPlusCoep
       | `String "RestrictPropertiesPlusCoep" -> `RestrictPropertiesPlusCoep
+      | `String "NoopenerAllowPopups" -> `NoopenerAllowPopups
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -19194,6 +19198,7 @@ end = struct
       | `UnsafeNone -> `String "UnsafeNone"
       | `SameOriginPlusCoep -> `String "SameOriginPlusCoep"
       | `RestrictPropertiesPlusCoep -> `String "RestrictPropertiesPlusCoep"
+      | `NoopenerAllowPopups -> `String "NoopenerAllowPopups"
 
     type t = _crossoriginopenerpolicyvalue
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
