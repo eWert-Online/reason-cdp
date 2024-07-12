@@ -27204,6 +27204,9 @@ and Storage : sig
           [@ocaml.doc "No description provided"]
       triggerDataMatching : AttributionReportingTriggerDataMatching.t;
           [@key "triggerDataMatching"] [@ocaml.doc "No description provided"]
+      destinationLimitPriority : SignedInt64AsBase10.t;
+          [@key "destinationLimitPriority"]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -28357,6 +28360,9 @@ end = struct
           [@ocaml.doc "No description provided"]
       triggerDataMatching : AttributionReportingTriggerDataMatching.t;
           [@key "triggerDataMatching"] [@ocaml.doc "No description provided"]
+      destinationLimitPriority : SignedInt64AsBase10.t;
+          [@key "destinationLimitPriority"]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -28390,6 +28396,9 @@ end = struct
           [@ocaml.doc "No description provided"]
       triggerDataMatching : AttributionReportingTriggerDataMatching.t;
           [@key "triggerDataMatching"] [@ocaml.doc "No description provided"]
+      destinationLimitPriority : SignedInt64AsBase10.t;
+          [@key "destinationLimitPriority"]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
