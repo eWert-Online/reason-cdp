@@ -27173,6 +27173,42 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingAggregatableDebugReportingData : sig
+    type t = {
+      keyPiece : UnsignedInt128AsBase16.t;
+          [@key "keyPiece"] [@ocaml.doc "No description provided"]
+      value : number;
+          [@key "value"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+      types : string list; [@key "types"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableDebugReportingConfig : sig
+    type t = {
+      budget : number option;
+          [@key "budget"]
+          [@yojson.option]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int, only present for source registrations"]
+      keyPiece : UnsignedInt128AsBase16.t;
+          [@key "keyPiece"] [@ocaml.doc "No description provided"]
+      debugData : AttributionReportingAggregatableDebugReportingData.t list;
+          [@key "debugData"] [@ocaml.doc "No description provided"]
+      aggregationCoordinatorOrigin : string option;
+          [@key "aggregationCoordinatorOrigin"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingSourceRegistration : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
@@ -27206,6 +27242,10 @@ and Storage : sig
           [@key "triggerDataMatching"] [@ocaml.doc "No description provided"]
       destinationLimitPriority : SignedInt64AsBase10.t;
           [@key "destinationLimitPriority"]
+          [@ocaml.doc "No description provided"]
+      aggregatableDebugReportingConfig :
+        AttributionReportingAggregatableDebugReportingConfig.t;
+          [@key "aggregatableDebugReportingConfig"]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -27351,6 +27391,10 @@ and Storage : sig
       triggerContextId : string option;
           [@key "triggerContextId"]
           [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      aggregatableDebugReportingConfig :
+        AttributionReportingAggregatableDebugReportingConfig.t;
+          [@key "aggregatableDebugReportingConfig"]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -28329,6 +28373,74 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingAggregatableDebugReportingData : sig
+    type t = {
+      keyPiece : UnsignedInt128AsBase16.t;
+          [@key "keyPiece"] [@ocaml.doc "No description provided"]
+      value : number;
+          [@key "value"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+      types : string list; [@key "types"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      keyPiece : UnsignedInt128AsBase16.t;
+          [@key "keyPiece"] [@ocaml.doc "No description provided"]
+      value : number;
+          [@key "value"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+      types : string list; [@key "types"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingAggregatableDebugReportingConfig : sig
+    type t = {
+      budget : number option;
+          [@key "budget"]
+          [@yojson.option]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int, only present for source registrations"]
+      keyPiece : UnsignedInt128AsBase16.t;
+          [@key "keyPiece"] [@ocaml.doc "No description provided"]
+      debugData : AttributionReportingAggregatableDebugReportingData.t list;
+          [@key "debugData"] [@ocaml.doc "No description provided"]
+      aggregationCoordinatorOrigin : string option;
+          [@key "aggregationCoordinatorOrigin"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      budget : number option;
+          [@key "budget"]
+          [@yojson.option]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int, only present for source registrations"]
+      keyPiece : UnsignedInt128AsBase16.t;
+          [@key "keyPiece"] [@ocaml.doc "No description provided"]
+      debugData : AttributionReportingAggregatableDebugReportingData.t list;
+          [@key "debugData"] [@ocaml.doc "No description provided"]
+      aggregationCoordinatorOrigin : string option;
+          [@key "aggregationCoordinatorOrigin"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingSourceRegistration : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
@@ -28362,6 +28474,10 @@ end = struct
           [@key "triggerDataMatching"] [@ocaml.doc "No description provided"]
       destinationLimitPriority : SignedInt64AsBase10.t;
           [@key "destinationLimitPriority"]
+          [@ocaml.doc "No description provided"]
+      aggregatableDebugReportingConfig :
+        AttributionReportingAggregatableDebugReportingConfig.t;
+          [@key "aggregatableDebugReportingConfig"]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -28398,6 +28514,10 @@ end = struct
           [@key "triggerDataMatching"] [@ocaml.doc "No description provided"]
       destinationLimitPriority : SignedInt64AsBase10.t;
           [@key "destinationLimitPriority"]
+          [@ocaml.doc "No description provided"]
+      aggregatableDebugReportingConfig :
+        AttributionReportingAggregatableDebugReportingConfig.t;
+          [@key "aggregatableDebugReportingConfig"]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -28680,6 +28800,10 @@ end = struct
           [@key "triggerContextId"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      aggregatableDebugReportingConfig :
+        AttributionReportingAggregatableDebugReportingConfig.t;
+          [@key "aggregatableDebugReportingConfig"]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -28716,6 +28840,10 @@ end = struct
       triggerContextId : string option;
           [@key "triggerContextId"]
           [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      aggregatableDebugReportingConfig :
+        AttributionReportingAggregatableDebugReportingConfig.t;
+          [@key "aggregatableDebugReportingConfig"]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
