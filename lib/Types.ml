@@ -11903,6 +11903,36 @@ and Emulation : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and PressureSource : sig
+    type _pressuresource = [ `cpu ]
+
+    val _pressuresource_of_yojson : Yojson.Basic.t -> _pressuresource
+    val yojson_of__pressuresource : _pressuresource -> Yojson.Basic.t
+
+    type t = _pressuresource
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PressureState : sig
+    type _pressurestate = [ `nominal | `fair | `serious | `critical ]
+
+    val _pressurestate_of_yojson : Yojson.Basic.t -> _pressurestate
+    val yojson_of__pressurestate : _pressurestate -> Yojson.Basic.t
+
+    type t = _pressurestate
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PressureMetadata : sig
+    type t = {
+      available : bool option;
+          [@key "available"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and DisabledImageType : sig
     type _disabledimagetype = [ `avif | `webp ]
 
@@ -12371,6 +12401,75 @@ end = struct
           [@key "xyz"] [@yojson.option] [@ocaml.doc "No description provided"]
       quaternion : SensorReadingQuaternion.t option;
           [@key "quaternion"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PressureSource : sig
+    type _pressuresource = [ `cpu ]
+
+    val _pressuresource_of_yojson : Yojson.Basic.t -> _pressuresource
+    val yojson_of__pressuresource : _pressuresource -> Yojson.Basic.t
+
+    type t = _pressuresource
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _pressuresource = [ `cpu ]
+
+    let _pressuresource_of_yojson = function
+      | `String "cpu" -> `cpu
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__pressuresource = function `cpu -> `String "cpu"
+
+    type t = _pressuresource
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PressureState : sig
+    type _pressurestate = [ `nominal | `fair | `serious | `critical ]
+
+    val _pressurestate_of_yojson : Yojson.Basic.t -> _pressurestate
+    val yojson_of__pressurestate : _pressurestate -> Yojson.Basic.t
+
+    type t = _pressurestate
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _pressurestate = [ `nominal | `fair | `serious | `critical ]
+
+    let _pressurestate_of_yojson = function
+      | `String "nominal" -> `nominal
+      | `String "fair" -> `fair
+      | `String "serious" -> `serious
+      | `String "critical" -> `critical
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__pressurestate = function
+      | `nominal -> `String "nominal"
+      | `fair -> `String "fair"
+      | `serious -> `String "serious"
+      | `critical -> `String "critical"
+
+    type t = _pressurestate
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PressureMetadata : sig
+    type t = {
+      available : bool option;
+          [@key "available"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      available : bool option;
+          [@key "available"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }

@@ -12256,6 +12256,136 @@ module Emulation = struct
     end
   end
 
+  (* Overrides a pressure source of a given type, as used by the Compute
+     Pressure API, so that updates to PressureObserver.observe() are provided
+     via setPressureStateOverride instead of being retrieved from
+     platform-provided telemetry data. *)
+  module SetPressureSourceOverrideEnabled = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        enabled : bool; [@key "enabled"] [@ocaml.doc "No description provided"]
+        source : Types.Emulation.PressureSource.t;
+            [@key "source"] [@ocaml.doc "No description provided"]
+        metadata : Types.Emulation.PressureMetadata.t option;
+            [@key "metadata"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~enabled ~source ?metadata () = { enabled; source; metadata }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Emulation.setPressureSourceOverrideEnabled";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Provides a given pressure state that will be processed and eventually be
+     delivered to PressureObserver users. |source| must have been previously
+     overridden by setPressureSourceOverrideEnabled. *)
+  module SetPressureStateOverride = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        source : Types.Emulation.PressureSource.t;
+            [@key "source"] [@ocaml.doc "No description provided"]
+        state : Types.Emulation.PressureState.t;
+            [@key "state"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~source ~state () = { source; state }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Emulation.setPressureStateOverride";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Overrides the Idle state. *)
   module SetIdleOverride = struct
     module Response : sig
