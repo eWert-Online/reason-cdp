@@ -21376,6 +21376,7 @@ and Page : sig
       | `keyboard_map
       | `local_fonts
       | `magnetometer
+      | `media_playback_while_not_visible
       | `microphone
       | `midi
       | `otp_credentials
@@ -22751,6 +22752,7 @@ end = struct
       | `keyboard_map
       | `local_fonts
       | `magnetometer
+      | `media_playback_while_not_visible
       | `microphone
       | `midi
       | `otp_credentials
@@ -22852,6 +22854,7 @@ end = struct
       | `keyboard_map
       | `local_fonts
       | `magnetometer
+      | `media_playback_while_not_visible
       | `microphone
       | `midi
       | `otp_credentials
@@ -22943,6 +22946,8 @@ end = struct
       | `String "keyboard-map" -> `keyboard_map
       | `String "local-fonts" -> `local_fonts
       | `String "magnetometer" -> `magnetometer
+      | `String "media-playback-while-not-visible" ->
+          `media_playback_while_not_visible
       | `String "microphone" -> `microphone
       | `String "midi" -> `midi
       | `String "otp-credentials" -> `otp_credentials
@@ -23037,6 +23042,8 @@ end = struct
       | `keyboard_map -> `String "keyboard-map"
       | `local_fonts -> `String "local-fonts"
       | `magnetometer -> `String "magnetometer"
+      | `media_playback_while_not_visible ->
+          `String "media-playback-while-not-visible"
       | `microphone -> `String "microphone"
       | `midi -> `String "midi"
       | `otp_credentials -> `String "otp-credentials"
