@@ -32382,7 +32382,8 @@ and Preload : sig
       | `JavaScriptInterfaceAdded
       | `JavaScriptInterfaceRemoved
       | `AllPrerenderingCanceled
-      | `WindowClosed ]
+      | `WindowClosed
+      | `SlowNetwork ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -32822,7 +32823,8 @@ end = struct
       | `JavaScriptInterfaceAdded
       | `JavaScriptInterfaceRemoved
       | `AllPrerenderingCanceled
-      | `WindowClosed ]
+      | `WindowClosed
+      | `SlowNetwork ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -32903,7 +32905,8 @@ end = struct
       | `JavaScriptInterfaceAdded
       | `JavaScriptInterfaceRemoved
       | `AllPrerenderingCanceled
-      | `WindowClosed ]
+      | `WindowClosed
+      | `SlowNetwork ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -32999,6 +33002,7 @@ end = struct
       | `String "JavaScriptInterfaceRemoved" -> `JavaScriptInterfaceRemoved
       | `String "AllPrerenderingCanceled" -> `AllPrerenderingCanceled
       | `String "WindowClosed" -> `WindowClosed
+      | `String "SlowNetwork" -> `SlowNetwork
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -33096,6 +33100,7 @@ end = struct
       | `JavaScriptInterfaceRemoved -> `String "JavaScriptInterfaceRemoved"
       | `AllPrerenderingCanceled -> `String "AllPrerenderingCanceled"
       | `WindowClosed -> `String "WindowClosed"
+      | `SlowNetwork -> `String "SlowNetwork"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
