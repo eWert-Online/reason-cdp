@@ -1424,7 +1424,9 @@ end
 module Extensions = struct
   (* Installs an unpacked extension from the filesystem similar to
      --load-extension CLI flags. Returns extension ID once the extension
-     has been installed. *)
+     has been installed. Available if the client is connected using the
+     --remote-debugging-pipe flag and the --enable-unsafe-extension-debugging
+     flag is set. *)
   module LoadUnpacked = struct
     module Response : sig
       type result = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
@@ -1475,6 +1477,72 @@ module Extensions = struct
 
       let make ?sessionId ~params id =
         { id; method_ = "Extensions.loadUnpacked"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Gets data from extension storage in the given `area`. If `keys` is
+     specified, these are used to filter the result. *)
+  module GetStorageItems = struct
+    module Response : sig
+      type result = {
+        data : Types.assoc; [@key "data"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        data : Types.assoc; [@key "data"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : string; [@key "id"] [@ocaml.doc "ID of extension."]
+        storageArea : Types.Extensions.StorageArea.t;
+            [@key "storageArea"]
+            [@ocaml.doc "StorageArea to retrieve data from."]
+        keys : string list option;
+            [@key "keys"] [@yojson.option] [@ocaml.doc "Keys to retrieve."]
+      }
+      [@@deriving yojson]
+
+      let make ~id ~storageArea ?keys () = { id; storageArea; keys }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Extensions.getStorageItems"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end

@@ -5068,6 +5068,44 @@ end = struct
   end
 end
 
+and Extensions : sig
+  module rec StorageArea : sig
+    type _storagearea = [ `session | `local | `sync | `managed ]
+
+    val _storagearea_of_yojson : Yojson.Basic.t -> _storagearea
+    val yojson_of__storagearea : _storagearea -> Yojson.Basic.t
+
+    type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
+  end
+end = struct
+  module rec StorageArea : sig
+    type _storagearea = [ `session | `local | `sync | `managed ]
+
+    val _storagearea_of_yojson : Yojson.Basic.t -> _storagearea
+    val yojson_of__storagearea : _storagearea -> Yojson.Basic.t
+
+    type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
+  end = struct
+    type _storagearea = [ `session | `local | `sync | `managed ]
+
+    let _storagearea_of_yojson = function
+      | `String "session" -> `session
+      | `String "local" -> `local
+      | `String "sync" -> `sync
+      | `String "managed" -> `managed
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__storagearea = function
+      | `session -> `String "session"
+      | `local -> `String "local"
+      | `sync -> `String "sync"
+      | `managed -> `String "managed"
+
+    type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
+  end
+end
+
 and Autofill : sig
   module rec CreditCard : sig
     type t = {
@@ -21320,6 +21358,7 @@ and Page : sig
   and PermissionsPolicyFeature : sig
     type _permissionspolicyfeature =
       [ `accelerometer
+      | `all_screens_capture
       | `ambient_light_sensor
       | `attribution_reporting
       | `autoplay
@@ -22696,6 +22735,7 @@ end = struct
   and PermissionsPolicyFeature : sig
     type _permissionspolicyfeature =
       [ `accelerometer
+      | `all_screens_capture
       | `ambient_light_sensor
       | `attribution_reporting
       | `autoplay
@@ -22798,6 +22838,7 @@ end = struct
   end = struct
     type _permissionspolicyfeature =
       [ `accelerometer
+      | `all_screens_capture
       | `ambient_light_sensor
       | `attribution_reporting
       | `autoplay
@@ -22887,6 +22928,7 @@ end = struct
 
     let _permissionspolicyfeature_of_yojson = function
       | `String "accelerometer" -> `accelerometer
+      | `String "all-screens-capture" -> `all_screens_capture
       | `String "ambient-light-sensor" -> `ambient_light_sensor
       | `String "attribution-reporting" -> `attribution_reporting
       | `String "autoplay" -> `autoplay
@@ -22983,6 +23025,7 @@ end = struct
 
     let yojson_of__permissionspolicyfeature = function
       | `accelerometer -> `String "accelerometer"
+      | `all_screens_capture -> `String "all-screens-capture"
       | `ambient_light_sensor -> `String "ambient-light-sensor"
       | `attribution_reporting -> `String "attribution-reporting"
       | `autoplay -> `String "autoplay"
@@ -32383,7 +32426,8 @@ and Preload : sig
       | `JavaScriptInterfaceRemoved
       | `AllPrerenderingCanceled
       | `WindowClosed
-      | `SlowNetwork ]
+      | `SlowNetwork
+      | `OtherPrerenderedPageActivated ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -32824,7 +32868,8 @@ end = struct
       | `JavaScriptInterfaceRemoved
       | `AllPrerenderingCanceled
       | `WindowClosed
-      | `SlowNetwork ]
+      | `SlowNetwork
+      | `OtherPrerenderedPageActivated ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -32906,7 +32951,8 @@ end = struct
       | `JavaScriptInterfaceRemoved
       | `AllPrerenderingCanceled
       | `WindowClosed
-      | `SlowNetwork ]
+      | `SlowNetwork
+      | `OtherPrerenderedPageActivated ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -33003,6 +33049,8 @@ end = struct
       | `String "AllPrerenderingCanceled" -> `AllPrerenderingCanceled
       | `String "WindowClosed" -> `WindowClosed
       | `String "SlowNetwork" -> `SlowNetwork
+      | `String "OtherPrerenderedPageActivated" ->
+          `OtherPrerenderedPageActivated
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -33101,6 +33149,8 @@ end = struct
       | `AllPrerenderingCanceled -> `String "AllPrerenderingCanceled"
       | `WindowClosed -> `String "WindowClosed"
       | `SlowNetwork -> `String "SlowNetwork"
+      | `OtherPrerenderedPageActivated ->
+          `String "OtherPrerenderedPageActivated"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
