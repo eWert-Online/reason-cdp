@@ -6876,16 +6876,6 @@ and CSS : sig
     [@@deriving yojson] [@@ocaml.doc "CSS try rule representation."]
   end
 
-  and CSSPositionFallbackRule : sig
-    type t = {
-      name : Value.t; [@key "name"] [@ocaml.doc "No description provided"]
-      tryRules : CSSTryRule.t list;
-          [@key "tryRules"] [@ocaml.doc "List of keyframes."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "CSS position-fallback rule representation."]
-  end
-
   and CSSPositionTryRule : sig
     type t = {
       name : Value.t; [@key "name"] [@ocaml.doc "The prelude dashed-ident name"]
@@ -8402,24 +8392,6 @@ end = struct
           [@key "style"] [@ocaml.doc "Associated style declaration."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS try rule representation."]
-  end
-
-  and CSSPositionFallbackRule : sig
-    type t = {
-      name : Value.t; [@key "name"] [@ocaml.doc "No description provided"]
-      tryRules : CSSTryRule.t list;
-          [@key "tryRules"] [@ocaml.doc "List of keyframes."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "CSS position-fallback rule representation."]
-  end = struct
-    type t = {
-      name : Value.t; [@key "name"] [@ocaml.doc "No description provided"]
-      tryRules : CSSTryRule.t list;
-          [@key "tryRules"] [@ocaml.doc "List of keyframes."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "CSS position-fallback rule representation."]
   end
 
   and CSSPositionTryRule : sig
