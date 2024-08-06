@@ -33756,6 +33756,216 @@ end = struct
   end
 end
 
+and BluetoothEmulation : sig
+  module rec CentralState : sig
+    type _centralstate = [ `absent | `powered_off | `powered_on ]
+
+    val _centralstate_of_yojson : Yojson.Basic.t -> _centralstate
+    val yojson_of__centralstate : _centralstate -> Yojson.Basic.t
+
+    type t = _centralstate
+    [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
+  end
+
+  and ManufacturerData : sig
+    type t = {
+      key : number;
+          [@key "key"]
+          [@ocaml.doc
+            "Company identifier\n\
+             https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml\n\
+             https://usb.org/developers"]
+      data : string;
+          [@key "data"]
+          [@ocaml.doc
+            "Manufacturer-specific data (Encoded as a base64 string when \
+             passed over JSON)"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Stores the manufacturer data"]
+  end
+
+  and ScanRecord : sig
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      uuids : string list option;
+          [@key "uuids"] [@yojson.option] [@ocaml.doc "No description provided"]
+      appearance : number option;
+          [@key "appearance"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Stores the external appearance description of the device."]
+      txPower : number option;
+          [@key "txPower"]
+          [@yojson.option]
+          [@ocaml.doc "Stores the transmission power of a broadcasting device."]
+      manufacturerData : ManufacturerData.t list option;
+          [@key "manufacturerData"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Key is the company identifier and the value is an array of bytes of\n\
+             manufacturer specific data."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the byte data of the advertisement packet sent by a Bluetooth \
+       device."]
+  end
+
+  and ScanEntry : sig
+    type t = {
+      deviceAddress : string;
+          [@key "deviceAddress"] [@ocaml.doc "No description provided"]
+      rssi : number; [@key "rssi"] [@ocaml.doc "No description provided"]
+      scanRecord : ScanRecord.t;
+          [@key "scanRecord"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the advertisement packet information that is sent by a Bluetooth \
+       device."]
+  end
+end = struct
+  module rec CentralState : sig
+    type _centralstate = [ `absent | `powered_off | `powered_on ]
+
+    val _centralstate_of_yojson : Yojson.Basic.t -> _centralstate
+    val yojson_of__centralstate : _centralstate -> Yojson.Basic.t
+
+    type t = _centralstate
+    [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
+  end = struct
+    type _centralstate = [ `absent | `powered_off | `powered_on ]
+
+    let _centralstate_of_yojson = function
+      | `String "absent" -> `absent
+      | `String "powered-off" -> `powered_off
+      | `String "powered-on" -> `powered_on
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__centralstate = function
+      | `absent -> `String "absent"
+      | `powered_off -> `String "powered-off"
+      | `powered_on -> `String "powered-on"
+
+    type t = _centralstate
+    [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
+  end
+
+  and ManufacturerData : sig
+    type t = {
+      key : number;
+          [@key "key"]
+          [@ocaml.doc
+            "Company identifier\n\
+             https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml\n\
+             https://usb.org/developers"]
+      data : string;
+          [@key "data"]
+          [@ocaml.doc
+            "Manufacturer-specific data (Encoded as a base64 string when \
+             passed over JSON)"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Stores the manufacturer data"]
+  end = struct
+    type t = {
+      key : number;
+          [@key "key"]
+          [@ocaml.doc
+            "Company identifier\n\
+             https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml\n\
+             https://usb.org/developers"]
+      data : string;
+          [@key "data"]
+          [@ocaml.doc
+            "Manufacturer-specific data (Encoded as a base64 string when \
+             passed over JSON)"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Stores the manufacturer data"]
+  end
+
+  and ScanRecord : sig
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      uuids : string list option;
+          [@key "uuids"] [@yojson.option] [@ocaml.doc "No description provided"]
+      appearance : number option;
+          [@key "appearance"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Stores the external appearance description of the device."]
+      txPower : number option;
+          [@key "txPower"]
+          [@yojson.option]
+          [@ocaml.doc "Stores the transmission power of a broadcasting device."]
+      manufacturerData : ManufacturerData.t list option;
+          [@key "manufacturerData"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Key is the company identifier and the value is an array of bytes of\n\
+             manufacturer specific data."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the byte data of the advertisement packet sent by a Bluetooth \
+       device."]
+  end = struct
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      uuids : string list option;
+          [@key "uuids"] [@yojson.option] [@ocaml.doc "No description provided"]
+      appearance : number option;
+          [@key "appearance"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Stores the external appearance description of the device."]
+      txPower : number option;
+          [@key "txPower"]
+          [@yojson.option]
+          [@ocaml.doc "Stores the transmission power of a broadcasting device."]
+      manufacturerData : ManufacturerData.t list option;
+          [@key "manufacturerData"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Key is the company identifier and the value is an array of bytes of\n\
+             manufacturer specific data."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the byte data of the advertisement packet sent by a Bluetooth \
+       device."]
+  end
+
+  and ScanEntry : sig
+    type t = {
+      deviceAddress : string;
+          [@key "deviceAddress"] [@ocaml.doc "No description provided"]
+      rssi : number; [@key "rssi"] [@ocaml.doc "No description provided"]
+      scanRecord : ScanRecord.t;
+          [@key "scanRecord"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the advertisement packet information that is sent by a Bluetooth \
+       device."]
+  end = struct
+    type t = {
+      deviceAddress : string;
+          [@key "deviceAddress"] [@ocaml.doc "No description provided"]
+      rssi : number; [@key "rssi"] [@ocaml.doc "No description provided"]
+      scanRecord : ScanRecord.t;
+          [@key "scanRecord"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the advertisement packet information that is sent by a Bluetooth \
+       device."]
+  end
+end
+
 and Console : sig
   module rec ConsoleMessage : sig
     type _consolemessage_source =

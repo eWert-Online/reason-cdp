@@ -32966,6 +32966,231 @@ module PWA = struct
   end
 end
 
+module BluetoothEmulation = struct
+  (* Enable the BluetoothEmulation domain. *)
+  module Enable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        state : Types.BluetoothEmulation.CentralState.t;
+            [@key "state"] [@ocaml.doc "State of the simulated central."]
+      }
+      [@@deriving yojson]
+
+      let make ~state () = { state }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "BluetoothEmulation.enable"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Disable the BluetoothEmulation domain. *)
+  module Disable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "BluetoothEmulation.disable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Simulates a peripheral with |address|, |name| and |knownServiceUuids|
+     that has already been connected to the system. *)
+  module SimulatePreconnectedPeripheral = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string;
+            [@key "address"] [@ocaml.doc "No description provided"]
+        name : string; [@key "name"] [@ocaml.doc "No description provided"]
+        manufacturerData : Types.BluetoothEmulation.ManufacturerData.t list;
+            [@key "manufacturerData"] [@ocaml.doc "No description provided"]
+        knownServiceUuids : string list;
+            [@key "knownServiceUuids"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address ~name ~manufacturerData ~knownServiceUuids () =
+        { address; name; manufacturerData; knownServiceUuids }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.simulatePreconnectedPeripheral";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Simulates an advertisement packet described in |entry| being received by
+     the central. *)
+  module SimulateAdvertisement = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        entry : Types.BluetoothEmulation.ScanEntry.t;
+            [@key "entry"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~entry () = { entry }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.simulateAdvertisement";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+end
+
 module Console = struct
   (* Does nothing. *)
   module ClearMessages = struct
