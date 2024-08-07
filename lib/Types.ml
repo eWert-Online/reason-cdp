@@ -21909,14 +21909,16 @@ and Page : sig
 
   and ClientNavigationReason : sig
     type _clientnavigationreason =
-      [ `formSubmissionGet
+      [ `anchorClick
+      | `formSubmissionGet
       | `formSubmissionPost
       | `httpHeaderRefresh
-      | `scriptInitiated
+      | `initialFrameNavigation
       | `metaTagRefresh
+      | `other
       | `pageBlockInterstitial
       | `reload
-      | `anchorClick ]
+      | `scriptInitiated ]
 
     val _clientnavigationreason_of_yojson :
       Yojson.Basic.t -> _clientnavigationreason
@@ -24085,14 +24087,16 @@ end = struct
 
   and ClientNavigationReason : sig
     type _clientnavigationreason =
-      [ `formSubmissionGet
+      [ `anchorClick
+      | `formSubmissionGet
       | `formSubmissionPost
       | `httpHeaderRefresh
-      | `scriptInitiated
+      | `initialFrameNavigation
       | `metaTagRefresh
+      | `other
       | `pageBlockInterstitial
       | `reload
-      | `anchorClick ]
+      | `scriptInitiated ]
 
     val _clientnavigationreason_of_yojson :
       Yojson.Basic.t -> _clientnavigationreason
@@ -24104,36 +24108,42 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type _clientnavigationreason =
-      [ `formSubmissionGet
+      [ `anchorClick
+      | `formSubmissionGet
       | `formSubmissionPost
       | `httpHeaderRefresh
-      | `scriptInitiated
+      | `initialFrameNavigation
       | `metaTagRefresh
+      | `other
       | `pageBlockInterstitial
       | `reload
-      | `anchorClick ]
+      | `scriptInitiated ]
 
     let _clientnavigationreason_of_yojson = function
+      | `String "anchorClick" -> `anchorClick
       | `String "formSubmissionGet" -> `formSubmissionGet
       | `String "formSubmissionPost" -> `formSubmissionPost
       | `String "httpHeaderRefresh" -> `httpHeaderRefresh
-      | `String "scriptInitiated" -> `scriptInitiated
+      | `String "initialFrameNavigation" -> `initialFrameNavigation
       | `String "metaTagRefresh" -> `metaTagRefresh
+      | `String "other" -> `other
       | `String "pageBlockInterstitial" -> `pageBlockInterstitial
       | `String "reload" -> `reload
-      | `String "anchorClick" -> `anchorClick
+      | `String "scriptInitiated" -> `scriptInitiated
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__clientnavigationreason = function
+      | `anchorClick -> `String "anchorClick"
       | `formSubmissionGet -> `String "formSubmissionGet"
       | `formSubmissionPost -> `String "formSubmissionPost"
       | `httpHeaderRefresh -> `String "httpHeaderRefresh"
-      | `scriptInitiated -> `String "scriptInitiated"
+      | `initialFrameNavigation -> `String "initialFrameNavigation"
       | `metaTagRefresh -> `String "metaTagRefresh"
+      | `other -> `String "other"
       | `pageBlockInterstitial -> `String "pageBlockInterstitial"
       | `reload -> `String "reload"
-      | `anchorClick -> `String "anchorClick"
+      | `scriptInitiated -> `String "scriptInitiated"
 
     type t = _clientnavigationreason
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
