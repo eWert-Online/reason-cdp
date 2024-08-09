@@ -8675,6 +8675,58 @@ module DOM = struct
     end
   end
 
+  (* Returns list of detached nodes *)
+  module GetDetachedDomNodes = struct
+    module Response : sig
+      type result = {
+        detachedNodes : Types.DOM.DetachedElementInfo.t list;
+            [@key "detachedNodes"] [@ocaml.doc "The list of detached nodes"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        detachedNodes : Types.DOM.DetachedElementInfo.t list;
+            [@key "detachedNodes"] [@ocaml.doc "The list of detached nodes"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "DOM.getDetachedDomNodes"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Enables console to refer to the node with given id via $x (see Command Line API for more details
      $x functions). *)
   module SetInspectedNode = struct

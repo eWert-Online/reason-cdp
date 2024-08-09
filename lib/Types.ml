@@ -9135,6 +9135,19 @@ and DOM : sig
        DOMNode is a base node mirror type."]
   end
 
+  and DetachedElementInfo : sig
+    type t = {
+      treeNode : Node.t;
+          [@key "treeNode"] [@ocaml.doc "No description provided"]
+      retainedNodeIds : NodeId.t list;
+          [@key "retainedNodeIds"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A structure to hold the top-level node of a detached tree and an array \
+       of its retained descendants."]
+  end
+
   and RGBA : sig
     type t = {
       r : number;
@@ -9783,6 +9796,30 @@ end = struct
       "DOM interaction is implemented in terms of mirror objects that \
        represent the actual DOM nodes.\n\
        DOMNode is a base node mirror type."]
+  end
+
+  and DetachedElementInfo : sig
+    type t = {
+      treeNode : Node.t;
+          [@key "treeNode"] [@ocaml.doc "No description provided"]
+      retainedNodeIds : NodeId.t list;
+          [@key "retainedNodeIds"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A structure to hold the top-level node of a detached tree and an array \
+       of its retained descendants."]
+  end = struct
+    type t = {
+      treeNode : Node.t;
+          [@key "treeNode"] [@ocaml.doc "No description provided"]
+      retainedNodeIds : NodeId.t list;
+          [@key "retainedNodeIds"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A structure to hold the top-level node of a detached tree and an array \
+       of its retained descendants."]
   end
 
   and RGBA : sig
