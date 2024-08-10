@@ -2751,10 +2751,27 @@ module Page = struct
   module NavigatedWithinDocument = struct
     let name = "Page.navigatedWithinDocument"
 
+    type navigatedwithindocument_navigationtype =
+      [ `fragment | `historyApi | `other ]
+
+    let navigatedwithindocument_navigationtype_of_yojson = function
+      | `String "fragment" -> `fragment
+      | `String "historyApi" -> `historyApi
+      | `String "other" -> `other
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of_navigatedwithindocument_navigationtype = function
+      | `fragment -> `String "fragment"
+      | `historyApi -> `String "historyApi"
+      | `other -> `String "other"
+
     type result = {
       frameId : Types.Page.FrameId.t;
           [@key "frameId"] [@ocaml.doc "Id of the frame."]
       url : string; [@key "url"] [@ocaml.doc "Frame's new url."]
+      navigationType : navigatedwithindocument_navigationtype;
+          [@key "navigationType"] [@ocaml.doc "Navigation type"]
     }
     [@@deriving yojson]
 
