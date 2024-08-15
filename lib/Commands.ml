@@ -1657,6 +1657,63 @@ module Extensions = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+
+  (* Sets `values` in extension storage in the given `storageArea`. The provided `values`
+     will be merged with existing values in the storage area. *)
+  module SetStorageItems = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : string; [@key "id"] [@ocaml.doc "ID of extension."]
+        storageArea : Types.Extensions.StorageArea.t;
+            [@key "storageArea"] [@ocaml.doc "StorageArea to set data in."]
+        values : Types.assoc; [@key "values"] [@ocaml.doc "Values to set."]
+      }
+      [@@deriving yojson]
+
+      let make ~id ~storageArea ~values () = { id; storageArea; values }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Extensions.setStorageItems"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
 end
 
 module Autofill = struct
