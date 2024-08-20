@@ -22419,6 +22419,7 @@ and Page : sig
       | `ContentWebUSB
       | `ContentMediaSessionService
       | `ContentScreenReader
+      | `ContentDiscarded
       | `EmbedderPopupBlockerTabHelper
       | `EmbedderSafeBrowsingTriggeredPopupBlocker
       | `EmbedderSafeBrowsingThreatDetails
@@ -24966,6 +24967,7 @@ end = struct
       | `ContentWebUSB
       | `ContentMediaSessionService
       | `ContentScreenReader
+      | `ContentDiscarded
       | `EmbedderPopupBlockerTabHelper
       | `EmbedderSafeBrowsingTriggeredPopupBlocker
       | `EmbedderSafeBrowsingThreatDetails
@@ -25115,6 +25117,7 @@ end = struct
       | `ContentWebUSB
       | `ContentMediaSessionService
       | `ContentScreenReader
+      | `ContentDiscarded
       | `EmbedderPopupBlockerTabHelper
       | `EmbedderSafeBrowsingTriggeredPopupBlocker
       | `EmbedderSafeBrowsingThreatDetails
@@ -25287,6 +25290,7 @@ end = struct
       | `String "ContentWebUSB" -> `ContentWebUSB
       | `String "ContentMediaSessionService" -> `ContentMediaSessionService
       | `String "ContentScreenReader" -> `ContentScreenReader
+      | `String "ContentDiscarded" -> `ContentDiscarded
       | `String "EmbedderPopupBlockerTabHelper" ->
           `EmbedderPopupBlockerTabHelper
       | `String "EmbedderSafeBrowsingTriggeredPopupBlocker" ->
@@ -25471,6 +25475,7 @@ end = struct
       | `ContentWebUSB -> `String "ContentWebUSB"
       | `ContentMediaSessionService -> `String "ContentMediaSessionService"
       | `ContentScreenReader -> `String "ContentScreenReader"
+      | `ContentDiscarded -> `String "ContentDiscarded"
       | `EmbedderPopupBlockerTabHelper ->
           `String "EmbedderPopupBlockerTabHelper"
       | `EmbedderSafeBrowsingTriggeredPopupBlocker ->
