@@ -5659,6 +5659,7 @@ and Browser : sig
       | `videoCapturePanTiltZoom
       | `wakeLockScreen
       | `wakeLockSystem
+      | `webAppInstallation
       | `windowManagement ]
 
     val _permissiontype_of_yojson : Yojson.Basic.t -> _permissiontype
@@ -5881,6 +5882,7 @@ end = struct
       | `videoCapturePanTiltZoom
       | `wakeLockScreen
       | `wakeLockSystem
+      | `webAppInstallation
       | `windowManagement ]
 
     val _permissiontype_of_yojson : Yojson.Basic.t -> _permissiontype
@@ -5918,6 +5920,7 @@ end = struct
       | `videoCapturePanTiltZoom
       | `wakeLockScreen
       | `wakeLockSystem
+      | `webAppInstallation
       | `windowManagement ]
 
     let _permissiontype_of_yojson = function
@@ -5949,6 +5952,7 @@ end = struct
       | `String "videoCapturePanTiltZoom" -> `videoCapturePanTiltZoom
       | `String "wakeLockScreen" -> `wakeLockScreen
       | `String "wakeLockSystem" -> `wakeLockSystem
+      | `String "webAppInstallation" -> `webAppInstallation
       | `String "windowManagement" -> `windowManagement
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -5982,6 +5986,7 @@ end = struct
       | `videoCapturePanTiltZoom -> `String "videoCapturePanTiltZoom"
       | `wakeLockScreen -> `String "wakeLockScreen"
       | `wakeLockSystem -> `String "wakeLockSystem"
+      | `webAppInstallation -> `String "webAppInstallation"
       | `windowManagement -> `String "windowManagement"
 
     type t = _permissiontype
@@ -21461,6 +21466,7 @@ and Page : sig
       | `usb
       | `usb_unrestricted
       | `vertical_scroll
+      | `web_app_installation
       | `web_printing
       | `web_share
       | `window_management
@@ -22842,6 +22848,7 @@ end = struct
       | `usb
       | `usb_unrestricted
       | `vertical_scroll
+      | `web_app_installation
       | `web_printing
       | `web_share
       | `window_management
@@ -22946,6 +22953,7 @@ end = struct
       | `usb
       | `usb_unrestricted
       | `vertical_scroll
+      | `web_app_installation
       | `web_printing
       | `web_share
       | `window_management
@@ -23042,6 +23050,7 @@ end = struct
       | `String "usb" -> `usb
       | `String "usb-unrestricted" -> `usb_unrestricted
       | `String "vertical-scroll" -> `vertical_scroll
+      | `String "web-app-installation" -> `web_app_installation
       | `String "web-printing" -> `web_printing
       | `String "web-share" -> `web_share
       | `String "window-management" -> `window_management
@@ -23140,6 +23149,7 @@ end = struct
       | `usb -> `String "usb"
       | `usb_unrestricted -> `String "usb-unrestricted"
       | `vertical_scroll -> `String "vertical-scroll"
+      | `web_app_installation -> `String "web-app-installation"
       | `web_printing -> `String "web-printing"
       | `web_share -> `String "web-share"
       | `window_management -> `String "window-management"
