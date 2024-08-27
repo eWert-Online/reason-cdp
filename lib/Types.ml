@@ -1878,7 +1878,8 @@ and Audits : sig
       | `NoRegisterSourceHeader
       | `NoRegisterTriggerHeader
       | `NoRegisterOsSourceHeader
-      | `NoRegisterOsTriggerHeader ]
+      | `NoRegisterOsTriggerHeader
+      | `NavigationRegistrationUniqueScopeAlreadySet ]
 
     val _attributionreportingissuetype_of_yojson :
       Yojson.Basic.t -> _attributionreportingissuetype
@@ -3561,7 +3562,8 @@ end = struct
       | `NoRegisterSourceHeader
       | `NoRegisterTriggerHeader
       | `NoRegisterOsSourceHeader
-      | `NoRegisterOsTriggerHeader ]
+      | `NoRegisterOsTriggerHeader
+      | `NavigationRegistrationUniqueScopeAlreadySet ]
 
     val _attributionreportingissuetype_of_yojson :
       Yojson.Basic.t -> _attributionreportingissuetype
@@ -3592,7 +3594,8 @@ end = struct
       | `NoRegisterSourceHeader
       | `NoRegisterTriggerHeader
       | `NoRegisterOsSourceHeader
-      | `NoRegisterOsTriggerHeader ]
+      | `NoRegisterOsTriggerHeader
+      | `NavigationRegistrationUniqueScopeAlreadySet ]
 
     let _attributionreportingissuetype_of_yojson = function
       | `String "PermissionPolicyDisabled" -> `PermissionPolicyDisabled
@@ -3618,6 +3621,8 @@ end = struct
       | `String "NoRegisterTriggerHeader" -> `NoRegisterTriggerHeader
       | `String "NoRegisterOsSourceHeader" -> `NoRegisterOsSourceHeader
       | `String "NoRegisterOsTriggerHeader" -> `NoRegisterOsTriggerHeader
+      | `String "NavigationRegistrationUniqueScopeAlreadySet" ->
+          `NavigationRegistrationUniqueScopeAlreadySet
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3645,6 +3650,8 @@ end = struct
       | `NoRegisterTriggerHeader -> `String "NoRegisterTriggerHeader"
       | `NoRegisterOsSourceHeader -> `String "NoRegisterOsSourceHeader"
       | `NoRegisterOsTriggerHeader -> `String "NoRegisterOsTriggerHeader"
+      | `NavigationRegistrationUniqueScopeAlreadySet ->
+          `String "NavigationRegistrationUniqueScopeAlreadySet"
 
     type t = _attributionreportingissuetype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -14320,6 +14327,19 @@ and Memory : sig
     }
     [@@deriving yojson] [@@ocaml.doc "Executable module information"]
   end
+
+  and DOMCounter : sig
+    type t = {
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "Object name. Note: object names should be presumed volatile and \
+             clients should not expect\n\
+             the returned names to be consistent across runs."]
+      count : number; [@key "count"] [@ocaml.doc "Object count."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "DOM object counter data."]
+  end
 end = struct
   module rec PressureLevel : sig
     type _pressurelevel = [ `moderate | `critical ]
@@ -14414,6 +14434,30 @@ end = struct
       size : number; [@key "size"] [@ocaml.doc "Size of the module in bytes."]
     }
     [@@deriving yojson] [@@ocaml.doc "Executable module information"]
+  end
+
+  and DOMCounter : sig
+    type t = {
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "Object name. Note: object names should be presumed volatile and \
+             clients should not expect\n\
+             the returned names to be consistent across runs."]
+      count : number; [@key "count"] [@ocaml.doc "Object count."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "DOM object counter data."]
+  end = struct
+    type t = {
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "Object name. Note: object names should be presumed volatile and \
+             clients should not expect\n\
+             the returned names to be consistent across runs."]
+      count : number; [@key "count"] [@ocaml.doc "Object count."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "DOM object counter data."]
   end
 end
 
@@ -15391,6 +15435,7 @@ and Network : sig
       | `UserSetting
       | `TPCDMetadata
       | `TPCDDeprecationTrial
+      | `TopLevelTPCDDeprecationTrial
       | `TPCDHeuristics
       | `EnterprisePolicy
       | `StorageAccess
@@ -18370,6 +18415,7 @@ end = struct
       | `UserSetting
       | `TPCDMetadata
       | `TPCDDeprecationTrial
+      | `TopLevelTPCDDeprecationTrial
       | `TPCDHeuristics
       | `EnterprisePolicy
       | `StorageAccess
@@ -18394,6 +18440,7 @@ end = struct
       | `UserSetting
       | `TPCDMetadata
       | `TPCDDeprecationTrial
+      | `TopLevelTPCDDeprecationTrial
       | `TPCDHeuristics
       | `EnterprisePolicy
       | `StorageAccess
@@ -18406,6 +18453,7 @@ end = struct
       | `String "UserSetting" -> `UserSetting
       | `String "TPCDMetadata" -> `TPCDMetadata
       | `String "TPCDDeprecationTrial" -> `TPCDDeprecationTrial
+      | `String "TopLevelTPCDDeprecationTrial" -> `TopLevelTPCDDeprecationTrial
       | `String "TPCDHeuristics" -> `TPCDHeuristics
       | `String "EnterprisePolicy" -> `EnterprisePolicy
       | `String "StorageAccess" -> `StorageAccess
@@ -18420,6 +18468,7 @@ end = struct
       | `UserSetting -> `String "UserSetting"
       | `TPCDMetadata -> `String "TPCDMetadata"
       | `TPCDDeprecationTrial -> `String "TPCDDeprecationTrial"
+      | `TopLevelTPCDDeprecationTrial -> `String "TopLevelTPCDDeprecationTrial"
       | `TPCDHeuristics -> `String "TPCDHeuristics"
       | `EnterprisePolicy -> `String "EnterprisePolicy"
       | `StorageAccess -> `String "StorageAccess"

@@ -16815,7 +16815,7 @@ module Log = struct
 end
 
 module Memory = struct
-  (* No description provided *)
+  (* Retruns current DOM object counters. *)
   module GetDOMCounters = struct
     module Response : sig
       type result = {
@@ -16875,7 +16875,60 @@ module Memory = struct
     end
   end
 
-  (* No description provided *)
+  (* Retruns DOM object counters after preparing renderer for leak detection. *)
+  module GetDOMCountersForLeakDetection = struct
+    module Response : sig
+      type result = {
+        counters : Types.Memory.DOMCounter.t list;
+            [@key "counters"] [@ocaml.doc "DOM object counters."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        counters : Types.Memory.DOMCounter.t list;
+            [@key "counters"] [@ocaml.doc "DOM object counters."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Memory.getDOMCountersForLeakDetection"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Prepares for leak detection by terminating workers, stopping spellcheckers,
+     dropping non-essential internal caches, running garbage collections, etc. *)
   module PrepareForLeakDetection = struct
     module Response : sig
       type result = Types.assoc
