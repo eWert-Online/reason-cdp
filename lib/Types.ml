@@ -27512,7 +27512,9 @@ and Storage : sig
       | `destinationBothLimitsReached
       | `reportingOriginsPerSiteLimitReached
       | `exceedsMaxChannelCapacity
+      | `exceedsMaxScopesChannelCapacity
       | `exceedsMaxTriggerStateCardinality
+      | `exceedsMaxEventStatesLimit
       | `destinationPerDayReportingLimitReached ]
 
     val _attributionreportingsourceregistrationresult_of_yojson :
@@ -28784,7 +28786,9 @@ end = struct
       | `destinationBothLimitsReached
       | `reportingOriginsPerSiteLimitReached
       | `exceedsMaxChannelCapacity
+      | `exceedsMaxScopesChannelCapacity
       | `exceedsMaxTriggerStateCardinality
+      | `exceedsMaxEventStatesLimit
       | `destinationPerDayReportingLimitReached ]
 
     val _attributionreportingsourceregistrationresult_of_yojson :
@@ -28809,7 +28813,9 @@ end = struct
       | `destinationBothLimitsReached
       | `reportingOriginsPerSiteLimitReached
       | `exceedsMaxChannelCapacity
+      | `exceedsMaxScopesChannelCapacity
       | `exceedsMaxTriggerStateCardinality
+      | `exceedsMaxEventStatesLimit
       | `destinationPerDayReportingLimitReached ]
 
     let _attributionreportingsourceregistrationresult_of_yojson = function
@@ -28829,8 +28835,11 @@ end = struct
       | `String "reportingOriginsPerSiteLimitReached" ->
           `reportingOriginsPerSiteLimitReached
       | `String "exceedsMaxChannelCapacity" -> `exceedsMaxChannelCapacity
+      | `String "exceedsMaxScopesChannelCapacity" ->
+          `exceedsMaxScopesChannelCapacity
       | `String "exceedsMaxTriggerStateCardinality" ->
           `exceedsMaxTriggerStateCardinality
+      | `String "exceedsMaxEventStatesLimit" -> `exceedsMaxEventStatesLimit
       | `String "destinationPerDayReportingLimitReached" ->
           `destinationPerDayReportingLimitReached
       | `String s -> failwith ("unknown enum: " ^ s)
@@ -28853,8 +28862,11 @@ end = struct
       | `reportingOriginsPerSiteLimitReached ->
           `String "reportingOriginsPerSiteLimitReached"
       | `exceedsMaxChannelCapacity -> `String "exceedsMaxChannelCapacity"
+      | `exceedsMaxScopesChannelCapacity ->
+          `String "exceedsMaxScopesChannelCapacity"
       | `exceedsMaxTriggerStateCardinality ->
           `String "exceedsMaxTriggerStateCardinality"
+      | `exceedsMaxEventStatesLimit -> `String "exceedsMaxEventStatesLimit"
       | `destinationPerDayReportingLimitReached ->
           `String "destinationPerDayReportingLimitReached"
 
