@@ -2336,6 +2336,30 @@ module Page = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
+  (* Fired before frame subtree is detached. Emitted before any frame of the
+     subtree is actually detached. *)
+  module FrameSubtreeWillBeDetached = struct
+    let name = "Page.frameSubtreeWillBeDetached"
+
+    type result = {
+      frameId : Types.Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc
+            "Id of the frame that is the root of the subtree that will be \
+             detached."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
   (* Fired once navigation of the frame has completed. Frame is now associated with the new loader. *)
   module FrameNavigated = struct
     let name = "Page.frameNavigated"
