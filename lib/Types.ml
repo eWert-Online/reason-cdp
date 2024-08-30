@@ -27456,6 +27456,22 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionScopesData : sig
+    type t = {
+      values : string list;
+          [@key "values"] [@ocaml.doc "No description provided"]
+      limit : number;
+          [@key "limit"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+      maxEventStates : number;
+          [@key "maxEventStates"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingSourceRegistration : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
@@ -27493,6 +27509,10 @@ and Storage : sig
       aggregatableDebugReportingConfig :
         AttributionReportingAggregatableDebugReportingConfig.t;
           [@key "aggregatableDebugReportingConfig"]
+          [@ocaml.doc "No description provided"]
+      scopesData : AttributionScopesData.t option;
+          [@key "scopesData"]
+          [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -27645,6 +27665,8 @@ and Storage : sig
         AttributionReportingAggregatableDebugReportingConfig.t;
           [@key "aggregatableDebugReportingConfig"]
           [@ocaml.doc "No description provided"]
+      scopes : string list;
+          [@key "scopes"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -28690,6 +28712,36 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionScopesData : sig
+    type t = {
+      values : string list;
+          [@key "values"] [@ocaml.doc "No description provided"]
+      limit : number;
+          [@key "limit"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+      maxEventStates : number;
+          [@key "maxEventStates"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      values : string list;
+          [@key "values"] [@ocaml.doc "No description provided"]
+      limit : number;
+          [@key "limit"]
+          [@ocaml.doc
+            "number instead of integer because not all uint32 can be \
+             represented by\n\
+             int"]
+      maxEventStates : number;
+          [@key "maxEventStates"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingSourceRegistration : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
@@ -28727,6 +28779,10 @@ end = struct
       aggregatableDebugReportingConfig :
         AttributionReportingAggregatableDebugReportingConfig.t;
           [@key "aggregatableDebugReportingConfig"]
+          [@ocaml.doc "No description provided"]
+      scopesData : AttributionScopesData.t option;
+          [@key "scopesData"]
+          [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -28767,6 +28823,10 @@ end = struct
       aggregatableDebugReportingConfig :
         AttributionReportingAggregatableDebugReportingConfig.t;
           [@key "aggregatableDebugReportingConfig"]
+          [@ocaml.doc "No description provided"]
+      scopesData : AttributionScopesData.t option;
+          [@key "scopesData"]
+          [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -29063,6 +29123,8 @@ end = struct
         AttributionReportingAggregatableDebugReportingConfig.t;
           [@key "aggregatableDebugReportingConfig"]
           [@ocaml.doc "No description provided"]
+      scopes : string list;
+          [@key "scopes"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -29104,6 +29166,8 @@ end = struct
         AttributionReportingAggregatableDebugReportingConfig.t;
           [@key "aggregatableDebugReportingConfig"]
           [@ocaml.doc "No description provided"]
+      scopes : string list;
+          [@key "scopes"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -32572,7 +32636,6 @@ and Preload : sig
       | `PrefetchFailedMIMENotSupported
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
-      | `PrefetchFailedPerPageLimitExceeded
       | `PrefetchEvictedAfterCandidateRemoved
       | `PrefetchEvictedForNewerPrefetch
       | `PrefetchHeldback
@@ -33316,7 +33379,6 @@ end = struct
       | `PrefetchFailedMIMENotSupported
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
-      | `PrefetchFailedPerPageLimitExceeded
       | `PrefetchEvictedAfterCandidateRemoved
       | `PrefetchEvictedForNewerPrefetch
       | `PrefetchHeldback
@@ -33358,7 +33420,6 @@ end = struct
       | `PrefetchFailedMIMENotSupported
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
-      | `PrefetchFailedPerPageLimitExceeded
       | `PrefetchEvictedAfterCandidateRemoved
       | `PrefetchEvictedForNewerPrefetch
       | `PrefetchHeldback
@@ -33394,8 +33455,6 @@ end = struct
           `PrefetchFailedMIMENotSupported
       | `String "PrefetchFailedNetError" -> `PrefetchFailedNetError
       | `String "PrefetchFailedNon2XX" -> `PrefetchFailedNon2XX
-      | `String "PrefetchFailedPerPageLimitExceeded" ->
-          `PrefetchFailedPerPageLimitExceeded
       | `String "PrefetchEvictedAfterCandidateRemoved" ->
           `PrefetchEvictedAfterCandidateRemoved
       | `String "PrefetchEvictedForNewerPrefetch" ->
@@ -33447,8 +33506,6 @@ end = struct
           `String "PrefetchFailedMIMENotSupported"
       | `PrefetchFailedNetError -> `String "PrefetchFailedNetError"
       | `PrefetchFailedNon2XX -> `String "PrefetchFailedNon2XX"
-      | `PrefetchFailedPerPageLimitExceeded ->
-          `String "PrefetchFailedPerPageLimitExceeded"
       | `PrefetchEvictedAfterCandidateRemoved ->
           `String "PrefetchEvictedAfterCandidateRemoved"
       | `PrefetchEvictedForNewerPrefetch ->
