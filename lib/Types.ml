@@ -9139,6 +9139,10 @@ and DOM : sig
           [@key "assignedSlot"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      isScrollable : bool option;
+          [@key "isScrollable"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -9672,6 +9676,10 @@ end = struct
           [@key "assignedSlot"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      isScrollable : bool option;
+          [@key "isScrollable"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -9800,6 +9808,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       assignedSlot : BackendNode.t option;
           [@key "assignedSlot"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      isScrollable : bool option;
+          [@key "isScrollable"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }

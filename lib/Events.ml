@@ -674,6 +674,28 @@ module DOM = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
+  (* Fired when a node's scrollability state changes. *)
+  module ScrollableFlagUpdated = struct
+    let name = "DOM.scrollableFlagUpdated"
+
+    type result = {
+      nodeId : Types.DOM.NodeId.t;
+          [@key "nodeId"] [@ocaml.doc "The id of the node."]
+      isScrollable : bool;
+          [@key "isScrollable"] [@ocaml.doc "If the node is scrollable."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
   (* Called when a pseudo element is removed from an element. *)
   module PseudoElementRemoved = struct
     let name = "DOM.pseudoElementRemoved"
