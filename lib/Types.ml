@@ -8955,7 +8955,13 @@ and DOM : sig
       | `view_transition_group
       | `view_transition_image_pair
       | `view_transition_old
-      | `view_transition_new ]
+      | `view_transition_new
+      | `placeholder
+      | `file_selector_button
+      | `details_content
+      | `select_fallback_button
+      | `select_fallback_button_text
+      | `picker ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
     val yojson_of__pseudotype : _pseudotype -> Yojson.Basic.t
@@ -9307,7 +9313,13 @@ end = struct
       | `view_transition_group
       | `view_transition_image_pair
       | `view_transition_old
-      | `view_transition_new ]
+      | `view_transition_new
+      | `placeholder
+      | `file_selector_button
+      | `details_content
+      | `select_fallback_button
+      | `select_fallback_button_text
+      | `picker ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
     val yojson_of__pseudotype : _pseudotype -> Yojson.Basic.t
@@ -9345,7 +9357,13 @@ end = struct
       | `view_transition_group
       | `view_transition_image_pair
       | `view_transition_old
-      | `view_transition_new ]
+      | `view_transition_new
+      | `placeholder
+      | `file_selector_button
+      | `details_content
+      | `select_fallback_button
+      | `select_fallback_button_text
+      | `picker ]
 
     let _pseudotype_of_yojson = function
       | `String "first-line" -> `first_line
@@ -9378,6 +9396,12 @@ end = struct
       | `String "view-transition-image-pair" -> `view_transition_image_pair
       | `String "view-transition-old" -> `view_transition_old
       | `String "view-transition-new" -> `view_transition_new
+      | `String "placeholder" -> `placeholder
+      | `String "file-selector-button" -> `file_selector_button
+      | `String "details-content" -> `details_content
+      | `String "select-fallback-button" -> `select_fallback_button
+      | `String "select-fallback-button-text" -> `select_fallback_button_text
+      | `String "picker" -> `picker
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -9412,6 +9436,12 @@ end = struct
       | `view_transition_image_pair -> `String "view-transition-image-pair"
       | `view_transition_old -> `String "view-transition-old"
       | `view_transition_new -> `String "view-transition-new"
+      | `placeholder -> `String "placeholder"
+      | `file_selector_button -> `String "file-selector-button"
+      | `details_content -> `String "details-content"
+      | `select_fallback_button -> `String "select-fallback-button"
+      | `select_fallback_button_text -> `String "select-fallback-button-text"
+      | `picker -> `String "picker"
 
     type t = _pseudotype
     [@@deriving yojson] [@@ocaml.doc "Pseudo element type."]
@@ -21477,6 +21507,7 @@ and Page : sig
       | `clipboard_read
       | `clipboard_write
       | `compute_pressure
+      | `controlled_frame
       | `cross_origin_isolated
       | `deferred_fetch
       | `digital_credentials_get
@@ -22859,6 +22890,7 @@ end = struct
       | `clipboard_read
       | `clipboard_write
       | `compute_pressure
+      | `controlled_frame
       | `cross_origin_isolated
       | `deferred_fetch
       | `digital_credentials_get
@@ -22964,6 +22996,7 @@ end = struct
       | `clipboard_read
       | `clipboard_write
       | `compute_pressure
+      | `controlled_frame
       | `cross_origin_isolated
       | `deferred_fetch
       | `digital_credentials_get
@@ -23057,6 +23090,7 @@ end = struct
       | `String "clipboard-read" -> `clipboard_read
       | `String "clipboard-write" -> `clipboard_write
       | `String "compute-pressure" -> `compute_pressure
+      | `String "controlled-frame" -> `controlled_frame
       | `String "cross-origin-isolated" -> `cross_origin_isolated
       | `String "deferred-fetch" -> `deferred_fetch
       | `String "digital-credentials-get" -> `digital_credentials_get
@@ -23156,6 +23190,7 @@ end = struct
       | `clipboard_read -> `String "clipboard-read"
       | `clipboard_write -> `String "clipboard-write"
       | `compute_pressure -> `String "compute-pressure"
+      | `controlled_frame -> `String "controlled-frame"
       | `cross_origin_isolated -> `String "cross-origin-isolated"
       | `deferred_fetch -> `String "deferred-fetch"
       | `digital_credentials_get -> `String "digital-credentials-get"
