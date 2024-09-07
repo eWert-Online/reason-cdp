@@ -15482,7 +15482,6 @@ and Network : sig
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `CorsOptIn
       | `Scheme ]
 
     val _cookieexemptionreason_of_yojson :
@@ -18462,7 +18461,6 @@ end = struct
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `CorsOptIn
       | `Scheme ]
 
     val _cookieexemptionreason_of_yojson :
@@ -18487,7 +18485,6 @@ end = struct
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `CorsOptIn
       | `Scheme ]
 
     let _cookieexemptionreason_of_yojson = function
@@ -18500,7 +18497,6 @@ end = struct
       | `String "EnterprisePolicy" -> `EnterprisePolicy
       | `String "StorageAccess" -> `StorageAccess
       | `String "TopLevelStorageAccess" -> `TopLevelStorageAccess
-      | `String "CorsOptIn" -> `CorsOptIn
       | `String "Scheme" -> `Scheme
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -18515,7 +18511,6 @@ end = struct
       | `EnterprisePolicy -> `String "EnterprisePolicy"
       | `StorageAccess -> `String "StorageAccess"
       | `TopLevelStorageAccess -> `String "TopLevelStorageAccess"
-      | `CorsOptIn -> `String "CorsOptIn"
       | `Scheme -> `String "Scheme"
 
     type t = _cookieexemptionreason
