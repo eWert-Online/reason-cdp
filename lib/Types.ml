@@ -8932,6 +8932,7 @@ and DOM : sig
       | `after
       | `marker
       | `backdrop
+      | `column
       | `selection
       | `search_text
       | `target_text
@@ -9290,6 +9291,7 @@ end = struct
       | `after
       | `marker
       | `backdrop
+      | `column
       | `selection
       | `search_text
       | `target_text
@@ -9334,6 +9336,7 @@ end = struct
       | `after
       | `marker
       | `backdrop
+      | `column
       | `selection
       | `search_text
       | `target_text
@@ -9372,6 +9375,7 @@ end = struct
       | `String "after" -> `after
       | `String "marker" -> `marker
       | `String "backdrop" -> `backdrop
+      | `String "column" -> `column
       | `String "selection" -> `selection
       | `String "search-text" -> `search_text
       | `String "target-text" -> `target_text
@@ -9412,6 +9416,7 @@ end = struct
       | `after -> `String "after"
       | `marker -> `String "marker"
       | `backdrop -> `String "backdrop"
+      | `column -> `String "column"
       | `selection -> `String "selection"
       | `search_text -> `String "search-text"
       | `target_text -> `String "target-text"
