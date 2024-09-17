@@ -1472,7 +1472,9 @@ and Audits : sig
       | `WarnAttributeValueExceedsMaxSize
       | `WarnDomainNonASCII
       | `WarnThirdPartyPhaseout
-      | `WarnCrossSiteRedirectDowngradeChangesInclusion ]
+      | `WarnCrossSiteRedirectDowngradeChangesInclusion
+      | `WarnDeprecationTrialMetadata
+      | `WarnThirdPartyCookieHeuristic ]
 
     val _cookiewarningreason_of_yojson : Yojson.Basic.t -> _cookiewarningreason
     val yojson_of__cookiewarningreason : _cookiewarningreason -> Yojson.Basic.t
@@ -2623,7 +2625,9 @@ end = struct
       | `WarnAttributeValueExceedsMaxSize
       | `WarnDomainNonASCII
       | `WarnThirdPartyPhaseout
-      | `WarnCrossSiteRedirectDowngradeChangesInclusion ]
+      | `WarnCrossSiteRedirectDowngradeChangesInclusion
+      | `WarnDeprecationTrialMetadata
+      | `WarnThirdPartyCookieHeuristic ]
 
     val _cookiewarningreason_of_yojson : Yojson.Basic.t -> _cookiewarningreason
     val yojson_of__cookiewarningreason : _cookiewarningreason -> Yojson.Basic.t
@@ -2643,7 +2647,9 @@ end = struct
       | `WarnAttributeValueExceedsMaxSize
       | `WarnDomainNonASCII
       | `WarnThirdPartyPhaseout
-      | `WarnCrossSiteRedirectDowngradeChangesInclusion ]
+      | `WarnCrossSiteRedirectDowngradeChangesInclusion
+      | `WarnDeprecationTrialMetadata
+      | `WarnThirdPartyCookieHeuristic ]
 
     let _cookiewarningreason_of_yojson = function
       | `String "WarnSameSiteUnspecifiedCrossSiteContext" ->
@@ -2667,6 +2673,9 @@ end = struct
       | `String "WarnThirdPartyPhaseout" -> `WarnThirdPartyPhaseout
       | `String "WarnCrossSiteRedirectDowngradeChangesInclusion" ->
           `WarnCrossSiteRedirectDowngradeChangesInclusion
+      | `String "WarnDeprecationTrialMetadata" -> `WarnDeprecationTrialMetadata
+      | `String "WarnThirdPartyCookieHeuristic" ->
+          `WarnThirdPartyCookieHeuristic
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -2692,6 +2701,9 @@ end = struct
       | `WarnThirdPartyPhaseout -> `String "WarnThirdPartyPhaseout"
       | `WarnCrossSiteRedirectDowngradeChangesInclusion ->
           `String "WarnCrossSiteRedirectDowngradeChangesInclusion"
+      | `WarnDeprecationTrialMetadata -> `String "WarnDeprecationTrialMetadata"
+      | `WarnThirdPartyCookieHeuristic ->
+          `String "WarnThirdPartyCookieHeuristic"
 
     type t = _cookiewarningreason
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -11946,7 +11958,6 @@ and Emulation : sig
       | `gyroscope
       | `linear_acceleration
       | `magnetometer
-      | `proximity
       | `relative_orientation ]
 
     val _sensortype_of_yojson : Yojson.Basic.t -> _sensortype
@@ -12359,7 +12370,6 @@ end = struct
       | `gyroscope
       | `linear_acceleration
       | `magnetometer
-      | `proximity
       | `relative_orientation ]
 
     val _sensortype_of_yojson : Yojson.Basic.t -> _sensortype
@@ -12379,7 +12389,6 @@ end = struct
       | `gyroscope
       | `linear_acceleration
       | `magnetometer
-      | `proximity
       | `relative_orientation ]
 
     let _sensortype_of_yojson = function
@@ -12390,7 +12399,6 @@ end = struct
       | `String "gyroscope" -> `gyroscope
       | `String "linear-acceleration" -> `linear_acceleration
       | `String "magnetometer" -> `magnetometer
-      | `String "proximity" -> `proximity
       | `String "relative-orientation" -> `relative_orientation
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -12403,7 +12411,6 @@ end = struct
       | `gyroscope -> `String "gyroscope"
       | `linear_acceleration -> `String "linear-acceleration"
       | `magnetometer -> `String "magnetometer"
-      | `proximity -> `String "proximity"
       | `relative_orientation -> `String "relative-orientation"
 
     type t = _sensortype
