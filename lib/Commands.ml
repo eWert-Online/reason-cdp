@@ -21071,7 +21071,7 @@ module Overlay = struct
     end
   end
 
-  (* Request that backend shows an overlay with web vital metrics. *)
+  (* Deprecated, no longer has any effect. *)
   module SetShowWebVitals = struct
     module Response : sig
       type result = Types.assoc
