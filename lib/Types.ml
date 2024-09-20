@@ -21519,6 +21519,7 @@ and Page : sig
       | `deferred_fetch
       | `digital_credentials_get
       | `direct_sockets
+      | `direct_sockets_private
       | `display_capture
       | `document_domain
       | `encrypted_media
@@ -22902,6 +22903,7 @@ end = struct
       | `deferred_fetch
       | `digital_credentials_get
       | `direct_sockets
+      | `direct_sockets_private
       | `display_capture
       | `document_domain
       | `encrypted_media
@@ -23008,6 +23010,7 @@ end = struct
       | `deferred_fetch
       | `digital_credentials_get
       | `direct_sockets
+      | `direct_sockets_private
       | `display_capture
       | `document_domain
       | `encrypted_media
@@ -23102,6 +23105,7 @@ end = struct
       | `String "deferred-fetch" -> `deferred_fetch
       | `String "digital-credentials-get" -> `digital_credentials_get
       | `String "direct-sockets" -> `direct_sockets
+      | `String "direct-sockets-private" -> `direct_sockets_private
       | `String "display-capture" -> `display_capture
       | `String "document-domain" -> `document_domain
       | `String "encrypted-media" -> `encrypted_media
@@ -23202,6 +23206,7 @@ end = struct
       | `deferred_fetch -> `String "deferred-fetch"
       | `digital_credentials_get -> `String "digital-credentials-get"
       | `direct_sockets -> `String "direct-sockets"
+      | `direct_sockets_private -> `String "direct-sockets-private"
       | `display_capture -> `String "display-capture"
       | `document_domain -> `String "document-domain"
       | `encrypted_media -> `String "encrypted-media"
