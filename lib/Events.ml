@@ -4865,11 +4865,11 @@ module Debugger = struct
           [@key "scriptLanguage"]
           [@yojson.option]
           [@ocaml.doc "The language of the script."]
-      debugSymbols : Types.Debugger.DebugSymbols.t option;
+      debugSymbols : Types.Debugger.DebugSymbols.t list option;
           [@key "debugSymbols"]
           [@yojson.option]
           [@ocaml.doc
-            "If the scriptLanguage is WebASsembly, the source of debug symbols \
+            "If the scriptLanguage is WebAssembly, the source of debug symbols \
              for the module."]
       embedderName : string option;
           [@key "embedderName"]

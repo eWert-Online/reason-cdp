@@ -34602,8 +34602,7 @@ and Debugger : sig
   end
 
   and DebugSymbols : sig
-    type _debugsymbols_type =
-      [ `None | `SourceMap | `EmbeddedDWARF | `ExternalDWARF ]
+    type _debugsymbols_type = [ `SourceMap | `EmbeddedDWARF | `ExternalDWARF ]
 
     val _debugsymbols_type_of_yojson : Yojson.Basic.t -> _debugsymbols_type
     val yojson_of__debugsymbols_type : _debugsymbols_type -> Yojson.Basic.t
@@ -35016,8 +35015,7 @@ end = struct
   end
 
   and DebugSymbols : sig
-    type _debugsymbols_type =
-      [ `None | `SourceMap | `EmbeddedDWARF | `ExternalDWARF ]
+    type _debugsymbols_type = [ `SourceMap | `EmbeddedDWARF | `ExternalDWARF ]
 
     val _debugsymbols_type_of_yojson : Yojson.Basic.t -> _debugsymbols_type
     val yojson_of__debugsymbols_type : _debugsymbols_type -> Yojson.Basic.t
@@ -35033,11 +35031,9 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc "Debug symbols available for a wasm script."]
   end = struct
-    type _debugsymbols_type =
-      [ `None | `SourceMap | `EmbeddedDWARF | `ExternalDWARF ]
+    type _debugsymbols_type = [ `SourceMap | `EmbeddedDWARF | `ExternalDWARF ]
 
     let _debugsymbols_type_of_yojson = function
-      | `String "None" -> `None
       | `String "SourceMap" -> `SourceMap
       | `String "EmbeddedDWARF" -> `EmbeddedDWARF
       | `String "ExternalDWARF" -> `ExternalDWARF
@@ -35045,7 +35041,6 @@ end = struct
       | _ -> failwith "unknown enum type"
 
     let yojson_of__debugsymbols_type = function
-      | `None -> `String "None"
       | `SourceMap -> `String "SourceMap"
       | `EmbeddedDWARF -> `String "EmbeddedDWARF"
       | `ExternalDWARF -> `String "ExternalDWARF"
