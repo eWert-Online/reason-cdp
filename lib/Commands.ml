@@ -34822,6 +34822,70 @@ module Debugger = struct
     end
   end
 
+  (* Replace previous blackbox execution contexts with passed ones. Forces backend to skip
+     stepping/pausing in scripts in these execution contexts. VM will try to leave blackboxed script by
+     performing 'step in' several times, finally resorting to 'step out' if unsuccessful. *)
+  module SetBlackboxExecutionContexts = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        uniqueIds : string list;
+            [@key "uniqueIds"]
+            [@ocaml.doc
+              "Array of execution context unique ids for the debugger to \
+               ignore."]
+      }
+      [@@deriving yojson]
+
+      let make ~uniqueIds () = { uniqueIds }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Debugger.setBlackboxExecutionContexts";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Replace previous blackbox patterns with passed ones. Forces backend to skip stepping/pausing in
      scripts with url matching one of the patterns. VM will try to leave blackboxed script by
      performing 'step in' several times, finally resorting to 'step out' if unsuccessful. *)
@@ -34860,10 +34924,14 @@ module Debugger = struct
             [@ocaml.doc
               "Array of regexps that will be used to check script url for \
                blackbox state."]
+        skipAnonymous : bool option;
+            [@key "skipAnonymous"]
+            [@yojson.option]
+            [@ocaml.doc "If true, also ignore scripts with no source url."]
       }
       [@@deriving yojson]
 
-      let make ~patterns () = { patterns }
+      let make ~patterns ?skipAnonymous () = { patterns; skipAnonymous }
     end
 
     module Request = struct
