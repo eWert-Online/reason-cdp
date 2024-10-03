@@ -4182,6 +4182,52 @@ module WebAuthn = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
+  (* Triggered when a credential is deleted, e.g. through
+     PublicKeyCredential.signalUnknownCredential(). *)
+  module CredentialDeleted = struct
+    let name = "WebAuthn.credentialDeleted"
+
+    type result = {
+      authenticatorId : Types.WebAuthn.AuthenticatorId.t;
+          [@key "authenticatorId"] [@ocaml.doc "No description provided"]
+      credentialId : string;
+          [@key "credentialId"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
+  (* Triggered when a credential is updated, e.g. through
+     PublicKeyCredential.signalCurrentUserDetails(). *)
+  module CredentialUpdated = struct
+    let name = "WebAuthn.credentialUpdated"
+
+    type result = {
+      authenticatorId : Types.WebAuthn.AuthenticatorId.t;
+          [@key "authenticatorId"] [@ocaml.doc "No description provided"]
+      credential : Types.WebAuthn.Credential.t;
+          [@key "credential"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
   (* Triggered when a credential is used in a webauthn assertion. *)
   module CredentialAsserted = struct
     let name = "WebAuthn.credentialAsserted"

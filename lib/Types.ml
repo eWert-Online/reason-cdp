@@ -31728,6 +31728,20 @@ and WebAuthn : sig
              (BS)\n\
              flag set to this value. Defaults to the authenticator's\n\
              defaultBackupState value."]
+      userName : string option;
+          [@key "userName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The credential's user.name property. Equivalent to empty if not \
+             set.\n\
+             https://w3c.github.io/webauthn/#dom-publickeycredentialentity-name"]
+      userDisplayName : string option;
+          [@key "userDisplayName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The credential's user.displayName property. Equivalent to empty if\n\
+             not set.\n\
+             https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-displayname"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -32039,6 +32053,20 @@ end = struct
              (BS)\n\
              flag set to this value. Defaults to the authenticator's\n\
              defaultBackupState value."]
+      userName : string option;
+          [@key "userName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The credential's user.name property. Equivalent to empty if not \
+             set.\n\
+             https://w3c.github.io/webauthn/#dom-publickeycredentialentity-name"]
+      userDisplayName : string option;
+          [@key "userDisplayName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The credential's user.displayName property. Equivalent to empty if\n\
+             not set.\n\
+             https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-displayname"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -32095,6 +32123,20 @@ end = struct
              (BS)\n\
              flag set to this value. Defaults to the authenticator's\n\
              defaultBackupState value."]
+      userName : string option;
+          [@key "userName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The credential's user.name property. Equivalent to empty if not \
+             set.\n\
+             https://w3c.github.io/webauthn/#dom-publickeycredentialentity-name"]
+      userDisplayName : string option;
+          [@key "userDisplayName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The credential's user.displayName property. Equivalent to empty if\n\
+             not set.\n\
+             https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-displayname"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -32660,7 +32702,8 @@ and Preload : sig
       | `AllPrerenderingCanceled
       | `WindowClosed
       | `SlowNetwork
-      | `OtherPrerenderedPageActivated ]
+      | `OtherPrerenderedPageActivated
+      | `V8OptimizerDisabled ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -33101,7 +33144,8 @@ end = struct
       | `AllPrerenderingCanceled
       | `WindowClosed
       | `SlowNetwork
-      | `OtherPrerenderedPageActivated ]
+      | `OtherPrerenderedPageActivated
+      | `V8OptimizerDisabled ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -33184,7 +33228,8 @@ end = struct
       | `AllPrerenderingCanceled
       | `WindowClosed
       | `SlowNetwork
-      | `OtherPrerenderedPageActivated ]
+      | `OtherPrerenderedPageActivated
+      | `V8OptimizerDisabled ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -33283,6 +33328,7 @@ end = struct
       | `String "SlowNetwork" -> `SlowNetwork
       | `String "OtherPrerenderedPageActivated" ->
           `OtherPrerenderedPageActivated
+      | `String "V8OptimizerDisabled" -> `V8OptimizerDisabled
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -33383,6 +33429,7 @@ end = struct
       | `SlowNetwork -> `String "SlowNetwork"
       | `OtherPrerenderedPageActivated ->
           `String "OtherPrerenderedPageActivated"
+      | `V8OptimizerDisabled -> `String "V8OptimizerDisabled"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
