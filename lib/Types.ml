@@ -2172,7 +2172,7 @@ and Audits : sig
       | `ThirdPartyCookiesBlocked
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
-      | `ReplacedByButtonMode
+      | `ReplacedByActiveMode
       | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching ]
@@ -4270,7 +4270,7 @@ end = struct
       | `ThirdPartyCookiesBlocked
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
-      | `ReplacedByButtonMode
+      | `ReplacedByActiveMode
       | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching ]
@@ -4332,7 +4332,7 @@ end = struct
       | `ThirdPartyCookiesBlocked
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
-      | `ReplacedByButtonMode
+      | `ReplacedByActiveMode
       | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching ]
@@ -4383,7 +4383,7 @@ end = struct
       | `String "NotSignedInWithIdp" -> `NotSignedInWithIdp
       | `String "MissingTransientUserActivation" ->
           `MissingTransientUserActivation
-      | `String "ReplacedByButtonMode" -> `ReplacedByButtonMode
+      | `String "ReplacedByActiveMode" -> `ReplacedByActiveMode
       | `String "InvalidFieldsSpecified" -> `InvalidFieldsSpecified
       | `String "RelyingPartyOriginIsOpaque" -> `RelyingPartyOriginIsOpaque
       | `String "TypeNotMatching" -> `TypeNotMatching
@@ -4436,7 +4436,7 @@ end = struct
       | `NotSignedInWithIdp -> `String "NotSignedInWithIdp"
       | `MissingTransientUserActivation ->
           `String "MissingTransientUserActivation"
-      | `ReplacedByButtonMode -> `String "ReplacedByButtonMode"
+      | `ReplacedByActiveMode -> `String "ReplacedByActiveMode"
       | `InvalidFieldsSpecified -> `String "InvalidFieldsSpecified"
       | `RelyingPartyOriginIsOpaque -> `String "RelyingPartyOriginIsOpaque"
       | `TypeNotMatching -> `String "TypeNotMatching"
