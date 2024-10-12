@@ -32703,7 +32703,8 @@ and Preload : sig
       | `WindowClosed
       | `SlowNetwork
       | `OtherPrerenderedPageActivated
-      | `V8OptimizerDisabled ]
+      | `V8OptimizerDisabled
+      | `PrerenderFailedDuringPrefetch ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -33145,7 +33146,8 @@ end = struct
       | `WindowClosed
       | `SlowNetwork
       | `OtherPrerenderedPageActivated
-      | `V8OptimizerDisabled ]
+      | `V8OptimizerDisabled
+      | `PrerenderFailedDuringPrefetch ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -33229,7 +33231,8 @@ end = struct
       | `WindowClosed
       | `SlowNetwork
       | `OtherPrerenderedPageActivated
-      | `V8OptimizerDisabled ]
+      | `V8OptimizerDisabled
+      | `PrerenderFailedDuringPrefetch ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -33329,6 +33332,8 @@ end = struct
       | `String "OtherPrerenderedPageActivated" ->
           `OtherPrerenderedPageActivated
       | `String "V8OptimizerDisabled" -> `V8OptimizerDisabled
+      | `String "PrerenderFailedDuringPrefetch" ->
+          `PrerenderFailedDuringPrefetch
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -33430,6 +33435,8 @@ end = struct
       | `OtherPrerenderedPageActivated ->
           `String "OtherPrerenderedPageActivated"
       | `V8OptimizerDisabled -> `String "V8OptimizerDisabled"
+      | `PrerenderFailedDuringPrefetch ->
+          `String "PrerenderFailedDuringPrefetch"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
