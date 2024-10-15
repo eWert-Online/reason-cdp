@@ -8972,8 +8972,6 @@ and DOM : sig
       | `placeholder
       | `file_selector_button
       | `details_content
-      | `select_fallback_button
-      | `select_fallback_button_text
       | `picker ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
@@ -9331,8 +9329,6 @@ end = struct
       | `placeholder
       | `file_selector_button
       | `details_content
-      | `select_fallback_button
-      | `select_fallback_button_text
       | `picker ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
@@ -9376,8 +9372,6 @@ end = struct
       | `placeholder
       | `file_selector_button
       | `details_content
-      | `select_fallback_button
-      | `select_fallback_button_text
       | `picker ]
 
     let _pseudotype_of_yojson = function
@@ -9415,8 +9409,6 @@ end = struct
       | `String "placeholder" -> `placeholder
       | `String "file-selector-button" -> `file_selector_button
       | `String "details-content" -> `details_content
-      | `String "select-fallback-button" -> `select_fallback_button
-      | `String "select-fallback-button-text" -> `select_fallback_button_text
       | `String "picker" -> `picker
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -9456,8 +9448,6 @@ end = struct
       | `placeholder -> `String "placeholder"
       | `file_selector_button -> `String "file-selector-button"
       | `details_content -> `String "details-content"
-      | `select_fallback_button -> `String "select-fallback-button"
-      | `select_fallback_button_text -> `String "select-fallback-button-text"
       | `picker -> `String "picker"
 
     type t = _pseudotype
@@ -22542,7 +22532,8 @@ and Page : sig
       | `EmbedderExtensionMessaging
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
-      | `RequestedByWebViewClient ]
+      | `RequestedByWebViewClient
+      | `PostMessageByWebViewClient ]
 
     val _backforwardcachenotrestoredreason_of_yojson :
       Yojson.Basic.t -> _backforwardcachenotrestoredreason
@@ -25106,7 +25097,8 @@ end = struct
       | `EmbedderExtensionMessaging
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
-      | `RequestedByWebViewClient ]
+      | `RequestedByWebViewClient
+      | `PostMessageByWebViewClient ]
 
     val _backforwardcachenotrestoredreason_of_yojson :
       Yojson.Basic.t -> _backforwardcachenotrestoredreason
@@ -25256,7 +25248,8 @@ end = struct
       | `EmbedderExtensionMessaging
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
-      | `RequestedByWebViewClient ]
+      | `RequestedByWebViewClient
+      | `PostMessageByWebViewClient ]
 
     let _backforwardcachenotrestoredreason_of_yojson = function
       | `String "NotPrimaryMainFrame" -> `NotPrimaryMainFrame
@@ -25440,6 +25433,7 @@ end = struct
       | `String "EmbedderExtensionSentMessageToCachedFrame" ->
           `EmbedderExtensionSentMessageToCachedFrame
       | `String "RequestedByWebViewClient" -> `RequestedByWebViewClient
+      | `String "PostMessageByWebViewClient" -> `PostMessageByWebViewClient
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -25625,6 +25619,7 @@ end = struct
       | `EmbedderExtensionSentMessageToCachedFrame ->
           `String "EmbedderExtensionSentMessageToCachedFrame"
       | `RequestedByWebViewClient -> `String "RequestedByWebViewClient"
+      | `PostMessageByWebViewClient -> `String "PostMessageByWebViewClient"
 
     type t = _backforwardcachenotrestoredreason
     [@@deriving yojson]
