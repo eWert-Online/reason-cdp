@@ -8940,6 +8940,7 @@ and DOM : sig
     type _pseudotype =
       [ `first_line
       | `first_letter
+      | `check
       | `before
       | `after
       | `marker
@@ -9297,6 +9298,7 @@ end = struct
     type _pseudotype =
       [ `first_line
       | `first_letter
+      | `check
       | `before
       | `after
       | `marker
@@ -9340,6 +9342,7 @@ end = struct
     type _pseudotype =
       [ `first_line
       | `first_letter
+      | `check
       | `before
       | `after
       | `marker
@@ -9377,6 +9380,7 @@ end = struct
     let _pseudotype_of_yojson = function
       | `String "first-line" -> `first_line
       | `String "first-letter" -> `first_letter
+      | `String "check" -> `check
       | `String "before" -> `before
       | `String "after" -> `after
       | `String "marker" -> `marker
@@ -9416,6 +9420,7 @@ end = struct
     let yojson_of__pseudotype = function
       | `first_line -> `String "first-line"
       | `first_letter -> `String "first-letter"
+      | `check -> `String "check"
       | `before -> `String "before"
       | `after -> `String "after"
       | `marker -> `String "marker"
@@ -21515,6 +21520,7 @@ and Page : sig
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
+      | `fenced_frame_unpartitioned_data
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -22900,6 +22906,7 @@ end = struct
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
+      | `fenced_frame_unpartitioned_data
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -23007,6 +23014,7 @@ end = struct
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
+      | `fenced_frame_unpartitioned_data
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -23103,6 +23111,8 @@ end = struct
       | `String "execution-while-out-of-viewport" ->
           `execution_while_out_of_viewport
       | `String "execution-while-not-rendered" -> `execution_while_not_rendered
+      | `String "fenced-frame-unpartitioned-data" ->
+          `fenced_frame_unpartitioned_data
       | `String "focus-without-user-activation" ->
           `focus_without_user_activation
       | `String "fullscreen" -> `fullscreen
@@ -23204,6 +23214,8 @@ end = struct
       | `execution_while_out_of_viewport ->
           `String "execution-while-out-of-viewport"
       | `execution_while_not_rendered -> `String "execution-while-not-rendered"
+      | `fenced_frame_unpartitioned_data ->
+          `String "fenced-frame-unpartitioned-data"
       | `focus_without_user_activation ->
           `String "focus-without-user-activation"
       | `fullscreen -> `String "fullscreen"
