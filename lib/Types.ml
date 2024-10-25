@@ -21520,7 +21520,7 @@ and Page : sig
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
-      | `fenced_frame_unpartitioned_data
+      | `fenced_unpartitioned_storage_read
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -22906,7 +22906,7 @@ end = struct
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
-      | `fenced_frame_unpartitioned_data
+      | `fenced_unpartitioned_storage_read
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -23014,7 +23014,7 @@ end = struct
       | `encrypted_media
       | `execution_while_out_of_viewport
       | `execution_while_not_rendered
-      | `fenced_frame_unpartitioned_data
+      | `fenced_unpartitioned_storage_read
       | `focus_without_user_activation
       | `fullscreen
       | `frobulate
@@ -23111,8 +23111,8 @@ end = struct
       | `String "execution-while-out-of-viewport" ->
           `execution_while_out_of_viewport
       | `String "execution-while-not-rendered" -> `execution_while_not_rendered
-      | `String "fenced-frame-unpartitioned-data" ->
-          `fenced_frame_unpartitioned_data
+      | `String "fenced-unpartitioned-storage-read" ->
+          `fenced_unpartitioned_storage_read
       | `String "focus-without-user-activation" ->
           `focus_without_user_activation
       | `String "fullscreen" -> `fullscreen
@@ -23214,8 +23214,8 @@ end = struct
       | `execution_while_out_of_viewport ->
           `String "execution-while-out-of-viewport"
       | `execution_while_not_rendered -> `String "execution-while-not-rendered"
-      | `fenced_frame_unpartitioned_data ->
-          `String "fenced-frame-unpartitioned-data"
+      | `fenced_unpartitioned_storage_read ->
+          `String "fenced-unpartitioned-storage-read"
       | `focus_without_user_activation ->
           `String "focus-without-user-activation"
       | `fullscreen -> `String "fullscreen"
