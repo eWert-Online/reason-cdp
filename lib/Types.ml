@@ -27580,6 +27580,8 @@ and Storage : sig
           [@key "scopesData"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      maxEventLevelReports : number;
+          [@key "maxEventLevelReports"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -28850,6 +28852,8 @@ end = struct
           [@key "scopesData"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      maxEventLevelReports : number;
+          [@key "maxEventLevelReports"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -28894,6 +28898,8 @@ end = struct
           [@key "scopesData"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      maxEventLevelReports : number;
+          [@key "maxEventLevelReports"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
