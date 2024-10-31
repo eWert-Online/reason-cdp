@@ -31051,7 +31051,7 @@ and WebAudio : sig
   end
 
   and ContextState : sig
-    type _contextstate = [ `suspended | `running | `closed ]
+    type _contextstate = [ `suspended | `running | `closed | `interrupted ]
 
     val _contextstate_of_yojson : Yojson.Basic.t -> _contextstate
     val yojson_of__contextstate : _contextstate -> Yojson.Basic.t
@@ -31246,7 +31246,7 @@ end = struct
   end
 
   and ContextState : sig
-    type _contextstate = [ `suspended | `running | `closed ]
+    type _contextstate = [ `suspended | `running | `closed | `interrupted ]
 
     val _contextstate_of_yojson : Yojson.Basic.t -> _contextstate
     val yojson_of__contextstate : _contextstate -> Yojson.Basic.t
@@ -31254,12 +31254,13 @@ end = struct
     type t = _contextstate
     [@@deriving yojson] [@@ocaml.doc "Enum of AudioContextState from the spec"]
   end = struct
-    type _contextstate = [ `suspended | `running | `closed ]
+    type _contextstate = [ `suspended | `running | `closed | `interrupted ]
 
     let _contextstate_of_yojson = function
       | `String "suspended" -> `suspended
       | `String "running" -> `running
       | `String "closed" -> `closed
+      | `String "interrupted" -> `interrupted
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -31267,6 +31268,7 @@ end = struct
       | `suspended -> `String "suspended"
       | `running -> `String "running"
       | `closed -> `String "closed"
+      | `interrupted -> `String "interrupted"
 
     type t = _contextstate
     [@@deriving yojson] [@@ocaml.doc "Enum of AudioContextState from the spec"]
