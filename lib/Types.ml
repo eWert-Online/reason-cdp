@@ -6465,6 +6465,13 @@ and CSS : sig
           [@ocaml.doc
             "The array keeps the types of ancestor CSSRules from the innermost \
              going outwards."]
+      startingStyles : CSSStartingStyle.t list option;
+          [@key "startingStyles"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@starting-style CSS at-rule array.\n\
+             The array enumerates @starting-style at-rules starting with the \
+             innermost one, going outwards."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS rule representation."]
   end
@@ -6476,7 +6483,8 @@ and CSS : sig
       | `ContainerRule
       | `LayerRule
       | `ScopeRule
-      | `StyleRule ]
+      | `StyleRule
+      | `StartingStyleRule ]
 
     val _cssruletype_of_yojson : Yojson.Basic.t -> _cssruletype
     val yojson_of__cssruletype : _cssruletype -> Yojson.Basic.t
@@ -6731,6 +6739,10 @@ and CSS : sig
           [@key "logicalAxes"]
           [@yojson.option]
           [@ocaml.doc "Optional logical axes queried for the container."]
+      queriesScrollState : bool option;
+          [@key "queriesScrollState"]
+          [@yojson.option]
+          [@ocaml.doc "true if the query contains scroll-state() queries."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS container query rule descriptor."]
   end
@@ -6790,6 +6802,23 @@ and CSS : sig
             "Identifier of the stylesheet containing this object (if exists)."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS Layer at-rule descriptor."]
+  end
+
+  and CSSStartingStyle : sig
+    type t = {
+      range : SourceRange.t option;
+          [@key "range"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The associated rule header range in the enclosing stylesheet (if\n\
+             available)."]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Identifier of the stylesheet containing this object (if exists)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS Starting Style at-rule descriptor."]
   end
 
   and CSSLayerData : sig
@@ -7500,6 +7529,13 @@ end = struct
           [@ocaml.doc
             "The array keeps the types of ancestor CSSRules from the innermost \
              going outwards."]
+      startingStyles : CSSStartingStyle.t list option;
+          [@key "startingStyles"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@starting-style CSS at-rule array.\n\
+             The array enumerates @starting-style at-rules starting with the \
+             innermost one, going outwards."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS rule representation."]
   end = struct
@@ -7564,6 +7600,13 @@ end = struct
           [@ocaml.doc
             "The array keeps the types of ancestor CSSRules from the innermost \
              going outwards."]
+      startingStyles : CSSStartingStyle.t list option;
+          [@key "startingStyles"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@starting-style CSS at-rule array.\n\
+             The array enumerates @starting-style at-rules starting with the \
+             innermost one, going outwards."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS rule representation."]
   end
@@ -7575,7 +7618,8 @@ end = struct
       | `ContainerRule
       | `LayerRule
       | `ScopeRule
-      | `StyleRule ]
+      | `StyleRule
+      | `StartingStyleRule ]
 
     val _cssruletype_of_yojson : Yojson.Basic.t -> _cssruletype
     val yojson_of__cssruletype : _cssruletype -> Yojson.Basic.t
@@ -7594,7 +7638,8 @@ end = struct
       | `ContainerRule
       | `LayerRule
       | `ScopeRule
-      | `StyleRule ]
+      | `StyleRule
+      | `StartingStyleRule ]
 
     let _cssruletype_of_yojson = function
       | `String "MediaRule" -> `MediaRule
@@ -7603,6 +7648,7 @@ end = struct
       | `String "LayerRule" -> `LayerRule
       | `String "ScopeRule" -> `ScopeRule
       | `String "StyleRule" -> `StyleRule
+      | `String "StartingStyleRule" -> `StartingStyleRule
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -7613,6 +7659,7 @@ end = struct
       | `LayerRule -> `String "LayerRule"
       | `ScopeRule -> `String "ScopeRule"
       | `StyleRule -> `String "StyleRule"
+      | `StartingStyleRule -> `String "StartingStyleRule"
 
     type t = _cssruletype
     [@@deriving yojson]
@@ -8072,6 +8119,10 @@ end = struct
           [@key "logicalAxes"]
           [@yojson.option]
           [@ocaml.doc "Optional logical axes queried for the container."]
+      queriesScrollState : bool option;
+          [@key "queriesScrollState"]
+          [@yojson.option]
+          [@ocaml.doc "true if the query contains scroll-state() queries."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS container query rule descriptor."]
   end = struct
@@ -8100,6 +8151,10 @@ end = struct
           [@key "logicalAxes"]
           [@yojson.option]
           [@ocaml.doc "Optional logical axes queried for the container."]
+      queriesScrollState : bool option;
+          [@key "queriesScrollState"]
+          [@yojson.option]
+          [@ocaml.doc "true if the query contains scroll-state() queries."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS container query rule descriptor."]
   end
@@ -8210,6 +8265,38 @@ end = struct
             "Identifier of the stylesheet containing this object (if exists)."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS Layer at-rule descriptor."]
+  end
+
+  and CSSStartingStyle : sig
+    type t = {
+      range : SourceRange.t option;
+          [@key "range"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The associated rule header range in the enclosing stylesheet (if\n\
+             available)."]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Identifier of the stylesheet containing this object (if exists)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS Starting Style at-rule descriptor."]
+  end = struct
+    type t = {
+      range : SourceRange.t option;
+          [@key "range"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The associated rule header range in the enclosing stylesheet (if\n\
+             available)."]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Identifier of the stylesheet containing this object (if exists)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS Starting Style at-rule descriptor."]
   end
 
   and CSSLayerData : sig

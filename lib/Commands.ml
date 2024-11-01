@@ -9246,9 +9246,10 @@ module DOM = struct
   end
 
   (* Returns the query container of the given node based on container query
-     conditions: containerName, physical, and logical axes. If no axes are
-     provided, the style container is returned, which is the direct parent or the
-     closest element with a matching container-name. *)
+     conditions: containerName, physical and logical axes, and whether it queries
+     scroll-state. If no axes are provided and queriesScrollState is false, the
+     style container is returned, which is the direct parent or the closest
+     element with a matching container-name. *)
   module GetContainerForNode = struct
     module Response : sig
       type result = {
@@ -9308,11 +9309,16 @@ module DOM = struct
             [@key "logicalAxes"]
             [@yojson.option]
             [@ocaml.doc "No description provided"]
+        queriesScrollState : bool option;
+            [@key "queriesScrollState"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
-      let make ~nodeId ?containerName ?physicalAxes ?logicalAxes () =
-        { nodeId; containerName; physicalAxes; logicalAxes }
+      let make ~nodeId ?containerName ?physicalAxes ?logicalAxes
+          ?queriesScrollState () =
+        { nodeId; containerName; physicalAxes; logicalAxes; queriesScrollState }
     end
 
     module Request = struct
