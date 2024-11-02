@@ -191,7 +191,8 @@ module rec Accessibility : sig
 
   and AXPropertyName : sig
     type _axpropertyname =
-      [ `busy
+      [ `actions
+      | `busy
       | `disabled
       | `editable
       | `focusable
@@ -695,7 +696,8 @@ end = struct
 
   and AXPropertyName : sig
     type _axpropertyname =
-      [ `busy
+      [ `actions
+      | `busy
       | `disabled
       | `editable
       | `focusable
@@ -751,7 +753,8 @@ end = struct
        other than parent/child/sibling."]
   end = struct
     type _axpropertyname =
-      [ `busy
+      [ `actions
+      | `busy
       | `disabled
       | `editable
       | `focusable
@@ -793,6 +796,7 @@ end = struct
       | `url ]
 
     let _axpropertyname_of_yojson = function
+      | `String "actions" -> `actions
       | `String "busy" -> `busy
       | `String "disabled" -> `disabled
       | `String "editable" -> `editable
@@ -837,6 +841,7 @@ end = struct
       | _ -> failwith "unknown enum type"
 
     let yojson_of__axpropertyname = function
+      | `actions -> `String "actions"
       | `busy -> `String "busy"
       | `disabled -> `String "disabled"
       | `editable -> `String "editable"
@@ -1447,7 +1452,9 @@ and Audits : sig
       | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
       | `ExcludeThirdPartyCookieBlockedInFirstPartySet
-      | `ExcludeThirdPartyPhaseout ]
+      | `ExcludeThirdPartyPhaseout
+      | `ExcludePortMismatch
+      | `ExcludeSchemeMismatch ]
 
     val _cookieexclusionreason_of_yojson :
       Yojson.Basic.t -> _cookieexclusionreason
@@ -2556,7 +2563,9 @@ end = struct
       | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
       | `ExcludeThirdPartyCookieBlockedInFirstPartySet
-      | `ExcludeThirdPartyPhaseout ]
+      | `ExcludeThirdPartyPhaseout
+      | `ExcludePortMismatch
+      | `ExcludeSchemeMismatch ]
 
     val _cookieexclusionreason_of_yojson :
       Yojson.Basic.t -> _cookieexclusionreason
@@ -2576,7 +2585,9 @@ end = struct
       | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
       | `ExcludeThirdPartyCookieBlockedInFirstPartySet
-      | `ExcludeThirdPartyPhaseout ]
+      | `ExcludeThirdPartyPhaseout
+      | `ExcludePortMismatch
+      | `ExcludeSchemeMismatch ]
 
     let _cookieexclusionreason_of_yojson = function
       | `String "ExcludeSameSiteUnspecifiedTreatedAsLax" ->
@@ -2591,6 +2602,8 @@ end = struct
       | `String "ExcludeThirdPartyCookieBlockedInFirstPartySet" ->
           `ExcludeThirdPartyCookieBlockedInFirstPartySet
       | `String "ExcludeThirdPartyPhaseout" -> `ExcludeThirdPartyPhaseout
+      | `String "ExcludePortMismatch" -> `ExcludePortMismatch
+      | `String "ExcludeSchemeMismatch" -> `ExcludeSchemeMismatch
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -2607,6 +2620,8 @@ end = struct
       | `ExcludeThirdPartyCookieBlockedInFirstPartySet ->
           `String "ExcludeThirdPartyCookieBlockedInFirstPartySet"
       | `ExcludeThirdPartyPhaseout -> `String "ExcludeThirdPartyPhaseout"
+      | `ExcludePortMismatch -> `String "ExcludePortMismatch"
+      | `ExcludeSchemeMismatch -> `String "ExcludeSchemeMismatch"
 
     type t = _cookieexclusionreason
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -9030,6 +9045,7 @@ and DOM : sig
       | `check
       | `before
       | `after
+      | `select_arrow
       | `marker
       | `backdrop
       | `column
@@ -9388,6 +9404,7 @@ end = struct
       | `check
       | `before
       | `after
+      | `select_arrow
       | `marker
       | `backdrop
       | `column
@@ -9432,6 +9449,7 @@ end = struct
       | `check
       | `before
       | `after
+      | `select_arrow
       | `marker
       | `backdrop
       | `column
@@ -9470,6 +9488,7 @@ end = struct
       | `String "check" -> `check
       | `String "before" -> `before
       | `String "after" -> `after
+      | `String "select-arrow" -> `select_arrow
       | `String "marker" -> `marker
       | `String "backdrop" -> `backdrop
       | `String "column" -> `column
@@ -9510,6 +9529,7 @@ end = struct
       | `check -> `String "check"
       | `before -> `String "before"
       | `after -> `String "after"
+      | `select_arrow -> `String "select-arrow"
       | `marker -> `String "marker"
       | `backdrop -> `String "backdrop"
       | `column -> `String "column"
