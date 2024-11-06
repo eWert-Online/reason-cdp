@@ -4397,6 +4397,69 @@ module CSS = struct
     end
   end
 
+  (* Starts tracking the given node for the computed style updates
+     and whenever the computed style is updated for node, it queues
+     a `computedStyleUpdated` event with throttling. *)
+  module TrackComputedStyleUpdatesForNode = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        nodeId : Types.DOM.NodeId.t option;
+            [@key "nodeId"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ?nodeId () = { nodeId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "CSS.trackComputedStyleUpdatesForNode";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Starts tracking the given computed styles for updates. The specified array of properties
      replaces the one previously specified. Pass empty array to disable tracking.
      Use takeComputedStyleUpdates to retrieve the list of nodes that had properties modified.

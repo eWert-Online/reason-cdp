@@ -394,6 +394,27 @@ module CSS = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+
+  (* No description provided *)
+  module ComputedStyleUpdated = struct
+    let name = "CSS.computedStyleUpdated"
+
+    type result = {
+      nodeId : Types.DOM.NodeId.t;
+          [@key "nodeId"]
+          [@ocaml.doc "The node id that has updated computed styles."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
 end
 
 module Cast = struct
