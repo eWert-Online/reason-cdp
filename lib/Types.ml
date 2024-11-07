@@ -15574,7 +15574,9 @@ and Network : sig
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
-      | `NameValuePairExceedsMaxSize ]
+      | `NameValuePairExceedsMaxSize
+      | `PortMismatch
+      | `SchemeMismatch ]
 
     val _cookieblockedreason_of_yojson : Yojson.Basic.t -> _cookieblockedreason
     val yojson_of__cookieblockedreason : _cookieblockedreason -> Yojson.Basic.t
@@ -18484,7 +18486,9 @@ end = struct
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
-      | `NameValuePairExceedsMaxSize ]
+      | `NameValuePairExceedsMaxSize
+      | `PortMismatch
+      | `SchemeMismatch ]
 
     val _cookieblockedreason_of_yojson : Yojson.Basic.t -> _cookieblockedreason
     val yojson_of__cookieblockedreason : _cookieblockedreason -> Yojson.Basic.t
@@ -18510,7 +18514,9 @@ end = struct
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
       | `SamePartyFromCrossPartyContext
-      | `NameValuePairExceedsMaxSize ]
+      | `NameValuePairExceedsMaxSize
+      | `PortMismatch
+      | `SchemeMismatch ]
 
     let _cookieblockedreason_of_yojson = function
       | `String "SecureOnly" -> `SecureOnly
@@ -18533,6 +18539,8 @@ end = struct
       | `String "SamePartyFromCrossPartyContext" ->
           `SamePartyFromCrossPartyContext
       | `String "NameValuePairExceedsMaxSize" -> `NameValuePairExceedsMaxSize
+      | `String "PortMismatch" -> `PortMismatch
+      | `String "SchemeMismatch" -> `SchemeMismatch
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -18557,6 +18565,8 @@ end = struct
       | `SamePartyFromCrossPartyContext ->
           `String "SamePartyFromCrossPartyContext"
       | `NameValuePairExceedsMaxSize -> `String "NameValuePairExceedsMaxSize"
+      | `PortMismatch -> `String "PortMismatch"
+      | `SchemeMismatch -> `String "SchemeMismatch"
 
     type t = _cookieblockedreason
     [@@deriving yojson]
@@ -27888,6 +27898,7 @@ and Storage : sig
       | `excessiveReportingOrigins
       | `noHistograms
       | `insufficientBudget
+      | `insufficientNamedBudget
       | `noMatchingSourceFilterData
       | `notRegistered
       | `prohibitedByBrowserPolicy
@@ -29463,6 +29474,7 @@ end = struct
       | `excessiveReportingOrigins
       | `noHistograms
       | `insufficientBudget
+      | `insufficientNamedBudget
       | `noMatchingSourceFilterData
       | `notRegistered
       | `prohibitedByBrowserPolicy
@@ -29488,6 +29500,7 @@ end = struct
       | `excessiveReportingOrigins
       | `noHistograms
       | `insufficientBudget
+      | `insufficientNamedBudget
       | `noMatchingSourceFilterData
       | `notRegistered
       | `prohibitedByBrowserPolicy
@@ -29505,6 +29518,7 @@ end = struct
       | `String "excessiveReportingOrigins" -> `excessiveReportingOrigins
       | `String "noHistograms" -> `noHistograms
       | `String "insufficientBudget" -> `insufficientBudget
+      | `String "insufficientNamedBudget" -> `insufficientNamedBudget
       | `String "noMatchingSourceFilterData" -> `noMatchingSourceFilterData
       | `String "notRegistered" -> `notRegistered
       | `String "prohibitedByBrowserPolicy" -> `prohibitedByBrowserPolicy
@@ -29524,6 +29538,7 @@ end = struct
       | `excessiveReportingOrigins -> `String "excessiveReportingOrigins"
       | `noHistograms -> `String "noHistograms"
       | `insufficientBudget -> `String "insufficientBudget"
+      | `insufficientNamedBudget -> `String "insufficientNamedBudget"
       | `noMatchingSourceFilterData -> `String "noMatchingSourceFilterData"
       | `notRegistered -> `String "notRegistered"
       | `prohibitedByBrowserPolicy -> `String "prohibitedByBrowserPolicy"

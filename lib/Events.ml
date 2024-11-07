@@ -2727,7 +2727,8 @@ module Page = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
-  (* Fired for top level page lifecycle events such as navigation, load, paint, etc. *)
+  (* Fired for lifecycle events (navigation, load, paint, etc) in the current
+     target (including local frames). *)
   module LifecycleEvent = struct
     let name = "Page.lifecycleEvent"
 
