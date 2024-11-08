@@ -14654,7 +14654,12 @@ and Network : sig
 
   and RequestId : sig
     type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique request identifier."]
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Unique network request identifier.\n\
+       Note that this does not identify individual HTTP requests that are part \
+       of\n\
+       a network request."]
   end
 
   and InterceptionId : sig
@@ -15422,7 +15427,9 @@ and Network : sig
       stack : Runtime.StackTrace.t option;
           [@key "stack"]
           [@yojson.option]
-          [@ocaml.doc "Initiator JavaScript stack trace, set for Script only."]
+          [@ocaml.doc
+            "Initiator JavaScript stack trace, set for Script only.\n\
+             Requires the Debugger domain to be enabled."]
       url : string option;
           [@key "url"]
           [@yojson.option]
@@ -16351,10 +16358,20 @@ end = struct
 
   and RequestId : sig
     type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique request identifier."]
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Unique network request identifier.\n\
+       Note that this does not identify individual HTTP requests that are part \
+       of\n\
+       a network request."]
   end = struct
     type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique request identifier."]
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Unique network request identifier.\n\
+       Note that this does not identify individual HTTP requests that are part \
+       of\n\
+       a network request."]
   end
 
   and InterceptionId : sig
@@ -18125,7 +18142,9 @@ end = struct
       stack : Runtime.StackTrace.t option;
           [@key "stack"]
           [@yojson.option]
-          [@ocaml.doc "Initiator JavaScript stack trace, set for Script only."]
+          [@ocaml.doc
+            "Initiator JavaScript stack trace, set for Script only.\n\
+             Requires the Debugger domain to be enabled."]
       url : string option;
           [@key "url"]
           [@yojson.option]
@@ -18181,7 +18200,9 @@ end = struct
       stack : Runtime.StackTrace.t option;
           [@key "stack"]
           [@yojson.option]
-          [@ocaml.doc "Initiator JavaScript stack trace, set for Script only."]
+          [@ocaml.doc
+            "Initiator JavaScript stack trace, set for Script only.\n\
+             Requires the Debugger domain to be enabled."]
       url : string option;
           [@key "url"]
           [@yojson.option]
@@ -30801,7 +30822,12 @@ end
 and Fetch : sig
   module rec RequestId : sig
     type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique request identifier."]
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Unique request identifier.\n\
+       Note that this does not identify individual HTTP requests that are part \
+       of\n\
+       a network request."]
   end
 
   and RequestStage : sig
@@ -30917,10 +30943,20 @@ and Fetch : sig
 end = struct
   module rec RequestId : sig
     type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique request identifier."]
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Unique request identifier.\n\
+       Note that this does not identify individual HTTP requests that are part \
+       of\n\
+       a network request."]
   end = struct
     type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique request identifier."]
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Unique request identifier.\n\
+       Note that this does not identify individual HTTP requests that are part \
+       of\n\
+       a network request."]
   end
 
   and RequestStage : sig
