@@ -1500,6 +1500,33 @@ and Audits : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and InsightType : sig
+    type _insighttype = [ `GitHubResource | `GracePeriod | `Heuristics ]
+
+    val _insighttype_of_yojson : Yojson.Basic.t -> _insighttype
+    val yojson_of__insighttype : _insighttype -> Yojson.Basic.t
+
+    type t = _insighttype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the category of insight that a cookie issue falls under."]
+  end
+
+  and CookieIssueInsight : sig
+    type t = {
+      type_ : InsightType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      tableEntryUrl : string option;
+          [@key "tableEntryUrl"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Link to table entry in third-party cookie migration readiness \
+             list."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Information about the suggested solution to a cookie issue."]
+  end
+
   and CookieIssueDetails : sig
     type t = {
       cookie : AffectedCookie.t option;
@@ -1536,6 +1563,10 @@ and Audits : sig
           [@key "request"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      insight : CookieIssueInsight.t option;
+          [@key "insight"]
+          [@yojson.option]
+          [@ocaml.doc "The recommended solution to the issue."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -2749,6 +2780,65 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and InsightType : sig
+    type _insighttype = [ `GitHubResource | `GracePeriod | `Heuristics ]
+
+    val _insighttype_of_yojson : Yojson.Basic.t -> _insighttype
+    val yojson_of__insighttype : _insighttype -> Yojson.Basic.t
+
+    type t = _insighttype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the category of insight that a cookie issue falls under."]
+  end = struct
+    type _insighttype = [ `GitHubResource | `GracePeriod | `Heuristics ]
+
+    let _insighttype_of_yojson = function
+      | `String "GitHubResource" -> `GitHubResource
+      | `String "GracePeriod" -> `GracePeriod
+      | `String "Heuristics" -> `Heuristics
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__insighttype = function
+      | `GitHubResource -> `String "GitHubResource"
+      | `GracePeriod -> `String "GracePeriod"
+      | `Heuristics -> `String "Heuristics"
+
+    type t = _insighttype
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the category of insight that a cookie issue falls under."]
+  end
+
+  and CookieIssueInsight : sig
+    type t = {
+      type_ : InsightType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      tableEntryUrl : string option;
+          [@key "tableEntryUrl"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Link to table entry in third-party cookie migration readiness \
+             list."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Information about the suggested solution to a cookie issue."]
+  end = struct
+    type t = {
+      type_ : InsightType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      tableEntryUrl : string option;
+          [@key "tableEntryUrl"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Link to table entry in third-party cookie migration readiness \
+             list."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Information about the suggested solution to a cookie issue."]
+  end
+
   and CookieIssueDetails : sig
     type t = {
       cookie : AffectedCookie.t option;
@@ -2785,6 +2875,10 @@ end = struct
           [@key "request"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      insight : CookieIssueInsight.t option;
+          [@key "insight"]
+          [@yojson.option]
+          [@ocaml.doc "The recommended solution to the issue."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -2827,6 +2921,10 @@ end = struct
           [@key "request"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      insight : CookieIssueInsight.t option;
+          [@key "insight"]
+          [@yojson.option]
+          [@ocaml.doc "The recommended solution to the issue."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
