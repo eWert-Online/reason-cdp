@@ -9156,8 +9156,7 @@ and DOM : sig
       | `first_line_inherited
       | `scroll_marker
       | `scroll_marker_group
-      | `scroll_next_button
-      | `scroll_prev_button
+      | `scroll_button
       | `scrollbar
       | `scrollbar_thumb
       | `scrollbar_button
@@ -9515,8 +9514,7 @@ end = struct
       | `first_line_inherited
       | `scroll_marker
       | `scroll_marker_group
-      | `scroll_next_button
-      | `scroll_prev_button
+      | `scroll_button
       | `scrollbar
       | `scrollbar_thumb
       | `scrollbar_button
@@ -9560,8 +9558,7 @@ end = struct
       | `first_line_inherited
       | `scroll_marker
       | `scroll_marker_group
-      | `scroll_next_button
-      | `scroll_prev_button
+      | `scroll_button
       | `scrollbar
       | `scrollbar_thumb
       | `scrollbar_button
@@ -9599,8 +9596,7 @@ end = struct
       | `String "first-line-inherited" -> `first_line_inherited
       | `String "scroll-marker" -> `scroll_marker
       | `String "scroll-marker-group" -> `scroll_marker_group
-      | `String "scroll-next-button" -> `scroll_next_button
-      | `String "scroll-prev-button" -> `scroll_prev_button
+      | `String "scroll-button" -> `scroll_button
       | `String "scrollbar" -> `scrollbar
       | `String "scrollbar-thumb" -> `scrollbar_thumb
       | `String "scrollbar-button" -> `scrollbar_button
@@ -9640,8 +9636,7 @@ end = struct
       | `first_line_inherited -> `String "first-line-inherited"
       | `scroll_marker -> `String "scroll-marker"
       | `scroll_marker_group -> `String "scroll-marker-group"
-      | `scroll_next_button -> `String "scroll-next-button"
-      | `scroll_prev_button -> `String "scroll-prev-button"
+      | `scroll_button -> `String "scroll-button"
       | `scrollbar -> `String "scrollbar"
       | `scrollbar_thumb -> `String "scrollbar-thumb"
       | `scrollbar_button -> `String "scrollbar-button"
