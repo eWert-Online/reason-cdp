@@ -9140,7 +9140,7 @@ and DOM : sig
     type _pseudotype =
       [ `first_line
       | `first_letter
-      | `check
+      | `checkmark
       | `before
       | `after
       | `select_arrow
@@ -9498,7 +9498,7 @@ end = struct
     type _pseudotype =
       [ `first_line
       | `first_letter
-      | `check
+      | `checkmark
       | `before
       | `after
       | `select_arrow
@@ -9542,7 +9542,7 @@ end = struct
     type _pseudotype =
       [ `first_line
       | `first_letter
-      | `check
+      | `checkmark
       | `before
       | `after
       | `select_arrow
@@ -9580,7 +9580,7 @@ end = struct
     let _pseudotype_of_yojson = function
       | `String "first-line" -> `first_line
       | `String "first-letter" -> `first_letter
-      | `String "check" -> `check
+      | `String "checkmark" -> `checkmark
       | `String "before" -> `before
       | `String "after" -> `after
       | `String "select-arrow" -> `select_arrow
@@ -9620,7 +9620,7 @@ end = struct
     let yojson_of__pseudotype = function
       | `first_line -> `String "first-line"
       | `first_letter -> `String "first-letter"
-      | `check -> `String "check"
+      | `checkmark -> `String "checkmark"
       | `before -> `String "before"
       | `after -> `String "after"
       | `select_arrow -> `String "select-arrow"
