@@ -5763,18 +5763,21 @@ and Browser : sig
 
   and PermissionType : sig
     type _permissiontype =
-      [ `accessibilityEvents
+      [ `ar
       | `audioCapture
-      | `backgroundSync
+      | `automaticFullscreen
       | `backgroundFetch
+      | `backgroundSync
+      | `cameraPanTiltZoom
       | `capturedSurfaceControl
       | `clipboardReadWrite
       | `clipboardSanitizedWrite
       | `displayCapture
       | `durableStorage
-      | `flash
       | `geolocation
+      | `handTracking
       | `idleDetection
+      | `keyboardLock
       | `localFonts
       | `midi
       | `midiSysex
@@ -5782,16 +5785,19 @@ and Browser : sig
       | `notifications
       | `paymentHandler
       | `periodicBackgroundSync
+      | `pointerLock
       | `protectedMediaIdentifier
       | `sensors
-      | `storageAccess
+      | `smartCard
       | `speakerSelection
+      | `storageAccess
       | `topLevelStorageAccess
       | `videoCapture
-      | `videoCapturePanTiltZoom
+      | `vr
       | `wakeLockScreen
       | `wakeLockSystem
       | `webAppInstallation
+      | `webPrinting
       | `windowManagement ]
 
     val _permissiontype_of_yojson : Yojson.Basic.t -> _permissiontype
@@ -5986,18 +5992,21 @@ end = struct
 
   and PermissionType : sig
     type _permissiontype =
-      [ `accessibilityEvents
+      [ `ar
       | `audioCapture
-      | `backgroundSync
+      | `automaticFullscreen
       | `backgroundFetch
+      | `backgroundSync
+      | `cameraPanTiltZoom
       | `capturedSurfaceControl
       | `clipboardReadWrite
       | `clipboardSanitizedWrite
       | `displayCapture
       | `durableStorage
-      | `flash
       | `geolocation
+      | `handTracking
       | `idleDetection
+      | `keyboardLock
       | `localFonts
       | `midi
       | `midiSysex
@@ -6005,16 +6014,19 @@ end = struct
       | `notifications
       | `paymentHandler
       | `periodicBackgroundSync
+      | `pointerLock
       | `protectedMediaIdentifier
       | `sensors
-      | `storageAccess
+      | `smartCard
       | `speakerSelection
+      | `storageAccess
       | `topLevelStorageAccess
       | `videoCapture
-      | `videoCapturePanTiltZoom
+      | `vr
       | `wakeLockScreen
       | `wakeLockSystem
       | `webAppInstallation
+      | `webPrinting
       | `windowManagement ]
 
     val _permissiontype_of_yojson : Yojson.Basic.t -> _permissiontype
@@ -6024,18 +6036,21 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type _permissiontype =
-      [ `accessibilityEvents
+      [ `ar
       | `audioCapture
-      | `backgroundSync
+      | `automaticFullscreen
       | `backgroundFetch
+      | `backgroundSync
+      | `cameraPanTiltZoom
       | `capturedSurfaceControl
       | `clipboardReadWrite
       | `clipboardSanitizedWrite
       | `displayCapture
       | `durableStorage
-      | `flash
       | `geolocation
+      | `handTracking
       | `idleDetection
+      | `keyboardLock
       | `localFonts
       | `midi
       | `midiSysex
@@ -6043,31 +6058,37 @@ end = struct
       | `notifications
       | `paymentHandler
       | `periodicBackgroundSync
+      | `pointerLock
       | `protectedMediaIdentifier
       | `sensors
-      | `storageAccess
+      | `smartCard
       | `speakerSelection
+      | `storageAccess
       | `topLevelStorageAccess
       | `videoCapture
-      | `videoCapturePanTiltZoom
+      | `vr
       | `wakeLockScreen
       | `wakeLockSystem
       | `webAppInstallation
+      | `webPrinting
       | `windowManagement ]
 
     let _permissiontype_of_yojson = function
-      | `String "accessibilityEvents" -> `accessibilityEvents
+      | `String "ar" -> `ar
       | `String "audioCapture" -> `audioCapture
-      | `String "backgroundSync" -> `backgroundSync
+      | `String "automaticFullscreen" -> `automaticFullscreen
       | `String "backgroundFetch" -> `backgroundFetch
+      | `String "backgroundSync" -> `backgroundSync
+      | `String "cameraPanTiltZoom" -> `cameraPanTiltZoom
       | `String "capturedSurfaceControl" -> `capturedSurfaceControl
       | `String "clipboardReadWrite" -> `clipboardReadWrite
       | `String "clipboardSanitizedWrite" -> `clipboardSanitizedWrite
       | `String "displayCapture" -> `displayCapture
       | `String "durableStorage" -> `durableStorage
-      | `String "flash" -> `flash
       | `String "geolocation" -> `geolocation
+      | `String "handTracking" -> `handTracking
       | `String "idleDetection" -> `idleDetection
+      | `String "keyboardLock" -> `keyboardLock
       | `String "localFonts" -> `localFonts
       | `String "midi" -> `midi
       | `String "midiSysex" -> `midiSysex
@@ -6075,33 +6096,39 @@ end = struct
       | `String "notifications" -> `notifications
       | `String "paymentHandler" -> `paymentHandler
       | `String "periodicBackgroundSync" -> `periodicBackgroundSync
+      | `String "pointerLock" -> `pointerLock
       | `String "protectedMediaIdentifier" -> `protectedMediaIdentifier
       | `String "sensors" -> `sensors
-      | `String "storageAccess" -> `storageAccess
+      | `String "smartCard" -> `smartCard
       | `String "speakerSelection" -> `speakerSelection
+      | `String "storageAccess" -> `storageAccess
       | `String "topLevelStorageAccess" -> `topLevelStorageAccess
       | `String "videoCapture" -> `videoCapture
-      | `String "videoCapturePanTiltZoom" -> `videoCapturePanTiltZoom
+      | `String "vr" -> `vr
       | `String "wakeLockScreen" -> `wakeLockScreen
       | `String "wakeLockSystem" -> `wakeLockSystem
       | `String "webAppInstallation" -> `webAppInstallation
+      | `String "webPrinting" -> `webPrinting
       | `String "windowManagement" -> `windowManagement
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__permissiontype = function
-      | `accessibilityEvents -> `String "accessibilityEvents"
+      | `ar -> `String "ar"
       | `audioCapture -> `String "audioCapture"
-      | `backgroundSync -> `String "backgroundSync"
+      | `automaticFullscreen -> `String "automaticFullscreen"
       | `backgroundFetch -> `String "backgroundFetch"
+      | `backgroundSync -> `String "backgroundSync"
+      | `cameraPanTiltZoom -> `String "cameraPanTiltZoom"
       | `capturedSurfaceControl -> `String "capturedSurfaceControl"
       | `clipboardReadWrite -> `String "clipboardReadWrite"
       | `clipboardSanitizedWrite -> `String "clipboardSanitizedWrite"
       | `displayCapture -> `String "displayCapture"
       | `durableStorage -> `String "durableStorage"
-      | `flash -> `String "flash"
       | `geolocation -> `String "geolocation"
+      | `handTracking -> `String "handTracking"
       | `idleDetection -> `String "idleDetection"
+      | `keyboardLock -> `String "keyboardLock"
       | `localFonts -> `String "localFonts"
       | `midi -> `String "midi"
       | `midiSysex -> `String "midiSysex"
@@ -6109,16 +6136,19 @@ end = struct
       | `notifications -> `String "notifications"
       | `paymentHandler -> `String "paymentHandler"
       | `periodicBackgroundSync -> `String "periodicBackgroundSync"
+      | `pointerLock -> `String "pointerLock"
       | `protectedMediaIdentifier -> `String "protectedMediaIdentifier"
       | `sensors -> `String "sensors"
-      | `storageAccess -> `String "storageAccess"
+      | `smartCard -> `String "smartCard"
       | `speakerSelection -> `String "speakerSelection"
+      | `storageAccess -> `String "storageAccess"
       | `topLevelStorageAccess -> `String "topLevelStorageAccess"
       | `videoCapture -> `String "videoCapture"
-      | `videoCapturePanTiltZoom -> `String "videoCapturePanTiltZoom"
+      | `vr -> `String "vr"
       | `wakeLockScreen -> `String "wakeLockScreen"
       | `wakeLockSystem -> `String "wakeLockSystem"
       | `webAppInstallation -> `String "webAppInstallation"
+      | `webPrinting -> `String "webPrinting"
       | `windowManagement -> `String "windowManagement"
 
     type t = _permissiontype
