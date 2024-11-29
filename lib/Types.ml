@@ -1677,7 +1677,8 @@ and Audits : sig
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoep
       | `CorpNotSameOriginAfterDefaultedToSameOriginByDip
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
-      | `CorpNotSameSite ]
+      | `CorpNotSameSite
+      | `SRIMessageSignatureMismatch ]
 
     val _blockedbyresponsereason_of_yojson :
       Yojson.Basic.t -> _blockedbyresponsereason
@@ -3189,7 +3190,8 @@ end = struct
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoep
       | `CorpNotSameOriginAfterDefaultedToSameOriginByDip
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
-      | `CorpNotSameSite ]
+      | `CorpNotSameSite
+      | `SRIMessageSignatureMismatch ]
 
     val _blockedbyresponsereason_of_yojson :
       Yojson.Basic.t -> _blockedbyresponsereason
@@ -3210,7 +3212,8 @@ end = struct
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoep
       | `CorpNotSameOriginAfterDefaultedToSameOriginByDip
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
-      | `CorpNotSameSite ]
+      | `CorpNotSameSite
+      | `SRIMessageSignatureMismatch ]
 
     let _blockedbyresponsereason_of_yojson = function
       | `String "CoepFrameResourceNeedsCoepHeader" ->
@@ -3225,6 +3228,7 @@ end = struct
       | `String "CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip" ->
           `CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip
       | `String "CorpNotSameSite" -> `CorpNotSameSite
+      | `String "SRIMessageSignatureMismatch" -> `SRIMessageSignatureMismatch
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -3241,6 +3245,7 @@ end = struct
       | `CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip ->
           `String "CorpNotSameOriginAfterDefaultedToSameOriginByCoepAndDip"
       | `CorpNotSameSite -> `String "CorpNotSameSite"
+      | `SRIMessageSignatureMismatch -> `String "SRIMessageSignatureMismatch"
 
     type t = _blockedbyresponsereason
     [@@deriving yojson]
@@ -15165,7 +15170,8 @@ and Network : sig
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_dip
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep_and_dip
-      | `corp_not_same_site ]
+      | `corp_not_same_site
+      | `sri_message_signature_mismatch ]
 
     val _blockedreason_of_yojson : Yojson.Basic.t -> _blockedreason
     val yojson_of__blockedreason : _blockedreason -> Yojson.Basic.t
@@ -17326,7 +17332,8 @@ end = struct
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_dip
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep_and_dip
-      | `corp_not_same_site ]
+      | `corp_not_same_site
+      | `sri_message_signature_mismatch ]
 
     val _blockedreason_of_yojson : Yojson.Basic.t -> _blockedreason
     val yojson_of__blockedreason : _blockedreason -> Yojson.Basic.t
@@ -17348,7 +17355,8 @@ end = struct
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_dip
       | `corp_not_same_origin_after_defaulted_to_same_origin_by_coep_and_dip
-      | `corp_not_same_site ]
+      | `corp_not_same_site
+      | `sri_message_signature_mismatch ]
 
     let _blockedreason_of_yojson = function
       | `String "other" -> `other
@@ -17372,6 +17380,8 @@ end = struct
         ->
           `corp_not_same_origin_after_defaulted_to_same_origin_by_coep_and_dip
       | `String "corp-not-same-site" -> `corp_not_same_site
+      | `String "sri-message-signature-mismatch" ->
+          `sri_message_signature_mismatch
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -17396,6 +17406,8 @@ end = struct
           `String
             "corp-not-same-origin-after-defaulted-to-same-origin-by-coep-and-dip"
       | `corp_not_same_site -> `String "corp-not-same-site"
+      | `sri_message_signature_mismatch ->
+          `String "sri-message-signature-mismatch"
 
     type t = _blockedreason
     [@@deriving yojson] [@@ocaml.doc "The reason why request was blocked."]
