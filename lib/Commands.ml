@@ -45,7 +45,7 @@ module Accessibility = struct
   end
 
   (* Enables the accessibility domain which causes `AXNodeId`s to remain consistent between method calls.
-     This turns on accessibility for the page, which can impact performance until accessibility is disabled. *)
+This turns on accessibility for the page, which can impact performance until accessibility is disabled. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -257,7 +257,7 @@ module Accessibility = struct
   end
 
   (* Fetches the root node.
-     Requires `enable()` to have been called previously. *)
+Requires `enable()` to have been called previously. *)
   module GetRootAXNode = struct
     module Response : sig
       type result = {
@@ -325,7 +325,7 @@ module Accessibility = struct
   end
 
   (* Fetches a node and all ancestors up to and including the root.
-     Requires `enable()` to have been called previously. *)
+Requires `enable()` to have been called previously. *)
   module GetAXNodeAndAncestors = struct
     module Response : sig
       type result = {
@@ -405,7 +405,7 @@ module Accessibility = struct
   end
 
   (* Fetches a particular accessibility node by AXNodeId.
-     Requires `enable()` to have been called previously. *)
+Requires `enable()` to have been called previously. *)
   module GetChildAXNodes = struct
     module Response : sig
       type result = {
@@ -475,10 +475,10 @@ module Accessibility = struct
   end
 
   (* Query a DOM node's accessibility subtree for accessible name and role.
-     This command computes the name and role for all nodes in the subtree, including those that are
-     ignored for accessibility, and returns those that match the specified name and role. If no DOM
-     node is specified, or the DOM node does not exist, the command returns an error. If neither
-     `accessibleName` or `role` is specified, it returns all the accessibility nodes in the subtree. *)
+This command computes the name and role for all nodes in the subtree, including those that are
+ignored for accessibility, and returns those that match the specified name and role. If no DOM
+node is specified, or the DOM node does not exist, the command returns an error. If neither
+`accessibleName` or `role` is specified, it returns all the accessibility nodes in the subtree. *)
   module QueryAXTree = struct
     module Response : sig
       type result = {
@@ -1116,7 +1116,7 @@ end
 
 module Audits = struct
   (* Returns the response body and size if it were re-encoded with the specified settings. Only
-     applies to images. *)
+applies to images. *)
   module GetEncodedResponse = struct
     module Response : sig
       type result = {
@@ -1266,7 +1266,7 @@ module Audits = struct
   end
 
   (* Enables issues domain, sends the issues collected so far to the client by means of the
-     `issueAdded` event. *)
+`issueAdded` event. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -1310,7 +1310,7 @@ module Audits = struct
   end
 
   (* Runs the contrast check for the target page. Found issues are reported
-     using Audits.issueAdded event. *)
+using Audits.issueAdded event. *)
   module CheckContrast = struct
     module Response : sig
       type result = Types.assoc
@@ -1368,7 +1368,7 @@ module Audits = struct
   end
 
   (* Runs the form issues check for the target page. Found issues are reported
-     using Audits.issueAdded event. *)
+using Audits.issueAdded event. *)
   module CheckFormsIssues = struct
     module Response : sig
       type result = {
@@ -1423,10 +1423,10 @@ end
 
 module Extensions = struct
   (* Installs an unpacked extension from the filesystem similar to
-     --load-extension CLI flags. Returns extension ID once the extension
-     has been installed. Available if the client is connected using the
-     --remote-debugging-pipe flag and the --enable-unsafe-extension-debugging
-     flag is set. *)
+--load-extension CLI flags. Returns extension ID once the extension
+has been installed. Available if the client is connected using the
+--remote-debugging-pipe flag and the --enable-unsafe-extension-debugging
+flag is set. *)
   module LoadUnpacked = struct
     module Response : sig
       type result = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
@@ -1482,7 +1482,7 @@ module Extensions = struct
   end
 
   (* Gets data from extension storage in the given `storageArea`. If `keys` is
-     specified, these are used to filter the result. *)
+specified, these are used to filter the result. *)
   module GetStorageItems = struct
     module Response : sig
       type result = {
@@ -1659,7 +1659,7 @@ module Extensions = struct
   end
 
   (* Sets `values` in extension storage in the given `storageArea`. The provided `values`
-     will be merged with existing values in the storage area. *)
+will be merged with existing values in the storage area. *)
   module SetStorageItems = struct
     module Response : sig
       type result = Types.assoc
@@ -1718,7 +1718,7 @@ end
 
 module Autofill = struct
   (* Trigger autofill on a form identified by the fieldId.
-     If the field and related form cannot be autofilled, returns an error. *)
+If the field and related form cannot be autofilled, returns an error. *)
   module Trigger = struct
     module Response : sig
       type result = Types.assoc
@@ -2684,7 +2684,7 @@ module Browser = struct
   end
 
   (* Returns the command line switches for the browser process if, and only if
-     --enable-automation is on the commandline. *)
+--enable-automation is on the commandline. *)
   module GetBrowserCommandLine = struct
     module Response : sig
       type result = {
@@ -3204,7 +3204,7 @@ module Browser = struct
   end
 
   (* Allows a site to use privacy sandbox features that require enrollment
-     without the site actually being enrolled. Only supported on page targets. *)
+without the site actually being enrolled. Only supported on page targets. *)
   module AddPrivacySandboxEnrollmentOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -3265,7 +3265,7 @@ end
 
 module CSS = struct
   (* Inserts a new rule with the given `ruleText` in a stylesheet with given `styleSheetId`, at the
-     position specified by `location`. *)
+position specified by `location`. *)
   module AddRule = struct
     module Response : sig
       type result = {
@@ -3526,7 +3526,7 @@ module CSS = struct
   end
 
   (* Enables the CSS agent for the given page. Clients should not assume that the CSS agent has been
-     enabled until the result of this command is received. *)
+enabled until the result of this command is received. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -3570,7 +3570,7 @@ module CSS = struct
   end
 
   (* Ensures that the given node will have specified pseudo-classes whenever its style is computed by
-     the browser. *)
+the browser. *)
   module ForcePseudoState = struct
     module Response : sig
       type result = Types.assoc
@@ -3808,7 +3808,7 @@ module CSS = struct
   end
 
   (* Returns the styles defined inline (explicitly in the "style" attribute and implicitly, using DOM
-     attributes) for a DOM node identified by `nodeId`. *)
+attributes) for a DOM node identified by `nodeId`. *)
   module GetInlineStylesForNode = struct
     module Response : sig
       type result = {
@@ -4139,7 +4139,7 @@ module CSS = struct
   end
 
   (* Requests information about platform fonts which we used to render child TextNodes in the given
-     node. *)
+node. *)
   module GetPlatformFontsForNode = struct
     module Response : sig
       type result = {
@@ -4266,9 +4266,9 @@ module CSS = struct
   end
 
   (* Returns all layers parsed by the rendering engine for the tree scope of a node.
-     Given a DOM element identified by nodeId, getLayersForNode returns the root
-     layer for the nearest ancestor document or shadow root. The layer root contains
-     the full layer tree for the tree scope and their ordering. *)
+Given a DOM element identified by nodeId, getLayersForNode returns the root
+layer for the nearest ancestor document or shadow root. The layer root contains
+the full layer tree for the tree scope and their ordering. *)
   module GetLayersForNode = struct
     module Response : sig
       type result = {
@@ -4332,7 +4332,7 @@ module CSS = struct
   end
 
   (* Given a CSS selector text and a style sheet ID, getLocationForSelector
-     returns an array of locations of the CSS selector in the style sheet. *)
+returns an array of locations of the CSS selector in the style sheet. *)
   module GetLocationForSelector = struct
     module Response : sig
       type result = {
@@ -4398,11 +4398,11 @@ module CSS = struct
   end
 
   (* Starts tracking the given node for the computed style updates
-     and whenever the computed style is updated for node, it queues
-     a `computedStyleUpdated` event with throttling.
-     There can only be 1 node tracked for computed style updates
-     so passing a new node id removes tracking from the previous node.
-     Pass `undefined` to disable tracking. *)
+and whenever the computed style is updated for node, it queues
+a `computedStyleUpdated` event with throttling.
+There can only be 1 node tracked for computed style updates
+so passing a new node id removes tracking from the previous node.
+Pass `undefined` to disable tracking. *)
   module TrackComputedStyleUpdatesForNode = struct
     module Response : sig
       type result = Types.assoc
@@ -4464,11 +4464,11 @@ module CSS = struct
   end
 
   (* Starts tracking the given computed styles for updates. The specified array of properties
-     replaces the one previously specified. Pass empty array to disable tracking.
-     Use takeComputedStyleUpdates to retrieve the list of nodes that had properties modified.
-     The changes to computed style properties are only tracked for nodes pushed to the front-end
-     by the DOM agent. If no changes to the tracked properties occur after the node has been pushed
-     to the front-end, no updates will be issued for the node. *)
+replaces the one previously specified. Pass empty array to disable tracking.
+Use takeComputedStyleUpdates to retrieve the list of nodes that had properties modified.
+The changes to computed style properties are only tracked for nodes pushed to the front-end
+by the DOM agent. If no changes to the tracked properties occur after the node has been pushed
+to the front-end, no updates will be issued for the node. *)
   module TrackComputedStyleUpdates = struct
     module Response : sig
       type result = Types.assoc
@@ -4581,7 +4581,7 @@ module CSS = struct
   end
 
   (* Find a rule with the given active property for the given node and set the new value for this
-     property *)
+property *)
   module SetEffectivePropertyValueForNode = struct
     module Response : sig
       type result = Types.assoc
@@ -5315,7 +5315,7 @@ module CSS = struct
   end
 
   (* Stop tracking rule usage and return the list of rules that were used since last call to
-     `takeCoverageDelta` (or since start of coverage instrumentation). *)
+`takeCoverageDelta` (or since start of coverage instrumentation). *)
   module StopRuleUsageTracking = struct
     module Response : sig
       type result = {
@@ -5368,7 +5368,7 @@ module CSS = struct
   end
 
   (* Obtain list of rules that became used since last call to this method (or since start of coverage
-     instrumentation). *)
+instrumentation). *)
   module TakeCoverageDelta = struct
     module Response : sig
       type result = {
@@ -5838,10 +5838,10 @@ end
 
 module Cast = struct
   (* Starts observing for sinks that can be used for tab mirroring, and if set,
-     sinks compatible with |presentationUrl| as well. When sinks are found, a
-     |sinksUpdated| event is fired.
-     Also starts observing for issue messages. When an issue is added or removed,
-     an |issueUpdated| event is fired. *)
+sinks compatible with |presentationUrl| as well. When sinks are found, a
+|sinksUpdated| event is fired.
+Also starts observing for issue messages. When an issue is added or removed,
+an |issueUpdated| event is fired. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -5941,7 +5941,7 @@ module Cast = struct
   end
 
   (* Sets a sink to be used when the web page requests the browser to choose a
-     sink via Presentation API, Remote Playback API, or Cast SDK. *)
+sink via Presentation API, Remote Playback API, or Cast SDK. *)
   module SetSinkToUse = struct
     module Response : sig
       type result = Types.assoc
@@ -6224,7 +6224,7 @@ module DOM = struct
   end
 
   (* Creates a deep copy of the specified node and places it into the target container before the
-     given anchor. *)
+given anchor. *)
   module CopyTo = struct
     module Response : sig
       type result = {
@@ -6299,7 +6299,7 @@ module DOM = struct
   end
 
   (* Describes node given its id, does not require domain to be enabled. Does not start tracking any
-     objects, can be used for automation. *)
+objects, can be used for automation. *)
   module DescribeNode = struct
     module Response : sig
       type result = {
@@ -6386,8 +6386,8 @@ module DOM = struct
   end
 
   (* Scrolls the specified rect of the given node into view if not already visible.
-     Note: exactly one between nodeId, backendNodeId and objectId should be passed
-     to identify the node. *)
+Note: exactly one between nodeId, backendNodeId and objectId should be passed
+to identify the node. *)
   module ScrollIntoViewIfNeeded = struct
     module Response : sig
       type result = Types.assoc
@@ -6504,7 +6504,7 @@ module DOM = struct
   end
 
   (* Discards search results from the session with the given id. `getSearchResults` should no longer
-     be called for that search. *)
+be called for that search. *)
   module DiscardSearchResults = struct
     module Response : sig
       type result = Types.assoc
@@ -6836,7 +6836,7 @@ module DOM = struct
   end
 
   (* Returns quads that describe node position on the page. This method
-     might return multiple quads for inline nodes. *)
+might return multiple quads for inline nodes. *)
   module GetContentQuads = struct
     module Response : sig
       type result = {
@@ -6913,7 +6913,7 @@ module DOM = struct
   end
 
   (* Returns the root DOM node (and optionally the subtree) to the caller.
-     Implicitly enables the DOM domain events for the current target. *)
+Implicitly enables the DOM domain events for the current target. *)
   module GetDocument = struct
     module Response : sig
       type result = {
@@ -6987,8 +6987,8 @@ module DOM = struct
   end
 
   (* Returns the root DOM node (and optionally the subtree) to the caller.
-     Deprecated, as it is not designed to work well with the rest of the DOM agent.
-     Use DOMSnapshot.captureSnapshot instead. *)
+Deprecated, as it is not designed to work well with the rest of the DOM agent.
+Use DOMSnapshot.captureSnapshot instead. *)
   module GetFlattenedDocument = struct
     module Response : sig
       type result = {
@@ -7141,7 +7141,7 @@ module DOM = struct
   end
 
   (* Returns node id at given location. Depending on whether DOM domain is enabled, nodeId is
-     either returned or not. *)
+either returned or not. *)
   module GetNodeForLocation = struct
     module Response : sig
       type result = {
@@ -7371,7 +7371,7 @@ module DOM = struct
   end
 
   (* Returns search results from given `fromIndex` to given `toIndex` from the search with the given
-     identifier. *)
+identifier. *)
   module GetSearchResults = struct
     module Response : sig
       type result = {
@@ -7688,7 +7688,7 @@ module DOM = struct
   end
 
   (* Searches for a given string in the DOM tree. Use `getSearchResults` to access search results or
-     `cancelSearch` to end this search session. *)
+`cancelSearch` to end this search session. *)
   module PerformSearch = struct
     module Response : sig
       type result = {
@@ -8030,8 +8030,8 @@ module DOM = struct
   end
 
   (* Returns NodeIds of current top layer elements.
-     Top layer is rendered closest to the user within a viewport, therefore its elements always
-     appear on top of all other content. *)
+Top layer is rendered closest to the user within a viewport, therefore its elements always
+appear on top of all other content. *)
   module GetTopLayerElements = struct
     module Response : sig
       type result = {
@@ -8316,8 +8316,8 @@ module DOM = struct
   end
 
   (* Requests that children of the node with given id are returned to the caller in form of
-     `setChildNodes` events where not only immediate children are retrieved, but all children down to
-     the specified depth. *)
+`setChildNodes` events where not only immediate children are retrieved, but all children down to
+the specified depth. *)
   module RequestChildNodes = struct
     module Response : sig
       type result = Types.assoc
@@ -8386,8 +8386,8 @@ module DOM = struct
   end
 
   (* Requests that the node is sent to the caller given the JavaScript node object reference. All
-     nodes that form the path from the node to the root are also sent to the client as a series of
-     `setChildNodes` notifications. *)
+nodes that form the path from the node to the root are also sent to the client as a series of
+`setChildNodes` notifications. *)
   module RequestNode = struct
     module Response : sig
       type result = {
@@ -8591,7 +8591,7 @@ module DOM = struct
   end
 
   (* Sets attributes on element with given id. This method is useful when user edits some existing
-     attribute value and types in several attribute name/value pairs. *)
+attribute value and types in several attribute name/value pairs. *)
   module SetAttributesAsText = struct
     module Response : sig
       type result = Types.assoc
@@ -8847,7 +8847,7 @@ module DOM = struct
   end
 
   (* Returns file information for the given
-     File wrapper. *)
+File wrapper. *)
   module GetFileInfo = struct
     module Response : sig
       type result = {
@@ -8962,7 +8962,7 @@ module DOM = struct
   end
 
   (* Enables console to refer to the node with given id via $x (see Command Line API for more details
-     $x functions). *)
+$x functions). *)
   module SetInspectedNode = struct
     module Response : sig
       type result = Types.assoc
@@ -9312,10 +9312,10 @@ module DOM = struct
   end
 
   (* Returns the query container of the given node based on container query
-     conditions: containerName, physical and logical axes, and whether it queries
-     scroll-state. If no axes are provided and queriesScrollState is false, the
-     style container is returned, which is the direct parent or the closest
-     element with a matching container-name. *)
+conditions: containerName, physical and logical axes, and whether it queries
+scroll-state. If no axes are provided and queriesScrollState is false, the
+style container is returned, which is the direct parent or the closest
+element with a matching container-name. *)
   module GetContainerForNode = struct
     module Response : sig
       type result = {
@@ -9403,7 +9403,7 @@ module DOM = struct
   end
 
   (* Returns the descendants of a container query container that have
-     container queries against this container. *)
+container queries against this container. *)
   module GetQueryingDescendantsForContainer = struct
     module Response : sig
       type result = {
@@ -9480,7 +9480,7 @@ module DOM = struct
   end
 
   (* Returns the target anchor element of the given anchor query according to
-     https://www.w3.org/TR/css-anchor-position-1/#target. *)
+https://www.w3.org/TR/css-anchor-position-1/#target. *)
   module GetAnchorElement = struct
     module Response : sig
       type result = {
@@ -10418,9 +10418,9 @@ module DOMSnapshot = struct
   end
 
   (* Returns a document snapshot, including the full DOM tree of the root node (including iframes,
-     template contents, and imported documents) in a flattened array, as well as layout and
-     white-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is
-     flattened. *)
+template contents, and imported documents) in a flattened array, as well as layout and
+white-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is
+flattened. *)
   module GetSnapshot = struct
     module Response : sig
       type result = {
@@ -10532,9 +10532,9 @@ module DOMSnapshot = struct
   end
 
   (* Returns a document snapshot, including the full DOM tree of the root node (including iframes,
-     template contents, and imported documents) in a flattened array, as well as layout and
-     white-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is
-     flattened. *)
+template contents, and imported documents) in a flattened array, as well as layout and
+white-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is
+flattened. *)
   module CaptureSnapshot = struct
     module Response : sig
       type result = {
@@ -11671,7 +11671,7 @@ module Emulation = struct
   end
 
   (* Sets or clears an override of the default background color of the frame. This override is used
-     if the content does not specify one. *)
+if the content does not specify one. *)
   module SetDefaultBackgroundColorOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -11736,8 +11736,8 @@ module Emulation = struct
   end
 
   (* Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
-     window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
-     query results). *)
+window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
+query results). *)
   module SetDeviceMetricsOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -11894,7 +11894,7 @@ module Emulation = struct
   end
 
   (* Start reporting the given posture value to the Device Posture API.
-     This override can also be set in setDeviceMetricsOverride(). *)
+This override can also be set in setDeviceMetricsOverride(). *)
   module SetDevicePostureOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -11954,9 +11954,9 @@ module Emulation = struct
   end
 
   (* Clears a device posture override set with either setDeviceMetricsOverride()
-     or setDevicePostureOverride() and starts using posture information from the
-     platform again.
-     Does nothing if no override is set. *)
+or setDevicePostureOverride() and starts using posture information from the
+platform again.
+Does nothing if no override is set. *)
   module ClearDevicePostureOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -12347,7 +12347,7 @@ module Emulation = struct
   end
 
   (* Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
-     unavailable. *)
+unavailable. *)
   module SetGeolocationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -12477,10 +12477,10 @@ module Emulation = struct
   end
 
   (* Overrides a platform sensor of a given type. If |enabled| is true, calls to
-     Sensor.start() will use a virtual sensor as backend rather than fetching
-     data from a real hardware sensor. Otherwise, existing virtual
-     sensor-backend Sensor objects will fire an error event and new calls to
-     Sensor.start() will attempt to use a real sensor instead. *)
+Sensor.start() will use a virtual sensor as backend rather than fetching
+data from a real hardware sensor. Otherwise, existing virtual
+sensor-backend Sensor objects will fire an error event and new calls to
+Sensor.start() will attempt to use a real sensor instead. *)
   module SetSensorOverrideEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -12545,7 +12545,7 @@ module Emulation = struct
   end
 
   (* Updates the sensor readings reported by a sensor type previously overridden
-     by setSensorOverrideEnabled. *)
+by setSensorOverrideEnabled. *)
   module SetSensorOverrideReadings = struct
     module Response : sig
       type result = Types.assoc
@@ -12607,9 +12607,9 @@ module Emulation = struct
   end
 
   (* Overrides a pressure source of a given type, as used by the Compute
-     Pressure API, so that updates to PressureObserver.observe() are provided
-     via setPressureStateOverride instead of being retrieved from
-     platform-provided telemetry data. *)
+Pressure API, so that updates to PressureObserver.observe() are provided
+via setPressureStateOverride instead of being retrieved from
+platform-provided telemetry data. *)
   module SetPressureSourceOverrideEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -12674,8 +12674,8 @@ module Emulation = struct
   end
 
   (* Provides a given pressure state that will be processed and eventually be
-     delivered to PressureObserver users. |source| must have been previously
-     overridden by setPressureSourceOverrideEnabled. *)
+delivered to PressureObserver users. |source| must have been previously
+overridden by setPressureSourceOverrideEnabled. *)
   module SetPressureStateOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -13071,7 +13071,7 @@ module Emulation = struct
   end
 
   (* Turns on virtual time for all frames (replacing real-time with a synthetic time source) and sets
-     the current virtual time policy.  Note this supersedes any previous time budget. *)
+the current virtual time policy.  Note this supersedes any previous time budget. *)
   module SetVirtualTimePolicy = struct
     module Response : sig
       type result = {
@@ -13286,8 +13286,8 @@ module Emulation = struct
   end
 
   (* Resizes the frame/viewport of the page. Note that this does not affect the frame's container
-     (e.g. browser window). Can be used to produce screenshots of the specified size. Not supported
-     on Android. *)
+(e.g. browser window). Can be used to produce screenshots of the specified size. Not supported
+on Android. *)
   module SetVisibleSize = struct
     module Response : sig
       type result = Types.assoc
@@ -13456,7 +13456,7 @@ module Emulation = struct
   end
 
   (* Allows overriding user agent with the given string.
-     `userAgentMetadata` must be set for Client Hint headers to be sent. *)
+`userAgentMetadata` must be set for Client Hint headers to be sent. *)
   module SetUserAgentOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -13582,9 +13582,9 @@ end
 
 module HeadlessExperimental = struct
   (* Sends a BeginFrame to the target and returns when the frame was completed. Optionally captures a
-     screenshot from the resulting frame. Requires that the target was created with enabled
-     BeginFrameControl. Designed for use with --run-all-compositor-stages-before-draw, see also
-     https://goo.gle/chrome-headless-rendering for more background. *)
+screenshot from the resulting frame. Requires that the target was created with enabled
+BeginFrameControl. Designed for use with --run-all-compositor-stages-before-draw, see also
+https://goo.gle/chrome-headless-rendering for more background. *)
   module BeginFrame = struct
     module Response : sig
       type result = {
@@ -15026,7 +15026,7 @@ module Input = struct
   end
 
   (* This method emulates inserting text that doesn't come from a key press,
-     for example an emoji keyboard or an IME. *)
+for example an emoji keyboard or an IME. *)
   module InsertText = struct
     module Response : sig
       type result = Types.assoc
@@ -15080,8 +15080,8 @@ module Input = struct
   end
 
   (* This method sets the current candidate text for IME.
-     Use imeCommitComposition to commit the final text.
-     Use imeSetComposition with empty string as text to cancel composition. *)
+Use imeCommitComposition to commit the final text.
+Use imeSetComposition with empty string as text to cancel composition. *)
   module ImeSetComposition = struct
     module Response : sig
       type result = Types.assoc
@@ -15646,7 +15646,7 @@ module Input = struct
   end
 
   (* Prevents default drag and drop behavior and instead emits `Input.dragIntercepted` events.
-     Drag and drop behavior can be directly controlled via `Input.dispatchDragEvent`. *)
+Drag and drop behavior can be directly controlled via `Input.dispatchDragEvent`. *)
   module SetInterceptDrags = struct
     module Response : sig
       type result = Types.assoc
@@ -16745,7 +16745,7 @@ module Log = struct
   end
 
   (* Enables log domain, sends the entries collected so far to the client by means of the
-     `entryAdded` notification. *)
+`entryAdded` notification. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -17000,7 +17000,7 @@ module Memory = struct
   end
 
   (* Prepares for leak detection by terminating workers, stopping spellcheckers,
-     dropping non-essential internal caches, running garbage collections, etc. *)
+dropping non-essential internal caches, running garbage collections, etc. *)
   module PrepareForLeakDetection = struct
     module Response : sig
       type result = Types.assoc
@@ -17312,7 +17312,7 @@ module Memory = struct
   end
 
   (* Retrieve native memory allocations profile
-     collected since renderer process startup. *)
+collected since renderer process startup. *)
   module GetAllTimeSamplingProfile = struct
     module Response : sig
       type result = {
@@ -17365,7 +17365,7 @@ module Memory = struct
   end
 
   (* Retrieve native memory allocations profile
-     collected since browser process startup. *)
+collected since browser process startup. *)
   module GetBrowserSamplingProfile = struct
     module Response : sig
       type result = {
@@ -17418,7 +17418,7 @@ module Memory = struct
   end
 
   (* Retrieve native memory allocations profile collected since last
-     `startSampling` call. *)
+`startSampling` call. *)
   module GetSamplingProfile = struct
     module Response : sig
       type result = {
@@ -17817,10 +17817,10 @@ module Network = struct
   end
 
   (* Response to Network.requestIntercepted which either modifies the request to continue with any
-     modifications, or blocks it, or completes it with the provided response bytes. If a network
-     fetch occurs as a result which encounters a redirect an additional Network.requestIntercepted
-     event will be sent with the same InterceptionId.
-     Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failRequest instead. *)
+modifications, or blocks it, or completes it with the provided response bytes. If a network
+fetch occurs as a result which encounters a redirect an additional Network.requestIntercepted
+event will be sent with the same InterceptionId.
+Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failRequest instead. *)
   module ContinueInterceptedRequest = struct
     module Response : sig
       type result = Types.assoc
@@ -18237,8 +18237,8 @@ module Network = struct
   end
 
   (* Returns all browser cookies. Depending on the backend support, will return detailed cookie
-     information in the `cookies` field.
-     Deprecated. Use Storage.getCookies instead. *)
+information in the `cookies` field.
+Deprecated. Use Storage.getCookies instead. *)
   module GetAllCookies = struct
     module Response : sig
       type result = {
@@ -18354,7 +18354,7 @@ module Network = struct
   end
 
   (* Returns all browser cookies for the current URL. Depending on the backend support, will return
-     detailed cookie information in the `cookies` field. *)
+detailed cookie information in the `cookies` field. *)
   module GetCookies = struct
     module Response : sig
       type result = {
@@ -18633,9 +18633,9 @@ module Network = struct
   end
 
   (* Returns a handle to the stream representing the response body. Note that after this command,
-     the intercepted request can't be continued as is -- you either need to cancel it or to provide
-     the response body. The stream only supports sequential read, IO.read will fail if the position
-     is specified. *)
+the intercepted request can't be continued as is -- you either need to cancel it or to provide
+the response body. The stream only supports sequential read, IO.read will fail if the position
+is specified. *)
   module TakeResponseBodyForInterceptionAsStream = struct
     module Response : sig
       type result = {
@@ -18704,8 +18704,8 @@ module Network = struct
   end
 
   (* This method sends a new XMLHttpRequest which is identical to the original one. The following
-     parameters should be identical: method, url, async, request body, extra headers, withCredentials
-     attribute, user, password. *)
+parameters should be identical: method, url, async, request body, extra headers, withCredentials
+attribute, user, password. *)
   module ReplayXHR = struct
     module Response : sig
       type result = Types.assoc
@@ -19305,7 +19305,7 @@ module Network = struct
   end
 
   (* Sets the requests to intercept that match the provided patterns and optionally resource types.
-     Deprecated, please use Fetch.enable instead. *)
+Deprecated, please use Fetch.enable instead. *)
   module SetRequestInterception = struct
     module Response : sig
       type result = Types.assoc
@@ -19432,7 +19432,7 @@ module Network = struct
   end
 
   (* Enables streaming of the response for the given requestId.
-     If enabled, the dataReceived event contains the data that was received during streaming. *)
+If enabled, the dataReceived event contains the data that was received during streaming. *)
   module StreamResourceContent = struct
     module Response : sig
       type result = {
@@ -19574,7 +19574,7 @@ module Network = struct
   end
 
   (* Enables tracking for the Reporting API, events generated by the Reporting API will now be delivered to the client.
-     Enabling triggers 'reportingApiReportAdded' for all existing reports. *)
+Enabling triggers 'reportingApiReportAdded' for all existing reports. *)
   module EnableReportingApi = struct
     module Response : sig
       type result = Types.assoc
@@ -20063,9 +20063,9 @@ module Overlay = struct
   end
 
   (* Highlights owner element of the frame with given id.
-     Deprecated: Doesn't work reliably and cannot be fixed due to process
-     separation (the owner node might be in a different process). Determine
-     the owner node in the client and use highlightNode. *)
+Deprecated: Doesn't work reliably and cannot be fixed due to process
+separation (the owner node might be in a different process). Determine
+the owner node in the client and use highlightNode. *)
   module HighlightFrame = struct
     module Response : sig
       type result = Types.assoc
@@ -20132,7 +20132,7 @@ module Overlay = struct
   end
 
   (* Highlights DOM node with given id or with the given JavaScript object wrapper. Either nodeId or
-     objectId must be specified. *)
+objectId must be specified. *)
   module HighlightNode = struct
     module Response : sig
       type result = Types.assoc
@@ -20331,7 +20331,7 @@ module Overlay = struct
   end
 
   (* Highlights the source order of the children of the DOM node with given id or with the given
-     JavaScript object wrapper. Either nodeId or objectId must be specified. *)
+JavaScript object wrapper. Either nodeId or objectId must be specified. *)
   module HighlightSourceOrder = struct
     module Response : sig
       type result = Types.assoc
@@ -20401,7 +20401,7 @@ module Overlay = struct
   end
 
   (* Enters the 'inspect' mode. In this mode, elements that user is hovering over are highlighted.
-     Backend then generates 'inspectNodeRequested' event upon element selection. *)
+Backend then generates 'inspectNodeRequested' event upon element selection. *)
   module SetInspectMode = struct
     module Response : sig
       type result = Types.assoc
@@ -21752,7 +21752,7 @@ module Page = struct
   end
 
   (* Returns a snapshot of the page as a string. For MHTML format, the serialization includes
-     iframes, shadow DOM, external resources, and element-inline styles. *)
+iframes, shadow DOM, external resources, and element-inline styles. *)
   module CaptureSnapshot = struct
     module Response : sig
       type result = {
@@ -22177,10 +22177,10 @@ module Page = struct
   end
 
   (* Gets the processed manifest for this current document.
-     This API always waits for the manifest to be loaded.
-     If manifestId is provided, and it does not match the manifest of the
-       current document, this API errors out.
-     If there is not a loaded page, this API errors out immediately. *)
+  This API always waits for the manifest to be loaded.
+  If manifestId is provided, and it does not match the manifest of the
+    current document, this API errors out.
+  If there is not a loaded page, this API errors out immediately. *)
   module GetAppManifest = struct
     module Response : sig
       type result = {
@@ -22374,7 +22374,7 @@ module Page = struct
   end
 
   (* Returns the unique (PWA) app id.
-     Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
+Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
   module GetAppId = struct
     module Response : sig
       type result = {
@@ -23878,8 +23878,8 @@ module Page = struct
   end
 
   (* Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
-     window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
-     query results). *)
+window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
+query results). *)
   module SetDeviceMetricsOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -24319,7 +24319,7 @@ module Page = struct
   end
 
   (* Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
-     unavailable. *)
+unavailable. *)
   module SetGeolocationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -24720,8 +24720,8 @@ module Page = struct
   end
 
   (* Tries to update the web lifecycle state of the page.
-     It will transition the page to the given state according to:
-     https://github.com/WICG/web-lifecycle/ *)
+It will transition the page to the given state according to:
+https://github.com/WICG/web-lifecycle/ *)
   module SetWebLifecycleState = struct
     module Response : sig
       type result = Types.assoc
@@ -24831,11 +24831,11 @@ module Page = struct
   end
 
   (* Requests backend to produce compilation cache for the specified scripts.
-     `scripts` are appended to the list of scripts for which the cache
-     would be produced. The list may be reset during page navigation.
-     When script with a matching URL is encountered, the cache is optionally
-     produced upon backend discretion, based on internal heuristics.
-     See also: `Page.compilationCacheProduced`. *)
+`scripts` are appended to the list of scripts for which the cache
+would be produced. The list may be reset during page navigation.
+When script with a matching URL is encountered, the cache is optionally
+produced upon backend discretion, based on internal heuristics.
+See also: `Page.compilationCacheProduced`. *)
   module ProduceCompilationCache = struct
     module Response : sig
       type result = Types.assoc
@@ -24890,7 +24890,7 @@ module Page = struct
   end
 
   (* Seeds compilation cache for given url. Compilation cache does not survive
-     cross-process navigation. *)
+cross-process navigation. *)
   module AddCompilationCache = struct
     module Response : sig
       type result = Types.assoc
@@ -24992,7 +24992,7 @@ module Page = struct
   end
 
   (* Sets the Secure Payment Confirmation transaction mode.
-     https://w3c.github.io/secure-payment-confirmation/#sctn-automation-set-spc-transaction-mode *)
+https://w3c.github.io/secure-payment-confirmation/#sctn-automation-set-spc-transaction-mode *)
   module SetSPCTransactionMode = struct
     module Response : sig
       type result = Types.assoc
@@ -25047,7 +25047,7 @@ module Page = struct
   end
 
   (* Extensions for Custom Handlers API:
-     https://html.spec.whatwg.org/multipage/system-state.html#rph-automation *)
+https://html.spec.whatwg.org/multipage/system-state.html#rph-automation *)
   module SetRPHRegistrationMode = struct
     module Response : sig
       type result = Types.assoc
@@ -25205,8 +25205,8 @@ module Page = struct
   end
 
   (* Intercept file chooser requests and transfer control to protocol clients.
-     When file chooser interception is enabled, native file chooser dialog is not shown.
-     Instead, a protocol event `Page.fileChooserOpened` is emitted. *)
+When file chooser interception is enabled, native file chooser dialog is not shown.
+Instead, a protocol event `Page.fileChooserOpened` is emitted. *)
   module SetInterceptFileChooserDialog = struct
     module Response : sig
       type result = Types.assoc
@@ -25266,11 +25266,11 @@ module Page = struct
 
   (* Enable/disable prerendering manually.
 
-     This command is a short-term solution for https://crbug.com/1440085.
-     See https://docs.google.com/document/d/12HVmFxYj5Jc-eJr5OmWsa2bqTJsbgGLKI6ZIyx0_wpA
-     for more details.
+This command is a short-term solution for https://crbug.com/1440085.
+See https://docs.google.com/document/d/12HVmFxYj5Jc-eJr5OmWsa2bqTJsbgGLKI6ZIyx0_wpA
+for more details.
 
-     TODO(https://crbug.com/1440085): Remove this once Puppeteer supports tab targets. *)
+TODO(https://crbug.com/1440085): Remove this once Puppeteer supports tab targets. *)
   module SetPrerenderingAllowed = struct
     module Response : sig
       type result = Types.assoc
@@ -25440,8 +25440,8 @@ module Performance = struct
   end
 
   (* Sets time domain to use for collecting and reporting duration metrics.
-     Note that this must be called before enabling metrics collection. Calling
-     this method while metrics collection is enabled returns an error. *)
+Note that this must be called before enabling metrics collection. Calling
+this method while metrics collection is enabled returns an error. *)
   module SetTimeDomain = struct
     module Response : sig
       type result = Types.assoc
@@ -25562,7 +25562,7 @@ end
 
 module PerformanceTimeline = struct
   (* Previously buffered events would be reported before method returns.
-     See also: timelineEventAdded *)
+See also: timelineEventAdded *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -25830,7 +25830,7 @@ module Security = struct
   end
 
   (* Enable/disable overriding certificate errors. If enabled, all certificate error events need to
-     be handled by the DevTools client and should be answered with `handleCertificateError` commands. *)
+be handled by the DevTools client and should be answered with `handleCertificateError` commands. *)
   module SetOverrideCertificateErrors = struct
     module Response : sig
       type result = Types.assoc
@@ -27545,7 +27545,7 @@ module Storage = struct
   end
 
   (* Returns the number of stored Trust Tokens per issuer for the
-     current browsing context. *)
+current browsing context. *)
   module GetTrustTokens = struct
     module Response : sig
       type result = {
@@ -27598,7 +27598,7 @@ module Storage = struct
   end
 
   (* Removes all Trust Tokens issued by the provided issuerOrigin.
-     Leaves other stored data, including the issuer's Redemption Records, intact. *)
+Leaves other stored data, including the issuer's Redemption Records, intact. *)
   module ClearTrustTokens = struct
     module Response : sig
       type result = {
@@ -27793,7 +27793,7 @@ module Storage = struct
   end
 
   (* Enables/Disables issuing of interestGroupAuctionEventOccurred and
-     interestGroupAuctionNetworkRequestCreated. *)
+interestGroupAuctionNetworkRequestCreated. *)
   module SetInterestGroupAuctionTracking = struct
     module Response : sig
       type result = Types.assoc
@@ -28539,7 +28539,7 @@ module Storage = struct
   end
 
   (* Sends all pending Attribution Reports immediately, regardless of their
-     scheduled report time. *)
+scheduled report time. *)
   module SendPendingAttributionReports = struct
     module Response : sig
       type result = {
@@ -28594,7 +28594,7 @@ module Storage = struct
   end
 
   (* Returns the effective Related Website Sets in use by this profile for the browser
-     session. The effective Related Website Sets will not change during a browser session. *)
+session. The effective Related Website Sets will not change during a browser session. *)
   module GetRelatedWebsiteSets = struct
     module Response : sig
       type result = {
@@ -29104,13 +29104,13 @@ module Target = struct
   end
 
   (* Inject object to the target's main frame that provides a communication
-     channel with browser target.
+channel with browser target.
 
-     Injected object will be available as `window[bindingName]`.
+Injected object will be available as `window[bindingName]`.
 
-     The object has the following API:
-     - `binding.send(json)` - a method to send messages over the remote debugging protocol
-     - `binding.onmessage = json => handleMessage(json)` - a callback that will be called for the protocol notifications and command responses. *)
+The object has the following API:
+- `binding.send(json)` - a method to send messages over the remote debugging protocol
+- `binding.onmessage = json => handleMessage(json)` - a callback that will be called for the protocol notifications and command responses. *)
   module ExposeDevToolsProtocol = struct
     module Response : sig
       type result = Types.assoc
@@ -29169,7 +29169,7 @@ module Target = struct
   end
 
   (* Creates a new empty BrowserContext. Similar to an incognito profile but you can have more than
-     one. *)
+one. *)
   module CreateBrowserContext = struct
     module Response : sig
       type result = {
@@ -29490,7 +29490,7 @@ module Target = struct
   end
 
   (* Deletes a BrowserContext. All the belonging pages will be closed without calling their
-     beforeunload hooks. *)
+beforeunload hooks. *)
   module DisposeBrowserContext = struct
     module Response : sig
       type result = Types.assoc
@@ -29680,8 +29680,8 @@ module Target = struct
   end
 
   (* Sends protocol message over session with given id.
-     Consider using flat mode instead; see commands attachToTarget, setAutoAttach,
-     and crbug.com/991325. *)
+Consider using flat mode instead; see commands attachToTarget, setAutoAttach,
+and crbug.com/991325. *)
   module SendMessageToTarget = struct
     module Response : sig
       type result = Types.assoc
@@ -29743,10 +29743,10 @@ module Target = struct
   end
 
   (* Controls whether to automatically attach to new targets which are considered to be related to
-     this one. When turned on, attaches to all existing related targets as well. When turned off,
-     automatically detaches from all currently attached targets.
-     This also clears all targets added by `autoAttachRelated` from the list of targets to watch
-     for creation of related targets. *)
+this one. When turned on, attaches to all existing related targets as well. When turned off,
+automatically detaches from all currently attached targets.
+This also clears all targets added by `autoAttachRelated` from the list of targets to watch
+for creation of related targets. *)
   module SetAutoAttach = struct
     module Response : sig
       type result = Types.assoc
@@ -29821,10 +29821,10 @@ module Target = struct
   end
 
   (* Adds the specified target to the list of targets that will be monitored for any related target
-     creation (such as child frames, child workers and new versions of service worker) and reported
-     through `attachedToTarget`. The specified target is also auto-attached.
-     This cancels the effect of any previous `setAutoAttach` and is also cancelled by subsequent
-     `setAutoAttach`. Only available at the Browser target. *)
+creation (such as child frames, child workers and new versions of service worker) and reported
+through `attachedToTarget`. The specified target is also auto-attached.
+This cancels the effect of any previous `setAutoAttach` and is also cancelled by subsequent
+`setAutoAttach`. Only available at the Browser target. *)
   module AutoAttachRelated = struct
     module Response : sig
       type result = Types.assoc
@@ -29890,7 +29890,7 @@ module Target = struct
   end
 
   (* Controls whether to discover available targets and notify via
-     `targetCreated/targetInfoChanged/targetDestroyed` events. *)
+`targetCreated/targetInfoChanged/targetDestroyed` events. *)
   module SetDiscoverTargets = struct
     module Response : sig
       type result = Types.assoc
@@ -29953,7 +29953,7 @@ module Target = struct
   end
 
   (* Enables target discovery for the specified locations, when `setDiscoverTargets` was set to
-     `true`. *)
+`true`. *)
   module SetRemoteLocations = struct
     module Response : sig
       type result = Types.assoc
@@ -30522,7 +30522,7 @@ module Fetch = struct
   end
 
   (* Enables issuing of requestPaused events. A request will be paused until client
-     calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. *)
+calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -30891,8 +30891,8 @@ module Fetch = struct
   end
 
   (* Continues loading of the paused response, optionally modifying the
-     response headers. If either responseCode or headers are modified, all of them
-     must be present. *)
+response headers. If either responseCode or headers are modified, all of them
+must be present. *)
   module ContinueResponse = struct
     module Response : sig
       type result = Types.assoc
@@ -30983,15 +30983,15 @@ module Fetch = struct
   end
 
   (* Causes the body of the response to be received from the server and
-     returned as a single string. May only be issued for a request that
-     is paused in the Response stage and is mutually exclusive with
-     takeResponseBodyForInterceptionAsStream. Calling other methods that
-     affect the request or disabling fetch domain before body is received
-     results in an undefined behavior.
-     Note that the response body is not available for redirects. Requests
-     paused in the _redirect received_ state may be differentiated by
-     `responseCode` and presence of `location` response header, see
-     comments to `requestPaused` for details. *)
+returned as a single string. May only be issued for a request that
+is paused in the Response stage and is mutually exclusive with
+takeResponseBodyForInterceptionAsStream. Calling other methods that
+affect the request or disabling fetch domain before body is received
+results in an undefined behavior.
+Note that the response body is not available for redirects. Requests
+paused in the _redirect received_ state may be differentiated by
+`responseCode` and presence of `location` response header, see
+comments to `requestPaused` for details. *)
   module GetResponseBody = struct
     module Response : sig
       type result = {
@@ -31061,15 +31061,15 @@ module Fetch = struct
   end
 
   (* Returns a handle to the stream representing the response body.
-     The request must be paused in the HeadersReceived stage.
-     Note that after this command the request can't be continued
-     as is -- client either needs to cancel it or to provide the
-     response body.
-     The stream only supports sequential read, IO.read will fail if the position
-     is specified.
-     This method is mutually exclusive with getResponseBody.
-     Calling other methods that affect the request or disabling fetch
-     domain before body is received results in an undefined behavior. *)
+The request must be paused in the HeadersReceived stage.
+Note that after this command the request can't be continued
+as is -- client either needs to cancel it or to provide the
+response body.
+The stream only supports sequential read, IO.read will fail if the position
+is specified.
+This method is mutually exclusive with getResponseBody.
+Calling other methods that affect the request or disabling fetch
+domain before body is received results in an undefined behavior. *)
   module TakeResponseBodyAsStream = struct
     module Response : sig
       type result = {
@@ -31286,7 +31286,7 @@ end
 
 module WebAuthn = struct
   (* Enable the WebAuthn domain and start intercepting credential storage and
-     retrieval with a virtual authenticator. *)
+retrieval with a virtual authenticator. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -31647,7 +31647,7 @@ module WebAuthn = struct
   end
 
   (* Returns a single credential stored in the given virtual authenticator that
-     matches the credential ID. *)
+matches the credential ID. *)
   module GetCredential = struct
     module Response : sig
       type result = {
@@ -31888,7 +31888,7 @@ module WebAuthn = struct
   end
 
   (* Sets whether User Verification succeeds or fails for an authenticator.
-     The default is true. *)
+The default is true. *)
   module SetUserVerified = struct
     module Response : sig
       type result = Types.assoc
@@ -31946,7 +31946,7 @@ module WebAuthn = struct
   end
 
   (* Sets whether tests of user presence will succeed immediately (if true) or fail to resolve (if false) for an authenticator.
-     The default is true. *)
+The default is true. *)
   module SetAutomaticPresenceSimulation = struct
     module Response : sig
       type result = Types.assoc
@@ -32007,7 +32007,7 @@ module WebAuthn = struct
   end
 
   (* Allows setting credential properties.
-     https://w3c.github.io/webauthn/#sctn-automation-set-credential-properties *)
+https://w3c.github.io/webauthn/#sctn-automation-set-credential-properties *)
   module SetCredentialProperties = struct
     module Response : sig
       type result = Types.assoc
@@ -32782,7 +32782,7 @@ module FedCm = struct
   end
 
   (* Resets the cooldown time, if any, to allow the next FedCM call to show
-     a dialog even if one was recently dismissed by the user. *)
+a dialog even if one was recently dismissed by the user. *)
   module ResetCooldown = struct
     module Response : sig
       type result = Types.assoc
@@ -32900,15 +32900,15 @@ module PWA = struct
   end
 
   (* Installs the given manifest identity, optionally using the given install_url
-     or IWA bundle location.
+or IWA bundle location.
 
-     TODO(crbug.com/337872319) Support IWA to meet the following specific
-     requirement.
-     IWA-specific install description: If the manifest_id is isolated-app://,
-     install_url_or_bundle_url is required, and can be either an http(s) URL or
-     file:// URL pointing to a signed web bundle (.swbn). The .swbn file's
-     signing key must correspond to manifest_id. If Chrome is not in IWA dev
-     mode, the installation will fail, regardless of the state of the allowlist. *)
+TODO(crbug.com/337872319) Support IWA to meet the following specific
+requirement.
+IWA-specific install description: If the manifest_id is isolated-app://,
+install_url_or_bundle_url is required, and can be either an http(s) URL or
+file:// URL pointing to a signed web bundle (.swbn). The .swbn file's
+signing key must correspond to manifest_id. If Chrome is not in IWA dev
+mode, the installation will fail, regardless of the state of the allowlist. *)
   module Install = struct
     module Response : sig
       type result = Types.assoc
@@ -33025,8 +33025,8 @@ module PWA = struct
   end
 
   (* Launches the installed web app, or an url in the same web app instead of the
-     default start url if it is provided. Returns a page Target.TargetID which
-     can be used to attach to via Target.attachToTarget or similar APIs. *)
+default start url if it is provided. Returns a page Target.TargetID which
+can be used to attach to via Target.attachToTarget or similar APIs. *)
   module Launch = struct
     module Response : sig
       type result = {
@@ -33094,18 +33094,18 @@ module PWA = struct
   end
 
   (* Opens one or more local files from an installed web app identified by its
-     manifestId. The web app needs to have file handlers registered to process
-     the files. The API returns one or more page Target.TargetIDs which can be
-     used to attach to via Target.attachToTarget or similar APIs.
-     If some files in the parameters cannot be handled by the web app, they will
-     be ignored. If none of the files can be handled, this API returns an error.
-     If no files are provided as the parameter, this API also returns an error.
+manifestId. The web app needs to have file handlers registered to process
+the files. The API returns one or more page Target.TargetIDs which can be
+used to attach to via Target.attachToTarget or similar APIs.
+If some files in the parameters cannot be handled by the web app, they will
+be ignored. If none of the files can be handled, this API returns an error.
+If no files are provided as the parameter, this API also returns an error.
 
-     According to the definition of the file handlers in the manifest file, one
-     Target.TargetID may represent a page handling one or more files. The order
-     of the returned Target.TargetIDs is not guaranteed.
+According to the definition of the file handlers in the manifest file, one
+Target.TargetID may represent a page handling one or more files. The order
+of the returned Target.TargetIDs is not guaranteed.
 
-     TODO(crbug.com/339454034): Check the existences of the input files. *)
+TODO(crbug.com/339454034): Check the existences of the input files. *)
   module LaunchFilesInApp = struct
     module Response : sig
       type result = {
@@ -33173,8 +33173,8 @@ module PWA = struct
   end
 
   (* Opens the current page in its web app identified by the manifest id, needs
-     to be called on a page target. This function returns immediately without
-     waiting for the app to finish loading. *)
+to be called on a page target. This function returns immediately without
+waiting for the app to finish loading. *)
   module OpenCurrentPageInApp = struct
     module Response : sig
       type result = Types.assoc
@@ -33229,14 +33229,14 @@ module PWA = struct
   end
 
   (* Changes user settings of the web app identified by its manifestId. If the
-     app was not installed, this command returns an error. Unset parameters will
-     be ignored; unrecognized values will cause an error.
+app was not installed, this command returns an error. Unset parameters will
+be ignored; unrecognized values will cause an error.
 
-     Unlike the ones defined in the manifest files of the web apps, these
-     settings are provided by the browser and controlled by the users, they
-     impact the way the browser handling the web apps.
+Unlike the ones defined in the manifest files of the web apps, these
+settings are provided by the browser and controlled by the users, they
+impact the way the browser handling the web apps.
 
-     See the comment of each parameter. *)
+See the comment of each parameter. *)
   module ChangeAppUserSettings = struct
     module Response : sig
       type result = Types.assoc
@@ -33410,7 +33410,7 @@ module BluetoothEmulation = struct
   end
 
   (* Simulates a peripheral with |address|, |name| and |knownServiceUuids|
-     that has already been connected to the system. *)
+that has already been connected to the system. *)
   module SimulatePreconnectedPeripheral = struct
     module Response : sig
       type result = Types.assoc
@@ -33476,7 +33476,7 @@ module BluetoothEmulation = struct
   end
 
   (* Simulates an advertisement packet described in |entry| being received by
-     the central. *)
+the central. *)
   module SimulateAdvertisement = struct
     module Response : sig
       type result = Types.assoc
@@ -33624,7 +33624,7 @@ module Console = struct
   end
 
   (* Enables console domain, sends the messages collected so far to the client by means of the
-     `messageAdded` notification. *)
+`messageAdded` notification. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -33783,7 +33783,7 @@ module Debugger = struct
   end
 
   (* Enables debugger for the given page. Clients should not assume that the debugging has been
-     enabled until the result for this command is received. *)
+enabled until the result for this command is received. *)
   module Enable = struct
     module Response : sig
       type result = {
@@ -33985,7 +33985,7 @@ module Debugger = struct
   end
 
   (* Returns possible locations for breakpoint. scriptId in start and end range locations should be
-     the same. *)
+the same. *)
   module GetPossibleBreakpoints = struct
     module Response : sig
       type result = {
@@ -34237,9 +34237,9 @@ module Debugger = struct
   end
 
   (* Disassemble the next chunk of lines for the module corresponding to the
-     stream. If disassembly is complete, this API will invalidate the streamId
-     and return an empty chunk. Any subsequent calls for the now invalid stream
-     will return errors. *)
+stream. If disassembly is complete, this API will invalidate the streamId
+and return an empty chunk. Any subsequent calls for the now invalid stream
+will return errors. *)
   module NextWasmDisassemblyChunk = struct
     module Response : sig
       type result = {
@@ -34590,18 +34590,18 @@ module Debugger = struct
   end
 
   (* Restarts particular call frame from the beginning. The old, deprecated
-     behavior of `restartFrame` is to stay paused and allow further CDP commands
-     after a restart was scheduled. This can cause problems with restarting, so
-     we now continue execution immediatly after it has been scheduled until we
-     reach the beginning of the restarted frame.
+behavior of `restartFrame` is to stay paused and allow further CDP commands
+after a restart was scheduled. This can cause problems with restarting, so
+we now continue execution immediatly after it has been scheduled until we
+reach the beginning of the restarted frame.
 
-     To stay back-wards compatible, `restartFrame` now expects a `mode`
-     parameter to be present. If the `mode` parameter is missing, `restartFrame`
-     errors out.
+To stay back-wards compatible, `restartFrame` now expects a `mode`
+parameter to be present. If the `mode` parameter is missing, `restartFrame`
+errors out.
 
-     The various return values are deprecated and `callFrames` is always empty.
-     Use the call frames from the `Debugger#paused` events instead, that fires
-     once V8 pauses at the beginning of the restarted function. *)
+The various return values are deprecated and `callFrames` is always empty.
+Use the call frames from the `Debugger#paused` events instead, that fires
+once V8 pauses at the beginning of the restarted function. *)
   module RestartFrame = struct
     module Response : sig
       type result = {
@@ -34895,8 +34895,8 @@ module Debugger = struct
   end
 
   (* Replace previous blackbox execution contexts with passed ones. Forces backend to skip
-     stepping/pausing in scripts in these execution contexts. VM will try to leave blackboxed script by
-     performing 'step in' several times, finally resorting to 'step out' if unsuccessful. *)
+stepping/pausing in scripts in these execution contexts. VM will try to leave blackboxed script by
+performing 'step in' several times, finally resorting to 'step out' if unsuccessful. *)
   module SetBlackboxExecutionContexts = struct
     module Response : sig
       type result = Types.assoc
@@ -34959,8 +34959,8 @@ module Debugger = struct
   end
 
   (* Replace previous blackbox patterns with passed ones. Forces backend to skip stepping/pausing in
-     scripts with url matching one of the patterns. VM will try to leave blackboxed script by
-     performing 'step in' several times, finally resorting to 'step out' if unsuccessful. *)
+scripts with url matching one of the patterns. VM will try to leave blackboxed script by
+performing 'step in' several times, finally resorting to 'step out' if unsuccessful. *)
   module SetBlackboxPatterns = struct
     module Response : sig
       type result = Types.assoc
@@ -35022,9 +35022,9 @@ module Debugger = struct
   end
 
   (* Makes backend skip steps in the script in blackboxed ranges. VM will try leave blacklisted
-     scripts by performing 'step in' several times, finally resorting to 'step out' if unsuccessful.
-     Positions array contains positions where blackbox state is changed. First interval isn't
-     blackboxed. Array should be sorted. *)
+scripts by performing 'step in' several times, finally resorting to 'step out' if unsuccessful.
+Positions array contains positions where blackbox state is changed. First interval isn't
+blackboxed. Array should be sorted. *)
   module SetBlackboxedRanges = struct
     module Response : sig
       type result = Types.assoc
@@ -35244,9 +35244,9 @@ module Debugger = struct
   end
 
   (* Sets JavaScript breakpoint at given location specified either by URL or URL regex. Once this
-     command is issued, all existing parsed scripts will have breakpoints resolved and returned in
-     `locations` property. Further matching script parsing will result in subsequent
-     `breakpointResolved` events issued. This logical breakpoint will survive page reloads. *)
+command is issued, all existing parsed scripts will have breakpoints resolved and returned in
+`locations` property. Further matching script parsing will result in subsequent
+`breakpointResolved` events issued. This logical breakpoint will survive page reloads. *)
   module SetBreakpointByUrl = struct
     module Response : sig
       type result = {
@@ -35350,8 +35350,8 @@ module Debugger = struct
   end
 
   (* Sets JavaScript breakpoint before each call to the given function.
-     If another function was created from the same source as a given one,
-     calling it will also trigger the breakpoint. *)
+If another function was created from the same source as a given one,
+calling it will also trigger the breakpoint. *)
   module SetBreakpointOnFunctionCall = struct
     module Response : sig
       type result = {
@@ -35484,7 +35484,7 @@ module Debugger = struct
   end
 
   (* Defines pause on exceptions state. Can be set to stop on all exceptions, uncaught exceptions,
-     or caught exceptions, no exceptions. Initial pause on exceptions state is `none`. *)
+or caught exceptions, no exceptions. Initial pause on exceptions state is `none`. *)
   module SetPauseOnExceptions = struct
     module Response : sig
       type result = Types.assoc
@@ -35610,11 +35610,11 @@ module Debugger = struct
 
   (* Edits JavaScript source live.
 
-     In general, functions that are currently on the stack can not be edited with
-     a single exception: If the edited function is the top-most stack frame and
-     that is the only activation of that function on the stack. In this case
-     the live edit will be successful and a `Debugger.restartFrame` for the
-     top-most function is automatically triggered. *)
+In general, functions that are currently on the stack can not be edited with
+a single exception: If the edited function is the top-most stack frame and
+that is the only activation of that function on the stack. In this case
+the live edit will be successful and a `Debugger.restartFrame` for the
+top-most function is automatically triggered. *)
   module SetScriptSource = struct
     module Response : sig
       type setscriptsource_status =
@@ -35848,7 +35848,7 @@ module Debugger = struct
   end
 
   (* Changes value of variable in a callframe. Object-based scopes are not supported and must be
-     mutated manually. *)
+mutated manually. *)
   module SetVariableValue = struct
     module Response : sig
       type result = Types.assoc
@@ -36084,7 +36084,7 @@ end
 
 module HeapProfiler = struct
   (* Enables console to refer to the node with given id via $x (see Command Line API for more details
-     $x functions). *)
+$x functions). *)
   module AddInspectedHeapObject = struct
     module Response : sig
       type result = Types.assoc
@@ -36939,7 +36939,7 @@ module Profiler = struct
   end
 
   (* Collect coverage data for the current isolate. The coverage data may be incomplete due to
-     garbage collection. *)
+garbage collection. *)
   module GetBestEffortCoverage = struct
     module Response : sig
       type result = {
@@ -37092,8 +37092,8 @@ module Profiler = struct
   end
 
   (* Enable precise code coverage. Coverage data for JavaScript executed before enabling precise code
-     coverage may be incomplete. Enabling prevents running optimized code and resets execution
-     counters. *)
+coverage may be incomplete. Enabling prevents running optimized code and resets execution
+counters. *)
   module StartPreciseCoverage = struct
     module Response : sig
       type result = {
@@ -37229,7 +37229,7 @@ module Profiler = struct
   end
 
   (* Disable precise code coverage. Disabling releases unnecessary execution count records and allows
-     executing optimized code. *)
+executing optimized code. *)
   module StopPreciseCoverage = struct
     module Response : sig
       type result = Types.assoc
@@ -37273,7 +37273,7 @@ module Profiler = struct
   end
 
   (* Collect coverage data for the current isolate, and resets execution counters. Precise code
-     coverage needs to have started. *)
+coverage needs to have started. *)
   module TakePreciseCoverage = struct
     module Response : sig
       type result = {
@@ -37428,7 +37428,7 @@ module Runtime = struct
   end
 
   (* Calls function with given declaration on the given object. Object group of the result is
-     inherited from the target object. *)
+inherited from the target object. *)
   module CallFunctionOn = struct
     module Response : sig
       type result = {
@@ -37778,8 +37778,8 @@ module Runtime = struct
   end
 
   (* Enables reporting of execution contexts creation by means of `executionContextCreated` event.
-     When the reporting gets enabled the event will be sent immediately for each existing execution
-     context. *)
+When the reporting gets enabled the event will be sent immediately for each existing execution
+context. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -38071,7 +38071,7 @@ module Runtime = struct
   end
 
   (* Returns the JavaScript heap usage.
-     It is the total usage of the corresponding isolate not scoped to a particular Runtime. *)
+It is the total usage of the corresponding isolate not scoped to a particular Runtime. *)
   module GetHeapUsage = struct
     module Response : sig
       type result = {
@@ -38128,7 +38128,7 @@ module Runtime = struct
   end
 
   (* Returns properties of a given object. Object group of the result is inherited from the target
-     object. *)
+object. *)
   module GetProperties = struct
     module Response : sig
       type result = {
@@ -38843,7 +38843,7 @@ module Runtime = struct
   end
 
   (* Terminate current or next JavaScript execution.
-     Will cancel the termination when the outer-most script execution ends. *)
+Will cancel the termination when the outer-most script execution ends. *)
   module TerminateExecution = struct
     module Response : sig
       type result = Types.assoc
@@ -38887,11 +38887,11 @@ module Runtime = struct
   end
 
   (* If executionContextId is empty, adds binding with the given name on the
-     global objects of all inspected contexts, including those created later,
-     bindings survive reloads.
-     Binding function takes exactly one argument, this argument should be string,
-     in case of any other input, function throws an exception.
-     Each binding function call produces Runtime.bindingCalled notification. *)
+global objects of all inspected contexts, including those created later,
+bindings survive reloads.
+Binding function takes exactly one argument, this argument should be string,
+in case of any other input, function throws an exception.
+Each binding function call produces Runtime.bindingCalled notification. *)
   module AddBinding = struct
     module Response : sig
       type result = Types.assoc
@@ -38970,7 +38970,7 @@ module Runtime = struct
   end
 
   (* This method does not remove binding function from global object but
-     unsubscribes current runtime agent from Runtime.bindingCalled notifications. *)
+unsubscribes current runtime agent from Runtime.bindingCalled notifications. *)
   module RemoveBinding = struct
     module Response : sig
       type result = Types.assoc
@@ -39024,10 +39024,10 @@ module Runtime = struct
   end
 
   (* This method tries to lookup and populate exception details for a
-     JavaScript Error object.
-     Note that the stackTrace portion of the resulting exceptionDetails will
-     only be populated if the Runtime domain was enabled at the time when the
-     Error was thrown. *)
+JavaScript Error object.
+Note that the stackTrace portion of the resulting exceptionDetails will
+only be populated if the Runtime domain was enabled at the time when the
+Error was thrown. *)
   module GetExceptionDetails = struct
     module Response : sig
       type result = {

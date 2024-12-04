@@ -2,7 +2,7 @@ open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module Accessibility = struct
   (* The loadComplete event mirrors the load complete event sent by the browser to assistive
-     technology when the web page has finished loading. *)
+technology when the web page has finished loading. *)
   module LoadComplete = struct
     let name = "Accessibility.loadComplete"
 
@@ -200,7 +200,7 @@ module BackgroundService = struct
   end
 
   (* Called with all existing backgroundServiceEvents when enabled, and all new
-     events afterwards if enabled and recording. *)
+events afterwards if enabled and recording. *)
   module BackgroundServiceEventReceived = struct
     let name = "BackgroundService.backgroundServiceEventReceived"
 
@@ -295,7 +295,7 @@ end
 
 module CSS = struct
   (* Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
-     web font. *)
+web font. *)
   module FontsUpdated = struct
     let name = "CSS.fontsUpdated"
 
@@ -318,7 +318,7 @@ module CSS = struct
   end
 
   (* Fires whenever a MediaQuery result changes (for example, after a browser window has been
-     resized.) The current implementation considers only viewport-dependent media features. *)
+resized.) The current implementation considers only viewport-dependent media features. *)
   module MediaQueryResultChanged = struct
     let name = "CSS.mediaQueryResultChanged"
 
@@ -419,7 +419,7 @@ end
 
 module Cast = struct
   (* This is fired whenever the list of available sinks changes. A sink is a
-     device or a software surface that you can cast to. *)
+device or a software surface that you can cast to. *)
   module SinksUpdated = struct
     let name = "Cast.sinksUpdated"
 
@@ -440,7 +440,7 @@ module Cast = struct
   end
 
   (* This is fired whenever the outstanding issue/error message changes.
-     |issueMessage| is empty if there is no issue. *)
+|issueMessage| is empty if there is no issue. *)
   module IssueUpdated = struct
     let name = "Cast.issueUpdated"
 
@@ -740,7 +740,7 @@ module DOM = struct
   end
 
   (* Fired when backend wants to provide client with the missing DOM structure. This happens upon
-     most of the calls requesting node ids. *)
+most of the calls requesting node ids. *)
   module SetChildNodes = struct
     let name = "DOM.setChildNodes"
 
@@ -937,7 +937,7 @@ end
 
 module Input = struct
   (* Emitted only when `Input.setInterceptDrags` is enabled. Use this data with `Input.dispatchDragEvent` to
-     restore normal drag and drop behavior. *)
+restore normal drag and drop behavior. *)
   module DragIntercepted = struct
     let name = "Input.dragIntercepted"
 
@@ -1207,8 +1207,8 @@ module Network = struct
   end
 
   (* Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
-     mocked.
-     Deprecated, use Fetch.requestPaused instead. *)
+mocked.
+Deprecated, use Fetch.requestPaused instead. *)
   module RequestIntercepted = struct
     let name = "Network.requestIntercepted"
 
@@ -1697,9 +1697,9 @@ module Network = struct
   end
 
   (* Fired when additional information about a requestWillBeSent event is available from the
-     network stack. Not every requestWillBeSent event will have an additional
-     requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
-     or requestWillBeSentExtraInfo will be fired first for the same request. *)
+network stack. Not every requestWillBeSent event will have an additional
+requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
+or requestWillBeSentExtraInfo will be fired first for the same request. *)
   module RequestWillBeSentExtraInfo = struct
     let name = "Network.requestWillBeSentExtraInfo"
 
@@ -1746,8 +1746,8 @@ module Network = struct
   end
 
   (* Fired when additional information about a responseReceived event is available from the network
-     stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
-     it, and responseReceivedExtraInfo may be fired before or after responseReceived. *)
+stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
+it, and responseReceivedExtraInfo may be fired before or after responseReceived. *)
   module ResponseReceivedExtraInfo = struct
     let name = "Network.responseReceivedExtraInfo"
 
@@ -1827,8 +1827,8 @@ module Network = struct
   end
 
   (* Fired when 103 Early Hints headers is received in addition to the common response.
-     Not every responseReceived event will have an responseReceivedEarlyHints fired.
-     Only one responseReceivedEarlyHints may be fired for eached responseReceived event. *)
+Not every responseReceived event will have an responseReceivedEarlyHints fired.
+Only one responseReceivedEarlyHints may be fired for eached responseReceived event. *)
   module ResponseReceivedEarlyHints = struct
     let name = "Network.responseReceivedEarlyHints"
 
@@ -1856,9 +1856,9 @@ module Network = struct
   end
 
   (* Fired exactly once for each Trust Token operation. Depending on
-     the type of the operation and whether the operation succeeded or
-     failed, the event is fired before the corresponding request was sent
-     or after the response was received. *)
+the type of the operation and whether the operation succeeded or
+failed, the event is fired before the corresponding request was sent
+or after the response was received. *)
   module TrustTokenOperationDone = struct
     let name = "Network.trustTokenOperationDone"
 
@@ -1967,7 +1967,7 @@ module Network = struct
   end
 
   (* Fired once when parsing the .wbn file has succeeded.
-     The event contains the information about the web bundle contents. *)
+The event contains the information about the web bundle contents. *)
   module SubresourceWebBundleMetadataReceived = struct
     let name = "Network.subresourceWebBundleMetadataReceived"
 
@@ -2019,7 +2019,7 @@ module Network = struct
   end
 
   (* Fired when handling requests for resources within a .wbn file.
-     Note: this will only be fired for resources that are requested by the webpage. *)
+Note: this will only be fired for resources that are requested by the webpage. *)
   module SubresourceWebBundleInnerResponseParsed = struct
     let name = "Network.subresourceWebBundleInnerResponseParsed"
 
@@ -2087,7 +2087,7 @@ module Network = struct
   end
 
   (* Is sent whenever a new report is added.
-     And after 'enableReportingApi' for all existing reports. *)
+And after 'enableReportingApi' for all existing reports. *)
   module ReportingApiReportAdded = struct
     let name = "Network.reportingApiReportAdded"
 
@@ -2154,7 +2154,7 @@ end
 
 module Overlay = struct
   (* Fired when the node should be inspected. This happens after call to `setInspectMode` or when
-     user manually inspects an element. *)
+user manually inspects an element. *)
   module InspectNodeRequested = struct
     let name = "Overlay.inspectNodeRequested"
 
@@ -2380,7 +2380,7 @@ module Page = struct
   end
 
   (* Fired before frame subtree is detached. Emitted before any frame of the
-     subtree is actually detached. *)
+subtree is actually detached. *)
   module FrameSubtreeWillBeDetached = struct
     let name = "Page.frameSubtreeWillBeDetached"
 
@@ -2460,7 +2460,7 @@ module Page = struct
   end
 
   (* Fired when a renderer-initiated navigation is requested.
-     Navigation may still be cancelled after the event is issued. *)
+Navigation may still be cancelled after the event is issued. *)
   module FrameRequestedNavigation = struct
     let name = "Page.frameRequestedNavigation"
 
@@ -2564,7 +2564,7 @@ module Page = struct
   end
 
   (* Fired when page is about to start a download.
-     Deprecated. Use Browser.downloadWillBegin instead. *)
+Deprecated. Use Browser.downloadWillBegin instead. *)
   module DownloadWillBegin = struct
     let name = "Page.downloadWillBegin"
 
@@ -2595,7 +2595,7 @@ module Page = struct
   end
 
   (* Fired when download makes progress. Last call has |done| == true.
-     Deprecated. Use Browser.downloadProgress instead. *)
+Deprecated. Use Browser.downloadProgress instead. *)
   module DownloadProgress = struct
     let name = "Page.downloadProgress"
 
@@ -2668,7 +2668,7 @@ module Page = struct
   end
 
   (* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
-     closed. *)
+closed. *)
   module JavascriptDialogClosed = struct
     let name = "Page.javascriptDialogClosed"
 
@@ -2691,7 +2691,7 @@ module Page = struct
   end
 
   (* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
-     open. *)
+open. *)
   module JavascriptDialogOpening = struct
     let name = "Page.javascriptDialogOpening"
 
@@ -2728,7 +2728,7 @@ module Page = struct
   end
 
   (* Fired for lifecycle events (navigation, load, paint, etc) in the current
-     target (including local frames). *)
+target (including local frames). *)
   module LifecycleEvent = struct
     let name = "Page.lifecycleEvent"
 
@@ -2757,9 +2757,9 @@ module Page = struct
   end
 
   (* Fired for failed bfcache history navigations if BackForwardCache feature is enabled. Do
-     not assume any ordering with the Page.frameNavigated event. This event is fired only for
-     main-frame history navigation where the document changes (non-same-document navigations),
-     when bfcache navigation fails. *)
+not assume any ordering with the Page.frameNavigated event. This event is fired only for
+main-frame history navigation where the document changes (non-same-document navigations),
+when bfcache navigation fails. *)
   module BackForwardCacheNotUsed = struct
     let name = "Page.backForwardCacheNotUsed"
 
@@ -2900,7 +2900,7 @@ module Page = struct
   end
 
   (* Fired when a new window is going to be opened, via window.open(), link click, form submission,
-     etc. *)
+etc. *)
   module WindowOpen = struct
     let name = "Page.windowOpen"
 
@@ -2927,7 +2927,7 @@ module Page = struct
   end
 
   (* Issued for every compilation cache generated. Is only available
-     if Page.setGenerateCompilationCache is enabled. *)
+if Page.setGenerateCompilationCache is enabled. *)
   module CompilationCacheProduced = struct
     let name = "Page.compilationCacheProduced"
 
@@ -2999,9 +2999,9 @@ end
 
 module Security = struct
   (* There is a certificate error. If overriding certificate errors is enabled, then it should be
-     handled with the `handleCertificateError` command. Note: this event does not fire if the
-     certificate error has been allowed internally. Only one client per target should override
-     certificate errors at the same time. *)
+handled with the `handleCertificateError` command. Note: this event does not fire if the
+certificate error has been allowed internally. Only one client per target should override
+certificate errors at the same time. *)
   module CertificateError = struct
     let name = "Security.certificateError"
 
@@ -3248,7 +3248,7 @@ module Storage = struct
   end
 
   (* One of the interest groups was accessed. Note that these events are global
-     to all targets sharing an interest group store. *)
+to all targets sharing an interest group store. *)
   module InterestGroupAccessed = struct
     let name = "Storage.interestGroupAccessed"
 
@@ -3295,7 +3295,7 @@ module Storage = struct
   end
 
   (* An auction involving interest groups is taking place. These events are
-     target-specific. *)
+target-specific. *)
   module InterestGroupAuctionEventOccurred = struct
     let name = "Storage.interestGroupAuctionEventOccurred"
 
@@ -3328,9 +3328,9 @@ module Storage = struct
   end
 
   (* Specifies which auctions a particular network fetch may be related to, and
-     in what role. Note that it is not ordered with respect to
-     Network.requestWillBeSent (but will happen before loadingFinished
-     loadingFailed). *)
+in what role. Note that it is not ordered with respect to
+Network.requestWillBeSent (but will happen before loadingFinished
+loadingFailed). *)
   module InterestGroupAuctionNetworkRequestCreated = struct
     let name = "Storage.interestGroupAuctionNetworkRequestCreated"
 
@@ -3360,7 +3360,7 @@ module Storage = struct
   end
 
   (* Shared storage was accessed by the associated page.
-     The following parameters are included in all events. *)
+The following parameters are included in all events. *)
   module SharedStorageAccessed = struct
     let name = "Storage.sharedStorageAccessed"
 
@@ -3511,7 +3511,7 @@ module Target = struct
   end
 
   (* Issued when detached from target for any reason (including `detachFromTarget` command). Can be
-     issued multiple times per target if multiple sessions have been attached to it. *)
+issued multiple times per target if multiple sessions have been attached to it. *)
   module DetachedFromTarget = struct
     let name = "Target.detachedFromTarget"
 
@@ -3534,7 +3534,7 @@ module Target = struct
   end
 
   (* Notifies about a new protocol message received from the session (as reported in
-     `attachedToTarget` event). *)
+`attachedToTarget` event). *)
   module ReceivedMessageFromTarget = struct
     let name = "Target.receivedMessageFromTarget"
 
@@ -3622,7 +3622,7 @@ module Target = struct
   end
 
   (* Issued when some information about a target has changed. This only happens between
-     `targetCreated` and `targetDestroyed`. *)
+`targetCreated` and `targetDestroyed`. *)
   module TargetInfoChanged = struct
     let name = "Target.targetInfoChanged"
 
@@ -3705,7 +3705,7 @@ module Tracing = struct
   end
 
   (* Contains a bucket of collected trace events. When tracing is stopped collected events will be
-     sent as a sequence of dataCollected events followed by tracingComplete event. *)
+sent as a sequence of dataCollected events followed by tracingComplete event. *)
   module DataCollected = struct
     let name = "Tracing.dataCollected"
 
@@ -3726,7 +3726,7 @@ module Tracing = struct
   end
 
   (* Signals that tracing is stopped and there is no trace buffers pending flush, all data were
-     delivered via dataCollected events. *)
+delivered via dataCollected events. *)
   module TracingComplete = struct
     let name = "Tracing.tracingComplete"
 
@@ -3765,16 +3765,16 @@ end
 
 module Fetch = struct
   (* Issued when the domain is enabled and the request URL matches the
-     specified filter. The request is paused until the client responds
-     with one of continueRequest, failRequest or fulfillRequest.
-     The stage of the request can be determined by presence of responseErrorReason
-     and responseStatusCode -- the request is at the response stage if either
-     of these fields is present and in the request stage otherwise.
-     Redirect responses and subsequent requests are reported similarly to regular
-     responses and requests. Redirect responses may be distinguished by the value
-     of `responseStatusCode` (which is one of 301, 302, 303, 307, 308) along with
-     presence of the `location` header. Requests resulting from a redirect will
-     have `redirectedRequestId` field set. *)
+specified filter. The request is paused until the client responds
+with one of continueRequest, failRequest or fulfillRequest.
+The stage of the request can be determined by presence of responseErrorReason
+and responseStatusCode -- the request is at the response stage if either
+of these fields is present and in the request stage otherwise.
+Redirect responses and subsequent requests are reported similarly to regular
+responses and requests. Redirect responses may be distinguished by the value
+of `responseStatusCode` (which is one of 301, 302, 303, 307, 308) along with
+presence of the `location` header. Requests resulting from a redirect will
+have `redirectedRequestId` field set. *)
   module RequestPaused = struct
     let name = "Fetch.requestPaused"
 
@@ -3835,7 +3835,7 @@ module Fetch = struct
   end
 
   (* Issued when the domain is enabled with handleAuthRequests set to true.
-     The request is paused until client responds with continueWithAuth. *)
+The request is paused until client responds with continueWithAuth. *)
   module AuthRequired = struct
     let name = "Fetch.authRequired"
 
@@ -4205,7 +4205,7 @@ module WebAuthn = struct
   end
 
   (* Triggered when a credential is deleted, e.g. through
-     PublicKeyCredential.signalUnknownCredential(). *)
+PublicKeyCredential.signalUnknownCredential(). *)
   module CredentialDeleted = struct
     let name = "WebAuthn.credentialDeleted"
 
@@ -4228,7 +4228,7 @@ module WebAuthn = struct
   end
 
   (* Triggered when a credential is updated, e.g. through
-     PublicKeyCredential.signalCurrentUserDetails(). *)
+PublicKeyCredential.signalCurrentUserDetails(). *)
   module CredentialUpdated = struct
     let name = "WebAuthn.credentialUpdated"
 
@@ -4275,7 +4275,7 @@ end
 
 module Media = struct
   (* This can be called multiple times, and can be used to set / override /
-     remove player properties. A null propValue indicates removal. *)
+remove player properties. A null propValue indicates removal. *)
   module PlayerPropertiesChanged = struct
     let name = "Media.playerPropertiesChanged"
 
@@ -4298,7 +4298,7 @@ module Media = struct
   end
 
   (* Send events as a list, allowing them to be batched on the browser for less
-     congestion. If batched, events must ALWAYS be in chronological order. *)
+congestion. If batched, events must ALWAYS be in chronological order. *)
   module PlayerEventsAdded = struct
     let name = "Media.playerEventsAdded"
 
@@ -4365,8 +4365,8 @@ module Media = struct
   end
 
   (* Called whenever a player is created, or when a new agent joins and receives
-     a list of active players. If an agent is restored, it will receive the full
-     list of player ids and all events again. *)
+a list of active players. If an agent is restored, it will receive the full
+list of player ids and all events again. *)
   module PlayersCreated = struct
     let name = "Media.playersCreated"
 
@@ -4389,7 +4389,7 @@ end
 
 module DeviceAccess = struct
   (* A device request opened a user prompt to select a device. Respond with the
-     selectPrompt or cancelPrompt command. *)
+selectPrompt or cancelPrompt command. *)
   module DeviceRequestPrompted = struct
     let name = "DeviceAccess.deviceRequestPrompted"
 
@@ -4611,7 +4611,7 @@ module FedCm = struct
   end
 
   (* Triggered when a dialog is closed, either by user action, JS abort,
-     or a command below. *)
+or a command below. *)
   module DialogClosed = struct
     let name = "FedCm.dialogClosed"
 
@@ -4863,7 +4863,7 @@ module Debugger = struct
   end
 
   (* Fired when virtual machine parses script. This event is also fired for all known and uncollected
-     scripts upon enabling debugger. *)
+scripts upon enabling debugger. *)
   module ScriptParsed = struct
     let name = "Debugger.scriptParsed"
 
@@ -5004,8 +5004,8 @@ module HeapProfiler = struct
   end
 
   (* If heap objects tracking has been started then backend regularly sends a current value for last
-     seen object id and corresponding timestamp. If the were changes in the heap since last event
-     then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event. *)
+seen object id and corresponding timestamp. If the were changes in the heap since last event
+then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event. *)
   module LastSeenObjectId = struct
     let name = "HeapProfiler.lastSeenObjectId"
 
@@ -5125,9 +5125,9 @@ module Profiler = struct
   end
 
   (* Reports coverage delta since the last poll (either from an event like this, or from
-     `takePreciseCoverage` for the current isolate. May only be sent if precise code
-     coverage has been started. This event can be trigged by the embedder to, for example,
-     trigger collection of coverage data immediately at a certain point in time. *)
+`takePreciseCoverage` for the current isolate. May only be sent if precise code
+coverage has been started. This event can be trigged by the embedder to, for example,
+trigger collection of coverage data immediately at a certain point in time. *)
   module PreciseCoverageDeltaUpdate = struct
     let name = "Profiler.preciseCoverageDeltaUpdate"
 
@@ -5395,7 +5395,7 @@ module Runtime = struct
   end
 
   (* Issued when object should be inspected (for example, as a result of inspect() command line API
-     call). *)
+call). *)
   module InspectRequested = struct
     let name = "Runtime.inspectRequested"
 

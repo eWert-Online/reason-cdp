@@ -9178,7 +9178,7 @@ and DOM : sig
       | `checkmark
       | `before
       | `after
-      | `select_arrow
+      | `picker_icon
       | `marker
       | `backdrop
       | `column
@@ -9536,7 +9536,7 @@ end = struct
       | `checkmark
       | `before
       | `after
-      | `select_arrow
+      | `picker_icon
       | `marker
       | `backdrop
       | `column
@@ -9580,7 +9580,7 @@ end = struct
       | `checkmark
       | `before
       | `after
-      | `select_arrow
+      | `picker_icon
       | `marker
       | `backdrop
       | `column
@@ -9618,7 +9618,7 @@ end = struct
       | `String "checkmark" -> `checkmark
       | `String "before" -> `before
       | `String "after" -> `after
-      | `String "select-arrow" -> `select_arrow
+      | `String "picker-icon" -> `picker_icon
       | `String "marker" -> `marker
       | `String "backdrop" -> `backdrop
       | `String "column" -> `column
@@ -9658,7 +9658,7 @@ end = struct
       | `checkmark -> `String "checkmark"
       | `before -> `String "before"
       | `after -> `String "after"
-      | `select_arrow -> `String "select-arrow"
+      | `picker_icon -> `String "picker-icon"
       | `marker -> `String "marker"
       | `backdrop -> `String "backdrop"
       | `column -> `String "column"
