@@ -32943,6 +32943,18 @@ and Preload : sig
        possible for multiple rule sets and links to trigger a single attempt."]
   end
 
+  and PreloadPipelineId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Chrome manages different types of preloads together using a\n\
+       concept of preloading pipeline. For example, if a site uses a\n\
+       SpeculationRules for prerender, Chrome first starts a prefetch and\n\
+       then upgrades it to prerender.\n\n\
+       CDP events for them are emitted separately but they share\n\
+       `PreloadPipelineId`."]
+  end
+
   and PrerenderFinalStatus : sig
     type _prerenderfinalstatus =
       [ `Activated
@@ -33384,6 +33396,28 @@ end = struct
        BackendNodeIds of <a href> or <area href> elements that triggered the\n\
        attempt (in the case of attempts triggered by a document rule). It is\n\
        possible for multiple rule sets and links to trigger a single attempt."]
+  end
+
+  and PreloadPipelineId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Chrome manages different types of preloads together using a\n\
+       concept of preloading pipeline. For example, if a site uses a\n\
+       SpeculationRules for prerender, Chrome first starts a prefetch and\n\
+       then upgrades it to prerender.\n\n\
+       CDP events for them are emitted separately but they share\n\
+       `PreloadPipelineId`."]
+  end = struct
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Chrome manages different types of preloads together using a\n\
+       concept of preloading pipeline. For example, if a site uses a\n\
+       SpeculationRules for prerender, Chrome first starts a prefetch and\n\
+       then upgrades it to prerender.\n\n\
+       CDP events for them are emitted separately but they share\n\
+       `PreloadPipelineId`."]
   end
 
   and PrerenderFinalStatus : sig
