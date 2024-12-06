@@ -1769,7 +1769,11 @@ it, and responseReceivedExtraInfo may be fired before or after responseReceived.
       headers : Types.Network.Headers.t;
           [@key "headers"]
           [@ocaml.doc
-            "Raw response headers as they were received over the wire."]
+            "Raw response headers as they were received over the wire.\n\
+             Duplicate headers in the response are represented as a single key \
+             with their values\n\
+             concatentated using `\\n` as the separator.\n\
+             See also `headersText` that contains verbatim text for HTTP/1.*."]
       resourceIPAddressSpace : Types.Network.IPAddressSpace.t;
           [@key "resourceIPAddressSpace"]
           [@ocaml.doc
@@ -1841,7 +1845,11 @@ Only one responseReceivedEarlyHints may be fired for eached responseReceived eve
       headers : Types.Network.Headers.t;
           [@key "headers"]
           [@ocaml.doc
-            "Raw response headers as they were received over the wire."]
+            "Raw response headers as they were received over the wire.\n\
+             Duplicate headers in the response are represented as a single key \
+             with their values\n\
+             concatentated using `\\n` as the separator.\n\
+             See also `headersText` that contains verbatim text for HTTP/1.*."]
     }
     [@@deriving yojson]
 

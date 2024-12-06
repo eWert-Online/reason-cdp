@@ -3807,6 +3807,95 @@ the browser. *)
     end
   end
 
+  (* Resolve the specified values in the context of the provided element.
+For example, a value of '1em' is evaluated according to the computed
+'font-size' of the element and a value 'calc(1px + 2px)' will be
+resolved to '3px'. *)
+  module ResolveValues = struct
+    module Response : sig
+      type result = {
+        results : string list;
+            [@key "results"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        results : string list;
+            [@key "results"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        values : string list;
+            [@key "values"]
+            [@ocaml.doc
+              "Substitution functions (var()/env()/attr()) and cascade-dependent\n\
+               keywords (revert/revert-layer) do not work."]
+        nodeId : Types.DOM.NodeId.t;
+            [@key "nodeId"]
+            [@ocaml.doc
+              "Id of the node in whose context the expression is evaluated"]
+        propertyName : string option;
+            [@key "propertyName"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Only longhands and custom property names are accepted."]
+        pseudoType : Types.DOM.PseudoType.t option;
+            [@key "pseudoType"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Pseudo element type, only works for pseudo elements that generate\n\
+               elements in the tree, such as ::before and ::after."]
+        pseudoIdentifier : string option;
+            [@key "pseudoIdentifier"]
+            [@yojson.option]
+            [@ocaml.doc "Pseudo element custom ident."]
+      }
+      [@@deriving yojson]
+
+      let make ~values ~nodeId ?propertyName ?pseudoType ?pseudoIdentifier () =
+        { values; nodeId; propertyName; pseudoType; pseudoIdentifier }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "CSS.resolveValues"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Returns the styles defined inline (explicitly in the "style" attribute and implicitly, using DOM
 attributes) for a DOM node identified by `nodeId`. *)
   module GetInlineStylesForNode = struct
