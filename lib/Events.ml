@@ -4821,6 +4821,10 @@ module Debugger = struct
           [@ocaml.doc "Specifies script creation context."]
       hash : string;
           [@key "hash"] [@ocaml.doc "Content hash of the script, SHA-256."]
+      buildId : string;
+          [@key "buildId"]
+          [@ocaml.doc
+            "For Wasm modules, the content of the `build_id` custom section."]
       executionContextAuxData : Types.assoc option;
           [@key "executionContextAuxData"]
           [@yojson.option]
@@ -4903,6 +4907,10 @@ scripts upon enabling debugger. *)
           [@ocaml.doc "Specifies script creation context."]
       hash : string;
           [@key "hash"] [@ocaml.doc "Content hash of the script, SHA-256."]
+      buildId : string;
+          [@key "buildId"]
+          [@ocaml.doc
+            "For Wasm modules, the content of the `build_id` custom section."]
       executionContextAuxData : Types.assoc option;
           [@key "executionContextAuxData"]
           [@yojson.option]
