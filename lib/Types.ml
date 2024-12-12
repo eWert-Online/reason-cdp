@@ -6372,6 +6372,20 @@ and CSS : sig
     [@@ocaml.doc "CSS rule collection for a single pseudo style."]
   end
 
+  and CSSAnimationStyle : sig
+    type t = {
+      name : string option;
+          [@key "name"]
+          [@yojson.option]
+          [@ocaml.doc "The name of the animation."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "The style coming from the animation."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "CSS style coming from animations with the name of the animation."]
+  end
+
   and InheritedStyleEntry : sig
     type t = {
       inlineStyle : CSSStyle.t option;
@@ -6388,6 +6402,26 @@ and CSS : sig
     }
     [@@deriving yojson]
     [@@ocaml.doc "Inherited CSS rule collection from ancestor node."]
+  end
+
+  and InheritedAnimatedStyleEntry : sig
+    type t = {
+      animationStyles : CSSAnimationStyle.t list option;
+          [@key "animationStyles"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Styles coming from the animations of the ancestor, if any, in the \
+             style inheritance chain."]
+      transitionsStyle : CSSStyle.t option;
+          [@key "transitionsStyle"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The style coming from the transitions of the ancestor, if any, in \
+             the style inheritance chain."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Inherited CSS style collection for animated styles from ancestor node."]
   end
 
   and InheritedPseudoElementMatches : sig
@@ -7271,6 +7305,32 @@ end = struct
     [@@ocaml.doc "CSS rule collection for a single pseudo style."]
   end
 
+  and CSSAnimationStyle : sig
+    type t = {
+      name : string option;
+          [@key "name"]
+          [@yojson.option]
+          [@ocaml.doc "The name of the animation."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "The style coming from the animation."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "CSS style coming from animations with the name of the animation."]
+  end = struct
+    type t = {
+      name : string option;
+          [@key "name"]
+          [@yojson.option]
+          [@ocaml.doc "The name of the animation."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "The style coming from the animation."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "CSS style coming from animations with the name of the animation."]
+  end
+
   and InheritedStyleEntry : sig
     type t = {
       inlineStyle : CSSStyle.t option;
@@ -7303,6 +7363,44 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc "Inherited CSS rule collection from ancestor node."]
+  end
+
+  and InheritedAnimatedStyleEntry : sig
+    type t = {
+      animationStyles : CSSAnimationStyle.t list option;
+          [@key "animationStyles"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Styles coming from the animations of the ancestor, if any, in the \
+             style inheritance chain."]
+      transitionsStyle : CSSStyle.t option;
+          [@key "transitionsStyle"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The style coming from the transitions of the ancestor, if any, in \
+             the style inheritance chain."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Inherited CSS style collection for animated styles from ancestor node."]
+  end = struct
+    type t = {
+      animationStyles : CSSAnimationStyle.t list option;
+          [@key "animationStyles"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Styles coming from the animations of the ancestor, if any, in the \
+             style inheritance chain."]
+      transitionsStyle : CSSStyle.t option;
+          [@key "transitionsStyle"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The style coming from the transitions of the ancestor, if any, in \
+             the style inheritance chain."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Inherited CSS style collection for animated styles from ancestor node."]
   end
 
   and InheritedPseudoElementMatches : sig

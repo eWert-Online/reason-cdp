@@ -3976,6 +3976,96 @@ attributes) for a DOM node identified by `nodeId`. *)
     end
   end
 
+  (* Returns the styles coming from animations & transitions
+including the animation & transition styles coming from inheritance chain. *)
+  module GetAnimatedStylesForNode = struct
+    module Response : sig
+      type result = {
+        animationStyles : Types.CSS.CSSAnimationStyle.t list option;
+            [@key "animationStyles"]
+            [@yojson.option]
+            [@ocaml.doc "Styles coming from animations."]
+        transitionsStyle : Types.CSS.CSSStyle.t option;
+            [@key "transitionsStyle"]
+            [@yojson.option]
+            [@ocaml.doc "Style coming from transitions."]
+        inherited : Types.CSS.InheritedAnimatedStyleEntry.t list option;
+            [@key "inherited"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Inherited style entries for animationsStyle and \
+               transitionsStyle from\n\
+               the inheritance chain of the element."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        animationStyles : Types.CSS.CSSAnimationStyle.t list option;
+            [@key "animationStyles"]
+            [@yojson.option]
+            [@ocaml.doc "Styles coming from animations."]
+        transitionsStyle : Types.CSS.CSSStyle.t option;
+            [@key "transitionsStyle"]
+            [@yojson.option]
+            [@ocaml.doc "Style coming from transitions."]
+        inherited : Types.CSS.InheritedAnimatedStyleEntry.t list option;
+            [@key "inherited"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Inherited style entries for animationsStyle and \
+               transitionsStyle from\n\
+               the inheritance chain of the element."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        nodeId : Types.DOM.NodeId.t;
+            [@key "nodeId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~nodeId () = { nodeId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "CSS.getAnimatedStylesForNode"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Returns requested styles for a DOM node identified by `nodeId`. *)
   module GetMatchedStylesForNode = struct
     module Response : sig
