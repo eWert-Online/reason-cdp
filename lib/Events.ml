@@ -895,28 +895,6 @@ module DOMStorage = struct
   end
 end
 
-module Database = struct
-  (* No description provided *)
-  module AddDatabase = struct
-    let name = "Database.addDatabase"
-
-    type result = {
-      database : Types.Database.Database.t;
-          [@key "database"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-end
-
 module Emulation = struct
   (* Notification sent after the virtual time budget for the current VirtualTimePolicy has run out. *)
   module VirtualTimeBudgetExpired = struct
@@ -1882,7 +1860,8 @@ or after the response was received. *)
       | `BadResponse
       | `InternalError
       | `UnknownError
-      | `FulfilledLocally ]
+      | `FulfilledLocally
+      | `SiteIssuerLimit ]
 
     let trusttokenoperationdone_status_of_yojson = function
       | `String "Ok" -> `Ok
@@ -1897,6 +1876,7 @@ or after the response was received. *)
       | `String "InternalError" -> `InternalError
       | `String "UnknownError" -> `UnknownError
       | `String "FulfilledLocally" -> `FulfilledLocally
+      | `String "SiteIssuerLimit" -> `SiteIssuerLimit
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -1913,6 +1893,7 @@ or after the response was received. *)
       | `InternalError -> `String "InternalError"
       | `UnknownError -> `String "UnknownError"
       | `FulfilledLocally -> `String "FulfilledLocally"
+      | `SiteIssuerLimit -> `String "SiteIssuerLimit"
 
     type result = {
       status : trusttokenoperationdone_status;

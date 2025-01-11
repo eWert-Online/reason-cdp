@@ -1423,10 +1423,11 @@ and Audits : sig
 
   and AffectedRequest : sig
     type t = {
-      requestId : Network.RequestId.t;
-          [@key "requestId"] [@ocaml.doc "The unique request id."]
-      url : string option;
-          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "The unique request id."]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -2214,7 +2215,8 @@ and Audits : sig
       | `ReplacedByActiveMode
       | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
-      | `TypeNotMatching ]
+      | `TypeNotMatching
+      | `UiDismissedNoEmbargo ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -2293,6 +2295,41 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SelectElementAccessibilityIssueReason : sig
+    type _selectelementaccessibilityissuereason =
+      [ `DisallowedSelectChild
+      | `DisallowedOptGroupChild
+      | `NonPhrasingContentOptionChild
+      | `InteractiveContentOptionChild
+      | `InteractiveContentLegendChild ]
+
+    val _selectelementaccessibilityissuereason_of_yojson :
+      Yojson.Basic.t -> _selectelementaccessibilityissuereason
+
+    val yojson_of__selectelementaccessibilityissuereason :
+      _selectelementaccessibilityissuereason -> Yojson.Basic.t
+
+    type t = _selectelementaccessibilityissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SelectElementAccessibilityIssueDetails : sig
+    type t = {
+      nodeId : DOM.BackendNodeId.t;
+          [@key "nodeId"] [@ocaml.doc "No description provided"]
+      selectElementAccessibilityIssueReason :
+        SelectElementAccessibilityIssueReason.t;
+          [@key "selectElementAccessibilityIssueReason"]
+          [@ocaml.doc "No description provided"]
+      hasDisallowedAttributes : bool;
+          [@key "hasDisallowedAttributes"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about errors in the select element content model."]
   end
 
   and StyleSheetLoadingIssueReason : sig
@@ -2384,7 +2421,8 @@ and Audits : sig
       | `StylesheetLoadingIssue
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue
-      | `SharedDictionaryIssue ]
+      | `SharedDictionaryIssue
+      | `SelectElementAccessibilityIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2488,6 +2526,11 @@ and Audits : sig
           [@key "sharedDictionaryIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      selectElementAccessibilityIssueDetails :
+        SelectElementAccessibilityIssueDetails.t option;
+          [@key "selectElementAccessibilityIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -2549,20 +2592,22 @@ end = struct
 
   and AffectedRequest : sig
     type t = {
-      requestId : Network.RequestId.t;
-          [@key "requestId"] [@ocaml.doc "The unique request id."]
-      url : string option;
-          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "The unique request id."]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
       "Information about a request that is affected by an inspector issue."]
   end = struct
     type t = {
-      requestId : Network.RequestId.t;
-          [@key "requestId"] [@ocaml.doc "The unique request id."]
-      url : string option;
-          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "The unique request id."]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -4391,7 +4436,8 @@ end = struct
       | `ReplacedByActiveMode
       | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
-      | `TypeNotMatching ]
+      | `TypeNotMatching
+      | `UiDismissedNoEmbargo ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4453,7 +4499,8 @@ end = struct
       | `ReplacedByActiveMode
       | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
-      | `TypeNotMatching ]
+      | `TypeNotMatching
+      | `UiDismissedNoEmbargo ]
 
     let _federatedauthrequestissuereason_of_yojson = function
       | `String "ShouldEmbargo" -> `ShouldEmbargo
@@ -4505,6 +4552,7 @@ end = struct
       | `String "InvalidFieldsSpecified" -> `InvalidFieldsSpecified
       | `String "RelyingPartyOriginIsOpaque" -> `RelyingPartyOriginIsOpaque
       | `String "TypeNotMatching" -> `TypeNotMatching
+      | `String "UiDismissedNoEmbargo" -> `UiDismissedNoEmbargo
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4558,6 +4606,7 @@ end = struct
       | `InvalidFieldsSpecified -> `String "InvalidFieldsSpecified"
       | `RelyingPartyOriginIsOpaque -> `String "RelyingPartyOriginIsOpaque"
       | `TypeNotMatching -> `String "TypeNotMatching"
+      | `UiDismissedNoEmbargo -> `String "UiDismissedNoEmbargo"
 
     type t = _federatedauthrequestissuereason
     [@@deriving yojson]
@@ -4705,6 +4754,88 @@ end = struct
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SelectElementAccessibilityIssueReason : sig
+    type _selectelementaccessibilityissuereason =
+      [ `DisallowedSelectChild
+      | `DisallowedOptGroupChild
+      | `NonPhrasingContentOptionChild
+      | `InteractiveContentOptionChild
+      | `InteractiveContentLegendChild ]
+
+    val _selectelementaccessibilityissuereason_of_yojson :
+      Yojson.Basic.t -> _selectelementaccessibilityissuereason
+
+    val yojson_of__selectelementaccessibilityissuereason :
+      _selectelementaccessibilityissuereason -> Yojson.Basic.t
+
+    type t = _selectelementaccessibilityissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _selectelementaccessibilityissuereason =
+      [ `DisallowedSelectChild
+      | `DisallowedOptGroupChild
+      | `NonPhrasingContentOptionChild
+      | `InteractiveContentOptionChild
+      | `InteractiveContentLegendChild ]
+
+    let _selectelementaccessibilityissuereason_of_yojson = function
+      | `String "DisallowedSelectChild" -> `DisallowedSelectChild
+      | `String "DisallowedOptGroupChild" -> `DisallowedOptGroupChild
+      | `String "NonPhrasingContentOptionChild" ->
+          `NonPhrasingContentOptionChild
+      | `String "InteractiveContentOptionChild" ->
+          `InteractiveContentOptionChild
+      | `String "InteractiveContentLegendChild" ->
+          `InteractiveContentLegendChild
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__selectelementaccessibilityissuereason = function
+      | `DisallowedSelectChild -> `String "DisallowedSelectChild"
+      | `DisallowedOptGroupChild -> `String "DisallowedOptGroupChild"
+      | `NonPhrasingContentOptionChild ->
+          `String "NonPhrasingContentOptionChild"
+      | `InteractiveContentOptionChild ->
+          `String "InteractiveContentOptionChild"
+      | `InteractiveContentLegendChild ->
+          `String "InteractiveContentLegendChild"
+
+    type t = _selectelementaccessibilityissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SelectElementAccessibilityIssueDetails : sig
+    type t = {
+      nodeId : DOM.BackendNodeId.t;
+          [@key "nodeId"] [@ocaml.doc "No description provided"]
+      selectElementAccessibilityIssueReason :
+        SelectElementAccessibilityIssueReason.t;
+          [@key "selectElementAccessibilityIssueReason"]
+          [@ocaml.doc "No description provided"]
+      hasDisallowedAttributes : bool;
+          [@key "hasDisallowedAttributes"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about errors in the select element content model."]
+  end = struct
+    type t = {
+      nodeId : DOM.BackendNodeId.t;
+          [@key "nodeId"] [@ocaml.doc "No description provided"]
+      selectElementAccessibilityIssueReason :
+        SelectElementAccessibilityIssueReason.t;
+          [@key "selectElementAccessibilityIssueReason"]
+          [@ocaml.doc "No description provided"]
+      hasDisallowedAttributes : bool;
+          [@key "hasDisallowedAttributes"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about errors in the select element content model."]
   end
 
   and StyleSheetLoadingIssueReason : sig
@@ -4867,7 +4998,8 @@ end = struct
       | `StylesheetLoadingIssue
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue
-      | `SharedDictionaryIssue ]
+      | `SharedDictionaryIssue
+      | `SelectElementAccessibilityIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -4900,7 +5032,8 @@ end = struct
       | `StylesheetLoadingIssue
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue
-      | `SharedDictionaryIssue ]
+      | `SharedDictionaryIssue
+      | `SelectElementAccessibilityIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -4926,6 +5059,8 @@ end = struct
           `FederatedAuthUserInfoRequestIssue
       | `String "PropertyRuleIssue" -> `PropertyRuleIssue
       | `String "SharedDictionaryIssue" -> `SharedDictionaryIssue
+      | `String "SelectElementAccessibilityIssue" ->
+          `SelectElementAccessibilityIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4953,6 +5088,8 @@ end = struct
           `String "FederatedAuthUserInfoRequestIssue"
       | `PropertyRuleIssue -> `String "PropertyRuleIssue"
       | `SharedDictionaryIssue -> `String "SharedDictionaryIssue"
+      | `SelectElementAccessibilityIssue ->
+          `String "SelectElementAccessibilityIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -5053,6 +5190,11 @@ end = struct
           [@key "sharedDictionaryIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      selectElementAccessibilityIssueDetails :
+        SelectElementAccessibilityIssueDetails.t option;
+          [@key "selectElementAccessibilityIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -5148,6 +5290,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       sharedDictionaryIssueDetails : SharedDictionaryIssueDetails.t option;
           [@key "sharedDictionaryIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      selectElementAccessibilityIssueDetails :
+        SelectElementAccessibilityIssueDetails.t option;
+          [@key "selectElementAccessibilityIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -12070,71 +12217,6 @@ end = struct
     type t = string list [@@deriving yojson] [@@ocaml.doc "DOM Storage item."]
   end = struct
     type t = string list [@@deriving yojson] [@@ocaml.doc "DOM Storage item."]
-  end
-end
-
-and Database : sig
-  module rec DatabaseId : sig
-    type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique identifier of Database object."]
-  end
-
-  and Database : sig
-    type t = {
-      id : DatabaseId.t; [@key "id"] [@ocaml.doc "Database ID."]
-      domain : string; [@key "domain"] [@ocaml.doc "Database domain."]
-      name : string; [@key "name"] [@ocaml.doc "Database name."]
-      version : string; [@key "version"] [@ocaml.doc "Database version."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Database object."]
-  end
-
-  and Error : sig
-    type t = {
-      message : string; [@key "message"] [@ocaml.doc "Error message."]
-      code : number; [@key "code"] [@ocaml.doc "Error code."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Database error."]
-  end
-end = struct
-  module rec DatabaseId : sig
-    type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique identifier of Database object."]
-  end = struct
-    type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique identifier of Database object."]
-  end
-
-  and Database : sig
-    type t = {
-      id : DatabaseId.t; [@key "id"] [@ocaml.doc "Database ID."]
-      domain : string; [@key "domain"] [@ocaml.doc "Database domain."]
-      name : string; [@key "name"] [@ocaml.doc "Database name."]
-      version : string; [@key "version"] [@ocaml.doc "Database version."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Database object."]
-  end = struct
-    type t = {
-      id : DatabaseId.t; [@key "id"] [@ocaml.doc "Database ID."]
-      domain : string; [@key "domain"] [@ocaml.doc "Database domain."]
-      name : string; [@key "name"] [@ocaml.doc "Database name."]
-      version : string; [@key "version"] [@ocaml.doc "Database version."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Database object."]
-  end
-
-  and Error : sig
-    type t = {
-      message : string; [@key "message"] [@ocaml.doc "Error message."]
-      code : number; [@key "code"] [@ocaml.doc "Error code."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Database error."]
-  end = struct
-    type t = {
-      message : string; [@key "message"] [@ocaml.doc "Error message."]
-      code : number; [@key "code"] [@ocaml.doc "Error code."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Database error."]
   end
 end
 
@@ -21866,6 +21948,7 @@ and Page : sig
       | `ch_ua
       | `ch_ua_arch
       | `ch_ua_bitness
+      | `ch_ua_high_entropy_values
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
@@ -23253,6 +23336,7 @@ end = struct
       | `ch_ua
       | `ch_ua_arch
       | `ch_ua_bitness
+      | `ch_ua_high_entropy_values
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
@@ -23362,6 +23446,7 @@ end = struct
       | `ch_ua
       | `ch_ua_arch
       | `ch_ua_bitness
+      | `ch_ua_high_entropy_values
       | `ch_ua_platform
       | `ch_ua_model
       | `ch_ua_mobile
@@ -23459,6 +23544,7 @@ end = struct
       | `String "ch-ua" -> `ch_ua
       | `String "ch-ua-arch" -> `ch_ua_arch
       | `String "ch-ua-bitness" -> `ch_ua_bitness
+      | `String "ch-ua-high-entropy-values" -> `ch_ua_high_entropy_values
       | `String "ch-ua-platform" -> `ch_ua_platform
       | `String "ch-ua-model" -> `ch_ua_model
       | `String "ch-ua-mobile" -> `ch_ua_mobile
@@ -23563,6 +23649,7 @@ end = struct
       | `ch_ua -> `String "ch-ua"
       | `ch_ua_arch -> `String "ch-ua-arch"
       | `ch_ua_bitness -> `String "ch-ua-bitness"
+      | `ch_ua_high_entropy_values -> `String "ch-ua-high-entropy-values"
       | `ch_ua_platform -> `String "ch-ua-platform"
       | `ch_ua_model -> `String "ch-ua-model"
       | `ch_ua_mobile -> `String "ch-ua-mobile"
@@ -27454,8 +27541,7 @@ and Storage : sig
 
   and StorageType : sig
     type _storagetype =
-      [ `appcache
-      | `cookies
+      [ `cookies
       | `file_systems
       | `indexeddb
       | `local_storage
@@ -28204,8 +28290,7 @@ end = struct
 
   and StorageType : sig
     type _storagetype =
-      [ `appcache
-      | `cookies
+      [ `cookies
       | `file_systems
       | `indexeddb
       | `local_storage
@@ -28226,8 +28311,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Enum of possible storage types."]
   end = struct
     type _storagetype =
-      [ `appcache
-      | `cookies
+      [ `cookies
       | `file_systems
       | `indexeddb
       | `local_storage
@@ -28242,7 +28326,6 @@ end = struct
       | `other ]
 
     let _storagetype_of_yojson = function
-      | `String "appcache" -> `appcache
       | `String "cookies" -> `cookies
       | `String "file_systems" -> `file_systems
       | `String "indexeddb" -> `indexeddb
@@ -28260,7 +28343,6 @@ end = struct
       | _ -> failwith "unknown enum type"
 
     let yojson_of__storagetype = function
-      | `appcache -> `String "appcache"
       | `cookies -> `String "cookies"
       | `file_systems -> `String "file_systems"
       | `indexeddb -> `String "indexeddb"

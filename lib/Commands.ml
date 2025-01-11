@@ -3955,6 +3955,70 @@ resolved to '3px'. *)
     end
   end
 
+  (* No description provided *)
+  module GetLonghandProperties = struct
+    module Response : sig
+      type result = {
+        longhandProperties : Types.CSS.CSSProperty.t list;
+            [@key "longhandProperties"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        longhandProperties : Types.CSS.CSSProperty.t list;
+            [@key "longhandProperties"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        shorthandName : string;
+            [@key "shorthandName"] [@ocaml.doc "No description provided"]
+        value : string; [@key "value"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~shorthandName ~value () = { shorthandName; value }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "CSS.getLonghandProperties"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
   (* Returns the styles defined inline (explicitly in the "style" attribute and implicitly, using DOM
 attributes) for a DOM node identified by `nodeId`. *)
   module GetInlineStylesForNode = struct
@@ -11202,241 +11266,6 @@ module DOMStorage = struct
 
       let make ?sessionId ~params id =
         { id; method_ = "DOMStorage.setDOMStorageItem"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-end
-
-module Database = struct
-  (* Disables database tracking, prevents database events from being sent to the client. *)
-  module Disable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Database.disable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-
-  (* Enables database tracking, database events will now be delivered to the client. *)
-  module Enable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Database.enable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-
-  (* No description provided *)
-  module ExecuteSQL = struct
-    module Response : sig
-      type result = {
-        columnNames : string list option;
-            [@key "columnNames"]
-            [@yojson.option]
-            [@ocaml.doc "No description provided"]
-        values : string list option;
-            [@key "values"]
-            [@yojson.option]
-            [@ocaml.doc "No description provided"]
-        sqlError : Types.Database.Error.t option;
-            [@key "sqlError"]
-            [@yojson.option]
-            [@ocaml.doc "No description provided"]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        columnNames : string list option;
-            [@key "columnNames"]
-            [@yojson.option]
-            [@ocaml.doc "No description provided"]
-        values : string list option;
-            [@key "values"]
-            [@yojson.option]
-            [@ocaml.doc "No description provided"]
-        sqlError : Types.Database.Error.t option;
-            [@key "sqlError"]
-            [@yojson.option]
-            [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        databaseId : Types.Database.DatabaseId.t;
-            [@key "databaseId"] [@ocaml.doc "No description provided"]
-        query : string; [@key "query"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~databaseId ~query () = { databaseId; query }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Database.executeSQL"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-
-  (* No description provided *)
-  module GetDatabaseTableNames = struct
-    module Response : sig
-      type result = {
-        tableNames : string list;
-            [@key "tableNames"] [@ocaml.doc "No description provided"]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        tableNames : string list;
-            [@key "tableNames"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        databaseId : Types.Database.DatabaseId.t;
-            [@key "databaseId"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~databaseId () = { databaseId }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Database.getDatabaseTableNames"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
@@ -19936,6 +19765,79 @@ Enabling triggers 'reportingApiReportAdded' for all existing reports. *)
 
       let make ?sessionId ~params id =
         { id; method_ = "Network.loadNetworkResource"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+
+  (* Sets Controls for third-party cookie access
+Page reload is required before the new cookie bahavior will be observed *)
+  module SetCookieControls = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        enableThirdPartyCookieRestriction : bool;
+            [@key "enableThirdPartyCookieRestriction"]
+            [@ocaml.doc "Whether 3pc restriction is enabled."]
+        disableThirdPartyCookieMetadata : bool;
+            [@key "disableThirdPartyCookieMetadata"]
+            [@ocaml.doc
+              "Whether 3pc grace period exception should be enabled; false by \
+               default."]
+        disableThirdPartyCookieHeuristics : bool;
+            [@key "disableThirdPartyCookieHeuristics"]
+            [@ocaml.doc
+              "Whether 3pc heuristics exceptions should be enabled; false by \
+               default."]
+      }
+      [@@deriving yojson]
+
+      let make ~enableThirdPartyCookieRestriction
+          ~disableThirdPartyCookieMetadata ~disableThirdPartyCookieHeuristics ()
+          =
+        {
+          enableThirdPartyCookieRestriction;
+          disableThirdPartyCookieMetadata;
+          disableThirdPartyCookieHeuristics;
+        }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Network.setCookieControls"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
@@ -29601,14 +29503,30 @@ one. *)
             [@ocaml.doc
               "The initial URL the page will be navigated to. An empty string \
                indicates about:blank."]
+        left : Types.number option;
+            [@key "left"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Frame left origin in DIP (requires newWindow to be true or \
+               headless shell)."]
+        top : Types.number option;
+            [@key "top"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Frame top origin in DIP (requires newWindow to be true or \
+               headless shell)."]
         width : Types.number option;
             [@key "width"]
             [@yojson.option]
-            [@ocaml.doc "Frame width in DIP (headless chrome only)."]
+            [@ocaml.doc
+              "Frame width in DIP (requires newWindow to be true or headless \
+               shell)."]
         height : Types.number option;
             [@key "height"]
             [@yojson.option]
-            [@ocaml.doc "Frame height in DIP (headless chrome only)."]
+            [@ocaml.doc
+              "Frame height in DIP (requires newWindow to be true or headless \
+               shell)."]
         browserContextId : Types.Browser.BrowserContextID.t option;
             [@key "browserContextId"]
             [@yojson.option]
@@ -29618,21 +29536,21 @@ one. *)
             [@yojson.option]
             [@ocaml.doc
               "Whether BeginFrames for this target will be controlled via \
-               DevTools (headless chrome only,\n\
+               DevTools (headless shell only,\n\
                not supported on MacOS yet, false by default)."]
         newWindow : bool option;
             [@key "newWindow"]
             [@yojson.option]
             [@ocaml.doc
-              "Whether to create a new Window or Tab (chrome-only, false by \
-               default)."]
+              "Whether to create a new Window or Tab (false by default, not \
+               supported by headless shell)."]
         background : bool option;
             [@key "background"]
             [@yojson.option]
             [@ocaml.doc
-              "Whether to create the target in background or foreground \
-               (chrome-only,\n\
-               false by default)."]
+              "Whether to create the target in background or foreground (false \
+               by default, not supported\n\
+               by headless shell)."]
         forTab : bool option;
             [@key "forTab"]
             [@yojson.option]
@@ -29640,10 +29558,12 @@ one. *)
       }
       [@@deriving yojson]
 
-      let make ~url ?width ?height ?browserContextId ?enableBeginFrameControl
-          ?newWindow ?background ?forTab () =
+      let make ~url ?left ?top ?width ?height ?browserContextId
+          ?enableBeginFrameControl ?newWindow ?background ?forTab () =
         {
           url;
+          left;
+          top;
           width;
           height;
           browserContextId;
