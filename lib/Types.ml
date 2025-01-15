@@ -30571,6 +30571,16 @@ and Target : sig
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
+
+  and WindowState : sig
+    type _windowstate = [ `normal | `minimized | `maximized | `fullscreen ]
+
+    val _windowstate_of_yojson : Yojson.Basic.t -> _windowstate
+    val yojson_of__windowstate : _windowstate -> Yojson.Basic.t
+
+    type t = _windowstate
+    [@@deriving yojson] [@@ocaml.doc "The state of the target window."]
+  end
 end = struct
   module rec TargetID : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -30734,6 +30744,35 @@ end = struct
       port : number; [@key "port"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and WindowState : sig
+    type _windowstate = [ `normal | `minimized | `maximized | `fullscreen ]
+
+    val _windowstate_of_yojson : Yojson.Basic.t -> _windowstate
+    val yojson_of__windowstate : _windowstate -> Yojson.Basic.t
+
+    type t = _windowstate
+    [@@deriving yojson] [@@ocaml.doc "The state of the target window."]
+  end = struct
+    type _windowstate = [ `normal | `minimized | `maximized | `fullscreen ]
+
+    let _windowstate_of_yojson = function
+      | `String "normal" -> `normal
+      | `String "minimized" -> `minimized
+      | `String "maximized" -> `maximized
+      | `String "fullscreen" -> `fullscreen
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__windowstate = function
+      | `normal -> `String "normal"
+      | `minimized -> `String "minimized"
+      | `maximized -> `String "maximized"
+      | `fullscreen -> `String "fullscreen"
+
+    type t = _windowstate
+    [@@deriving yojson] [@@ocaml.doc "The state of the target window."]
   end
 end
 

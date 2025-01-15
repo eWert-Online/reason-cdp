@@ -29527,6 +29527,13 @@ one. *)
             [@ocaml.doc
               "Frame height in DIP (requires newWindow to be true or headless \
                shell)."]
+        windowState : Types.Target.WindowState.t option;
+            [@key "windowState"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Frame window state (requires newWindow to be true or headless \
+               shell).\n\
+               Default is normal."]
         browserContextId : Types.Browser.BrowserContextID.t option;
             [@key "browserContextId"]
             [@yojson.option]
@@ -29558,7 +29565,7 @@ one. *)
       }
       [@@deriving yojson]
 
-      let make ~url ?left ?top ?width ?height ?browserContextId
+      let make ~url ?left ?top ?width ?height ?windowState ?browserContextId
           ?enableBeginFrameControl ?newWindow ?background ?forTab () =
         {
           url;
@@ -29566,6 +29573,7 @@ one. *)
           top;
           width;
           height;
+          windowState;
           browserContextId;
           enableBeginFrameControl;
           newWindow;
