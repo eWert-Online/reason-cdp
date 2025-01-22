@@ -28785,6 +28785,89 @@ session. The effective Related Website Sets will not change during a browser ses
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+
+  (* Returns the list of URLs from a page and its embedded resources that match
+existing grace period URL pattern rules.
+https://developers.google.com/privacy-sandbox/cookies/temporary-exceptions/grace-period *)
+  module GetAffectedUrlsForThirdPartyCookieMetadata = struct
+    module Response : sig
+      type result = {
+        matchedUrls : string list;
+            [@key "matchedUrls"]
+            [@ocaml.doc
+              "Array of matching URLs. If there is a primary pattern match for \
+               the first-\n\
+               party URL, only the first-party URL is returned in the array."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        matchedUrls : string list;
+            [@key "matchedUrls"]
+            [@ocaml.doc
+              "Array of matching URLs. If there is a primary pattern match for \
+               the first-\n\
+               party URL, only the first-party URL is returned in the array."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        firstPartyUrl : string;
+            [@key "firstPartyUrl"]
+            [@ocaml.doc "The URL of the page currently being visited."]
+        thirdPartyUrls : string list;
+            [@key "thirdPartyUrls"]
+            [@ocaml.doc "The list of embedded resource URLs from the page."]
+      }
+      [@@deriving yojson]
+
+      let make ~firstPartyUrl ~thirdPartyUrls () =
+        { firstPartyUrl; thirdPartyUrls }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Storage.getAffectedUrlsForThirdPartyCookieMetadata";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
 end
 
 module SystemInfo = struct
