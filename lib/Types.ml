@@ -15914,7 +15914,8 @@ and Network : sig
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `Scheme ]
+      | `Scheme
+      | `SameSiteNoneCookiesInSandbox ]
 
     val _cookieexemptionreason_of_yojson :
       Yojson.Basic.t -> _cookieexemptionreason
@@ -18921,7 +18922,8 @@ end = struct
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `Scheme ]
+      | `Scheme
+      | `SameSiteNoneCookiesInSandbox ]
 
     val _cookieexemptionreason_of_yojson :
       Yojson.Basic.t -> _cookieexemptionreason
@@ -18945,7 +18947,8 @@ end = struct
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
-      | `Scheme ]
+      | `Scheme
+      | `SameSiteNoneCookiesInSandbox ]
 
     let _cookieexemptionreason_of_yojson = function
       | `String "None" -> `None
@@ -18958,6 +18961,7 @@ end = struct
       | `String "StorageAccess" -> `StorageAccess
       | `String "TopLevelStorageAccess" -> `TopLevelStorageAccess
       | `String "Scheme" -> `Scheme
+      | `String "SameSiteNoneCookiesInSandbox" -> `SameSiteNoneCookiesInSandbox
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -18972,6 +18976,7 @@ end = struct
       | `StorageAccess -> `String "StorageAccess"
       | `TopLevelStorageAccess -> `String "TopLevelStorageAccess"
       | `Scheme -> `String "Scheme"
+      | `SameSiteNoneCookiesInSandbox -> `String "SameSiteNoneCookiesInSandbox"
 
     type t = _cookieexemptionreason
     [@@deriving yojson]
