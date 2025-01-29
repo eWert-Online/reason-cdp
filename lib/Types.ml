@@ -35243,6 +35243,16 @@ and Debugger : sig
     [@@deriving yojson]
     [@@ocaml.doc "Debug symbols available for a wasm script."]
   end
+
+  and ResolvedBreakpoint : sig
+    type t = {
+      breakpointId : BreakpointId.t;
+          [@key "breakpointId"] [@ocaml.doc "Breakpoint unique identifier."]
+      location : Location.t;
+          [@key "location"] [@ocaml.doc "Actual breakpoint location."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
 end = struct
   module rec BreakpointId : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "Breakpoint identifier."]
@@ -35680,6 +35690,24 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc "Debug symbols available for a wasm script."]
+  end
+
+  and ResolvedBreakpoint : sig
+    type t = {
+      breakpointId : BreakpointId.t;
+          [@key "breakpointId"] [@ocaml.doc "Breakpoint unique identifier."]
+      location : Location.t;
+          [@key "location"] [@ocaml.doc "Actual breakpoint location."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      breakpointId : BreakpointId.t;
+          [@key "breakpointId"] [@ocaml.doc "Breakpoint unique identifier."]
+      location : Location.t;
+          [@key "location"] [@ocaml.doc "Actual breakpoint location."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 end
 

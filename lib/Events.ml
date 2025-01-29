@@ -4647,7 +4647,8 @@ module Console = struct
 end
 
 module Debugger = struct
-  (* Fired when breakpoint is resolved to an actual script and location. *)
+  (* Fired when breakpoint is resolved to an actual script and location.
+Deprecated in favor of `resolvedBreakpoints` in the `scriptParsed` event. *)
   module BreakpointResolved = struct
     let name = "Debugger.breakpointResolved"
 
@@ -4944,6 +4945,15 @@ scripts upon enabling debugger. *)
           [@key "embedderName"]
           [@yojson.option]
           [@ocaml.doc "The name the embedder supplied for this script."]
+      resolvedBreakpoints : Types.Debugger.ResolvedBreakpoint.t list option;
+          [@key "resolvedBreakpoints"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The list of set breakpoints in this script if calls to \
+             `setBreakpointByUrl`\n\
+             matches this script's URL or hash. Clients that use this list can \
+             ignore the\n\
+             `breakpointResolved` event. They are equivalent."]
     }
     [@@deriving yojson]
 

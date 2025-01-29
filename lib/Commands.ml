@@ -38325,9 +38325,19 @@ It is the total usage of the corresponding isolate not scoped to a particular Ru
     module Response : sig
       type result = {
         usedSize : Types.number;
-            [@key "usedSize"] [@ocaml.doc "Used heap size in bytes."]
+            [@key "usedSize"] [@ocaml.doc "Used JavaScript heap size in bytes."]
         totalSize : Types.number;
-            [@key "totalSize"] [@ocaml.doc "Allocated heap size in bytes."]
+            [@key "totalSize"]
+            [@ocaml.doc "Allocated JavaScript heap size in bytes."]
+        embedderHeapUsedSize : Types.number;
+            [@key "embedderHeapUsedSize"]
+            [@ocaml.doc
+              "Used size in bytes in the embedder's garbage-collected heap."]
+        backingStorageSize : Types.number;
+            [@key "backingStorageSize"]
+            [@ocaml.doc
+              "Size in bytes of backing storage for array buffers and external \
+               strings."]
       }
 
       type error = { code : int; message : string }
@@ -38343,9 +38353,19 @@ It is the total usage of the corresponding isolate not scoped to a particular Ru
     end = struct
       type result = {
         usedSize : Types.number;
-            [@key "usedSize"] [@ocaml.doc "Used heap size in bytes."]
+            [@key "usedSize"] [@ocaml.doc "Used JavaScript heap size in bytes."]
         totalSize : Types.number;
-            [@key "totalSize"] [@ocaml.doc "Allocated heap size in bytes."]
+            [@key "totalSize"]
+            [@ocaml.doc "Allocated JavaScript heap size in bytes."]
+        embedderHeapUsedSize : Types.number;
+            [@key "embedderHeapUsedSize"]
+            [@ocaml.doc
+              "Used size in bytes in the embedder's garbage-collected heap."]
+        backingStorageSize : Types.number;
+            [@key "backingStorageSize"]
+            [@ocaml.doc
+              "Size in bytes of backing storage for array buffers and external \
+               strings."]
       }
       [@@deriving yojson]
 
