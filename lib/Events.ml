@@ -2448,6 +2448,81 @@ subtree is actually detached. *)
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
 
+  (* Fired when a navigation starts. This event is fired for both
+renderer-initiated and browser-initiated navigations. For renderer-initiated
+navigations, the event is fired after `frameRequestedNavigation`.
+Navigation may still be cancelled after the event is issued. Multiple events
+can be fired for a single navigation, for example, when a same-document
+navigation becomes a cross-document navigation (such as in the case of a
+frameset). *)
+  module FrameStartedNavigating = struct
+    let name = "Page.frameStartedNavigating"
+
+    type framestartednavigating_navigationtype =
+      [ `reload
+      | `reloadBypassingCache
+      | `restore
+      | `restoreWithPost
+      | `historySameDocument
+      | `historyDifferentDocument
+      | `sameDocument
+      | `differentDocument ]
+
+    let framestartednavigating_navigationtype_of_yojson = function
+      | `String "reload" -> `reload
+      | `String "reloadBypassingCache" -> `reloadBypassingCache
+      | `String "restore" -> `restore
+      | `String "restoreWithPost" -> `restoreWithPost
+      | `String "historySameDocument" -> `historySameDocument
+      | `String "historyDifferentDocument" -> `historyDifferentDocument
+      | `String "sameDocument" -> `sameDocument
+      | `String "differentDocument" -> `differentDocument
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of_framestartednavigating_navigationtype = function
+      | `reload -> `String "reload"
+      | `reloadBypassingCache -> `String "reloadBypassingCache"
+      | `restore -> `String "restore"
+      | `restoreWithPost -> `String "restoreWithPost"
+      | `historySameDocument -> `String "historySameDocument"
+      | `historyDifferentDocument -> `String "historyDifferentDocument"
+      | `sameDocument -> `String "sameDocument"
+      | `differentDocument -> `String "differentDocument"
+
+    type result = {
+      frameId : Types.Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "ID of the frame that is being navigated."]
+      url : string;
+          [@key "url"]
+          [@ocaml.doc
+            "The URL the navigation started with. The final URL can be \
+             different."]
+      loaderId : Types.Network.LoaderId.t;
+          [@key "loaderId"]
+          [@ocaml.doc
+            "Loader identifier. Even though it is present in case of \
+             same-document\n\
+             navigation, the previously committed loaderId would not change \
+             unless\n\
+             the navigation changes from a same-document to a cross-document\n\
+             navigation."]
+      navigationType : framestartednavigating_navigationtype;
+          [@key "navigationType"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+
   (* Fired when a renderer-initiated navigation is requested.
 Navigation may still be cancelled after the event is issued. *)
   module FrameRequestedNavigation = struct
