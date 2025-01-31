@@ -3461,10 +3461,19 @@ position specified by `location`. *)
             [@ocaml.doc
               "Identifier of the frame where \"via-inspector\" stylesheet \
                should be created."]
+        force : bool option;
+            [@key "force"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If true, creates a new stylesheet for every call. If false,\n\
+               returns a stylesheet previously created by a call with \
+               force=false\n\
+               for the frame's document if it exists or creates a new stylesheet\n\
+               (default: false)."]
       }
       [@@deriving yojson]
 
-      let make ~frameId () = { frameId }
+      let make ~frameId ?force () = { frameId; force }
     end
 
     module Request = struct
