@@ -2216,7 +2216,8 @@ and Audits : sig
       | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching
-      | `UiDismissedNoEmbargo ]
+      | `UiDismissedNoEmbargo
+      | `CorsError ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4437,7 +4438,8 @@ end = struct
       | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching
-      | `UiDismissedNoEmbargo ]
+      | `UiDismissedNoEmbargo
+      | `CorsError ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4500,7 +4502,8 @@ end = struct
       | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching
-      | `UiDismissedNoEmbargo ]
+      | `UiDismissedNoEmbargo
+      | `CorsError ]
 
     let _federatedauthrequestissuereason_of_yojson = function
       | `String "ShouldEmbargo" -> `ShouldEmbargo
@@ -4553,6 +4556,7 @@ end = struct
       | `String "RelyingPartyOriginIsOpaque" -> `RelyingPartyOriginIsOpaque
       | `String "TypeNotMatching" -> `TypeNotMatching
       | `String "UiDismissedNoEmbargo" -> `UiDismissedNoEmbargo
+      | `String "CorsError" -> `CorsError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4607,6 +4611,7 @@ end = struct
       | `RelyingPartyOriginIsOpaque -> `String "RelyingPartyOriginIsOpaque"
       | `TypeNotMatching -> `String "TypeNotMatching"
       | `UiDismissedNoEmbargo -> `String "UiDismissedNoEmbargo"
+      | `CorsError -> `String "CorsError"
 
     type t = _federatedauthrequestissuereason
     [@@deriving yojson]
@@ -22177,6 +22182,20 @@ and Page : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and SecurityOriginDetails : sig
+    type t = {
+      isLocalhost : bool;
+          [@key "isLocalhost"]
+          [@ocaml.doc
+            "Indicates whether the frame document's security origin is one\n\
+             of the local hostnames (e.g. \"localhost\") or IP addresses (IPv4\n\
+             127.0.0.0/8 or IPv6 ::1)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Additional information about the frame document's security origin."]
+  end
+
   and Frame : sig
     type t = {
       id : FrameId.t; [@key "id"] [@ocaml.doc "Frame unique identifier."]
@@ -22208,6 +22227,11 @@ and Page : sig
       securityOrigin : string;
           [@key "securityOrigin"]
           [@ocaml.doc "Frame document's security origin."]
+      securityOriginDetails : SecurityOriginDetails.t option;
+          [@key "securityOriginDetails"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Additional details about the frame document's security origin."]
       mimeType : string;
           [@key "mimeType"]
           [@ocaml.doc "Frame document's mimeType as determined by the browser."]
@@ -24041,6 +24065,32 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and SecurityOriginDetails : sig
+    type t = {
+      isLocalhost : bool;
+          [@key "isLocalhost"]
+          [@ocaml.doc
+            "Indicates whether the frame document's security origin is one\n\
+             of the local hostnames (e.g. \"localhost\") or IP addresses (IPv4\n\
+             127.0.0.0/8 or IPv6 ::1)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Additional information about the frame document's security origin."]
+  end = struct
+    type t = {
+      isLocalhost : bool;
+          [@key "isLocalhost"]
+          [@ocaml.doc
+            "Indicates whether the frame document's security origin is one\n\
+             of the local hostnames (e.g. \"localhost\") or IP addresses (IPv4\n\
+             127.0.0.0/8 or IPv6 ::1)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Additional information about the frame document's security origin."]
+  end
+
   and Frame : sig
     type t = {
       id : FrameId.t; [@key "id"] [@ocaml.doc "Frame unique identifier."]
@@ -24072,6 +24122,11 @@ end = struct
       securityOrigin : string;
           [@key "securityOrigin"]
           [@ocaml.doc "Frame document's security origin."]
+      securityOriginDetails : SecurityOriginDetails.t option;
+          [@key "securityOriginDetails"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Additional details about the frame document's security origin."]
       mimeType : string;
           [@key "mimeType"]
           [@ocaml.doc "Frame document's mimeType as determined by the browser."]
@@ -24132,6 +24187,11 @@ end = struct
       securityOrigin : string;
           [@key "securityOrigin"]
           [@ocaml.doc "Frame document's security origin."]
+      securityOriginDetails : SecurityOriginDetails.t option;
+          [@key "securityOriginDetails"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Additional details about the frame document's security origin."]
       mimeType : string;
           [@key "mimeType"]
           [@ocaml.doc "Frame document's mimeType as determined by the browser."]

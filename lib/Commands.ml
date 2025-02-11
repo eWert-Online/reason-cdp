@@ -29432,10 +29432,17 @@ The object has the following API:
             [@key "bindingName"]
             [@yojson.option]
             [@ocaml.doc "Binding name, 'cdp' if not specified."]
+        inheritPermissions : bool option;
+            [@key "inheritPermissions"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If true, inherits the current root session's permissions \
+               (default: false)."]
       }
       [@@deriving yojson]
 
-      let make ~targetId ?bindingName () = { targetId; bindingName }
+      let make ~targetId ?bindingName ?inheritPermissions () =
+        { targetId; bindingName; inheritPermissions }
     end
 
     module Request = struct
