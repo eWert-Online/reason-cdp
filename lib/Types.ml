@@ -2298,6 +2298,31 @@ and Audits : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and PartitioningBlobURLInfo : sig
+    type _partitioningbloburlinfo =
+      [ `BlockedCrossPartitionFetching | `EnforceNoopenerForNavigation ]
+
+    val _partitioningbloburlinfo_of_yojson :
+      Yojson.Basic.t -> _partitioningbloburlinfo
+
+    val yojson_of__partitioningbloburlinfo :
+      _partitioningbloburlinfo -> Yojson.Basic.t
+
+    type t = _partitioningbloburlinfo
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PartitioningBlobURLIssueDetails : sig
+    type t = {
+      url : string; [@key "url"] [@ocaml.doc "The BlobURL that failed to load."]
+      partitioningBlobURLInfo : PartitioningBlobURLInfo.t;
+          [@key "partitioningBlobURLInfo"]
+          [@ocaml.doc
+            "Additional information about the Partitioning Blob URL issue."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and SelectElementAccessibilityIssueReason : sig
     type _selectelementaccessibilityissuereason =
       [ `DisallowedSelectChild
@@ -2412,6 +2437,7 @@ and Audits : sig
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
+      | `PartitioningBlobURLIssue
       | `NavigatorUserAgentIssue
       | `GenericIssue
       | `DeprecationIssue
@@ -2478,6 +2504,11 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       quirksModeIssueDetails : QuirksModeIssueDetails.t option;
           [@key "quirksModeIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      partitioningBlobURLIssueDetails :
+        PartitioningBlobURLIssueDetails.t option;
+          [@key "partitioningBlobURLIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       navigatorUserAgentIssueDetails : NavigatorUserAgentIssueDetails.t option;
@@ -4761,6 +4792,58 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and PartitioningBlobURLInfo : sig
+    type _partitioningbloburlinfo =
+      [ `BlockedCrossPartitionFetching | `EnforceNoopenerForNavigation ]
+
+    val _partitioningbloburlinfo_of_yojson :
+      Yojson.Basic.t -> _partitioningbloburlinfo
+
+    val yojson_of__partitioningbloburlinfo :
+      _partitioningbloburlinfo -> Yojson.Basic.t
+
+    type t = _partitioningbloburlinfo
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _partitioningbloburlinfo =
+      [ `BlockedCrossPartitionFetching | `EnforceNoopenerForNavigation ]
+
+    let _partitioningbloburlinfo_of_yojson = function
+      | `String "BlockedCrossPartitionFetching" ->
+          `BlockedCrossPartitionFetching
+      | `String "EnforceNoopenerForNavigation" -> `EnforceNoopenerForNavigation
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__partitioningbloburlinfo = function
+      | `BlockedCrossPartitionFetching ->
+          `String "BlockedCrossPartitionFetching"
+      | `EnforceNoopenerForNavigation -> `String "EnforceNoopenerForNavigation"
+
+    type t = _partitioningbloburlinfo
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PartitioningBlobURLIssueDetails : sig
+    type t = {
+      url : string; [@key "url"] [@ocaml.doc "The BlobURL that failed to load."]
+      partitioningBlobURLInfo : PartitioningBlobURLInfo.t;
+          [@key "partitioningBlobURLInfo"]
+          [@ocaml.doc
+            "Additional information about the Partitioning Blob URL issue."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      url : string; [@key "url"] [@ocaml.doc "The BlobURL that failed to load."]
+      partitioningBlobURLInfo : PartitioningBlobURLInfo.t;
+          [@key "partitioningBlobURLInfo"]
+          [@ocaml.doc
+            "Additional information about the Partitioning Blob URL issue."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and SelectElementAccessibilityIssueReason : sig
     type _selectelementaccessibilityissuereason =
       [ `DisallowedSelectChild
@@ -4993,6 +5076,7 @@ end = struct
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
+      | `PartitioningBlobURLIssue
       | `NavigatorUserAgentIssue
       | `GenericIssue
       | `DeprecationIssue
@@ -5027,6 +5111,7 @@ end = struct
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
+      | `PartitioningBlobURLIssue
       | `NavigatorUserAgentIssue
       | `GenericIssue
       | `DeprecationIssue
@@ -5051,6 +5136,7 @@ end = struct
       | `String "CorsIssue" -> `CorsIssue
       | `String "AttributionReportingIssue" -> `AttributionReportingIssue
       | `String "QuirksModeIssue" -> `QuirksModeIssue
+      | `String "PartitioningBlobURLIssue" -> `PartitioningBlobURLIssue
       | `String "NavigatorUserAgentIssue" -> `NavigatorUserAgentIssue
       | `String "GenericIssue" -> `GenericIssue
       | `String "DeprecationIssue" -> `DeprecationIssue
@@ -5080,6 +5166,7 @@ end = struct
       | `CorsIssue -> `String "CorsIssue"
       | `AttributionReportingIssue -> `String "AttributionReportingIssue"
       | `QuirksModeIssue -> `String "QuirksModeIssue"
+      | `PartitioningBlobURLIssue -> `String "PartitioningBlobURLIssue"
       | `NavigatorUserAgentIssue -> `String "NavigatorUserAgentIssue"
       | `GenericIssue -> `String "GenericIssue"
       | `DeprecationIssue -> `String "DeprecationIssue"
@@ -5146,6 +5233,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       quirksModeIssueDetails : QuirksModeIssueDetails.t option;
           [@key "quirksModeIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      partitioningBlobURLIssueDetails :
+        PartitioningBlobURLIssueDetails.t option;
+          [@key "partitioningBlobURLIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       navigatorUserAgentIssueDetails : NavigatorUserAgentIssueDetails.t option;
@@ -5248,6 +5340,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       quirksModeIssueDetails : QuirksModeIssueDetails.t option;
           [@key "quirksModeIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      partitioningBlobURLIssueDetails :
+        PartitioningBlobURLIssueDetails.t option;
+          [@key "partitioningBlobURLIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       navigatorUserAgentIssueDetails : NavigatorUserAgentIssueDetails.t option;
