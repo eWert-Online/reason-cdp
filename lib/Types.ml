@@ -1760,6 +1760,7 @@ and Audits : sig
       [ `kInlineViolation
       | `kEvalViolation
       | `kURLViolation
+      | `kSRIViolation
       | `kTrustedTypesSinkViolation
       | `kTrustedTypesPolicyViolation
       | `kWasmEvalViolation ]
@@ -3463,6 +3464,7 @@ end = struct
       [ `kInlineViolation
       | `kEvalViolation
       | `kURLViolation
+      | `kSRIViolation
       | `kTrustedTypesSinkViolation
       | `kTrustedTypesPolicyViolation
       | `kWasmEvalViolation ]
@@ -3480,6 +3482,7 @@ end = struct
       [ `kInlineViolation
       | `kEvalViolation
       | `kURLViolation
+      | `kSRIViolation
       | `kTrustedTypesSinkViolation
       | `kTrustedTypesPolicyViolation
       | `kWasmEvalViolation ]
@@ -3488,6 +3491,7 @@ end = struct
       | `String "kInlineViolation" -> `kInlineViolation
       | `String "kEvalViolation" -> `kEvalViolation
       | `String "kURLViolation" -> `kURLViolation
+      | `String "kSRIViolation" -> `kSRIViolation
       | `String "kTrustedTypesSinkViolation" -> `kTrustedTypesSinkViolation
       | `String "kTrustedTypesPolicyViolation" -> `kTrustedTypesPolicyViolation
       | `String "kWasmEvalViolation" -> `kWasmEvalViolation
@@ -3498,6 +3502,7 @@ end = struct
       | `kInlineViolation -> `String "kInlineViolation"
       | `kEvalViolation -> `String "kEvalViolation"
       | `kURLViolation -> `String "kURLViolation"
+      | `kSRIViolation -> `String "kSRIViolation"
       | `kTrustedTypesSinkViolation -> `String "kTrustedTypesSinkViolation"
       | `kTrustedTypesPolicyViolation -> `String "kTrustedTypesPolicyViolation"
       | `kWasmEvalViolation -> `String "kWasmEvalViolation"

@@ -8488,15 +8488,17 @@ appear on top of all other content. *)
     end
 
     module Params = struct
-      type getelementbyrelation_relation = [ `PopoverTarget ]
+      type getelementbyrelation_relation = [ `PopoverTarget | `InterestTarget ]
 
       let getelementbyrelation_relation_of_yojson = function
         | `String "PopoverTarget" -> `PopoverTarget
+        | `String "InterestTarget" -> `InterestTarget
         | `String s -> failwith ("unknown enum: " ^ s)
         | _ -> failwith "unknown enum type"
 
       let yojson_of_getelementbyrelation_relation = function
         | `PopoverTarget -> `String "PopoverTarget"
+        | `InterestTarget -> `String "InterestTarget"
 
       type t = {
         nodeId : Types.DOM.NodeId.t;
