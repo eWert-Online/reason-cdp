@@ -1970,6 +1970,39 @@ and Audits : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and SRIMessageSignatureError : sig
+    type _srimessagesignatureerror =
+      [ `MissingSignatureHeader
+      | `MissingSignatureInputHeader
+      | `InvalidSignatureHeader
+      | `InvalidSignatureInputHeader
+      | `SignatureHeaderValueIsNotByteSequence
+      | `SignatureHeaderValueIsParameterized
+      | `SignatureHeaderValueIsIncorrectLength
+      | `SignatureInputHeaderMissingLabel
+      | `SignatureInputHeaderValueNotInnerList
+      | `SignatureInputHeaderValueMissingComponents
+      | `SignatureInputHeaderInvalidComponentType
+      | `SignatureInputHeaderInvalidComponentName
+      | `SignatureInputHeaderInvalidHeaderComponentParameter
+      | `SignatureInputHeaderInvalidDerivedComponentParameter
+      | `SignatureInputHeaderKeyIdLength
+      | `SignatureInputHeaderInvalidParameter
+      | `SignatureInputHeaderMissingRequiredParameters
+      | `ValidationFailedSignatureExpired
+      | `ValidationFailedInvalidLength
+      | `ValidationFailedSignatureMismatch ]
+
+    val _srimessagesignatureerror_of_yojson :
+      Yojson.Basic.t -> _srimessagesignatureerror
+
+    val yojson_of__srimessagesignatureerror :
+      _srimessagesignatureerror -> Yojson.Basic.t
+
+    type t = _srimessagesignatureerror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingIssueDetails : sig
     type t = {
       violationType : AttributionReportingIssueType.t;
@@ -2029,6 +2062,16 @@ and Audits : sig
     type t = {
       sharedDictionaryError : SharedDictionaryError.t;
           [@key "sharedDictionaryError"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SRIMessageSignatureIssueDetails : sig
+    type t = {
+      error : SRIMessageSignatureError.t;
+          [@key "error"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
     }
@@ -2450,7 +2493,8 @@ and Audits : sig
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue
       | `SharedDictionaryIssue
-      | `SelectElementAccessibilityIssue ]
+      | `SelectElementAccessibilityIssue
+      | `SRIMessageSignatureIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2562,6 +2606,10 @@ and Audits : sig
       selectElementAccessibilityIssueDetails :
         SelectElementAccessibilityIssueDetails.t option;
           [@key "selectElementAccessibilityIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      sriMessageSignatureIssueDetails : SRIMessageSignatureIssueDetails.t option;
+          [@key "sriMessageSignatureIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -4007,6 +4055,142 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and SRIMessageSignatureError : sig
+    type _srimessagesignatureerror =
+      [ `MissingSignatureHeader
+      | `MissingSignatureInputHeader
+      | `InvalidSignatureHeader
+      | `InvalidSignatureInputHeader
+      | `SignatureHeaderValueIsNotByteSequence
+      | `SignatureHeaderValueIsParameterized
+      | `SignatureHeaderValueIsIncorrectLength
+      | `SignatureInputHeaderMissingLabel
+      | `SignatureInputHeaderValueNotInnerList
+      | `SignatureInputHeaderValueMissingComponents
+      | `SignatureInputHeaderInvalidComponentType
+      | `SignatureInputHeaderInvalidComponentName
+      | `SignatureInputHeaderInvalidHeaderComponentParameter
+      | `SignatureInputHeaderInvalidDerivedComponentParameter
+      | `SignatureInputHeaderKeyIdLength
+      | `SignatureInputHeaderInvalidParameter
+      | `SignatureInputHeaderMissingRequiredParameters
+      | `ValidationFailedSignatureExpired
+      | `ValidationFailedInvalidLength
+      | `ValidationFailedSignatureMismatch ]
+
+    val _srimessagesignatureerror_of_yojson :
+      Yojson.Basic.t -> _srimessagesignatureerror
+
+    val yojson_of__srimessagesignatureerror :
+      _srimessagesignatureerror -> Yojson.Basic.t
+
+    type t = _srimessagesignatureerror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _srimessagesignatureerror =
+      [ `MissingSignatureHeader
+      | `MissingSignatureInputHeader
+      | `InvalidSignatureHeader
+      | `InvalidSignatureInputHeader
+      | `SignatureHeaderValueIsNotByteSequence
+      | `SignatureHeaderValueIsParameterized
+      | `SignatureHeaderValueIsIncorrectLength
+      | `SignatureInputHeaderMissingLabel
+      | `SignatureInputHeaderValueNotInnerList
+      | `SignatureInputHeaderValueMissingComponents
+      | `SignatureInputHeaderInvalidComponentType
+      | `SignatureInputHeaderInvalidComponentName
+      | `SignatureInputHeaderInvalidHeaderComponentParameter
+      | `SignatureInputHeaderInvalidDerivedComponentParameter
+      | `SignatureInputHeaderKeyIdLength
+      | `SignatureInputHeaderInvalidParameter
+      | `SignatureInputHeaderMissingRequiredParameters
+      | `ValidationFailedSignatureExpired
+      | `ValidationFailedInvalidLength
+      | `ValidationFailedSignatureMismatch ]
+
+    let _srimessagesignatureerror_of_yojson = function
+      | `String "MissingSignatureHeader" -> `MissingSignatureHeader
+      | `String "MissingSignatureInputHeader" -> `MissingSignatureInputHeader
+      | `String "InvalidSignatureHeader" -> `InvalidSignatureHeader
+      | `String "InvalidSignatureInputHeader" -> `InvalidSignatureInputHeader
+      | `String "SignatureHeaderValueIsNotByteSequence" ->
+          `SignatureHeaderValueIsNotByteSequence
+      | `String "SignatureHeaderValueIsParameterized" ->
+          `SignatureHeaderValueIsParameterized
+      | `String "SignatureHeaderValueIsIncorrectLength" ->
+          `SignatureHeaderValueIsIncorrectLength
+      | `String "SignatureInputHeaderMissingLabel" ->
+          `SignatureInputHeaderMissingLabel
+      | `String "SignatureInputHeaderValueNotInnerList" ->
+          `SignatureInputHeaderValueNotInnerList
+      | `String "SignatureInputHeaderValueMissingComponents" ->
+          `SignatureInputHeaderValueMissingComponents
+      | `String "SignatureInputHeaderInvalidComponentType" ->
+          `SignatureInputHeaderInvalidComponentType
+      | `String "SignatureInputHeaderInvalidComponentName" ->
+          `SignatureInputHeaderInvalidComponentName
+      | `String "SignatureInputHeaderInvalidHeaderComponentParameter" ->
+          `SignatureInputHeaderInvalidHeaderComponentParameter
+      | `String "SignatureInputHeaderInvalidDerivedComponentParameter" ->
+          `SignatureInputHeaderInvalidDerivedComponentParameter
+      | `String "SignatureInputHeaderKeyIdLength" ->
+          `SignatureInputHeaderKeyIdLength
+      | `String "SignatureInputHeaderInvalidParameter" ->
+          `SignatureInputHeaderInvalidParameter
+      | `String "SignatureInputHeaderMissingRequiredParameters" ->
+          `SignatureInputHeaderMissingRequiredParameters
+      | `String "ValidationFailedSignatureExpired" ->
+          `ValidationFailedSignatureExpired
+      | `String "ValidationFailedInvalidLength" ->
+          `ValidationFailedInvalidLength
+      | `String "ValidationFailedSignatureMismatch" ->
+          `ValidationFailedSignatureMismatch
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__srimessagesignatureerror = function
+      | `MissingSignatureHeader -> `String "MissingSignatureHeader"
+      | `MissingSignatureInputHeader -> `String "MissingSignatureInputHeader"
+      | `InvalidSignatureHeader -> `String "InvalidSignatureHeader"
+      | `InvalidSignatureInputHeader -> `String "InvalidSignatureInputHeader"
+      | `SignatureHeaderValueIsNotByteSequence ->
+          `String "SignatureHeaderValueIsNotByteSequence"
+      | `SignatureHeaderValueIsParameterized ->
+          `String "SignatureHeaderValueIsParameterized"
+      | `SignatureHeaderValueIsIncorrectLength ->
+          `String "SignatureHeaderValueIsIncorrectLength"
+      | `SignatureInputHeaderMissingLabel ->
+          `String "SignatureInputHeaderMissingLabel"
+      | `SignatureInputHeaderValueNotInnerList ->
+          `String "SignatureInputHeaderValueNotInnerList"
+      | `SignatureInputHeaderValueMissingComponents ->
+          `String "SignatureInputHeaderValueMissingComponents"
+      | `SignatureInputHeaderInvalidComponentType ->
+          `String "SignatureInputHeaderInvalidComponentType"
+      | `SignatureInputHeaderInvalidComponentName ->
+          `String "SignatureInputHeaderInvalidComponentName"
+      | `SignatureInputHeaderInvalidHeaderComponentParameter ->
+          `String "SignatureInputHeaderInvalidHeaderComponentParameter"
+      | `SignatureInputHeaderInvalidDerivedComponentParameter ->
+          `String "SignatureInputHeaderInvalidDerivedComponentParameter"
+      | `SignatureInputHeaderKeyIdLength ->
+          `String "SignatureInputHeaderKeyIdLength"
+      | `SignatureInputHeaderInvalidParameter ->
+          `String "SignatureInputHeaderInvalidParameter"
+      | `SignatureInputHeaderMissingRequiredParameters ->
+          `String "SignatureInputHeaderMissingRequiredParameters"
+      | `ValidationFailedSignatureExpired ->
+          `String "ValidationFailedSignatureExpired"
+      | `ValidationFailedInvalidLength ->
+          `String "ValidationFailedInvalidLength"
+      | `ValidationFailedSignatureMismatch ->
+          `String "ValidationFailedSignatureMismatch"
+
+    type t = _srimessagesignatureerror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingIssueDetails : sig
     type t = {
       violationType : AttributionReportingIssueType.t;
@@ -4123,6 +4307,24 @@ end = struct
     type t = {
       sharedDictionaryError : SharedDictionaryError.t;
           [@key "sharedDictionaryError"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SRIMessageSignatureIssueDetails : sig
+    type t = {
+      error : SRIMessageSignatureError.t;
+          [@key "error"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      error : SRIMessageSignatureError.t;
+          [@key "error"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
     }
@@ -5093,7 +5295,8 @@ end = struct
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue
       | `SharedDictionaryIssue
-      | `SelectElementAccessibilityIssue ]
+      | `SelectElementAccessibilityIssue
+      | `SRIMessageSignatureIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -5128,7 +5331,8 @@ end = struct
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue
       | `SharedDictionaryIssue
-      | `SelectElementAccessibilityIssue ]
+      | `SelectElementAccessibilityIssue
+      | `SRIMessageSignatureIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -5157,6 +5361,7 @@ end = struct
       | `String "SharedDictionaryIssue" -> `SharedDictionaryIssue
       | `String "SelectElementAccessibilityIssue" ->
           `SelectElementAccessibilityIssue
+      | `String "SRIMessageSignatureIssue" -> `SRIMessageSignatureIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -5187,6 +5392,7 @@ end = struct
       | `SharedDictionaryIssue -> `String "SharedDictionaryIssue"
       | `SelectElementAccessibilityIssue ->
           `String "SelectElementAccessibilityIssue"
+      | `SRIMessageSignatureIssue -> `String "SRIMessageSignatureIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -5297,6 +5503,10 @@ end = struct
           [@key "selectElementAccessibilityIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      sriMessageSignatureIssueDetails : SRIMessageSignatureIssueDetails.t option;
+          [@key "sriMessageSignatureIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -5402,6 +5612,10 @@ end = struct
       selectElementAccessibilityIssueDetails :
         SelectElementAccessibilityIssueDetails.t option;
           [@key "selectElementAccessibilityIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      sriMessageSignatureIssueDetails : SRIMessageSignatureIssueDetails.t option;
+          [@key "sriMessageSignatureIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
