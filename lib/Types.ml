@@ -23339,7 +23339,8 @@ and Page : sig
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
       | `RequestedByWebViewClient
-      | `PostMessageByWebViewClient ]
+      | `PostMessageByWebViewClient
+      | `CacheControlNoStoreDeviceBoundSessionTerminated ]
 
     val _backforwardcachenotrestoredreason_of_yojson :
       Yojson.Basic.t -> _backforwardcachenotrestoredreason
@@ -25954,7 +25955,8 @@ end = struct
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
       | `RequestedByWebViewClient
-      | `PostMessageByWebViewClient ]
+      | `PostMessageByWebViewClient
+      | `CacheControlNoStoreDeviceBoundSessionTerminated ]
 
     val _backforwardcachenotrestoredreason_of_yojson :
       Yojson.Basic.t -> _backforwardcachenotrestoredreason
@@ -26105,7 +26107,8 @@ end = struct
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
       | `RequestedByWebViewClient
-      | `PostMessageByWebViewClient ]
+      | `PostMessageByWebViewClient
+      | `CacheControlNoStoreDeviceBoundSessionTerminated ]
 
     let _backforwardcachenotrestoredreason_of_yojson = function
       | `String "NotPrimaryMainFrame" -> `NotPrimaryMainFrame
@@ -26290,6 +26293,8 @@ end = struct
           `EmbedderExtensionSentMessageToCachedFrame
       | `String "RequestedByWebViewClient" -> `RequestedByWebViewClient
       | `String "PostMessageByWebViewClient" -> `PostMessageByWebViewClient
+      | `String "CacheControlNoStoreDeviceBoundSessionTerminated" ->
+          `CacheControlNoStoreDeviceBoundSessionTerminated
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26476,6 +26481,8 @@ end = struct
           `String "EmbedderExtensionSentMessageToCachedFrame"
       | `RequestedByWebViewClient -> `String "RequestedByWebViewClient"
       | `PostMessageByWebViewClient -> `String "PostMessageByWebViewClient"
+      | `CacheControlNoStoreDeviceBoundSessionTerminated ->
+          `String "CacheControlNoStoreDeviceBoundSessionTerminated"
 
     type t = _backforwardcachenotrestoredreason
     [@@deriving yojson]
