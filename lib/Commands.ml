@@ -22366,16 +22366,33 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
       let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
     end
 
+    module Params = struct
+      type t = {
+        enableFileChooserOpenedEvent : bool option;
+            [@key "enableFileChooserOpenedEvent"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If true, the `Page.fileChooserOpened` event will be emitted \
+               regardless of the state set by\n\
+               `Page.setInterceptFileChooserDialog` command (default: false)."]
+      }
+      [@@deriving yojson]
+
+      let make ?enableFileChooserOpenedEvent () =
+        { enableFileChooserOpenedEvent }
+    end
+
     module Request = struct
       type t = {
         id : int;
         sessionId : Types.Target.SessionID.t option; [@yojson.option]
         method_ : string; [@key "method"]
+        params : Params.t;
       }
       [@@deriving yojson]
 
-      let make ?sessionId id =
-        { id; method_ = "Page.enable"; sessionId }
+      let make ?sessionId ~params id =
+        { id; method_ = "Page.enable"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
