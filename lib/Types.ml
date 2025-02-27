@@ -22360,7 +22360,7 @@ and Page : sig
     [@@ocaml.doc
       "All Permissions Policy features. This enum should match the one defined\n\
        in \
-       third_party/blink/renderer/core/permissions_policy/permissions_policy_features.json5."]
+       services/network/public/cpp/permissions_policy/permissions_policy_features.json5."]
   end
 
   and PermissionsPolicyBlockReason : sig
@@ -23768,7 +23768,7 @@ end = struct
     [@@ocaml.doc
       "All Permissions Policy features. This enum should match the one defined\n\
        in \
-       third_party/blink/renderer/core/permissions_policy/permissions_policy_features.json5."]
+       services/network/public/cpp/permissions_policy/permissions_policy_features.json5."]
   end = struct
     type _permissionspolicyfeature =
       [ `accelerometer
@@ -24080,7 +24080,7 @@ end = struct
     [@@ocaml.doc
       "All Permissions Policy features. This enum should match the one defined\n\
        in \
-       third_party/blink/renderer/core/permissions_policy/permissions_policy_features.json5."]
+       services/network/public/cpp/permissions_policy/permissions_policy_features.json5."]
   end
 
   and PermissionsPolicyBlockReason : sig
