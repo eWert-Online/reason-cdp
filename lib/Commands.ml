@@ -4325,6 +4325,12 @@ including the animation & transition styles coming from inheritance chain. *)
             [@ocaml.doc
               "Id of the first parent element that does not have display: \
                contents."]
+        cssFunctionRules : Types.CSS.CSSFunctionRule.t list option;
+            [@key "cssFunctionRules"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A list of CSS at-function rules referenced by styles of this \
+               node."]
       }
 
       type error = { code : int; message : string }
@@ -4409,6 +4415,12 @@ including the animation & transition styles coming from inheritance chain. *)
             [@ocaml.doc
               "Id of the first parent element that does not have display: \
                contents."]
+        cssFunctionRules : Types.CSS.CSSFunctionRule.t list option;
+            [@key "cssFunctionRules"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A list of CSS at-function rules referenced by styles of this \
+               node."]
       }
       [@@deriving yojson]
 

@@ -7664,6 +7664,79 @@ and CSS : sig
     [@@deriving yojson] [@@ocaml.doc "CSS property at-rule representation."]
   end
 
+  and CSSFunctionParameter : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "The parameter name."]
+      type_ : string; [@key "type"] [@ocaml.doc "The parameter type."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS function argument representation."]
+  end
+
+  and CSSFunctionConditionNode : sig
+    type t = {
+      media : CSSMedia.t option;
+          [@key "media"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Media query for this conditional block. Only one type of \
+             condition should be set."]
+      containerQueries : CSSContainerQuery.t option;
+          [@key "containerQueries"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Container query for this conditional block. Only one type of \
+             condition should be set."]
+      supports : CSSSupports.t option;
+          [@key "supports"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@supports CSS at-rule condition. Only one type of condition \
+             should be set."]
+      children : CSSFunctionNode.t list;
+          [@key "children"] [@ocaml.doc "Block body."]
+      conditionText : string;
+          [@key "conditionText"] [@ocaml.doc "The condition text."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "CSS function conditional block representation."]
+  end
+
+  and CSSFunctionNode : sig
+    type t = {
+      condition : CSSFunctionConditionNode.t option;
+          [@key "condition"]
+          [@yojson.option]
+          [@ocaml.doc "A conditional block. If set, style should not be set."]
+      style : CSSStyle.t option;
+          [@key "style"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Values set by this node. If set, condition should not be set."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Section of the body of a CSS function rule."]
+  end
+
+  and CSSFunctionRule : sig
+    type t = {
+      name : Value.t; [@key "name"] [@ocaml.doc "Name of the function."]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      parameters : CSSFunctionParameter.t list;
+          [@key "parameters"] [@ocaml.doc "List of parameters."]
+      children : CSSFunctionNode.t list;
+          [@key "children"] [@ocaml.doc "Function body."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS function at-rule representation."]
+  end
+
   and CSSKeyframeRule : sig
     type t = {
       styleSheetId : StyleSheetId.t option;
@@ -9377,6 +9450,144 @@ end = struct
           [@key "style"] [@ocaml.doc "Associated style declaration."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS property at-rule representation."]
+  end
+
+  and CSSFunctionParameter : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "The parameter name."]
+      type_ : string; [@key "type"] [@ocaml.doc "The parameter type."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS function argument representation."]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "The parameter name."]
+      type_ : string; [@key "type"] [@ocaml.doc "The parameter type."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS function argument representation."]
+  end
+
+  and CSSFunctionConditionNode : sig
+    type t = {
+      media : CSSMedia.t option;
+          [@key "media"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Media query for this conditional block. Only one type of \
+             condition should be set."]
+      containerQueries : CSSContainerQuery.t option;
+          [@key "containerQueries"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Container query for this conditional block. Only one type of \
+             condition should be set."]
+      supports : CSSSupports.t option;
+          [@key "supports"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@supports CSS at-rule condition. Only one type of condition \
+             should be set."]
+      children : CSSFunctionNode.t list;
+          [@key "children"] [@ocaml.doc "Block body."]
+      conditionText : string;
+          [@key "conditionText"] [@ocaml.doc "The condition text."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "CSS function conditional block representation."]
+  end = struct
+    type t = {
+      media : CSSMedia.t option;
+          [@key "media"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Media query for this conditional block. Only one type of \
+             condition should be set."]
+      containerQueries : CSSContainerQuery.t option;
+          [@key "containerQueries"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Container query for this conditional block. Only one type of \
+             condition should be set."]
+      supports : CSSSupports.t option;
+          [@key "supports"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@supports CSS at-rule condition. Only one type of condition \
+             should be set."]
+      children : CSSFunctionNode.t list;
+          [@key "children"] [@ocaml.doc "Block body."]
+      conditionText : string;
+          [@key "conditionText"] [@ocaml.doc "The condition text."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "CSS function conditional block representation."]
+  end
+
+  and CSSFunctionNode : sig
+    type t = {
+      condition : CSSFunctionConditionNode.t option;
+          [@key "condition"]
+          [@yojson.option]
+          [@ocaml.doc "A conditional block. If set, style should not be set."]
+      style : CSSStyle.t option;
+          [@key "style"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Values set by this node. If set, condition should not be set."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Section of the body of a CSS function rule."]
+  end = struct
+    type t = {
+      condition : CSSFunctionConditionNode.t option;
+          [@key "condition"]
+          [@yojson.option]
+          [@ocaml.doc "A conditional block. If set, style should not be set."]
+      style : CSSStyle.t option;
+          [@key "style"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Values set by this node. If set, condition should not be set."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Section of the body of a CSS function rule."]
+  end
+
+  and CSSFunctionRule : sig
+    type t = {
+      name : Value.t; [@key "name"] [@ocaml.doc "Name of the function."]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      parameters : CSSFunctionParameter.t list;
+          [@key "parameters"] [@ocaml.doc "List of parameters."]
+      children : CSSFunctionNode.t list;
+          [@key "children"] [@ocaml.doc "Function body."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS function at-rule representation."]
+  end = struct
+    type t = {
+      name : Value.t; [@key "name"] [@ocaml.doc "Name of the function."]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      parameters : CSSFunctionParameter.t list;
+          [@key "parameters"] [@ocaml.doc "List of parameters."]
+      children : CSSFunctionNode.t list;
+          [@key "children"] [@ocaml.doc "Function body."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS function at-rule representation."]
   end
 
   and CSSKeyframeRule : sig
@@ -15716,7 +15927,8 @@ and Network : sig
       | `PreflightMissingPrivateNetworkAccessId
       | `PreflightMissingPrivateNetworkAccessName
       | `PrivateNetworkAccessPermissionUnavailable
-      | `PrivateNetworkAccessPermissionDenied ]
+      | `PrivateNetworkAccessPermissionDenied
+      | `LocalNetworkAccessPermissionDenied ]
 
     val _corserror_of_yojson : Yojson.Basic.t -> _corserror
     val yojson_of__corserror : _corserror -> Yojson.Basic.t
@@ -16625,7 +16837,8 @@ and Network : sig
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
       | `PreflightBlock
-      | `PreflightWarn ]
+      | `PreflightWarn
+      | `PermissionBlock ]
 
     val _privatenetworkrequestpolicy_of_yojson :
       Yojson.Basic.t -> _privatenetworkrequestpolicy
@@ -17950,7 +18163,8 @@ end = struct
       | `PreflightMissingPrivateNetworkAccessId
       | `PreflightMissingPrivateNetworkAccessName
       | `PrivateNetworkAccessPermissionUnavailable
-      | `PrivateNetworkAccessPermissionDenied ]
+      | `PrivateNetworkAccessPermissionDenied
+      | `LocalNetworkAccessPermissionDenied ]
 
     val _corserror_of_yojson : Yojson.Basic.t -> _corserror
     val yojson_of__corserror : _corserror -> Yojson.Basic.t
@@ -17992,7 +18206,8 @@ end = struct
       | `PreflightMissingPrivateNetworkAccessId
       | `PreflightMissingPrivateNetworkAccessName
       | `PrivateNetworkAccessPermissionUnavailable
-      | `PrivateNetworkAccessPermissionDenied ]
+      | `PrivateNetworkAccessPermissionDenied
+      | `LocalNetworkAccessPermissionDenied ]
 
     let _corserror_of_yojson = function
       | `String "DisallowedByMode" -> `DisallowedByMode
@@ -18047,6 +18262,8 @@ end = struct
           `PrivateNetworkAccessPermissionUnavailable
       | `String "PrivateNetworkAccessPermissionDenied" ->
           `PrivateNetworkAccessPermissionDenied
+      | `String "LocalNetworkAccessPermissionDenied" ->
+          `LocalNetworkAccessPermissionDenied
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -18103,6 +18320,8 @@ end = struct
           `String "PrivateNetworkAccessPermissionUnavailable"
       | `PrivateNetworkAccessPermissionDenied ->
           `String "PrivateNetworkAccessPermissionDenied"
+      | `LocalNetworkAccessPermissionDenied ->
+          `String "LocalNetworkAccessPermissionDenied"
 
     type t = _corserror
     [@@deriving yojson] [@@ocaml.doc "The reason why request was blocked."]
@@ -20060,7 +20279,8 @@ end = struct
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
       | `PreflightBlock
-      | `PreflightWarn ]
+      | `PreflightWarn
+      | `PermissionBlock ]
 
     val _privatenetworkrequestpolicy_of_yojson :
       Yojson.Basic.t -> _privatenetworkrequestpolicy
@@ -20076,7 +20296,8 @@ end = struct
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
       | `PreflightBlock
-      | `PreflightWarn ]
+      | `PreflightWarn
+      | `PermissionBlock ]
 
     let _privatenetworkrequestpolicy_of_yojson = function
       | `String "Allow" -> `Allow
@@ -20086,6 +20307,7 @@ end = struct
           `WarnFromInsecureToMorePrivate
       | `String "PreflightBlock" -> `PreflightBlock
       | `String "PreflightWarn" -> `PreflightWarn
+      | `String "PermissionBlock" -> `PermissionBlock
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -20097,6 +20319,7 @@ end = struct
           `String "WarnFromInsecureToMorePrivate"
       | `PreflightBlock -> `String "PreflightBlock"
       | `PreflightWarn -> `String "PreflightWarn"
+      | `PermissionBlock -> `String "PermissionBlock"
 
     type t = _privatenetworkrequestpolicy
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
