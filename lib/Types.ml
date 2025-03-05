@@ -12753,7 +12753,45 @@ end = struct
 end
 
 and Emulation : sig
-  module rec ScreenOrientation : sig
+  module rec SafeAreaInsets : sig
+    type t = {
+      top : number option;
+          [@key "top"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-top."]
+      topMax : number option;
+          [@key "topMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-top."]
+      left : number option;
+          [@key "left"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-left."]
+      leftMax : number option;
+          [@key "leftMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-left."]
+      bottom : number option;
+          [@key "bottom"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-bottom."]
+      bottomMax : number option;
+          [@key "bottomMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-bottom."]
+      right : number option;
+          [@key "right"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-right."]
+      rightMax : number option;
+          [@key "rightMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-right."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ScreenOrientation : sig
     type _screenorientation_type =
       [ `portraitPrimary
       | `portraitSecondary
@@ -13013,7 +13051,81 @@ and Emulation : sig
     [@@ocaml.doc "Enum of image types that can be disabled."]
   end
 end = struct
-  module rec ScreenOrientation : sig
+  module rec SafeAreaInsets : sig
+    type t = {
+      top : number option;
+          [@key "top"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-top."]
+      topMax : number option;
+          [@key "topMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-top."]
+      left : number option;
+          [@key "left"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-left."]
+      leftMax : number option;
+          [@key "leftMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-left."]
+      bottom : number option;
+          [@key "bottom"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-bottom."]
+      bottomMax : number option;
+          [@key "bottomMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-bottom."]
+      right : number option;
+          [@key "right"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-right."]
+      rightMax : number option;
+          [@key "rightMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-right."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      top : number option;
+          [@key "top"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-top."]
+      topMax : number option;
+          [@key "topMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-top."]
+      left : number option;
+          [@key "left"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-left."]
+      leftMax : number option;
+          [@key "leftMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-left."]
+      bottom : number option;
+          [@key "bottom"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-bottom."]
+      bottomMax : number option;
+          [@key "bottomMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-bottom."]
+      right : number option;
+          [@key "right"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-inset-right."]
+      rightMax : number option;
+          [@key "rightMax"]
+          [@yojson.option]
+          [@ocaml.doc "Overrides safe-area-max-inset-right."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ScreenOrientation : sig
     type _screenorientation_type =
       [ `portraitPrimary
       | `portraitSecondary
