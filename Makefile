@@ -4,14 +4,16 @@
 all: build
 
 build:
-	dune build -p cdp-generator
+	opam exec -- dune build -p cdp-generator
 
 test:
-	dune build -p cdp
+	opam exec -- dune build -p cdp
 
 generate:
-	dune exec -- cdp ./devtools-protocol/json/browser_protocol.json ./devtools-protocol/json/js_protocol.json ./lib
-	ocamlformat --inplace ./lib/*.ml
+  # rm -rf ./devtools-protocol
+  # git clone --depth=1 https://github.com/ChromeDevTools/devtools-protocol.git ./devtools-protocol
+	opam exec -- dune exec -- cdp ./devtools-protocol/json/browser_protocol.json ./devtools-protocol/json/js_protocol.json ./lib
+	opam exec -- ocamlformat --inplace ./lib/*.ml
 
 install:
 	if ! [ -e _opam ]; then \
@@ -25,7 +27,7 @@ update:
 	opam upgrade
 
 fmt:
-	dune build @fmt --auto-promote --silent
+	opam exec -- dune build @fmt --auto-promote --silent
 
 clean:
 	rm -rf _build

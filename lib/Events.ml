@@ -1,8 +1,6 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module Accessibility = struct
-  (* The loadComplete event mirrors the load complete event sent by the browser to assistive
-technology when the web page has finished loading. *)
   module LoadComplete = struct
     let name = "Accessibility.loadComplete"
 
@@ -21,8 +19,10 @@ technology when the web page has finished loading. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|The loadComplete event mirrors the load complete event sent by the browser to assistive
+technology when the web page has finished loading. |desc}]
 
-  (* The nodesUpdated event is sent every time a previously requested node has changed the in tree. *)
   module NodesUpdated = struct
     let name = "Accessibility.nodesUpdated"
 
@@ -41,10 +41,11 @@ technology when the web page has finished loading. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|The nodesUpdated event is sent every time a previously requested node has changed the in tree. |desc}]
 end
 
 module Animation = struct
-  (* Event for when an animation has been cancelled. *)
   module AnimationCanceled = struct
     let name = "Animation.animationCanceled"
 
@@ -63,8 +64,8 @@ module Animation = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Event for when an animation has been cancelled. |desc}]
 
-  (* Event for each animation that has been created. *)
   module AnimationCreated = struct
     let name = "Animation.animationCreated"
 
@@ -83,8 +84,8 @@ module Animation = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Event for each animation that has been created. |desc}]
 
-  (* Event for animation that has been started. *)
   module AnimationStarted = struct
     let name = "Animation.animationStarted"
 
@@ -103,8 +104,8 @@ module Animation = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Event for animation that has been started. |desc}]
 
-  (* Event for animation that has been updated. *)
   module AnimationUpdated = struct
     let name = "Animation.animationUpdated"
 
@@ -123,10 +124,10 @@ module Animation = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Event for animation that has been updated. |desc}]
 end
 
 module Audits = struct
-  (* No description provided *)
   module IssueAdded = struct
     let name = "Audits.issueAdded"
 
@@ -145,10 +146,10 @@ module Audits = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Autofill = struct
-  (* Emitted when an address form is filled. *)
   module AddressFormFilled = struct
     let name = "Autofill.addressFormFilled"
 
@@ -174,10 +175,10 @@ module Autofill = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Emitted when an address form is filled. |desc}]
 end
 
 module BackgroundService = struct
-  (* Called when the recording state for the service has been updated. *)
   module RecordingStateChanged = struct
     let name = "BackgroundService.recordingStateChanged"
 
@@ -198,9 +199,9 @@ module BackgroundService = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Called when the recording state for the service has been updated. |desc}]
 
-  (* Called with all existing backgroundServiceEvents when enabled, and all new
-events afterwards if enabled and recording. *)
   module BackgroundServiceEventReceived = struct
     let name = "BackgroundService.backgroundServiceEventReceived"
 
@@ -219,10 +220,12 @@ events afterwards if enabled and recording. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Called with all existing backgroundServiceEvents when enabled, and all new
+events afterwards if enabled and recording. |desc}]
 end
 
 module Browser = struct
-  (* Fired when page is about to start a download. *)
   module DownloadWillBegin = struct
     let name = "Browser.downloadWillBegin"
 
@@ -251,8 +254,8 @@ module Browser = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when page is about to start a download. |desc}]
 
-  (* Fired when download makes progress. Last call has |done| == true. *)
   module DownloadProgress = struct
     let name = "Browser.downloadProgress"
 
@@ -291,11 +294,11 @@ module Browser = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when download makes progress. Last call has |done| == true. |desc}]
 end
 
 module CSS = struct
-  (* Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
-web font. *)
   module FontsUpdated = struct
     let name = "CSS.fontsUpdated"
 
@@ -316,9 +319,10 @@ web font. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fires whenever a web font is updated.  A non-empty font parameter indicates a successfully loaded
+web font. |desc}]
 
-  (* Fires whenever a MediaQuery result changes (for example, after a browser window has been
-resized.) The current implementation considers only viewport-dependent media features. *)
   module MediaQueryResultChanged = struct
     let name = "CSS.mediaQueryResultChanged"
 
@@ -333,8 +337,10 @@ resized.) The current implementation considers only viewport-dependent media fea
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fires whenever a MediaQuery result changes (for example, after a browser window has been
+resized.) The current implementation considers only viewport-dependent media features. |desc}]
 
-  (* Fired whenever an active document stylesheet is added. *)
   module StyleSheetAdded = struct
     let name = "CSS.styleSheetAdded"
 
@@ -353,8 +359,9 @@ resized.) The current implementation considers only viewport-dependent media fea
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired whenever an active document stylesheet is added. |desc}]
 
-  (* Fired whenever a stylesheet is changed as a result of the client operation. *)
   module StyleSheetChanged = struct
     let name = "CSS.styleSheetChanged"
 
@@ -373,8 +380,9 @@ resized.) The current implementation considers only viewport-dependent media fea
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired whenever a stylesheet is changed as a result of the client operation. |desc}]
 
-  (* Fired whenever an active document stylesheet is removed. *)
   module StyleSheetRemoved = struct
     let name = "CSS.styleSheetRemoved"
 
@@ -394,8 +402,9 @@ resized.) The current implementation considers only viewport-dependent media fea
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired whenever an active document stylesheet is removed. |desc}]
 
-  (* No description provided *)
   module ComputedStyleUpdated = struct
     let name = "CSS.computedStyleUpdated"
 
@@ -415,11 +424,10 @@ resized.) The current implementation considers only viewport-dependent media fea
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Cast = struct
-  (* This is fired whenever the list of available sinks changes. A sink is a
-device or a software surface that you can cast to. *)
   module SinksUpdated = struct
     let name = "Cast.sinksUpdated"
 
@@ -438,9 +446,10 @@ device or a software surface that you can cast to. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|This is fired whenever the list of available sinks changes. A sink is a
+device or a software surface that you can cast to. |desc}]
 
-  (* This is fired whenever the outstanding issue/error message changes.
-|issueMessage| is empty if there is no issue. *)
   module IssueUpdated = struct
     let name = "Cast.issueUpdated"
 
@@ -459,10 +468,12 @@ device or a software surface that you can cast to. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|This is fired whenever the outstanding issue/error message changes.
+|issueMessage| is empty if there is no issue. |desc}]
 end
 
 module DOM = struct
-  (* Fired when `Element`'s attribute is modified. *)
   module AttributeModified = struct
     let name = "DOM.attributeModified"
 
@@ -483,8 +494,8 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when `Element`'s attribute is modified. |desc}]
 
-  (* Fired when `Element`'s attribute is removed. *)
   module AttributeRemoved = struct
     let name = "DOM.attributeRemoved"
 
@@ -504,8 +515,8 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when `Element`'s attribute is removed. |desc}]
 
-  (* Mirrors `DOMCharacterDataModified` event. *)
   module CharacterDataModified = struct
     let name = "DOM.characterDataModified"
 
@@ -526,8 +537,8 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Mirrors `DOMCharacterDataModified` event. |desc}]
 
-  (* Fired when `Container`'s child node count has changed. *)
   module ChildNodeCountUpdated = struct
     let name = "DOM.childNodeCountUpdated"
 
@@ -548,8 +559,9 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when `Container`'s child node count has changed. |desc}]
 
-  (* Mirrors `DOMNodeInserted` event. *)
   module ChildNodeInserted = struct
     let name = "DOM.childNodeInserted"
 
@@ -571,8 +583,8 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Mirrors `DOMNodeInserted` event. |desc}]
 
-  (* Mirrors `DOMNodeRemoved` event. *)
   module ChildNodeRemoved = struct
     let name = "DOM.childNodeRemoved"
 
@@ -593,8 +605,8 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Mirrors `DOMNodeRemoved` event. |desc}]
 
-  (* Called when distribution is changed. *)
   module DistributedNodesUpdated = struct
     let name = "DOM.distributedNodesUpdated"
 
@@ -617,8 +629,8 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Called when distribution is changed. |desc}]
 
-  (* Fired when `Document` has been totally updated. Node ids are no longer valid. *)
   module DocumentUpdated = struct
     let name = "DOM.documentUpdated"
 
@@ -633,8 +645,9 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when `Document` has been totally updated. Node ids are no longer valid. |desc}]
 
-  (* Fired when `Element`'s inline style is modified via a CSS property modification. *)
   module InlineStyleInvalidated = struct
     let name = "DOM.inlineStyleInvalidated"
 
@@ -656,8 +669,9 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when `Element`'s inline style is modified via a CSS property modification. |desc}]
 
-  (* Called when a pseudo element is added to an element. *)
   module PseudoElementAdded = struct
     let name = "DOM.pseudoElementAdded"
 
@@ -678,8 +692,9 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Called when a pseudo element is added to an element. |desc}]
 
-  (* Called when top layer elements are changed. *)
   module TopLayerElementsUpdated = struct
     let name = "DOM.topLayerElementsUpdated"
 
@@ -694,8 +709,8 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Called when top layer elements are changed. |desc}]
 
-  (* Fired when a node's scrollability state changes. *)
   module ScrollableFlagUpdated = struct
     let name = "DOM.scrollableFlagUpdated"
 
@@ -716,8 +731,8 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when a node's scrollability state changes. |desc}]
 
-  (* Called when a pseudo element is removed from an element. *)
   module PseudoElementRemoved = struct
     let name = "DOM.pseudoElementRemoved"
 
@@ -738,9 +753,9 @@ module DOM = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Called when a pseudo element is removed from an element. |desc}]
 
-  (* Fired when backend wants to provide client with the missing DOM structure. This happens upon
-most of the calls requesting node ids. *)
   module SetChildNodes = struct
     let name = "DOM.setChildNodes"
 
@@ -762,8 +777,10 @@ most of the calls requesting node ids. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when backend wants to provide client with the missing DOM structure. This happens upon
+most of the calls requesting node ids. |desc}]
 
-  (* Called when shadow root is popped from the element. *)
   module ShadowRootPopped = struct
     let name = "DOM.shadowRootPopped"
 
@@ -783,8 +800,8 @@ most of the calls requesting node ids. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Called when shadow root is popped from the element. |desc}]
 
-  (* Called when shadow root is pushed into the element. *)
   module ShadowRootPushed = struct
     let name = "DOM.shadowRootPushed"
 
@@ -804,10 +821,10 @@ most of the calls requesting node ids. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Called when shadow root is pushed into the element. |desc}]
 end
 
 module DOMStorage = struct
-  (* No description provided *)
   module DomStorageItemAdded = struct
     let name = "DOMStorage.domStorageItemAdded"
 
@@ -828,8 +845,8 @@ module DOMStorage = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module DomStorageItemRemoved = struct
     let name = "DOMStorage.domStorageItemRemoved"
 
@@ -849,8 +866,8 @@ module DOMStorage = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module DomStorageItemUpdated = struct
     let name = "DOMStorage.domStorageItemUpdated"
 
@@ -873,8 +890,8 @@ module DOMStorage = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module DomStorageItemsCleared = struct
     let name = "DOMStorage.domStorageItemsCleared"
 
@@ -893,10 +910,10 @@ module DOMStorage = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Emulation = struct
-  (* Notification sent after the virtual time budget for the current VirtualTimePolicy has run out. *)
   module VirtualTimeBudgetExpired = struct
     let name = "Emulation.virtualTimeBudgetExpired"
 
@@ -911,11 +928,11 @@ module Emulation = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notification sent after the virtual time budget for the current VirtualTimePolicy has run out. |desc}]
 end
 
 module Input = struct
-  (* Emitted only when `Input.setInterceptDrags` is enabled. Use this data with `Input.dispatchDragEvent` to
-restore normal drag and drop behavior. *)
   module DragIntercepted = struct
     let name = "Input.dragIntercepted"
 
@@ -934,10 +951,12 @@ restore normal drag and drop behavior. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Emitted only when `Input.setInterceptDrags` is enabled. Use this data with `Input.dispatchDragEvent` to
+restore normal drag and drop behavior. |desc}]
 end
 
 module Inspector = struct
-  (* Fired when remote debugging connection is about to be terminated. Contains detach reason. *)
   module Detached = struct
     let name = "Inspector.detached"
 
@@ -957,8 +976,9 @@ module Inspector = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when remote debugging connection is about to be terminated. Contains detach reason. |desc}]
 
-  (* Fired when debugging target has crashed *)
   module TargetCrashed = struct
     let name = "Inspector.targetCrashed"
 
@@ -973,8 +993,8 @@ module Inspector = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when debugging target has crashed |desc}]
 
-  (* Fired when debugging target has reloaded after crash *)
   module TargetReloadedAfterCrash = struct
     let name = "Inspector.targetReloadedAfterCrash"
 
@@ -989,10 +1009,11 @@ module Inspector = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when debugging target has reloaded after crash |desc}]
 end
 
 module LayerTree = struct
-  (* No description provided *)
   module LayerPainted = struct
     let name = "LayerTree.layerPainted"
 
@@ -1012,8 +1033,8 @@ module LayerTree = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module LayerTreeDidChange = struct
     let name = "LayerTree.layerTreeDidChange"
 
@@ -1034,10 +1055,10 @@ module LayerTree = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Log = struct
-  (* Issued when new message was logged. *)
   module EntryAdded = struct
     let name = "Log.entryAdded"
 
@@ -1055,10 +1076,10 @@ module Log = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Issued when new message was logged. |desc}]
 end
 
 module Network = struct
-  (* Fired when data chunk was received over the network. *)
   module DataReceived = struct
     let name = "Network.dataReceived"
 
@@ -1092,8 +1113,9 @@ module Network = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when data chunk was received over the network. |desc}]
 
-  (* Fired when EventSource message is received. *)
   module EventSourceMessageReceived = struct
     let name = "Network.eventSourceMessageReceived"
 
@@ -1117,8 +1139,8 @@ module Network = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when EventSource message is received. |desc}]
 
-  (* Fired when HTTP request has failed to load. *)
   module LoadingFailed = struct
     let name = "Network.loadingFailed"
 
@@ -1158,8 +1180,8 @@ module Network = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when HTTP request has failed to load. |desc}]
 
-  (* Fired when HTTP request has finished loading. *)
   module LoadingFinished = struct
     let name = "Network.loadingFinished"
 
@@ -1183,10 +1205,8 @@ module Network = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when HTTP request has finished loading. |desc}]
 
-  (* Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
-mocked.
-Deprecated, use Fetch.requestPaused instead. *)
   module RequestIntercepted = struct
     let name = "Network.requestIntercepted"
 
@@ -1273,8 +1293,11 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
+mocked.
+Deprecated, use Fetch.requestPaused instead. |desc}]
 
-  (* Fired if request ended up loading from cache. *)
   module RequestServedFromCache = struct
     let name = "Network.requestServedFromCache"
 
@@ -1293,8 +1316,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired if request ended up loading from cache. |desc}]
 
-  (* Fired when page is about to send HTTP request. *)
   module RequestWillBeSent = struct
     let name = "Network.requestWillBeSent"
 
@@ -1351,8 +1374,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when page is about to send HTTP request. |desc}]
 
-  (* Fired when resource loading priority is changed *)
   module ResourceChangedPriority = struct
     let name = "Network.resourceChangedPriority"
 
@@ -1375,8 +1398,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when resource loading priority is changed |desc}]
 
-  (* Fired when a signed exchange was received over the network *)
   module SignedExchangeReceived = struct
     let name = "Network.signedExchangeReceived"
 
@@ -1398,8 +1421,9 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when a signed exchange was received over the network |desc}]
 
-  (* Fired when HTTP response is available. *)
   module ResponseReceived = struct
     let name = "Network.responseReceived"
 
@@ -1437,8 +1461,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when HTTP response is available. |desc}]
 
-  (* Fired when WebSocket is closed. *)
   module WebSocketClosed = struct
     let name = "Network.webSocketClosed"
 
@@ -1459,8 +1483,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when WebSocket is closed. |desc}]
 
-  (* Fired upon WebSocket creation. *)
   module WebSocketCreated = struct
     let name = "Network.webSocketCreated"
 
@@ -1482,8 +1506,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired upon WebSocket creation. |desc}]
 
-  (* Fired when WebSocket message error occurs. *)
   module WebSocketFrameError = struct
     let name = "Network.webSocketFrameError"
 
@@ -1506,8 +1530,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when WebSocket message error occurs. |desc}]
 
-  (* Fired when WebSocket message is received. *)
   module WebSocketFrameReceived = struct
     let name = "Network.webSocketFrameReceived"
 
@@ -1530,8 +1554,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when WebSocket message is received. |desc}]
 
-  (* Fired when WebSocket message is sent. *)
   module WebSocketFrameSent = struct
     let name = "Network.webSocketFrameSent"
 
@@ -1554,8 +1578,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when WebSocket message is sent. |desc}]
 
-  (* Fired when WebSocket handshake response becomes available. *)
   module WebSocketHandshakeResponseReceived = struct
     let name = "Network.webSocketHandshakeResponseReceived"
 
@@ -1578,8 +1602,9 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when WebSocket handshake response becomes available. |desc}]
 
-  (* Fired when WebSocket is about to initiate handshake. *)
   module WebSocketWillSendHandshakeRequest = struct
     let name = "Network.webSocketWillSendHandshakeRequest"
 
@@ -1604,8 +1629,9 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when WebSocket is about to initiate handshake. |desc}]
 
-  (* Fired upon WebTransport creation. *)
   module WebTransportCreated = struct
     let name = "Network.webTransportCreated"
 
@@ -1629,8 +1655,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired upon WebTransport creation. |desc}]
 
-  (* Fired when WebTransport handshake is finished. *)
   module WebTransportConnectionEstablished = struct
     let name = "Network.webTransportConnectionEstablished"
 
@@ -1651,8 +1677,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when WebTransport handshake is finished. |desc}]
 
-  (* Fired when WebTransport is disposed. *)
   module WebTransportClosed = struct
     let name = "Network.webTransportClosed"
 
@@ -1673,11 +1699,8 @@ Deprecated, use Fetch.requestPaused instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when WebTransport is disposed. |desc}]
 
-  (* Fired when additional information about a requestWillBeSent event is available from the
-network stack. Not every requestWillBeSent event will have an additional
-requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
-or requestWillBeSentExtraInfo will be fired first for the same request. *)
   module RequestWillBeSentExtraInfo = struct
     let name = "Network.requestWillBeSentExtraInfo"
 
@@ -1722,10 +1745,12 @@ or requestWillBeSentExtraInfo will be fired first for the same request. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when additional information about a requestWillBeSent event is available from the
+network stack. Not every requestWillBeSent event will have an additional
+requestWillBeSentExtraInfo fired for it, and there is no guarantee whether requestWillBeSent
+or requestWillBeSentExtraInfo will be fired first for the same request. |desc}]
 
-  (* Fired when additional information about a responseReceived event is available from the network
-stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
-it, and responseReceivedExtraInfo may be fired before or after responseReceived. *)
   module ResponseReceivedExtraInfo = struct
     let name = "Network.responseReceivedExtraInfo"
 
@@ -1807,10 +1832,11 @@ it, and responseReceivedExtraInfo may be fired before or after responseReceived.
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when additional information about a responseReceived event is available from the network
+stack. Not every responseReceived event will have an additional responseReceivedExtraInfo for
+it, and responseReceivedExtraInfo may be fired before or after responseReceived. |desc}]
 
-  (* Fired when 103 Early Hints headers is received in addition to the common response.
-Not every responseReceived event will have an responseReceivedEarlyHints fired.
-Only one responseReceivedEarlyHints may be fired for eached responseReceived event. *)
   module ResponseReceivedEarlyHints = struct
     let name = "Network.responseReceivedEarlyHints"
 
@@ -1840,11 +1866,11 @@ Only one responseReceivedEarlyHints may be fired for eached responseReceived eve
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when 103 Early Hints headers is received in addition to the common response.
+Not every responseReceived event will have an responseReceivedEarlyHints fired.
+Only one responseReceivedEarlyHints may be fired for eached responseReceived event. |desc}]
 
-  (* Fired exactly once for each Trust Token operation. Depending on
-the type of the operation and whether the operation succeeded or
-failed, the event is fired before the corresponding request was sent
-or after the response was received. *)
   module TrustTokenOperationDone = struct
     let name = "Network.trustTokenOperationDone"
 
@@ -1938,8 +1964,12 @@ or after the response was received. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired exactly once for each Trust Token operation. Depending on
+the type of the operation and whether the operation succeeded or
+failed, the event is fired before the corresponding request was sent
+or after the response was received. |desc}]
 
-  (* Fired once security policy has been updated. *)
   module PolicyUpdated = struct
     let name = "Network.policyUpdated"
 
@@ -1954,9 +1984,8 @@ or after the response was received. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired once security policy has been updated. |desc}]
 
-  (* Fired once when parsing the .wbn file has succeeded.
-The event contains the information about the web bundle contents. *)
   module SubresourceWebBundleMetadataReceived = struct
     let name = "Network.subresourceWebBundleMetadataReceived"
 
@@ -1982,8 +2011,10 @@ The event contains the information about the web bundle contents. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired once when parsing the .wbn file has succeeded.
+The event contains the information about the web bundle contents. |desc}]
 
-  (* Fired once when parsing the .wbn file has failed. *)
   module SubresourceWebBundleMetadataError = struct
     let name = "Network.subresourceWebBundleMetadataError"
 
@@ -2006,9 +2037,8 @@ The event contains the information about the web bundle contents. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired once when parsing the .wbn file has failed. |desc}]
 
-  (* Fired when handling requests for resources within a .wbn file.
-Note: this will only be fired for resources that are requested by the webpage. *)
   module SubresourceWebBundleInnerResponseParsed = struct
     let name = "Network.subresourceWebBundleInnerResponseParsed"
 
@@ -2040,8 +2070,10 @@ Note: this will only be fired for resources that are requested by the webpage. *
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when handling requests for resources within a .wbn file.
+Note: this will only be fired for resources that are requested by the webpage. |desc}]
 
-  (* Fired when request for resources within a .wbn file failed. *)
   module SubresourceWebBundleInnerResponseError = struct
     let name = "Network.subresourceWebBundleInnerResponseError"
 
@@ -2074,9 +2106,9 @@ Note: this will only be fired for resources that are requested by the webpage. *
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when request for resources within a .wbn file failed. |desc}]
 
-  (* Is sent whenever a new report is added.
-And after 'enableReportingApi' for all existing reports. *)
   module ReportingApiReportAdded = struct
     let name = "Network.reportingApiReportAdded"
 
@@ -2095,8 +2127,10 @@ And after 'enableReportingApi' for all existing reports. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Is sent whenever a new report is added.
+And after 'enableReportingApi' for all existing reports. |desc}]
 
-  (* No description provided *)
   module ReportingApiReportUpdated = struct
     let name = "Network.reportingApiReportUpdated"
 
@@ -2115,8 +2149,8 @@ And after 'enableReportingApi' for all existing reports. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module ReportingApiEndpointsChangedForOrigin = struct
     let name = "Network.reportingApiEndpointsChangedForOrigin"
 
@@ -2139,11 +2173,10 @@ And after 'enableReportingApi' for all existing reports. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Overlay = struct
-  (* Fired when the node should be inspected. This happens after call to `setInspectMode` or when
-user manually inspects an element. *)
   module InspectNodeRequested = struct
     let name = "Overlay.inspectNodeRequested"
 
@@ -2162,8 +2195,10 @@ user manually inspects an element. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when the node should be inspected. This happens after call to `setInspectMode` or when
+user manually inspects an element. |desc}]
 
-  (* Fired when the node should be highlighted. This happens after call to `setInspectMode`. *)
   module NodeHighlightRequested = struct
     let name = "Overlay.nodeHighlightRequested"
 
@@ -2182,8 +2217,9 @@ user manually inspects an element. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when the node should be highlighted. This happens after call to `setInspectMode`. |desc}]
 
-  (* Fired when user asks to capture screenshot of some area on the page. *)
   module ScreenshotRequested = struct
     let name = "Overlay.screenshotRequested"
 
@@ -2204,8 +2240,9 @@ user manually inspects an element. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when user asks to capture screenshot of some area on the page. |desc}]
 
-  (* Fired when user cancels the inspect mode. *)
   module InspectModeCanceled = struct
     let name = "Overlay.inspectModeCanceled"
 
@@ -2220,10 +2257,10 @@ user manually inspects an element. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when user cancels the inspect mode. |desc}]
 end
 
 module Page = struct
-  (* No description provided *)
   module DomContentEventFired = struct
     let name = "Page.domContentEventFired"
 
@@ -2242,8 +2279,8 @@ module Page = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Emitted only when `page.interceptFileChooser` is enabled. *)
   module FileChooserOpened = struct
     let name = "Page.fileChooserOpened"
 
@@ -2281,8 +2318,9 @@ module Page = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Emitted only when `page.interceptFileChooser` is enabled. |desc}]
 
-  (* Fired when frame has been attached to its parent. *)
   module FrameAttached = struct
     let name = "Page.frameAttached"
 
@@ -2310,8 +2348,8 @@ module Page = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when frame has been attached to its parent. |desc}]
 
-  (* Fired when frame no longer has a scheduled navigation. *)
   module FrameClearedScheduledNavigation = struct
     let name = "Page.frameClearedScheduledNavigation"
 
@@ -2332,8 +2370,9 @@ module Page = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when frame no longer has a scheduled navigation. |desc}]
 
-  (* Fired when frame has been detached from its parent. *)
   module FrameDetached = struct
     let name = "Page.frameDetached"
 
@@ -2367,9 +2406,8 @@ module Page = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when frame has been detached from its parent. |desc}]
 
-  (* Fired before frame subtree is detached. Emitted before any frame of the
-subtree is actually detached. *)
   module FrameSubtreeWillBeDetached = struct
     let name = "Page.frameSubtreeWillBeDetached"
 
@@ -2391,8 +2429,10 @@ subtree is actually detached. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired before frame subtree is detached. Emitted before any frame of the
+subtree is actually detached. |desc}]
 
-  (* Fired once navigation of the frame has completed. Frame is now associated with the new loader. *)
   module FrameNavigated = struct
     let name = "Page.frameNavigated"
 
@@ -2412,8 +2452,9 @@ subtree is actually detached. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired once navigation of the frame has completed. Frame is now associated with the new loader. |desc}]
 
-  (* Fired when opening document to write to. *)
   module DocumentOpened = struct
     let name = "Page.documentOpened"
 
@@ -2431,8 +2472,8 @@ subtree is actually detached. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when opening document to write to. |desc}]
 
-  (* No description provided *)
   module FrameResized = struct
     let name = "Page.frameResized"
 
@@ -2447,14 +2488,8 @@ subtree is actually detached. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Fired when a navigation starts. This event is fired for both
-renderer-initiated and browser-initiated navigations. For renderer-initiated
-navigations, the event is fired after `frameRequestedNavigation`.
-Navigation may still be cancelled after the event is issued. Multiple events
-can be fired for a single navigation, for example, when a same-document
-navigation becomes a cross-document navigation (such as in the case of a
-frameset). *)
   module FrameStartedNavigating = struct
     let name = "Page.frameStartedNavigating"
 
@@ -2522,9 +2557,15 @@ frameset). *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when a navigation starts. This event is fired for both
+renderer-initiated and browser-initiated navigations. For renderer-initiated
+navigations, the event is fired after `frameRequestedNavigation`.
+Navigation may still be cancelled after the event is issued. Multiple events
+can be fired for a single navigation, for example, when a same-document
+navigation becomes a cross-document navigation (such as in the case of a
+frameset). |desc}]
 
-  (* Fired when a renderer-initiated navigation is requested.
-Navigation may still be cancelled after the event is issued. *)
   module FrameRequestedNavigation = struct
     let name = "Page.frameRequestedNavigation"
 
@@ -2552,8 +2593,10 @@ Navigation may still be cancelled after the event is issued. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when a renderer-initiated navigation is requested.
+Navigation may still be cancelled after the event is issued. |desc}]
 
-  (* Fired when frame schedules a potential navigation. *)
   module FrameScheduledNavigation = struct
     let name = "Page.frameScheduledNavigation"
 
@@ -2584,8 +2627,8 @@ Navigation may still be cancelled after the event is issued. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when frame schedules a potential navigation. |desc}]
 
-  (* Fired when frame has started loading. *)
   module FrameStartedLoading = struct
     let name = "Page.frameStartedLoading"
 
@@ -2605,8 +2648,8 @@ Navigation may still be cancelled after the event is issued. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when frame has started loading. |desc}]
 
-  (* Fired when frame has stopped loading. *)
   module FrameStoppedLoading = struct
     let name = "Page.frameStoppedLoading"
 
@@ -2626,9 +2669,8 @@ Navigation may still be cancelled after the event is issued. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when frame has stopped loading. |desc}]
 
-  (* Fired when page is about to start a download.
-Deprecated. Use Browser.downloadWillBegin instead. *)
   module DownloadWillBegin = struct
     let name = "Page.downloadWillBegin"
 
@@ -2657,9 +2699,10 @@ Deprecated. Use Browser.downloadWillBegin instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when page is about to start a download.
+Deprecated. Use Browser.downloadWillBegin instead. |desc}]
 
-  (* Fired when download makes progress. Last call has |done| == true.
-Deprecated. Use Browser.downloadProgress instead. *)
   module DownloadProgress = struct
     let name = "Page.downloadProgress"
 
@@ -2698,8 +2741,10 @@ Deprecated. Use Browser.downloadProgress instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when download makes progress. Last call has |done| == true.
+Deprecated. Use Browser.downloadProgress instead. |desc}]
 
-  (* Fired when interstitial page was hidden *)
   module InterstitialHidden = struct
     let name = "Page.interstitialHidden"
 
@@ -2714,8 +2759,8 @@ Deprecated. Use Browser.downloadProgress instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when interstitial page was hidden |desc}]
 
-  (* Fired when interstitial page was shown *)
   module InterstitialShown = struct
     let name = "Page.interstitialShown"
 
@@ -2730,9 +2775,8 @@ Deprecated. Use Browser.downloadProgress instead. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when interstitial page was shown |desc}]
 
-  (* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
-closed. *)
   module JavascriptDialogClosed = struct
     let name = "Page.javascriptDialogClosed"
 
@@ -2753,9 +2797,10 @@ closed. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) has been
+closed. |desc}]
 
-  (* Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
-open. *)
   module JavascriptDialogOpening = struct
     let name = "Page.javascriptDialogOpening"
 
@@ -2790,9 +2835,10 @@ open. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload) is about to
+open. |desc}]
 
-  (* Fired for lifecycle events (navigation, load, paint, etc) in the current
-target (including local frames). *)
   module LifecycleEvent = struct
     let name = "Page.lifecycleEvent"
 
@@ -2819,11 +2865,10 @@ target (including local frames). *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired for lifecycle events (navigation, load, paint, etc) in the current
+target (including local frames). |desc}]
 
-  (* Fired for failed bfcache history navigations if BackForwardCache feature is enabled. Do
-not assume any ordering with the Page.frameNavigated event. This event is fired only for
-main-frame history navigation where the document changes (non-same-document navigations),
-when bfcache navigation fails. *)
   module BackForwardCacheNotUsed = struct
     let name = "Page.backForwardCacheNotUsed"
 
@@ -2858,8 +2903,12 @@ when bfcache navigation fails. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired for failed bfcache history navigations if BackForwardCache feature is enabled. Do
+not assume any ordering with the Page.frameNavigated event. This event is fired only for
+main-frame history navigation where the document changes (non-same-document navigations),
+when bfcache navigation fails. |desc}]
 
-  (* No description provided *)
   module LoadEventFired = struct
     let name = "Page.loadEventFired"
 
@@ -2878,8 +2927,8 @@ when bfcache navigation fails. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation. *)
   module NavigatedWithinDocument = struct
     let name = "Page.navigatedWithinDocument"
 
@@ -2916,8 +2965,9 @@ when bfcache navigation fails. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when same-document navigation happens, e.g. due to history API usage or anchor navigation. |desc}]
 
-  (* Compressed image data requested by the `startScreencast`. *)
   module ScreencastFrame = struct
     let name = "Page.screencastFrame"
 
@@ -2942,8 +2992,9 @@ when bfcache navigation fails. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Compressed image data requested by the `startScreencast`. |desc}]
 
-  (* Fired when the page with currently enabled screencast was shown or hidden `. *)
   module ScreencastVisibilityChanged = struct
     let name = "Page.screencastVisibilityChanged"
 
@@ -2962,9 +3013,9 @@ when bfcache navigation fails. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when the page with currently enabled screencast was shown or hidden `. |desc}]
 
-  (* Fired when a new window is going to be opened, via window.open(), link click, form submission,
-etc. *)
   module WindowOpen = struct
     let name = "Page.windowOpen"
 
@@ -2989,9 +3040,10 @@ etc. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when a new window is going to be opened, via window.open(), link click, form submission,
+etc. |desc}]
 
-  (* Issued for every compilation cache generated. Is only available
-if Page.setGenerateCompilationCache is enabled. *)
   module CompilationCacheProduced = struct
     let name = "Page.compilationCacheProduced"
 
@@ -3014,10 +3066,12 @@ if Page.setGenerateCompilationCache is enabled. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Issued for every compilation cache generated. Is only available
+if Page.setGenerateCompilationCache is enabled. |desc}]
 end
 
 module Performance = struct
-  (* Current values of the metrics. *)
   module Metrics = struct
     let name = "Performance.metrics"
 
@@ -3037,10 +3091,10 @@ module Performance = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Current values of the metrics. |desc}]
 end
 
 module PerformanceTimeline = struct
-  (* Sent when a performance timeline event is added. See reportPerformanceTimeline method. *)
   module TimelineEventAdded = struct
     let name = "PerformanceTimeline.timelineEventAdded"
 
@@ -3059,13 +3113,11 @@ module PerformanceTimeline = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Sent when a performance timeline event is added. See reportPerformanceTimeline method. |desc}]
 end
 
 module Security = struct
-  (* There is a certificate error. If overriding certificate errors is enabled, then it should be
-handled with the `handleCertificateError` command. Note: this event does not fire if the
-certificate error has been allowed internally. Only one client per target should override
-certificate errors at the same time. *)
   module CertificateError = struct
     let name = "Security.certificateError"
 
@@ -3088,8 +3140,12 @@ certificate errors at the same time. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|There is a certificate error. If overriding certificate errors is enabled, then it should be
+handled with the `handleCertificateError` command. Note: this event does not fire if the
+certificate error has been allowed internally. Only one client per target should override
+certificate errors at the same time. |desc}]
 
-  (* The security state of the page changed. *)
   module VisibleSecurityStateChanged = struct
     let name = "Security.visibleSecurityStateChanged"
 
@@ -3109,8 +3165,8 @@ certificate errors at the same time. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|The security state of the page changed. |desc}]
 
-  (* The security state of the page changed. No longer being sent. *)
   module SecurityStateChanged = struct
     let name = "Security.securityStateChanged"
 
@@ -3148,10 +3204,11 @@ certificate errors at the same time. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|The security state of the page changed. No longer being sent. |desc}]
 end
 
 module ServiceWorker = struct
-  (* No description provided *)
   module WorkerErrorReported = struct
     let name = "ServiceWorker.workerErrorReported"
 
@@ -3170,8 +3227,8 @@ module ServiceWorker = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module WorkerRegistrationUpdated = struct
     let name = "ServiceWorker.workerRegistrationUpdated"
 
@@ -3190,8 +3247,8 @@ module ServiceWorker = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module WorkerVersionUpdated = struct
     let name = "ServiceWorker.workerVersionUpdated"
 
@@ -3210,10 +3267,10 @@ module ServiceWorker = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Storage = struct
-  (* A cache's contents have been modified. *)
   module CacheStorageContentUpdated = struct
     let name = "Storage.cacheStorageContentUpdated"
 
@@ -3237,8 +3294,8 @@ module Storage = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|A cache's contents have been modified. |desc}]
 
-  (* A cache has been added/deleted. *)
   module CacheStorageListUpdated = struct
     let name = "Storage.cacheStorageListUpdated"
 
@@ -3260,8 +3317,8 @@ module Storage = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|A cache has been added/deleted. |desc}]
 
-  (* The origin's IndexedDB object store has been modified. *)
   module IndexedDBContentUpdated = struct
     let name = "Storage.indexedDBContentUpdated"
 
@@ -3287,8 +3344,9 @@ module Storage = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|The origin's IndexedDB object store has been modified. |desc}]
 
-  (* The origin's IndexedDB database list has been modified. *)
   module IndexedDBListUpdated = struct
     let name = "Storage.indexedDBListUpdated"
 
@@ -3310,9 +3368,9 @@ module Storage = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|The origin's IndexedDB database list has been modified. |desc}]
 
-  (* One of the interest groups was accessed. Note that these events are global
-to all targets sharing an interest group store. *)
   module InterestGroupAccessed = struct
     let name = "Storage.interestGroupAccessed"
 
@@ -3357,9 +3415,10 @@ to all targets sharing an interest group store. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|One of the interest groups was accessed. Note that these events are global
+to all targets sharing an interest group store. |desc}]
 
-  (* An auction involving interest groups is taking place. These events are
-target-specific. *)
   module InterestGroupAuctionEventOccurred = struct
     let name = "Storage.interestGroupAuctionEventOccurred"
 
@@ -3390,11 +3449,10 @@ target-specific. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|An auction involving interest groups is taking place. These events are
+target-specific. |desc}]
 
-  (* Specifies which auctions a particular network fetch may be related to, and
-in what role. Note that it is not ordered with respect to
-Network.requestWillBeSent (but will happen before loadingFinished
-loadingFailed). *)
   module InterestGroupAuctionNetworkRequestCreated = struct
     let name = "Storage.interestGroupAuctionNetworkRequestCreated"
 
@@ -3422,9 +3480,12 @@ loadingFailed). *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Specifies which auctions a particular network fetch may be related to, and
+in what role. Note that it is not ordered with respect to
+Network.requestWillBeSent (but will happen before loadingFinished
+loadingFailed). |desc}]
 
-  (* Shared storage was accessed by the associated page.
-The following parameters are included in all events. *)
   module SharedStorageAccessed = struct
     let name = "Storage.sharedStorageAccessed"
 
@@ -3460,8 +3521,10 @@ The following parameters are included in all events. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Shared storage was accessed by the associated page.
+The following parameters are included in all events. |desc}]
 
-  (* No description provided *)
   module StorageBucketCreatedOrUpdated = struct
     let name = "Storage.storageBucketCreatedOrUpdated"
 
@@ -3480,8 +3543,8 @@ The following parameters are included in all events. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module StorageBucketDeleted = struct
     let name = "Storage.storageBucketDeleted"
 
@@ -3499,8 +3562,8 @@ The following parameters are included in all events. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module AttributionReportingSourceRegistered = struct
     let name = "Storage.attributionReportingSourceRegistered"
 
@@ -3521,8 +3584,8 @@ The following parameters are included in all events. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module AttributionReportingTriggerRegistered = struct
     let name = "Storage.attributionReportingTriggerRegistered"
 
@@ -3545,10 +3608,10 @@ The following parameters are included in all events. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Target = struct
-  (* Issued when attached to target because of auto-attach or `attachToTarget` command. *)
   module AttachedToTarget = struct
     let name = "Target.attachedToTarget"
 
@@ -3573,9 +3636,9 @@ module Target = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Issued when attached to target because of auto-attach or `attachToTarget` command. |desc}]
 
-  (* Issued when detached from target for any reason (including `detachFromTarget` command). Can be
-issued multiple times per target if multiple sessions have been attached to it. *)
   module DetachedFromTarget = struct
     let name = "Target.detachedFromTarget"
 
@@ -3596,9 +3659,10 @@ issued multiple times per target if multiple sessions have been attached to it. 
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Issued when detached from target for any reason (including `detachFromTarget` command). Can be
+issued multiple times per target if multiple sessions have been attached to it. |desc}]
 
-  (* Notifies about a new protocol message received from the session (as reported in
-`attachedToTarget` event). *)
   module ReceivedMessageFromTarget = struct
     let name = "Target.receivedMessageFromTarget"
 
@@ -3621,8 +3685,10 @@ issued multiple times per target if multiple sessions have been attached to it. 
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notifies about a new protocol message received from the session (as reported in
+`attachedToTarget` event). |desc}]
 
-  (* Issued when a possible inspection target is created. *)
   module TargetCreated = struct
     let name = "Target.targetCreated"
 
@@ -3641,8 +3707,9 @@ issued multiple times per target if multiple sessions have been attached to it. 
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Issued when a possible inspection target is created. |desc}]
 
-  (* Issued when a target is destroyed. *)
   module TargetDestroyed = struct
     let name = "Target.targetDestroyed"
 
@@ -3661,8 +3728,8 @@ issued multiple times per target if multiple sessions have been attached to it. 
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Issued when a target is destroyed. |desc}]
 
-  (* Issued when a target has crashed. *)
   module TargetCrashed = struct
     let name = "Target.targetCrashed"
 
@@ -3684,9 +3751,8 @@ issued multiple times per target if multiple sessions have been attached to it. 
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Issued when a target has crashed. |desc}]
 
-  (* Issued when some information about a target has changed. This only happens between
-`targetCreated` and `targetDestroyed`. *)
   module TargetInfoChanged = struct
     let name = "Target.targetInfoChanged"
 
@@ -3705,10 +3771,12 @@ issued multiple times per target if multiple sessions have been attached to it. 
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Issued when some information about a target has changed. This only happens between
+`targetCreated` and `targetDestroyed`. |desc}]
 end
 
 module Tethering = struct
-  (* Informs that port was successfully bound and got a specified connection id. *)
   module Accepted = struct
     let name = "Tethering.accepted"
 
@@ -3729,10 +3797,11 @@ module Tethering = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Informs that port was successfully bound and got a specified connection id. |desc}]
 end
 
 module Tracing = struct
-  (* No description provided *)
   module BufferUsage = struct
     let name = "Tracing.bufferUsage"
 
@@ -3767,9 +3836,8 @@ module Tracing = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Contains a bucket of collected trace events. When tracing is stopped collected events will be
-sent as a sequence of dataCollected events followed by tracingComplete event. *)
   module DataCollected = struct
     let name = "Tracing.dataCollected"
 
@@ -3788,9 +3856,10 @@ sent as a sequence of dataCollected events followed by tracingComplete event. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Contains a bucket of collected trace events. When tracing is stopped collected events will be
+sent as a sequence of dataCollected events followed by tracingComplete event. |desc}]
 
-  (* Signals that tracing is stopped and there is no trace buffers pending flush, all data were
-delivered via dataCollected events. *)
   module TracingComplete = struct
     let name = "Tracing.tracingComplete"
 
@@ -3825,20 +3894,12 @@ delivered via dataCollected events. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Signals that tracing is stopped and there is no trace buffers pending flush, all data were
+delivered via dataCollected events. |desc}]
 end
 
 module Fetch = struct
-  (* Issued when the domain is enabled and the request URL matches the
-specified filter. The request is paused until the client responds
-with one of continueRequest, failRequest or fulfillRequest.
-The stage of the request can be determined by presence of responseErrorReason
-and responseStatusCode -- the request is at the response stage if either
-of these fields is present and in the request stage otherwise.
-Redirect responses and subsequent requests are reported similarly to regular
-responses and requests. Redirect responses may be distinguished by the value
-of `responseStatusCode` (which is one of 301, 302, 303, 307, 308) along with
-presence of the `location` header. Requests resulting from a redirect will
-have `redirectedRequestId` field set. *)
   module RequestPaused = struct
     let name = "Fetch.requestPaused"
 
@@ -3897,9 +3958,19 @@ have `redirectedRequestId` field set. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Issued when the domain is enabled and the request URL matches the
+specified filter. The request is paused until the client responds
+with one of continueRequest, failRequest or fulfillRequest.
+The stage of the request can be determined by presence of responseErrorReason
+and responseStatusCode -- the request is at the response stage if either
+of these fields is present and in the request stage otherwise.
+Redirect responses and subsequent requests are reported similarly to regular
+responses and requests. Redirect responses may be distinguished by the value
+of `responseStatusCode` (which is one of 301, 302, 303, 307, 308) along with
+presence of the `location` header. Requests resulting from a redirect will
+have `redirectedRequestId` field set. |desc}]
 
-  (* Issued when the domain is enabled with handleAuthRequests set to true.
-The request is paused until client responds with continueWithAuth. *)
   module AuthRequired = struct
     let name = "Fetch.authRequired"
 
@@ -3933,10 +4004,12 @@ The request is paused until client responds with continueWithAuth. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Issued when the domain is enabled with handleAuthRequests set to true.
+The request is paused until client responds with continueWithAuth. |desc}]
 end
 
 module WebAudio = struct
-  (* Notifies that a new BaseAudioContext has been created. *)
   module ContextCreated = struct
     let name = "WebAudio.contextCreated"
 
@@ -3955,8 +4028,9 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notifies that a new BaseAudioContext has been created. |desc}]
 
-  (* Notifies that an existing BaseAudioContext will be destroyed. *)
   module ContextWillBeDestroyed = struct
     let name = "WebAudio.contextWillBeDestroyed"
 
@@ -3975,8 +4049,9 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notifies that an existing BaseAudioContext will be destroyed. |desc}]
 
-  (* Notifies that existing BaseAudioContext has changed some properties (id stays the same).. *)
   module ContextChanged = struct
     let name = "WebAudio.contextChanged"
 
@@ -3995,8 +4070,9 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notifies that existing BaseAudioContext has changed some properties (id stays the same).. |desc}]
 
-  (* Notifies that the construction of an AudioListener has finished. *)
   module AudioListenerCreated = struct
     let name = "WebAudio.audioListenerCreated"
 
@@ -4015,8 +4091,9 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notifies that the construction of an AudioListener has finished. |desc}]
 
-  (* Notifies that a new AudioListener has been created. *)
   module AudioListenerWillBeDestroyed = struct
     let name = "WebAudio.audioListenerWillBeDestroyed"
 
@@ -4037,8 +4114,8 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Notifies that a new AudioListener has been created. |desc}]
 
-  (* Notifies that a new AudioNode has been created. *)
   module AudioNodeCreated = struct
     let name = "WebAudio.audioNodeCreated"
 
@@ -4057,8 +4134,8 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Notifies that a new AudioNode has been created. |desc}]
 
-  (* Notifies that an existing AudioNode has been destroyed. *)
   module AudioNodeWillBeDestroyed = struct
     let name = "WebAudio.audioNodeWillBeDestroyed"
 
@@ -4079,8 +4156,9 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notifies that an existing AudioNode has been destroyed. |desc}]
 
-  (* Notifies that a new AudioParam has been created. *)
   module AudioParamCreated = struct
     let name = "WebAudio.audioParamCreated"
 
@@ -4099,8 +4177,8 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Notifies that a new AudioParam has been created. |desc}]
 
-  (* Notifies that an existing AudioParam has been destroyed. *)
   module AudioParamWillBeDestroyed = struct
     let name = "WebAudio.audioParamWillBeDestroyed"
 
@@ -4123,8 +4201,9 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notifies that an existing AudioParam has been destroyed. |desc}]
 
-  (* Notifies that two AudioNodes are connected. *)
   module NodesConnected = struct
     let name = "WebAudio.nodesConnected"
 
@@ -4155,8 +4234,8 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Notifies that two AudioNodes are connected. |desc}]
 
-  (* Notifies that AudioNodes are disconnected. The destination can be null, and it means all the outgoing connections from the source are disconnected. *)
   module NodesDisconnected = struct
     let name = "WebAudio.nodesDisconnected"
 
@@ -4187,8 +4266,9 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notifies that AudioNodes are disconnected. The destination can be null, and it means all the outgoing connections from the source are disconnected. |desc}]
 
-  (* Notifies that an AudioNode is connected to an AudioParam. *)
   module NodeParamConnected = struct
     let name = "WebAudio.nodeParamConnected"
 
@@ -4215,8 +4295,9 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notifies that an AudioNode is connected to an AudioParam. |desc}]
 
-  (* Notifies that an AudioNode is disconnected to an AudioParam. *)
   module NodeParamDisconnected = struct
     let name = "WebAudio.nodeParamDisconnected"
 
@@ -4243,10 +4324,11 @@ module WebAudio = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notifies that an AudioNode is disconnected to an AudioParam. |desc}]
 end
 
 module WebAuthn = struct
-  (* Triggered when a credential is added to an authenticator. *)
   module CredentialAdded = struct
     let name = "WebAuthn.credentialAdded"
 
@@ -4267,9 +4349,9 @@ module WebAuthn = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Triggered when a credential is added to an authenticator. |desc}]
 
-  (* Triggered when a credential is deleted, e.g. through
-PublicKeyCredential.signalUnknownCredential(). *)
   module CredentialDeleted = struct
     let name = "WebAuthn.credentialDeleted"
 
@@ -4290,9 +4372,10 @@ PublicKeyCredential.signalUnknownCredential(). *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Triggered when a credential is deleted, e.g. through
+PublicKeyCredential.signalUnknownCredential(). |desc}]
 
-  (* Triggered when a credential is updated, e.g. through
-PublicKeyCredential.signalCurrentUserDetails(). *)
   module CredentialUpdated = struct
     let name = "WebAuthn.credentialUpdated"
 
@@ -4313,8 +4396,10 @@ PublicKeyCredential.signalCurrentUserDetails(). *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Triggered when a credential is updated, e.g. through
+PublicKeyCredential.signalCurrentUserDetails(). |desc}]
 
-  (* Triggered when a credential is used in a webauthn assertion. *)
   module CredentialAsserted = struct
     let name = "WebAuthn.credentialAsserted"
 
@@ -4335,11 +4420,11 @@ PublicKeyCredential.signalCurrentUserDetails(). *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Triggered when a credential is used in a webauthn assertion. |desc}]
 end
 
 module Media = struct
-  (* This can be called multiple times, and can be used to set / override /
-remove player properties. A null propValue indicates removal. *)
   module PlayerPropertiesChanged = struct
     let name = "Media.playerPropertiesChanged"
 
@@ -4360,9 +4445,10 @@ remove player properties. A null propValue indicates removal. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|This can be called multiple times, and can be used to set / override /
+remove player properties. A null propValue indicates removal. |desc}]
 
-  (* Send events as a list, allowing them to be batched on the browser for less
-congestion. If batched, events must ALWAYS be in chronological order. *)
   module PlayerEventsAdded = struct
     let name = "Media.playerEventsAdded"
 
@@ -4383,8 +4469,10 @@ congestion. If batched, events must ALWAYS be in chronological order. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Send events as a list, allowing them to be batched on the browser for less
+congestion. If batched, events must ALWAYS be in chronological order. |desc}]
 
-  (* Send a list of any messages that need to be delivered. *)
   module PlayerMessagesLogged = struct
     let name = "Media.playerMessagesLogged"
 
@@ -4405,8 +4493,9 @@ congestion. If batched, events must ALWAYS be in chronological order. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Send a list of any messages that need to be delivered. |desc}]
 
-  (* Send a list of any errors that need to be delivered. *)
   module PlayerErrorsRaised = struct
     let name = "Media.playerErrorsRaised"
 
@@ -4427,10 +4516,9 @@ congestion. If batched, events must ALWAYS be in chronological order. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Send a list of any errors that need to be delivered. |desc}]
 
-  (* Called whenever a player is created, or when a new agent joins and receives
-a list of active players. If an agent is restored, it will receive the full
-list of player ids and all events again. *)
   module PlayersCreated = struct
     let name = "Media.playersCreated"
 
@@ -4449,11 +4537,13 @@ list of player ids and all events again. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Called whenever a player is created, or when a new agent joins and receives
+a list of active players. If an agent is restored, it will receive the full
+list of player ids and all events again. |desc}]
 end
 
 module DeviceAccess = struct
-  (* A device request opened a user prompt to select a device. Respond with the
-selectPrompt or cancelPrompt command. *)
   module DeviceRequestPrompted = struct
     let name = "DeviceAccess.deviceRequestPrompted"
 
@@ -4474,10 +4564,12 @@ selectPrompt or cancelPrompt command. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|A device request opened a user prompt to select a device. Respond with the
+selectPrompt or cancelPrompt command. |desc}]
 end
 
 module Preload = struct
-  (* Upsert. Currently, it is only emitted when a rule set added. *)
   module RuleSetUpdated = struct
     let name = "Preload.ruleSetUpdated"
 
@@ -4496,8 +4588,9 @@ module Preload = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Upsert. Currently, it is only emitted when a rule set added. |desc}]
 
-  (* No description provided *)
   module RuleSetRemoved = struct
     let name = "Preload.ruleSetRemoved"
 
@@ -4516,8 +4609,8 @@ module Preload = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Fired when a preload enabled state is updated. *)
   module PreloadEnabledStateUpdated = struct
     let name = "Preload.preloadEnabledStateUpdated"
 
@@ -4546,8 +4639,8 @@ module Preload = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when a preload enabled state is updated. |desc}]
 
-  (* Fired when a prefetch attempt is updated. *)
   module PrefetchStatusUpdated = struct
     let name = "Preload.prefetchStatusUpdated"
 
@@ -4579,8 +4672,8 @@ module Preload = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when a prefetch attempt is updated. |desc}]
 
-  (* Fired when a prerender attempt is updated. *)
   module PrerenderStatusUpdated = struct
     let name = "Preload.prerenderStatusUpdated"
 
@@ -4619,8 +4712,8 @@ module Preload = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when a prerender attempt is updated. |desc}]
 
-  (* Send a list of sources for all preloading attempts in a document. *)
   module PreloadingAttemptSourcesUpdated = struct
     let name = "Preload.preloadingAttemptSourcesUpdated"
 
@@ -4642,10 +4735,11 @@ module Preload = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Send a list of sources for all preloading attempts in a document. |desc}]
 end
 
 module FedCm = struct
-  (* No description provided *)
   module DialogShown = struct
     let name = "FedCm.dialogShown"
 
@@ -4677,9 +4771,8 @@ module FedCm = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Triggered when a dialog is closed, either by user action, JS abort,
-or a command below. *)
   module DialogClosed = struct
     let name = "FedCm.dialogClosed"
 
@@ -4697,10 +4790,12 @@ or a command below. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Triggered when a dialog is closed, either by user action, JS abort,
+or a command below. |desc}]
 end
 
 module Console = struct
-  (* Issued when new console message is added. *)
   module MessageAdded = struct
     let name = "Console.messageAdded"
 
@@ -4719,11 +4814,10 @@ module Console = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Issued when new console message is added. |desc}]
 end
 
 module Debugger = struct
-  (* Fired when breakpoint is resolved to an actual script and location.
-Deprecated in favor of `resolvedBreakpoints` in the `scriptParsed` event. *)
   module BreakpointResolved = struct
     let name = "Debugger.breakpointResolved"
 
@@ -4744,8 +4838,10 @@ Deprecated in favor of `resolvedBreakpoints` in the `scriptParsed` event. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when breakpoint is resolved to an actual script and location.
+Deprecated in favor of `resolvedBreakpoints` in the `scriptParsed` event. |desc}]
 
-  (* Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria. *)
   module Paused = struct
     let name = "Debugger.paused"
 
@@ -4833,8 +4929,9 @@ Deprecated in favor of `resolvedBreakpoints` in the `scriptParsed` event. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when the virtual machine stopped on breakpoint or exception or any other stop criteria. |desc}]
 
-  (* Fired when the virtual machine resumed execution. *)
   module Resumed = struct
     let name = "Debugger.resumed"
 
@@ -4849,8 +4946,8 @@ Deprecated in favor of `resolvedBreakpoints` in the `scriptParsed` event. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when the virtual machine resumed execution. |desc}]
 
-  (* Fired when virtual machine fails to parse the script. *)
   module ScriptFailedToParse = struct
     let name = "Debugger.scriptFailedToParse"
 
@@ -4934,9 +5031,9 @@ Deprecated in favor of `resolvedBreakpoints` in the `scriptParsed` event. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when virtual machine fails to parse the script. |desc}]
 
-  (* Fired when virtual machine parses script. This event is also fired for all known and uncollected
-scripts upon enabling debugger. *)
   module ScriptParsed = struct
     let name = "Debugger.scriptParsed"
 
@@ -5041,10 +5138,12 @@ scripts upon enabling debugger. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Fired when virtual machine parses script. This event is also fired for all known and uncollected
+scripts upon enabling debugger. |desc}]
 end
 
 module HeapProfiler = struct
-  (* No description provided *)
   module AddHeapSnapshotChunk = struct
     let name = "HeapProfiler.addHeapSnapshotChunk"
 
@@ -5062,8 +5161,8 @@ module HeapProfiler = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* If heap objects tracking has been started then backend may send update for one or more fragments *)
   module HeapStatsUpdate = struct
     let name = "HeapProfiler.heapStatsUpdate"
 
@@ -5088,10 +5187,9 @@ module HeapProfiler = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|If heap objects tracking has been started then backend may send update for one or more fragments |desc}]
 
-  (* If heap objects tracking has been started then backend regularly sends a current value for last
-seen object id and corresponding timestamp. If the were changes in the heap since last event
-then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event. *)
   module LastSeenObjectId = struct
     let name = "HeapProfiler.lastSeenObjectId"
 
@@ -5112,8 +5210,11 @@ then one or more heapStatsUpdate events will be sent before a new lastSeenObject
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|If heap objects tracking has been started then backend regularly sends a current value for last
+seen object id and corresponding timestamp. If the were changes in the heap since last event
+then one or more heapStatsUpdate events will be sent before a new lastSeenObjectId event. |desc}]
 
-  (* No description provided *)
   module ReportHeapSnapshotProgress = struct
     let name = "HeapProfiler.reportHeapSnapshotProgress"
 
@@ -5137,8 +5238,8 @@ then one or more heapStatsUpdate events will be sent before a new lastSeenObject
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module ResetProfiles = struct
     let name = "HeapProfiler.resetProfiles"
 
@@ -5153,10 +5254,10 @@ then one or more heapStatsUpdate events will be sent before a new lastSeenObject
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Profiler = struct
-  (* No description provided *)
   module ConsoleProfileFinished = struct
     let name = "Profiler.consoleProfileFinished"
 
@@ -5183,8 +5284,8 @@ module Profiler = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Sent when new profile recording is started using console.profile() call. *)
   module ConsoleProfileStarted = struct
     let name = "Profiler.consoleProfileStarted"
 
@@ -5209,11 +5310,9 @@ module Profiler = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Sent when new profile recording is started using console.profile() call. |desc}]
 
-  (* Reports coverage delta since the last poll (either from an event like this, or from
-`takePreciseCoverage` for the current isolate. May only be sent if precise code
-coverage has been started. This event can be trigged by the embedder to, for example,
-trigger collection of coverage data immediately at a certain point in time. *)
   module PreciseCoverageDeltaUpdate = struct
     let name = "Profiler.preciseCoverageDeltaUpdate"
 
@@ -5240,10 +5339,14 @@ trigger collection of coverage data immediately at a certain point in time. *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Reports coverage delta since the last poll (either from an event like this, or from
+`takePreciseCoverage` for the current isolate. May only be sent if precise code
+coverage has been started. This event can be trigged by the embedder to, for example,
+trigger collection of coverage data immediately at a certain point in time. |desc}]
 end
 
 module Runtime = struct
-  (* Notification is issued every time when binding is called. *)
   module BindingCalled = struct
     let name = "Runtime.bindingCalled"
 
@@ -5265,8 +5368,9 @@ module Runtime = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Notification is issued every time when binding is called. |desc}]
 
-  (* Issued when console API was called. *)
   module ConsoleAPICalled = struct
     let name = "Runtime.consoleAPICalled"
 
@@ -5373,8 +5477,8 @@ module Runtime = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Issued when console API was called. |desc}]
 
-  (* Issued when unhandled exception was revoked. *)
   module ExceptionRevoked = struct
     let name = "Runtime.exceptionRevoked"
 
@@ -5398,8 +5502,8 @@ module Runtime = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Issued when unhandled exception was revoked. |desc}]
 
-  (* Issued when exception was thrown and unhandled. *)
   module ExceptionThrown = struct
     let name = "Runtime.exceptionThrown"
 
@@ -5420,8 +5524,8 @@ module Runtime = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Issued when exception was thrown and unhandled. |desc}]
 
-  (* Issued when new execution context is created. *)
   module ExecutionContextCreated = struct
     let name = "Runtime.executionContextCreated"
 
@@ -5440,8 +5544,8 @@ module Runtime = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Issued when new execution context is created. |desc}]
 
-  (* Issued when execution context is destroyed. *)
   module ExecutionContextDestroyed = struct
     let name = "Runtime.executionContextDestroyed"
 
@@ -5463,8 +5567,8 @@ module Runtime = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Issued when execution context is destroyed. |desc}]
 
-  (* Issued when all executionContexts were cleared in browser *)
   module ExecutionContextsCleared = struct
     let name = "Runtime.executionContextsCleared"
 
@@ -5479,9 +5583,9 @@ module Runtime = struct
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Issued when all executionContexts were cleared in browser |desc}]
 
-  (* Issued when object should be inspected (for example, as a result of inspect() command line API
-call). *)
   module InspectRequested = struct
     let name = "Runtime.inspectRequested"
 
@@ -5505,4 +5609,7 @@ call). *)
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc
+    {desc|Issued when object should be inspected (for example, as a result of inspect() command line API
+call). |desc}]
 end

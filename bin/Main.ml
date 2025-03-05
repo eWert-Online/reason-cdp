@@ -141,9 +141,9 @@ and map_object ?(key = "properties") ?(additional_ref_path_segment = "") ~enums
               in
               Printf.sprintf
                 (if optional then
-                 "%s: %s option [@key \"%s\"] [@yojson.option] [@ocaml.doc \
-                  \"%s\"];"
-                else "%s: %s [@key \"%s\"] [@ocaml.doc \"%s\"];")
+                   "%s: %s option [@key \"%s\"] [@yojson.option] [@ocaml.doc \
+                    \"%s\"];"
+                 else "%s: %s [@key \"%s\"] [@ocaml.doc \"%s\"];")
                 key typ name
                 (String.escaped description)))
     |> Option.map (String.concat "\n")
@@ -233,11 +233,11 @@ let get_enums enums =
                  |> List.map (fun (original, enum) ->
                         "| `String \"" ^ original ^ "\" -> `" ^ enum)
                  |> (fun __x ->
-                      List.append __x
-                        [
-                          "| `String s -> failwith (\"unknown enum: \" ^ s)";
-                          "| _ -> failwith \"unknown enum type\"";
-                        ])
+                 List.append __x
+                   [
+                     "| `String s -> failwith (\"unknown enum: \" ^ s)";
+                     "| _ -> failwith \"unknown enum type\"";
+                   ])
                  |> String.concat "\n"
                in
                String.concat "\n"
@@ -321,7 +321,6 @@ let get_event ~domain event =
   in
   let content =
     [
-      "(* " ^ description ^ " *)";
       "module " ^ module_name ^ " = struct";
       "  let name = \"" ^ key ^ "\"";
       "";
@@ -337,6 +336,7 @@ let get_event ~domain event =
       "";
       "  let parse event = event |> Yojson.Safe.from_string |> t_of_yojson;;";
       "end";
+      "[@@ocaml.doc {desc|" ^ description ^ " |desc}]";
     ]
   in
   String.concat "\n" content
@@ -378,7 +378,6 @@ let get_command ~domain command =
   in
   let content =
     [
-      "(* " ^ description ^ " *)";
       "module " ^ module_name ^ " = struct";
       "";
       "  module Response : sig";
@@ -495,6 +494,7 @@ let get_command ~domain command =
       "    ;;";
       "  end";
       "end";
+      "[@@ocaml.doc {desc|" ^ description ^ " |desc}]";
     ]
   in
   String.concat "\n" content

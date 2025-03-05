@@ -1,7 +1,6 @@
 open Ppx_yojson_conv_lib.Yojson_conv.Primitives
 
 module Accessibility = struct
-  (* Disables the accessibility domain. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -43,9 +42,8 @@ module Accessibility = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables the accessibility domain. |desc}]
 
-  (* Enables the accessibility domain which causes `AXNodeId`s to remain consistent between method calls.
-This turns on accessibility for the page, which can impact performance until accessibility is disabled. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -87,8 +85,10 @@ This turns on accessibility for the page, which can impact performance until acc
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables the accessibility domain which causes `AXNodeId`s to remain consistent between method calls.
+This turns on accessibility for the page, which can impact performance until accessibility is disabled. |desc}]
 
-  (* Fetches the accessibility node and partial accessibility tree for this DOM node, if it exists. *)
   module GetPartialAXTree = struct
     module Response : sig
       type result = {
@@ -181,8 +181,9 @@ This turns on accessibility for the page, which can impact performance until acc
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Fetches the accessibility node and partial accessibility tree for this DOM node, if it exists. |desc}]
 
-  (* Fetches the entire accessibility tree for the root Document *)
   module GetFullAXTree = struct
     module Response : sig
       type result = {
@@ -255,9 +256,9 @@ This turns on accessibility for the page, which can impact performance until acc
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Fetches the entire accessibility tree for the root Document |desc}]
 
-  (* Fetches the root node.
-Requires `enable()` to have been called previously. *)
   module GetRootAXNode = struct
     module Response : sig
       type result = {
@@ -323,9 +324,10 @@ Requires `enable()` to have been called previously. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Fetches the root node.
+Requires `enable()` to have been called previously. |desc}]
 
-  (* Fetches a node and all ancestors up to and including the root.
-Requires `enable()` to have been called previously. *)
   module GetAXNodeAndAncestors = struct
     module Response : sig
       type result = {
@@ -403,9 +405,10 @@ Requires `enable()` to have been called previously. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Fetches a node and all ancestors up to and including the root.
+Requires `enable()` to have been called previously. |desc}]
 
-  (* Fetches a particular accessibility node by AXNodeId.
-Requires `enable()` to have been called previously. *)
   module GetChildAXNodes = struct
     module Response : sig
       type result = {
@@ -473,12 +476,10 @@ Requires `enable()` to have been called previously. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Fetches a particular accessibility node by AXNodeId.
+Requires `enable()` to have been called previously. |desc}]
 
-  (* Query a DOM node's accessibility subtree for accessible name and role.
-This command computes the name and role for all nodes in the subtree, including those that are
-ignored for accessibility, and returns those that match the specified name and role. If no DOM
-node is specified, or the DOM node does not exist, the command returns an error. If neither
-`accessibleName` or `role` is specified, it returns all the accessibility nodes in the subtree. *)
   module QueryAXTree = struct
     module Response : sig
       type result = {
@@ -568,10 +569,15 @@ node is specified, or the DOM node does not exist, the command returns an error.
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Query a DOM node's accessibility subtree for accessible name and role.
+This command computes the name and role for all nodes in the subtree, including those that are
+ignored for accessibility, and returns those that match the specified name and role. If no DOM
+node is specified, or the DOM node does not exist, the command returns an error. If neither
+`accessibleName` or `role` is specified, it returns all the accessibility nodes in the subtree. |desc}]
 end
 
 module Animation = struct
-  (* Disables animation domain notifications. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -613,8 +619,8 @@ module Animation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables animation domain notifications. |desc}]
 
-  (* Enables animation domain notifications. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -656,8 +662,8 @@ module Animation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables animation domain notifications. |desc}]
 
-  (* Returns the current time of the an animation. *)
   module GetCurrentTime = struct
     module Response : sig
       type result = {
@@ -716,8 +722,8 @@ module Animation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns the current time of the an animation. |desc}]
 
-  (* Gets the playback rate of the document timeline. *)
   module GetPlaybackRate = struct
     module Response : sig
       type result = {
@@ -770,8 +776,8 @@ module Animation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Gets the playback rate of the document timeline. |desc}]
 
-  (* Releases a set of animations to no longer be manipulated. *)
   module ReleaseAnimations = struct
     module Response : sig
       type result = Types.assoc
@@ -824,8 +830,9 @@ module Animation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Releases a set of animations to no longer be manipulated. |desc}]
 
-  (* Gets the remote object of the Animation. *)
   module ResolveAnimation = struct
     module Response : sig
       type result = {
@@ -886,8 +893,8 @@ module Animation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Gets the remote object of the Animation. |desc}]
 
-  (* Seek a set of animations to a particular time within each animation. *)
   module SeekAnimations = struct
     module Response : sig
       type result = Types.assoc
@@ -943,8 +950,9 @@ module Animation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Seek a set of animations to a particular time within each animation. |desc}]
 
-  (* Sets the paused state of a set of animations. *)
   module SetPaused = struct
     module Response : sig
       type result = Types.assoc
@@ -999,8 +1007,8 @@ module Animation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets the paused state of a set of animations. |desc}]
 
-  (* Sets the playback rate of the document timeline. *)
   module SetPlaybackRate = struct
     module Response : sig
       type result = Types.assoc
@@ -1054,8 +1062,8 @@ module Animation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets the playback rate of the document timeline. |desc}]
 
-  (* Sets the timing of an animation node. *)
   module SetTiming = struct
     module Response : sig
       type result = Types.assoc
@@ -1112,11 +1120,10 @@ module Animation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets the timing of an animation node. |desc}]
 end
 
 module Audits = struct
-  (* Returns the response body and size if it were re-encoded with the specified settings. Only
-applies to images. *)
   module GetEncodedResponse = struct
     module Response : sig
       type result = {
@@ -1221,8 +1228,10 @@ applies to images. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the response body and size if it were re-encoded with the specified settings. Only
+applies to images. |desc}]
 
-  (* Disables issues domain, prevents further issues from being reported to the client. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -1264,9 +1273,9 @@ applies to images. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Disables issues domain, prevents further issues from being reported to the client. |desc}]
 
-  (* Enables issues domain, sends the issues collected so far to the client by means of the
-`issueAdded` event. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -1308,9 +1317,10 @@ applies to images. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables issues domain, sends the issues collected so far to the client by means of the
+`issueAdded` event. |desc}]
 
-  (* Runs the contrast check for the target page. Found issues are reported
-using Audits.issueAdded event. *)
   module CheckContrast = struct
     module Response : sig
       type result = Types.assoc
@@ -1366,9 +1376,10 @@ using Audits.issueAdded event. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Runs the contrast check for the target page. Found issues are reported
+using Audits.issueAdded event. |desc}]
 
-  (* Runs the form issues check for the target page. Found issues are reported
-using Audits.issueAdded event. *)
   module CheckFormsIssues = struct
     module Response : sig
       type result = {
@@ -1419,14 +1430,12 @@ using Audits.issueAdded event. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Runs the form issues check for the target page. Found issues are reported
+using Audits.issueAdded event. |desc}]
 end
 
 module Extensions = struct
-  (* Installs an unpacked extension from the filesystem similar to
---load-extension CLI flags. Returns extension ID once the extension
-has been installed. Available if the client is connected using the
---remote-debugging-pipe flag and the --enable-unsafe-extension-debugging
-flag is set. *)
   module LoadUnpacked = struct
     module Response : sig
       type result = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
@@ -1480,10 +1489,13 @@ flag is set. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Installs an unpacked extension from the filesystem similar to
+--load-extension CLI flags. Returns extension ID once the extension
+has been installed. Available if the client is connected using the
+--remote-debugging-pipe flag and the --enable-unsafe-extension-debugging
+flag is set. |desc}]
 
-  (* Uninstalls an unpacked extension (others not supported) from the profile.
-Available if the client is connected using the --remote-debugging-pipe flag
-and the --enable-unsafe-extension-debugging. *)
   module Uninstall = struct
     module Response : sig
       type result = Types.assoc
@@ -1533,9 +1545,11 @@ and the --enable-unsafe-extension-debugging. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Uninstalls an unpacked extension (others not supported) from the profile.
+Available if the client is connected using the --remote-debugging-pipe flag
+and the --enable-unsafe-extension-debugging. |desc}]
 
-  (* Gets data from extension storage in the given `storageArea`. If `keys` is
-specified, these are used to filter the result. *)
   module GetStorageItems = struct
     module Response : sig
       type result = {
@@ -1599,8 +1613,10 @@ specified, these are used to filter the result. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Gets data from extension storage in the given `storageArea`. If `keys` is
+specified, these are used to filter the result. |desc}]
 
-  (* Removes `keys` from extension storage in the given `storageArea`. *)
   module RemoveStorageItems = struct
     module Response : sig
       type result = Types.assoc
@@ -1655,8 +1671,9 @@ specified, these are used to filter the result. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Removes `keys` from extension storage in the given `storageArea`. |desc}]
 
-  (* Clears extension storage in the given `storageArea`. *)
   module ClearStorageItems = struct
     module Response : sig
       type result = Types.assoc
@@ -1710,9 +1727,9 @@ specified, these are used to filter the result. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Clears extension storage in the given `storageArea`. |desc}]
 
-  (* Sets `values` in extension storage in the given `storageArea`. The provided `values`
-will be merged with existing values in the storage area. *)
   module SetStorageItems = struct
     module Response : sig
       type result = Types.assoc
@@ -1767,11 +1784,12 @@ will be merged with existing values in the storage area. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets `values` in extension storage in the given `storageArea`. The provided `values`
+will be merged with existing values in the storage area. |desc}]
 end
 
 module Autofill = struct
-  (* Trigger autofill on a form identified by the fieldId.
-If the field and related form cannot be autofilled, returns an error. *)
   module Trigger = struct
     module Response : sig
       type result = Types.assoc
@@ -1835,8 +1853,10 @@ If the field and related form cannot be autofilled, returns an error. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Trigger autofill on a form identified by the fieldId.
+If the field and related form cannot be autofilled, returns an error. |desc}]
 
-  (* Set addresses so that developers can verify their forms implementation. *)
   module SetAddresses = struct
     module Response : sig
       type result = Types.assoc
@@ -1889,8 +1909,9 @@ If the field and related form cannot be autofilled, returns an error. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Set addresses so that developers can verify their forms implementation. |desc}]
 
-  (* Disables autofill domain notifications. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -1932,8 +1953,8 @@ If the field and related form cannot be autofilled, returns an error. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables autofill domain notifications. |desc}]
 
-  (* Enables autofill domain notifications. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -1975,10 +1996,10 @@ If the field and related form cannot be autofilled, returns an error. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables autofill domain notifications. |desc}]
 end
 
 module BackgroundService = struct
-  (* Enables event updates for the service. *)
   module StartObserving = struct
     module Response : sig
       type result = Types.assoc
@@ -2031,8 +2052,8 @@ module BackgroundService = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables event updates for the service. |desc}]
 
-  (* Disables event updates for the service. *)
   module StopObserving = struct
     module Response : sig
       type result = Types.assoc
@@ -2085,8 +2106,8 @@ module BackgroundService = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables event updates for the service. |desc}]
 
-  (* Set the recording state for the service. *)
   module SetRecording = struct
     module Response : sig
       type result = Types.assoc
@@ -2141,8 +2162,8 @@ module BackgroundService = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Set the recording state for the service. |desc}]
 
-  (* Clears all stored data for the service. *)
   module ClearEvents = struct
     module Response : sig
       type result = Types.assoc
@@ -2195,10 +2216,10 @@ module BackgroundService = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears all stored data for the service. |desc}]
 end
 
 module Browser = struct
-  (* Set permission settings for given origin. *)
   module SetPermission = struct
     module Response : sig
       type result = Types.assoc
@@ -2266,8 +2287,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Set permission settings for given origin. |desc}]
 
-  (* Grant specific permissions to the given origin and reject all others. *)
   module GrantPermissions = struct
     module Response : sig
       type result = Types.assoc
@@ -2332,8 +2353,9 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Grant specific permissions to the given origin and reject all others. |desc}]
 
-  (* Reset all permission management for all origins. *)
   module ResetPermissions = struct
     module Response : sig
       type result = Types.assoc
@@ -2390,8 +2412,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Reset all permission management for all origins. |desc}]
 
-  (* Set the behavior when downloading a file. *)
   module SetDownloadBehavior = struct
     module Response : sig
       type result = Types.assoc
@@ -2485,8 +2507,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Set the behavior when downloading a file. |desc}]
 
-  (* Cancel a download if in progress *)
   module CancelDownload = struct
     module Response : sig
       type result = Types.assoc
@@ -2546,8 +2568,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Cancel a download if in progress |desc}]
 
-  (* Close browser gracefully. *)
   module Close = struct
     module Response : sig
       type result = Types.assoc
@@ -2589,8 +2611,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Close browser gracefully. |desc}]
 
-  (* Crashes browser on the main thread. *)
   module Crash = struct
     module Response : sig
       type result = Types.assoc
@@ -2632,8 +2654,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Crashes browser on the main thread. |desc}]
 
-  (* Crashes GPU process. *)
   module CrashGpuProcess = struct
     module Response : sig
       type result = Types.assoc
@@ -2675,8 +2697,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Crashes GPU process. |desc}]
 
-  (* Returns version information. *)
   module GetVersion = struct
     module Response : sig
       type result = {
@@ -2735,9 +2757,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns version information. |desc}]
 
-  (* Returns the command line switches for the browser process if, and only if
---enable-automation is on the commandline. *)
   module GetBrowserCommandLine = struct
     module Response : sig
       type result = {
@@ -2788,8 +2809,10 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the command line switches for the browser process if, and only if
+--enable-automation is on the commandline. |desc}]
 
-  (* Get Chrome histograms. *)
   module GetHistograms = struct
     module Response : sig
       type result = {
@@ -2862,8 +2885,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Get Chrome histograms. |desc}]
 
-  (* Get a Chrome histogram by name. *)
   module GetHistogram = struct
     module Response : sig
       type result = {
@@ -2928,8 +2951,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Get a Chrome histogram by name. |desc}]
 
-  (* Get position and size of the browser window. *)
   module GetWindowBounds = struct
     module Response : sig
       type result = {
@@ -2999,8 +3022,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Get position and size of the browser window. |desc}]
 
-  (* Get the browser window that contains the devtools target. *)
   module GetWindowForTarget = struct
     module Response : sig
       type result = {
@@ -3078,8 +3101,9 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Get the browser window that contains the devtools target. |desc}]
 
-  (* Set position and/or size of the browser window. *)
   module SetWindowBounds = struct
     module Response : sig
       type result = Types.assoc
@@ -3139,8 +3163,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Set position and/or size of the browser window. |desc}]
 
-  (* Set dock tile details, platform-specific. *)
   module SetDockTile = struct
     module Response : sig
       type result = Types.assoc
@@ -3201,8 +3225,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Set dock tile details, platform-specific. |desc}]
 
-  (* Invoke custom browser commands used by telemetry. *)
   module ExecuteBrowserCommand = struct
     module Response : sig
       type result = Types.assoc
@@ -3255,9 +3279,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Invoke custom browser commands used by telemetry. |desc}]
 
-  (* Allows a site to use privacy sandbox features that require enrollment
-without the site actually being enrolled. Only supported on page targets. *)
   module AddPrivacySandboxEnrollmentOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -3314,11 +3337,12 @@ without the site actually being enrolled. Only supported on page targets. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Allows a site to use privacy sandbox features that require enrollment
+without the site actually being enrolled. Only supported on page targets. |desc}]
 end
 
 module CSS = struct
-  (* Inserts a new rule with the given `ruleText` in a stylesheet with given `styleSheetId`, at the
-position specified by `location`. *)
   module AddRule = struct
     module Response : sig
       type result = {
@@ -3401,8 +3425,10 @@ position specified by `location`. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Inserts a new rule with the given `ruleText` in a stylesheet with given `styleSheetId`, at the
+position specified by `location`. |desc}]
 
-  (* Returns all class names from specified stylesheet. *)
   module CollectClassNames = struct
     module Response : sig
       type result = {
@@ -3464,8 +3490,8 @@ position specified by `location`. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns all class names from specified stylesheet. |desc}]
 
-  (* Creates a new special "via-inspector" stylesheet in the frame with given `frameId`. *)
   module CreateStyleSheet = struct
     module Response : sig
       type result = {
@@ -3543,8 +3569,9 @@ position specified by `location`. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Creates a new special "via-inspector" stylesheet in the frame with given `frameId`. |desc}]
 
-  (* Disables the CSS agent for the given page. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -3586,9 +3613,8 @@ position specified by `location`. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables the CSS agent for the given page. |desc}]
 
-  (* Enables the CSS agent for the given page. Clients should not assume that the CSS agent has been
-enabled until the result of this command is received. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -3630,9 +3656,10 @@ enabled until the result of this command is received. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables the CSS agent for the given page. Clients should not assume that the CSS agent has been
+enabled until the result of this command is received. |desc}]
 
-  (* Ensures that the given node will have specified pseudo-classes whenever its style is computed by
-the browser. *)
   module ForcePseudoState = struct
     module Response : sig
       type result = Types.assoc
@@ -3691,8 +3718,10 @@ the browser. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Ensures that the given node will have specified pseudo-classes whenever its style is computed by
+the browser. |desc}]
 
-  (* Ensures that the given node is in its starting-style state. *)
   module ForceStartingStyle = struct
     module Response : sig
       type result = Types.assoc
@@ -3750,8 +3779,9 @@ the browser. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Ensures that the given node is in its starting-style state. |desc}]
 
-  (* No description provided *)
   module GetBackgroundColors = struct
     module Response : sig
       type result = {
@@ -3862,8 +3892,8 @@ the browser. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Returns the computed style for a DOM node identified by `nodeId`. *)
   module GetComputedStyleForNode = struct
     module Response : sig
       type result = {
@@ -3927,11 +3957,9 @@ the browser. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the computed style for a DOM node identified by `nodeId`. |desc}]
 
-  (* Resolve the specified values in the context of the provided element.
-For example, a value of '1em' is evaluated according to the computed
-'font-size' of the element and a value 'calc(1px + 2px)' will be
-resolved to '3px'. *)
   module ResolveValues = struct
     module Response : sig
       type result = {
@@ -4016,8 +4044,12 @@ resolved to '3px'. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Resolve the specified values in the context of the provided element.
+For example, a value of '1em' is evaluated according to the computed
+'font-size' of the element and a value 'calc(1px + 2px)' will be
+resolved to '3px'. |desc}]
 
-  (* No description provided *)
   module GetLonghandProperties = struct
     module Response : sig
       type result = {
@@ -4080,9 +4112,8 @@ resolved to '3px'. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Returns the styles defined inline (explicitly in the "style" attribute and implicitly, using DOM
-attributes) for a DOM node identified by `nodeId`. *)
   module GetInlineStylesForNode = struct
     module Response : sig
       type result = {
@@ -4160,9 +4191,10 @@ attributes) for a DOM node identified by `nodeId`. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the styles defined inline (explicitly in the "style" attribute and implicitly, using DOM
+attributes) for a DOM node identified by `nodeId`. |desc}]
 
-  (* Returns the styles coming from animations & transitions
-including the animation & transition styles coming from inheritance chain. *)
   module GetAnimatedStylesForNode = struct
     module Response : sig
       type result = {
@@ -4250,8 +4282,10 @@ including the animation & transition styles coming from inheritance chain. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the styles coming from animations & transitions
+including the animation & transition styles coming from inheritance chain. |desc}]
 
-  (* Returns requested styles for a DOM node identified by `nodeId`. *)
   module GetMatchedStylesForNode = struct
     module Response : sig
       type result = {
@@ -4461,8 +4495,9 @@ including the animation & transition styles coming from inheritance chain. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns requested styles for a DOM node identified by `nodeId`. |desc}]
 
-  (* Returns all media queries parsed by the rendering engine. *)
   module GetMediaQueries = struct
     module Response : sig
       type result = {
@@ -4513,9 +4548,9 @@ including the animation & transition styles coming from inheritance chain. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns all media queries parsed by the rendering engine. |desc}]
 
-  (* Requests information about platform fonts which we used to render child TextNodes in the given
-node. *)
   module GetPlatformFontsForNode = struct
     module Response : sig
       type result = {
@@ -4579,8 +4614,10 @@ node. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Requests information about platform fonts which we used to render child TextNodes in the given
+node. |desc}]
 
-  (* Returns the current textual content for a stylesheet. *)
   module GetStyleSheetText = struct
     module Response : sig
       type result = {
@@ -4640,11 +4677,9 @@ node. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the current textual content for a stylesheet. |desc}]
 
-  (* Returns all layers parsed by the rendering engine for the tree scope of a node.
-Given a DOM element identified by nodeId, getLayersForNode returns the root
-layer for the nearest ancestor document or shadow root. The layer root contains
-the full layer tree for the tree scope and their ordering. *)
   module GetLayersForNode = struct
     module Response : sig
       type result = {
@@ -4706,9 +4741,12 @@ the full layer tree for the tree scope and their ordering. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns all layers parsed by the rendering engine for the tree scope of a node.
+Given a DOM element identified by nodeId, getLayersForNode returns the root
+layer for the nearest ancestor document or shadow root. The layer root contains
+the full layer tree for the tree scope and their ordering. |desc}]
 
-  (* Given a CSS selector text and a style sheet ID, getLocationForSelector
-returns an array of locations of the CSS selector in the style sheet. *)
   module GetLocationForSelector = struct
     module Response : sig
       type result = {
@@ -4772,13 +4810,10 @@ returns an array of locations of the CSS selector in the style sheet. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Given a CSS selector text and a style sheet ID, getLocationForSelector
+returns an array of locations of the CSS selector in the style sheet. |desc}]
 
-  (* Starts tracking the given node for the computed style updates
-and whenever the computed style is updated for node, it queues
-a `computedStyleUpdated` event with throttling.
-There can only be 1 node tracked for computed style updates
-so passing a new node id removes tracking from the previous node.
-Pass `undefined` to disable tracking. *)
   module TrackComputedStyleUpdatesForNode = struct
     module Response : sig
       type result = Types.assoc
@@ -4838,13 +4873,14 @@ Pass `undefined` to disable tracking. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Starts tracking the given node for the computed style updates
+and whenever the computed style is updated for node, it queues
+a `computedStyleUpdated` event with throttling.
+There can only be 1 node tracked for computed style updates
+so passing a new node id removes tracking from the previous node.
+Pass `undefined` to disable tracking. |desc}]
 
-  (* Starts tracking the given computed styles for updates. The specified array of properties
-replaces the one previously specified. Pass empty array to disable tracking.
-Use takeComputedStyleUpdates to retrieve the list of nodes that had properties modified.
-The changes to computed style properties are only tracked for nodes pushed to the front-end
-by the DOM agent. If no changes to the tracked properties occur after the node has been pushed
-to the front-end, no updates will be issued for the node. *)
   module TrackComputedStyleUpdates = struct
     module Response : sig
       type result = Types.assoc
@@ -4897,8 +4933,14 @@ to the front-end, no updates will be issued for the node. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Starts tracking the given computed styles for updates. The specified array of properties
+replaces the one previously specified. Pass empty array to disable tracking.
+Use takeComputedStyleUpdates to retrieve the list of nodes that had properties modified.
+The changes to computed style properties are only tracked for nodes pushed to the front-end
+by the DOM agent. If no changes to the tracked properties occur after the node has been pushed
+to the front-end, no updates will be issued for the node. |desc}]
 
-  (* Polls the next batch of computed style updates. *)
   module TakeComputedStyleUpdates = struct
     module Response : sig
       type result = {
@@ -4955,9 +4997,8 @@ to the front-end, no updates will be issued for the node. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Polls the next batch of computed style updates. |desc}]
 
-  (* Find a rule with the given active property for the given node and set the new value for this
-property *)
   module SetEffectivePropertyValueForNode = struct
     module Response : sig
       type result = Types.assoc
@@ -5019,8 +5060,10 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Find a rule with the given active property for the given node and set the new value for this
+property |desc}]
 
-  (* Modifies the property rule property name. *)
   module SetPropertyRulePropertyName = struct
     module Response : sig
       type result = {
@@ -5089,8 +5132,8 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Modifies the property rule property name. |desc}]
 
-  (* Modifies the keyframe rule key text. *)
   module SetKeyframeKey = struct
     module Response : sig
       type result = {
@@ -5158,8 +5201,8 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Modifies the keyframe rule key text. |desc}]
 
-  (* Modifies the rule selector. *)
   module SetMediaText = struct
     module Response : sig
       type result = {
@@ -5226,8 +5269,8 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Modifies the rule selector. |desc}]
 
-  (* Modifies the expression of a container query. *)
   module SetContainerQueryText = struct
     module Response : sig
       type result = {
@@ -5296,8 +5339,8 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Modifies the expression of a container query. |desc}]
 
-  (* Modifies the expression of a supports at-rule. *)
   module SetSupportsText = struct
     module Response : sig
       type result = {
@@ -5364,8 +5407,8 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Modifies the expression of a supports at-rule. |desc}]
 
-  (* Modifies the expression of a scope at-rule. *)
   module SetScopeText = struct
     module Response : sig
       type result = {
@@ -5432,8 +5475,8 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Modifies the expression of a scope at-rule. |desc}]
 
-  (* Modifies the rule selector. *)
   module SetRuleSelector = struct
     module Response : sig
       type result = {
@@ -5502,8 +5545,8 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Modifies the rule selector. |desc}]
 
-  (* Sets the new stylesheet text. *)
   module SetStyleSheetText = struct
     module Response : sig
       type result = {
@@ -5570,8 +5613,8 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets the new stylesheet text. |desc}]
 
-  (* Applies specified style edits one after another in the given order. *)
   module SetStyleTexts = struct
     module Response : sig
       type result = {
@@ -5646,8 +5689,9 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Applies specified style edits one after another in the given order. |desc}]
 
-  (* Enables the selector recording. *)
   module StartRuleUsageTracking = struct
     module Response : sig
       type result = Types.assoc
@@ -5689,9 +5733,8 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables the selector recording. |desc}]
 
-  (* Stop tracking rule usage and return the list of rules that were used since last call to
-`takeCoverageDelta` (or since start of coverage instrumentation). *)
   module StopRuleUsageTracking = struct
     module Response : sig
       type result = {
@@ -5742,9 +5785,10 @@ property *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Stop tracking rule usage and return the list of rules that were used since last call to
+`takeCoverageDelta` (or since start of coverage instrumentation). |desc}]
 
-  (* Obtain list of rules that became used since last call to this method (or since start of coverage
-instrumentation). *)
   module TakeCoverageDelta = struct
     module Response : sig
       type result = {
@@ -5801,8 +5845,10 @@ instrumentation). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Obtain list of rules that became used since last call to this method (or since start of coverage
+instrumentation). |desc}]
 
-  (* Enables/disables rendering of local CSS fonts (enabled by default). *)
   module SetLocalFontsEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -5856,10 +5902,11 @@ instrumentation). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables/disables rendering of local CSS fonts (enabled by default). |desc}]
 end
 
 module CacheStorage = struct
-  (* Deletes a cache. *)
   module DeleteCache = struct
     module Response : sig
       type result = Types.assoc
@@ -5912,8 +5959,8 @@ module CacheStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Deletes a cache. |desc}]
 
-  (* Deletes a cache entry. *)
   module DeleteEntry = struct
     module Response : sig
       type result = Types.assoc
@@ -5969,8 +6016,8 @@ module CacheStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Deletes a cache entry. |desc}]
 
-  (* Requests cache names. *)
   module RequestCacheNames = struct
     module Response : sig
       type result = {
@@ -6045,8 +6092,8 @@ module CacheStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Requests cache names. |desc}]
 
-  (* Fetches cache entry. *)
   module RequestCachedResponse = struct
     module Response : sig
       type result = {
@@ -6118,8 +6165,8 @@ module CacheStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Fetches cache entry. |desc}]
 
-  (* Requests data from cache. *)
   module RequestEntries = struct
     module Response : sig
       type result = {
@@ -6210,14 +6257,10 @@ module CacheStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Requests data from cache. |desc}]
 end
 
 module Cast = struct
-  (* Starts observing for sinks that can be used for tab mirroring, and if set,
-sinks compatible with |presentationUrl| as well. When sinks are found, a
-|sinksUpdated| event is fired.
-Also starts observing for issue messages. When an issue is added or removed,
-an |issueUpdated| event is fired. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -6272,8 +6315,13 @@ an |issueUpdated| event is fired. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Starts observing for sinks that can be used for tab mirroring, and if set,
+sinks compatible with |presentationUrl| as well. When sinks are found, a
+|sinksUpdated| event is fired.
+Also starts observing for issue messages. When an issue is added or removed,
+an |issueUpdated| event is fired. |desc}]
 
-  (* Stops observing for sinks and issues. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -6315,9 +6363,8 @@ an |issueUpdated| event is fired. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Stops observing for sinks and issues. |desc}]
 
-  (* Sets a sink to be used when the web page requests the browser to choose a
-sink via Presentation API, Remote Playback API, or Cast SDK. *)
   module SetSinkToUse = struct
     module Response : sig
       type result = Types.assoc
@@ -6370,8 +6417,10 @@ sink via Presentation API, Remote Playback API, or Cast SDK. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets a sink to be used when the web page requests the browser to choose a
+sink via Presentation API, Remote Playback API, or Cast SDK. |desc}]
 
-  (* Starts mirroring the desktop to the sink. *)
   module StartDesktopMirroring = struct
     module Response : sig
       type result = Types.assoc
@@ -6424,8 +6473,8 @@ sink via Presentation API, Remote Playback API, or Cast SDK. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Starts mirroring the desktop to the sink. |desc}]
 
-  (* Starts mirroring the tab to the sink. *)
   module StartTabMirroring = struct
     module Response : sig
       type result = Types.assoc
@@ -6478,8 +6527,8 @@ sink via Presentation API, Remote Playback API, or Cast SDK. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Starts mirroring the tab to the sink. |desc}]
 
-  (* Stops the active Cast session on the sink. *)
   module StopCasting = struct
     module Response : sig
       type result = Types.assoc
@@ -6532,10 +6581,10 @@ sink via Presentation API, Remote Playback API, or Cast SDK. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Stops the active Cast session on the sink. |desc}]
 end
 
 module DOM = struct
-  (* Collects class names for the node with given id and all of it's child nodes. *)
   module CollectClassNamesFromSubtree = struct
     module Response : sig
       type result = {
@@ -6598,9 +6647,9 @@ module DOM = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Collects class names for the node with given id and all of it's child nodes. |desc}]
 
-  (* Creates a deep copy of the specified node and places it into the target container before the
-given anchor. *)
   module CopyTo = struct
     module Response : sig
       type result = {
@@ -6673,9 +6722,10 @@ given anchor. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Creates a deep copy of the specified node and places it into the target container before the
+given anchor. |desc}]
 
-  (* Describes node given its id, does not require domain to be enabled. Does not start tracking any
-objects, can be used for automation. *)
   module DescribeNode = struct
     module Response : sig
       type result = {
@@ -6760,10 +6810,10 @@ objects, can be used for automation. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Describes node given its id, does not require domain to be enabled. Does not start tracking any
+objects, can be used for automation. |desc}]
 
-  (* Scrolls the specified rect of the given node into view if not already visible.
-Note: exactly one between nodeId, backendNodeId and objectId should be passed
-to identify the node. *)
   module ScrollIntoViewIfNeeded = struct
     module Response : sig
       type result = Types.assoc
@@ -6835,8 +6885,11 @@ to identify the node. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Scrolls the specified rect of the given node into view if not already visible.
+Note: exactly one between nodeId, backendNodeId and objectId should be passed
+to identify the node. |desc}]
 
-  (* Disables DOM agent for the given page. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -6878,9 +6931,8 @@ to identify the node. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables DOM agent for the given page. |desc}]
 
-  (* Discards search results from the session with the given id. `getSearchResults` should no longer
-be called for that search. *)
   module DiscardSearchResults = struct
     module Response : sig
       type result = Types.assoc
@@ -6933,8 +6985,10 @@ be called for that search. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Discards search results from the session with the given id. `getSearchResults` should no longer
+be called for that search. |desc}]
 
-  (* Enables DOM agent for the given page. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -7003,8 +7057,8 @@ be called for that search. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables DOM agent for the given page. |desc}]
 
-  (* Focuses the given element. *)
   module Focus = struct
     module Response : sig
       type result = Types.assoc
@@ -7068,8 +7122,8 @@ be called for that search. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Focuses the given element. |desc}]
 
-  (* Returns attributes for the specified node. *)
   module GetAttributes = struct
     module Response : sig
       type result = {
@@ -7136,8 +7190,8 @@ be called for that search. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns attributes for the specified node. |desc}]
 
-  (* Returns boxes for the given node. *)
   module GetBoxModel = struct
     module Response : sig
       type result = {
@@ -7210,9 +7264,8 @@ be called for that search. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns boxes for the given node. |desc}]
 
-  (* Returns quads that describe node position on the page. This method
-might return multiple quads for inline nodes. *)
   module GetContentQuads = struct
     module Response : sig
       type result = {
@@ -7287,9 +7340,10 @@ might return multiple quads for inline nodes. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns quads that describe node position on the page. This method
+might return multiple quads for inline nodes. |desc}]
 
-  (* Returns the root DOM node (and optionally the subtree) to the caller.
-Implicitly enables the DOM domain events for the current target. *)
   module GetDocument = struct
     module Response : sig
       type result = {
@@ -7361,10 +7415,10 @@ Implicitly enables the DOM domain events for the current target. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the root DOM node (and optionally the subtree) to the caller.
+Implicitly enables the DOM domain events for the current target. |desc}]
 
-  (* Returns the root DOM node (and optionally the subtree) to the caller.
-Deprecated, as it is not designed to work well with the rest of the DOM agent.
-Use DOMSnapshot.captureSnapshot instead. *)
   module GetFlattenedDocument = struct
     module Response : sig
       type result = {
@@ -7438,8 +7492,11 @@ Use DOMSnapshot.captureSnapshot instead. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the root DOM node (and optionally the subtree) to the caller.
+Deprecated, as it is not designed to work well with the rest of the DOM agent.
+Use DOMSnapshot.captureSnapshot instead. |desc}]
 
-  (* Finds nodes with a given computed style in a subtree. *)
   module GetNodesForSubtreeByStyle = struct
     module Response : sig
       type result = {
@@ -7515,9 +7572,9 @@ Use DOMSnapshot.captureSnapshot instead. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Finds nodes with a given computed style in a subtree. |desc}]
 
-  (* Returns node id at given location. Depending on whether DOM domain is enabled, nodeId is
-either returned or not. *)
   module GetNodeForLocation = struct
     module Response : sig
       type result = {
@@ -7608,8 +7665,10 @@ either returned or not. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns node id at given location. Depending on whether DOM domain is enabled, nodeId is
+either returned or not. |desc}]
 
-  (* Returns node's HTML markup. *)
   module GetOuterHTML = struct
     module Response : sig
       type result = {
@@ -7680,8 +7739,8 @@ either returned or not. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns node's HTML markup. |desc}]
 
-  (* Returns the id of the nearest ancestor that is a relayout boundary. *)
   module GetRelayoutBoundary = struct
     module Response : sig
       type result = {
@@ -7745,9 +7804,9 @@ either returned or not. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the id of the nearest ancestor that is a relayout boundary. |desc}]
 
-  (* Returns search results from given `fromIndex` to given `toIndex` from the search with the given
-identifier. *)
   module GetSearchResults = struct
     module Response : sig
       type result = {
@@ -7816,8 +7875,10 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns search results from given `fromIndex` to given `toIndex` from the search with the given
+identifier. |desc}]
 
-  (* Hides any highlight. *)
   module HideHighlight = struct
     module Response : sig
       type result = Types.assoc
@@ -7859,8 +7920,8 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Hides any highlight. |desc}]
 
-  (* Highlights DOM node. *)
   module HighlightNode = struct
     module Response : sig
       type result = Types.assoc
@@ -7902,8 +7963,8 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Highlights DOM node. |desc}]
 
-  (* Highlights given rectangle. *)
   module HighlightRect = struct
     module Response : sig
       type result = Types.assoc
@@ -7945,8 +8006,8 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Highlights given rectangle. |desc}]
 
-  (* Marks last undoable state. *)
   module MarkUndoableState = struct
     module Response : sig
       type result = Types.assoc
@@ -7988,8 +8049,8 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Marks last undoable state. |desc}]
 
-  (* Moves node into the new container, places it before the given anchor. *)
   module MoveTo = struct
     module Response : sig
       type result = {
@@ -8062,9 +8123,9 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Moves node into the new container, places it before the given anchor. |desc}]
 
-  (* Searches for a given string in the DOM tree. Use `getSearchResults` to access search results or
-`cancelSearch` to end this search session. *)
   module PerformSearch = struct
     module Response : sig
       type result = {
@@ -8136,8 +8197,10 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Searches for a given string in the DOM tree. Use `getSearchResults` to access search results or
+`cancelSearch` to end this search session. |desc}]
 
-  (* Requests that the node is sent to the caller given its path. // FIXME, use XPath *)
   module PushNodeByPathToFrontend = struct
     module Response : sig
       type result = {
@@ -8199,8 +8262,9 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Requests that the node is sent to the caller given its path. // FIXME, use XPath |desc}]
 
-  (* Requests that a batch of nodes is sent to the caller given their backend node ids. *)
   module PushNodesByBackendIdsToFrontend = struct
     module Response : sig
       type result = {
@@ -8276,8 +8340,9 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Requests that a batch of nodes is sent to the caller given their backend node ids. |desc}]
 
-  (* Executes `querySelector` on a given node. *)
   module QuerySelector = struct
     module Response : sig
       type result = {
@@ -8340,8 +8405,8 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Executes `querySelector` on a given node. |desc}]
 
-  (* Executes `querySelectorAll` on a given node. *)
   module QuerySelectorAll = struct
     module Response : sig
       type result = {
@@ -8404,10 +8469,8 @@ identifier. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Executes `querySelectorAll` on a given node. |desc}]
 
-  (* Returns NodeIds of current top layer elements.
-Top layer is rendered closest to the user within a viewport, therefore its elements always
-appear on top of all other content. *)
   module GetTopLayerElements = struct
     module Response : sig
       type result = {
@@ -8458,8 +8521,11 @@ appear on top of all other content. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns NodeIds of current top layer elements.
+Top layer is rendered closest to the user within a viewport, therefore its elements always
+appear on top of all other content. |desc}]
 
-  (* Returns the NodeId of the matched element according to certain relations. *)
   module GetElementByRelation = struct
     module Response : sig
       type result = {
@@ -8538,8 +8604,9 @@ appear on top of all other content. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the NodeId of the matched element according to certain relations. |desc}]
 
-  (* Re-does the last undone action. *)
   module Redo = struct
     module Response : sig
       type result = Types.assoc
@@ -8581,8 +8648,8 @@ appear on top of all other content. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Re-does the last undone action. |desc}]
 
-  (* Removes attribute with given name from an element with given id. *)
   module RemoveAttribute = struct
     module Response : sig
       type result = Types.assoc
@@ -8638,8 +8705,9 @@ appear on top of all other content. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Removes attribute with given name from an element with given id. |desc}]
 
-  (* Removes node with given id. *)
   module RemoveNode = struct
     module Response : sig
       type result = Types.assoc
@@ -8692,10 +8760,8 @@ appear on top of all other content. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Removes node with given id. |desc}]
 
-  (* Requests that children of the node with given id are returned to the caller in form of
-`setChildNodes` events where not only immediate children are retrieved, but all children down to
-the specified depth. *)
   module RequestChildNodes = struct
     module Response : sig
       type result = Types.assoc
@@ -8762,10 +8828,11 @@ the specified depth. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Requests that children of the node with given id are returned to the caller in form of
+`setChildNodes` events where not only immediate children are retrieved, but all children down to
+the specified depth. |desc}]
 
-  (* Requests that the node is sent to the caller given the JavaScript node object reference. All
-nodes that form the path from the node to the root are also sent to the client as a series of
-`setChildNodes` notifications. *)
   module RequestNode = struct
     module Response : sig
       type result = {
@@ -8828,8 +8895,11 @@ nodes that form the path from the node to the root are also sent to the client a
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Requests that the node is sent to the caller given the JavaScript node object reference. All
+nodes that form the path from the node to the root are also sent to the client as a series of
+`setChildNodes` notifications. |desc}]
 
-  (* Resolves the JavaScript node object for a given NodeId or BackendNodeId. *)
   module ResolveNode = struct
     module Response : sig
       type result = {
@@ -8910,8 +8980,9 @@ nodes that form the path from the node to the root are also sent to the client a
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Resolves the JavaScript node object for a given NodeId or BackendNodeId. |desc}]
 
-  (* Sets attribute for an element with given id. *)
   module SetAttributeValue = struct
     module Response : sig
       type result = Types.assoc
@@ -8967,9 +9038,8 @@ nodes that form the path from the node to the root are also sent to the client a
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets attribute for an element with given id. |desc}]
 
-  (* Sets attributes on element with given id. This method is useful when user edits some existing
-attribute value and types in several attribute name/value pairs. *)
   module SetAttributesAsText = struct
     module Response : sig
       type result = Types.assoc
@@ -9035,8 +9105,10 @@ attribute value and types in several attribute name/value pairs. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets attributes on element with given id. This method is useful when user edits some existing
+attribute value and types in several attribute name/value pairs. |desc}]
 
-  (* Sets files for the given file input element. *)
   module SetFileInputFiles = struct
     module Response : sig
       type result = Types.assoc
@@ -9102,8 +9174,8 @@ attribute value and types in several attribute name/value pairs. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets files for the given file input element. |desc}]
 
-  (* Sets if stack traces should be captured for Nodes. See `Node.getNodeStackTraces`. Default is disabled. *)
   module SetNodeStackTracesEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -9155,8 +9227,9 @@ attribute value and types in several attribute name/value pairs. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets if stack traces should be captured for Nodes. See `Node.getNodeStackTraces`. Default is disabled. |desc}]
 
-  (* Gets stack traces associated with a Node. As of now, only provides stack trace for Node creation. *)
   module GetNodeStackTraces = struct
     module Response : sig
       type result = {
@@ -9223,9 +9296,9 @@ attribute value and types in several attribute name/value pairs. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Gets stack traces associated with a Node. As of now, only provides stack trace for Node creation. |desc}]
 
-  (* Returns file information for the given
-File wrapper. *)
   module GetFileInfo = struct
     module Response : sig
       type result = {
@@ -9286,8 +9359,10 @@ File wrapper. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns file information for the given
+File wrapper. |desc}]
 
-  (* Returns list of detached nodes *)
   module GetDetachedDomNodes = struct
     module Response : sig
       type result = {
@@ -9338,9 +9413,8 @@ File wrapper. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns list of detached nodes |desc}]
 
-  (* Enables console to refer to the node with given id via $x (see Command Line API for more details
-$x functions). *)
   module SetInspectedNode = struct
     module Response : sig
       type result = Types.assoc
@@ -9395,8 +9469,10 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables console to refer to the node with given id via $x (see Command Line API for more details
+$x functions). |desc}]
 
-  (* Sets node name for a node with given id. *)
   module SetNodeName = struct
     module Response : sig
       type result = {
@@ -9459,8 +9535,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets node name for a node with given id. |desc}]
 
-  (* Sets node value for a node with given id. *)
   module SetNodeValue = struct
     module Response : sig
       type result = Types.assoc
@@ -9514,8 +9590,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets node value for a node with given id. |desc}]
 
-  (* Sets node HTML markup, returns new node id. *)
   module SetOuterHTML = struct
     module Response : sig
       type result = Types.assoc
@@ -9570,8 +9646,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets node HTML markup, returns new node id. |desc}]
 
-  (* Undoes the last performed action. *)
   module Undo = struct
     module Response : sig
       type result = Types.assoc
@@ -9613,8 +9689,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Undoes the last performed action. |desc}]
 
-  (* Returns iframe node that owns iframe with the given domain. *)
   module GetFrameOwner = struct
     module Response : sig
       type result = {
@@ -9688,12 +9764,9 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns iframe node that owns iframe with the given domain. |desc}]
 
-  (* Returns the query container of the given node based on container query
-conditions: containerName, physical and logical axes, and whether it queries
-scroll-state. If no axes are provided and queriesScrollState is false, the
-style container is returned, which is the direct parent or the closest
-element with a matching container-name. *)
   module GetContainerForNode = struct
     module Response : sig
       type result = {
@@ -9779,9 +9852,13 @@ element with a matching container-name. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the query container of the given node based on container query
+conditions: containerName, physical and logical axes, and whether it queries
+scroll-state. If no axes are provided and queriesScrollState is false, the
+style container is returned, which is the direct parent or the closest
+element with a matching container-name. |desc}]
 
-  (* Returns the descendants of a container query container that have
-container queries against this container. *)
   module GetQueryingDescendantsForContainer = struct
     module Response : sig
       type result = {
@@ -9856,9 +9933,10 @@ container queries against this container. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the descendants of a container query container that have
+container queries against this container. |desc}]
 
-  (* Returns the target anchor element of the given anchor query according to
-https://www.w3.org/TR/css-anchor-position-1/#target. *)
   module GetAnchorElement = struct
     module Response : sig
       type result = {
@@ -9932,10 +10010,12 @@ https://www.w3.org/TR/css-anchor-position-1/#target. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the target anchor element of the given anchor query according to
+https://www.w3.org/TR/css-anchor-position-1/#target. |desc}]
 end
 
 module DOMDebugger = struct
-  (* Returns event listeners of the given object. *)
   module GetEventListeners = struct
     module Response : sig
       type result = {
@@ -10013,8 +10093,8 @@ module DOMDebugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns event listeners of the given object. |desc}]
 
-  (* Removes DOM breakpoint that was set using `setDOMBreakpoint`. *)
   module RemoveDOMBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -10070,8 +10150,9 @@ module DOMDebugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Removes DOM breakpoint that was set using `setDOMBreakpoint`. |desc}]
 
-  (* Removes breakpoint on particular DOM event. *)
   module RemoveEventListenerBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -10132,8 +10213,8 @@ module DOMDebugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Removes breakpoint on particular DOM event. |desc}]
 
-  (* Removes breakpoint on particular native event. *)
   module RemoveInstrumentationBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -10191,8 +10272,8 @@ module DOMDebugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Removes breakpoint on particular native event. |desc}]
 
-  (* Removes breakpoint from XMLHttpRequest. *)
   module RemoveXHRBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -10244,8 +10325,8 @@ module DOMDebugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Removes breakpoint from XMLHttpRequest. |desc}]
 
-  (* Sets breakpoint on particular CSP violations. *)
   module SetBreakOnCSPViolation = struct
     module Response : sig
       type result = Types.assoc
@@ -10303,8 +10384,8 @@ module DOMDebugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets breakpoint on particular CSP violations. |desc}]
 
-  (* Sets breakpoint on particular operation with DOM. *)
   module SetDOMBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -10360,8 +10441,8 @@ module DOMDebugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets breakpoint on particular operation with DOM. |desc}]
 
-  (* Sets breakpoint on particular DOM event. *)
   module SetEventListenerBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -10427,8 +10508,8 @@ module DOMDebugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets breakpoint on particular DOM event. |desc}]
 
-  (* Sets breakpoint on particular native event. *)
   module SetInstrumentationBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -10486,8 +10567,8 @@ module DOMDebugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets breakpoint on particular native event. |desc}]
 
-  (* Sets breakpoint on XMLHttpRequest. *)
   module SetXHRBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -10543,10 +10624,10 @@ module DOMDebugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets breakpoint on XMLHttpRequest. |desc}]
 end
 
 module EventBreakpoints = struct
-  (* Sets breakpoint on particular native event. *)
   module SetInstrumentationBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -10604,8 +10685,8 @@ module EventBreakpoints = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets breakpoint on particular native event. |desc}]
 
-  (* Removes breakpoint on particular native event. *)
   module RemoveInstrumentationBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -10663,8 +10744,8 @@ module EventBreakpoints = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Removes breakpoint on particular native event. |desc}]
 
-  (* Removes all breakpoints *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -10706,10 +10787,10 @@ module EventBreakpoints = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Removes all breakpoints |desc}]
 end
 
 module DOMSnapshot = struct
-  (* Disables DOM snapshot agent for the given page. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -10751,8 +10832,8 @@ module DOMSnapshot = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables DOM snapshot agent for the given page. |desc}]
 
-  (* Enables DOM snapshot agent for the given page. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -10794,11 +10875,8 @@ module DOMSnapshot = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables DOM snapshot agent for the given page. |desc}]
 
-  (* Returns a document snapshot, including the full DOM tree of the root node (including iframes,
-template contents, and imported documents) in a flattened array, as well as layout and
-white-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is
-flattened. *)
   module GetSnapshot = struct
     module Response : sig
       type result = {
@@ -10908,11 +10986,12 @@ flattened. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
-
-  (* Returns a document snapshot, including the full DOM tree of the root node (including iframes,
+  [@@ocaml.doc
+    {desc|Returns a document snapshot, including the full DOM tree of the root node (including iframes,
 template contents, and imported documents) in a flattened array, as well as layout and
 white-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is
-flattened. *)
+flattened. |desc}]
+
   module CaptureSnapshot = struct
     module Response : sig
       type result = {
@@ -11029,10 +11108,14 @@ flattened. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns a document snapshot, including the full DOM tree of the root node (including iframes,
+template contents, and imported documents) in a flattened array, as well as layout and
+white-listed computed style information for the nodes. Shadow DOM in the returned DOM tree is
+flattened. |desc}]
 end
 
 module DOMStorage = struct
-  (* No description provided *)
   module Clear = struct
     module Response : sig
       type result = Types.assoc
@@ -11085,8 +11168,8 @@ module DOMStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Disables storage tracking, prevents storage events from being sent to the client. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -11128,8 +11211,9 @@ module DOMStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Disables storage tracking, prevents storage events from being sent to the client. |desc}]
 
-  (* Enables storage tracking, storage events will now be delivered to the client. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -11171,8 +11255,9 @@ module DOMStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables storage tracking, storage events will now be delivered to the client. |desc}]
 
-  (* No description provided *)
   module GetDOMStorageItems = struct
     module Response : sig
       type result = {
@@ -11234,8 +11319,8 @@ module DOMStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module RemoveDOMStorageItem = struct
     module Response : sig
       type result = Types.assoc
@@ -11289,8 +11374,8 @@ module DOMStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module SetDOMStorageItem = struct
     module Response : sig
       type result = Types.assoc
@@ -11345,10 +11430,10 @@ module DOMStorage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module DeviceOrientation = struct
-  (* Clears the overridden Device Orientation. *)
   module ClearDeviceOrientationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -11394,8 +11479,8 @@ module DeviceOrientation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears the overridden Device Orientation. |desc}]
 
-  (* Overrides the Device Orientation. *)
   module SetDeviceOrientationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -11454,10 +11539,10 @@ module DeviceOrientation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Overrides the Device Orientation. |desc}]
 end
 
 module Emulation = struct
-  (* Tells whether emulation is supported. *)
   module CanEmulate = struct
     module Response : sig
       type result = {
@@ -11508,8 +11593,8 @@ module Emulation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Tells whether emulation is supported. |desc}]
 
-  (* Clears the overridden device metrics. *)
   module ClearDeviceMetricsOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -11551,8 +11636,8 @@ module Emulation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears the overridden device metrics. |desc}]
 
-  (* Clears the overridden Geolocation Position and Error. *)
   module ClearGeolocationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -11594,8 +11679,9 @@ module Emulation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Clears the overridden Geolocation Position and Error. |desc}]
 
-  (* Requests that page scale factor is reset to initial values. *)
   module ResetPageScaleFactor = struct
     module Response : sig
       type result = Types.assoc
@@ -11637,8 +11723,9 @@ module Emulation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Requests that page scale factor is reset to initial values. |desc}]
 
-  (* Enables or disables simulating a focused and active page. *)
   module SetFocusEmulationEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -11697,8 +11784,9 @@ module Emulation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables or disables simulating a focused and active page. |desc}]
 
-  (* Automatically render all web contents using a dark theme. *)
   module SetAutoDarkModeOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -11755,8 +11843,9 @@ module Emulation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Automatically render all web contents using a dark theme. |desc}]
 
-  (* Enables CPU throttling to emulate slow CPUs. *)
   module SetCPUThrottlingRate = struct
     module Response : sig
       type result = Types.assoc
@@ -11812,9 +11901,8 @@ module Emulation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables CPU throttling to emulate slow CPUs. |desc}]
 
-  (* Sets or clears an override of the default background color of the frame. This override is used
-if the content does not specify one. *)
   module SetDefaultBackgroundColorOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -11877,10 +11965,10 @@ if the content does not specify one. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets or clears an override of the default background color of the frame. This override is used
+if the content does not specify one. |desc}]
 
-  (* Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
-window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
-query results). *)
   module SetDeviceMetricsOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -12035,9 +12123,11 @@ query results). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
+window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
+query results). |desc}]
 
-  (* Start reporting the given posture value to the Device Posture API.
-This override can also be set in setDeviceMetricsOverride(). *)
   module SetDevicePostureOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -12095,11 +12185,10 @@ This override can also be set in setDeviceMetricsOverride(). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Start reporting the given posture value to the Device Posture API.
+This override can also be set in setDeviceMetricsOverride(). |desc}]
 
-  (* Clears a device posture override set with either setDeviceMetricsOverride()
-or setDevicePostureOverride() and starts using posture information from the
-platform again.
-Does nothing if no override is set. *)
   module ClearDevicePostureOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -12141,8 +12230,12 @@ Does nothing if no override is set. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Clears a device posture override set with either setDeviceMetricsOverride()
+or setDevicePostureOverride() and starts using posture information from the
+platform again.
+Does nothing if no override is set. |desc}]
 
-  (* No description provided *)
   module SetScrollbarsHidden = struct
     module Response : sig
       type result = Types.assoc
@@ -12196,8 +12289,8 @@ Does nothing if no override is set. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module SetDocumentCookieDisabled = struct
     module Response : sig
       type result = Types.assoc
@@ -12256,8 +12349,8 @@ Does nothing if no override is set. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module SetEmitTouchEventsForMouse = struct
     module Response : sig
       type result = Types.assoc
@@ -12334,8 +12427,8 @@ Does nothing if no override is set. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Emulates the given media type or media feature for CSS media queries. *)
   module SetEmulatedMedia = struct
     module Response : sig
       type result = Types.assoc
@@ -12395,8 +12488,9 @@ Does nothing if no override is set. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Emulates the given media type or media feature for CSS media queries. |desc}]
 
-  (* Emulates the given vision deficiency. *)
   module SetEmulatedVisionDeficiency = struct
     module Response : sig
       type result = Types.assoc
@@ -12488,9 +12582,8 @@ Does nothing if no override is set. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Emulates the given vision deficiency. |desc}]
 
-  (* Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
-unavailable. *)
   module SetGeolocationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -12548,8 +12641,10 @@ unavailable. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
+unavailable. |desc}]
 
-  (* No description provided *)
   module GetOverriddenSensorInformation = struct
     module Response : sig
       type result = {
@@ -12618,12 +12713,8 @@ unavailable. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Overrides a platform sensor of a given type. If |enabled| is true, calls to
-Sensor.start() will use a virtual sensor as backend rather than fetching
-data from a real hardware sensor. Otherwise, existing virtual
-sensor-backend Sensor objects will fire an error event and new calls to
-Sensor.start() will attempt to use a real sensor instead. *)
   module SetSensorOverrideEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -12686,9 +12777,13 @@ Sensor.start() will attempt to use a real sensor instead. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Overrides a platform sensor of a given type. If |enabled| is true, calls to
+Sensor.start() will use a virtual sensor as backend rather than fetching
+data from a real hardware sensor. Otherwise, existing virtual
+sensor-backend Sensor objects will fire an error event and new calls to
+Sensor.start() will attempt to use a real sensor instead. |desc}]
 
-  (* Updates the sensor readings reported by a sensor type previously overridden
-by setSensorOverrideEnabled. *)
   module SetSensorOverrideReadings = struct
     module Response : sig
       type result = Types.assoc
@@ -12748,11 +12843,10 @@ by setSensorOverrideEnabled. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Updates the sensor readings reported by a sensor type previously overridden
+by setSensorOverrideEnabled. |desc}]
 
-  (* Overrides a pressure source of a given type, as used by the Compute
-Pressure API, so that updates to PressureObserver.observe() are provided
-via setPressureStateOverride instead of being retrieved from
-platform-provided telemetry data. *)
   module SetPressureSourceOverrideEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -12815,10 +12909,12 @@ platform-provided telemetry data. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Overrides a pressure source of a given type, as used by the Compute
+Pressure API, so that updates to PressureObserver.observe() are provided
+via setPressureStateOverride instead of being retrieved from
+platform-provided telemetry data. |desc}]
 
-  (* Provides a given pressure state that will be processed and eventually be
-delivered to PressureObserver users. |source| must have been previously
-overridden by setPressureSourceOverrideEnabled. *)
   module SetPressureStateOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -12878,8 +12974,11 @@ overridden by setPressureSourceOverrideEnabled. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Provides a given pressure state that will be processed and eventually be
+delivered to PressureObserver users. |source| must have been previously
+overridden by setPressureSourceOverrideEnabled. |desc}]
 
-  (* Overrides the Idle state. *)
   module SetIdleOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -12935,8 +13034,8 @@ overridden by setPressureSourceOverrideEnabled. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Overrides the Idle state. |desc}]
 
-  (* Clears Idle state overrides. *)
   module ClearIdleOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -12978,8 +13077,8 @@ overridden by setPressureSourceOverrideEnabled. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears Idle state overrides. |desc}]
 
-  (* Overrides value returned by the javascript navigator object. *)
   module SetNavigatorOverrides = struct
     module Response : sig
       type result = Types.assoc
@@ -13033,8 +13132,9 @@ overridden by setPressureSourceOverrideEnabled. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Overrides value returned by the javascript navigator object. |desc}]
 
-  (* Sets a specified page scale factor. *)
   module SetPageScaleFactor = struct
     module Response : sig
       type result = Types.assoc
@@ -13087,8 +13187,8 @@ overridden by setPressureSourceOverrideEnabled. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets a specified page scale factor. |desc}]
 
-  (* Switches script execution in the page. *)
   module SetScriptExecutionDisabled = struct
     module Response : sig
       type result = Types.assoc
@@ -13148,8 +13248,8 @@ overridden by setPressureSourceOverrideEnabled. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Switches script execution in the page. |desc}]
 
-  (* Enables touch on platforms which do not support them. *)
   module SetTouchEmulationEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -13212,9 +13312,9 @@ overridden by setPressureSourceOverrideEnabled. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables touch on platforms which do not support them. |desc}]
 
-  (* Turns on virtual time for all frames (replacing real-time with a synthetic time source) and sets
-the current virtual time policy.  Note this supersedes any previous time budget. *)
   module SetVirtualTimePolicy = struct
     module Response : sig
       type result = {
@@ -13309,8 +13409,10 @@ the current virtual time policy.  Note this supersedes any previous time budget.
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Turns on virtual time for all frames (replacing real-time with a synthetic time source) and sets
+the current virtual time policy.  Note this supersedes any previous time budget. |desc}]
 
-  (* Overrides default host system locale with the specified one. *)
   module SetLocaleOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -13368,8 +13470,9 @@ the current virtual time policy.  Note this supersedes any previous time budget.
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Overrides default host system locale with the specified one. |desc}]
 
-  (* Overrides default host system timezone with the specified one. *)
   module SetTimezoneOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -13427,10 +13530,9 @@ the current virtual time policy.  Note this supersedes any previous time budget.
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Overrides default host system timezone with the specified one. |desc}]
 
-  (* Resizes the frame/viewport of the page. Note that this does not affect the frame's container
-(e.g. browser window). Can be used to produce screenshots of the specified size. Not supported
-on Android. *)
   module SetVisibleSize = struct
     module Response : sig
       type result = Types.assoc
@@ -13483,8 +13585,11 @@ on Android. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Resizes the frame/viewport of the page. Note that this does not affect the frame's container
+(e.g. browser window). Can be used to produce screenshots of the specified size. Not supported
+on Android. |desc}]
 
-  (* No description provided *)
   module SetDisabledImageTypes = struct
     module Response : sig
       type result = Types.assoc
@@ -13537,8 +13642,8 @@ on Android. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module SetHardwareConcurrencyOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -13597,9 +13702,8 @@ on Android. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Allows overriding user agent with the given string.
-`userAgentMetadata` must be set for Client Hint headers to be sent. *)
   module SetUserAgentOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -13666,8 +13770,10 @@ on Android. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Allows overriding user agent with the given string.
+`userAgentMetadata` must be set for Client Hint headers to be sent. |desc}]
 
-  (* Allows overriding the automation flag. *)
   module SetAutomationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -13721,13 +13827,10 @@ on Android. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Allows overriding the automation flag. |desc}]
 end
 
 module HeadlessExperimental = struct
-  (* Sends a BeginFrame to the target and returns when the frame was completed. Optionally captures a
-screenshot from the resulting frame. Requires that the target was created with enabled
-BeginFrameControl. Designed for use with --run-all-compositor-stages-before-draw, see also
-https://goo.gle/chrome-headless-rendering for more background. *)
   module BeginFrame = struct
     module Response : sig
       type result = {
@@ -13847,8 +13950,12 @@ https://goo.gle/chrome-headless-rendering for more background. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sends a BeginFrame to the target and returns when the frame was completed. Optionally captures a
+screenshot from the resulting frame. Requires that the target was created with enabled
+BeginFrameControl. Designed for use with --run-all-compositor-stages-before-draw, see also
+https://goo.gle/chrome-headless-rendering for more background. |desc}]
 
-  (* Disables headless events for the target. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -13890,8 +13997,8 @@ https://goo.gle/chrome-headless-rendering for more background. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables headless events for the target. |desc}]
 
-  (* Enables headless events for the target. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -13933,10 +14040,10 @@ https://goo.gle/chrome-headless-rendering for more background. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables headless events for the target. |desc}]
 end
 
 module IO = struct
-  (* Close the stream, discard any temporary backing storage. *)
   module Close = struct
     module Response : sig
       type result = Types.assoc
@@ -13989,8 +14096,9 @@ module IO = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Close the stream, discard any temporary backing storage. |desc}]
 
-  (* Read a chunk of the stream *)
   module Read = struct
     module Response : sig
       type result = {
@@ -14080,8 +14188,8 @@ module IO = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Read a chunk of the stream |desc}]
 
-  (* Return UUID of Blob object specified by a remote object id. *)
   module ResolveBlob = struct
     module Response : sig
       type result = {
@@ -14141,10 +14249,11 @@ module IO = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Return UUID of Blob object specified by a remote object id. |desc}]
 end
 
 module FileSystem = struct
-  (* No description provided *)
   module GetDirectory = struct
     module Response : sig
       type result = {
@@ -14209,10 +14318,10 @@ module FileSystem = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module IndexedDB = struct
-  (* Clears all entries from an object store. *)
   module ClearObjectStore = struct
     module Response : sig
       type result = Types.assoc
@@ -14289,8 +14398,8 @@ module IndexedDB = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears all entries from an object store. |desc}]
 
-  (* Deletes a database. *)
   module DeleteDatabase = struct
     module Response : sig
       type result = Types.assoc
@@ -14358,8 +14467,8 @@ module IndexedDB = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Deletes a database. |desc}]
 
-  (* Delete a range of entries from an object store *)
   module DeleteObjectStoreEntries = struct
     module Response : sig
       type result = Types.assoc
@@ -14444,8 +14553,8 @@ module IndexedDB = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Delete a range of entries from an object store |desc}]
 
-  (* Disables events from backend. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -14487,8 +14596,8 @@ module IndexedDB = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables events from backend. |desc}]
 
-  (* Enables events from backend. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -14530,8 +14639,8 @@ module IndexedDB = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables events from backend. |desc}]
 
-  (* Requests data from object store or index. *)
   module RequestData = struct
     module Response : sig
       type result = {
@@ -14641,8 +14750,8 @@ module IndexedDB = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Requests data from object store or index. |desc}]
 
-  (* Gets metadata of an object store. *)
   module GetMetadata = struct
     module Response : sig
       type result = {
@@ -14740,8 +14849,8 @@ module IndexedDB = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Gets metadata of an object store. |desc}]
 
-  (* Requests database with given name in given frame. *)
   module RequestDatabase = struct
     module Response : sig
       type result = {
@@ -14820,8 +14929,8 @@ module IndexedDB = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Requests database with given name in given frame. |desc}]
 
-  (* Requests database names for given security origin. *)
   module RequestDatabaseNames = struct
     module Response : sig
       type result = {
@@ -14896,10 +15005,10 @@ module IndexedDB = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Requests database names for given security origin. |desc}]
 end
 
 module Input = struct
-  (* Dispatches a drag event into the page. *)
   module DispatchDragEvent = struct
     module Response : sig
       type result = Types.assoc
@@ -14991,8 +15100,8 @@ module Input = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Dispatches a drag event into the page. |desc}]
 
-  (* Dispatches a key event to the page. *)
   module DispatchKeyEvent = struct
     module Response : sig
       type result = Types.assoc
@@ -15167,9 +15276,8 @@ module Input = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Dispatches a key event to the page. |desc}]
 
-  (* This method emulates inserting text that doesn't come from a key press,
-for example an emoji keyboard or an IME. *)
   module InsertText = struct
     module Response : sig
       type result = Types.assoc
@@ -15221,10 +15329,10 @@ for example an emoji keyboard or an IME. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|This method emulates inserting text that doesn't come from a key press,
+for example an emoji keyboard or an IME. |desc}]
 
-  (* This method sets the current candidate text for IME.
-Use imeCommitComposition to commit the final text.
-Use imeSetComposition with empty string as text to cancel composition. *)
   module ImeSetComposition = struct
     module Response : sig
       type result = Types.assoc
@@ -15290,8 +15398,11 @@ Use imeSetComposition with empty string as text to cancel composition. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|This method sets the current candidate text for IME.
+Use imeCommitComposition to commit the final text.
+Use imeSetComposition with empty string as text to cancel composition. |desc}]
 
-  (* Dispatches a mouse event to the page. *)
   module DispatchMouseEvent = struct
     module Response : sig
       type result = Types.assoc
@@ -15478,8 +15589,8 @@ Use imeSetComposition with empty string as text to cancel composition. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Dispatches a mouse event to the page. |desc}]
 
-  (* Dispatches a touch event to the page. *)
   module DispatchTouchEvent = struct
     module Response : sig
       type result = Types.assoc
@@ -15573,8 +15684,8 @@ Use imeSetComposition with empty string as text to cancel composition. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Dispatches a touch event to the page. |desc}]
 
-  (* Cancels any active dragging in the page. *)
   module CancelDragging = struct
     module Response : sig
       type result = Types.assoc
@@ -15616,8 +15727,8 @@ Use imeSetComposition with empty string as text to cancel composition. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Cancels any active dragging in the page. |desc}]
 
-  (* Emulates touch event from the mouse event parameters. *)
   module EmulateTouchFromMouseEvent = struct
     module Response : sig
       type result = Types.assoc
@@ -15732,8 +15843,9 @@ Use imeSetComposition with empty string as text to cancel composition. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Emulates touch event from the mouse event parameters. |desc}]
 
-  (* Ignores input events (useful while auditing page). *)
   module SetIgnoreInputEvents = struct
     module Response : sig
       type result = Types.assoc
@@ -15787,9 +15899,8 @@ Use imeSetComposition with empty string as text to cancel composition. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Ignores input events (useful while auditing page). |desc}]
 
-  (* Prevents default drag and drop behavior and instead emits `Input.dragIntercepted` events.
-Drag and drop behavior can be directly controlled via `Input.dispatchDragEvent`. *)
   module SetInterceptDrags = struct
     module Response : sig
       type result = Types.assoc
@@ -15841,8 +15952,10 @@ Drag and drop behavior can be directly controlled via `Input.dispatchDragEvent`.
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Prevents default drag and drop behavior and instead emits `Input.dragIntercepted` events.
+Drag and drop behavior can be directly controlled via `Input.dispatchDragEvent`. |desc}]
 
-  (* Synthesizes a pinch gesture over a time period by issuing appropriate touch events. *)
   module SynthesizePinchGesture = struct
     module Response : sig
       type result = Types.assoc
@@ -15919,8 +16032,9 @@ Drag and drop behavior can be directly controlled via `Input.dispatchDragEvent`.
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Synthesizes a pinch gesture over a time period by issuing appropriate touch events. |desc}]
 
-  (* Synthesizes a scroll gesture over a time period by issuing appropriate touch events. *)
   module SynthesizeScrollGesture = struct
     module Response : sig
       type result = Types.assoc
@@ -16052,8 +16166,9 @@ Drag and drop behavior can be directly controlled via `Input.dispatchDragEvent`.
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Synthesizes a scroll gesture over a time period by issuing appropriate touch events. |desc}]
 
-  (* Synthesizes a tap gesture over a time period by issuing appropriate touch events. *)
   module SynthesizeTapGesture = struct
     module Response : sig
       type result = Types.assoc
@@ -16132,10 +16247,11 @@ Drag and drop behavior can be directly controlled via `Input.dispatchDragEvent`.
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Synthesizes a tap gesture over a time period by issuing appropriate touch events. |desc}]
 end
 
 module Inspector = struct
-  (* Disables inspector domain notifications. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -16177,8 +16293,8 @@ module Inspector = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables inspector domain notifications. |desc}]
 
-  (* Enables inspector domain notifications. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -16220,10 +16336,10 @@ module Inspector = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables inspector domain notifications. |desc}]
 end
 
 module LayerTree = struct
-  (* Provides the reasons why the given layer was composited. *)
   module CompositingReasons = struct
     module Response : sig
       type result = {
@@ -16304,8 +16420,9 @@ module LayerTree = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Provides the reasons why the given layer was composited. |desc}]
 
-  (* Disables compositing tree inspection. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -16347,8 +16464,8 @@ module LayerTree = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables compositing tree inspection. |desc}]
 
-  (* Enables compositing tree inspection. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -16390,8 +16507,8 @@ module LayerTree = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables compositing tree inspection. |desc}]
 
-  (* Returns the snapshot identifier. *)
   module LoadSnapshot = struct
     module Response : sig
       type result = {
@@ -16454,8 +16571,8 @@ module LayerTree = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns the snapshot identifier. |desc}]
 
-  (* Returns the layer snapshot identifier. *)
   module MakeSnapshot = struct
     module Response : sig
       type result = {
@@ -16517,8 +16634,8 @@ module LayerTree = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns the layer snapshot identifier. |desc}]
 
-  (* No description provided *)
   module ProfileSnapshot = struct
     module Response : sig
       type result = {
@@ -16599,8 +16716,8 @@ module LayerTree = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Releases layer snapshot captured by the back-end. *)
   module ReleaseSnapshot = struct
     module Response : sig
       type result = Types.assoc
@@ -16653,8 +16770,8 @@ module LayerTree = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Releases layer snapshot captured by the back-end. |desc}]
 
-  (* Replays the layer snapshot and returns the resulting bitmap. *)
   module ReplaySnapshot = struct
     module Response : sig
       type result = {
@@ -16733,8 +16850,9 @@ module LayerTree = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Replays the layer snapshot and returns the resulting bitmap. |desc}]
 
-  (* Replays the layer snapshot and returns canvas log. *)
   module SnapshotCommandLog = struct
     module Response : sig
       type result = {
@@ -16798,10 +16916,10 @@ module LayerTree = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Replays the layer snapshot and returns canvas log. |desc}]
 end
 
 module Log = struct
-  (* Clears the log. *)
   module Clear = struct
     module Response : sig
       type result = Types.assoc
@@ -16843,8 +16961,8 @@ module Log = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears the log. |desc}]
 
-  (* Disables log domain, prevents further log entries from being reported to the client. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -16886,9 +17004,9 @@ module Log = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Disables log domain, prevents further log entries from being reported to the client. |desc}]
 
-  (* Enables log domain, sends the entries collected so far to the client by means of the
-`entryAdded` notification. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -16930,8 +17048,10 @@ module Log = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables log domain, sends the entries collected so far to the client by means of the
+`entryAdded` notification. |desc}]
 
-  (* start violation reporting. *)
   module StartViolationsReport = struct
     module Response : sig
       type result = Types.assoc
@@ -16984,8 +17104,8 @@ module Log = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|start violation reporting. |desc}]
 
-  (* Stop violation reporting. *)
   module StopViolationsReport = struct
     module Response : sig
       type result = Types.assoc
@@ -17027,10 +17147,10 @@ module Log = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Stop violation reporting. |desc}]
 end
 
 module Memory = struct
-  (* Retruns current DOM object counters. *)
   module GetDOMCounters = struct
     module Response : sig
       type result = {
@@ -17089,8 +17209,8 @@ module Memory = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Retruns current DOM object counters. |desc}]
 
-  (* Retruns DOM object counters after preparing renderer for leak detection. *)
   module GetDOMCountersForLeakDetection = struct
     module Response : sig
       type result = {
@@ -17141,9 +17261,9 @@ module Memory = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Retruns DOM object counters after preparing renderer for leak detection. |desc}]
 
-  (* Prepares for leak detection by terminating workers, stopping spellcheckers,
-dropping non-essential internal caches, running garbage collections, etc. *)
   module PrepareForLeakDetection = struct
     module Response : sig
       type result = Types.assoc
@@ -17185,8 +17305,10 @@ dropping non-essential internal caches, running garbage collections, etc. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Prepares for leak detection by terminating workers, stopping spellcheckers,
+dropping non-essential internal caches, running garbage collections, etc. |desc}]
 
-  (* Simulate OomIntervention by purging V8 memory. *)
   module ForciblyPurgeJavaScriptMemory = struct
     module Response : sig
       type result = Types.assoc
@@ -17228,8 +17350,8 @@ dropping non-essential internal caches, running garbage collections, etc. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Simulate OomIntervention by purging V8 memory. |desc}]
 
-  (* Enable/disable suppressing memory pressure notifications in all processes. *)
   module SetPressureNotificationsSuppressed = struct
     module Response : sig
       type result = Types.assoc
@@ -17289,8 +17411,9 @@ dropping non-essential internal caches, running garbage collections, etc. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enable/disable suppressing memory pressure notifications in all processes. |desc}]
 
-  (* Simulate a memory pressure notification in all processes. *)
   module SimulatePressureNotification = struct
     module Response : sig
       type result = Types.assoc
@@ -17349,8 +17472,9 @@ dropping non-essential internal caches, running garbage collections, etc. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Simulate a memory pressure notification in all processes. |desc}]
 
-  (* Start collecting native memory profile. *)
   module StartSampling = struct
     module Response : sig
       type result = Types.assoc
@@ -17410,8 +17534,8 @@ dropping non-essential internal caches, running garbage collections, etc. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Start collecting native memory profile. |desc}]
 
-  (* Stop collecting native memory profile. *)
   module StopSampling = struct
     module Response : sig
       type result = Types.assoc
@@ -17453,9 +17577,8 @@ dropping non-essential internal caches, running garbage collections, etc. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Stop collecting native memory profile. |desc}]
 
-  (* Retrieve native memory allocations profile
-collected since renderer process startup. *)
   module GetAllTimeSamplingProfile = struct
     module Response : sig
       type result = {
@@ -17506,9 +17629,10 @@ collected since renderer process startup. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Retrieve native memory allocations profile
+collected since renderer process startup. |desc}]
 
-  (* Retrieve native memory allocations profile
-collected since browser process startup. *)
   module GetBrowserSamplingProfile = struct
     module Response : sig
       type result = {
@@ -17559,9 +17683,10 @@ collected since browser process startup. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Retrieve native memory allocations profile
+collected since browser process startup. |desc}]
 
-  (* Retrieve native memory allocations profile collected since last
-`startSampling` call. *)
   module GetSamplingProfile = struct
     module Response : sig
       type result = {
@@ -17612,10 +17737,12 @@ collected since browser process startup. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Retrieve native memory allocations profile collected since last
+`startSampling` call. |desc}]
 end
 
 module Network = struct
-  (* Sets a list of content encodings that will be accepted. Empty list means no encoding is accepted. *)
   module SetAcceptedEncodings = struct
     module Response : sig
       type result = Types.assoc
@@ -17669,8 +17796,9 @@ module Network = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets a list of content encodings that will be accepted. Empty list means no encoding is accepted. |desc}]
 
-  (* Clears accepted encodings set by setAcceptedEncodings *)
   module ClearAcceptedEncodingsOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -17712,8 +17840,9 @@ module Network = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Clears accepted encodings set by setAcceptedEncodings |desc}]
 
-  (* Tells whether clearing browser cache is supported. *)
   module CanClearBrowserCache = struct
     module Response : sig
       type result = {
@@ -17764,8 +17893,8 @@ module Network = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Tells whether clearing browser cache is supported. |desc}]
 
-  (* Tells whether clearing browser cookies is supported. *)
   module CanClearBrowserCookies = struct
     module Response : sig
       type result = {
@@ -17818,8 +17947,9 @@ module Network = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Tells whether clearing browser cookies is supported. |desc}]
 
-  (* Tells whether emulation of network conditions is supported. *)
   module CanEmulateNetworkConditions = struct
     module Response : sig
       type result = {
@@ -17872,8 +18002,9 @@ module Network = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Tells whether emulation of network conditions is supported. |desc}]
 
-  (* Clears browser cache. *)
   module ClearBrowserCache = struct
     module Response : sig
       type result = Types.assoc
@@ -17915,8 +18046,8 @@ module Network = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears browser cache. |desc}]
 
-  (* Clears browser cookies. *)
   module ClearBrowserCookies = struct
     module Response : sig
       type result = Types.assoc
@@ -17958,12 +18089,8 @@ module Network = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears browser cookies. |desc}]
 
-  (* Response to Network.requestIntercepted which either modifies the request to continue with any
-modifications, or blocks it, or completes it with the provided response bytes. If a network
-fetch occurs as a result which encounters a redirect an additional Network.requestIntercepted
-event will be sent with the same InterceptionId.
-Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failRequest instead. *)
   module ContinueInterceptedRequest = struct
     module Response : sig
       type result = Types.assoc
@@ -18083,8 +18210,13 @@ Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failReques
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Response to Network.requestIntercepted which either modifies the request to continue with any
+modifications, or blocks it, or completes it with the provided response bytes. If a network
+fetch occurs as a result which encounters a redirect an additional Network.requestIntercepted
+event will be sent with the same InterceptionId.
+Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failRequest instead. |desc}]
 
-  (* Deletes browser cookies with matching name and url or domain/path/partitionKey pair. *)
   module DeleteCookies = struct
     module Response : sig
       type result = Types.assoc
@@ -18163,8 +18295,9 @@ Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failReques
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Deletes browser cookies with matching name and url or domain/path/partitionKey pair. |desc}]
 
-  (* Disables network tracking, prevents network events from being sent to the client. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -18206,8 +18339,9 @@ Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failReques
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Disables network tracking, prevents network events from being sent to the client. |desc}]
 
-  (* Activates emulation of network conditions. *)
   module EmulateNetworkConditions = struct
     module Response : sig
       type result = Types.assoc
@@ -18307,8 +18441,8 @@ Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failReques
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Activates emulation of network conditions. |desc}]
 
-  (* Enables network tracking, network events will now be delivered to the client. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -18378,10 +18512,9 @@ Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failReques
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables network tracking, network events will now be delivered to the client. |desc}]
 
-  (* Returns all browser cookies. Depending on the backend support, will return detailed cookie
-information in the `cookies` field.
-Deprecated. Use Storage.getCookies instead. *)
   module GetAllCookies = struct
     module Response : sig
       type result = {
@@ -18432,8 +18565,11 @@ Deprecated. Use Storage.getCookies instead. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns all browser cookies. Depending on the backend support, will return detailed cookie
+information in the `cookies` field.
+Deprecated. Use Storage.getCookies instead. |desc}]
 
-  (* Returns the DER-encoded certificate. *)
   module GetCertificate = struct
     module Response : sig
       type result = {
@@ -18495,9 +18631,8 @@ Deprecated. Use Storage.getCookies instead. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns the DER-encoded certificate. |desc}]
 
-  (* Returns all browser cookies for the current URL. Depending on the backend support, will return
-detailed cookie information in the `cookies` field. *)
   module GetCookies = struct
     module Response : sig
       type result = {
@@ -18564,8 +18699,10 @@ detailed cookie information in the `cookies` field. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns all browser cookies for the current URL. Depending on the backend support, will return
+detailed cookie information in the `cookies` field. |desc}]
 
-  (* Returns content served for the given request. *)
   module GetResponseBody = struct
     module Response : sig
       type result = {
@@ -18632,8 +18769,8 @@ detailed cookie information in the `cookies` field. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns content served for the given request. |desc}]
 
-  (* Returns post data sent with the request. Returns an error when no data was sent with the request. *)
   module GetRequestPostData = struct
     module Response : sig
       type result = {
@@ -18700,8 +18837,9 @@ detailed cookie information in the `cookies` field. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns post data sent with the request. Returns an error when no data was sent with the request. |desc}]
 
-  (* Returns content served for the given currently intercepted request. *)
   module GetResponseBodyForInterception = struct
     module Response : sig
       type result = {
@@ -18774,11 +18912,9 @@ detailed cookie information in the `cookies` field. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns content served for the given currently intercepted request. |desc}]
 
-  (* Returns a handle to the stream representing the response body. Note that after this command,
-the intercepted request can't be continued as is -- you either need to cancel it or to provide
-the response body. The stream only supports sequential read, IO.read will fail if the position
-is specified. *)
   module TakeResponseBodyForInterceptionAsStream = struct
     module Response : sig
       type result = {
@@ -18845,10 +18981,12 @@ is specified. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns a handle to the stream representing the response body. Note that after this command,
+the intercepted request can't be continued as is -- you either need to cancel it or to provide
+the response body. The stream only supports sequential read, IO.read will fail if the position
+is specified. |desc}]
 
-  (* This method sends a new XMLHttpRequest which is identical to the original one. The following
-parameters should be identical: method, url, async, request body, extra headers, withCredentials
-attribute, user, password. *)
   module ReplayXHR = struct
     module Response : sig
       type result = Types.assoc
@@ -18901,8 +19039,11 @@ attribute, user, password. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|This method sends a new XMLHttpRequest which is identical to the original one. The following
+parameters should be identical: method, url, async, request body, extra headers, withCredentials
+attribute, user, password. |desc}]
 
-  (* Searches for given string in response content. *)
   module SearchInResponseBody = struct
     module Response : sig
       type result = {
@@ -18975,8 +19116,8 @@ attribute, user, password. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Searches for given string in response content. |desc}]
 
-  (* Blocks URLs from loading. *)
   module SetBlockedURLs = struct
     module Response : sig
       type result = Types.assoc
@@ -19030,8 +19171,8 @@ attribute, user, password. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Blocks URLs from loading. |desc}]
 
-  (* Toggles ignoring of service worker for each request. *)
   module SetBypassServiceWorker = struct
     module Response : sig
       type result = Types.assoc
@@ -19085,8 +19226,9 @@ attribute, user, password. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Toggles ignoring of service worker for each request. |desc}]
 
-  (* Toggles ignoring cache for each request. If `true`, cache will not be used. *)
   module SetCacheDisabled = struct
     module Response : sig
       type result = Types.assoc
@@ -19139,8 +19281,9 @@ attribute, user, password. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Toggles ignoring cache for each request. If `true`, cache will not be used. |desc}]
 
-  (* Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist. *)
   module SetCookie = struct
     module Response : sig
       type result = {
@@ -19282,8 +19425,9 @@ attribute, user, password. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets a cookie with the given cookie data; may overwrite equivalent cookies if they exist. |desc}]
 
-  (* Sets given cookies. *)
   module SetCookies = struct
     module Response : sig
       type result = Types.assoc
@@ -19336,8 +19480,8 @@ attribute, user, password. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets given cookies. |desc}]
 
-  (* Specifies whether to always send extra HTTP headers with the requests from this page. *)
   module SetExtraHTTPHeaders = struct
     module Response : sig
       type result = Types.assoc
@@ -19390,8 +19534,9 @@ attribute, user, password. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Specifies whether to always send extra HTTP headers with the requests from this page. |desc}]
 
-  (* Specifies whether to attach a page script stack id in requests *)
   module SetAttachDebugStack = struct
     module Response : sig
       type result = Types.assoc
@@ -19446,9 +19591,9 @@ attribute, user, password. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Specifies whether to attach a page script stack id in requests |desc}]
 
-  (* Sets the requests to intercept that match the provided patterns and optionally resource types.
-Deprecated, please use Fetch.enable instead. *)
   module SetRequestInterception = struct
     module Response : sig
       type result = Types.assoc
@@ -19505,8 +19650,10 @@ Deprecated, please use Fetch.enable instead. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets the requests to intercept that match the provided patterns and optionally resource types.
+Deprecated, please use Fetch.enable instead. |desc}]
 
-  (* Allows overriding user agent with the given string. *)
   module SetUserAgentOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -19573,9 +19720,8 @@ Deprecated, please use Fetch.enable instead. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Allows overriding user agent with the given string. |desc}]
 
-  (* Enables streaming of the response for the given requestId.
-If enabled, the dataReceived event contains the data that was received during streaming. *)
   module StreamResourceContent = struct
     module Response : sig
       type result = {
@@ -19644,8 +19790,10 @@ If enabled, the dataReceived event contains the data that was received during st
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables streaming of the response for the given requestId.
+If enabled, the dataReceived event contains the data that was received during streaming. |desc}]
 
-  (* Returns information about the COEP/COOP isolation status. *)
   module GetSecurityIsolationStatus = struct
     module Response : sig
       type result = {
@@ -19715,9 +19863,9 @@ If enabled, the dataReceived event contains the data that was received during st
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns information about the COEP/COOP isolation status. |desc}]
 
-  (* Enables tracking for the Reporting API, events generated by the Reporting API will now be delivered to the client.
-Enabling triggers 'reportingApiReportAdded' for all existing reports. *)
   module EnableReportingApi = struct
     module Response : sig
       type result = Types.assoc
@@ -19772,8 +19920,10 @@ Enabling triggers 'reportingApiReportAdded' for all existing reports. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables tracking for the Reporting API, events generated by the Reporting API will now be delivered to the client.
+Enabling triggers 'reportingApiReportAdded' for all existing reports. |desc}]
 
-  (* Fetches the resource and returns the content. *)
   module LoadNetworkResource = struct
     module Response : sig
       type result = {
@@ -19844,9 +19994,8 @@ Enabling triggers 'reportingApiReportAdded' for all existing reports. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Fetches the resource and returns the content. |desc}]
 
-  (* Sets Controls for third-party cookie access
-Page reload is required before the new cookie bahavior will be observed *)
   module SetCookieControls = struct
     module Response : sig
       type result = Types.assoc
@@ -19917,10 +20066,12 @@ Page reload is required before the new cookie bahavior will be observed *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets Controls for third-party cookie access
+Page reload is required before the new cookie bahavior will be observed |desc}]
 end
 
 module Overlay = struct
-  (* Disables domain notifications. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -19962,8 +20113,8 @@ module Overlay = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables domain notifications. |desc}]
 
-  (* Enables domain notifications. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -20005,8 +20156,8 @@ module Overlay = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables domain notifications. |desc}]
 
-  (* For testing. *)
   module GetHighlightObjectForTest = struct
     module Response : sig
       type result = {
@@ -20093,8 +20244,8 @@ module Overlay = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|For testing. |desc}]
 
-  (* For Persistent Grid testing. *)
   module GetGridHighlightObjectsForTest = struct
     module Response : sig
       type result = {
@@ -20164,8 +20315,8 @@ module Overlay = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|For Persistent Grid testing. |desc}]
 
-  (* For Source Order Viewer testing. *)
   module GetSourceOrderHighlightObjectForTest = struct
     module Response : sig
       type result = {
@@ -20234,8 +20385,8 @@ module Overlay = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|For Source Order Viewer testing. |desc}]
 
-  (* Hides any highlight. *)
   module HideHighlight = struct
     module Response : sig
       type result = Types.assoc
@@ -20277,11 +20428,8 @@ module Overlay = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Hides any highlight. |desc}]
 
-  (* Highlights owner element of the frame with given id.
-Deprecated: Doesn't work reliably and cannot be fixed due to process
-separation (the owner node might be in a different process). Determine
-the owner node in the client and use highlightNode. *)
   module HighlightFrame = struct
     module Response : sig
       type result = Types.assoc
@@ -20346,9 +20494,12 @@ the owner node in the client and use highlightNode. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Highlights owner element of the frame with given id.
+Deprecated: Doesn't work reliably and cannot be fixed due to process
+separation (the owner node might be in a different process). Determine
+the owner node in the client and use highlightNode. |desc}]
 
-  (* Highlights DOM node with given id or with the given JavaScript object wrapper. Either nodeId or
-objectId must be specified. *)
   module HighlightNode = struct
     module Response : sig
       type result = Types.assoc
@@ -20419,8 +20570,10 @@ objectId must be specified. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Highlights DOM node with given id or with the given JavaScript object wrapper. Either nodeId or
+objectId must be specified. |desc}]
 
-  (* Highlights given quad. Coordinates are absolute with respect to the main frame viewport. *)
   module HighlightQuad = struct
     module Response : sig
       type result = Types.assoc
@@ -20480,8 +20633,9 @@ objectId must be specified. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Highlights given quad. Coordinates are absolute with respect to the main frame viewport. |desc}]
 
-  (* Highlights given rectangle. Coordinates are absolute with respect to the main frame viewport. *)
   module HighlightRect = struct
     module Response : sig
       type result = Types.assoc
@@ -20545,9 +20699,9 @@ objectId must be specified. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Highlights given rectangle. Coordinates are absolute with respect to the main frame viewport. |desc}]
 
-  (* Highlights the source order of the children of the DOM node with given id or with the given
-JavaScript object wrapper. Either nodeId or objectId must be specified. *)
   module HighlightSourceOrder = struct
     module Response : sig
       type result = Types.assoc
@@ -20615,9 +20769,10 @@ JavaScript object wrapper. Either nodeId or objectId must be specified. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Highlights the source order of the children of the DOM node with given id or with the given
+JavaScript object wrapper. Either nodeId or objectId must be specified. |desc}]
 
-  (* Enters the 'inspect' mode. In this mode, elements that user is hovering over are highlighted.
-Backend then generates 'inspectNodeRequested' event upon element selection. *)
   module SetInspectMode = struct
     module Response : sig
       type result = Types.assoc
@@ -20677,8 +20832,10 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enters the 'inspect' mode. In this mode, elements that user is hovering over are highlighted.
+Backend then generates 'inspectNodeRequested' event upon element selection. |desc}]
 
-  (* Highlights owner element of all frames detected to be ads. *)
   module SetShowAdHighlights = struct
     module Response : sig
       type result = Types.assoc
@@ -20730,8 +20887,9 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Highlights owner element of all frames detected to be ads. |desc}]
 
-  (* No description provided *)
   module SetPausedInDebuggerMessage = struct
     module Response : sig
       type result = Types.assoc
@@ -20793,8 +20951,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Requests that backend shows debug borders on layers *)
   module SetShowDebugBorders = struct
     module Response : sig
       type result = Types.assoc
@@ -20846,8 +21004,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Requests that backend shows debug borders on layers |desc}]
 
-  (* Requests that backend shows the FPS counter *)
   module SetShowFPSCounter = struct
     module Response : sig
       type result = Types.assoc
@@ -20900,8 +21058,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Requests that backend shows the FPS counter |desc}]
 
-  (* Highlight multiple elements with the CSS Grid overlay. *)
   module SetShowGridOverlays = struct
     module Response : sig
       type result = Types.assoc
@@ -20957,8 +21115,9 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Highlight multiple elements with the CSS Grid overlay. |desc}]
 
-  (* No description provided *)
   module SetShowFlexOverlays = struct
     module Response : sig
       type result = Types.assoc
@@ -21014,8 +21173,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module SetShowScrollSnapOverlays = struct
     module Response : sig
       type result = Types.assoc
@@ -21072,8 +21231,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module SetShowContainerQueryOverlays = struct
     module Response : sig
       type result = Types.assoc
@@ -21136,8 +21295,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Requests that backend shows paint rectangles *)
   module SetShowPaintRects = struct
     module Response : sig
       type result = Types.assoc
@@ -21190,8 +21349,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Requests that backend shows paint rectangles |desc}]
 
-  (* Requests that backend shows layout shift regions *)
   module SetShowLayoutShiftRegions = struct
     module Response : sig
       type result = Types.assoc
@@ -21244,8 +21403,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Requests that backend shows layout shift regions |desc}]
 
-  (* Requests that backend shows scroll bottleneck rects *)
   module SetShowScrollBottleneckRects = struct
     module Response : sig
       type result = Types.assoc
@@ -21304,8 +21463,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Requests that backend shows scroll bottleneck rects |desc}]
 
-  (* Deprecated, no longer has any effect. *)
   module SetShowHitTestBorders = struct
     module Response : sig
       type result = Types.assoc
@@ -21358,8 +21517,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Deprecated, no longer has any effect. |desc}]
 
-  (* Deprecated, no longer has any effect. *)
   module SetShowWebVitals = struct
     module Response : sig
       type result = Types.assoc
@@ -21411,8 +21570,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Deprecated, no longer has any effect. |desc}]
 
-  (* Paints viewport size upon main frame resize. *)
   module SetShowViewportSizeOnResize = struct
     module Response : sig
       type result = Types.assoc
@@ -21469,8 +21628,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Paints viewport size upon main frame resize. |desc}]
 
-  (* Add a dual screen device hinge *)
   module SetShowHinge = struct
     module Response : sig
       type result = Types.assoc
@@ -21525,8 +21684,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Add a dual screen device hinge |desc}]
 
-  (* Show elements in isolation mode with overlays. *)
   module SetShowIsolatedElements = struct
     module Response : sig
       type result = Types.assoc
@@ -21584,8 +21743,8 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Show elements in isolation mode with overlays. |desc}]
 
-  (* Show Window Controls Overlay for PWA *)
   module SetShowWindowControlsOverlay = struct
     module Response : sig
       type result = Types.assoc
@@ -21648,10 +21807,10 @@ Backend then generates 'inspectNodeRequested' event upon element selection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Show Window Controls Overlay for PWA |desc}]
 end
 
 module Page = struct
-  (* Deprecated, please use addScriptToEvaluateOnNewDocument instead. *)
   module AddScriptToEvaluateOnLoad = struct
     module Response : sig
       type result = {
@@ -21713,8 +21872,9 @@ module Page = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Deprecated, please use addScriptToEvaluateOnNewDocument instead. |desc}]
 
-  (* Evaluates given script in every frame upon creation (before loading frame's scripts). *)
   module AddScriptToEvaluateOnNewDocument = struct
     module Response : sig
       type result = {
@@ -21804,8 +21964,9 @@ module Page = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Evaluates given script in every frame upon creation (before loading frame's scripts). |desc}]
 
-  (* Brings page to front (activates tab). *)
   module BringToFront = struct
     module Response : sig
       type result = Types.assoc
@@ -21847,8 +22008,8 @@ module Page = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Brings page to front (activates tab). |desc}]
 
-  (* Capture page screenshot. *)
   module CaptureScreenshot = struct
     module Response : sig
       type result = {
@@ -21966,9 +22127,8 @@ module Page = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Capture page screenshot. |desc}]
 
-  (* Returns a snapshot of the page as a string. For MHTML format, the serialization includes
-iframes, shadow DOM, external resources, and element-inline styles. *)
   module CaptureSnapshot = struct
     module Response : sig
       type result = {
@@ -22040,8 +22200,10 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns a snapshot of the page as a string. For MHTML format, the serialization includes
+iframes, shadow DOM, external resources, and element-inline styles. |desc}]
 
-  (* Clears the overridden device metrics. *)
   module ClearDeviceMetricsOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -22083,8 +22245,8 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears the overridden device metrics. |desc}]
 
-  (* Clears the overridden Device Orientation. *)
   module ClearDeviceOrientationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -22126,8 +22288,8 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears the overridden Device Orientation. |desc}]
 
-  (* Clears the overridden Geolocation Position and Error. *)
   module ClearGeolocationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -22169,8 +22331,9 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Clears the overridden Geolocation Position and Error. |desc}]
 
-  (* Creates an isolated world for the given frame. *)
   module CreateIsolatedWorld = struct
     module Response : sig
       type result = {
@@ -22249,8 +22412,8 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Creates an isolated world for the given frame. |desc}]
 
-  (* Deletes browser cookie with given name, domain and path. *)
   module DeleteCookie = struct
     module Response : sig
       type result = Types.assoc
@@ -22305,8 +22468,9 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Deletes browser cookie with given name, domain and path. |desc}]
 
-  (* Disables page domain notifications. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -22348,8 +22512,8 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables page domain notifications. |desc}]
 
-  (* Enables page domain notifications. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -22408,12 +22572,8 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables page domain notifications. |desc}]
 
-  (* Gets the processed manifest for this current document.
-  This API always waits for the manifest to be loaded.
-  If manifestId is provided, and it does not match the manifest of the
-    current document, this API errors out.
-  If there is not a loaded page, this API errors out immediately. *)
   module GetAppManifest = struct
     module Response : sig
       type result = {
@@ -22497,8 +22657,13 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Gets the processed manifest for this current document.
+  This API always waits for the manifest to be loaded.
+  If manifestId is provided, and it does not match the manifest of the
+    current document, this API errors out.
+  If there is not a loaded page, this API errors out immediately. |desc}]
 
-  (* No description provided *)
   module GetInstallabilityErrors = struct
     module Response : sig
       type result = {
@@ -22549,8 +22714,8 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Deprecated because it's not guaranteed that the returned icon is in fact the one used for PWA installation. *)
   module GetManifestIcons = struct
     module Response : sig
       type result = {
@@ -22605,9 +22770,9 @@ iframes, shadow DOM, external resources, and element-inline styles. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Deprecated because it's not guaranteed that the returned icon is in fact the one used for PWA installation. |desc}]
 
-  (* Returns the unique (PWA) app id.
-Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
   module GetAppId = struct
     module Response : sig
       type result = {
@@ -22678,8 +22843,10 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the unique (PWA) app id.
+Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |desc}]
 
-  (* No description provided *)
   module GetAdScriptId = struct
     module Response : sig
       type result = {
@@ -22753,8 +22920,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Returns present frame tree structure. *)
   module GetFrameTree = struct
     module Response : sig
       type result = {
@@ -22805,8 +22972,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns present frame tree structure. |desc}]
 
-  (* Returns metrics relating to the layouting of the page, such as viewport bounds/scale. *)
   module GetLayoutMetrics = struct
     module Response : sig
       type result = {
@@ -22905,8 +23072,9 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns metrics relating to the layouting of the page, such as viewport bounds/scale. |desc}]
 
-  (* Returns navigation history for the current page. *)
   module GetNavigationHistory = struct
     module Response : sig
       type result = {
@@ -22963,8 +23131,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns navigation history for the current page. |desc}]
 
-  (* Resets navigation history for the current page. *)
   module ResetNavigationHistory = struct
     module Response : sig
       type result = Types.assoc
@@ -23006,8 +23174,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Resets navigation history for the current page. |desc}]
 
-  (* Returns content of the given resource. *)
   module GetResourceContent = struct
     module Response : sig
       type result = {
@@ -23075,8 +23243,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns content of the given resource. |desc}]
 
-  (* Returns present frame / resource tree structure. *)
   module GetResourceTree = struct
     module Response : sig
       type result = {
@@ -23129,8 +23297,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns present frame / resource tree structure. |desc}]
 
-  (* Accepts or dismisses a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload). *)
   module HandleJavaScriptDialog = struct
     module Response : sig
       type result = Types.assoc
@@ -23191,8 +23359,9 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Accepts or dismisses a JavaScript initiated dialog (alert, confirm, prompt, or onbeforeunload). |desc}]
 
-  (* Navigates current page to the given URL. *)
   module Navigate = struct
     module Response : sig
       type result = {
@@ -23297,8 +23466,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Navigates current page to the given URL. |desc}]
 
-  (* Navigates current page to the given history entry. *)
   module NavigateToHistoryEntry = struct
     module Response : sig
       type result = Types.assoc
@@ -23352,8 +23521,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Navigates current page to the given history entry. |desc}]
 
-  (* Print page as PDF. *)
   module PrintToPDF = struct
     module Response : sig
       type result = {
@@ -23560,8 +23729,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Print page as PDF. |desc}]
 
-  (* Reloads given page optionally ignoring the cache. *)
   module Reload = struct
     module Response : sig
       type result = Types.assoc
@@ -23635,8 +23804,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Reloads given page optionally ignoring the cache. |desc}]
 
-  (* Deprecated, please use removeScriptToEvaluateOnNewDocument instead. *)
   module RemoveScriptToEvaluateOnLoad = struct
     module Response : sig
       type result = Types.assoc
@@ -23689,8 +23858,9 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Deprecated, please use removeScriptToEvaluateOnNewDocument instead. |desc}]
 
-  (* Removes given script from the list. *)
   module RemoveScriptToEvaluateOnNewDocument = struct
     module Response : sig
       type result = Types.assoc
@@ -23748,8 +23918,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Removes given script from the list. |desc}]
 
-  (* Acknowledges that a screencast frame has been received by the frontend. *)
   module ScreencastFrameAck = struct
     module Response : sig
       type result = Types.assoc
@@ -23801,8 +23971,9 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Acknowledges that a screencast frame has been received by the frontend. |desc}]
 
-  (* Searches for given string in resource content. *)
   module SearchInResource = struct
     module Response : sig
       type result = {
@@ -23876,8 +24047,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Searches for given string in resource content. |desc}]
 
-  (* Enable Chrome's experimental ad filter on all sites. *)
   module SetAdBlockingEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -23929,8 +24100,9 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enable Chrome's experimental ad filter on all sites. |desc}]
 
-  (* Enable page Content Security Policy by-passing. *)
   module SetBypassCSP = struct
     module Response : sig
       type result = Types.assoc
@@ -23983,8 +24155,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enable page Content Security Policy by-passing. |desc}]
 
-  (* Get Permissions Policy state on given frame. *)
   module GetPermissionsPolicyState = struct
     module Response : sig
       type result = {
@@ -24046,8 +24218,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Get Permissions Policy state on given frame. |desc}]
 
-  (* Get Origin Trials on given frame. *)
   module GetOriginTrials = struct
     module Response : sig
       type result = {
@@ -24109,10 +24281,8 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Get Origin Trials on given frame. |desc}]
 
-  (* Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
-window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
-query results). *)
   module SetDeviceMetricsOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -24243,8 +24413,11 @@ query results). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Overrides the values of device screen dimensions (window.screen.width, window.screen.height,
+window.innerWidth, window.innerHeight, and "device-width"/"device-height"-related CSS media
+query results). |desc}]
 
-  (* Overrides the Device Orientation. *)
   module SetDeviceOrientationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -24298,8 +24471,8 @@ query results). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Overrides the Device Orientation. |desc}]
 
-  (* Set generic font families. *)
   module SetFontFamilies = struct
     module Response : sig
       type result = Types.assoc
@@ -24360,8 +24533,8 @@ query results). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Set generic font families. |desc}]
 
-  (* Set default font sizes. *)
   module SetFontSizes = struct
     module Response : sig
       type result = Types.assoc
@@ -24417,8 +24590,8 @@ query results). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Set default font sizes. |desc}]
 
-  (* Sets given markup as the document's HTML. *)
   module SetDocumentContent = struct
     module Response : sig
       type result = Types.assoc
@@ -24472,8 +24645,8 @@ query results). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets given markup as the document's HTML. |desc}]
 
-  (* Set the behavior when downloading a file. *)
   module SetDownloadBehavior = struct
     module Response : sig
       type result = Types.assoc
@@ -24550,9 +24723,8 @@ query results). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Set the behavior when downloading a file. |desc}]
 
-  (* Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
-unavailable. *)
   module SetGeolocationOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -24610,8 +24782,10 @@ unavailable. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
+unavailable. |desc}]
 
-  (* Controls whether page will emit lifecycle events. *)
   module SetLifecycleEventsEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -24665,8 +24839,8 @@ unavailable. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Controls whether page will emit lifecycle events. |desc}]
 
-  (* Toggles mouse event-based touch event emulation. *)
   module SetTouchEmulationEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -24737,8 +24911,8 @@ unavailable. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Toggles mouse event-based touch event emulation. |desc}]
 
-  (* Starts sending each frame using the `screencastFrame` event. *)
   module StartScreencast = struct
     module Response : sig
       type result = Types.assoc
@@ -24822,8 +24996,9 @@ unavailable. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Starts sending each frame using the `screencastFrame` event. |desc}]
 
-  (* Force the page stop all navigations and pending resource fetches. *)
   module StopLoading = struct
     module Response : sig
       type result = Types.assoc
@@ -24865,8 +25040,9 @@ unavailable. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Force the page stop all navigations and pending resource fetches. |desc}]
 
-  (* Crashes renderer on the IO thread, generates minidumps. *)
   module Crash = struct
     module Response : sig
       type result = Types.assoc
@@ -24908,8 +25084,9 @@ unavailable. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Crashes renderer on the IO thread, generates minidumps. |desc}]
 
-  (* Tries to close page, running its beforeunload hooks, if any. *)
   module Close = struct
     module Response : sig
       type result = Types.assoc
@@ -24951,10 +25128,9 @@ unavailable. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Tries to close page, running its beforeunload hooks, if any. |desc}]
 
-  (* Tries to update the web lifecycle state of the page.
-It will transition the page to the given state according to:
-https://github.com/WICG/web-lifecycle/ *)
   module SetWebLifecycleState = struct
     module Response : sig
       type result = Types.assoc
@@ -25019,8 +25195,11 @@ https://github.com/WICG/web-lifecycle/ *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Tries to update the web lifecycle state of the page.
+It will transition the page to the given state according to:
+https://github.com/WICG/web-lifecycle/ |desc}]
 
-  (* Stops sending each frame in the `screencastFrame`. *)
   module StopScreencast = struct
     module Response : sig
       type result = Types.assoc
@@ -25062,13 +25241,8 @@ https://github.com/WICG/web-lifecycle/ *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Stops sending each frame in the `screencastFrame`. |desc}]
 
-  (* Requests backend to produce compilation cache for the specified scripts.
-`scripts` are appended to the list of scripts for which the cache
-would be produced. The list may be reset during page navigation.
-When script with a matching URL is encountered, the cache is optionally
-produced upon backend discretion, based on internal heuristics.
-See also: `Page.compilationCacheProduced`. *)
   module ProduceCompilationCache = struct
     module Response : sig
       type result = Types.assoc
@@ -25121,9 +25295,14 @@ See also: `Page.compilationCacheProduced`. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Requests backend to produce compilation cache for the specified scripts.
+`scripts` are appended to the list of scripts for which the cache
+would be produced. The list may be reset during page navigation.
+When script with a matching URL is encountered, the cache is optionally
+produced upon backend discretion, based on internal heuristics.
+See also: `Page.compilationCacheProduced`. |desc}]
 
-  (* Seeds compilation cache for given url. Compilation cache does not survive
-cross-process navigation. *)
   module AddCompilationCache = struct
     module Response : sig
       type result = Types.assoc
@@ -25180,8 +25359,10 @@ cross-process navigation. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Seeds compilation cache for given url. Compilation cache does not survive
+cross-process navigation. |desc}]
 
-  (* Clears seeded compilation cache. *)
   module ClearCompilationCache = struct
     module Response : sig
       type result = Types.assoc
@@ -25223,9 +25404,8 @@ cross-process navigation. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears seeded compilation cache. |desc}]
 
-  (* Sets the Secure Payment Confirmation transaction mode.
-https://w3c.github.io/secure-payment-confirmation/#sctn-automation-set-spc-transaction-mode *)
   module SetSPCTransactionMode = struct
     module Response : sig
       type result = Types.assoc
@@ -25278,9 +25458,10 @@ https://w3c.github.io/secure-payment-confirmation/#sctn-automation-set-spc-trans
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets the Secure Payment Confirmation transaction mode.
+https://w3c.github.io/secure-payment-confirmation/#sctn-automation-set-spc-transaction-mode |desc}]
 
-  (* Extensions for Custom Handlers API:
-https://html.spec.whatwg.org/multipage/system-state.html#rph-automation *)
   module SetRPHRegistrationMode = struct
     module Response : sig
       type result = Types.assoc
@@ -25333,8 +25514,10 @@ https://html.spec.whatwg.org/multipage/system-state.html#rph-automation *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Extensions for Custom Handlers API:
+https://html.spec.whatwg.org/multipage/system-state.html#rph-automation |desc}]
 
-  (* Generates a report for testing. *)
   module GenerateTestReport = struct
     module Response : sig
       type result = Types.assoc
@@ -25393,8 +25576,8 @@ https://html.spec.whatwg.org/multipage/system-state.html#rph-automation *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Generates a report for testing. |desc}]
 
-  (* Pauses page execution. Can be resumed using generic Runtime.runIfWaitingForDebugger. *)
   module WaitForDebugger = struct
     module Response : sig
       type result = Types.assoc
@@ -25436,10 +25619,9 @@ https://html.spec.whatwg.org/multipage/system-state.html#rph-automation *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Pauses page execution. Can be resumed using generic Runtime.runIfWaitingForDebugger. |desc}]
 
-  (* Intercept file chooser requests and transfer control to protocol clients.
-When file chooser interception is enabled, native file chooser dialog is not shown.
-Instead, a protocol event `Page.fileChooserOpened` is emitted. *)
   module SetInterceptFileChooserDialog = struct
     module Response : sig
       type result = Types.assoc
@@ -25496,14 +25678,11 @@ Instead, a protocol event `Page.fileChooserOpened` is emitted. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Intercept file chooser requests and transfer control to protocol clients.
+When file chooser interception is enabled, native file chooser dialog is not shown.
+Instead, a protocol event `Page.fileChooserOpened` is emitted. |desc}]
 
-  (* Enable/disable prerendering manually.
-
-This command is a short-term solution for https://crbug.com/1440085.
-See https://docs.google.com/document/d/12HVmFxYj5Jc-eJr5OmWsa2bqTJsbgGLKI6ZIyx0_wpA
-for more details.
-
-TODO(https://crbug.com/1440085): Remove this once Puppeteer supports tab targets. *)
   module SetPrerenderingAllowed = struct
     module Response : sig
       type result = Types.assoc
@@ -25556,10 +25735,17 @@ TODO(https://crbug.com/1440085): Remove this once Puppeteer supports tab targets
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enable/disable prerendering manually.
+
+This command is a short-term solution for https://crbug.com/1440085.
+See https://docs.google.com/document/d/12HVmFxYj5Jc-eJr5OmWsa2bqTJsbgGLKI6ZIyx0_wpA
+for more details.
+
+TODO(https://crbug.com/1440085): Remove this once Puppeteer supports tab targets. |desc}]
 end
 
 module Performance = struct
-  (* Disable collecting and reporting metrics. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -25601,8 +25787,8 @@ module Performance = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disable collecting and reporting metrics. |desc}]
 
-  (* Enable collecting and reporting metrics. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -25671,10 +25857,8 @@ module Performance = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enable collecting and reporting metrics. |desc}]
 
-  (* Sets time domain to use for collecting and reporting duration metrics.
-Note that this must be called before enabling metrics collection. Calling
-this method while metrics collection is enabled returns an error. *)
   module SetTimeDomain = struct
     module Response : sig
       type result = Types.assoc
@@ -25739,8 +25923,11 @@ this method while metrics collection is enabled returns an error. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets time domain to use for collecting and reporting duration metrics.
+Note that this must be called before enabling metrics collection. Calling
+this method while metrics collection is enabled returns an error. |desc}]
 
-  (* Retrieve current values of run-time metrics. *)
   module GetMetrics = struct
     module Response : sig
       type result = {
@@ -25791,11 +25978,10 @@ this method while metrics collection is enabled returns an error. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Retrieve current values of run-time metrics. |desc}]
 end
 
 module PerformanceTimeline = struct
-  (* Previously buffered events would be reported before method returns.
-See also: timelineEventAdded *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -25856,10 +26042,12 @@ See also: timelineEventAdded *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Previously buffered events would be reported before method returns.
+See also: timelineEventAdded |desc}]
 end
 
 module Security = struct
-  (* Disables tracking security state changes. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -25901,8 +26089,8 @@ module Security = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables tracking security state changes. |desc}]
 
-  (* Enables tracking security state changes. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -25944,8 +26132,8 @@ module Security = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables tracking security state changes. |desc}]
 
-  (* Enable/disable whether all certificate errors should be ignored. *)
   module SetIgnoreCertificateErrors = struct
     module Response : sig
       type result = Types.assoc
@@ -26004,8 +26192,9 @@ module Security = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enable/disable whether all certificate errors should be ignored. |desc}]
 
-  (* Handles a certificate error that fired a certificateError event. *)
   module HandleCertificateError = struct
     module Response : sig
       type result = Types.assoc
@@ -26061,9 +26250,9 @@ module Security = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Handles a certificate error that fired a certificateError event. |desc}]
 
-  (* Enable/disable overriding certificate errors. If enabled, all certificate error events need to
-be handled by the DevTools client and should be answered with `handleCertificateError` commands. *)
   module SetOverrideCertificateErrors = struct
     module Response : sig
       type result = Types.assoc
@@ -26122,10 +26311,12 @@ be handled by the DevTools client and should be answered with `handleCertificate
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enable/disable overriding certificate errors. If enabled, all certificate error events need to
+be handled by the DevTools client and should be answered with `handleCertificateError` commands. |desc}]
 end
 
 module ServiceWorker = struct
-  (* No description provided *)
   module DeliverPushMessage = struct
     module Response : sig
       type result = Types.assoc
@@ -26181,8 +26372,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -26224,8 +26415,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module DispatchSyncEvent = struct
     module Response : sig
       type result = Types.assoc
@@ -26283,8 +26474,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module DispatchPeriodicSyncEvent = struct
     module Response : sig
       type result = Types.assoc
@@ -26344,8 +26535,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -26387,8 +26578,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module InspectWorker = struct
     module Response : sig
       type result = Types.assoc
@@ -26441,8 +26632,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module SetForceUpdateOnPageLoad = struct
     module Response : sig
       type result = Types.assoc
@@ -26501,8 +26692,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module SkipWaiting = struct
     module Response : sig
       type result = Types.assoc
@@ -26555,8 +26746,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module StartWorker = struct
     module Response : sig
       type result = Types.assoc
@@ -26609,8 +26800,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module StopAllWorkers = struct
     module Response : sig
       type result = Types.assoc
@@ -26652,8 +26843,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module StopWorker = struct
     module Response : sig
       type result = Types.assoc
@@ -26706,8 +26897,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module Unregister = struct
     module Response : sig
       type result = Types.assoc
@@ -26760,8 +26951,8 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module UpdateRegistration = struct
     module Response : sig
       type result = Types.assoc
@@ -26814,10 +27005,10 @@ module ServiceWorker = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Storage = struct
-  (* Returns a storage key given a frame id. *)
   module GetStorageKeyForFrame = struct
     module Response : sig
       type result = {
@@ -26879,8 +27070,8 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns a storage key given a frame id. |desc}]
 
-  (* Clears storage for origin. *)
   module ClearDataForOrigin = struct
     module Response : sig
       type result = Types.assoc
@@ -26935,8 +27126,8 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears storage for origin. |desc}]
 
-  (* Clears storage for storage key. *)
   module ClearDataForStorageKey = struct
     module Response : sig
       type result = Types.assoc
@@ -26991,8 +27182,8 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears storage for storage key. |desc}]
 
-  (* Returns all browser cookies. *)
   module GetCookies = struct
     module Response : sig
       type result = {
@@ -27057,8 +27248,8 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns all browser cookies. |desc}]
 
-  (* Sets given cookies. *)
   module SetCookies = struct
     module Response : sig
       type result = Types.assoc
@@ -27116,8 +27307,8 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets given cookies. |desc}]
 
-  (* Clears cookies. *)
   module ClearCookies = struct
     module Response : sig
       type result = Types.assoc
@@ -27173,8 +27364,8 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Clears cookies. |desc}]
 
-  (* Returns usage and quota in bytes. *)
   module GetUsageAndQuota = struct
     module Response : sig
       type result = {
@@ -27253,8 +27444,8 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns usage and quota in bytes. |desc}]
 
-  (* Override quota for the specified origin *)
   module OverrideQuotaForOrigin = struct
     module Response : sig
       type result = Types.assoc
@@ -27322,8 +27513,8 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Override quota for the specified origin |desc}]
 
-  (* Registers origin to be notified when an update occurs to its cache storage list. *)
   module TrackCacheStorageForOrigin = struct
     module Response : sig
       type result = Types.assoc
@@ -27380,8 +27571,9 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Registers origin to be notified when an update occurs to its cache storage list. |desc}]
 
-  (* Registers storage key to be notified when an update occurs to its cache storage list. *)
   module TrackCacheStorageForStorageKey = struct
     module Response : sig
       type result = Types.assoc
@@ -27438,8 +27630,9 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Registers storage key to be notified when an update occurs to its cache storage list. |desc}]
 
-  (* Registers origin to be notified when an update occurs to its IndexedDB. *)
   module TrackIndexedDBForOrigin = struct
     module Response : sig
       type result = Types.assoc
@@ -27491,8 +27684,9 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Registers origin to be notified when an update occurs to its IndexedDB. |desc}]
 
-  (* Registers storage key to be notified when an update occurs to its IndexedDB. *)
   module TrackIndexedDBForStorageKey = struct
     module Response : sig
       type result = Types.assoc
@@ -27549,8 +27743,9 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Registers storage key to be notified when an update occurs to its IndexedDB. |desc}]
 
-  (* Unregisters origin from receiving notifications for cache storage. *)
   module UntrackCacheStorageForOrigin = struct
     module Response : sig
       type result = Types.assoc
@@ -27607,8 +27802,9 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Unregisters origin from receiving notifications for cache storage. |desc}]
 
-  (* Unregisters storage key from receiving notifications for cache storage. *)
   module UntrackCacheStorageForStorageKey = struct
     module Response : sig
       type result = Types.assoc
@@ -27665,8 +27861,9 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Unregisters storage key from receiving notifications for cache storage. |desc}]
 
-  (* Unregisters origin from receiving notifications for IndexedDB. *)
   module UntrackIndexedDBForOrigin = struct
     module Response : sig
       type result = Types.assoc
@@ -27718,8 +27915,9 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Unregisters origin from receiving notifications for IndexedDB. |desc}]
 
-  (* Unregisters storage key from receiving notifications for IndexedDB. *)
   module UntrackIndexedDBForStorageKey = struct
     module Response : sig
       type result = Types.assoc
@@ -27776,9 +27974,9 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Unregisters storage key from receiving notifications for IndexedDB. |desc}]
 
-  (* Returns the number of stored Trust Tokens per issuer for the
-current browsing context. *)
   module GetTrustTokens = struct
     module Response : sig
       type result = {
@@ -27829,9 +28027,10 @@ current browsing context. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the number of stored Trust Tokens per issuer for the
+current browsing context. |desc}]
 
-  (* Removes all Trust Tokens issued by the provided issuerOrigin.
-Leaves other stored data, including the issuer's Redemption Records, intact. *)
   module ClearTrustTokens = struct
     module Response : sig
       type result = {
@@ -27895,8 +28094,10 @@ Leaves other stored data, including the issuer's Redemption Records, intact. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Removes all Trust Tokens issued by the provided issuerOrigin.
+Leaves other stored data, including the issuer's Redemption Records, intact. |desc}]
 
-  (* Gets details for a named interest group. *)
   module GetInterestGroupDetails = struct
     module Response : sig
       type result = {
@@ -27971,8 +28172,8 @@ Leaves other stored data, including the issuer's Redemption Records, intact. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Gets details for a named interest group. |desc}]
 
-  (* Enables/Disables issuing of interestGroupAccessed events. *)
   module SetInterestGroupTracking = struct
     module Response : sig
       type result = Types.assoc
@@ -28024,9 +28225,9 @@ Leaves other stored data, including the issuer's Redemption Records, intact. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables/Disables issuing of interestGroupAccessed events. |desc}]
 
-  (* Enables/Disables issuing of interestGroupAuctionEventOccurred and
-interestGroupAuctionNetworkRequestCreated. *)
   module SetInterestGroupAuctionTracking = struct
     module Response : sig
       type result = Types.assoc
@@ -28083,8 +28284,10 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables/Disables issuing of interestGroupAuctionEventOccurred and
+interestGroupAuctionNetworkRequestCreated. |desc}]
 
-  (* Gets metadata for an origin's shared storage. *)
   module GetSharedStorageMetadata = struct
     module Response : sig
       type result = {
@@ -28146,8 +28349,8 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Gets metadata for an origin's shared storage. |desc}]
 
-  (* Gets the entries in an given origin's shared storage. *)
   module GetSharedStorageEntries = struct
     module Response : sig
       type result = {
@@ -28209,8 +28412,9 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Gets the entries in an given origin's shared storage. |desc}]
 
-  (* Sets entry with `key` and `value` for a given origin's shared storage. *)
   module SetSharedStorageEntry = struct
     module Response : sig
       type result = Types.assoc
@@ -28273,8 +28477,9 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets entry with `key` and `value` for a given origin's shared storage. |desc}]
 
-  (* Deletes entry for `key` (if it exists) for a given origin's shared storage. *)
   module DeleteSharedStorageEntry = struct
     module Response : sig
       type result = Types.assoc
@@ -28328,8 +28533,9 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Deletes entry for `key` (if it exists) for a given origin's shared storage. |desc}]
 
-  (* Clears all entries for a given origin's shared storage. *)
   module ClearSharedStorageEntries = struct
     module Response : sig
       type result = Types.assoc
@@ -28382,8 +28588,9 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Clears all entries for a given origin's shared storage. |desc}]
 
-  (* Resets the budget for `ownerOrigin` by clearing all budget withdrawals. *)
   module ResetSharedStorageBudget = struct
     module Response : sig
       type result = Types.assoc
@@ -28436,8 +28643,9 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Resets the budget for `ownerOrigin` by clearing all budget withdrawals. |desc}]
 
-  (* Enables/disables issuing of sharedStorageAccessed events. *)
   module SetSharedStorageTracking = struct
     module Response : sig
       type result = Types.assoc
@@ -28489,8 +28697,9 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables/disables issuing of sharedStorageAccessed events. |desc}]
 
-  (* Set tracking for a storage key's buckets. *)
   module SetStorageBucketTracking = struct
     module Response : sig
       type result = Types.assoc
@@ -28544,8 +28753,8 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Set tracking for a storage key's buckets. |desc}]
 
-  (* Deletes the Storage Bucket with the given storage key and bucket name. *)
   module DeleteStorageBucket = struct
     module Response : sig
       type result = Types.assoc
@@ -28598,8 +28807,9 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Deletes the Storage Bucket with the given storage key and bucket name. |desc}]
 
-  (* Deletes state for sites identified as potential bounce trackers, immediately. *)
   module RunBounceTrackingMitigations = struct
     module Response : sig
       type result = {
@@ -28650,8 +28860,9 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Deletes state for sites identified as potential bounce trackers, immediately. |desc}]
 
-  (* https://wicg.github.io/attribution-reporting-api/ *)
   module SetAttributionReportingLocalTestingMode = struct
     module Response : sig
       type result = Types.assoc
@@ -28712,8 +28923,8 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|https://wicg.github.io/attribution-reporting-api/ |desc}]
 
-  (* Enables/disables issuing of Attribution Reporting events. *)
   module SetAttributionReportingTracking = struct
     module Response : sig
       type result = Types.assoc
@@ -28770,9 +28981,9 @@ interestGroupAuctionNetworkRequestCreated. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables/disables issuing of Attribution Reporting events. |desc}]
 
-  (* Sends all pending Attribution Reports immediately, regardless of their
-scheduled report time. *)
   module SendPendingAttributionReports = struct
     module Response : sig
       type result = {
@@ -28825,9 +29036,10 @@ scheduled report time. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sends all pending Attribution Reports immediately, regardless of their
+scheduled report time. |desc}]
 
-  (* Returns the effective Related Website Sets in use by this profile for the browser
-session. The effective Related Website Sets will not change during a browser session. *)
   module GetRelatedWebsiteSets = struct
     module Response : sig
       type result = {
@@ -28878,10 +29090,10 @@ session. The effective Related Website Sets will not change during a browser ses
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the effective Related Website Sets in use by this profile for the browser
+session. The effective Related Website Sets will not change during a browser session. |desc}]
 
-  (* Returns the list of URLs from a page and its embedded resources that match
-existing grace period URL pattern rules.
-https://developers.google.com/privacy-sandbox/cookies/temporary-exceptions/grace-period *)
   module GetAffectedUrlsForThirdPartyCookieMetadata = struct
     module Response : sig
       type result = {
@@ -28961,10 +29173,13 @@ https://developers.google.com/privacy-sandbox/cookies/temporary-exceptions/grace
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the list of URLs from a page and its embedded resources that match
+existing grace period URL pattern rules.
+https://developers.google.com/privacy-sandbox/cookies/temporary-exceptions/grace-period |desc}]
 end
 
 module SystemInfo = struct
-  (* Returns information about the system. *)
   module GetInfo = struct
     module Response : sig
       type result = {
@@ -29055,8 +29270,8 @@ module SystemInfo = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns information about the system. |desc}]
 
-  (* Returns information about the feature state. *)
   module GetFeatureState = struct
     module Response : sig
       type result = {
@@ -29118,8 +29333,8 @@ module SystemInfo = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns information about the feature state. |desc}]
 
-  (* Returns information about all running processes. *)
   module GetProcessInfo = struct
     module Response : sig
       type result = {
@@ -29170,10 +29385,10 @@ module SystemInfo = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns information about all running processes. |desc}]
 end
 
 module Target = struct
-  (* Activates (focuses) the target. *)
   module ActivateTarget = struct
     module Response : sig
       type result = Types.assoc
@@ -29226,8 +29441,8 @@ module Target = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Activates (focuses) the target. |desc}]
 
-  (* Attaches to the target with given id. *)
   module AttachToTarget = struct
     module Response : sig
       type result = {
@@ -29297,8 +29512,8 @@ module Target = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Attaches to the target with given id. |desc}]
 
-  (* Attaches to the browser target, only uses flat sessionId mode. *)
   module AttachToBrowserTarget = struct
     module Response : sig
       type result = {
@@ -29349,8 +29564,9 @@ module Target = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Attaches to the browser target, only uses flat sessionId mode. |desc}]
 
-  (* Closes the target. If the target is a page that gets closed too. *)
   module CloseTarget = struct
     module Response : sig
       type result = {
@@ -29418,15 +29634,9 @@ module Target = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Closes the target. If the target is a page that gets closed too. |desc}]
 
-  (* Inject object to the target's main frame that provides a communication
-channel with browser target.
-
-Injected object will be available as `window[bindingName]`.
-
-The object has the following API:
-- `binding.send(json)` - a method to send messages over the remote debugging protocol
-- `binding.onmessage = json => handleMessage(json)` - a callback that will be called for the protocol notifications and command responses. *)
   module ExposeDevToolsProtocol = struct
     module Response : sig
       type result = Types.assoc
@@ -29490,9 +29700,16 @@ The object has the following API:
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Inject object to the target's main frame that provides a communication
+channel with browser target.
 
-  (* Creates a new empty BrowserContext. Similar to an incognito profile but you can have more than
-one. *)
+Injected object will be available as `window[bindingName]`.
+
+The object has the following API:
+- `binding.send(json)` - a method to send messages over the remote debugging protocol
+- `binding.onmessage = json => handleMessage(json)` - a callback that will be called for the protocol notifications and command responses. |desc}]
+
   module CreateBrowserContext = struct
     module Response : sig
       type result = {
@@ -29586,8 +29803,10 @@ one. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Creates a new empty BrowserContext. Similar to an incognito profile but you can have more than
+one. |desc}]
 
-  (* Returns all browser contexts created with `Target.createBrowserContext` method. *)
   module GetBrowserContexts = struct
     module Response : sig
       type result = {
@@ -29640,8 +29859,9 @@ one. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns all browser contexts created with `Target.createBrowserContext` method. |desc}]
 
-  (* Creates a new page. *)
   module CreateTarget = struct
     module Response : sig
       type result = {
@@ -29779,8 +29999,8 @@ one. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Creates a new page. |desc}]
 
-  (* Detaches session with given id. *)
   module DetachFromTarget = struct
     module Response : sig
       type result = Types.assoc
@@ -29837,9 +30057,8 @@ one. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Detaches session with given id. |desc}]
 
-  (* Deletes a BrowserContext. All the belonging pages will be closed without calling their
-beforeunload hooks. *)
   module DisposeBrowserContext = struct
     module Response : sig
       type result = Types.assoc
@@ -29892,8 +30111,10 @@ beforeunload hooks. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Deletes a BrowserContext. All the belonging pages will be closed without calling their
+beforeunload hooks. |desc}]
 
-  (* Returns information about a target. *)
   module GetTargetInfo = struct
     module Response : sig
       type result = {
@@ -29957,8 +30178,8 @@ beforeunload hooks. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns information about a target. |desc}]
 
-  (* Retrieves a list of available targets. *)
   module GetTargets = struct
     module Response : sig
       type result = {
@@ -30027,10 +30248,8 @@ beforeunload hooks. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Retrieves a list of available targets. |desc}]
 
-  (* Sends protocol message over session with given id.
-Consider using flat mode instead; see commands attachToTarget, setAutoAttach,
-and crbug.com/991325. *)
   module SendMessageToTarget = struct
     module Response : sig
       type result = Types.assoc
@@ -30090,12 +30309,11 @@ and crbug.com/991325. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sends protocol message over session with given id.
+Consider using flat mode instead; see commands attachToTarget, setAutoAttach,
+and crbug.com/991325. |desc}]
 
-  (* Controls whether to automatically attach to new targets which are considered to be related to
-this one. When turned on, attaches to all existing related targets as well. When turned off,
-automatically detaches from all currently attached targets.
-This also clears all targets added by `autoAttachRelated` from the list of targets to watch
-for creation of related targets. *)
   module SetAutoAttach = struct
     module Response : sig
       type result = Types.assoc
@@ -30168,12 +30386,13 @@ for creation of related targets. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Controls whether to automatically attach to new targets which are considered to be related to
+this one. When turned on, attaches to all existing related targets as well. When turned off,
+automatically detaches from all currently attached targets.
+This also clears all targets added by `autoAttachRelated` from the list of targets to watch
+for creation of related targets. |desc}]
 
-  (* Adds the specified target to the list of targets that will be monitored for any related target
-creation (such as child frames, child workers and new versions of service worker) and reported
-through `attachedToTarget`. The specified target is also auto-attached.
-This cancels the effect of any previous `setAutoAttach` and is also cancelled by subsequent
-`setAutoAttach`. Only available at the Browser target. *)
   module AutoAttachRelated = struct
     module Response : sig
       type result = Types.assoc
@@ -30237,9 +30456,13 @@ This cancels the effect of any previous `setAutoAttach` and is also cancelled by
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Adds the specified target to the list of targets that will be monitored for any related target
+creation (such as child frames, child workers and new versions of service worker) and reported
+through `attachedToTarget`. The specified target is also auto-attached.
+This cancels the effect of any previous `setAutoAttach` and is also cancelled by subsequent
+`setAutoAttach`. Only available at the Browser target. |desc}]
 
-  (* Controls whether to discover available targets and notify via
-`targetCreated/targetInfoChanged/targetDestroyed` events. *)
   module SetDiscoverTargets = struct
     module Response : sig
       type result = Types.assoc
@@ -30300,9 +30523,10 @@ This cancels the effect of any previous `setAutoAttach` and is also cancelled by
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Controls whether to discover available targets and notify via
+`targetCreated/targetInfoChanged/targetDestroyed` events. |desc}]
 
-  (* Enables target discovery for the specified locations, when `setDiscoverTargets` was set to
-`true`. *)
   module SetRemoteLocations = struct
     module Response : sig
       type result = Types.assoc
@@ -30355,10 +30579,12 @@ This cancels the effect of any previous `setAutoAttach` and is also cancelled by
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables target discovery for the specified locations, when `setDiscoverTargets` was set to
+`true`. |desc}]
 end
 
 module Tethering = struct
-  (* Request browser port binding. *)
   module Bind = struct
     module Response : sig
       type result = Types.assoc
@@ -30410,8 +30636,8 @@ module Tethering = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Request browser port binding. |desc}]
 
-  (* Request browser port unbinding. *)
   module Unbind = struct
     module Response : sig
       type result = Types.assoc
@@ -30463,10 +30689,10 @@ module Tethering = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Request browser port unbinding. |desc}]
 end
 
 module Tracing = struct
-  (* Stop trace events collection. *)
   module End = struct
     module Response : sig
       type result = Types.assoc
@@ -30508,8 +30734,8 @@ module Tracing = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Stop trace events collection. |desc}]
 
-  (* Gets supported tracing categories. *)
   module GetCategories = struct
     module Response : sig
       type result = {
@@ -30562,8 +30788,8 @@ module Tracing = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Gets supported tracing categories. |desc}]
 
-  (* Record a clock sync marker in the trace. *)
   module RecordClockSyncMarker = struct
     module Response : sig
       type result = Types.assoc
@@ -30616,8 +30842,8 @@ module Tracing = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Record a clock sync marker in the trace. |desc}]
 
-  (* Request a global memory dump. *)
   module RequestMemoryDump = struct
     module Response : sig
       type result = {
@@ -30697,8 +30923,8 @@ module Tracing = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Request a global memory dump. |desc}]
 
-  (* Start trace events collection. *)
   module Start = struct
     module Response : sig
       type result = Types.assoc
@@ -30824,10 +31050,10 @@ module Tracing = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Start trace events collection. |desc}]
 end
 
 module Fetch = struct
-  (* Disables the fetch domain. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -30869,9 +31095,8 @@ module Fetch = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables the fetch domain. |desc}]
 
-  (* Enables issuing of requestPaused events. A request will be paused until client
-calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -30939,8 +31164,10 @@ calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables issuing of requestPaused events. A request will be paused until client
+calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. |desc}]
 
-  (* Causes the request to fail with specified reason. *)
   module FailRequest = struct
     module Response : sig
       type result = Types.assoc
@@ -30997,8 +31224,8 @@ calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Causes the request to fail with specified reason. |desc}]
 
-  (* Provides response to the request. *)
   module FulfillRequest = struct
     module Response : sig
       type result = Types.assoc
@@ -31091,8 +31318,8 @@ calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Provides response to the request. |desc}]
 
-  (* Continues the request, optionally modifying some of its parameters. *)
   module ContinueRequest = struct
     module Response : sig
       type result = Types.assoc
@@ -31179,8 +31406,9 @@ calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Continues the request, optionally modifying some of its parameters. |desc}]
 
-  (* Continues a request supplying authChallengeResponse following authRequired event. *)
   module ContinueWithAuth = struct
     module Response : sig
       type result = Types.assoc
@@ -31238,10 +31466,9 @@ calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Continues a request supplying authChallengeResponse following authRequired event. |desc}]
 
-  (* Continues loading of the paused response, optionally modifying the
-response headers. If either responseCode or headers are modified, all of them
-must be present. *)
   module ContinueResponse = struct
     module Response : sig
       type result = Types.assoc
@@ -31330,17 +31557,11 @@ must be present. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Continues loading of the paused response, optionally modifying the
+response headers. If either responseCode or headers are modified, all of them
+must be present. |desc}]
 
-  (* Causes the body of the response to be received from the server and
-returned as a single string. May only be issued for a request that
-is paused in the Response stage and is mutually exclusive with
-takeResponseBodyForInterceptionAsStream. Calling other methods that
-affect the request or disabling fetch domain before body is received
-results in an undefined behavior.
-Note that the response body is not available for redirects. Requests
-paused in the _redirect received_ state may be differentiated by
-`responseCode` and presence of `location` response header, see
-comments to `requestPaused` for details. *)
   module GetResponseBody = struct
     module Response : sig
       type result = {
@@ -31408,17 +31629,18 @@ comments to `requestPaused` for details. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Causes the body of the response to be received from the server and
+returned as a single string. May only be issued for a request that
+is paused in the Response stage and is mutually exclusive with
+takeResponseBodyForInterceptionAsStream. Calling other methods that
+affect the request or disabling fetch domain before body is received
+results in an undefined behavior.
+Note that the response body is not available for redirects. Requests
+paused in the _redirect received_ state may be differentiated by
+`responseCode` and presence of `location` response header, see
+comments to `requestPaused` for details. |desc}]
 
-  (* Returns a handle to the stream representing the response body.
-The request must be paused in the HeadersReceived stage.
-Note that after this command the request can't be continued
-as is -- client either needs to cancel it or to provide the
-response body.
-The stream only supports sequential read, IO.read will fail if the position
-is specified.
-This method is mutually exclusive with getResponseBody.
-Calling other methods that affect the request or disabling fetch
-domain before body is received results in an undefined behavior. *)
   module TakeResponseBodyAsStream = struct
     module Response : sig
       type result = {
@@ -31480,10 +31702,20 @@ domain before body is received results in an undefined behavior. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns a handle to the stream representing the response body.
+The request must be paused in the HeadersReceived stage.
+Note that after this command the request can't be continued
+as is -- client either needs to cancel it or to provide the
+response body.
+The stream only supports sequential read, IO.read will fail if the position
+is specified.
+This method is mutually exclusive with getResponseBody.
+Calling other methods that affect the request or disabling fetch
+domain before body is received results in an undefined behavior. |desc}]
 end
 
 module WebAudio = struct
-  (* Enables the WebAudio domain and starts sending context lifetime events. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -31525,8 +31757,9 @@ module WebAudio = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables the WebAudio domain and starts sending context lifetime events. |desc}]
 
-  (* Disables the WebAudio domain. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -31568,8 +31801,8 @@ module WebAudio = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables the WebAudio domain. |desc}]
 
-  (* Fetch the realtime data from the registered contexts. *)
   module GetRealtimeData = struct
     module Response : sig
       type result = {
@@ -31631,11 +31864,11 @@ module WebAudio = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Fetch the realtime data from the registered contexts. |desc}]
 end
 
 module WebAuthn = struct
-  (* Enable the WebAuthn domain and start intercepting credential storage and
-retrieval with a virtual authenticator. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -31697,8 +31930,10 @@ retrieval with a virtual authenticator. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enable the WebAuthn domain and start intercepting credential storage and
+retrieval with a virtual authenticator. |desc}]
 
-  (* Disable the WebAuthn domain. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -31740,8 +31975,8 @@ retrieval with a virtual authenticator. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disable the WebAuthn domain. |desc}]
 
-  (* Creates and adds a virtual authenticator. *)
   module AddVirtualAuthenticator = struct
     module Response : sig
       type result = {
@@ -31803,8 +32038,8 @@ retrieval with a virtual authenticator. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Creates and adds a virtual authenticator. |desc}]
 
-  (* Resets parameters isBogusSignature, isBadUV, isBadUP to false if they are not present. *)
   module SetResponseOverrideBits = struct
     module Response : sig
       type result = Types.assoc
@@ -31879,8 +32114,9 @@ retrieval with a virtual authenticator. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Resets parameters isBogusSignature, isBadUV, isBadUP to false if they are not present. |desc}]
 
-  (* Removes the given authenticator. *)
   module RemoveVirtualAuthenticator = struct
     module Response : sig
       type result = Types.assoc
@@ -31938,8 +32174,8 @@ retrieval with a virtual authenticator. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Removes the given authenticator. |desc}]
 
-  (* Adds the credential to the specified authenticator. *)
   module AddCredential = struct
     module Response : sig
       type result = Types.assoc
@@ -31994,9 +32230,8 @@ retrieval with a virtual authenticator. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Adds the credential to the specified authenticator. |desc}]
 
-  (* Returns a single credential stored in the given virtual authenticator that
-matches the credential ID. *)
   module GetCredential = struct
     module Response : sig
       type result = {
@@ -32061,8 +32296,10 @@ matches the credential ID. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns a single credential stored in the given virtual authenticator that
+matches the credential ID. |desc}]
 
-  (* Returns all the credentials stored in the given virtual authenticator. *)
   module GetCredentials = struct
     module Response : sig
       type result = {
@@ -32124,8 +32361,9 @@ matches the credential ID. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns all the credentials stored in the given virtual authenticator. |desc}]
 
-  (* Removes a credential from the authenticator. *)
   module RemoveCredential = struct
     module Response : sig
       type result = Types.assoc
@@ -32181,8 +32419,8 @@ matches the credential ID. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Removes a credential from the authenticator. |desc}]
 
-  (* Clears all the credentials from the specified device. *)
   module ClearCredentials = struct
     module Response : sig
       type result = Types.assoc
@@ -32235,9 +32473,9 @@ matches the credential ID. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Clears all the credentials from the specified device. |desc}]
 
-  (* Sets whether User Verification succeeds or fails for an authenticator.
-The default is true. *)
   module SetUserVerified = struct
     module Response : sig
       type result = Types.assoc
@@ -32293,9 +32531,10 @@ The default is true. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets whether User Verification succeeds or fails for an authenticator.
+The default is true. |desc}]
 
-  (* Sets whether tests of user presence will succeed immediately (if true) or fail to resolve (if false) for an authenticator.
-The default is true. *)
   module SetAutomaticPresenceSimulation = struct
     module Response : sig
       type result = Types.assoc
@@ -32354,9 +32593,10 @@ The default is true. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets whether tests of user presence will succeed immediately (if true) or fail to resolve (if false) for an authenticator.
+The default is true. |desc}]
 
-  (* Allows setting credential properties.
-https://w3c.github.io/webauthn/#sctn-automation-set-credential-properties *)
   module SetCredentialProperties = struct
     module Response : sig
       type result = Types.assoc
@@ -32421,10 +32661,12 @@ https://w3c.github.io/webauthn/#sctn-automation-set-credential-properties *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Allows setting credential properties.
+https://w3c.github.io/webauthn/#sctn-automation-set-credential-properties |desc}]
 end
 
 module Media = struct
-  (* Enables the Media domain *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -32466,8 +32708,8 @@ module Media = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables the Media domain |desc}]
 
-  (* Disables the Media domain. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -32509,10 +32751,10 @@ module Media = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables the Media domain. |desc}]
 end
 
 module DeviceAccess = struct
-  (* Enable events in this domain. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -32554,8 +32796,8 @@ module DeviceAccess = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enable events in this domain. |desc}]
 
-  (* Disable events in this domain. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -32597,8 +32839,8 @@ module DeviceAccess = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disable events in this domain. |desc}]
 
-  (* Select a device in response to a DeviceAccess.deviceRequestPrompted event. *)
   module SelectPrompt = struct
     module Response : sig
       type result = Types.assoc
@@ -32653,8 +32895,9 @@ module DeviceAccess = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Select a device in response to a DeviceAccess.deviceRequestPrompted event. |desc}]
 
-  (* Cancel a prompt in response to a DeviceAccess.deviceRequestPrompted event. *)
   module CancelPrompt = struct
     module Response : sig
       type result = Types.assoc
@@ -32707,10 +32950,11 @@ module DeviceAccess = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Cancel a prompt in response to a DeviceAccess.deviceRequestPrompted event. |desc}]
 end
 
 module Preload = struct
-  (* No description provided *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -32752,8 +32996,8 @@ module Preload = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -32795,10 +33039,10 @@ module Preload = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module FedCm = struct
-  (* No description provided *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -32857,8 +33101,8 @@ module FedCm = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -32900,8 +33144,8 @@ module FedCm = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module SelectAccount = struct
     module Response : sig
       type result = Types.assoc
@@ -32956,8 +33200,8 @@ module FedCm = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module ClickDialogButton = struct
     module Response : sig
       type result = Types.assoc
@@ -33012,8 +33256,8 @@ module FedCm = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module OpenUrl = struct
     module Response : sig
       type result = Types.assoc
@@ -33071,8 +33315,8 @@ module FedCm = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module DismissDialog = struct
     module Response : sig
       type result = Types.assoc
@@ -33129,9 +33373,8 @@ module FedCm = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Resets the cooldown time, if any, to allow the next FedCM call to show
-a dialog even if one was recently dismissed by the user. *)
   module ResetCooldown = struct
     module Response : sig
       type result = Types.assoc
@@ -33173,10 +33416,12 @@ a dialog even if one was recently dismissed by the user. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Resets the cooldown time, if any, to allow the next FedCM call to show
+a dialog even if one was recently dismissed by the user. |desc}]
 end
 
 module PWA = struct
-  (* Returns the following OS state for the given manifest id. *)
   module GetOsAppState = struct
     module Response : sig
       type result = {
@@ -33247,17 +33492,9 @@ module PWA = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the following OS state for the given manifest id. |desc}]
 
-  (* Installs the given manifest identity, optionally using the given install_url
-or IWA bundle location.
-
-TODO(crbug.com/337872319) Support IWA to meet the following specific
-requirement.
-IWA-specific install description: If the manifest_id is isolated-app://,
-install_url_or_bundle_url is required, and can be either an http(s) URL or
-file:// URL pointing to a signed web bundle (.swbn). The .swbn file's
-signing key must correspond to manifest_id. If Chrome is not in IWA dev
-mode, the installation will fail, regardless of the state of the allowlist. *)
   module Install = struct
     module Response : sig
       type result = Types.assoc
@@ -33318,8 +33555,18 @@ mode, the installation will fail, regardless of the state of the allowlist. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Installs the given manifest identity, optionally using the given install_url
+or IWA bundle location.
 
-  (* Uninstalls the given manifest_id and closes any opened app windows. *)
+TODO(crbug.com/337872319) Support IWA to meet the following specific
+requirement.
+IWA-specific install description: If the manifest_id is isolated-app://,
+install_url_or_bundle_url is required, and can be either an http(s) URL or
+file:// URL pointing to a signed web bundle (.swbn). The .swbn file's
+signing key must correspond to manifest_id. If Chrome is not in IWA dev
+mode, the installation will fail, regardless of the state of the allowlist. |desc}]
+
   module Uninstall = struct
     module Response : sig
       type result = Types.assoc
@@ -33372,10 +33619,9 @@ mode, the installation will fail, regardless of the state of the allowlist. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Uninstalls the given manifest_id and closes any opened app windows. |desc}]
 
-  (* Launches the installed web app, or an url in the same web app instead of the
-default start url if it is provided. Returns a page Target.TargetID which
-can be used to attach to via Target.attachToTarget or similar APIs. *)
   module Launch = struct
     module Response : sig
       type result = {
@@ -33441,20 +33687,11 @@ can be used to attach to via Target.attachToTarget or similar APIs. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Launches the installed web app, or an url in the same web app instead of the
+default start url if it is provided. Returns a page Target.TargetID which
+can be used to attach to via Target.attachToTarget or similar APIs. |desc}]
 
-  (* Opens one or more local files from an installed web app identified by its
-manifestId. The web app needs to have file handlers registered to process
-the files. The API returns one or more page Target.TargetIDs which can be
-used to attach to via Target.attachToTarget or similar APIs.
-If some files in the parameters cannot be handled by the web app, they will
-be ignored. If none of the files can be handled, this API returns an error.
-If no files are provided as the parameter, this API also returns an error.
-
-According to the definition of the file handlers in the manifest file, one
-Target.TargetID may represent a page handling one or more files. The order
-of the returned Target.TargetIDs is not guaranteed.
-
-TODO(crbug.com/339454034): Check the existences of the input files. *)
   module LaunchFilesInApp = struct
     module Response : sig
       type result = {
@@ -33520,10 +33757,21 @@ TODO(crbug.com/339454034): Check the existences of the input files. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Opens one or more local files from an installed web app identified by its
+manifestId. The web app needs to have file handlers registered to process
+the files. The API returns one or more page Target.TargetIDs which can be
+used to attach to via Target.attachToTarget or similar APIs.
+If some files in the parameters cannot be handled by the web app, they will
+be ignored. If none of the files can be handled, this API returns an error.
+If no files are provided as the parameter, this API also returns an error.
 
-  (* Opens the current page in its web app identified by the manifest id, needs
-to be called on a page target. This function returns immediately without
-waiting for the app to finish loading. *)
+According to the definition of the file handlers in the manifest file, one
+Target.TargetID may represent a page handling one or more files. The order
+of the returned Target.TargetIDs is not guaranteed.
+
+TODO(crbug.com/339454034): Check the existences of the input files. |desc}]
+
   module OpenCurrentPageInApp = struct
     module Response : sig
       type result = Types.assoc
@@ -33576,16 +33824,11 @@ waiting for the app to finish loading. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Opens the current page in its web app identified by the manifest id, needs
+to be called on a page target. This function returns immediately without
+waiting for the app to finish loading. |desc}]
 
-  (* Changes user settings of the web app identified by its manifestId. If the
-app was not installed, this command returns an error. Unset parameters will
-be ignored; unrecognized values will cause an error.
-
-Unlike the ones defined in the manifest files of the web apps, these
-settings are provided by the browser and controlled by the users, they
-impact the way the browser handling the web apps.
-
-See the comment of each parameter. *)
   module ChangeAppUserSettings = struct
     module Response : sig
       type result = Types.assoc
@@ -33658,10 +33901,19 @@ See the comment of each parameter. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Changes user settings of the web app identified by its manifestId. If the
+app was not installed, this command returns an error. Unset parameters will
+be ignored; unrecognized values will cause an error.
+
+Unlike the ones defined in the manifest files of the web apps, these
+settings are provided by the browser and controlled by the users, they
+impact the way the browser handling the web apps.
+
+See the comment of each parameter. |desc}]
 end
 
 module BluetoothEmulation = struct
-  (* Enable the BluetoothEmulation domain. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -33714,8 +33966,8 @@ module BluetoothEmulation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enable the BluetoothEmulation domain. |desc}]
 
-  (* Disable the BluetoothEmulation domain. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -33757,9 +34009,8 @@ module BluetoothEmulation = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disable the BluetoothEmulation domain. |desc}]
 
-  (* Simulates a peripheral with |address|, |name| and |knownServiceUuids|
-that has already been connected to the system. *)
   module SimulatePreconnectedPeripheral = struct
     module Response : sig
       type result = Types.assoc
@@ -33823,9 +34074,10 @@ that has already been connected to the system. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Simulates a peripheral with |address|, |name| and |knownServiceUuids|
+that has already been connected to the system. |desc}]
 
-  (* Simulates an advertisement packet described in |entry| being received by
-the central. *)
   module SimulateAdvertisement = struct
     module Response : sig
       type result = Types.assoc
@@ -33883,10 +34135,12 @@ the central. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Simulates an advertisement packet described in |entry| being received by
+the central. |desc}]
 end
 
 module Console = struct
-  (* Does nothing. *)
   module ClearMessages = struct
     module Response : sig
       type result = Types.assoc
@@ -33928,8 +34182,8 @@ module Console = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Does nothing. |desc}]
 
-  (* Disables console domain, prevents further console messages from being reported to the client. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -33971,9 +34225,9 @@ module Console = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Disables console domain, prevents further console messages from being reported to the client. |desc}]
 
-  (* Enables console domain, sends the messages collected so far to the client by means of the
-`messageAdded` notification. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -34015,10 +34269,12 @@ module Console = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables console domain, sends the messages collected so far to the client by means of the
+`messageAdded` notification. |desc}]
 end
 
 module Debugger = struct
-  (* Continues execution until specific location is reached. *)
   module ContinueToLocation = struct
     module Response : sig
       type result = Types.assoc
@@ -34087,8 +34343,9 @@ module Debugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Continues execution until specific location is reached. |desc}]
 
-  (* Disables debugger for given page. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -34130,9 +34387,8 @@ module Debugger = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables debugger for given page. |desc}]
 
-  (* Enables debugger for the given page. Clients should not assume that the debugging has been
-enabled until the result for this command is received. *)
   module Enable = struct
     module Response : sig
       type result = {
@@ -34201,8 +34457,10 @@ enabled until the result for this command is received. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables debugger for the given page. Clients should not assume that the debugging has been
+enabled until the result for this command is received. |desc}]
 
-  (* Evaluates expression on a given call frame. *)
   module EvaluateOnCallFrame = struct
     module Response : sig
       type result = {
@@ -34332,9 +34590,8 @@ enabled until the result for this command is received. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Evaluates expression on a given call frame. |desc}]
 
-  (* Returns possible locations for breakpoint. scriptId in start and end range locations should be
-the same. *)
   module GetPossibleBreakpoints = struct
     module Response : sig
       type result = {
@@ -34414,8 +34671,10 @@ the same. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns possible locations for breakpoint. scriptId in start and end range locations should be
+the same. |desc}]
 
-  (* Returns source for the script with given id. *)
   module GetScriptSource = struct
     module Response : sig
       type result = {
@@ -34491,8 +34750,8 @@ the same. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns source for the script with given id. |desc}]
 
-  (* No description provided *)
   module DisassembleWasmModule = struct
     module Response : sig
       type result = {
@@ -34584,11 +34843,8 @@ the same. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Disassemble the next chunk of lines for the module corresponding to the
-stream. If disassembly is complete, this API will invalidate the streamId
-and return an empty chunk. Any subsequent calls for the now invalid stream
-will return errors. *)
   module NextWasmDisassemblyChunk = struct
     module Response : sig
       type result = {
@@ -34650,8 +34906,12 @@ will return errors. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Disassemble the next chunk of lines for the module corresponding to the
+stream. If disassembly is complete, this API will invalidate the streamId
+and return an empty chunk. Any subsequent calls for the now invalid stream
+will return errors. |desc}]
 
-  (* This command is deprecated. Use getScriptSource instead. *)
   module GetWasmBytecode = struct
     module Response : sig
       type result = {
@@ -34720,8 +34980,9 @@ will return errors. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|This command is deprecated. Use getScriptSource instead. |desc}]
 
-  (* Returns stack trace with given `stackTraceId`. *)
   module GetStackTrace = struct
     module Response : sig
       type result = {
@@ -34783,8 +35044,8 @@ will return errors. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns stack trace with given `stackTraceId`. |desc}]
 
-  (* Stops on the next JavaScript statement. *)
   module Pause = struct
     module Response : sig
       type result = Types.assoc
@@ -34826,8 +35087,8 @@ will return errors. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Stops on the next JavaScript statement. |desc}]
 
-  (* No description provided *)
   module PauseOnAsyncCall = struct
     module Response : sig
       type result = Types.assoc
@@ -34883,8 +35144,8 @@ will return errors. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Removes JavaScript breakpoint. *)
   module RemoveBreakpoint = struct
     module Response : sig
       type result = Types.assoc
@@ -34937,20 +35198,8 @@ will return errors. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Removes JavaScript breakpoint. |desc}]
 
-  (* Restarts particular call frame from the beginning. The old, deprecated
-behavior of `restartFrame` is to stay paused and allow further CDP commands
-after a restart was scheduled. This can cause problems with restarting, so
-we now continue execution immediatly after it has been scheduled until we
-reach the beginning of the restarted frame.
-
-To stay back-wards compatible, `restartFrame` now expects a `mode`
-parameter to be present. If the `mode` parameter is missing, `restartFrame`
-errors out.
-
-The various return values are deprecated and `callFrames` is always empty.
-Use the call frames from the `Debugger#paused` events instead, that fires
-once V8 pauses at the beginning of the restarted function. *)
   module RestartFrame = struct
     module Response : sig
       type result = {
@@ -35046,8 +35295,21 @@ once V8 pauses at the beginning of the restarted function. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Restarts particular call frame from the beginning. The old, deprecated
+behavior of `restartFrame` is to stay paused and allow further CDP commands
+after a restart was scheduled. This can cause problems with restarting, so
+we now continue execution immediatly after it has been scheduled until we
+reach the beginning of the restarted frame.
 
-  (* Resumes JavaScript execution. *)
+To stay back-wards compatible, `restartFrame` now expects a `mode`
+parameter to be present. If the `mode` parameter is missing, `restartFrame`
+errors out.
+
+The various return values are deprecated and `callFrames` is always empty.
+Use the call frames from the `Debugger#paused` events instead, that fires
+once V8 pauses at the beginning of the restarted function. |desc}]
+
   module Resume = struct
     module Response : sig
       type result = Types.assoc
@@ -35111,8 +35373,8 @@ once V8 pauses at the beginning of the restarted function. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Resumes JavaScript execution. |desc}]
 
-  (* Searches for given string in script content. *)
   module SearchInContent = struct
     module Response : sig
       type result = {
@@ -35184,8 +35446,8 @@ once V8 pauses at the beginning of the restarted function. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Searches for given string in script content. |desc}]
 
-  (* Enables or disables async call stacks tracking. *)
   module SetAsyncCallStackDepth = struct
     module Response : sig
       type result = Types.assoc
@@ -35242,10 +35504,8 @@ once V8 pauses at the beginning of the restarted function. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables or disables async call stacks tracking. |desc}]
 
-  (* Replace previous blackbox execution contexts with passed ones. Forces backend to skip
-stepping/pausing in scripts in these execution contexts. VM will try to leave blackboxed script by
-performing 'step in' several times, finally resorting to 'step out' if unsuccessful. *)
   module SetBlackboxExecutionContexts = struct
     module Response : sig
       type result = Types.assoc
@@ -35306,10 +35566,11 @@ performing 'step in' several times, finally resorting to 'step out' if unsuccess
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Replace previous blackbox execution contexts with passed ones. Forces backend to skip
+stepping/pausing in scripts in these execution contexts. VM will try to leave blackboxed script by
+performing 'step in' several times, finally resorting to 'step out' if unsuccessful. |desc}]
 
-  (* Replace previous blackbox patterns with passed ones. Forces backend to skip stepping/pausing in
-scripts with url matching one of the patterns. VM will try to leave blackboxed script by
-performing 'step in' several times, finally resorting to 'step out' if unsuccessful. *)
   module SetBlackboxPatterns = struct
     module Response : sig
       type result = Types.assoc
@@ -35369,11 +35630,11 @@ performing 'step in' several times, finally resorting to 'step out' if unsuccess
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Replace previous blackbox patterns with passed ones. Forces backend to skip stepping/pausing in
+scripts with url matching one of the patterns. VM will try to leave blackboxed script by
+performing 'step in' several times, finally resorting to 'step out' if unsuccessful. |desc}]
 
-  (* Makes backend skip steps in the script in blackboxed ranges. VM will try leave blacklisted
-scripts by performing 'step in' several times, finally resorting to 'step out' if unsuccessful.
-Positions array contains positions where blackbox state is changed. First interval isn't
-blackboxed. Array should be sorted. *)
   module SetBlackboxedRanges = struct
     module Response : sig
       type result = Types.assoc
@@ -35428,8 +35689,12 @@ blackboxed. Array should be sorted. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Makes backend skip steps in the script in blackboxed ranges. VM will try leave blacklisted
+scripts by performing 'step in' several times, finally resorting to 'step out' if unsuccessful.
+Positions array contains positions where blackbox state is changed. First interval isn't
+blackboxed. Array should be sorted. |desc}]
 
-  (* Sets JavaScript breakpoint at a given location. *)
   module SetBreakpoint = struct
     module Response : sig
       type result = {
@@ -35506,8 +35771,8 @@ blackboxed. Array should be sorted. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets JavaScript breakpoint at a given location. |desc}]
 
-  (* Sets instrumentation breakpoint. *)
   module SetInstrumentationBreakpoint = struct
     module Response : sig
       type result = {
@@ -35591,11 +35856,8 @@ blackboxed. Array should be sorted. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Sets instrumentation breakpoint. |desc}]
 
-  (* Sets JavaScript breakpoint at given location specified either by URL or URL regex. Once this
-command is issued, all existing parsed scripts will have breakpoints resolved and returned in
-`locations` property. Further matching script parsing will result in subsequent
-`breakpointResolved` events issued. This logical breakpoint will survive page reloads. *)
   module SetBreakpointByUrl = struct
     module Response : sig
       type result = {
@@ -35697,10 +35959,12 @@ command is issued, all existing parsed scripts will have breakpoints resolved an
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets JavaScript breakpoint at given location specified either by URL or URL regex. Once this
+command is issued, all existing parsed scripts will have breakpoints resolved and returned in
+`locations` property. Further matching script parsing will result in subsequent
+`breakpointResolved` events issued. This logical breakpoint will survive page reloads. |desc}]
 
-  (* Sets JavaScript breakpoint before each call to the given function.
-If another function was created from the same source as a given one,
-calling it will also trigger the breakpoint. *)
   module SetBreakpointOnFunctionCall = struct
     module Response : sig
       type result = {
@@ -35776,8 +36040,11 @@ calling it will also trigger the breakpoint. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Sets JavaScript breakpoint before each call to the given function.
+If another function was created from the same source as a given one,
+calling it will also trigger the breakpoint. |desc}]
 
-  (* Activates / deactivates all breakpoints on the page. *)
   module SetBreakpointsActive = struct
     module Response : sig
       type result = Types.assoc
@@ -35831,9 +36098,9 @@ calling it will also trigger the breakpoint. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Activates / deactivates all breakpoints on the page. |desc}]
 
-  (* Defines pause on exceptions state. Can be set to stop on all exceptions, uncaught exceptions,
-or caught exceptions, no exceptions. Initial pause on exceptions state is `none`. *)
   module SetPauseOnExceptions = struct
     module Response : sig
       type result = Types.assoc
@@ -35902,8 +36169,10 @@ or caught exceptions, no exceptions. Initial pause on exceptions state is `none`
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Defines pause on exceptions state. Can be set to stop on all exceptions, uncaught exceptions,
+or caught exceptions, no exceptions. Initial pause on exceptions state is `none`. |desc}]
 
-  (* Changes return value in top frame. Available only at return break position. *)
   module SetReturnValue = struct
     module Response : sig
       type result = Types.assoc
@@ -35956,14 +36225,9 @@ or caught exceptions, no exceptions. Initial pause on exceptions state is `none`
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Changes return value in top frame. Available only at return break position. |desc}]
 
-  (* Edits JavaScript source live.
-
-In general, functions that are currently on the stack can not be edited with
-a single exception: If the edited function is the top-most stack frame and
-that is the only activation of that function on the stack. In this case
-the live edit will be successful and a `Debugger.restartFrame` for the
-top-most function is automatically triggered. *)
   module SetScriptSource = struct
     module Response : sig
       type setscriptsource_status =
@@ -36141,8 +36405,15 @@ top-most function is automatically triggered. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Edits JavaScript source live.
 
-  (* Makes page not interrupt on any pauses (breakpoint, exception, dom exception etc). *)
+In general, functions that are currently on the stack can not be edited with
+a single exception: If the edited function is the top-most stack frame and
+that is the only activation of that function on the stack. In this case
+the live edit will be successful and a `Debugger.restartFrame` for the
+top-most function is automatically triggered. |desc}]
+
   module SetSkipAllPauses = struct
     module Response : sig
       type result = Types.assoc
@@ -36195,9 +36466,9 @@ top-most function is automatically triggered. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Makes page not interrupt on any pauses (breakpoint, exception, dom exception etc). |desc}]
 
-  (* Changes value of variable in a callframe. Object-based scopes are not supported and must be
-mutated manually. *)
   module SetVariableValue = struct
     module Response : sig
       type result = Types.assoc
@@ -36263,8 +36534,10 @@ mutated manually. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Changes value of variable in a callframe. Object-based scopes are not supported and must be
+mutated manually. |desc}]
 
-  (* Steps into the function call. *)
   module StepInto = struct
     module Response : sig
       type result = Types.assoc
@@ -36328,8 +36601,8 @@ mutated manually. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Steps into the function call. |desc}]
 
-  (* Steps out of the function call. *)
   module StepOut = struct
     module Response : sig
       type result = Types.assoc
@@ -36371,8 +36644,8 @@ mutated manually. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Steps out of the function call. |desc}]
 
-  (* Steps over the statement. *)
   module StepOver = struct
     module Response : sig
       type result = Types.assoc
@@ -36429,11 +36702,10 @@ mutated manually. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Steps over the statement. |desc}]
 end
 
 module HeapProfiler = struct
-  (* Enables console to refer to the node with given id via $x (see Command Line API for more details
-$x functions). *)
   module AddInspectedHeapObject = struct
     module Response : sig
       type result = Types.assoc
@@ -36494,8 +36766,10 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables console to refer to the node with given id via $x (see Command Line API for more details
+$x functions). |desc}]
 
-  (* No description provided *)
   module CollectGarbage = struct
     module Response : sig
       type result = Types.assoc
@@ -36537,8 +36811,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -36580,8 +36854,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -36623,8 +36897,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module GetHeapObjectId = struct
     module Response : sig
       type result = {
@@ -36693,8 +36967,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module GetObjectByHeapObjectId = struct
     module Response : sig
       type result = {
@@ -36767,8 +37041,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module GetSamplingProfile = struct
     module Response : sig
       type result = {
@@ -36821,8 +37095,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module StartSampling = struct
     module Response : sig
       type result = Types.assoc
@@ -36920,8 +37194,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module StartTrackingHeapObjects = struct
     module Response : sig
       type result = Types.assoc
@@ -36981,8 +37255,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module StopSampling = struct
     module Response : sig
       type result = {
@@ -37033,8 +37307,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module StopTrackingHeapObjects = struct
     module Response : sig
       type result = Types.assoc
@@ -37117,8 +37391,8 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module TakeHeapSnapshot = struct
     module Response : sig
       type result = Types.assoc
@@ -37198,10 +37472,10 @@ $x functions). *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Profiler = struct
-  (* No description provided *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -37243,8 +37517,8 @@ module Profiler = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -37286,9 +37560,8 @@ module Profiler = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Collect coverage data for the current isolate. The coverage data may be incomplete due to
-garbage collection. *)
   module GetBestEffortCoverage = struct
     module Response : sig
       type result = {
@@ -37341,8 +37614,10 @@ garbage collection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Collect coverage data for the current isolate. The coverage data may be incomplete due to
+garbage collection. |desc}]
 
-  (* Changes CPU profiler sampling interval. Must be called before CPU profiles recording started. *)
   module SetSamplingInterval = struct
     module Response : sig
       type result = Types.assoc
@@ -37396,8 +37671,9 @@ garbage collection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Changes CPU profiler sampling interval. Must be called before CPU profiles recording started. |desc}]
 
-  (* No description provided *)
   module Start = struct
     module Response : sig
       type result = Types.assoc
@@ -37439,10 +37715,8 @@ garbage collection. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Enable precise code coverage. Coverage data for JavaScript executed before enabling precise code
-coverage may be incomplete. Enabling prevents running optimized code and resets execution
-counters. *)
   module StartPreciseCoverage = struct
     module Response : sig
       type result = {
@@ -37524,8 +37798,11 @@ counters. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enable precise code coverage. Coverage data for JavaScript executed before enabling precise code
+coverage may be incomplete. Enabling prevents running optimized code and resets execution
+counters. |desc}]
 
-  (* No description provided *)
   module Stop = struct
     module Response : sig
       type result = {
@@ -37576,9 +37853,8 @@ counters. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Disable precise code coverage. Disabling releases unnecessary execution count records and allows
-executing optimized code. *)
   module StopPreciseCoverage = struct
     module Response : sig
       type result = Types.assoc
@@ -37620,9 +37896,10 @@ executing optimized code. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Disable precise code coverage. Disabling releases unnecessary execution count records and allows
+executing optimized code. |desc}]
 
-  (* Collect coverage data for the current isolate, and resets execution counters. Precise code
-coverage needs to have started. *)
   module TakePreciseCoverage = struct
     module Response : sig
       type result = {
@@ -37685,10 +37962,12 @@ coverage needs to have started. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Collect coverage data for the current isolate, and resets execution counters. Precise code
+coverage needs to have started. |desc}]
 end
 
 module Runtime = struct
-  (* Add handler to promise with given promise object id. *)
   module AwaitPromise = struct
     module Response : sig
       type result = {
@@ -37775,9 +38054,9 @@ module Runtime = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Add handler to promise with given promise object id. |desc}]
 
-  (* Calls function with given declaration on the given object. Object group of the result is
-inherited from the target object. *)
   module CallFunctionOn = struct
     module Response : sig
       type result = {
@@ -37952,8 +38231,10 @@ inherited from the target object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Calls function with given declaration on the given object. Object group of the result is
+inherited from the target object. |desc}]
 
-  (* Compiles expression. *)
   module CompileScript = struct
     module Response : sig
       type result = {
@@ -38039,8 +38320,8 @@ inherited from the target object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Compiles expression. |desc}]
 
-  (* Disables reporting of execution contexts creation. *)
   module Disable = struct
     module Response : sig
       type result = Types.assoc
@@ -38082,8 +38363,8 @@ inherited from the target object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Disables reporting of execution contexts creation. |desc}]
 
-  (* Discards collected exceptions and console API calls. *)
   module DiscardConsoleEntries = struct
     module Response : sig
       type result = Types.assoc
@@ -38125,10 +38406,9 @@ inherited from the target object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Discards collected exceptions and console API calls. |desc}]
 
-  (* Enables reporting of execution contexts creation by means of `executionContextCreated` event.
-When the reporting gets enabled the event will be sent immediately for each existing execution
-context. *)
   module Enable = struct
     module Response : sig
       type result = Types.assoc
@@ -38170,8 +38450,11 @@ context. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Enables reporting of execution contexts creation by means of `executionContextCreated` event.
+When the reporting gets enabled the event will be sent immediately for each existing execution
+context. |desc}]
 
-  (* Evaluates expression on global object. *)
   module Evaluate = struct
     module Response : sig
       type result = {
@@ -38373,8 +38656,8 @@ context. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Evaluates expression on global object. |desc}]
 
-  (* Returns the isolate id. *)
   module GetIsolateId = struct
     module Response : sig
       type result = { id : string [@key "id"] [@ocaml.doc "The isolate id."] }
@@ -38418,9 +38701,8 @@ context. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns the isolate id. |desc}]
 
-  (* Returns the JavaScript heap usage.
-It is the total usage of the corresponding isolate not scoped to a particular Runtime. *)
   module GetHeapUsage = struct
     module Response : sig
       type result = {
@@ -38495,9 +38777,10 @@ It is the total usage of the corresponding isolate not scoped to a particular Ru
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns the JavaScript heap usage.
+It is the total usage of the corresponding isolate not scoped to a particular Runtime. |desc}]
 
-  (* Returns properties of a given object. Object group of the result is inherited from the target
-object. *)
   module GetProperties = struct
     module Response : sig
       type result = {
@@ -38620,8 +38903,10 @@ object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns properties of a given object. Object group of the result is inherited from the target
+object. |desc}]
 
-  (* Returns all let, const and class variables from global scope. *)
   module GlobalLexicalScopeNames = struct
     module Response : sig
       type result = {
@@ -38687,8 +38972,9 @@ object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Returns all let, const and class variables from global scope. |desc}]
 
-  (* No description provided *)
   module QueryObjects = struct
     module Response : sig
       type result = {
@@ -38757,8 +39043,8 @@ object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Releases remote object with given id. *)
   module ReleaseObject = struct
     module Response : sig
       type result = Types.assoc
@@ -38812,8 +39098,8 @@ object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Releases remote object with given id. |desc}]
 
-  (* Releases all remote objects that belong to a given group. *)
   module ReleaseObjectGroup = struct
     module Response : sig
       type result = Types.assoc
@@ -38866,8 +39152,9 @@ object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Releases all remote objects that belong to a given group. |desc}]
 
-  (* Tells inspected instance to run if it was waiting for debugger to attach. *)
   module RunIfWaitingForDebugger = struct
     module Response : sig
       type result = Types.assoc
@@ -38909,8 +39196,9 @@ object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Tells inspected instance to run if it was waiting for debugger to attach. |desc}]
 
-  (* Runs script with given id in a given context. *)
   module RunScript = struct
     module Response : sig
       type result = {
@@ -39036,8 +39324,8 @@ object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Runs script with given id in a given context. |desc}]
 
-  (* Enables or disables async call stacks tracking. *)
   module SetAsyncCallStackDepth = struct
     module Response : sig
       type result = Types.assoc
@@ -39094,8 +39382,8 @@ object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Enables or disables async call stacks tracking. |desc}]
 
-  (* No description provided *)
   module SetCustomObjectFormatterEnabled = struct
     module Response : sig
       type result = Types.assoc
@@ -39152,8 +39440,8 @@ object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* No description provided *)
   module SetMaxCallStackSizeToCapture = struct
     module Response : sig
       type result = Types.assoc
@@ -39210,9 +39498,8 @@ object. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|No description provided |desc}]
 
-  (* Terminate current or next JavaScript execution.
-Will cancel the termination when the outer-most script execution ends. *)
   module TerminateExecution = struct
     module Response : sig
       type result = Types.assoc
@@ -39254,13 +39541,10 @@ Will cancel the termination when the outer-most script execution ends. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|Terminate current or next JavaScript execution.
+Will cancel the termination when the outer-most script execution ends. |desc}]
 
-  (* If executionContextId is empty, adds binding with the given name on the
-global objects of all inspected contexts, including those created later,
-bindings survive reloads.
-Binding function takes exactly one argument, this argument should be string,
-in case of any other input, function throws an exception.
-Each binding function call produces Runtime.bindingCalled notification. *)
   module AddBinding = struct
     module Response : sig
       type result = Types.assoc
@@ -39337,9 +39621,14 @@ Each binding function call produces Runtime.bindingCalled notification. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|If executionContextId is empty, adds binding with the given name on the
+global objects of all inspected contexts, including those created later,
+bindings survive reloads.
+Binding function takes exactly one argument, this argument should be string,
+in case of any other input, function throws an exception.
+Each binding function call produces Runtime.bindingCalled notification. |desc}]
 
-  (* This method does not remove binding function from global object but
-unsubscribes current runtime agent from Runtime.bindingCalled notifications. *)
   module RemoveBinding = struct
     module Response : sig
       type result = Types.assoc
@@ -39391,12 +39680,10 @@ unsubscribes current runtime agent from Runtime.bindingCalled notifications. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|This method does not remove binding function from global object but
+unsubscribes current runtime agent from Runtime.bindingCalled notifications. |desc}]
 
-  (* This method tries to lookup and populate exception details for a
-JavaScript Error object.
-Note that the stackTrace portion of the resulting exceptionDetails will
-only be populated if the Runtime domain was enabled at the time when the
-Error was thrown. *)
   module GetExceptionDetails = struct
     module Response : sig
       type result = {
@@ -39464,10 +39751,15 @@ Error was thrown. *)
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc
+    {desc|This method tries to lookup and populate exception details for a
+JavaScript Error object.
+Note that the stackTrace portion of the resulting exceptionDetails will
+only be populated if the Runtime domain was enabled at the time when the
+Error was thrown. |desc}]
 end
 
 module Schema = struct
-  (* Returns supported domains. *)
   module GetDomains = struct
     module Response : sig
       type result = {
@@ -39518,4 +39810,5 @@ module Schema = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
+  [@@ocaml.doc {desc|Returns supported domains. |desc}]
 end
