@@ -1701,6 +1701,119 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
   end
   [@@ocaml.doc {desc|Fired when WebTransport is disposed. |desc}]
 
+  module DirectTCPSocketCreated = struct
+    let name = "Network.directTCPSocketCreated"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      remoteAddr : string;
+          [@key "remoteAddr"] [@ocaml.doc "No description provided"]
+      remotePort : Types.number;
+          [@key "remotePort"] [@ocaml.doc "Unsigned int 16."]
+      options : Types.Network.DirectTCPSocketOptions.t;
+          [@key "options"] [@ocaml.doc "No description provided"]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+      initiator : Types.Network.Initiator.t option;
+          [@key "initiator"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Fired upon direct_socket.TCPSocket creation. |desc}]
+
+  module DirectTCPSocketOpened = struct
+    let name = "Network.directTCPSocketOpened"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      remoteAddr : string;
+          [@key "remoteAddr"] [@ocaml.doc "No description provided"]
+      remotePort : Types.number;
+          [@key "remotePort"] [@ocaml.doc "Expected to be unsigned integer."]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+      localAddr : string option;
+          [@key "localAddr"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      localPort : Types.number option;
+          [@key "localPort"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Fired when direct_socket.TCPSocket connection is opened. |desc}]
+
+  module DirectTCPSocketAborted = struct
+    let name = "Network.directTCPSocketAborted"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      errorMessage : string;
+          [@key "errorMessage"] [@ocaml.doc "No description provided"]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Fired when direct_socket.TCPSocket is aborted. |desc}]
+
+  module DirectTCPSocketClosed = struct
+    let name = "Network.directTCPSocketClosed"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Fired when direct_socket.TCPSocket is closed. |desc}]
+
   module RequestWillBeSentExtraInfo = struct
     let name = "Network.requestWillBeSentExtraInfo"
 

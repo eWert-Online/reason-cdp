@@ -16943,6 +16943,42 @@ and Network : sig
     [@@ocaml.doc "List of content encodings supported by the backend."]
   end
 
+  and DirectSocketDnsQueryType : sig
+    type _directsocketdnsquerytype = [ `ipv4 | `ipv6 ]
+
+    val _directsocketdnsquerytype_of_yojson :
+      Yojson.Basic.t -> _directsocketdnsquerytype
+
+    val yojson_of__directsocketdnsquerytype :
+      _directsocketdnsquerytype -> Yojson.Basic.t
+
+    type t = _directsocketdnsquerytype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and DirectTCPSocketOptions : sig
+    type t = {
+      noDelay : bool; [@key "noDelay"] [@ocaml.doc "TCP_NODELAY option"]
+      keepAliveDelay : number option;
+          [@key "keepAliveDelay"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      sendBufferSize : number option;
+          [@key "sendBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      receiveBufferSize : number option;
+          [@key "receiveBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      dnsQueryType : DirectSocketDnsQueryType.t option;
+          [@key "dnsQueryType"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and PrivateNetworkRequestPolicy : sig
     type _privatenetworkrequestpolicy =
       [ `Allow
@@ -20383,6 +20419,78 @@ end = struct
     type t = _contentencoding
     [@@deriving yojson]
     [@@ocaml.doc "List of content encodings supported by the backend."]
+  end
+
+  and DirectSocketDnsQueryType : sig
+    type _directsocketdnsquerytype = [ `ipv4 | `ipv6 ]
+
+    val _directsocketdnsquerytype_of_yojson :
+      Yojson.Basic.t -> _directsocketdnsquerytype
+
+    val yojson_of__directsocketdnsquerytype :
+      _directsocketdnsquerytype -> Yojson.Basic.t
+
+    type t = _directsocketdnsquerytype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _directsocketdnsquerytype = [ `ipv4 | `ipv6 ]
+
+    let _directsocketdnsquerytype_of_yojson = function
+      | `String "ipv4" -> `ipv4
+      | `String "ipv6" -> `ipv6
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__directsocketdnsquerytype = function
+      | `ipv4 -> `String "ipv4"
+      | `ipv6 -> `String "ipv6"
+
+    type t = _directsocketdnsquerytype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and DirectTCPSocketOptions : sig
+    type t = {
+      noDelay : bool; [@key "noDelay"] [@ocaml.doc "TCP_NODELAY option"]
+      keepAliveDelay : number option;
+          [@key "keepAliveDelay"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      sendBufferSize : number option;
+          [@key "sendBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      receiveBufferSize : number option;
+          [@key "receiveBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      dnsQueryType : DirectSocketDnsQueryType.t option;
+          [@key "dnsQueryType"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      noDelay : bool; [@key "noDelay"] [@ocaml.doc "TCP_NODELAY option"]
+      keepAliveDelay : number option;
+          [@key "keepAliveDelay"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      sendBufferSize : number option;
+          [@key "sendBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      receiveBufferSize : number option;
+          [@key "receiveBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      dnsQueryType : DirectSocketDnsQueryType.t option;
+          [@key "dnsQueryType"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
   and PrivateNetworkRequestPolicy : sig
@@ -34022,6 +34130,9 @@ and Preload : sig
       | `PrefetchNotEligibleSchemeIsNotHttps
       | `PrefetchNotEligibleUserHasCookies
       | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
+      | `PrefetchNotEligibleRedirectFromServiceWorker
+      | `PrefetchNotEligibleRedirectToServiceWorker
       | `PrefetchNotEligibleBatterySaverEnabled
       | `PrefetchNotEligiblePreloadingDisabled
       | `PrefetchNotFinishedInTime
@@ -34801,6 +34912,9 @@ end = struct
       | `PrefetchNotEligibleSchemeIsNotHttps
       | `PrefetchNotEligibleUserHasCookies
       | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
+      | `PrefetchNotEligibleRedirectFromServiceWorker
+      | `PrefetchNotEligibleRedirectToServiceWorker
       | `PrefetchNotEligibleBatterySaverEnabled
       | `PrefetchNotEligiblePreloadingDisabled
       | `PrefetchNotFinishedInTime
@@ -34842,6 +34956,9 @@ end = struct
       | `PrefetchNotEligibleSchemeIsNotHttps
       | `PrefetchNotEligibleUserHasCookies
       | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
+      | `PrefetchNotEligibleRedirectFromServiceWorker
+      | `PrefetchNotEligibleRedirectToServiceWorker
       | `PrefetchNotEligibleBatterySaverEnabled
       | `PrefetchNotEligiblePreloadingDisabled
       | `PrefetchNotFinishedInTime
@@ -34888,6 +35005,12 @@ end = struct
           `PrefetchNotEligibleUserHasCookies
       | `String "PrefetchNotEligibleUserHasServiceWorker" ->
           `PrefetchNotEligibleUserHasServiceWorker
+      | `String "PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler" ->
+          `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
+      | `String "PrefetchNotEligibleRedirectFromServiceWorker" ->
+          `PrefetchNotEligibleRedirectFromServiceWorker
+      | `String "PrefetchNotEligibleRedirectToServiceWorker" ->
+          `PrefetchNotEligibleRedirectToServiceWorker
       | `String "PrefetchNotEligibleBatterySaverEnabled" ->
           `PrefetchNotEligibleBatterySaverEnabled
       | `String "PrefetchNotEligiblePreloadingDisabled" ->
@@ -34939,6 +35062,12 @@ end = struct
           `String "PrefetchNotEligibleUserHasCookies"
       | `PrefetchNotEligibleUserHasServiceWorker ->
           `String "PrefetchNotEligibleUserHasServiceWorker"
+      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler ->
+          `String "PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler"
+      | `PrefetchNotEligibleRedirectFromServiceWorker ->
+          `String "PrefetchNotEligibleRedirectFromServiceWorker"
+      | `PrefetchNotEligibleRedirectToServiceWorker ->
+          `String "PrefetchNotEligibleRedirectToServiceWorker"
       | `PrefetchNotEligibleBatterySaverEnabled ->
           `String "PrefetchNotEligibleBatterySaverEnabled"
       | `PrefetchNotEligiblePreloadingDisabled ->

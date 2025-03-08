@@ -34007,10 +34007,13 @@ module BluetoothEmulation = struct
       type t = {
         state : Types.BluetoothEmulation.CentralState.t;
             [@key "state"] [@ocaml.doc "State of the simulated central."]
+        leSupported : bool;
+            [@key "leSupported"]
+            [@ocaml.doc "If the simulated central supports low-energy."]
       }
       [@@deriving yojson]
 
-      let make ~state () = { state }
+      let make ~state ~leSupported () = { state; leSupported }
     end
 
     module Request = struct
@@ -34028,6 +34031,65 @@ module BluetoothEmulation = struct
     end
   end
   [@@ocaml.doc {desc|Enable the BluetoothEmulation domain. |desc}]
+
+  module SetSimulatedCentralState = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        state : Types.BluetoothEmulation.CentralState.t;
+            [@key "state"] [@ocaml.doc "State of the simulated central."]
+      }
+      [@@deriving yojson]
+
+      let make ~state () = { state }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.setSimulatedCentralState";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Set the state of the simulated central. |desc}]
 
   module Disable = struct
     module Response : sig
