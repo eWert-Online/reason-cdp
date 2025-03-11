@@ -25714,10 +25714,17 @@ https://html.spec.whatwg.org/multipage/system-state.html#rph-automation |desc}]
     module Params = struct
       type t = {
         enabled : bool; [@key "enabled"] [@ocaml.doc "No description provided"]
+        cancel : bool option;
+            [@key "cancel"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If true, cancels the dialog by emitting relevant events (if any)\n\
+               in addition to not showing it if the interception is enabled\n\
+               (default: false)."]
       }
       [@@deriving yojson]
 
-      let make ~enabled () = { enabled }
+      let make ~enabled ?cancel () = { enabled; cancel }
     end
 
     module Request = struct
