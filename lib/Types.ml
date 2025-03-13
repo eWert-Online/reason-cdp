@@ -6252,6 +6252,7 @@ and Browser : sig
       | `idleDetection
       | `keyboardLock
       | `localFonts
+      | `localNetworkAccess
       | `midi
       | `midiSysex
       | `nfc
@@ -6362,6 +6363,16 @@ and Browser : sig
       buckets : Bucket.t list; [@key "buckets"] [@ocaml.doc "Buckets."]
     }
     [@@deriving yojson] [@@ocaml.doc "Chrome histogram."]
+  end
+
+  and PrivacySandboxAPI : sig
+    type _privacysandboxapi = [ `BiddingAndAuctionServices | `TrustedKeyValue ]
+
+    val _privacysandboxapi_of_yojson : Yojson.Basic.t -> _privacysandboxapi
+    val yojson_of__privacysandboxapi : _privacysandboxapi -> Yojson.Basic.t
+
+    type t = _privacysandboxapi
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 end = struct
   module rec BrowserContextID : sig
@@ -6481,6 +6492,7 @@ end = struct
       | `idleDetection
       | `keyboardLock
       | `localFonts
+      | `localNetworkAccess
       | `midi
       | `midiSysex
       | `nfc
@@ -6525,6 +6537,7 @@ end = struct
       | `idleDetection
       | `keyboardLock
       | `localFonts
+      | `localNetworkAccess
       | `midi
       | `midiSysex
       | `nfc
@@ -6563,6 +6576,7 @@ end = struct
       | `String "idleDetection" -> `idleDetection
       | `String "keyboardLock" -> `keyboardLock
       | `String "localFonts" -> `localFonts
+      | `String "localNetworkAccess" -> `localNetworkAccess
       | `String "midi" -> `midi
       | `String "midiSysex" -> `midiSysex
       | `String "nfc" -> `nfc
@@ -6603,6 +6617,7 @@ end = struct
       | `idleDetection -> `String "idleDetection"
       | `keyboardLock -> `String "keyboardLock"
       | `localFonts -> `String "localFonts"
+      | `localNetworkAccess -> `String "localNetworkAccess"
       | `midi -> `String "midi"
       | `midiSysex -> `String "midiSysex"
       | `nfc -> `String "nfc"
@@ -6800,6 +6815,31 @@ end = struct
       buckets : Bucket.t list; [@key "buckets"] [@ocaml.doc "Buckets."]
     }
     [@@deriving yojson] [@@ocaml.doc "Chrome histogram."]
+  end
+
+  and PrivacySandboxAPI : sig
+    type _privacysandboxapi = [ `BiddingAndAuctionServices | `TrustedKeyValue ]
+
+    val _privacysandboxapi_of_yojson : Yojson.Basic.t -> _privacysandboxapi
+    val yojson_of__privacysandboxapi : _privacysandboxapi -> Yojson.Basic.t
+
+    type t = _privacysandboxapi
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _privacysandboxapi = [ `BiddingAndAuctionServices | `TrustedKeyValue ]
+
+    let _privacysandboxapi_of_yojson = function
+      | `String "BiddingAndAuctionServices" -> `BiddingAndAuctionServices
+      | `String "TrustedKeyValue" -> `TrustedKeyValue
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__privacysandboxapi = function
+      | `BiddingAndAuctionServices -> `String "BiddingAndAuctionServices"
+      | `TrustedKeyValue -> `String "TrustedKeyValue"
+
+    type t = _privacysandboxapi
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 end
 
@@ -16986,7 +17026,8 @@ and Network : sig
       | `WarnFromInsecureToMorePrivate
       | `PreflightBlock
       | `PreflightWarn
-      | `PermissionBlock ]
+      | `PermissionBlock
+      | `PermissionWarn ]
 
     val _privatenetworkrequestpolicy_of_yojson :
       Yojson.Basic.t -> _privatenetworkrequestpolicy
@@ -20500,7 +20541,8 @@ end = struct
       | `WarnFromInsecureToMorePrivate
       | `PreflightBlock
       | `PreflightWarn
-      | `PermissionBlock ]
+      | `PermissionBlock
+      | `PermissionWarn ]
 
     val _privatenetworkrequestpolicy_of_yojson :
       Yojson.Basic.t -> _privatenetworkrequestpolicy
@@ -20517,7 +20559,8 @@ end = struct
       | `WarnFromInsecureToMorePrivate
       | `PreflightBlock
       | `PreflightWarn
-      | `PermissionBlock ]
+      | `PermissionBlock
+      | `PermissionWarn ]
 
     let _privatenetworkrequestpolicy_of_yojson = function
       | `String "Allow" -> `Allow
@@ -20528,6 +20571,7 @@ end = struct
       | `String "PreflightBlock" -> `PreflightBlock
       | `String "PreflightWarn" -> `PreflightWarn
       | `String "PermissionBlock" -> `PermissionBlock
+      | `String "PermissionWarn" -> `PermissionWarn
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -20540,6 +20584,7 @@ end = struct
       | `PreflightBlock -> `String "PreflightBlock"
       | `PreflightWarn -> `String "PreflightWarn"
       | `PermissionBlock -> `String "PermissionBlock"
+      | `PermissionWarn -> `String "PermissionWarn"
 
     type t = _privatenetworkrequestpolicy
     [@@deriving yojson] [@@ocaml.doc "No description provided"]

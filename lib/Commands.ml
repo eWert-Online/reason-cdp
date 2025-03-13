@@ -3340,6 +3340,81 @@ module Browser = struct
   [@@ocaml.doc
     {desc|Allows a site to use privacy sandbox features that require enrollment
 without the site actually being enrolled. Only supported on page targets. |desc}]
+
+  module AddPrivacySandboxCoordinatorKeyConfig = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        api : Types.Browser.PrivacySandboxAPI.t;
+            [@key "api"] [@ocaml.doc "No description provided"]
+        coordinatorOrigin : string;
+            [@key "coordinatorOrigin"] [@ocaml.doc "No description provided"]
+        keyConfig : string;
+            [@key "keyConfig"] [@ocaml.doc "No description provided"]
+        browserContextId : Types.Browser.BrowserContextID.t option;
+            [@key "browserContextId"]
+            [@yojson.option]
+            [@ocaml.doc
+              "BrowserContext to perform the action in. When omitted, default \
+               browser\n\
+               context is used."]
+      }
+      [@@deriving yojson]
+
+      let make ~api ~coordinatorOrigin ~keyConfig ?browserContextId () =
+        { api; coordinatorOrigin; keyConfig; browserContextId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Browser.addPrivacySandboxCoordinatorKeyConfig";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Configures encryption keys used with a given privacy sandbox API to talk
+to a trusted coordinator.  Since this is intended for test automation only,
+coordinatorOrigin must be a .test domain. No existing coordinator
+configuration for the origin may exist. |desc}]
 end
 
 module CSS = struct
