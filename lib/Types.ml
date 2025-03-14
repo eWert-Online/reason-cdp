@@ -23828,7 +23828,8 @@ and Page : sig
       | `EmbedderExtensionSentMessageToCachedFrame
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
-      | `CacheControlNoStoreDeviceBoundSessionTerminated ]
+      | `CacheControlNoStoreDeviceBoundSessionTerminated
+      | `CacheLimitPruned ]
 
     val _backforwardcachenotrestoredreason_of_yojson :
       Yojson.Basic.t -> _backforwardcachenotrestoredreason
@@ -26444,7 +26445,8 @@ end = struct
       | `EmbedderExtensionSentMessageToCachedFrame
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
-      | `CacheControlNoStoreDeviceBoundSessionTerminated ]
+      | `CacheControlNoStoreDeviceBoundSessionTerminated
+      | `CacheLimitPruned ]
 
     val _backforwardcachenotrestoredreason_of_yojson :
       Yojson.Basic.t -> _backforwardcachenotrestoredreason
@@ -26596,7 +26598,8 @@ end = struct
       | `EmbedderExtensionSentMessageToCachedFrame
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
-      | `CacheControlNoStoreDeviceBoundSessionTerminated ]
+      | `CacheControlNoStoreDeviceBoundSessionTerminated
+      | `CacheLimitPruned ]
 
     let _backforwardcachenotrestoredreason_of_yojson = function
       | `String "NotPrimaryMainFrame" -> `NotPrimaryMainFrame
@@ -26783,6 +26786,7 @@ end = struct
       | `String "PostMessageByWebViewClient" -> `PostMessageByWebViewClient
       | `String "CacheControlNoStoreDeviceBoundSessionTerminated" ->
           `CacheControlNoStoreDeviceBoundSessionTerminated
+      | `String "CacheLimitPruned" -> `CacheLimitPruned
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26971,6 +26975,7 @@ end = struct
       | `PostMessageByWebViewClient -> `String "PostMessageByWebViewClient"
       | `CacheControlNoStoreDeviceBoundSessionTerminated ->
           `String "CacheControlNoStoreDeviceBoundSessionTerminated"
+      | `CacheLimitPruned -> `String "CacheLimitPruned"
 
     type t = _backforwardcachenotrestoredreason
     [@@deriving yojson]
