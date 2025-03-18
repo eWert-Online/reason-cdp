@@ -2072,6 +2072,8 @@ and Audits : sig
     type t = {
       error : SRIMessageSignatureError.t;
           [@key "error"] [@ocaml.doc "No description provided"]
+      signatureBase : string;
+          [@key "signatureBase"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
     }
@@ -4317,6 +4319,8 @@ end = struct
     type t = {
       error : SRIMessageSignatureError.t;
           [@key "error"] [@ocaml.doc "No description provided"]
+      signatureBase : string;
+          [@key "signatureBase"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
     }
@@ -4325,6 +4329,8 @@ end = struct
     type t = {
       error : SRIMessageSignatureError.t;
           [@key "error"] [@ocaml.doc "No description provided"]
+      signatureBase : string;
+          [@key "signatureBase"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
     }
@@ -34165,6 +34171,7 @@ and Preload : sig
       | `PrefetchFailedMIMENotSupported
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
+      | `PrefetchEvictedAfterBrowsingDataRemoved
       | `PrefetchEvictedAfterCandidateRemoved
       | `PrefetchEvictedForNewerPrefetch
       | `PrefetchHeldback
@@ -34947,6 +34954,7 @@ end = struct
       | `PrefetchFailedMIMENotSupported
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
+      | `PrefetchEvictedAfterBrowsingDataRemoved
       | `PrefetchEvictedAfterCandidateRemoved
       | `PrefetchEvictedForNewerPrefetch
       | `PrefetchHeldback
@@ -34991,6 +34999,7 @@ end = struct
       | `PrefetchFailedMIMENotSupported
       | `PrefetchFailedNetError
       | `PrefetchFailedNon2XX
+      | `PrefetchEvictedAfterBrowsingDataRemoved
       | `PrefetchEvictedAfterCandidateRemoved
       | `PrefetchEvictedForNewerPrefetch
       | `PrefetchHeldback
@@ -35029,6 +35038,8 @@ end = struct
           `PrefetchFailedMIMENotSupported
       | `String "PrefetchFailedNetError" -> `PrefetchFailedNetError
       | `String "PrefetchFailedNon2XX" -> `PrefetchFailedNon2XX
+      | `String "PrefetchEvictedAfterBrowsingDataRemoved" ->
+          `PrefetchEvictedAfterBrowsingDataRemoved
       | `String "PrefetchEvictedAfterCandidateRemoved" ->
           `PrefetchEvictedAfterCandidateRemoved
       | `String "PrefetchEvictedForNewerPrefetch" ->
@@ -35086,6 +35097,8 @@ end = struct
           `String "PrefetchFailedMIMENotSupported"
       | `PrefetchFailedNetError -> `String "PrefetchFailedNetError"
       | `PrefetchFailedNon2XX -> `String "PrefetchFailedNon2XX"
+      | `PrefetchEvictedAfterBrowsingDataRemoved ->
+          `String "PrefetchEvictedAfterBrowsingDataRemoved"
       | `PrefetchEvictedAfterCandidateRemoved ->
           `String "PrefetchEvictedAfterCandidateRemoved"
       | `PrefetchEvictedForNewerPrefetch ->
