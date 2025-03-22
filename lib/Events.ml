@@ -4908,6 +4908,31 @@ module FedCm = struct
 or a command below. |desc}]
 end
 
+module BluetoothEmulation = struct
+  module GattOperationReceived = struct
+    let name = "BluetoothEmulation.gattOperationReceived"
+
+    type result = {
+      address : string; [@key "address"] [@ocaml.doc "No description provided"]
+      type_ : Types.BluetoothEmulation.GATTOperationType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Event for when a GATT operation of |type| to the peripheral with |address|
+happened. |desc}]
+end
+
 module Console = struct
   module MessageAdded = struct
     let name = "Console.messageAdded"

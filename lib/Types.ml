@@ -22808,6 +22808,7 @@ and Page : sig
       | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
+      | `language_detector
       | `local_fonts
       | `magnetometer
       | `media_playback_while_not_visible
@@ -22822,6 +22823,7 @@ and Page : sig
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
+      | `rewriter
       | `run_ad_auction
       | `screen_wake_lock
       | `serial
@@ -22832,7 +22834,9 @@ and Page : sig
       | `speaker_selection
       | `storage_access
       | `sub_apps
+      | `summarizer
       | `sync_xhr
+      | `translator
       | `unload
       | `usb
       | `usb_unrestricted
@@ -22841,6 +22845,7 @@ and Page : sig
       | `web_printing
       | `web_share
       | `window_management
+      | `writer
       | `xr_spatial_tracking ]
 
     val _permissionspolicyfeature_of_yojson :
@@ -24217,6 +24222,7 @@ end = struct
       | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
+      | `language_detector
       | `local_fonts
       | `magnetometer
       | `media_playback_while_not_visible
@@ -24231,6 +24237,7 @@ end = struct
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
+      | `rewriter
       | `run_ad_auction
       | `screen_wake_lock
       | `serial
@@ -24241,7 +24248,9 @@ end = struct
       | `speaker_selection
       | `storage_access
       | `sub_apps
+      | `summarizer
       | `sync_xhr
+      | `translator
       | `unload
       | `usb
       | `usb_unrestricted
@@ -24250,6 +24259,7 @@ end = struct
       | `web_printing
       | `web_share
       | `window_management
+      | `writer
       | `xr_spatial_tracking ]
 
     val _permissionspolicyfeature_of_yojson :
@@ -24327,6 +24337,7 @@ end = struct
       | `interest_cohort
       | `join_ad_interest_group
       | `keyboard_map
+      | `language_detector
       | `local_fonts
       | `magnetometer
       | `media_playback_while_not_visible
@@ -24341,6 +24352,7 @@ end = struct
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
+      | `rewriter
       | `run_ad_auction
       | `screen_wake_lock
       | `serial
@@ -24351,7 +24363,9 @@ end = struct
       | `speaker_selection
       | `storage_access
       | `sub_apps
+      | `summarizer
       | `sync_xhr
+      | `translator
       | `unload
       | `usb
       | `usb_unrestricted
@@ -24360,6 +24374,7 @@ end = struct
       | `web_printing
       | `web_share
       | `window_management
+      | `writer
       | `xr_spatial_tracking ]
 
     let _permissionspolicyfeature_of_yojson = function
@@ -24428,6 +24443,7 @@ end = struct
       | `String "interest-cohort" -> `interest_cohort
       | `String "join-ad-interest-group" -> `join_ad_interest_group
       | `String "keyboard-map" -> `keyboard_map
+      | `String "language-detector" -> `language_detector
       | `String "local-fonts" -> `local_fonts
       | `String "magnetometer" -> `magnetometer
       | `String "media-playback-while-not-visible" ->
@@ -24444,6 +24460,7 @@ end = struct
           `private_state_token_redemption
       | `String "publickey-credentials-create" -> `publickey_credentials_create
       | `String "publickey-credentials-get" -> `publickey_credentials_get
+      | `String "rewriter" -> `rewriter
       | `String "run-ad-auction" -> `run_ad_auction
       | `String "screen-wake-lock" -> `screen_wake_lock
       | `String "serial" -> `serial
@@ -24454,7 +24471,9 @@ end = struct
       | `String "speaker-selection" -> `speaker_selection
       | `String "storage-access" -> `storage_access
       | `String "sub-apps" -> `sub_apps
+      | `String "summarizer" -> `summarizer
       | `String "sync-xhr" -> `sync_xhr
+      | `String "translator" -> `translator
       | `String "unload" -> `unload
       | `String "usb" -> `usb
       | `String "usb-unrestricted" -> `usb_unrestricted
@@ -24463,6 +24482,7 @@ end = struct
       | `String "web-printing" -> `web_printing
       | `String "web-share" -> `web_share
       | `String "window-management" -> `window_management
+      | `String "writer" -> `writer
       | `String "xr-spatial-tracking" -> `xr_spatial_tracking
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -24533,6 +24553,7 @@ end = struct
       | `interest_cohort -> `String "interest-cohort"
       | `join_ad_interest_group -> `String "join-ad-interest-group"
       | `keyboard_map -> `String "keyboard-map"
+      | `language_detector -> `String "language-detector"
       | `local_fonts -> `String "local-fonts"
       | `magnetometer -> `String "magnetometer"
       | `media_playback_while_not_visible ->
@@ -24549,6 +24570,7 @@ end = struct
           `String "private-state-token-redemption"
       | `publickey_credentials_create -> `String "publickey-credentials-create"
       | `publickey_credentials_get -> `String "publickey-credentials-get"
+      | `rewriter -> `String "rewriter"
       | `run_ad_auction -> `String "run-ad-auction"
       | `screen_wake_lock -> `String "screen-wake-lock"
       | `serial -> `String "serial"
@@ -24559,7 +24581,9 @@ end = struct
       | `speaker_selection -> `String "speaker-selection"
       | `storage_access -> `String "storage-access"
       | `sub_apps -> `String "sub-apps"
+      | `summarizer -> `String "summarizer"
       | `sync_xhr -> `String "sync-xhr"
+      | `translator -> `String "translator"
       | `unload -> `String "unload"
       | `usb -> `String "usb"
       | `usb_unrestricted -> `String "usb-unrestricted"
@@ -24568,6 +24592,7 @@ end = struct
       | `web_printing -> `String "web-printing"
       | `web_share -> `String "web-share"
       | `window_management -> `String "window-management"
+      | `writer -> `String "writer"
       | `xr_spatial_tracking -> `String "xr-spatial-tracking"
 
     type t = _permissionspolicyfeature
@@ -35561,6 +35586,17 @@ and BluetoothEmulation : sig
     [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
   end
 
+  and GATTOperationType : sig
+    type _gattoperationtype = [ `connection | `discovery ]
+
+    val _gattoperationtype_of_yojson : Yojson.Basic.t -> _gattoperationtype
+    val yojson_of__gattoperationtype : _gattoperationtype -> Yojson.Basic.t
+
+    type t = _gattoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of GATT event."]
+  end
+
   and ManufacturerData : sig
     type t = {
       key : number;
@@ -35645,6 +35681,33 @@ end = struct
 
     type t = _centralstate
     [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
+  end
+
+  and GATTOperationType : sig
+    type _gattoperationtype = [ `connection | `discovery ]
+
+    val _gattoperationtype_of_yojson : Yojson.Basic.t -> _gattoperationtype
+    val yojson_of__gattoperationtype : _gattoperationtype -> Yojson.Basic.t
+
+    type t = _gattoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of GATT event."]
+  end = struct
+    type _gattoperationtype = [ `connection | `discovery ]
+
+    let _gattoperationtype_of_yojson = function
+      | `String "connection" -> `connection
+      | `String "discovery" -> `discovery
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__gattoperationtype = function
+      | `connection -> `String "connection"
+      | `discovery -> `String "discovery"
+
+    type t = _gattoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of GATT event."]
   end
 
   and ManufacturerData : sig
