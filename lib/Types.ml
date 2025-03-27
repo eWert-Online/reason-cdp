@@ -28557,38 +28557,46 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "Enum of network fetches auctions can do."]
   end
 
-  and SharedStorageAccessType : sig
-    type _sharedstorageaccesstype =
-      [ `documentAddModule
-      | `documentSelectURL
-      | `documentRun
-      | `documentSet
-      | `documentAppend
-      | `documentDelete
-      | `documentClear
-      | `documentGet
-      | `workletSet
-      | `workletAppend
-      | `workletDelete
-      | `workletClear
-      | `workletGet
-      | `workletKeys
-      | `workletEntries
-      | `workletLength
-      | `workletRemainingBudget
-      | `headerSet
-      | `headerAppend
-      | `headerDelete
-      | `headerClear ]
+  and SharedStorageAccessScope : sig
+    type _sharedstorageaccessscope =
+      [ `window | `sharedStorageWorklet | `protectedAudienceWorklet | `header ]
 
-    val _sharedstorageaccesstype_of_yojson :
-      Yojson.Basic.t -> _sharedstorageaccesstype
+    val _sharedstorageaccessscope_of_yojson :
+      Yojson.Basic.t -> _sharedstorageaccessscope
 
-    val yojson_of__sharedstorageaccesstype :
-      _sharedstorageaccesstype -> Yojson.Basic.t
+    val yojson_of__sharedstorageaccessscope :
+      _sharedstorageaccessscope -> Yojson.Basic.t
 
-    type t = _sharedstorageaccesstype
-    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access types."]
+    type t = _sharedstorageaccessscope
+    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access scopes."]
+  end
+
+  and SharedStorageAccessMethod : sig
+    type _sharedstorageaccessmethod =
+      [ `addModule
+      | `createWorklet
+      | `selectURL
+      | `run
+      | `batchUpdate
+      | `set
+      | `append
+      | `delete
+      | `clear
+      | `get
+      | `keys
+      | `values
+      | `entries
+      | `length
+      | `remainingBudget ]
+
+    val _sharedstorageaccessmethod_of_yojson :
+      Yojson.Basic.t -> _sharedstorageaccessmethod
+
+    val yojson_of__sharedstorageaccessmethod :
+      _sharedstorageaccessmethod -> Yojson.Basic.t
+
+    type t = _sharedstorageaccessmethod
+    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access methods."]
   end
 
   and SharedStorageEntry : sig
@@ -29463,112 +29471,122 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Enum of network fetches auctions can do."]
   end
 
-  and SharedStorageAccessType : sig
-    type _sharedstorageaccesstype =
-      [ `documentAddModule
-      | `documentSelectURL
-      | `documentRun
-      | `documentSet
-      | `documentAppend
-      | `documentDelete
-      | `documentClear
-      | `documentGet
-      | `workletSet
-      | `workletAppend
-      | `workletDelete
-      | `workletClear
-      | `workletGet
-      | `workletKeys
-      | `workletEntries
-      | `workletLength
-      | `workletRemainingBudget
-      | `headerSet
-      | `headerAppend
-      | `headerDelete
-      | `headerClear ]
+  and SharedStorageAccessScope : sig
+    type _sharedstorageaccessscope =
+      [ `window | `sharedStorageWorklet | `protectedAudienceWorklet | `header ]
 
-    val _sharedstorageaccesstype_of_yojson :
-      Yojson.Basic.t -> _sharedstorageaccesstype
+    val _sharedstorageaccessscope_of_yojson :
+      Yojson.Basic.t -> _sharedstorageaccessscope
 
-    val yojson_of__sharedstorageaccesstype :
-      _sharedstorageaccesstype -> Yojson.Basic.t
+    val yojson_of__sharedstorageaccessscope :
+      _sharedstorageaccessscope -> Yojson.Basic.t
 
-    type t = _sharedstorageaccesstype
-    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access types."]
+    type t = _sharedstorageaccessscope
+    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access scopes."]
   end = struct
-    type _sharedstorageaccesstype =
-      [ `documentAddModule
-      | `documentSelectURL
-      | `documentRun
-      | `documentSet
-      | `documentAppend
-      | `documentDelete
-      | `documentClear
-      | `documentGet
-      | `workletSet
-      | `workletAppend
-      | `workletDelete
-      | `workletClear
-      | `workletGet
-      | `workletKeys
-      | `workletEntries
-      | `workletLength
-      | `workletRemainingBudget
-      | `headerSet
-      | `headerAppend
-      | `headerDelete
-      | `headerClear ]
+    type _sharedstorageaccessscope =
+      [ `window | `sharedStorageWorklet | `protectedAudienceWorklet | `header ]
 
-    let _sharedstorageaccesstype_of_yojson = function
-      | `String "documentAddModule" -> `documentAddModule
-      | `String "documentSelectURL" -> `documentSelectURL
-      | `String "documentRun" -> `documentRun
-      | `String "documentSet" -> `documentSet
-      | `String "documentAppend" -> `documentAppend
-      | `String "documentDelete" -> `documentDelete
-      | `String "documentClear" -> `documentClear
-      | `String "documentGet" -> `documentGet
-      | `String "workletSet" -> `workletSet
-      | `String "workletAppend" -> `workletAppend
-      | `String "workletDelete" -> `workletDelete
-      | `String "workletClear" -> `workletClear
-      | `String "workletGet" -> `workletGet
-      | `String "workletKeys" -> `workletKeys
-      | `String "workletEntries" -> `workletEntries
-      | `String "workletLength" -> `workletLength
-      | `String "workletRemainingBudget" -> `workletRemainingBudget
-      | `String "headerSet" -> `headerSet
-      | `String "headerAppend" -> `headerAppend
-      | `String "headerDelete" -> `headerDelete
-      | `String "headerClear" -> `headerClear
+    let _sharedstorageaccessscope_of_yojson = function
+      | `String "window" -> `window
+      | `String "sharedStorageWorklet" -> `sharedStorageWorklet
+      | `String "protectedAudienceWorklet" -> `protectedAudienceWorklet
+      | `String "header" -> `header
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
-    let yojson_of__sharedstorageaccesstype = function
-      | `documentAddModule -> `String "documentAddModule"
-      | `documentSelectURL -> `String "documentSelectURL"
-      | `documentRun -> `String "documentRun"
-      | `documentSet -> `String "documentSet"
-      | `documentAppend -> `String "documentAppend"
-      | `documentDelete -> `String "documentDelete"
-      | `documentClear -> `String "documentClear"
-      | `documentGet -> `String "documentGet"
-      | `workletSet -> `String "workletSet"
-      | `workletAppend -> `String "workletAppend"
-      | `workletDelete -> `String "workletDelete"
-      | `workletClear -> `String "workletClear"
-      | `workletGet -> `String "workletGet"
-      | `workletKeys -> `String "workletKeys"
-      | `workletEntries -> `String "workletEntries"
-      | `workletLength -> `String "workletLength"
-      | `workletRemainingBudget -> `String "workletRemainingBudget"
-      | `headerSet -> `String "headerSet"
-      | `headerAppend -> `String "headerAppend"
-      | `headerDelete -> `String "headerDelete"
-      | `headerClear -> `String "headerClear"
+    let yojson_of__sharedstorageaccessscope = function
+      | `window -> `String "window"
+      | `sharedStorageWorklet -> `String "sharedStorageWorklet"
+      | `protectedAudienceWorklet -> `String "protectedAudienceWorklet"
+      | `header -> `String "header"
 
-    type t = _sharedstorageaccesstype
-    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access types."]
+    type t = _sharedstorageaccessscope
+    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access scopes."]
+  end
+
+  and SharedStorageAccessMethod : sig
+    type _sharedstorageaccessmethod =
+      [ `addModule
+      | `createWorklet
+      | `selectURL
+      | `run
+      | `batchUpdate
+      | `set
+      | `append
+      | `delete
+      | `clear
+      | `get
+      | `keys
+      | `values
+      | `entries
+      | `length
+      | `remainingBudget ]
+
+    val _sharedstorageaccessmethod_of_yojson :
+      Yojson.Basic.t -> _sharedstorageaccessmethod
+
+    val yojson_of__sharedstorageaccessmethod :
+      _sharedstorageaccessmethod -> Yojson.Basic.t
+
+    type t = _sharedstorageaccessmethod
+    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access methods."]
+  end = struct
+    type _sharedstorageaccessmethod =
+      [ `addModule
+      | `createWorklet
+      | `selectURL
+      | `run
+      | `batchUpdate
+      | `set
+      | `append
+      | `delete
+      | `clear
+      | `get
+      | `keys
+      | `values
+      | `entries
+      | `length
+      | `remainingBudget ]
+
+    let _sharedstorageaccessmethod_of_yojson = function
+      | `String "addModule" -> `addModule
+      | `String "createWorklet" -> `createWorklet
+      | `String "selectURL" -> `selectURL
+      | `String "run" -> `run
+      | `String "batchUpdate" -> `batchUpdate
+      | `String "set" -> `set
+      | `String "append" -> `append
+      | `String "delete" -> `delete
+      | `String "clear" -> `clear
+      | `String "get" -> `get
+      | `String "keys" -> `keys
+      | `String "values" -> `values
+      | `String "entries" -> `entries
+      | `String "length" -> `length
+      | `String "remainingBudget" -> `remainingBudget
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__sharedstorageaccessmethod = function
+      | `addModule -> `String "addModule"
+      | `createWorklet -> `String "createWorklet"
+      | `selectURL -> `String "selectURL"
+      | `run -> `String "run"
+      | `batchUpdate -> `String "batchUpdate"
+      | `set -> `String "set"
+      | `append -> `String "append"
+      | `delete -> `String "delete"
+      | `clear -> `String "clear"
+      | `get -> `String "get"
+      | `keys -> `String "keys"
+      | `values -> `String "values"
+      | `entries -> `String "entries"
+      | `length -> `String "length"
+      | `remainingBudget -> `String "remainingBudget"
+
+    type t = _sharedstorageaccessmethod
+    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access methods."]
   end
 
   and SharedStorageEntry : sig

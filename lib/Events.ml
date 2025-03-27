@@ -3605,8 +3605,10 @@ loadingFailed). |desc}]
     type result = {
       accessTime : Types.Network.TimeSinceEpoch.t;
           [@key "accessTime"] [@ocaml.doc "Time of the access."]
-      type_ : Types.Storage.SharedStorageAccessType.t;
-          [@key "type"]
+      scope : Types.Storage.SharedStorageAccessScope.t;
+          [@key "scope"] [@ocaml.doc "Enum value indicating the access scope."]
+      method_ : Types.Storage.SharedStorageAccessMethod.t;
+          [@key "method"]
           [@ocaml.doc
             "Enum value indicating the Shared Storage API method invoked."]
       mainFrameId : Types.Page.FrameId.t;
@@ -3615,8 +3617,11 @@ loadingFailed). |desc}]
       ownerOrigin : string;
           [@key "ownerOrigin"]
           [@ocaml.doc
-            "Serialized origin for the context that invoked the Shared Storage \
-             API."]
+            "Serialization of the origin owning the Shared Storage data."]
+      ownerSite : string;
+          [@key "ownerSite"]
+          [@ocaml.doc
+            "Serialization of the site owning the Shared Storage data."]
       params : Types.Storage.SharedStorageAccessParams.t;
           [@key "params"]
           [@ocaml.doc
