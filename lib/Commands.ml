@@ -34517,6 +34517,130 @@ the central. |desc}]
     {desc|Simulates the response code from the peripheral with |address| for a
 GATT operation of |type|. The |code| value follows the HCI Error Codes from
 Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
+
+  module AddService = struct
+    module Response : sig
+      type result = {
+        id : string;
+            [@key "id"]
+            [@ocaml.doc "An identifier that uniquely represents this service."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        id : string;
+            [@key "id"]
+            [@ocaml.doc "An identifier that uniquely represents this service."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string;
+            [@key "address"] [@ocaml.doc "No description provided"]
+        serviceUuid : string;
+            [@key "serviceUuid"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address ~serviceUuid () = { address; serviceUuid }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "BluetoothEmulation.addService"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Adds a service with |uuid| to the peripheral with |address|. |desc}]
+
+  module RemoveService = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string;
+            [@key "address"] [@ocaml.doc "No description provided"]
+        id : string; [@key "id"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address ~id () = { address; id }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "BluetoothEmulation.removeService"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Removes the service respresented by |id| from the peripheral with |address|. |desc}]
 end
 
 module Console = struct

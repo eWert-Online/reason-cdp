@@ -1991,7 +1991,8 @@ and Audits : sig
       | `SignatureInputHeaderMissingRequiredParameters
       | `ValidationFailedSignatureExpired
       | `ValidationFailedInvalidLength
-      | `ValidationFailedSignatureMismatch ]
+      | `ValidationFailedSignatureMismatch
+      | `ValidationFailedIntegrityMismatch ]
 
     val _srimessagesignatureerror_of_yojson :
       Yojson.Basic.t -> _srimessagesignatureerror
@@ -2074,6 +2075,8 @@ and Audits : sig
           [@key "error"] [@ocaml.doc "No description provided"]
       signatureBase : string;
           [@key "signatureBase"] [@ocaml.doc "No description provided"]
+      integrityAssertions : string list;
+          [@key "integrityAssertions"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
     }
@@ -4078,7 +4081,8 @@ end = struct
       | `SignatureInputHeaderMissingRequiredParameters
       | `ValidationFailedSignatureExpired
       | `ValidationFailedInvalidLength
-      | `ValidationFailedSignatureMismatch ]
+      | `ValidationFailedSignatureMismatch
+      | `ValidationFailedIntegrityMismatch ]
 
     val _srimessagesignatureerror_of_yojson :
       Yojson.Basic.t -> _srimessagesignatureerror
@@ -4109,7 +4113,8 @@ end = struct
       | `SignatureInputHeaderMissingRequiredParameters
       | `ValidationFailedSignatureExpired
       | `ValidationFailedInvalidLength
-      | `ValidationFailedSignatureMismatch ]
+      | `ValidationFailedSignatureMismatch
+      | `ValidationFailedIntegrityMismatch ]
 
     let _srimessagesignatureerror_of_yojson = function
       | `String "MissingSignatureHeader" -> `MissingSignatureHeader
@@ -4148,6 +4153,8 @@ end = struct
           `ValidationFailedInvalidLength
       | `String "ValidationFailedSignatureMismatch" ->
           `ValidationFailedSignatureMismatch
+      | `String "ValidationFailedIntegrityMismatch" ->
+          `ValidationFailedIntegrityMismatch
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4188,6 +4195,8 @@ end = struct
           `String "ValidationFailedInvalidLength"
       | `ValidationFailedSignatureMismatch ->
           `String "ValidationFailedSignatureMismatch"
+      | `ValidationFailedIntegrityMismatch ->
+          `String "ValidationFailedIntegrityMismatch"
 
     type t = _srimessagesignatureerror
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -4321,6 +4330,8 @@ end = struct
           [@key "error"] [@ocaml.doc "No description provided"]
       signatureBase : string;
           [@key "signatureBase"] [@ocaml.doc "No description provided"]
+      integrityAssertions : string list;
+          [@key "integrityAssertions"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
     }
@@ -4331,6 +4342,8 @@ end = struct
           [@key "error"] [@ocaml.doc "No description provided"]
       signatureBase : string;
           [@key "signatureBase"] [@ocaml.doc "No description provided"]
+      integrityAssertions : string list;
+          [@key "integrityAssertions"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
     }
@@ -16583,7 +16596,8 @@ and Network : sig
       | `SamePartyFromCrossPartyContext
       | `NameValuePairExceedsMaxSize
       | `PortMismatch
-      | `SchemeMismatch ]
+      | `SchemeMismatch
+      | `AnonymousContext ]
 
     val _cookieblockedreason_of_yojson : Yojson.Basic.t -> _cookieblockedreason
     val yojson_of__cookieblockedreason : _cookieblockedreason -> Yojson.Basic.t
@@ -19560,7 +19574,8 @@ end = struct
       | `SamePartyFromCrossPartyContext
       | `NameValuePairExceedsMaxSize
       | `PortMismatch
-      | `SchemeMismatch ]
+      | `SchemeMismatch
+      | `AnonymousContext ]
 
     val _cookieblockedreason_of_yojson : Yojson.Basic.t -> _cookieblockedreason
     val yojson_of__cookieblockedreason : _cookieblockedreason -> Yojson.Basic.t
@@ -19588,7 +19603,8 @@ end = struct
       | `SamePartyFromCrossPartyContext
       | `NameValuePairExceedsMaxSize
       | `PortMismatch
-      | `SchemeMismatch ]
+      | `SchemeMismatch
+      | `AnonymousContext ]
 
     let _cookieblockedreason_of_yojson = function
       | `String "SecureOnly" -> `SecureOnly
@@ -19613,6 +19629,7 @@ end = struct
       | `String "NameValuePairExceedsMaxSize" -> `NameValuePairExceedsMaxSize
       | `String "PortMismatch" -> `PortMismatch
       | `String "SchemeMismatch" -> `SchemeMismatch
+      | `String "AnonymousContext" -> `AnonymousContext
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -19639,6 +19656,7 @@ end = struct
       | `NameValuePairExceedsMaxSize -> `String "NameValuePairExceedsMaxSize"
       | `PortMismatch -> `String "PortMismatch"
       | `SchemeMismatch -> `String "SchemeMismatch"
+      | `AnonymousContext -> `String "AnonymousContext"
 
     type t = _cookieblockedreason
     [@@deriving yojson]
