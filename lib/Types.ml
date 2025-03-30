@@ -35691,6 +35691,43 @@ and BluetoothEmulation : sig
       "Stores the advertisement packet information that is sent by a Bluetooth \
        device."]
   end
+
+  and CharacteristicProperties : sig
+    type t = {
+      broadcast : bool option;
+          [@key "broadcast"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      read : bool option;
+          [@key "read"] [@yojson.option] [@ocaml.doc "No description provided"]
+      writeWithoutResponse : bool option;
+          [@key "writeWithoutResponse"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      write : bool option;
+          [@key "write"] [@yojson.option] [@ocaml.doc "No description provided"]
+      notify : bool option;
+          [@key "notify"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      indicate : bool option;
+          [@key "indicate"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      authenticatedSignedWrites : bool option;
+          [@key "authenticatedSignedWrites"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      extendedProperties : bool option;
+          [@key "extendedProperties"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Describes the properties of a characteristic. This follows Bluetooth Core\n\
+       Specification BT 4.2 Vol 3 Part G 3.3.1. Characteristic Properties."]
+  end
 end = struct
   module rec CentralState : sig
     type _centralstate = [ `absent | `powered_off | `powered_on ]
@@ -35856,6 +35893,78 @@ end = struct
     [@@ocaml.doc
       "Stores the advertisement packet information that is sent by a Bluetooth \
        device."]
+  end
+
+  and CharacteristicProperties : sig
+    type t = {
+      broadcast : bool option;
+          [@key "broadcast"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      read : bool option;
+          [@key "read"] [@yojson.option] [@ocaml.doc "No description provided"]
+      writeWithoutResponse : bool option;
+          [@key "writeWithoutResponse"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      write : bool option;
+          [@key "write"] [@yojson.option] [@ocaml.doc "No description provided"]
+      notify : bool option;
+          [@key "notify"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      indicate : bool option;
+          [@key "indicate"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      authenticatedSignedWrites : bool option;
+          [@key "authenticatedSignedWrites"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      extendedProperties : bool option;
+          [@key "extendedProperties"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Describes the properties of a characteristic. This follows Bluetooth Core\n\
+       Specification BT 4.2 Vol 3 Part G 3.3.1. Characteristic Properties."]
+  end = struct
+    type t = {
+      broadcast : bool option;
+          [@key "broadcast"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      read : bool option;
+          [@key "read"] [@yojson.option] [@ocaml.doc "No description provided"]
+      writeWithoutResponse : bool option;
+          [@key "writeWithoutResponse"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      write : bool option;
+          [@key "write"] [@yojson.option] [@ocaml.doc "No description provided"]
+      notify : bool option;
+          [@key "notify"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      indicate : bool option;
+          [@key "indicate"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      authenticatedSignedWrites : bool option;
+          [@key "authenticatedSignedWrites"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      extendedProperties : bool option;
+          [@key "extendedProperties"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Describes the properties of a characteristic. This follows Bluetooth Core\n\
+       Specification BT 4.2 Vol 3 Part G 3.3.1. Characteristic Properties."]
   end
 end
 

@@ -34521,8 +34521,8 @@ Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
   module AddService = struct
     module Response : sig
       type result = {
-        id : string;
-            [@key "id"]
+        serviceId : string;
+            [@key "serviceId"]
             [@ocaml.doc "An identifier that uniquely represents this service."]
       }
 
@@ -34538,8 +34538,8 @@ Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
       val parse : string -> t
     end = struct
       type result = {
-        id : string;
-            [@key "id"]
+        serviceId : string;
+            [@key "serviceId"]
             [@ocaml.doc "An identifier that uniquely represents this service."]
       }
       [@@deriving yojson]
@@ -34584,7 +34584,7 @@ Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
     end
   end
   [@@ocaml.doc
-    {desc|Adds a service with |uuid| to the peripheral with |address|. |desc}]
+    {desc|Adds a service with |serviceUuid| to the peripheral with |address|. |desc}]
 
   module RemoveService = struct
     module Response : sig
@@ -34618,11 +34618,12 @@ Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
       type t = {
         address : string;
             [@key "address"] [@ocaml.doc "No description provided"]
-        id : string; [@key "id"] [@ocaml.doc "No description provided"]
+        serviceId : string;
+            [@key "serviceId"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
-      let make ~address ~id () = { address; id }
+      let make ~address ~serviceId () = { address; serviceId }
     end
 
     module Request = struct
@@ -34640,7 +34641,155 @@ Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
     end
   end
   [@@ocaml.doc
-    {desc|Removes the service respresented by |id| from the peripheral with |address|. |desc}]
+    {desc|Removes the service respresented by |serviceId| from the peripheral with
+|address|. |desc}]
+
+  module AddCharacteristic = struct
+    module Response : sig
+      type result = {
+        characteristicId : string;
+            [@key "characteristicId"]
+            [@ocaml.doc
+              "An identifier that uniquely represents this characteristic."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        characteristicId : string;
+            [@key "characteristicId"]
+            [@ocaml.doc
+              "An identifier that uniquely represents this characteristic."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string;
+            [@key "address"] [@ocaml.doc "No description provided"]
+        serviceId : string;
+            [@key "serviceId"] [@ocaml.doc "No description provided"]
+        characteristicUuid : string;
+            [@key "characteristicUuid"] [@ocaml.doc "No description provided"]
+        properties : Types.BluetoothEmulation.CharacteristicProperties.t;
+            [@key "properties"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address ~serviceId ~characteristicUuid ~properties () =
+        { address; serviceId; characteristicUuid; properties }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.addCharacteristic";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Adds a characteristic with |characteristicUuid| and |properties| to the
+service represented by |serviceId| in the peripheral with |address|. |desc}]
+
+  module RemoveCharacteristic = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string;
+            [@key "address"] [@ocaml.doc "No description provided"]
+        serviceId : string;
+            [@key "serviceId"] [@ocaml.doc "No description provided"]
+        characteristicId : string;
+            [@key "characteristicId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address ~serviceId ~characteristicId () =
+        { address; serviceId; characteristicId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.removeCharacteristic";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Removes the characteristic respresented by |characteristicId| from the
+service respresented by |serviceId| in the peripheral with |address|. |desc}]
 end
 
 module Console = struct
