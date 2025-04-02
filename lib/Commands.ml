@@ -4123,7 +4123,12 @@ the browser. |desc}]
     {desc|Resolve the specified values in the context of the provided element.
 For example, a value of '1em' is evaluated according to the computed
 'font-size' of the element and a value 'calc(1px + 2px)' will be
-resolved to '3px'. |desc}]
+resolved to '3px'.
+If the `propertyName` was specified the `values` are resolved as if
+they were property's declaration. If a value cannot be parsed according
+to the provided property syntax, the value is parsed using combined
+syntax as if null `propertyName` was provided. If the value cannot be
+resolved even then, return the provided value without any changes. |desc}]
 
   module GetLonghandProperties = struct
     module Response : sig
@@ -34790,6 +34795,152 @@ service represented by |serviceId| in the peripheral with |address|. |desc}]
   [@@ocaml.doc
     {desc|Removes the characteristic respresented by |characteristicId| from the
 service respresented by |serviceId| in the peripheral with |address|. |desc}]
+
+  module AddDescriptor = struct
+    module Response : sig
+      type result = {
+        descriptorId : string;
+            [@key "descriptorId"]
+            [@ocaml.doc
+              "An identifier that uniquely represents this descriptor."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        descriptorId : string;
+            [@key "descriptorId"]
+            [@ocaml.doc
+              "An identifier that uniquely represents this descriptor."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string;
+            [@key "address"] [@ocaml.doc "No description provided"]
+        serviceId : string;
+            [@key "serviceId"] [@ocaml.doc "No description provided"]
+        characteristicId : string;
+            [@key "characteristicId"] [@ocaml.doc "No description provided"]
+        descriptorUuid : string;
+            [@key "descriptorUuid"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address ~serviceId ~characteristicId ~descriptorUuid () =
+        { address; serviceId; characteristicId; descriptorUuid }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "BluetoothEmulation.addDescriptor"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Adds a descriptor with |descriptorUuid| to the characteristic respresented
+by |characteristicId| in the service represented by |serviceId| of the
+peripheral with |address|. |desc}]
+
+  module RemoveDescriptor = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string;
+            [@key "address"] [@ocaml.doc "No description provided"]
+        serviceId : string;
+            [@key "serviceId"] [@ocaml.doc "No description provided"]
+        characteristicId : string;
+            [@key "characteristicId"] [@ocaml.doc "No description provided"]
+        descriptorId : string;
+            [@key "descriptorId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address ~serviceId ~characteristicId ~descriptorId () =
+        { address; serviceId; characteristicId; descriptorId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.removeDescriptor";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Removes the descriptor with |descriptorId| from the characteristic
+respresented by |characteristicId| in the service represented by |serviceId|
+of the peripheral with |address|. |desc}]
 end
 
 module Console = struct

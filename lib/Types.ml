@@ -2266,7 +2266,8 @@ and Audits : sig
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching
       | `UiDismissedNoEmbargo
-      | `CorsError ]
+      | `CorsError
+      | `SuppressedBySegmentationPlatform ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4696,7 +4697,8 @@ end = struct
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching
       | `UiDismissedNoEmbargo
-      | `CorsError ]
+      | `CorsError
+      | `SuppressedBySegmentationPlatform ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -4760,7 +4762,8 @@ end = struct
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching
       | `UiDismissedNoEmbargo
-      | `CorsError ]
+      | `CorsError
+      | `SuppressedBySegmentationPlatform ]
 
     let _federatedauthrequestissuereason_of_yojson = function
       | `String "ShouldEmbargo" -> `ShouldEmbargo
@@ -4814,6 +4817,8 @@ end = struct
       | `String "TypeNotMatching" -> `TypeNotMatching
       | `String "UiDismissedNoEmbargo" -> `UiDismissedNoEmbargo
       | `String "CorsError" -> `CorsError
+      | `String "SuppressedBySegmentationPlatform" ->
+          `SuppressedBySegmentationPlatform
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4869,6 +4874,8 @@ end = struct
       | `TypeNotMatching -> `String "TypeNotMatching"
       | `UiDismissedNoEmbargo -> `String "UiDismissedNoEmbargo"
       | `CorsError -> `String "CorsError"
+      | `SuppressedBySegmentationPlatform ->
+          `String "SuppressedBySegmentationPlatform"
 
     type t = _federatedauthrequestissuereason
     [@@deriving yojson]
