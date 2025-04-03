@@ -30222,11 +30222,21 @@ one. |desc}]
             [@key "forTab"]
             [@yojson.option]
             [@ocaml.doc "Whether to create the target of type \"tab\"."]
+        hidden : bool option;
+            [@key "hidden"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Whether to create a hidden target. The hidden target is \
+               observable via protocol, but not\n\
+               present in the tab UI strip. Cannot be created with `forTab: \
+               true`, `newWindow: true` or\n\
+               `background: false`. The life-time of the tab is limited to the \
+               life-time of the session."]
       }
       [@@deriving yojson]
 
       let make ~url ?left ?top ?width ?height ?windowState ?browserContextId
-          ?enableBeginFrameControl ?newWindow ?background ?forTab () =
+          ?enableBeginFrameControl ?newWindow ?background ?forTab ?hidden () =
         {
           url;
           left;
@@ -30239,6 +30249,7 @@ one. |desc}]
           newWindow;
           background;
           forTab;
+          hidden;
         }
     end
 
