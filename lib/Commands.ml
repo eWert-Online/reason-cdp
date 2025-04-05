@@ -34632,14 +34632,12 @@ Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
 
     module Params = struct
       type t = {
-        address : string;
-            [@key "address"] [@ocaml.doc "No description provided"]
         serviceId : string;
             [@key "serviceId"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
-      let make ~address ~serviceId () = { address; serviceId }
+      let make ~serviceId () = { serviceId }
     end
 
     module Request = struct
@@ -34657,8 +34655,7 @@ Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
     end
   end
   [@@ocaml.doc
-    {desc|Removes the service respresented by |serviceId| from the peripheral with
-|address|. |desc}]
+    {desc|Removes the service respresented by |serviceId| from the simulated central. |desc}]
 
   module AddCharacteristic = struct
     module Response : sig
@@ -34703,8 +34700,6 @@ Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
 
     module Params = struct
       type t = {
-        address : string;
-            [@key "address"] [@ocaml.doc "No description provided"]
         serviceId : string;
             [@key "serviceId"] [@ocaml.doc "No description provided"]
         characteristicUuid : string;
@@ -34714,8 +34709,8 @@ Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
       }
       [@@deriving yojson]
 
-      let make ~address ~serviceId ~characteristicUuid ~properties () =
-        { address; serviceId; characteristicUuid; properties }
+      let make ~serviceId ~characteristicUuid ~properties () =
+        { serviceId; characteristicUuid; properties }
     end
 
     module Request = struct
@@ -34739,7 +34734,7 @@ Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
   end
   [@@ocaml.doc
     {desc|Adds a characteristic with |characteristicUuid| and |properties| to the
-service represented by |serviceId| in the peripheral with |address|. |desc}]
+service represented by |serviceId|. |desc}]
 
   module RemoveCharacteristic = struct
     module Response : sig
@@ -34771,17 +34766,12 @@ service represented by |serviceId| in the peripheral with |address|. |desc}]
 
     module Params = struct
       type t = {
-        address : string;
-            [@key "address"] [@ocaml.doc "No description provided"]
-        serviceId : string;
-            [@key "serviceId"] [@ocaml.doc "No description provided"]
         characteristicId : string;
             [@key "characteristicId"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
-      let make ~address ~serviceId ~characteristicId () =
-        { address; serviceId; characteristicId }
+      let make ~characteristicId () = { characteristicId }
     end
 
     module Request = struct
@@ -34805,7 +34795,7 @@ service represented by |serviceId| in the peripheral with |address|. |desc}]
   end
   [@@ocaml.doc
     {desc|Removes the characteristic respresented by |characteristicId| from the
-service respresented by |serviceId| in the peripheral with |address|. |desc}]
+simulated central. |desc}]
 
   module AddDescriptor = struct
     module Response : sig
@@ -34850,10 +34840,6 @@ service respresented by |serviceId| in the peripheral with |address|. |desc}]
 
     module Params = struct
       type t = {
-        address : string;
-            [@key "address"] [@ocaml.doc "No description provided"]
-        serviceId : string;
-            [@key "serviceId"] [@ocaml.doc "No description provided"]
         characteristicId : string;
             [@key "characteristicId"] [@ocaml.doc "No description provided"]
         descriptorUuid : string;
@@ -34861,8 +34847,8 @@ service respresented by |serviceId| in the peripheral with |address|. |desc}]
       }
       [@@deriving yojson]
 
-      let make ~address ~serviceId ~characteristicId ~descriptorUuid () =
-        { address; serviceId; characteristicId; descriptorUuid }
+      let make ~characteristicId ~descriptorUuid () =
+        { characteristicId; descriptorUuid }
     end
 
     module Request = struct
@@ -34881,8 +34867,7 @@ service respresented by |serviceId| in the peripheral with |address|. |desc}]
   end
   [@@ocaml.doc
     {desc|Adds a descriptor with |descriptorUuid| to the characteristic respresented
-by |characteristicId| in the service represented by |serviceId| of the
-peripheral with |address|. |desc}]
+by |characteristicId|. |desc}]
 
   module RemoveDescriptor = struct
     module Response : sig
@@ -34914,19 +34899,12 @@ peripheral with |address|. |desc}]
 
     module Params = struct
       type t = {
-        address : string;
-            [@key "address"] [@ocaml.doc "No description provided"]
-        serviceId : string;
-            [@key "serviceId"] [@ocaml.doc "No description provided"]
-        characteristicId : string;
-            [@key "characteristicId"] [@ocaml.doc "No description provided"]
         descriptorId : string;
             [@key "descriptorId"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
-      let make ~address ~serviceId ~characteristicId ~descriptorId () =
-        { address; serviceId; characteristicId; descriptorId }
+      let make ~descriptorId () = { descriptorId }
     end
 
     module Request = struct
@@ -34949,9 +34927,7 @@ peripheral with |address|. |desc}]
     end
   end
   [@@ocaml.doc
-    {desc|Removes the descriptor with |descriptorId| from the characteristic
-respresented by |characteristicId| in the service represented by |serviceId|
-of the peripheral with |address|. |desc}]
+    {desc|Removes the descriptor with |descriptorId| from the simulated central. |desc}]
 end
 
 module Console = struct
