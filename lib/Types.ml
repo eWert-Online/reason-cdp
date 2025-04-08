@@ -22812,6 +22812,7 @@ and Page : sig
       | `cross_origin_isolated
       | `deferred_fetch
       | `deferred_fetch_minimal
+      | `device_attributes
       | `digital_credentials_get
       | `direct_sockets
       | `direct_sockets_private
@@ -24226,6 +24227,7 @@ end = struct
       | `cross_origin_isolated
       | `deferred_fetch
       | `deferred_fetch_minimal
+      | `device_attributes
       | `digital_credentials_get
       | `direct_sockets
       | `direct_sockets_private
@@ -24341,6 +24343,7 @@ end = struct
       | `cross_origin_isolated
       | `deferred_fetch
       | `deferred_fetch_minimal
+      | `device_attributes
       | `digital_credentials_get
       | `direct_sockets
       | `direct_sockets_private
@@ -24444,6 +24447,7 @@ end = struct
       | `String "cross-origin-isolated" -> `cross_origin_isolated
       | `String "deferred-fetch" -> `deferred_fetch
       | `String "deferred-fetch-minimal" -> `deferred_fetch_minimal
+      | `String "device-attributes" -> `device_attributes
       | `String "digital-credentials-get" -> `digital_credentials_get
       | `String "direct-sockets" -> `direct_sockets
       | `String "direct-sockets-private" -> `direct_sockets_private
@@ -24554,6 +24558,7 @@ end = struct
       | `cross_origin_isolated -> `String "cross-origin-isolated"
       | `deferred_fetch -> `String "deferred-fetch"
       | `deferred_fetch_minimal -> `String "deferred-fetch-minimal"
+      | `device_attributes -> `String "device-attributes"
       | `digital_credentials_get -> `String "digital-credentials-get"
       | `direct_sockets -> `String "direct-sockets"
       | `direct_sockets_private -> `String "direct-sockets-private"
