@@ -6362,7 +6362,7 @@ and Browser : sig
   end
 
   and BrowserCommandId : sig
-    type _browsercommandid = [ `openTabSearch | `closeTabSearch ]
+    type _browsercommandid = [ `openTabSearch | `closeTabSearch | `openGlic ]
 
     val _browsercommandid_of_yojson : Yojson.Basic.t -> _browsercommandid
     val yojson_of__browsercommandid : _browsercommandid -> Yojson.Basic.t
@@ -6783,7 +6783,7 @@ end = struct
   end
 
   and BrowserCommandId : sig
-    type _browsercommandid = [ `openTabSearch | `closeTabSearch ]
+    type _browsercommandid = [ `openTabSearch | `closeTabSearch | `openGlic ]
 
     val _browsercommandid_of_yojson : Yojson.Basic.t -> _browsercommandid
     val yojson_of__browsercommandid : _browsercommandid -> Yojson.Basic.t
@@ -6792,17 +6792,19 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc "Browser command ids used by executeBrowserCommand."]
   end = struct
-    type _browsercommandid = [ `openTabSearch | `closeTabSearch ]
+    type _browsercommandid = [ `openTabSearch | `closeTabSearch | `openGlic ]
 
     let _browsercommandid_of_yojson = function
       | `String "openTabSearch" -> `openTabSearch
       | `String "closeTabSearch" -> `closeTabSearch
+      | `String "openGlic" -> `openGlic
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__browsercommandid = function
       | `openTabSearch -> `String "openTabSearch"
       | `closeTabSearch -> `String "closeTabSearch"
+      | `openGlic -> `String "openGlic"
 
     type t = _browsercommandid
     [@@deriving yojson]
@@ -16209,7 +16211,11 @@ and Network : sig
 
   and ServiceWorkerRouterSource : sig
     type _serviceworkerroutersource =
-      [ `network | `cache | `fetch_event | `race_network_and_fetch_handler ]
+      [ `network
+      | `cache
+      | `fetch_event
+      | `race_network_and_fetch_handler
+      | `race_network_and_cache ]
 
     val _serviceworkerroutersource_of_yojson :
       Yojson.Basic.t -> _serviceworkerroutersource
@@ -18753,7 +18759,11 @@ end = struct
 
   and ServiceWorkerRouterSource : sig
     type _serviceworkerroutersource =
-      [ `network | `cache | `fetch_event | `race_network_and_fetch_handler ]
+      [ `network
+      | `cache
+      | `fetch_event
+      | `race_network_and_fetch_handler
+      | `race_network_and_cache ]
 
     val _serviceworkerroutersource_of_yojson :
       Yojson.Basic.t -> _serviceworkerroutersource
@@ -18765,7 +18775,11 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Source of service worker router."]
   end = struct
     type _serviceworkerroutersource =
-      [ `network | `cache | `fetch_event | `race_network_and_fetch_handler ]
+      [ `network
+      | `cache
+      | `fetch_event
+      | `race_network_and_fetch_handler
+      | `race_network_and_cache ]
 
     let _serviceworkerroutersource_of_yojson = function
       | `String "network" -> `network
@@ -18773,6 +18787,7 @@ end = struct
       | `String "fetch-event" -> `fetch_event
       | `String "race-network-and-fetch-handler" ->
           `race_network_and_fetch_handler
+      | `String "race-network-and-cache" -> `race_network_and_cache
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -18782,6 +18797,7 @@ end = struct
       | `fetch_event -> `String "fetch-event"
       | `race_network_and_fetch_handler ->
           `String "race-network-and-fetch-handler"
+      | `race_network_and_cache -> `String "race-network-and-cache"
 
     type t = _serviceworkerroutersource
     [@@deriving yojson] [@@ocaml.doc "Source of service worker router."]
