@@ -12870,11 +12870,30 @@ Does nothing if no override is set. |desc}]
             [@key "longitude"] [@yojson.option] [@ocaml.doc "Mock longitude"]
         accuracy : Types.number option;
             [@key "accuracy"] [@yojson.option] [@ocaml.doc "Mock accuracy"]
+        altitude : Types.number option;
+            [@key "altitude"] [@yojson.option] [@ocaml.doc "Mock altitude"]
+        altitudeAccuracy : Types.number option;
+            [@key "altitudeAccuracy"]
+            [@yojson.option]
+            [@ocaml.doc "Mock altitudeAccuracy"]
+        heading : Types.number option;
+            [@key "heading"] [@yojson.option] [@ocaml.doc "Mock heading"]
+        speed : Types.number option;
+            [@key "speed"] [@yojson.option] [@ocaml.doc "Mock speed"]
       }
       [@@deriving yojson]
 
-      let make ?latitude ?longitude ?accuracy () =
-        { latitude; longitude; accuracy }
+      let make ?latitude ?longitude ?accuracy ?altitude ?altitudeAccuracy
+          ?heading ?speed () =
+        {
+          latitude;
+          longitude;
+          accuracy;
+          altitude;
+          altitudeAccuracy;
+          heading;
+          speed;
+        }
     end
 
     module Request = struct
@@ -12892,8 +12911,8 @@ Does nothing if no override is set. |desc}]
     end
   end
   [@@ocaml.doc
-    {desc|Overrides the Geolocation Position or Error. Omitting any of the parameters emulates position
-unavailable. |desc}]
+    {desc|Overrides the Geolocation Position or Error. Omitting latitude, longitude or
+accuracy emulates position unavailable. |desc}]
 
   module GetOverriddenSensorInformation = struct
     module Response : sig
