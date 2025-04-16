@@ -1814,6 +1814,84 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
   end
   [@@ocaml.doc {desc|Fired when direct_socket.TCPSocket is closed. |desc}]
 
+  module DirectTCPSocketChunkSent = struct
+    let name = "Network.directTCPSocketChunkSent"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      data : string; [@key "data"] [@ocaml.doc "No description provided"]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Fired when data is sent to tcp direct socket stream. |desc}]
+
+  module DirectTCPSocketChunkReceived = struct
+    let name = "Network.directTCPSocketChunkReceived"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      data : string; [@key "data"] [@ocaml.doc "No description provided"]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Fired when data is received from tcp direct socket stream. |desc}]
+
+  module DirectTCPSocketChunkError = struct
+    let name = "Network.directTCPSocketChunkError"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      errorMessage : string;
+          [@key "errorMessage"] [@ocaml.doc "No description provided"]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Fired when there is an error
+when writing to tcp direct socket stream.
+For example, if user writes illegal type like string
+instead of ArrayBuffer or ArrayBufferView.
+There's no reporting for reading, because
+we cannot know errors on the other side. |desc}]
+
   module RequestWillBeSentExtraInfo = struct
     let name = "Network.requestWillBeSentExtraInfo"
 
