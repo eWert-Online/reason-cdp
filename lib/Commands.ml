@@ -29453,6 +29453,67 @@ session. The effective Related Website Sets will not change during a browser ses
     {desc|Returns the list of URLs from a page and its embedded resources that match
 existing grace period URL pattern rules.
 https://developers.google.com/privacy-sandbox/cookies/temporary-exceptions/grace-period |desc}]
+
+  module SetProtectedAudienceKAnonymity = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        owner : string; [@key "owner"] [@ocaml.doc "No description provided"]
+        name : string; [@key "name"] [@ocaml.doc "No description provided"]
+        hashes : string list;
+            [@key "hashes"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~owner ~name ~hashes () = { owner; name; hashes }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Storage.setProtectedAudienceKAnonymity";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module SystemInfo = struct
