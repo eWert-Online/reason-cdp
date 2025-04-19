@@ -14097,6 +14097,71 @@ on Android. |desc}]
     end
   end
   [@@ocaml.doc {desc|Allows overriding the automation flag. |desc}]
+
+  module SetSmallViewportHeightDifferenceOverride = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        difference : Types.number;
+            [@key "difference"]
+            [@ocaml.doc
+              "This will cause an element of size 100svh to be `difference` \
+               pixels smaller than an element\n\
+               of size 100lvh."]
+      }
+      [@@deriving yojson]
+
+      let make ~difference () = { difference }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Emulation.setSmallViewportHeightDifferenceOverride";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Allows overriding the difference between the small and large viewport sizes, which determine the
+value of the `svh` and `lvh` unit, respectively. Only supported for top-level frames. |desc}]
 end
 
 module HeadlessExperimental = struct

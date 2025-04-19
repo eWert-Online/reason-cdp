@@ -23882,7 +23882,8 @@ and Page : sig
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
       | `CacheControlNoStoreDeviceBoundSessionTerminated
-      | `CacheLimitPruned ]
+      | `CacheLimitPrunedOnModerateMemoryPressure
+      | `CacheLimitPrunedOnCriticalMemoryPressure ]
 
     val _backforwardcachenotrestoredreason_of_yojson :
       Yojson.Basic.t -> _backforwardcachenotrestoredreason
@@ -26523,7 +26524,8 @@ end = struct
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
       | `CacheControlNoStoreDeviceBoundSessionTerminated
-      | `CacheLimitPruned ]
+      | `CacheLimitPrunedOnModerateMemoryPressure
+      | `CacheLimitPrunedOnCriticalMemoryPressure ]
 
     val _backforwardcachenotrestoredreason_of_yojson :
       Yojson.Basic.t -> _backforwardcachenotrestoredreason
@@ -26676,7 +26678,8 @@ end = struct
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
       | `CacheControlNoStoreDeviceBoundSessionTerminated
-      | `CacheLimitPruned ]
+      | `CacheLimitPrunedOnModerateMemoryPressure
+      | `CacheLimitPrunedOnCriticalMemoryPressure ]
 
     let _backforwardcachenotrestoredreason_of_yojson = function
       | `String "NotPrimaryMainFrame" -> `NotPrimaryMainFrame
@@ -26863,7 +26866,10 @@ end = struct
       | `String "PostMessageByWebViewClient" -> `PostMessageByWebViewClient
       | `String "CacheControlNoStoreDeviceBoundSessionTerminated" ->
           `CacheControlNoStoreDeviceBoundSessionTerminated
-      | `String "CacheLimitPruned" -> `CacheLimitPruned
+      | `String "CacheLimitPrunedOnModerateMemoryPressure" ->
+          `CacheLimitPrunedOnModerateMemoryPressure
+      | `String "CacheLimitPrunedOnCriticalMemoryPressure" ->
+          `CacheLimitPrunedOnCriticalMemoryPressure
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -27052,7 +27058,10 @@ end = struct
       | `PostMessageByWebViewClient -> `String "PostMessageByWebViewClient"
       | `CacheControlNoStoreDeviceBoundSessionTerminated ->
           `String "CacheControlNoStoreDeviceBoundSessionTerminated"
-      | `CacheLimitPruned -> `String "CacheLimitPruned"
+      | `CacheLimitPrunedOnModerateMemoryPressure ->
+          `String "CacheLimitPrunedOnModerateMemoryPressure"
+      | `CacheLimitPrunedOnCriticalMemoryPressure ->
+          `String "CacheLimitPrunedOnCriticalMemoryPressure"
 
     type t = _backforwardcachenotrestoredreason
     [@@deriving yojson]
