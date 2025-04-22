@@ -28975,6 +28975,14 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingNamedBudgetDef : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      budget : number; [@key "budget"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingSourceRegistration : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
@@ -29019,6 +29027,8 @@ and Storage : sig
           [@ocaml.doc "No description provided"]
       maxEventLevelReports : number;
           [@key "maxEventLevelReports"] [@ocaml.doc "No description provided"]
+      namedBudgets : AttributionReportingNamedBudgetDef.t list;
+          [@key "namedBudgets"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -29131,6 +29141,16 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingNamedBudgetCandidate : sig
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingTriggerRegistration : sig
     type t = {
       filters : AttributionReportingFilterPair.t;
@@ -29172,6 +29192,8 @@ and Storage : sig
           [@ocaml.doc "No description provided"]
       scopes : string list;
           [@key "scopes"] [@ocaml.doc "No description provided"]
+      namedBudgets : AttributionReportingNamedBudgetCandidate.t list;
+          [@key "namedBudgets"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -30254,6 +30276,20 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingNamedBudgetDef : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      budget : number; [@key "budget"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      budget : number; [@key "budget"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingSourceRegistration : sig
     type t = {
       time : Network.TimeSinceEpoch.t;
@@ -30298,6 +30334,8 @@ end = struct
           [@ocaml.doc "No description provided"]
       maxEventLevelReports : number;
           [@key "maxEventLevelReports"] [@ocaml.doc "No description provided"]
+      namedBudgets : AttributionReportingNamedBudgetDef.t list;
+          [@key "namedBudgets"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -30344,6 +30382,8 @@ end = struct
           [@ocaml.doc "No description provided"]
       maxEventLevelReports : number;
           [@key "maxEventLevelReports"] [@ocaml.doc "No description provided"]
+      namedBudgets : AttributionReportingNamedBudgetDef.t list;
+          [@key "namedBudgets"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -30600,6 +30640,24 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingNamedBudgetCandidate : sig
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      filters : AttributionReportingFilterPair.t;
+          [@key "filters"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingTriggerRegistration : sig
     type t = {
       filters : AttributionReportingFilterPair.t;
@@ -30641,6 +30699,8 @@ end = struct
           [@ocaml.doc "No description provided"]
       scopes : string list;
           [@key "scopes"] [@ocaml.doc "No description provided"]
+      namedBudgets : AttributionReportingNamedBudgetCandidate.t list;
+          [@key "namedBudgets"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -30684,6 +30744,8 @@ end = struct
           [@ocaml.doc "No description provided"]
       scopes : string list;
           [@key "scopes"] [@ocaml.doc "No description provided"]
+      namedBudgets : AttributionReportingNamedBudgetCandidate.t list;
+          [@key "namedBudgets"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
