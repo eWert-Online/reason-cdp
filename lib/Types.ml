@@ -28687,6 +28687,31 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "Details for an origin's shared storage."]
   end
 
+  and SharedStoragePrivateAggregationConfig : sig
+    type t = {
+      aggregationCoordinatorOrigin : string option;
+          [@key "aggregationCoordinatorOrigin"]
+          [@yojson.option]
+          [@ocaml.doc "The chosen aggregation service deployment."]
+      contextId : string option;
+          [@key "contextId"]
+          [@yojson.option]
+          [@ocaml.doc "The context ID provided."]
+      filteringIdMaxBytes : number;
+          [@key "filteringIdMaxBytes"]
+          [@ocaml.doc "Configures the maximum size allowed for filtering IDs."]
+      maxContributions : number option;
+          [@key "maxContributions"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The limit on the number of contributions in the final report."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents a dictionary object passed in as privateAggregationConfig to\n\
+       run or selectURL."]
+  end
+
   and SharedStorageReportingMetadata : sig
     type t = {
       eventType : string;
@@ -28718,62 +28743,107 @@ and Storage : sig
           [@yojson.option]
           [@ocaml.doc
             "Spec of the module script URL.\n\
-             Present only for SharedStorageAccessType.documentAddModule."]
+             Present only for SharedStorageAccessMethods: addModule and\n\
+             createWorklet."]
+      dataOrigin : string option;
+          [@key "dataOrigin"]
+          [@yojson.option]
+          [@ocaml.doc
+            "String denoting \"context-origin\", \"script-origin\", or a custom\n\
+             origin to be used as the worklet's data origin.\n\
+             Present only for SharedStorageAccessMethod: createWorklet."]
       operationName : string option;
           [@key "operationName"]
           [@yojson.option]
           [@ocaml.doc
             "Name of the registered operation to be run.\n\
-             Present only for SharedStorageAccessType.documentRun and\n\
-             SharedStorageAccessType.documentSelectURL."]
+             Present only for SharedStorageAccessMethods: run and selectURL."]
+      keepAlive : bool option;
+          [@key "keepAlive"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Whether or not to keep the worket alive for future run or selectURL\n\
+             calls.\n\
+             Present only for SharedStorageAccessMethods: run and selectURL."]
+      privateAggregationConfig : SharedStoragePrivateAggregationConfig.t option;
+          [@key "privateAggregationConfig"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Configures the private aggregation options.\n\
+             Present only for SharedStorageAccessMethods: run and selectURL."]
       serializedData : string option;
           [@key "serializedData"]
           [@yojson.option]
           [@ocaml.doc
             "The operation's serialized data in bytes (converted to a string).\n\
-             Present only for SharedStorageAccessType.documentRun and\n\
-             SharedStorageAccessType.documentSelectURL."]
+             Present only for SharedStorageAccessMethods: run and selectURL.\n\
+             TODO(crbug.com/401011862): Consider updating this parameter to \
+             binary."]
       urlsWithMetadata : SharedStorageUrlWithMetadata.t list option;
           [@key "urlsWithMetadata"]
           [@yojson.option]
           [@ocaml.doc
             "Array of candidate URLs' specs, along with any associated metadata.\n\
-             Present only for SharedStorageAccessType.documentSelectURL."]
+             Present only for SharedStorageAccessMethod: selectURL."]
+      urnUuid : string option;
+          [@key "urnUuid"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Spec of the URN:UUID generated for a selectURL call.\n\
+             Present only for SharedStorageAccessMethod: selectURL."]
       key : string option;
           [@key "key"]
           [@yojson.option]
           [@ocaml.doc
             "Key for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessType.documentSet,\n\
-             SharedStorageAccessType.documentAppend,\n\
-             SharedStorageAccessType.documentDelete,\n\
-             SharedStorageAccessType.workletSet,\n\
-             SharedStorageAccessType.workletAppend,\n\
-             SharedStorageAccessType.workletDelete,\n\
-             SharedStorageAccessType.workletGet,\n\
-             SharedStorageAccessType.headerSet,\n\
-             SharedStorageAccessType.headerAppend, and\n\
-             SharedStorageAccessType.headerDelete."]
+             Present only for SharedStorageAccessMethods: set, append, delete, \
+             and\n\
+             get."]
       value : string option;
           [@key "value"]
           [@yojson.option]
           [@ocaml.doc
             "Value for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessType.documentSet,\n\
-             SharedStorageAccessType.documentAppend,\n\
-             SharedStorageAccessType.workletSet,\n\
-             SharedStorageAccessType.workletAppend,\n\
-             SharedStorageAccessType.headerSet, and\n\
-             SharedStorageAccessType.headerAppend."]
+             Present only for SharedStorageAccessMethods: set and append."]
       ignoreIfPresent : bool option;
           [@key "ignoreIfPresent"]
           [@yojson.option]
           [@ocaml.doc
             "Whether or not to set an entry for a key if that key is already \
              present.\n\
-             Present only for SharedStorageAccessType.documentSet,\n\
-             SharedStorageAccessType.workletSet, and\n\
-             SharedStorageAccessType.headerSet."]
+             Present only for SharedStorageAccessMethod: set."]
+      workletId : string option;
+          [@key "workletId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the method is called on a worklet, or as part of\n\
+             a worklet script, it will have an ID for the associated worklet.\n\
+             Present only for SharedStorageAccessMethods: addModule, \
+             createWorklet,\n\
+             run, selectURL, and any other SharedStorageAccessMethod when the\n\
+             SharedStorageAccessScope is worklet."]
+      withLock : string option;
+          [@key "withLock"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Name of the lock to be acquired, if present.\n\
+             Optionally present only for SharedStorageAccessMethods: \
+             batchUpdate,\n\
+             set, append, delete, and clear."]
+      batchUpdateId : string option;
+          [@key "batchUpdateId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the method has been called as part of a batchUpdate, then this\n\
+             number identifies the batch to which it belongs.\n\
+             Optionally present only for SharedStorageAccessMethods:\n\
+             batchUpdate (required), set, append, delete, and clear."]
+      batchSize : number option;
+          [@key "batchSize"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Number of modifier methods sent in batch.\n\
+             Present only for SharedStorageAccessMethod: batchUpdate."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -29029,6 +29099,10 @@ and Storage : sig
           [@key "maxEventLevelReports"] [@ocaml.doc "No description provided"]
       namedBudgets : AttributionReportingNamedBudgetDef.t list;
           [@key "namedBudgets"] [@ocaml.doc "No description provided"]
+      debugReporting : bool;
+          [@key "debugReporting"] [@ocaml.doc "No description provided"]
+      eventLevelEpsilon : number;
+          [@key "eventLevelEpsilon"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -29728,6 +29802,54 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Details for an origin's shared storage."]
   end
 
+  and SharedStoragePrivateAggregationConfig : sig
+    type t = {
+      aggregationCoordinatorOrigin : string option;
+          [@key "aggregationCoordinatorOrigin"]
+          [@yojson.option]
+          [@ocaml.doc "The chosen aggregation service deployment."]
+      contextId : string option;
+          [@key "contextId"]
+          [@yojson.option]
+          [@ocaml.doc "The context ID provided."]
+      filteringIdMaxBytes : number;
+          [@key "filteringIdMaxBytes"]
+          [@ocaml.doc "Configures the maximum size allowed for filtering IDs."]
+      maxContributions : number option;
+          [@key "maxContributions"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The limit on the number of contributions in the final report."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents a dictionary object passed in as privateAggregationConfig to\n\
+       run or selectURL."]
+  end = struct
+    type t = {
+      aggregationCoordinatorOrigin : string option;
+          [@key "aggregationCoordinatorOrigin"]
+          [@yojson.option]
+          [@ocaml.doc "The chosen aggregation service deployment."]
+      contextId : string option;
+          [@key "contextId"]
+          [@yojson.option]
+          [@ocaml.doc "The context ID provided."]
+      filteringIdMaxBytes : number;
+          [@key "filteringIdMaxBytes"]
+          [@ocaml.doc "Configures the maximum size allowed for filtering IDs."]
+      maxContributions : number option;
+          [@key "maxContributions"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The limit on the number of contributions in the final report."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents a dictionary object passed in as privateAggregationConfig to\n\
+       run or selectURL."]
+  end
+
   and SharedStorageReportingMetadata : sig
     type t = {
       eventType : string;
@@ -29779,62 +29901,107 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "Spec of the module script URL.\n\
-             Present only for SharedStorageAccessType.documentAddModule."]
+             Present only for SharedStorageAccessMethods: addModule and\n\
+             createWorklet."]
+      dataOrigin : string option;
+          [@key "dataOrigin"]
+          [@yojson.option]
+          [@ocaml.doc
+            "String denoting \"context-origin\", \"script-origin\", or a custom\n\
+             origin to be used as the worklet's data origin.\n\
+             Present only for SharedStorageAccessMethod: createWorklet."]
       operationName : string option;
           [@key "operationName"]
           [@yojson.option]
           [@ocaml.doc
             "Name of the registered operation to be run.\n\
-             Present only for SharedStorageAccessType.documentRun and\n\
-             SharedStorageAccessType.documentSelectURL."]
+             Present only for SharedStorageAccessMethods: run and selectURL."]
+      keepAlive : bool option;
+          [@key "keepAlive"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Whether or not to keep the worket alive for future run or selectURL\n\
+             calls.\n\
+             Present only for SharedStorageAccessMethods: run and selectURL."]
+      privateAggregationConfig : SharedStoragePrivateAggregationConfig.t option;
+          [@key "privateAggregationConfig"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Configures the private aggregation options.\n\
+             Present only for SharedStorageAccessMethods: run and selectURL."]
       serializedData : string option;
           [@key "serializedData"]
           [@yojson.option]
           [@ocaml.doc
             "The operation's serialized data in bytes (converted to a string).\n\
-             Present only for SharedStorageAccessType.documentRun and\n\
-             SharedStorageAccessType.documentSelectURL."]
+             Present only for SharedStorageAccessMethods: run and selectURL.\n\
+             TODO(crbug.com/401011862): Consider updating this parameter to \
+             binary."]
       urlsWithMetadata : SharedStorageUrlWithMetadata.t list option;
           [@key "urlsWithMetadata"]
           [@yojson.option]
           [@ocaml.doc
             "Array of candidate URLs' specs, along with any associated metadata.\n\
-             Present only for SharedStorageAccessType.documentSelectURL."]
+             Present only for SharedStorageAccessMethod: selectURL."]
+      urnUuid : string option;
+          [@key "urnUuid"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Spec of the URN:UUID generated for a selectURL call.\n\
+             Present only for SharedStorageAccessMethod: selectURL."]
       key : string option;
           [@key "key"]
           [@yojson.option]
           [@ocaml.doc
             "Key for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessType.documentSet,\n\
-             SharedStorageAccessType.documentAppend,\n\
-             SharedStorageAccessType.documentDelete,\n\
-             SharedStorageAccessType.workletSet,\n\
-             SharedStorageAccessType.workletAppend,\n\
-             SharedStorageAccessType.workletDelete,\n\
-             SharedStorageAccessType.workletGet,\n\
-             SharedStorageAccessType.headerSet,\n\
-             SharedStorageAccessType.headerAppend, and\n\
-             SharedStorageAccessType.headerDelete."]
+             Present only for SharedStorageAccessMethods: set, append, delete, \
+             and\n\
+             get."]
       value : string option;
           [@key "value"]
           [@yojson.option]
           [@ocaml.doc
             "Value for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessType.documentSet,\n\
-             SharedStorageAccessType.documentAppend,\n\
-             SharedStorageAccessType.workletSet,\n\
-             SharedStorageAccessType.workletAppend,\n\
-             SharedStorageAccessType.headerSet, and\n\
-             SharedStorageAccessType.headerAppend."]
+             Present only for SharedStorageAccessMethods: set and append."]
       ignoreIfPresent : bool option;
           [@key "ignoreIfPresent"]
           [@yojson.option]
           [@ocaml.doc
             "Whether or not to set an entry for a key if that key is already \
              present.\n\
-             Present only for SharedStorageAccessType.documentSet,\n\
-             SharedStorageAccessType.workletSet, and\n\
-             SharedStorageAccessType.headerSet."]
+             Present only for SharedStorageAccessMethod: set."]
+      workletId : string option;
+          [@key "workletId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the method is called on a worklet, or as part of\n\
+             a worklet script, it will have an ID for the associated worklet.\n\
+             Present only for SharedStorageAccessMethods: addModule, \
+             createWorklet,\n\
+             run, selectURL, and any other SharedStorageAccessMethod when the\n\
+             SharedStorageAccessScope is worklet."]
+      withLock : string option;
+          [@key "withLock"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Name of the lock to be acquired, if present.\n\
+             Optionally present only for SharedStorageAccessMethods: \
+             batchUpdate,\n\
+             set, append, delete, and clear."]
+      batchUpdateId : string option;
+          [@key "batchUpdateId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the method has been called as part of a batchUpdate, then this\n\
+             number identifies the batch to which it belongs.\n\
+             Optionally present only for SharedStorageAccessMethods:\n\
+             batchUpdate (required), set, append, delete, and clear."]
+      batchSize : number option;
+          [@key "batchSize"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Number of modifier methods sent in batch.\n\
+             Present only for SharedStorageAccessMethod: batchUpdate."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -29847,62 +30014,107 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "Spec of the module script URL.\n\
-             Present only for SharedStorageAccessType.documentAddModule."]
+             Present only for SharedStorageAccessMethods: addModule and\n\
+             createWorklet."]
+      dataOrigin : string option;
+          [@key "dataOrigin"]
+          [@yojson.option]
+          [@ocaml.doc
+            "String denoting \"context-origin\", \"script-origin\", or a custom\n\
+             origin to be used as the worklet's data origin.\n\
+             Present only for SharedStorageAccessMethod: createWorklet."]
       operationName : string option;
           [@key "operationName"]
           [@yojson.option]
           [@ocaml.doc
             "Name of the registered operation to be run.\n\
-             Present only for SharedStorageAccessType.documentRun and\n\
-             SharedStorageAccessType.documentSelectURL."]
+             Present only for SharedStorageAccessMethods: run and selectURL."]
+      keepAlive : bool option;
+          [@key "keepAlive"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Whether or not to keep the worket alive for future run or selectURL\n\
+             calls.\n\
+             Present only for SharedStorageAccessMethods: run and selectURL."]
+      privateAggregationConfig : SharedStoragePrivateAggregationConfig.t option;
+          [@key "privateAggregationConfig"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Configures the private aggregation options.\n\
+             Present only for SharedStorageAccessMethods: run and selectURL."]
       serializedData : string option;
           [@key "serializedData"]
           [@yojson.option]
           [@ocaml.doc
             "The operation's serialized data in bytes (converted to a string).\n\
-             Present only for SharedStorageAccessType.documentRun and\n\
-             SharedStorageAccessType.documentSelectURL."]
+             Present only for SharedStorageAccessMethods: run and selectURL.\n\
+             TODO(crbug.com/401011862): Consider updating this parameter to \
+             binary."]
       urlsWithMetadata : SharedStorageUrlWithMetadata.t list option;
           [@key "urlsWithMetadata"]
           [@yojson.option]
           [@ocaml.doc
             "Array of candidate URLs' specs, along with any associated metadata.\n\
-             Present only for SharedStorageAccessType.documentSelectURL."]
+             Present only for SharedStorageAccessMethod: selectURL."]
+      urnUuid : string option;
+          [@key "urnUuid"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Spec of the URN:UUID generated for a selectURL call.\n\
+             Present only for SharedStorageAccessMethod: selectURL."]
       key : string option;
           [@key "key"]
           [@yojson.option]
           [@ocaml.doc
             "Key for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessType.documentSet,\n\
-             SharedStorageAccessType.documentAppend,\n\
-             SharedStorageAccessType.documentDelete,\n\
-             SharedStorageAccessType.workletSet,\n\
-             SharedStorageAccessType.workletAppend,\n\
-             SharedStorageAccessType.workletDelete,\n\
-             SharedStorageAccessType.workletGet,\n\
-             SharedStorageAccessType.headerSet,\n\
-             SharedStorageAccessType.headerAppend, and\n\
-             SharedStorageAccessType.headerDelete."]
+             Present only for SharedStorageAccessMethods: set, append, delete, \
+             and\n\
+             get."]
       value : string option;
           [@key "value"]
           [@yojson.option]
           [@ocaml.doc
             "Value for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessType.documentSet,\n\
-             SharedStorageAccessType.documentAppend,\n\
-             SharedStorageAccessType.workletSet,\n\
-             SharedStorageAccessType.workletAppend,\n\
-             SharedStorageAccessType.headerSet, and\n\
-             SharedStorageAccessType.headerAppend."]
+             Present only for SharedStorageAccessMethods: set and append."]
       ignoreIfPresent : bool option;
           [@key "ignoreIfPresent"]
           [@yojson.option]
           [@ocaml.doc
             "Whether or not to set an entry for a key if that key is already \
              present.\n\
-             Present only for SharedStorageAccessType.documentSet,\n\
-             SharedStorageAccessType.workletSet, and\n\
-             SharedStorageAccessType.headerSet."]
+             Present only for SharedStorageAccessMethod: set."]
+      workletId : string option;
+          [@key "workletId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the method is called on a worklet, or as part of\n\
+             a worklet script, it will have an ID for the associated worklet.\n\
+             Present only for SharedStorageAccessMethods: addModule, \
+             createWorklet,\n\
+             run, selectURL, and any other SharedStorageAccessMethod when the\n\
+             SharedStorageAccessScope is worklet."]
+      withLock : string option;
+          [@key "withLock"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Name of the lock to be acquired, if present.\n\
+             Optionally present only for SharedStorageAccessMethods: \
+             batchUpdate,\n\
+             set, append, delete, and clear."]
+      batchUpdateId : string option;
+          [@key "batchUpdateId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the method has been called as part of a batchUpdate, then this\n\
+             number identifies the batch to which it belongs.\n\
+             Optionally present only for SharedStorageAccessMethods:\n\
+             batchUpdate (required), set, append, delete, and clear."]
+      batchSize : number option;
+          [@key "batchSize"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Number of modifier methods sent in batch.\n\
+             Present only for SharedStorageAccessMethod: batchUpdate."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -30336,6 +30548,10 @@ end = struct
           [@key "maxEventLevelReports"] [@ocaml.doc "No description provided"]
       namedBudgets : AttributionReportingNamedBudgetDef.t list;
           [@key "namedBudgets"] [@ocaml.doc "No description provided"]
+      debugReporting : bool;
+          [@key "debugReporting"] [@ocaml.doc "No description provided"]
+      eventLevelEpsilon : number;
+          [@key "eventLevelEpsilon"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -30384,6 +30600,10 @@ end = struct
           [@key "maxEventLevelReports"] [@ocaml.doc "No description provided"]
       namedBudgets : AttributionReportingNamedBudgetDef.t list;
           [@key "namedBudgets"] [@ocaml.doc "No description provided"]
+      debugReporting : bool;
+          [@key "debugReporting"] [@ocaml.doc "No description provided"]
+      eventLevelEpsilon : number;
+          [@key "eventLevelEpsilon"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
