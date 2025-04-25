@@ -23181,16 +23181,19 @@ iframes, shadow DOM, external resources, and element-inline styles. |desc}]
     {desc|Returns the unique (PWA) app id.
 Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |desc}]
 
-  module GetAdScriptId = struct
+  module GetAdScriptAncestryIds = struct
     module Response : sig
       type result = {
-        adScriptId : Types.Page.AdScriptId.t option;
-            [@key "adScriptId"]
-            [@yojson.option]
+        adScriptAncestryIds : Types.Page.AdScriptId.t list;
+            [@key "adScriptAncestryIds"]
             [@ocaml.doc
-              "Identifies the bottom-most script which caused the frame to be \
-               labelled\n\
-               as an ad. Only sent if frame is labelled as an ad and id is \
+              "The ancestry chain of ad script identifiers leading to this \
+               frame's\n\
+               creation, ordered from the most immediate script (in the frame \
+               creation\n\
+               stack) to more distant ancestors (that created the immediately \
+               preceding\n\
+               script). Only sent if frame is labelled as an ad and ids are \
                available."]
       }
 
@@ -23206,13 +23209,16 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |des
       val parse : string -> t
     end = struct
       type result = {
-        adScriptId : Types.Page.AdScriptId.t option;
-            [@key "adScriptId"]
-            [@yojson.option]
+        adScriptAncestryIds : Types.Page.AdScriptId.t list;
+            [@key "adScriptAncestryIds"]
             [@ocaml.doc
-              "Identifies the bottom-most script which caused the frame to be \
-               labelled\n\
-               as an ad. Only sent if frame is labelled as an ad and id is \
+              "The ancestry chain of ad script identifiers leading to this \
+               frame's\n\
+               creation, ordered from the most immediate script (in the frame \
+               creation\n\
+               stack) to more distant ancestors (that created the immediately \
+               preceding\n\
+               script). Only sent if frame is labelled as an ad and ids are \
                available."]
       }
       [@@deriving yojson]
@@ -23250,7 +23256,7 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |des
       [@@deriving yojson]
 
       let make ?sessionId ~params id =
-        { id; method_ = "Page.getAdScriptId"; sessionId; params }
+        { id; method_ = "Page.getAdScriptAncestryIds"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end

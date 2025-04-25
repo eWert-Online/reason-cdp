@@ -2972,6 +2972,7 @@ Deprecated. Use Browser.downloadProgress instead. |desc}]
     let name = "Page.javascriptDialogClosed"
 
     type result = {
+      frameId : Types.Page.FrameId.t; [@key "frameId"] [@ocaml.doc "Frame id."]
       result : bool;
           [@key "result"] [@ocaml.doc "Whether dialog was confirmed."]
       userInput : string;
@@ -2997,6 +2998,7 @@ closed. |desc}]
 
     type result = {
       url : string; [@key "url"] [@ocaml.doc "Frame url."]
+      frameId : Types.Page.FrameId.t; [@key "frameId"] [@ocaml.doc "Frame id."]
       message : string;
           [@key "message"]
           [@ocaml.doc "Message that will be displayed by the dialog."]
