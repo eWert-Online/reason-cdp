@@ -5201,7 +5201,8 @@ Deprecated in favor of `resolvedBreakpoints` in the `scriptParsed` event. |desc}
       buildId : string;
           [@key "buildId"]
           [@ocaml.doc
-            "For Wasm modules, the content of the `build_id` custom section."]
+            "For Wasm modules, the content of the `build_id` custom section. \
+             For JavaScript the `debugId` magic comment."]
       executionContextAuxData : Types.assoc option;
           [@key "executionContextAuxData"]
           [@yojson.option]
@@ -5287,7 +5288,8 @@ Deprecated in favor of `resolvedBreakpoints` in the `scriptParsed` event. |desc}
       buildId : string;
           [@key "buildId"]
           [@ocaml.doc
-            "For Wasm modules, the content of the `build_id` custom section."]
+            "For Wasm modules, the content of the `build_id` custom section. \
+             For JavaScript the `debugId` magic comment."]
       executionContextAuxData : Types.assoc option;
           [@key "executionContextAuxData"]
           [@yojson.option]
