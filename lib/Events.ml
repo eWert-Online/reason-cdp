@@ -5016,6 +5016,37 @@ module BluetoothEmulation = struct
   [@@ocaml.doc
     {desc|Event for when a GATT operation of |type| to the peripheral with |address|
 happened. |desc}]
+
+  module CharacteristicOperationReceived = struct
+    let name = "BluetoothEmulation.characteristicOperationReceived"
+
+    type result = {
+      characteristicId : string;
+          [@key "characteristicId"] [@ocaml.doc "No description provided"]
+      type_ : Types.BluetoothEmulation.CharacteristicOperationType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      data : string option;
+          [@key "data"] [@yojson.option] [@ocaml.doc "No description provided"]
+      writeType : Types.BluetoothEmulation.CharacteristicWriteType.t option;
+          [@key "writeType"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Event for when a characteristic operation of |type| to the characteristic
+respresented by |characteristicId| happened. |data| and |writeType| is
+expected to exist when |type| is write. |desc}]
 end
 
 module Console = struct

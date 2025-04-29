@@ -22852,6 +22852,7 @@ and Page : sig
       | `keyboard_map
       | `language_detector
       | `local_fonts
+      | `local_network_access
       | `magnetometer
       | `media_playback_while_not_visible
       | `microphone
@@ -22865,6 +22866,7 @@ and Page : sig
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
+      | `record_ad_auction_events
       | `rewriter
       | `run_ad_auction
       | `screen_wake_lock
@@ -22901,7 +22903,8 @@ and Page : sig
     [@@ocaml.doc
       "All Permissions Policy features. This enum should match the one defined\n\
        in \
-       services/network/public/cpp/permissions_policy/permissions_policy_features.json5."]
+       services/network/public/cpp/permissions_policy/permissions_policy_features.json5.\n\
+       LINT.IfChange(PermissionsPolicyFeature)"]
   end
 
   and PermissionsPolicyBlockReason : sig
@@ -24268,6 +24271,7 @@ end = struct
       | `keyboard_map
       | `language_detector
       | `local_fonts
+      | `local_network_access
       | `magnetometer
       | `media_playback_while_not_visible
       | `microphone
@@ -24281,6 +24285,7 @@ end = struct
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
+      | `record_ad_auction_events
       | `rewriter
       | `run_ad_auction
       | `screen_wake_lock
@@ -24317,7 +24322,8 @@ end = struct
     [@@ocaml.doc
       "All Permissions Policy features. This enum should match the one defined\n\
        in \
-       services/network/public/cpp/permissions_policy/permissions_policy_features.json5."]
+       services/network/public/cpp/permissions_policy/permissions_policy_features.json5.\n\
+       LINT.IfChange(PermissionsPolicyFeature)"]
   end = struct
     type _permissionspolicyfeature =
       [ `accelerometer
@@ -24384,6 +24390,7 @@ end = struct
       | `keyboard_map
       | `language_detector
       | `local_fonts
+      | `local_network_access
       | `magnetometer
       | `media_playback_while_not_visible
       | `microphone
@@ -24397,6 +24404,7 @@ end = struct
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
+      | `record_ad_auction_events
       | `rewriter
       | `run_ad_auction
       | `screen_wake_lock
@@ -24491,6 +24499,7 @@ end = struct
       | `String "keyboard-map" -> `keyboard_map
       | `String "language-detector" -> `language_detector
       | `String "local-fonts" -> `local_fonts
+      | `String "local-network-access" -> `local_network_access
       | `String "magnetometer" -> `magnetometer
       | `String "media-playback-while-not-visible" ->
           `media_playback_while_not_visible
@@ -24506,6 +24515,7 @@ end = struct
           `private_state_token_redemption
       | `String "publickey-credentials-create" -> `publickey_credentials_create
       | `String "publickey-credentials-get" -> `publickey_credentials_get
+      | `String "record-ad-auction-events" -> `record_ad_auction_events
       | `String "rewriter" -> `rewriter
       | `String "run-ad-auction" -> `run_ad_auction
       | `String "screen-wake-lock" -> `screen_wake_lock
@@ -24602,6 +24612,7 @@ end = struct
       | `keyboard_map -> `String "keyboard-map"
       | `language_detector -> `String "language-detector"
       | `local_fonts -> `String "local-fonts"
+      | `local_network_access -> `String "local-network-access"
       | `magnetometer -> `String "magnetometer"
       | `media_playback_while_not_visible ->
           `String "media-playback-while-not-visible"
@@ -24617,6 +24628,7 @@ end = struct
           `String "private-state-token-redemption"
       | `publickey_credentials_create -> `String "publickey-credentials-create"
       | `publickey_credentials_get -> `String "publickey-credentials-get"
+      | `record_ad_auction_events -> `String "record-ad-auction-events"
       | `rewriter -> `String "rewriter"
       | `run_ad_auction -> `String "run-ad-auction"
       | `screen_wake_lock -> `String "screen-wake-lock"
@@ -24647,7 +24659,8 @@ end = struct
     [@@ocaml.doc
       "All Permissions Policy features. This enum should match the one defined\n\
        in \
-       services/network/public/cpp/permissions_policy/permissions_policy_features.json5."]
+       services/network/public/cpp/permissions_policy/permissions_policy_features.json5.\n\
+       LINT.IfChange(PermissionsPolicyFeature)"]
   end
 
   and PermissionsPolicyBlockReason : sig
@@ -35952,6 +35965,41 @@ and BluetoothEmulation : sig
     [@@ocaml.doc "Indicates the various types of GATT event."]
   end
 
+  and CharacteristicWriteType : sig
+    type _characteristicwritetype =
+      [ `write_default_deprecated
+      | `write_with_response
+      | `write_without_response ]
+
+    val _characteristicwritetype_of_yojson :
+      Yojson.Basic.t -> _characteristicwritetype
+
+    val yojson_of__characteristicwritetype :
+      _characteristicwritetype -> Yojson.Basic.t
+
+    type t = _characteristicwritetype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic write."]
+  end
+
+  and CharacteristicOperationType : sig
+    type _characteristicoperationtype =
+      [ `read
+      | `write
+      | `subscribe_to_notifications
+      | `unsubscribe_from_notifications ]
+
+    val _characteristicoperationtype_of_yojson :
+      Yojson.Basic.t -> _characteristicoperationtype
+
+    val yojson_of__characteristicoperationtype :
+      _characteristicoperationtype -> Yojson.Basic.t
+
+    type t = _characteristicoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic operation."]
+  end
+
   and ManufacturerData : sig
     type t = {
       key : number;
@@ -36100,6 +36148,88 @@ end = struct
     type t = _gattoperationtype
     [@@deriving yojson]
     [@@ocaml.doc "Indicates the various types of GATT event."]
+  end
+
+  and CharacteristicWriteType : sig
+    type _characteristicwritetype =
+      [ `write_default_deprecated
+      | `write_with_response
+      | `write_without_response ]
+
+    val _characteristicwritetype_of_yojson :
+      Yojson.Basic.t -> _characteristicwritetype
+
+    val yojson_of__characteristicwritetype :
+      _characteristicwritetype -> Yojson.Basic.t
+
+    type t = _characteristicwritetype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic write."]
+  end = struct
+    type _characteristicwritetype =
+      [ `write_default_deprecated
+      | `write_with_response
+      | `write_without_response ]
+
+    let _characteristicwritetype_of_yojson = function
+      | `String "write-default-deprecated" -> `write_default_deprecated
+      | `String "write-with-response" -> `write_with_response
+      | `String "write-without-response" -> `write_without_response
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__characteristicwritetype = function
+      | `write_default_deprecated -> `String "write-default-deprecated"
+      | `write_with_response -> `String "write-with-response"
+      | `write_without_response -> `String "write-without-response"
+
+    type t = _characteristicwritetype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic write."]
+  end
+
+  and CharacteristicOperationType : sig
+    type _characteristicoperationtype =
+      [ `read
+      | `write
+      | `subscribe_to_notifications
+      | `unsubscribe_from_notifications ]
+
+    val _characteristicoperationtype_of_yojson :
+      Yojson.Basic.t -> _characteristicoperationtype
+
+    val yojson_of__characteristicoperationtype :
+      _characteristicoperationtype -> Yojson.Basic.t
+
+    type t = _characteristicoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic operation."]
+  end = struct
+    type _characteristicoperationtype =
+      [ `read
+      | `write
+      | `subscribe_to_notifications
+      | `unsubscribe_from_notifications ]
+
+    let _characteristicoperationtype_of_yojson = function
+      | `String "read" -> `read
+      | `String "write" -> `write
+      | `String "subscribe-to-notifications" -> `subscribe_to_notifications
+      | `String "unsubscribe-from-notifications" ->
+          `unsubscribe_from_notifications
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__characteristicoperationtype = function
+      | `read -> `String "read"
+      | `write -> `String "write"
+      | `subscribe_to_notifications -> `String "subscribe-to-notifications"
+      | `unsubscribe_from_notifications ->
+          `String "unsubscribe-from-notifications"
+
+    type t = _characteristicoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic operation."]
   end
 
   and ManufacturerData : sig
