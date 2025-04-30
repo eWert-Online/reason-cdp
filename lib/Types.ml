@@ -2475,6 +2475,37 @@ and Audits : sig
        registrations being ignored."]
   end
 
+  and UserReidentificationIssueType : sig
+    type _userreidentificationissuetype =
+      [ `BlockedFrameNavigation | `BlockedSubresource ]
+
+    val _userreidentificationissuetype_of_yojson :
+      Yojson.Basic.t -> _userreidentificationissuetype
+
+    val yojson_of__userreidentificationissuetype :
+      _userreidentificationissuetype -> Yojson.Basic.t
+
+    type t = _userreidentificationissuetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and UserReidentificationIssueDetails : sig
+    type t = {
+      type_ : UserReidentificationIssueType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t option;
+          [@key "request"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Applies to BlockedFrameNavigation and BlockedSubresource issue \
+             types."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about uses of APIs that may be considered misuse to\n\
+       re-identify users."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -2500,7 +2531,8 @@ and Audits : sig
       | `PropertyRuleIssue
       | `SharedDictionaryIssue
       | `SelectElementAccessibilityIssue
-      | `SRIMessageSignatureIssue ]
+      | `SRIMessageSignatureIssue
+      | `UserReidentificationIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2614,8 +2646,14 @@ and Audits : sig
           [@key "selectElementAccessibilityIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      sriMessageSignatureIssueDetails : SRIMessageSignatureIssueDetails.t option;
+      sriMessageSignatureIssueDetails :
+        SRIMessageSignatureIssueDetails.t option;
           [@key "sriMessageSignatureIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      userReidentificationIssueDetails :
+        UserReidentificationIssueDetails.t option;
+          [@key "userReidentificationIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -5297,6 +5335,68 @@ end = struct
        registrations being ignored."]
   end
 
+  and UserReidentificationIssueType : sig
+    type _userreidentificationissuetype =
+      [ `BlockedFrameNavigation | `BlockedSubresource ]
+
+    val _userreidentificationissuetype_of_yojson :
+      Yojson.Basic.t -> _userreidentificationissuetype
+
+    val yojson_of__userreidentificationissuetype :
+      _userreidentificationissuetype -> Yojson.Basic.t
+
+    type t = _userreidentificationissuetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _userreidentificationissuetype =
+      [ `BlockedFrameNavigation | `BlockedSubresource ]
+
+    let _userreidentificationissuetype_of_yojson = function
+      | `String "BlockedFrameNavigation" -> `BlockedFrameNavigation
+      | `String "BlockedSubresource" -> `BlockedSubresource
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__userreidentificationissuetype = function
+      | `BlockedFrameNavigation -> `String "BlockedFrameNavigation"
+      | `BlockedSubresource -> `String "BlockedSubresource"
+
+    type t = _userreidentificationissuetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and UserReidentificationIssueDetails : sig
+    type t = {
+      type_ : UserReidentificationIssueType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t option;
+          [@key "request"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Applies to BlockedFrameNavigation and BlockedSubresource issue \
+             types."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about uses of APIs that may be considered misuse to\n\
+       re-identify users."]
+  end = struct
+    type t = {
+      type_ : UserReidentificationIssueType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t option;
+          [@key "request"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Applies to BlockedFrameNavigation and BlockedSubresource issue \
+             types."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about uses of APIs that may be considered misuse to\n\
+       re-identify users."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -5322,7 +5422,8 @@ end = struct
       | `PropertyRuleIssue
       | `SharedDictionaryIssue
       | `SelectElementAccessibilityIssue
-      | `SRIMessageSignatureIssue ]
+      | `SRIMessageSignatureIssue
+      | `UserReidentificationIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -5358,7 +5459,8 @@ end = struct
       | `PropertyRuleIssue
       | `SharedDictionaryIssue
       | `SelectElementAccessibilityIssue
-      | `SRIMessageSignatureIssue ]
+      | `SRIMessageSignatureIssue
+      | `UserReidentificationIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -5388,6 +5490,7 @@ end = struct
       | `String "SelectElementAccessibilityIssue" ->
           `SelectElementAccessibilityIssue
       | `String "SRIMessageSignatureIssue" -> `SRIMessageSignatureIssue
+      | `String "UserReidentificationIssue" -> `UserReidentificationIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -5419,6 +5522,7 @@ end = struct
       | `SelectElementAccessibilityIssue ->
           `String "SelectElementAccessibilityIssue"
       | `SRIMessageSignatureIssue -> `String "SRIMessageSignatureIssue"
+      | `UserReidentificationIssue -> `String "UserReidentificationIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -5529,8 +5633,14 @@ end = struct
           [@key "selectElementAccessibilityIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      sriMessageSignatureIssueDetails : SRIMessageSignatureIssueDetails.t option;
+      sriMessageSignatureIssueDetails :
+        SRIMessageSignatureIssueDetails.t option;
           [@key "sriMessageSignatureIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      userReidentificationIssueDetails :
+        UserReidentificationIssueDetails.t option;
+          [@key "userReidentificationIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -5640,8 +5750,14 @@ end = struct
           [@key "selectElementAccessibilityIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      sriMessageSignatureIssueDetails : SRIMessageSignatureIssueDetails.t option;
+      sriMessageSignatureIssueDetails :
+        SRIMessageSignatureIssueDetails.t option;
           [@key "sriMessageSignatureIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      userReidentificationIssueDetails :
+        UserReidentificationIssueDetails.t option;
+          [@key "userReidentificationIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
