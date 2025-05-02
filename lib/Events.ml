@@ -3807,6 +3807,40 @@ The following parameters are included in all events. |desc}]
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
   [@@ocaml.doc {desc|No description provided |desc}]
+
+  module AttributionReportingReportSent = struct
+    let name = "Storage.attributionReportingReportSent"
+
+    type result = {
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+      body : Types.assoc; [@key "body"] [@ocaml.doc "No description provided"]
+      result : Types.Storage.AttributionReportingReportResult.t;
+          [@key "result"] [@ocaml.doc "No description provided"]
+      netError : Types.number option;
+          [@key "netError"]
+          [@yojson.option]
+          [@ocaml.doc "If result is `sent`, populated with net/HTTP status."]
+      netErrorName : string option;
+          [@key "netErrorName"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      httpStatusCode : Types.number option;
+          [@key "httpStatusCode"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Target = struct
@@ -5047,6 +5081,33 @@ happened. |desc}]
     {desc|Event for when a characteristic operation of |type| to the characteristic
 respresented by |characteristicId| happened. |data| and |writeType| is
 expected to exist when |type| is write. |desc}]
+
+  module DescriptorOperationReceived = struct
+    let name = "BluetoothEmulation.descriptorOperationReceived"
+
+    type result = {
+      descriptorId : string;
+          [@key "descriptorId"] [@ocaml.doc "No description provided"]
+      type_ : Types.BluetoothEmulation.CharacteristicOperationType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      data : string option;
+          [@key "data"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Event for when a descriptor operation of |type| to the descriptor
+respresented by |descriptorId| happened. |data| is expected to exist when
+|type| is write. |desc}]
 end
 
 module Console = struct

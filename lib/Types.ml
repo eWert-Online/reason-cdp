@@ -29461,6 +29461,20 @@ and Storage : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AttributionReportingReportResult : sig
+    type _attributionreportingreportresult =
+      [ `sent | `prohibited | `failedToAssemble | `expired ]
+
+    val _attributionreportingreportresult_of_yojson :
+      Yojson.Basic.t -> _attributionreportingreportresult
+
+    val yojson_of__attributionreportingreportresult :
+      _attributionreportingreportresult -> Yojson.Basic.t
+
+    type t = _attributionreportingreportresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and RelatedWebsiteSet : sig
     type t = {
       primarySites : string list;
@@ -31284,6 +31298,40 @@ end = struct
       | `excessiveReports -> `String "excessiveReports"
 
     type t = _attributionreportingaggregatableresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and AttributionReportingReportResult : sig
+    type _attributionreportingreportresult =
+      [ `sent | `prohibited | `failedToAssemble | `expired ]
+
+    val _attributionreportingreportresult_of_yojson :
+      Yojson.Basic.t -> _attributionreportingreportresult
+
+    val yojson_of__attributionreportingreportresult :
+      _attributionreportingreportresult -> Yojson.Basic.t
+
+    type t = _attributionreportingreportresult
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _attributionreportingreportresult =
+      [ `sent | `prohibited | `failedToAssemble | `expired ]
+
+    let _attributionreportingreportresult_of_yojson = function
+      | `String "sent" -> `sent
+      | `String "prohibited" -> `prohibited
+      | `String "failedToAssemble" -> `failedToAssemble
+      | `String "expired" -> `expired
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__attributionreportingreportresult = function
+      | `sent -> `String "sent"
+      | `prohibited -> `String "prohibited"
+      | `failedToAssemble -> `String "failedToAssemble"
+      | `expired -> `String "expired"
+
+    type t = _attributionreportingreportresult
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
@@ -36116,6 +36164,20 @@ and BluetoothEmulation : sig
     [@@ocaml.doc "Indicates the various types of characteristic operation."]
   end
 
+  and DescriptorOperationType : sig
+    type _descriptoroperationtype = [ `read | `write ]
+
+    val _descriptoroperationtype_of_yojson :
+      Yojson.Basic.t -> _descriptoroperationtype
+
+    val yojson_of__descriptoroperationtype :
+      _descriptoroperationtype -> Yojson.Basic.t
+
+    type t = _descriptoroperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of descriptor operation."]
+  end
+
   and ManufacturerData : sig
     type t = {
       key : number;
@@ -36346,6 +36408,36 @@ end = struct
     type t = _characteristicoperationtype
     [@@deriving yojson]
     [@@ocaml.doc "Indicates the various types of characteristic operation."]
+  end
+
+  and DescriptorOperationType : sig
+    type _descriptoroperationtype = [ `read | `write ]
+
+    val _descriptoroperationtype_of_yojson :
+      Yojson.Basic.t -> _descriptoroperationtype
+
+    val yojson_of__descriptoroperationtype :
+      _descriptoroperationtype -> Yojson.Basic.t
+
+    type t = _descriptoroperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of descriptor operation."]
+  end = struct
+    type _descriptoroperationtype = [ `read | `write ]
+
+    let _descriptoroperationtype_of_yojson = function
+      | `String "read" -> `read
+      | `String "write" -> `write
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__descriptoroperationtype = function
+      | `read -> `String "read"
+      | `write -> `String "write"
+
+    type t = _descriptoroperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of descriptor operation."]
   end
 
   and ManufacturerData : sig
