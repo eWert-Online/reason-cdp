@@ -18825,11 +18825,23 @@ Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failReques
             [@ocaml.doc
               "Longest post body size (in bytes) that would be included in \
                requestWillBeSent notification"]
+        reportDirectSocketTraffic : bool option;
+            [@key "reportDirectSocketTraffic"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Whether DirectSocket chunk send/receive events should be \
+               reported."]
       }
       [@@deriving yojson]
 
-      let make ?maxTotalBufferSize ?maxResourceBufferSize ?maxPostDataSize () =
-        { maxTotalBufferSize; maxResourceBufferSize; maxPostDataSize }
+      let make ?maxTotalBufferSize ?maxResourceBufferSize ?maxPostDataSize
+          ?reportDirectSocketTraffic () =
+        {
+          maxTotalBufferSize;
+          maxResourceBufferSize;
+          maxPostDataSize;
+          reportDirectSocketTraffic;
+        }
     end
 
     module Request = struct

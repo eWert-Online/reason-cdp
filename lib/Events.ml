@@ -1862,8 +1862,71 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
   [@@ocaml.doc
     {desc|Fired when data is received from tcp direct socket stream. |desc}]
 
-  module DirectTCPSocketChunkError = struct
-    let name = "Network.directTCPSocketChunkError"
+  module DirectUDPSocketCreated = struct
+    let name = "Network.directUDPSocketCreated"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      options : Types.Network.DirectUDPSocketOptions.t;
+          [@key "options"] [@ocaml.doc "No description provided"]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+      initiator : Types.Network.Initiator.t option;
+          [@key "initiator"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Fired upon direct_socket.UDPSocket creation. |desc}]
+
+  module DirectUDPSocketOpened = struct
+    let name = "Network.directUDPSocketOpened"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      localAddr : string;
+          [@key "localAddr"] [@ocaml.doc "No description provided"]
+      localPort : Types.number;
+          [@key "localPort"] [@ocaml.doc "Expected to be unsigned integer."]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+      remoteAddr : string option;
+          [@key "remoteAddr"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      remotePort : Types.number option;
+          [@key "remotePort"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Fired when direct_socket.UDPSocket connection is opened. |desc}]
+
+  module DirectUDPSocketAborted = struct
+    let name = "Network.directUDPSocketAborted"
 
     type result = {
       identifier : Types.Network.RequestId.t;
@@ -1884,13 +1947,79 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
+  [@@ocaml.doc {desc|Fired when direct_socket.UDPSocket is aborted. |desc}]
+
+  module DirectUDPSocketClosed = struct
+    let name = "Network.directUDPSocketClosed"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Fired when direct_socket.UDPSocket is closed. |desc}]
+
+  module DirectUDPSocketChunkSent = struct
+    let name = "Network.directUDPSocketChunkSent"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      message : Types.Network.DirectUDPMessage.t;
+          [@key "message"] [@ocaml.doc "No description provided"]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
   [@@ocaml.doc
-    {desc|Fired when there is an error
-when writing to tcp direct socket stream.
-For example, if user writes illegal type like string
-instead of ArrayBuffer or ArrayBufferView.
-There's no reporting for reading, because
-we cannot know errors on the other side. |desc}]
+    {desc|Fired when message is sent to udp direct socket stream. |desc}]
+
+  module DirectUDPSocketChunkReceived = struct
+    let name = "Network.directUDPSocketChunkReceived"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      message : Types.Network.DirectUDPMessage.t;
+          [@key "message"] [@ocaml.doc "No description provided"]
+      timestamp : Types.Network.MonotonicTime.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Fired when message is received from udp direct socket stream. |desc}]
 
   module RequestWillBeSentExtraInfo = struct
     let name = "Network.requestWillBeSentExtraInfo"

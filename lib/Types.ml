@@ -17168,6 +17168,52 @@ and Network : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and DirectUDPSocketOptions : sig
+    type t = {
+      remoteAddr : string option;
+          [@key "remoteAddr"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      remotePort : number option;
+          [@key "remotePort"] [@yojson.option] [@ocaml.doc "Unsigned int 16."]
+      localAddr : string option;
+          [@key "localAddr"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      localPort : number option;
+          [@key "localPort"] [@yojson.option] [@ocaml.doc "Unsigned int 16."]
+      dnsQueryType : DirectSocketDnsQueryType.t option;
+          [@key "dnsQueryType"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      sendBufferSize : number option;
+          [@key "sendBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      receiveBufferSize : number option;
+          [@key "receiveBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and DirectUDPMessage : sig
+    type t = {
+      data : string; [@key "data"] [@ocaml.doc "No description provided"]
+      remoteAddr : string option;
+          [@key "remoteAddr"]
+          [@yojson.option]
+          [@ocaml.doc "Null for connected mode."]
+      remotePort : number option;
+          [@key "remotePort"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Null for connected mode.\nExpected to be unsigned integer."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and PrivateNetworkRequestPolicy : sig
     type _privatenetworkrequestpolicy =
       [ `Allow
@@ -20693,6 +20739,94 @@ end = struct
           [@key "dnsQueryType"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and DirectUDPSocketOptions : sig
+    type t = {
+      remoteAddr : string option;
+          [@key "remoteAddr"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      remotePort : number option;
+          [@key "remotePort"] [@yojson.option] [@ocaml.doc "Unsigned int 16."]
+      localAddr : string option;
+          [@key "localAddr"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      localPort : number option;
+          [@key "localPort"] [@yojson.option] [@ocaml.doc "Unsigned int 16."]
+      dnsQueryType : DirectSocketDnsQueryType.t option;
+          [@key "dnsQueryType"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      sendBufferSize : number option;
+          [@key "sendBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      receiveBufferSize : number option;
+          [@key "receiveBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      remoteAddr : string option;
+          [@key "remoteAddr"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      remotePort : number option;
+          [@key "remotePort"] [@yojson.option] [@ocaml.doc "Unsigned int 16."]
+      localAddr : string option;
+          [@key "localAddr"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      localPort : number option;
+          [@key "localPort"] [@yojson.option] [@ocaml.doc "Unsigned int 16."]
+      dnsQueryType : DirectSocketDnsQueryType.t option;
+          [@key "dnsQueryType"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      sendBufferSize : number option;
+          [@key "sendBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+      receiveBufferSize : number option;
+          [@key "receiveBufferSize"]
+          [@yojson.option]
+          [@ocaml.doc "Expected to be unsigned integer."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and DirectUDPMessage : sig
+    type t = {
+      data : string; [@key "data"] [@ocaml.doc "No description provided"]
+      remoteAddr : string option;
+          [@key "remoteAddr"]
+          [@yojson.option]
+          [@ocaml.doc "Null for connected mode."]
+      remotePort : number option;
+          [@key "remotePort"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Null for connected mode.\nExpected to be unsigned integer."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      data : string; [@key "data"] [@ocaml.doc "No description provided"]
+      remoteAddr : string option;
+          [@key "remoteAddr"]
+          [@yojson.option]
+          [@ocaml.doc "Null for connected mode."]
+      remotePort : number option;
+          [@key "remotePort"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Null for connected mode.\nExpected to be unsigned integer."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
