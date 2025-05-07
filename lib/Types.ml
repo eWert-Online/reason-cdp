@@ -16170,6 +16170,7 @@ and Network : sig
       | `mixed_content
       | `origin
       | `inspector
+      | `integrity
       | `subresource_filter
       | `content_type
       | `coep_frame_resource_needs_coep_header
@@ -18423,6 +18424,7 @@ end = struct
       | `mixed_content
       | `origin
       | `inspector
+      | `integrity
       | `subresource_filter
       | `content_type
       | `coep_frame_resource_needs_coep_header
@@ -18446,6 +18448,7 @@ end = struct
       | `mixed_content
       | `origin
       | `inspector
+      | `integrity
       | `subresource_filter
       | `content_type
       | `coep_frame_resource_needs_coep_header
@@ -18463,6 +18466,7 @@ end = struct
       | `String "mixed-content" -> `mixed_content
       | `String "origin" -> `origin
       | `String "inspector" -> `inspector
+      | `String "integrity" -> `integrity
       | `String "subresource-filter" -> `subresource_filter
       | `String "content-type" -> `content_type
       | `String "coep-frame-resource-needs-coep-header" ->
@@ -18490,6 +18494,7 @@ end = struct
       | `mixed_content -> `String "mixed-content"
       | `origin -> `String "origin"
       | `inspector -> `String "inspector"
+      | `integrity -> `String "integrity"
       | `subresource_filter -> `String "subresource-filter"
       | `content_type -> `String "content-type"
       | `coep_frame_resource_needs_coep_header ->
