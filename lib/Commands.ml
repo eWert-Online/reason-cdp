@@ -20414,7 +20414,7 @@ Enabling triggers 'reportingApiReportAdded' for all existing reports. |desc}]
   end
   [@@ocaml.doc
     {desc|Sets Controls for third-party cookie access
-Page reload is required before the new cookie bahavior will be observed |desc}]
+Page reload is required before the new cookie behavior will be observed |desc}]
 end
 
 module Overlay = struct
