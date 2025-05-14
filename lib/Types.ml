@@ -15773,6 +15773,7 @@ and Network : sig
       | `Ping
       | `CSPViolationReport
       | `Preflight
+      | `FedCM
       | `Other ]
 
     val _resourcetype_of_yojson : Yojson.Basic.t -> _resourcetype
@@ -17501,6 +17502,7 @@ end = struct
       | `Ping
       | `CSPViolationReport
       | `Preflight
+      | `FedCM
       | `Other ]
 
     val _resourcetype_of_yojson : Yojson.Basic.t -> _resourcetype
@@ -17528,6 +17530,7 @@ end = struct
       | `Ping
       | `CSPViolationReport
       | `Preflight
+      | `FedCM
       | `Other ]
 
     let _resourcetype_of_yojson = function
@@ -17548,6 +17551,7 @@ end = struct
       | `String "Ping" -> `Ping
       | `String "CSPViolationReport" -> `CSPViolationReport
       | `String "Preflight" -> `Preflight
+      | `String "FedCM" -> `FedCM
       | `String "Other" -> `Other
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -17570,6 +17574,7 @@ end = struct
       | `Ping -> `String "Ping"
       | `CSPViolationReport -> `String "CSPViolationReport"
       | `Preflight -> `String "Preflight"
+      | `FedCM -> `String "FedCM"
       | `Other -> `String "Other"
 
     type t = _resourcetype
@@ -23112,6 +23117,7 @@ and Page : sig
       | `media_playback_while_not_visible
       | `microphone
       | `midi
+      | `on_device_speech_recognition
       | `otp_credentials
       | `payment
       | `picture_in_picture
@@ -24531,6 +24537,7 @@ end = struct
       | `media_playback_while_not_visible
       | `microphone
       | `midi
+      | `on_device_speech_recognition
       | `otp_credentials
       | `payment
       | `picture_in_picture
@@ -24650,6 +24657,7 @@ end = struct
       | `media_playback_while_not_visible
       | `microphone
       | `midi
+      | `on_device_speech_recognition
       | `otp_credentials
       | `payment
       | `picture_in_picture
@@ -24760,6 +24768,7 @@ end = struct
           `media_playback_while_not_visible
       | `String "microphone" -> `microphone
       | `String "midi" -> `midi
+      | `String "on-device-speech-recognition" -> `on_device_speech_recognition
       | `String "otp-credentials" -> `otp_credentials
       | `String "payment" -> `payment
       | `String "picture-in-picture" -> `picture_in_picture
@@ -24873,6 +24882,7 @@ end = struct
           `String "media-playback-while-not-visible"
       | `microphone -> `String "microphone"
       | `midi -> `String "midi"
+      | `on_device_speech_recognition -> `String "on-device-speech-recognition"
       | `otp_credentials -> `String "otp-credentials"
       | `payment -> `String "payment"
       | `picture_in_picture -> `String "picture-in-picture"
