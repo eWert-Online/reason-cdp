@@ -13244,7 +13244,72 @@ platform-provided telemetry data. |desc}]
     end
   end
   [@@ocaml.doc
-    {desc|Provides a given pressure state that will be processed and eventually be
+    {desc|TODO: OBSOLETE: To remove when setPressureDataOverride is merged.
+Provides a given pressure state that will be processed and eventually be
+delivered to PressureObserver users. |source| must have been previously
+overridden by setPressureSourceOverrideEnabled. |desc}]
+
+  module SetPressureDataOverride = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        source : Types.Emulation.PressureSource.t;
+            [@key "source"] [@ocaml.doc "No description provided"]
+        state : Types.Emulation.PressureState.t;
+            [@key "state"] [@ocaml.doc "No description provided"]
+        ownContributionEstimate : Types.number option;
+            [@key "ownContributionEstimate"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~source ~state ?ownContributionEstimate () =
+        { source; state; ownContributionEstimate }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Emulation.setPressureDataOverride"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Provides a given pressure data set that will be processed and eventually be
 delivered to PressureObserver users. |source| must have been previously
 overridden by setPressureSourceOverrideEnabled. |desc}]
 

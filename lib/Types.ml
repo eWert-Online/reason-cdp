@@ -34753,7 +34753,6 @@ and Preload : sig
       | `InvalidSchemeRedirect
       | `InvalidSchemeNavigation
       | `NavigationRequestBlockedByCsp
-      | `MainFrameNavigation
       | `MojoBinderPolicy
       | `RendererProcessCrashed
       | `RendererProcessKilled
@@ -35223,7 +35222,6 @@ end = struct
       | `InvalidSchemeRedirect
       | `InvalidSchemeNavigation
       | `NavigationRequestBlockedByCsp
-      | `MainFrameNavigation
       | `MojoBinderPolicy
       | `RendererProcessCrashed
       | `RendererProcessKilled
@@ -35309,7 +35307,6 @@ end = struct
       | `InvalidSchemeRedirect
       | `InvalidSchemeNavigation
       | `NavigationRequestBlockedByCsp
-      | `MainFrameNavigation
       | `MojoBinderPolicy
       | `RendererProcessCrashed
       | `RendererProcessKilled
@@ -35386,7 +35383,6 @@ end = struct
       | `String "InvalidSchemeNavigation" -> `InvalidSchemeNavigation
       | `String "NavigationRequestBlockedByCsp" ->
           `NavigationRequestBlockedByCsp
-      | `String "MainFrameNavigation" -> `MainFrameNavigation
       | `String "MojoBinderPolicy" -> `MojoBinderPolicy
       | `String "RendererProcessCrashed" -> `RendererProcessCrashed
       | `String "RendererProcessKilled" -> `RendererProcessKilled
@@ -35490,7 +35486,6 @@ end = struct
       | `InvalidSchemeNavigation -> `String "InvalidSchemeNavigation"
       | `NavigationRequestBlockedByCsp ->
           `String "NavigationRequestBlockedByCsp"
-      | `MainFrameNavigation -> `String "MainFrameNavigation"
       | `MojoBinderPolicy -> `String "MojoBinderPolicy"
       | `RendererProcessCrashed -> `String "RendererProcessCrashed"
       | `RendererProcessKilled -> `String "RendererProcessKilled"
