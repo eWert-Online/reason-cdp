@@ -5217,7 +5217,7 @@ expected to exist when |type| is write. |desc}]
     type result = {
       descriptorId : string;
           [@key "descriptorId"] [@ocaml.doc "No description provided"]
-      type_ : Types.BluetoothEmulation.CharacteristicOperationType.t;
+      type_ : Types.BluetoothEmulation.DescriptorOperationType.t;
           [@key "type"] [@ocaml.doc "No description provided"]
       data : string option;
           [@key "data"] [@yojson.option] [@ocaml.doc "No description provided"]
