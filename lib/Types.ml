@@ -29036,6 +29036,12 @@ and Storage : sig
           [@ocaml.doc
             "Name of the registered operation to be run.\n\
              Present only for SharedStorageAccessMethods: run and selectURL."]
+      operationId : string option;
+          [@key "operationId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "ID of the operation call.\n\
+             Present only for SharedStorageAccessMethods: run and selectURL."]
       keepAlive : bool option;
           [@key "keepAlive"]
           [@yojson.option]
@@ -29090,16 +29096,32 @@ and Storage : sig
             "Whether or not to set an entry for a key if that key is already \
              present.\n\
              Present only for SharedStorageAccessMethod: set."]
-      workletId : string option;
-          [@key "workletId"]
+      workletOrdinal : number option;
+          [@key "workletOrdinal"]
           [@yojson.option]
           [@ocaml.doc
-            "If the method is called on a worklet, or as part of\n\
-             a worklet script, it will have an ID for the associated worklet.\n\
+            "If the method is called on a shared storage worklet, or as part of\n\
+             a shared storage worklet script, it will have a number for the\n\
+             associated worklet, denoting the (0-indexed) order of the worklet's\n\
+             creation relative to all other shared storage worklets created by\n\
+             documents using the current storage partition.\n\
              Present only for SharedStorageAccessMethods: addModule, \
              createWorklet,\n\
              run, selectURL, and any other SharedStorageAccessMethod when the\n\
-             SharedStorageAccessScope is worklet."]
+             SharedStorageAccessScope is sharedStorageWorklet.\n\
+             TODO(crbug.com/401011862): Pass this only for addModule & \
+             createWorklet."]
+      workletTargetId : Target.TargetID.t option;
+          [@key "workletTargetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Hex representation of the DevTools token used as the TargetID for \
+             the\n\
+             associated shared storage worklet.\n\
+             Present only for SharedStorageAccessMethods: addModule, \
+             createWorklet,\n\
+             run, selectURL, and any other SharedStorageAccessMethod when the\n\
+             SharedStorageAccessScope is sharedStorageWorklet."]
       withLock : string option;
           [@key "withLock"]
           [@yojson.option]
@@ -30200,6 +30222,12 @@ end = struct
           [@ocaml.doc
             "Name of the registered operation to be run.\n\
              Present only for SharedStorageAccessMethods: run and selectURL."]
+      operationId : string option;
+          [@key "operationId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "ID of the operation call.\n\
+             Present only for SharedStorageAccessMethods: run and selectURL."]
       keepAlive : bool option;
           [@key "keepAlive"]
           [@yojson.option]
@@ -30254,16 +30282,32 @@ end = struct
             "Whether or not to set an entry for a key if that key is already \
              present.\n\
              Present only for SharedStorageAccessMethod: set."]
-      workletId : string option;
-          [@key "workletId"]
+      workletOrdinal : number option;
+          [@key "workletOrdinal"]
           [@yojson.option]
           [@ocaml.doc
-            "If the method is called on a worklet, or as part of\n\
-             a worklet script, it will have an ID for the associated worklet.\n\
+            "If the method is called on a shared storage worklet, or as part of\n\
+             a shared storage worklet script, it will have a number for the\n\
+             associated worklet, denoting the (0-indexed) order of the worklet's\n\
+             creation relative to all other shared storage worklets created by\n\
+             documents using the current storage partition.\n\
              Present only for SharedStorageAccessMethods: addModule, \
              createWorklet,\n\
              run, selectURL, and any other SharedStorageAccessMethod when the\n\
-             SharedStorageAccessScope is worklet."]
+             SharedStorageAccessScope is sharedStorageWorklet.\n\
+             TODO(crbug.com/401011862): Pass this only for addModule & \
+             createWorklet."]
+      workletTargetId : Target.TargetID.t option;
+          [@key "workletTargetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Hex representation of the DevTools token used as the TargetID for \
+             the\n\
+             associated shared storage worklet.\n\
+             Present only for SharedStorageAccessMethods: addModule, \
+             createWorklet,\n\
+             run, selectURL, and any other SharedStorageAccessMethod when the\n\
+             SharedStorageAccessScope is sharedStorageWorklet."]
       withLock : string option;
           [@key "withLock"]
           [@yojson.option]
@@ -30313,6 +30357,12 @@ end = struct
           [@ocaml.doc
             "Name of the registered operation to be run.\n\
              Present only for SharedStorageAccessMethods: run and selectURL."]
+      operationId : string option;
+          [@key "operationId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "ID of the operation call.\n\
+             Present only for SharedStorageAccessMethods: run and selectURL."]
       keepAlive : bool option;
           [@key "keepAlive"]
           [@yojson.option]
@@ -30367,16 +30417,32 @@ end = struct
             "Whether or not to set an entry for a key if that key is already \
              present.\n\
              Present only for SharedStorageAccessMethod: set."]
-      workletId : string option;
-          [@key "workletId"]
+      workletOrdinal : number option;
+          [@key "workletOrdinal"]
           [@yojson.option]
           [@ocaml.doc
-            "If the method is called on a worklet, or as part of\n\
-             a worklet script, it will have an ID for the associated worklet.\n\
+            "If the method is called on a shared storage worklet, or as part of\n\
+             a shared storage worklet script, it will have a number for the\n\
+             associated worklet, denoting the (0-indexed) order of the worklet's\n\
+             creation relative to all other shared storage worklets created by\n\
+             documents using the current storage partition.\n\
              Present only for SharedStorageAccessMethods: addModule, \
              createWorklet,\n\
              run, selectURL, and any other SharedStorageAccessMethod when the\n\
-             SharedStorageAccessScope is worklet."]
+             SharedStorageAccessScope is sharedStorageWorklet.\n\
+             TODO(crbug.com/401011862): Pass this only for addModule & \
+             createWorklet."]
+      workletTargetId : Target.TargetID.t option;
+          [@key "workletTargetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Hex representation of the DevTools token used as the TargetID for \
+             the\n\
+             associated shared storage worklet.\n\
+             Present only for SharedStorageAccessMethods: addModule, \
+             createWorklet,\n\
+             run, selectURL, and any other SharedStorageAccessMethod when the\n\
+             SharedStorageAccessScope is sharedStorageWorklet."]
       withLock : string option;
           [@key "withLock"]
           [@yojson.option]

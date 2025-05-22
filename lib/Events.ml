@@ -3852,6 +3852,53 @@ loadingFailed). |desc}]
     {desc|Shared storage was accessed by the associated page.
 The following parameters are included in all events. |desc}]
 
+  module SharedStorageWorkletOperationExecutionFinished = struct
+    let name = "Storage.sharedStorageWorkletOperationExecutionFinished"
+
+    type result = {
+      finishedTime : Types.Network.TimeSinceEpoch.t;
+          [@key "finishedTime"] [@ocaml.doc "Time that the operation finished."]
+      executionTime : Types.number;
+          [@key "executionTime"]
+          [@ocaml.doc
+            "Time, in microseconds, from start of shared storage JS API call \
+             until\n\
+             end of operation execution in the worklet."]
+      method_ : Types.Storage.SharedStorageAccessMethod.t;
+          [@key "method"]
+          [@ocaml.doc
+            "Enum value indicating the Shared Storage API method invoked."]
+      operationId : string;
+          [@key "operationId"] [@ocaml.doc "ID of the operation call."]
+      workletTargetId : Types.Target.TargetID.t;
+          [@key "workletTargetId"]
+          [@ocaml.doc
+            "Hex representation of the DevTools token used as the TargetID for \
+             the\n\
+             associated shared storage worklet."]
+      mainFrameId : Types.Page.FrameId.t;
+          [@key "mainFrameId"]
+          [@ocaml.doc "DevTools Frame Token for the primary frame tree's root."]
+      ownerOrigin : string;
+          [@key "ownerOrigin"]
+          [@ocaml.doc
+            "Serialization of the origin owning the Shared Storage data."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|A shared storage run or selectURL operation finished its execution.
+The following parameters are included in all events. |desc}]
+
   module StorageBucketCreatedOrUpdated = struct
     let name = "Storage.storageBucketCreatedOrUpdated"
 
