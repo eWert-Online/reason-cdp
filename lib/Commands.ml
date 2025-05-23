@@ -8646,17 +8646,20 @@ appear on top of all other content. |desc}]
     end
 
     module Params = struct
-      type getelementbyrelation_relation = [ `PopoverTarget | `InterestTarget ]
+      type getelementbyrelation_relation =
+        [ `PopoverTarget | `InterestTarget | `CommandFor ]
 
       let getelementbyrelation_relation_of_yojson = function
         | `String "PopoverTarget" -> `PopoverTarget
         | `String "InterestTarget" -> `InterestTarget
+        | `String "CommandFor" -> `CommandFor
         | `String s -> failwith ("unknown enum: " ^ s)
         | _ -> failwith "unknown enum type"
 
       let yojson_of_getelementbyrelation_relation = function
         | `PopoverTarget -> `String "PopoverTarget"
         | `InterestTarget -> `String "InterestTarget"
+        | `CommandFor -> `String "CommandFor"
 
       type t = {
         nodeId : Types.DOM.NodeId.t;
