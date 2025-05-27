@@ -282,6 +282,15 @@ module Browser = struct
           [@key "receivedBytes"] [@ocaml.doc "Total bytes received."]
       state : downloadprogress_state;
           [@key "state"] [@ocaml.doc "Download status."]
+      filePath : string option;
+          [@key "filePath"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If download is \"completed\", provides the path of the downloaded \
+             file.\n\
+             Depending on the platform, it is not guaranteed to be set, nor \
+             the file\n\
+             is guaranteed to exist."]
     }
     [@@deriving yojson]
 

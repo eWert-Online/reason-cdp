@@ -10169,7 +10169,8 @@ and DOM : sig
       | `placeholder
       | `file_selector_button
       | `details_content
-      | `picker ]
+      | `picker
+      | `permission_icon ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
     val yojson_of__pseudotype : _pseudotype -> Yojson.Basic.t
@@ -10527,7 +10528,8 @@ end = struct
       | `placeholder
       | `file_selector_button
       | `details_content
-      | `picker ]
+      | `picker
+      | `permission_icon ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
     val yojson_of__pseudotype : _pseudotype -> Yojson.Basic.t
@@ -10571,7 +10573,8 @@ end = struct
       | `placeholder
       | `file_selector_button
       | `details_content
-      | `picker ]
+      | `picker
+      | `permission_icon ]
 
     let _pseudotype_of_yojson = function
       | `String "first-line" -> `first_line
@@ -10610,6 +10613,7 @@ end = struct
       | `String "file-selector-button" -> `file_selector_button
       | `String "details-content" -> `details_content
       | `String "picker" -> `picker
+      | `String "permission-icon" -> `permission_icon
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -10650,6 +10654,7 @@ end = struct
       | `file_selector_button -> `String "file-selector-button"
       | `details_content -> `String "details-content"
       | `picker -> `String "picker"
+      | `permission_icon -> `String "permission-icon"
 
     type t = _pseudotype
     [@@deriving yojson] [@@ocaml.doc "Pseudo element type."]
