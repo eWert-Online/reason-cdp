@@ -29105,16 +29105,10 @@ and Storage : sig
           [@key "workletOrdinal"]
           [@yojson.option]
           [@ocaml.doc
-            "If the method is called on a shared storage worklet, or as part of\n\
-             a shared storage worklet script, it will have a number for the\n\
-             associated worklet, denoting the (0-indexed) order of the worklet's\n\
+            "A number denoting the (0-based) order of the worklet's\n\
              creation relative to all other shared storage worklets created by\n\
              documents using the current storage partition.\n\
              Present only for SharedStorageAccessMethods: addModule, \
-             createWorklet,\n\
-             run, selectURL, and any other SharedStorageAccessMethod when the\n\
-             SharedStorageAccessScope is sharedStorageWorklet.\n\
-             TODO(crbug.com/401011862): Pass this only for addModule & \
              createWorklet."]
       workletTargetId : Target.TargetID.t option;
           [@key "workletTargetId"]
@@ -30291,16 +30285,10 @@ end = struct
           [@key "workletOrdinal"]
           [@yojson.option]
           [@ocaml.doc
-            "If the method is called on a shared storage worklet, or as part of\n\
-             a shared storage worklet script, it will have a number for the\n\
-             associated worklet, denoting the (0-indexed) order of the worklet's\n\
+            "A number denoting the (0-based) order of the worklet's\n\
              creation relative to all other shared storage worklets created by\n\
              documents using the current storage partition.\n\
              Present only for SharedStorageAccessMethods: addModule, \
-             createWorklet,\n\
-             run, selectURL, and any other SharedStorageAccessMethod when the\n\
-             SharedStorageAccessScope is sharedStorageWorklet.\n\
-             TODO(crbug.com/401011862): Pass this only for addModule & \
              createWorklet."]
       workletTargetId : Target.TargetID.t option;
           [@key "workletTargetId"]
@@ -30426,16 +30414,10 @@ end = struct
           [@key "workletOrdinal"]
           [@yojson.option]
           [@ocaml.doc
-            "If the method is called on a shared storage worklet, or as part of\n\
-             a shared storage worklet script, it will have a number for the\n\
-             associated worklet, denoting the (0-indexed) order of the worklet's\n\
+            "A number denoting the (0-based) order of the worklet's\n\
              creation relative to all other shared storage worklets created by\n\
              documents using the current storage partition.\n\
              Present only for SharedStorageAccessMethods: addModule, \
-             createWorklet,\n\
-             run, selectURL, and any other SharedStorageAccessMethod when the\n\
-             SharedStorageAccessScope is sharedStorageWorklet.\n\
-             TODO(crbug.com/401011862): Pass this only for addModule & \
              createWorklet."]
       workletTargetId : Target.TargetID.t option;
           [@key "workletTargetId"]
@@ -32444,7 +32426,9 @@ and Tracing : sig
       recordMode : _traceconfig_recordmode option;
           [@key "recordMode"]
           [@yojson.option]
-          [@ocaml.doc "Controls how the trace buffer stores data."]
+          [@ocaml.doc
+            "Controls how the trace buffer stores data. The default is \
+             `recordUntilFull`."]
       traceBufferSizeInKb : number option;
           [@key "traceBufferSizeInKb"]
           [@yojson.option]
@@ -32575,7 +32559,9 @@ end = struct
       recordMode : _traceconfig_recordmode option;
           [@key "recordMode"]
           [@yojson.option]
-          [@ocaml.doc "Controls how the trace buffer stores data."]
+          [@ocaml.doc
+            "Controls how the trace buffer stores data. The default is \
+             `recordUntilFull`."]
       traceBufferSizeInKb : number option;
           [@key "traceBufferSizeInKb"]
           [@yojson.option]
@@ -32640,7 +32626,9 @@ end = struct
       recordMode : _traceconfig_recordmode option;
           [@key "recordMode"]
           [@yojson.option]
-          [@ocaml.doc "Controls how the trace buffer stores data."]
+          [@ocaml.doc
+            "Controls how the trace buffer stores data. The default is \
+             `recordUntilFull`."]
       traceBufferSizeInKb : number option;
           [@key "traceBufferSizeInKb"]
           [@yojson.option]
