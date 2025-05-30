@@ -10164,6 +10164,7 @@ and DOM : sig
       | `view_transition
       | `view_transition_group
       | `view_transition_image_pair
+      | `view_transition_group_children
       | `view_transition_old
       | `view_transition_new
       | `placeholder
@@ -10523,6 +10524,7 @@ end = struct
       | `view_transition
       | `view_transition_group
       | `view_transition_image_pair
+      | `view_transition_group_children
       | `view_transition_old
       | `view_transition_new
       | `placeholder
@@ -10568,6 +10570,7 @@ end = struct
       | `view_transition
       | `view_transition_group
       | `view_transition_image_pair
+      | `view_transition_group_children
       | `view_transition_old
       | `view_transition_new
       | `placeholder
@@ -10607,6 +10610,8 @@ end = struct
       | `String "view-transition" -> `view_transition
       | `String "view-transition-group" -> `view_transition_group
       | `String "view-transition-image-pair" -> `view_transition_image_pair
+      | `String "view-transition-group-children" ->
+          `view_transition_group_children
       | `String "view-transition-old" -> `view_transition_old
       | `String "view-transition-new" -> `view_transition_new
       | `String "placeholder" -> `placeholder
@@ -10648,6 +10653,8 @@ end = struct
       | `view_transition -> `String "view-transition"
       | `view_transition_group -> `String "view-transition-group"
       | `view_transition_image_pair -> `String "view-transition-image-pair"
+      | `view_transition_group_children ->
+          `String "view-transition-group-children"
       | `view_transition_old -> `String "view-transition-old"
       | `view_transition_new -> `String "view-transition-new"
       | `placeholder -> `String "placeholder"
