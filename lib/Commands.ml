@@ -23261,15 +23261,18 @@ iframes, shadow DOM, external resources, and element-inline styles. |desc}]
     {desc|Returns the unique (PWA) app id.
 Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |desc}]
 
-  module GetAdScriptAncestryIds = struct
+  module GetAdScriptAncestry = struct
     module Response : sig
       type result = {
-        adScriptAncestryIds : Types.Page.AdScriptId.t list;
-            [@key "adScriptAncestryIds"]
+        adScriptAncestry : Types.Page.AdScriptAncestry.t option;
+            [@key "adScriptAncestry"]
+            [@yojson.option]
             [@ocaml.doc
               "The ancestry chain of ad script identifiers leading to this \
                frame's\n\
-               creation, ordered from the most immediate script (in the frame \
+               creation, along with the root script's filterlist rule. The \
+               ancestry\n\
+               chain is ordered from the most immediate script (in the frame \
                creation\n\
                stack) to more distant ancestors (that created the immediately \
                preceding\n\
@@ -23289,12 +23292,15 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |des
       val parse : string -> t
     end = struct
       type result = {
-        adScriptAncestryIds : Types.Page.AdScriptId.t list;
-            [@key "adScriptAncestryIds"]
+        adScriptAncestry : Types.Page.AdScriptAncestry.t option;
+            [@key "adScriptAncestry"]
+            [@yojson.option]
             [@ocaml.doc
               "The ancestry chain of ad script identifiers leading to this \
                frame's\n\
-               creation, ordered from the most immediate script (in the frame \
+               creation, along with the root script's filterlist rule. The \
+               ancestry\n\
+               chain is ordered from the most immediate script (in the frame \
                creation\n\
                stack) to more distant ancestors (that created the immediately \
                preceding\n\
@@ -23336,7 +23342,7 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |des
       [@@deriving yojson]
 
       let make ?sessionId ~params id =
-        { id; method_ = "Page.getAdScriptAncestryIds"; sessionId; params }
+        { id; method_ = "Page.getAdScriptAncestry"; sessionId; params }
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
