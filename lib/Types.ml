@@ -13077,6 +13077,20 @@ and Emulation : sig
        resource fetches."]
   end
 
+  and UserAgentFormFactor : sig
+    type _useragentformfactor =
+      [ `Desktop | `Automotive | `Mobile | `Tablet | `XR | `EInk | `Watch ]
+
+    val _useragentformfactor_of_yojson : Yojson.Basic.t -> _useragentformfactor
+    val yojson_of__useragentformfactor : _useragentformfactor -> Yojson.Basic.t
+
+    type t = _useragentformfactor
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Used to specify User Agent form-factor values. See \
+       https://wicg.github.io/ua-client-hints/#sec-ch-ua-form-factors"]
+  end
+
   and UserAgentBrandVersion : sig
     type t = {
       brand : string; [@key "brand"] [@ocaml.doc "No description provided"]
@@ -13116,6 +13130,10 @@ and Emulation : sig
           [@ocaml.doc "No description provided"]
       wow64 : bool option;
           [@key "wow64"] [@yojson.option] [@ocaml.doc "No description provided"]
+      formFactors : UserAgentFormFactor.t list option;
+          [@key "formFactors"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -13519,6 +13537,49 @@ end = struct
        resource fetches."]
   end
 
+  and UserAgentFormFactor : sig
+    type _useragentformfactor =
+      [ `Desktop | `Automotive | `Mobile | `Tablet | `XR | `EInk | `Watch ]
+
+    val _useragentformfactor_of_yojson : Yojson.Basic.t -> _useragentformfactor
+    val yojson_of__useragentformfactor : _useragentformfactor -> Yojson.Basic.t
+
+    type t = _useragentformfactor
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Used to specify User Agent form-factor values. See \
+       https://wicg.github.io/ua-client-hints/#sec-ch-ua-form-factors"]
+  end = struct
+    type _useragentformfactor =
+      [ `Desktop | `Automotive | `Mobile | `Tablet | `XR | `EInk | `Watch ]
+
+    let _useragentformfactor_of_yojson = function
+      | `String "Desktop" -> `Desktop
+      | `String "Automotive" -> `Automotive
+      | `String "Mobile" -> `Mobile
+      | `String "Tablet" -> `Tablet
+      | `String "XR" -> `XR
+      | `String "EInk" -> `EInk
+      | `String "Watch" -> `Watch
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__useragentformfactor = function
+      | `Desktop -> `String "Desktop"
+      | `Automotive -> `String "Automotive"
+      | `Mobile -> `String "Mobile"
+      | `Tablet -> `String "Tablet"
+      | `XR -> `String "XR"
+      | `EInk -> `String "EInk"
+      | `Watch -> `String "Watch"
+
+    type t = _useragentformfactor
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Used to specify User Agent form-factor values. See \
+       https://wicg.github.io/ua-client-hints/#sec-ch-ua-form-factors"]
+  end
+
   and UserAgentBrandVersion : sig
     type t = {
       brand : string; [@key "brand"] [@ocaml.doc "No description provided"]
@@ -13567,6 +13628,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       wow64 : bool option;
           [@key "wow64"] [@yojson.option] [@ocaml.doc "No description provided"]
+      formFactors : UserAgentFormFactor.t list option;
+          [@key "formFactors"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -13602,6 +13667,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       wow64 : bool option;
           [@key "wow64"] [@yojson.option] [@ocaml.doc "No description provided"]
+      formFactors : UserAgentFormFactor.t list option;
+          [@key "formFactors"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
