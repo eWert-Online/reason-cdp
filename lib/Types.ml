@@ -23219,6 +23219,7 @@ and Page : sig
       | `join_ad_interest_group
       | `keyboard_map
       | `language_detector
+      | `language_model
       | `local_fonts
       | `local_network_access
       | `magnetometer
@@ -24691,6 +24692,7 @@ end = struct
       | `join_ad_interest_group
       | `keyboard_map
       | `language_detector
+      | `language_model
       | `local_fonts
       | `local_network_access
       | `magnetometer
@@ -24811,6 +24813,7 @@ end = struct
       | `join_ad_interest_group
       | `keyboard_map
       | `language_detector
+      | `language_model
       | `local_fonts
       | `local_network_access
       | `magnetometer
@@ -24921,6 +24924,7 @@ end = struct
       | `String "join-ad-interest-group" -> `join_ad_interest_group
       | `String "keyboard-map" -> `keyboard_map
       | `String "language-detector" -> `language_detector
+      | `String "language-model" -> `language_model
       | `String "local-fonts" -> `local_fonts
       | `String "local-network-access" -> `local_network_access
       | `String "magnetometer" -> `magnetometer
@@ -25035,6 +25039,7 @@ end = struct
       | `join_ad_interest_group -> `String "join-ad-interest-group"
       | `keyboard_map -> `String "keyboard-map"
       | `language_detector -> `String "language-detector"
+      | `language_model -> `String "language-model"
       | `local_fonts -> `String "local-fonts"
       | `local_network_access -> `String "local-network-access"
       | `magnetometer -> `String "magnetometer"
