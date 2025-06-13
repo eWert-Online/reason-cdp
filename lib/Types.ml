@@ -17187,6 +17187,11 @@ and Network : sig
           [@ocaml.doc
             "The outer response of signed HTTP exchange which was received \
              from network."]
+      hasExtraInfo : bool;
+          [@key "hasExtraInfo"]
+          [@ocaml.doc
+            "Whether network response for the signed exchange was accompanied by\n\
+             extra headers."]
       header : SignedExchangeHeader.t option;
           [@key "header"]
           [@yojson.option]
@@ -20692,6 +20697,11 @@ end = struct
           [@ocaml.doc
             "The outer response of signed HTTP exchange which was received \
              from network."]
+      hasExtraInfo : bool;
+          [@key "hasExtraInfo"]
+          [@ocaml.doc
+            "Whether network response for the signed exchange was accompanied by\n\
+             extra headers."]
       header : SignedExchangeHeader.t option;
           [@key "header"]
           [@yojson.option]
@@ -20714,6 +20724,11 @@ end = struct
           [@ocaml.doc
             "The outer response of signed HTTP exchange which was received \
              from network."]
+      hasExtraInfo : bool;
+          [@key "hasExtraInfo"]
+          [@ocaml.doc
+            "Whether network response for the signed exchange was accompanied by\n\
+             extra headers."]
       header : SignedExchangeHeader.t option;
           [@key "header"]
           [@yojson.option]
