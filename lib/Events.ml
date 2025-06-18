@@ -4026,6 +4026,39 @@ The following parameters are included in all events. |desc}]
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
   [@@ocaml.doc {desc|No description provided |desc}]
+
+  module AttributionReportingVerboseDebugReportSent = struct
+    let name = "Storage.attributionReportingVerboseDebugReportSent"
+
+    type result = {
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+      body : Types.assoc list option;
+          [@key "body"] [@yojson.option] [@ocaml.doc "No description provided"]
+      netError : Types.number option;
+          [@key "netError"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      netErrorName : string option;
+          [@key "netErrorName"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      httpStatusCode : Types.number option;
+          [@key "httpStatusCode"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Target = struct
