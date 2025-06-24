@@ -25917,8 +25917,31 @@ cross-process navigation. |desc}]
     end
 
     module Params = struct
+      type setspctransactionmode_mode =
+        [ `none
+        | `autoAccept
+        | `autoChooseToAuthAnotherWay
+        | `autoReject
+        | `autoOptOut ]
+
+      let setspctransactionmode_mode_of_yojson = function
+        | `String "none" -> `none
+        | `String "autoAccept" -> `autoAccept
+        | `String "autoChooseToAuthAnotherWay" -> `autoChooseToAuthAnotherWay
+        | `String "autoReject" -> `autoReject
+        | `String "autoOptOut" -> `autoOptOut
+        | `String s -> failwith ("unknown enum: " ^ s)
+        | _ -> failwith "unknown enum type"
+
+      let yojson_of_setspctransactionmode_mode = function
+        | `none -> `String "none"
+        | `autoAccept -> `String "autoAccept"
+        | `autoChooseToAuthAnotherWay -> `String "autoChooseToAuthAnotherWay"
+        | `autoReject -> `String "autoReject"
+        | `autoOptOut -> `String "autoOptOut"
+
       type t = {
-        mode : Types.Page.AutoResponseMode.t;
+        mode : setspctransactionmode_mode;
             [@key "mode"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
@@ -25973,8 +25996,22 @@ https://w3c.github.io/secure-payment-confirmation/#sctn-automation-set-spc-trans
     end
 
     module Params = struct
+      type setrphregistrationmode_mode = [ `none | `autoAccept | `autoReject ]
+
+      let setrphregistrationmode_mode_of_yojson = function
+        | `String "none" -> `none
+        | `String "autoAccept" -> `autoAccept
+        | `String "autoReject" -> `autoReject
+        | `String s -> failwith ("unknown enum: " ^ s)
+        | _ -> failwith "unknown enum type"
+
+      let yojson_of_setrphregistrationmode_mode = function
+        | `none -> `String "none"
+        | `autoAccept -> `String "autoAccept"
+        | `autoReject -> `String "autoReject"
+
       type t = {
-        mode : Types.Page.AutoResponseMode.t;
+        mode : setrphregistrationmode_mode;
             [@key "mode"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
