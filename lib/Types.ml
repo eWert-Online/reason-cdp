@@ -2373,31 +2373,31 @@ and Audits : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
-  and SelectElementAccessibilityIssueReason : sig
-    type _selectelementaccessibilityissuereason =
+  and ElementAccessibilityIssueReason : sig
+    type _elementaccessibilityissuereason =
       [ `DisallowedSelectChild
       | `DisallowedOptGroupChild
       | `NonPhrasingContentOptionChild
       | `InteractiveContentOptionChild
-      | `InteractiveContentLegendChild ]
+      | `InteractiveContentLegendChild
+      | `InteractiveContentSummaryDescendant ]
 
-    val _selectelementaccessibilityissuereason_of_yojson :
-      Yojson.Basic.t -> _selectelementaccessibilityissuereason
+    val _elementaccessibilityissuereason_of_yojson :
+      Yojson.Basic.t -> _elementaccessibilityissuereason
 
-    val yojson_of__selectelementaccessibilityissuereason :
-      _selectelementaccessibilityissuereason -> Yojson.Basic.t
+    val yojson_of__elementaccessibilityissuereason :
+      _elementaccessibilityissuereason -> Yojson.Basic.t
 
-    type t = _selectelementaccessibilityissuereason
+    type t = _elementaccessibilityissuereason
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
-  and SelectElementAccessibilityIssueDetails : sig
+  and ElementAccessibilityIssueDetails : sig
     type t = {
       nodeId : DOM.BackendNodeId.t;
           [@key "nodeId"] [@ocaml.doc "No description provided"]
-      selectElementAccessibilityIssueReason :
-        SelectElementAccessibilityIssueReason.t;
-          [@key "selectElementAccessibilityIssueReason"]
+      elementAccessibilityIssueReason : ElementAccessibilityIssueReason.t;
+          [@key "elementAccessibilityIssueReason"]
           [@ocaml.doc "No description provided"]
       hasDisallowedAttributes : bool;
           [@key "hasDisallowedAttributes"]
@@ -2405,7 +2405,8 @@ and Audits : sig
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "This issue warns about errors in the select element content model."]
+      "This issue warns about errors in the select or summary element content \
+       model."]
   end
 
   and StyleSheetLoadingIssueReason : sig
@@ -2530,7 +2531,7 @@ and Audits : sig
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue
       | `SharedDictionaryIssue
-      | `SelectElementAccessibilityIssue
+      | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
       | `UserReidentificationIssue ]
 
@@ -2641,9 +2642,9 @@ and Audits : sig
           [@key "sharedDictionaryIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      selectElementAccessibilityIssueDetails :
-        SelectElementAccessibilityIssueDetails.t option;
-          [@key "selectElementAccessibilityIssueDetails"]
+      elementAccessibilityIssueDetails :
+        ElementAccessibilityIssueDetails.t option;
+          [@key "elementAccessibilityIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       sriMessageSignatureIssueDetails :
@@ -5115,31 +5116,33 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
-  and SelectElementAccessibilityIssueReason : sig
-    type _selectelementaccessibilityissuereason =
+  and ElementAccessibilityIssueReason : sig
+    type _elementaccessibilityissuereason =
       [ `DisallowedSelectChild
       | `DisallowedOptGroupChild
       | `NonPhrasingContentOptionChild
       | `InteractiveContentOptionChild
-      | `InteractiveContentLegendChild ]
+      | `InteractiveContentLegendChild
+      | `InteractiveContentSummaryDescendant ]
 
-    val _selectelementaccessibilityissuereason_of_yojson :
-      Yojson.Basic.t -> _selectelementaccessibilityissuereason
+    val _elementaccessibilityissuereason_of_yojson :
+      Yojson.Basic.t -> _elementaccessibilityissuereason
 
-    val yojson_of__selectelementaccessibilityissuereason :
-      _selectelementaccessibilityissuereason -> Yojson.Basic.t
+    val yojson_of__elementaccessibilityissuereason :
+      _elementaccessibilityissuereason -> Yojson.Basic.t
 
-    type t = _selectelementaccessibilityissuereason
+    type t = _elementaccessibilityissuereason
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
-    type _selectelementaccessibilityissuereason =
+    type _elementaccessibilityissuereason =
       [ `DisallowedSelectChild
       | `DisallowedOptGroupChild
       | `NonPhrasingContentOptionChild
       | `InteractiveContentOptionChild
-      | `InteractiveContentLegendChild ]
+      | `InteractiveContentLegendChild
+      | `InteractiveContentSummaryDescendant ]
 
-    let _selectelementaccessibilityissuereason_of_yojson = function
+    let _elementaccessibilityissuereason_of_yojson = function
       | `String "DisallowedSelectChild" -> `DisallowedSelectChild
       | `String "DisallowedOptGroupChild" -> `DisallowedOptGroupChild
       | `String "NonPhrasingContentOptionChild" ->
@@ -5148,10 +5151,12 @@ end = struct
           `InteractiveContentOptionChild
       | `String "InteractiveContentLegendChild" ->
           `InteractiveContentLegendChild
+      | `String "InteractiveContentSummaryDescendant" ->
+          `InteractiveContentSummaryDescendant
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
-    let yojson_of__selectelementaccessibilityissuereason = function
+    let yojson_of__elementaccessibilityissuereason = function
       | `DisallowedSelectChild -> `String "DisallowedSelectChild"
       | `DisallowedOptGroupChild -> `String "DisallowedOptGroupChild"
       | `NonPhrasingContentOptionChild ->
@@ -5160,18 +5165,19 @@ end = struct
           `String "InteractiveContentOptionChild"
       | `InteractiveContentLegendChild ->
           `String "InteractiveContentLegendChild"
+      | `InteractiveContentSummaryDescendant ->
+          `String "InteractiveContentSummaryDescendant"
 
-    type t = _selectelementaccessibilityissuereason
+    type t = _elementaccessibilityissuereason
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
-  and SelectElementAccessibilityIssueDetails : sig
+  and ElementAccessibilityIssueDetails : sig
     type t = {
       nodeId : DOM.BackendNodeId.t;
           [@key "nodeId"] [@ocaml.doc "No description provided"]
-      selectElementAccessibilityIssueReason :
-        SelectElementAccessibilityIssueReason.t;
-          [@key "selectElementAccessibilityIssueReason"]
+      elementAccessibilityIssueReason : ElementAccessibilityIssueReason.t;
+          [@key "elementAccessibilityIssueReason"]
           [@ocaml.doc "No description provided"]
       hasDisallowedAttributes : bool;
           [@key "hasDisallowedAttributes"]
@@ -5179,14 +5185,14 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "This issue warns about errors in the select element content model."]
+      "This issue warns about errors in the select or summary element content \
+       model."]
   end = struct
     type t = {
       nodeId : DOM.BackendNodeId.t;
           [@key "nodeId"] [@ocaml.doc "No description provided"]
-      selectElementAccessibilityIssueReason :
-        SelectElementAccessibilityIssueReason.t;
-          [@key "selectElementAccessibilityIssueReason"]
+      elementAccessibilityIssueReason : ElementAccessibilityIssueReason.t;
+          [@key "elementAccessibilityIssueReason"]
           [@ocaml.doc "No description provided"]
       hasDisallowedAttributes : bool;
           [@key "hasDisallowedAttributes"]
@@ -5194,7 +5200,8 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "This issue warns about errors in the select element content model."]
+      "This issue warns about errors in the select or summary element content \
+       model."]
   end
 
   and StyleSheetLoadingIssueReason : sig
@@ -5421,7 +5428,7 @@ end = struct
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue
       | `SharedDictionaryIssue
-      | `SelectElementAccessibilityIssue
+      | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
       | `UserReidentificationIssue ]
 
@@ -5458,7 +5465,7 @@ end = struct
       | `FederatedAuthUserInfoRequestIssue
       | `PropertyRuleIssue
       | `SharedDictionaryIssue
-      | `SelectElementAccessibilityIssue
+      | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
       | `UserReidentificationIssue ]
 
@@ -5487,8 +5494,7 @@ end = struct
           `FederatedAuthUserInfoRequestIssue
       | `String "PropertyRuleIssue" -> `PropertyRuleIssue
       | `String "SharedDictionaryIssue" -> `SharedDictionaryIssue
-      | `String "SelectElementAccessibilityIssue" ->
-          `SelectElementAccessibilityIssue
+      | `String "ElementAccessibilityIssue" -> `ElementAccessibilityIssue
       | `String "SRIMessageSignatureIssue" -> `SRIMessageSignatureIssue
       | `String "UserReidentificationIssue" -> `UserReidentificationIssue
       | `String s -> failwith ("unknown enum: " ^ s)
@@ -5519,8 +5525,7 @@ end = struct
           `String "FederatedAuthUserInfoRequestIssue"
       | `PropertyRuleIssue -> `String "PropertyRuleIssue"
       | `SharedDictionaryIssue -> `String "SharedDictionaryIssue"
-      | `SelectElementAccessibilityIssue ->
-          `String "SelectElementAccessibilityIssue"
+      | `ElementAccessibilityIssue -> `String "ElementAccessibilityIssue"
       | `SRIMessageSignatureIssue -> `String "SRIMessageSignatureIssue"
       | `UserReidentificationIssue -> `String "UserReidentificationIssue"
 
@@ -5628,9 +5633,9 @@ end = struct
           [@key "sharedDictionaryIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      selectElementAccessibilityIssueDetails :
-        SelectElementAccessibilityIssueDetails.t option;
-          [@key "selectElementAccessibilityIssueDetails"]
+      elementAccessibilityIssueDetails :
+        ElementAccessibilityIssueDetails.t option;
+          [@key "elementAccessibilityIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       sriMessageSignatureIssueDetails :
@@ -5745,9 +5750,9 @@ end = struct
           [@key "sharedDictionaryIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      selectElementAccessibilityIssueDetails :
-        SelectElementAccessibilityIssueDetails.t option;
-          [@key "selectElementAccessibilityIssueDetails"]
+      elementAccessibilityIssueDetails :
+        ElementAccessibilityIssueDetails.t option;
+          [@key "elementAccessibilityIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       sriMessageSignatureIssueDetails :
@@ -24147,6 +24152,7 @@ and Page : sig
       | `BroadcastChannel
       | `WebXR
       | `SharedWorker
+      | `SharedWorkerMessage
       | `WebLocks
       | `WebHID
       | `WebShare
@@ -26826,6 +26832,7 @@ end = struct
       | `BroadcastChannel
       | `WebXR
       | `SharedWorker
+      | `SharedWorkerMessage
       | `WebLocks
       | `WebHID
       | `WebShare
@@ -26980,6 +26987,7 @@ end = struct
       | `BroadcastChannel
       | `WebXR
       | `SharedWorker
+      | `SharedWorkerMessage
       | `WebLocks
       | `WebHID
       | `WebShare
@@ -27153,6 +27161,7 @@ end = struct
       | `String "BroadcastChannel" -> `BroadcastChannel
       | `String "WebXR" -> `WebXR
       | `String "SharedWorker" -> `SharedWorker
+      | `String "SharedWorkerMessage" -> `SharedWorkerMessage
       | `String "WebLocks" -> `WebLocks
       | `String "WebHID" -> `WebHID
       | `String "WebShare" -> `WebShare
@@ -27345,6 +27354,7 @@ end = struct
       | `BroadcastChannel -> `String "BroadcastChannel"
       | `WebXR -> `String "WebXR"
       | `SharedWorker -> `String "SharedWorker"
+      | `SharedWorkerMessage -> `String "SharedWorkerMessage"
       | `WebLocks -> `String "WebLocks"
       | `WebHID -> `String "WebHID"
       | `WebShare -> `String "WebShare"
