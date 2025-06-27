@@ -17277,7 +17277,7 @@ and Network : sig
   end
 
   and IPAddressSpace : sig
-    type _ipaddressspace = [ `Local | `Private | `Public | `Unknown ]
+    type _ipaddressspace = [ `Loopback | `Private | `Public | `Unknown ]
 
     val _ipaddressspace_of_yojson : Yojson.Basic.t -> _ipaddressspace
     val yojson_of__ipaddressspace : _ipaddressspace -> Yojson.Basic.t
@@ -20948,7 +20948,7 @@ end = struct
   end
 
   and IPAddressSpace : sig
-    type _ipaddressspace = [ `Local | `Private | `Public | `Unknown ]
+    type _ipaddressspace = [ `Loopback | `Private | `Public | `Unknown ]
 
     val _ipaddressspace_of_yojson : Yojson.Basic.t -> _ipaddressspace
     val yojson_of__ipaddressspace : _ipaddressspace -> Yojson.Basic.t
@@ -20956,10 +20956,10 @@ end = struct
     type t = _ipaddressspace
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
-    type _ipaddressspace = [ `Local | `Private | `Public | `Unknown ]
+    type _ipaddressspace = [ `Loopback | `Private | `Public | `Unknown ]
 
     let _ipaddressspace_of_yojson = function
-      | `String "Local" -> `Local
+      | `String "Loopback" -> `Loopback
       | `String "Private" -> `Private
       | `String "Public" -> `Public
       | `String "Unknown" -> `Unknown
@@ -20967,7 +20967,7 @@ end = struct
       | _ -> failwith "unknown enum type"
 
     let yojson_of__ipaddressspace = function
-      | `Local -> `String "Local"
+      | `Loopback -> `String "Loopback"
       | `Private -> `String "Private"
       | `Public -> `String "Public"
       | `Unknown -> `String "Unknown"
