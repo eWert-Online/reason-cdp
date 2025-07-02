@@ -21956,11 +21956,7 @@ and Overlay : sig
 
   and InspectMode : sig
     type _inspectmode =
-      [ `searchForNode
-      | `searchForUAShadowDOM
-      | `captureAreaScreenshot
-      | `showDistances
-      | `none ]
+      [ `searchForNode | `searchForUAShadowDOM | `captureAreaScreenshot | `none ]
 
     val _inspectmode_of_yojson : Yojson.Basic.t -> _inspectmode
     val yojson_of__inspectmode : _inspectmode -> Yojson.Basic.t
@@ -22954,11 +22950,7 @@ end = struct
 
   and InspectMode : sig
     type _inspectmode =
-      [ `searchForNode
-      | `searchForUAShadowDOM
-      | `captureAreaScreenshot
-      | `showDistances
-      | `none ]
+      [ `searchForNode | `searchForUAShadowDOM | `captureAreaScreenshot | `none ]
 
     val _inspectmode_of_yojson : Yojson.Basic.t -> _inspectmode
     val yojson_of__inspectmode : _inspectmode -> Yojson.Basic.t
@@ -22967,17 +22959,12 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type _inspectmode =
-      [ `searchForNode
-      | `searchForUAShadowDOM
-      | `captureAreaScreenshot
-      | `showDistances
-      | `none ]
+      [ `searchForNode | `searchForUAShadowDOM | `captureAreaScreenshot | `none ]
 
     let _inspectmode_of_yojson = function
       | `String "searchForNode" -> `searchForNode
       | `String "searchForUAShadowDOM" -> `searchForUAShadowDOM
       | `String "captureAreaScreenshot" -> `captureAreaScreenshot
-      | `String "showDistances" -> `showDistances
       | `String "none" -> `none
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -22986,7 +22973,6 @@ end = struct
       | `searchForNode -> `String "searchForNode"
       | `searchForUAShadowDOM -> `String "searchForUAShadowDOM"
       | `captureAreaScreenshot -> `String "captureAreaScreenshot"
-      | `showDistances -> `String "showDistances"
       | `none -> `String "none"
 
     type t = _inspectmode
