@@ -7798,11 +7798,16 @@ either returned or not. |desc}]
             [@key "objectId"]
             [@yojson.option]
             [@ocaml.doc "JavaScript object id of the node wrapper."]
+        includeShadowDOM : bool option;
+            [@key "includeShadowDOM"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Include all shadow roots. Equals to false if not specified."]
       }
       [@@deriving yojson]
 
-      let make ?nodeId ?backendNodeId ?objectId () =
-        { nodeId; backendNodeId; objectId }
+      let make ?nodeId ?backendNodeId ?objectId ?includeShadowDOM () =
+        { nodeId; backendNodeId; objectId; includeShadowDOM }
     end
 
     module Request = struct
@@ -14036,6 +14041,63 @@ on Android. |desc}]
     end
   end
   [@@ocaml.doc {desc|No description provided |desc}]
+
+  module SetDataSaverOverride = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        dataSaverEnabled : bool option;
+            [@key "dataSaverEnabled"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Override value. Omitting the parameter disables the override."]
+      }
+      [@@deriving yojson]
+
+      let make ?dataSaverEnabled () = { dataSaverEnabled }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Emulation.setDataSaverOverride"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Override the value of navigator.connection.saveData |desc}]
 
   module SetHardwareConcurrencyOverride = struct
     module Response : sig
