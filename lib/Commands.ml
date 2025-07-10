@@ -3165,6 +3165,75 @@ module Browser = struct
   end
   [@@ocaml.doc {desc|Set position and/or size of the browser window. |desc}]
 
+  module SetContentsSize = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        windowId : Types.Browser.WindowID.t;
+            [@key "windowId"] [@ocaml.doc "Browser window id."]
+        width : Types.number option;
+            [@key "width"]
+            [@yojson.option]
+            [@ocaml.doc
+              "The window contents width in DIP. Assumes current width if \
+               omitted.\n\
+               Must be specified if 'height' is omitted."]
+        height : Types.number option;
+            [@key "height"]
+            [@yojson.option]
+            [@ocaml.doc
+              "The window contents height in DIP. Assumes current height if \
+               omitted.\n\
+               Must be specified if 'width' is omitted."]
+      }
+      [@@deriving yojson]
+
+      let make ~windowId ?width ?height () = { windowId; width; height }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Browser.setContentsSize"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Set size of the browser contents resizing browser window as necessary. |desc}]
+
   module SetDockTile = struct
     module Response : sig
       type result = Types.assoc
