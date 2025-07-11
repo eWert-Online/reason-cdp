@@ -23114,6 +23114,7 @@ and Page : sig
       [ `accelerometer
       | `all_screens_capture
       | `ambient_light_sensor
+      | `aria_notify
       | `attribution_reporting
       | `autoplay
       | `bluetooth
@@ -24576,6 +24577,7 @@ end = struct
       [ `accelerometer
       | `all_screens_capture
       | `ambient_light_sensor
+      | `aria_notify
       | `attribution_reporting
       | `autoplay
       | `bluetooth
@@ -24697,6 +24699,7 @@ end = struct
       [ `accelerometer
       | `all_screens_capture
       | `ambient_light_sensor
+      | `aria_notify
       | `attribution_reporting
       | `autoplay
       | `bluetooth
@@ -24804,6 +24807,7 @@ end = struct
       | `String "accelerometer" -> `accelerometer
       | `String "all-screens-capture" -> `all_screens_capture
       | `String "ambient-light-sensor" -> `ambient_light_sensor
+      | `String "aria-notify" -> `aria_notify
       | `String "attribution-reporting" -> `attribution_reporting
       | `String "autoplay" -> `autoplay
       | `String "bluetooth" -> `bluetooth
@@ -24919,6 +24923,7 @@ end = struct
       | `accelerometer -> `String "accelerometer"
       | `all_screens_capture -> `String "all-screens-capture"
       | `ambient_light_sensor -> `String "ambient-light-sensor"
+      | `aria_notify -> `String "aria-notify"
       | `attribution_reporting -> `String "attribution-reporting"
       | `autoplay -> `String "autoplay"
       | `bluetooth -> `String "bluetooth"
