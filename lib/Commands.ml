@@ -4647,6 +4647,59 @@ including the animation & transition styles coming from inheritance chain. |desc
   [@@ocaml.doc
     {desc|Returns requested styles for a DOM node identified by `nodeId`. |desc}]
 
+  module GetEnvironmentVariables = struct
+    module Response : sig
+      type result = {
+        environmentVariables : Types.assoc;
+            [@key "environmentVariables"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        environmentVariables : Types.assoc;
+            [@key "environmentVariables"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "CSS.getEnvironmentVariables"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns the values of the default UA-defined environment variables used in env() |desc}]
+
   module GetMediaQueries = struct
     module Response : sig
       type result = {
@@ -24071,6 +24124,10 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |des
             [@ocaml.doc
               "User friendly error message, present if and only if navigation \
                has failed."]
+        isDownload : bool option;
+            [@key "isDownload"]
+            [@yojson.option]
+            [@ocaml.doc "Whether the navigation resulted in a download."]
       }
 
       type error = { code : int; message : string }
@@ -24101,6 +24158,10 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |des
             [@ocaml.doc
               "User friendly error message, present if and only if navigation \
                has failed."]
+        isDownload : bool option;
+            [@key "isDownload"]
+            [@yojson.option]
+            [@ocaml.doc "Whether the navigation resulted in a download."]
       }
       [@@deriving yojson]
 
