@@ -17277,7 +17277,7 @@ and Network : sig
   end
 
   and IPAddressSpace : sig
-    type _ipaddressspace = [ `Loopback | `Private | `Public | `Unknown ]
+    type _ipaddressspace = [ `Loopback | `Local | `Public | `Unknown ]
 
     val _ipaddressspace_of_yojson : Yojson.Basic.t -> _ipaddressspace
     val yojson_of__ipaddressspace : _ipaddressspace -> Yojson.Basic.t
@@ -20948,7 +20948,7 @@ end = struct
   end
 
   and IPAddressSpace : sig
-    type _ipaddressspace = [ `Loopback | `Private | `Public | `Unknown ]
+    type _ipaddressspace = [ `Loopback | `Local | `Public | `Unknown ]
 
     val _ipaddressspace_of_yojson : Yojson.Basic.t -> _ipaddressspace
     val yojson_of__ipaddressspace : _ipaddressspace -> Yojson.Basic.t
@@ -20956,11 +20956,11 @@ end = struct
     type t = _ipaddressspace
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
-    type _ipaddressspace = [ `Loopback | `Private | `Public | `Unknown ]
+    type _ipaddressspace = [ `Loopback | `Local | `Public | `Unknown ]
 
     let _ipaddressspace_of_yojson = function
       | `String "Loopback" -> `Loopback
-      | `String "Private" -> `Private
+      | `String "Local" -> `Local
       | `String "Public" -> `Public
       | `String "Unknown" -> `Unknown
       | `String s -> failwith ("unknown enum: " ^ s)
@@ -20968,7 +20968,7 @@ end = struct
 
     let yojson_of__ipaddressspace = function
       | `Loopback -> `String "Loopback"
-      | `Private -> `String "Private"
+      | `Local -> `String "Local"
       | `Public -> `String "Public"
       | `Unknown -> `String "Unknown"
 
@@ -34791,7 +34791,8 @@ and Preload : sig
   end
 
   and RuleSetErrorType : sig
-    type _ruleseterrortype = [ `SourceIsNotJsonObject | `InvalidRulesSkipped ]
+    type _ruleseterrortype =
+      [ `SourceIsNotJsonObject | `InvalidRulesSkipped | `InvalidRulesetLevelTag ]
 
     val _ruleseterrortype_of_yojson : Yojson.Basic.t -> _ruleseterrortype
     val yojson_of__ruleseterrortype : _ruleseterrortype -> Yojson.Basic.t
@@ -35160,7 +35161,8 @@ end = struct
   end
 
   and RuleSetErrorType : sig
-    type _ruleseterrortype = [ `SourceIsNotJsonObject | `InvalidRulesSkipped ]
+    type _ruleseterrortype =
+      [ `SourceIsNotJsonObject | `InvalidRulesSkipped | `InvalidRulesetLevelTag ]
 
     val _ruleseterrortype_of_yojson : Yojson.Basic.t -> _ruleseterrortype
     val yojson_of__ruleseterrortype : _ruleseterrortype -> Yojson.Basic.t
@@ -35168,17 +35170,20 @@ end = struct
     type t = _ruleseterrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
-    type _ruleseterrortype = [ `SourceIsNotJsonObject | `InvalidRulesSkipped ]
+    type _ruleseterrortype =
+      [ `SourceIsNotJsonObject | `InvalidRulesSkipped | `InvalidRulesetLevelTag ]
 
     let _ruleseterrortype_of_yojson = function
       | `String "SourceIsNotJsonObject" -> `SourceIsNotJsonObject
       | `String "InvalidRulesSkipped" -> `InvalidRulesSkipped
+      | `String "InvalidRulesetLevelTag" -> `InvalidRulesetLevelTag
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__ruleseterrortype = function
       | `SourceIsNotJsonObject -> `String "SourceIsNotJsonObject"
       | `InvalidRulesSkipped -> `String "InvalidRulesSkipped"
+      | `InvalidRulesetLevelTag -> `String "InvalidRulesetLevelTag"
 
     type t = _ruleseterrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
