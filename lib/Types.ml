@@ -16522,6 +16522,13 @@ and Network : sig
           [@key "securityDetails"]
           [@yojson.option]
           [@ocaml.doc "Security details for the request."]
+      isIpProtectionUsed : bool option;
+          [@key "isIpProtectionUsed"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Indicates whether the request was sent through IP Protection \
+             proxies. If\n\
+             set to true, the request used the IP Protection privacy feature."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP response data."]
   end
@@ -19178,6 +19185,13 @@ end = struct
           [@key "securityDetails"]
           [@yojson.option]
           [@ocaml.doc "Security details for the request."]
+      isIpProtectionUsed : bool option;
+          [@key "isIpProtectionUsed"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Indicates whether the request was sent through IP Protection \
+             proxies. If\n\
+             set to true, the request used the IP Protection privacy feature."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP response data."]
   end = struct
@@ -19299,6 +19313,13 @@ end = struct
           [@key "securityDetails"]
           [@yojson.option]
           [@ocaml.doc "Security details for the request."]
+      isIpProtectionUsed : bool option;
+          [@key "isIpProtectionUsed"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Indicates whether the request was sent through IP Protection \
+             proxies. If\n\
+             set to true, the request used the IP Protection privacy feature."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP response data."]
   end
