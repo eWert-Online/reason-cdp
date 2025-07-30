@@ -10040,12 +10040,23 @@ $x functions). |desc}]
             [@key "queriesScrollState"]
             [@yojson.option]
             [@ocaml.doc "No description provided"]
+        queriesAnchored : bool option;
+            [@key "queriesAnchored"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
       let make ~nodeId ?containerName ?physicalAxes ?logicalAxes
-          ?queriesScrollState () =
-        { nodeId; containerName; physicalAxes; logicalAxes; queriesScrollState }
+          ?queriesScrollState ?queriesAnchored () =
+        {
+          nodeId;
+          containerName;
+          physicalAxes;
+          logicalAxes;
+          queriesScrollState;
+          queriesAnchored;
+        }
     end
 
     module Request = struct
@@ -10065,9 +10076,9 @@ $x functions). |desc}]
   [@@ocaml.doc
     {desc|Returns the query container of the given node based on container query
 conditions: containerName, physical and logical axes, and whether it queries
-scroll-state. If no axes are provided and queriesScrollState is false, the
-style container is returned, which is the direct parent or the closest
-element with a matching container-name. |desc}]
+scroll-state or anchored elements. If no axes are provided and
+queriesScrollState is false, the style container is returned, which is the
+direct parent or the closest element with a matching container-name. |desc}]
 
   module GetQueryingDescendantsForContainer = struct
     module Response : sig

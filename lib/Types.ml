@@ -7582,6 +7582,10 @@ and CSS : sig
           [@key "queriesScrollState"]
           [@yojson.option]
           [@ocaml.doc "true if the query contains scroll-state() queries."]
+      queriesAnchored : bool option;
+          [@key "queriesAnchored"]
+          [@yojson.option]
+          [@ocaml.doc "true if the query contains anchored() queries."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS container query rule descriptor."]
   end
@@ -9099,6 +9103,10 @@ end = struct
           [@key "queriesScrollState"]
           [@yojson.option]
           [@ocaml.doc "true if the query contains scroll-state() queries."]
+      queriesAnchored : bool option;
+          [@key "queriesAnchored"]
+          [@yojson.option]
+          [@ocaml.doc "true if the query contains anchored() queries."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS container query rule descriptor."]
   end = struct
@@ -9131,6 +9139,10 @@ end = struct
           [@key "queriesScrollState"]
           [@yojson.option]
           [@ocaml.doc "true if the query contains scroll-state() queries."]
+      queriesAnchored : bool option;
+          [@key "queriesAnchored"]
+          [@yojson.option]
+          [@ocaml.doc "true if the query contains anchored() queries."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS container query rule descriptor."]
   end
@@ -34980,7 +34992,8 @@ and Preload : sig
       | `OtherPrerenderedPageActivated
       | `V8OptimizerDisabled
       | `PrerenderFailedDuringPrefetch
-      | `BrowsingDataRemoved ]
+      | `BrowsingDataRemoved
+      | `PrerenderHostReused ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -35453,7 +35466,8 @@ end = struct
       | `OtherPrerenderedPageActivated
       | `V8OptimizerDisabled
       | `PrerenderFailedDuringPrefetch
-      | `BrowsingDataRemoved ]
+      | `BrowsingDataRemoved
+      | `PrerenderHostReused ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -35538,7 +35552,8 @@ end = struct
       | `OtherPrerenderedPageActivated
       | `V8OptimizerDisabled
       | `PrerenderFailedDuringPrefetch
-      | `BrowsingDataRemoved ]
+      | `BrowsingDataRemoved
+      | `PrerenderHostReused ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -35640,6 +35655,7 @@ end = struct
       | `String "PrerenderFailedDuringPrefetch" ->
           `PrerenderFailedDuringPrefetch
       | `String "BrowsingDataRemoved" -> `BrowsingDataRemoved
+      | `String "PrerenderHostReused" -> `PrerenderHostReused
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -35743,6 +35759,7 @@ end = struct
       | `PrerenderFailedDuringPrefetch ->
           `String "PrerenderFailedDuringPrefetch"
       | `BrowsingDataRemoved -> `String "BrowsingDataRemoved"
+      | `PrerenderHostReused -> `String "PrerenderHostReused"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
