@@ -2004,6 +2004,23 @@ and Audits : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and UnencodedDigestError : sig
+    type _unencodeddigesterror =
+      [ `MalformedDictionary
+      | `UnknownAlgorithm
+      | `IncorrectDigestType
+      | `IncorrectDigestLength ]
+
+    val _unencodeddigesterror_of_yojson :
+      Yojson.Basic.t -> _unencodeddigesterror
+
+    val yojson_of__unencodeddigesterror :
+      _unencodeddigesterror -> Yojson.Basic.t
+
+    type t = _unencodeddigesterror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingIssueDetails : sig
     type t = {
       violationType : AttributionReportingIssueType.t;
@@ -2077,6 +2094,16 @@ and Audits : sig
           [@key "signatureBase"] [@ocaml.doc "No description provided"]
       integrityAssertions : string list;
           [@key "integrityAssertions"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and UnencodedDigestIssueDetails : sig
+    type t = {
+      error : UnencodedDigestError.t;
+          [@key "error"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
     }
@@ -2533,6 +2560,7 @@ and Audits : sig
       | `SharedDictionaryIssue
       | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
+      | `UnencodedDigestIssue
       | `UserReidentificationIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
@@ -2650,6 +2678,10 @@ and Audits : sig
       sriMessageSignatureIssueDetails :
         SRIMessageSignatureIssueDetails.t option;
           [@key "sriMessageSignatureIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      unencodedDigestIssueDetails : UnencodedDigestIssueDetails.t option;
+          [@key "unencodedDigestIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       userReidentificationIssueDetails :
@@ -4242,6 +4274,46 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and UnencodedDigestError : sig
+    type _unencodeddigesterror =
+      [ `MalformedDictionary
+      | `UnknownAlgorithm
+      | `IncorrectDigestType
+      | `IncorrectDigestLength ]
+
+    val _unencodeddigesterror_of_yojson :
+      Yojson.Basic.t -> _unencodeddigesterror
+
+    val yojson_of__unencodeddigesterror :
+      _unencodeddigesterror -> Yojson.Basic.t
+
+    type t = _unencodeddigesterror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _unencodeddigesterror =
+      [ `MalformedDictionary
+      | `UnknownAlgorithm
+      | `IncorrectDigestType
+      | `IncorrectDigestLength ]
+
+    let _unencodeddigesterror_of_yojson = function
+      | `String "MalformedDictionary" -> `MalformedDictionary
+      | `String "UnknownAlgorithm" -> `UnknownAlgorithm
+      | `String "IncorrectDigestType" -> `IncorrectDigestType
+      | `String "IncorrectDigestLength" -> `IncorrectDigestLength
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__unencodeddigesterror = function
+      | `MalformedDictionary -> `String "MalformedDictionary"
+      | `UnknownAlgorithm -> `String "UnknownAlgorithm"
+      | `IncorrectDigestType -> `String "IncorrectDigestType"
+      | `IncorrectDigestLength -> `String "IncorrectDigestLength"
+
+    type t = _unencodeddigesterror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingIssueDetails : sig
     type t = {
       violationType : AttributionReportingIssueType.t;
@@ -4384,6 +4456,24 @@ end = struct
           [@key "signatureBase"] [@ocaml.doc "No description provided"]
       integrityAssertions : string list;
           [@key "integrityAssertions"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and UnencodedDigestIssueDetails : sig
+    type t = {
+      error : UnencodedDigestError.t;
+          [@key "error"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      error : UnencodedDigestError.t;
+          [@key "error"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
     }
@@ -5430,6 +5520,7 @@ end = struct
       | `SharedDictionaryIssue
       | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
+      | `UnencodedDigestIssue
       | `UserReidentificationIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
@@ -5467,6 +5558,7 @@ end = struct
       | `SharedDictionaryIssue
       | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
+      | `UnencodedDigestIssue
       | `UserReidentificationIssue ]
 
     let _inspectorissuecode_of_yojson = function
@@ -5496,6 +5588,7 @@ end = struct
       | `String "SharedDictionaryIssue" -> `SharedDictionaryIssue
       | `String "ElementAccessibilityIssue" -> `ElementAccessibilityIssue
       | `String "SRIMessageSignatureIssue" -> `SRIMessageSignatureIssue
+      | `String "UnencodedDigestIssue" -> `UnencodedDigestIssue
       | `String "UserReidentificationIssue" -> `UserReidentificationIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -5527,6 +5620,7 @@ end = struct
       | `SharedDictionaryIssue -> `String "SharedDictionaryIssue"
       | `ElementAccessibilityIssue -> `String "ElementAccessibilityIssue"
       | `SRIMessageSignatureIssue -> `String "SRIMessageSignatureIssue"
+      | `UnencodedDigestIssue -> `String "UnencodedDigestIssue"
       | `UserReidentificationIssue -> `String "UserReidentificationIssue"
 
     type t = _inspectorissuecode
@@ -5641,6 +5735,10 @@ end = struct
       sriMessageSignatureIssueDetails :
         SRIMessageSignatureIssueDetails.t option;
           [@key "sriMessageSignatureIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      unencodedDigestIssueDetails : UnencodedDigestIssueDetails.t option;
+          [@key "unencodedDigestIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       userReidentificationIssueDetails :
@@ -5758,6 +5856,10 @@ end = struct
       sriMessageSignatureIssueDetails :
         SRIMessageSignatureIssueDetails.t option;
           [@key "sriMessageSignatureIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      unencodedDigestIssueDetails : UnencodedDigestIssueDetails.t option;
+          [@key "unencodedDigestIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       userReidentificationIssueDetails :
