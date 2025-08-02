@@ -31409,6 +31409,72 @@ This cancels the effect of any previous `setAutoAttach` and is also cancelled by
   [@@ocaml.doc
     {desc|Enables target discovery for the specified locations, when `setDiscoverTargets` was set to
 `true`. |desc}]
+
+  module OpenDevTools = struct
+    module Response : sig
+      type result = {
+        targetId : Types.Target.TargetID.t;
+            [@key "targetId"]
+            [@ocaml.doc "The targetId of DevTools page target."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        targetId : Types.Target.TargetID.t;
+            [@key "targetId"]
+            [@ocaml.doc "The targetId of DevTools page target."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        targetId : Types.Target.TargetID.t;
+            [@key "targetId"]
+            [@ocaml.doc "This can be the page or tab target ID."]
+      }
+      [@@deriving yojson]
+
+      let make ~targetId () = { targetId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Target.openDevTools"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Opens a DevTools window for the target. |desc}]
 end
 
 module Tethering = struct

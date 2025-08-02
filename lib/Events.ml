@@ -3397,9 +3397,7 @@ etc. |desc}]
 
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
-  [@@ocaml.doc
-    {desc|Issued for every compilation cache generated. Is only available
-if Page.setGenerateCompilationCache is enabled. |desc}]
+  [@@ocaml.doc {desc|Issued for every compilation cache generated. |desc}]
 end
 
 module Performance = struct
