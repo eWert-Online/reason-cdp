@@ -2505,7 +2505,7 @@ and Audits : sig
 
   and UserReidentificationIssueType : sig
     type _userreidentificationissuetype =
-      [ `BlockedFrameNavigation | `BlockedSubresource ]
+      [ `BlockedFrameNavigation | `BlockedSubresource | `NoisedCanvasReadback ]
 
     val _userreidentificationissuetype_of_yojson :
       Yojson.Basic.t -> _userreidentificationissuetype
@@ -2527,6 +2527,10 @@ and Audits : sig
           [@ocaml.doc
             "Applies to BlockedFrameNavigation and BlockedSubresource issue \
              types."]
+      sourceCodeLocation : SourceCodeLocation.t option;
+          [@key "sourceCodeLocation"]
+          [@yojson.option]
+          [@ocaml.doc "Applies to NoisedCanvasReadback issue type."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -5434,7 +5438,7 @@ end = struct
 
   and UserReidentificationIssueType : sig
     type _userreidentificationissuetype =
-      [ `BlockedFrameNavigation | `BlockedSubresource ]
+      [ `BlockedFrameNavigation | `BlockedSubresource | `NoisedCanvasReadback ]
 
     val _userreidentificationissuetype_of_yojson :
       Yojson.Basic.t -> _userreidentificationissuetype
@@ -5446,17 +5450,19 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type _userreidentificationissuetype =
-      [ `BlockedFrameNavigation | `BlockedSubresource ]
+      [ `BlockedFrameNavigation | `BlockedSubresource | `NoisedCanvasReadback ]
 
     let _userreidentificationissuetype_of_yojson = function
       | `String "BlockedFrameNavigation" -> `BlockedFrameNavigation
       | `String "BlockedSubresource" -> `BlockedSubresource
+      | `String "NoisedCanvasReadback" -> `NoisedCanvasReadback
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__userreidentificationissuetype = function
       | `BlockedFrameNavigation -> `String "BlockedFrameNavigation"
       | `BlockedSubresource -> `String "BlockedSubresource"
+      | `NoisedCanvasReadback -> `String "NoisedCanvasReadback"
 
     type t = _userreidentificationissuetype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -5472,6 +5478,10 @@ end = struct
           [@ocaml.doc
             "Applies to BlockedFrameNavigation and BlockedSubresource issue \
              types."]
+      sourceCodeLocation : SourceCodeLocation.t option;
+          [@key "sourceCodeLocation"]
+          [@yojson.option]
+          [@ocaml.doc "Applies to NoisedCanvasReadback issue type."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -5487,6 +5497,10 @@ end = struct
           [@ocaml.doc
             "Applies to BlockedFrameNavigation and BlockedSubresource issue \
              types."]
+      sourceCodeLocation : SourceCodeLocation.t option;
+          [@key "sourceCodeLocation"]
+          [@yojson.option]
+          [@ocaml.doc "Applies to NoisedCanvasReadback issue type."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -10259,6 +10273,7 @@ and DOM : sig
       | `before
       | `after
       | `picker_icon
+      | `interest_hint
       | `marker
       | `backdrop
       | `column
@@ -10619,6 +10634,7 @@ end = struct
       | `before
       | `after
       | `picker_icon
+      | `interest_hint
       | `marker
       | `backdrop
       | `column
@@ -10665,6 +10681,7 @@ end = struct
       | `before
       | `after
       | `picker_icon
+      | `interest_hint
       | `marker
       | `backdrop
       | `column
@@ -10705,6 +10722,7 @@ end = struct
       | `String "before" -> `before
       | `String "after" -> `after
       | `String "picker-icon" -> `picker_icon
+      | `String "interest-hint" -> `interest_hint
       | `String "marker" -> `marker
       | `String "backdrop" -> `backdrop
       | `String "column" -> `column
@@ -10748,6 +10766,7 @@ end = struct
       | `before -> `String "before"
       | `after -> `String "after"
       | `picker_icon -> `String "picker-icon"
+      | `interest_hint -> `String "interest-hint"
       | `marker -> `String "marker"
       | `backdrop -> `String "backdrop"
       | `column -> `String "column"
