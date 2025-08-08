@@ -4146,8 +4146,7 @@ the browser. |desc}]
         values : string list;
             [@key "values"]
             [@ocaml.doc
-              "Substitution functions (var()/env()/attr()) and cascade-dependent\n\
-               keywords (revert/revert-layer) do not work."]
+              "Cascade-dependent keywords (revert/revert-layer) do not work."]
         nodeId : Types.DOM.NodeId.t;
             [@key "nodeId"]
             [@ocaml.doc
