@@ -5936,44 +5936,6 @@ end = struct
   end
 end
 
-and Extensions : sig
-  module rec StorageArea : sig
-    type _storagearea = [ `session | `local | `sync | `managed ]
-
-    val _storagearea_of_yojson : Yojson.Basic.t -> _storagearea
-    val yojson_of__storagearea : _storagearea -> Yojson.Basic.t
-
-    type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
-  end
-end = struct
-  module rec StorageArea : sig
-    type _storagearea = [ `session | `local | `sync | `managed ]
-
-    val _storagearea_of_yojson : Yojson.Basic.t -> _storagearea
-    val yojson_of__storagearea : _storagearea -> Yojson.Basic.t
-
-    type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
-  end = struct
-    type _storagearea = [ `session | `local | `sync | `managed ]
-
-    let _storagearea_of_yojson = function
-      | `String "session" -> `session
-      | `String "local" -> `local
-      | `String "sync" -> `sync
-      | `String "managed" -> `managed
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__storagearea = function
-      | `session -> `String "session"
-      | `local -> `String "local"
-      | `sync -> `String "sync"
-      | `managed -> `String "managed"
-
-    type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
-  end
-end
-
 and Autofill : sig
   module rec CreditCard : sig
     type t = {
@@ -6445,6 +6407,524 @@ end = struct
           [@key "storageKey"] [@ocaml.doc "Storage key this event belongs to."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end
+
+and BluetoothEmulation : sig
+  module rec CentralState : sig
+    type _centralstate = [ `absent | `powered_off | `powered_on ]
+
+    val _centralstate_of_yojson : Yojson.Basic.t -> _centralstate
+    val yojson_of__centralstate : _centralstate -> Yojson.Basic.t
+
+    type t = _centralstate
+    [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
+  end
+
+  and GATTOperationType : sig
+    type _gattoperationtype = [ `connection | `discovery ]
+
+    val _gattoperationtype_of_yojson : Yojson.Basic.t -> _gattoperationtype
+    val yojson_of__gattoperationtype : _gattoperationtype -> Yojson.Basic.t
+
+    type t = _gattoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of GATT event."]
+  end
+
+  and CharacteristicWriteType : sig
+    type _characteristicwritetype =
+      [ `write_default_deprecated
+      | `write_with_response
+      | `write_without_response ]
+
+    val _characteristicwritetype_of_yojson :
+      Yojson.Basic.t -> _characteristicwritetype
+
+    val yojson_of__characteristicwritetype :
+      _characteristicwritetype -> Yojson.Basic.t
+
+    type t = _characteristicwritetype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic write."]
+  end
+
+  and CharacteristicOperationType : sig
+    type _characteristicoperationtype =
+      [ `read
+      | `write
+      | `subscribe_to_notifications
+      | `unsubscribe_from_notifications ]
+
+    val _characteristicoperationtype_of_yojson :
+      Yojson.Basic.t -> _characteristicoperationtype
+
+    val yojson_of__characteristicoperationtype :
+      _characteristicoperationtype -> Yojson.Basic.t
+
+    type t = _characteristicoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic operation."]
+  end
+
+  and DescriptorOperationType : sig
+    type _descriptoroperationtype = [ `read | `write ]
+
+    val _descriptoroperationtype_of_yojson :
+      Yojson.Basic.t -> _descriptoroperationtype
+
+    val yojson_of__descriptoroperationtype :
+      _descriptoroperationtype -> Yojson.Basic.t
+
+    type t = _descriptoroperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of descriptor operation."]
+  end
+
+  and ManufacturerData : sig
+    type t = {
+      key : number;
+          [@key "key"]
+          [@ocaml.doc
+            "Company identifier\n\
+             https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml\n\
+             https://usb.org/developers"]
+      data : string;
+          [@key "data"]
+          [@ocaml.doc
+            "Manufacturer-specific data (Encoded as a base64 string when \
+             passed over JSON)"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Stores the manufacturer data"]
+  end
+
+  and ScanRecord : sig
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      uuids : string list option;
+          [@key "uuids"] [@yojson.option] [@ocaml.doc "No description provided"]
+      appearance : number option;
+          [@key "appearance"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Stores the external appearance description of the device."]
+      txPower : number option;
+          [@key "txPower"]
+          [@yojson.option]
+          [@ocaml.doc "Stores the transmission power of a broadcasting device."]
+      manufacturerData : ManufacturerData.t list option;
+          [@key "manufacturerData"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Key is the company identifier and the value is an array of bytes of\n\
+             manufacturer specific data."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the byte data of the advertisement packet sent by a Bluetooth \
+       device."]
+  end
+
+  and ScanEntry : sig
+    type t = {
+      deviceAddress : string;
+          [@key "deviceAddress"] [@ocaml.doc "No description provided"]
+      rssi : number; [@key "rssi"] [@ocaml.doc "No description provided"]
+      scanRecord : ScanRecord.t;
+          [@key "scanRecord"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the advertisement packet information that is sent by a Bluetooth \
+       device."]
+  end
+
+  and CharacteristicProperties : sig
+    type t = {
+      broadcast : bool option;
+          [@key "broadcast"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      read : bool option;
+          [@key "read"] [@yojson.option] [@ocaml.doc "No description provided"]
+      writeWithoutResponse : bool option;
+          [@key "writeWithoutResponse"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      write : bool option;
+          [@key "write"] [@yojson.option] [@ocaml.doc "No description provided"]
+      notify : bool option;
+          [@key "notify"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      indicate : bool option;
+          [@key "indicate"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      authenticatedSignedWrites : bool option;
+          [@key "authenticatedSignedWrites"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      extendedProperties : bool option;
+          [@key "extendedProperties"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Describes the properties of a characteristic. This follows Bluetooth Core\n\
+       Specification BT 4.2 Vol 3 Part G 3.3.1. Characteristic Properties."]
+  end
+end = struct
+  module rec CentralState : sig
+    type _centralstate = [ `absent | `powered_off | `powered_on ]
+
+    val _centralstate_of_yojson : Yojson.Basic.t -> _centralstate
+    val yojson_of__centralstate : _centralstate -> Yojson.Basic.t
+
+    type t = _centralstate
+    [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
+  end = struct
+    type _centralstate = [ `absent | `powered_off | `powered_on ]
+
+    let _centralstate_of_yojson = function
+      | `String "absent" -> `absent
+      | `String "powered-off" -> `powered_off
+      | `String "powered-on" -> `powered_on
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__centralstate = function
+      | `absent -> `String "absent"
+      | `powered_off -> `String "powered-off"
+      | `powered_on -> `String "powered-on"
+
+    type t = _centralstate
+    [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
+  end
+
+  and GATTOperationType : sig
+    type _gattoperationtype = [ `connection | `discovery ]
+
+    val _gattoperationtype_of_yojson : Yojson.Basic.t -> _gattoperationtype
+    val yojson_of__gattoperationtype : _gattoperationtype -> Yojson.Basic.t
+
+    type t = _gattoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of GATT event."]
+  end = struct
+    type _gattoperationtype = [ `connection | `discovery ]
+
+    let _gattoperationtype_of_yojson = function
+      | `String "connection" -> `connection
+      | `String "discovery" -> `discovery
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__gattoperationtype = function
+      | `connection -> `String "connection"
+      | `discovery -> `String "discovery"
+
+    type t = _gattoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of GATT event."]
+  end
+
+  and CharacteristicWriteType : sig
+    type _characteristicwritetype =
+      [ `write_default_deprecated
+      | `write_with_response
+      | `write_without_response ]
+
+    val _characteristicwritetype_of_yojson :
+      Yojson.Basic.t -> _characteristicwritetype
+
+    val yojson_of__characteristicwritetype :
+      _characteristicwritetype -> Yojson.Basic.t
+
+    type t = _characteristicwritetype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic write."]
+  end = struct
+    type _characteristicwritetype =
+      [ `write_default_deprecated
+      | `write_with_response
+      | `write_without_response ]
+
+    let _characteristicwritetype_of_yojson = function
+      | `String "write-default-deprecated" -> `write_default_deprecated
+      | `String "write-with-response" -> `write_with_response
+      | `String "write-without-response" -> `write_without_response
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__characteristicwritetype = function
+      | `write_default_deprecated -> `String "write-default-deprecated"
+      | `write_with_response -> `String "write-with-response"
+      | `write_without_response -> `String "write-without-response"
+
+    type t = _characteristicwritetype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic write."]
+  end
+
+  and CharacteristicOperationType : sig
+    type _characteristicoperationtype =
+      [ `read
+      | `write
+      | `subscribe_to_notifications
+      | `unsubscribe_from_notifications ]
+
+    val _characteristicoperationtype_of_yojson :
+      Yojson.Basic.t -> _characteristicoperationtype
+
+    val yojson_of__characteristicoperationtype :
+      _characteristicoperationtype -> Yojson.Basic.t
+
+    type t = _characteristicoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic operation."]
+  end = struct
+    type _characteristicoperationtype =
+      [ `read
+      | `write
+      | `subscribe_to_notifications
+      | `unsubscribe_from_notifications ]
+
+    let _characteristicoperationtype_of_yojson = function
+      | `String "read" -> `read
+      | `String "write" -> `write
+      | `String "subscribe-to-notifications" -> `subscribe_to_notifications
+      | `String "unsubscribe-from-notifications" ->
+          `unsubscribe_from_notifications
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__characteristicoperationtype = function
+      | `read -> `String "read"
+      | `write -> `String "write"
+      | `subscribe_to_notifications -> `String "subscribe-to-notifications"
+      | `unsubscribe_from_notifications ->
+          `String "unsubscribe-from-notifications"
+
+    type t = _characteristicoperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of characteristic operation."]
+  end
+
+  and DescriptorOperationType : sig
+    type _descriptoroperationtype = [ `read | `write ]
+
+    val _descriptoroperationtype_of_yojson :
+      Yojson.Basic.t -> _descriptoroperationtype
+
+    val yojson_of__descriptoroperationtype :
+      _descriptoroperationtype -> Yojson.Basic.t
+
+    type t = _descriptoroperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of descriptor operation."]
+  end = struct
+    type _descriptoroperationtype = [ `read | `write ]
+
+    let _descriptoroperationtype_of_yojson = function
+      | `String "read" -> `read
+      | `String "write" -> `write
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__descriptoroperationtype = function
+      | `read -> `String "read"
+      | `write -> `String "write"
+
+    type t = _descriptoroperationtype
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates the various types of descriptor operation."]
+  end
+
+  and ManufacturerData : sig
+    type t = {
+      key : number;
+          [@key "key"]
+          [@ocaml.doc
+            "Company identifier\n\
+             https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml\n\
+             https://usb.org/developers"]
+      data : string;
+          [@key "data"]
+          [@ocaml.doc
+            "Manufacturer-specific data (Encoded as a base64 string when \
+             passed over JSON)"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Stores the manufacturer data"]
+  end = struct
+    type t = {
+      key : number;
+          [@key "key"]
+          [@ocaml.doc
+            "Company identifier\n\
+             https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml\n\
+             https://usb.org/developers"]
+      data : string;
+          [@key "data"]
+          [@ocaml.doc
+            "Manufacturer-specific data (Encoded as a base64 string when \
+             passed over JSON)"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Stores the manufacturer data"]
+  end
+
+  and ScanRecord : sig
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      uuids : string list option;
+          [@key "uuids"] [@yojson.option] [@ocaml.doc "No description provided"]
+      appearance : number option;
+          [@key "appearance"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Stores the external appearance description of the device."]
+      txPower : number option;
+          [@key "txPower"]
+          [@yojson.option]
+          [@ocaml.doc "Stores the transmission power of a broadcasting device."]
+      manufacturerData : ManufacturerData.t list option;
+          [@key "manufacturerData"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Key is the company identifier and the value is an array of bytes of\n\
+             manufacturer specific data."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the byte data of the advertisement packet sent by a Bluetooth \
+       device."]
+  end = struct
+    type t = {
+      name : string option;
+          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
+      uuids : string list option;
+          [@key "uuids"] [@yojson.option] [@ocaml.doc "No description provided"]
+      appearance : number option;
+          [@key "appearance"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Stores the external appearance description of the device."]
+      txPower : number option;
+          [@key "txPower"]
+          [@yojson.option]
+          [@ocaml.doc "Stores the transmission power of a broadcasting device."]
+      manufacturerData : ManufacturerData.t list option;
+          [@key "manufacturerData"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Key is the company identifier and the value is an array of bytes of\n\
+             manufacturer specific data."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the byte data of the advertisement packet sent by a Bluetooth \
+       device."]
+  end
+
+  and ScanEntry : sig
+    type t = {
+      deviceAddress : string;
+          [@key "deviceAddress"] [@ocaml.doc "No description provided"]
+      rssi : number; [@key "rssi"] [@ocaml.doc "No description provided"]
+      scanRecord : ScanRecord.t;
+          [@key "scanRecord"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the advertisement packet information that is sent by a Bluetooth \
+       device."]
+  end = struct
+    type t = {
+      deviceAddress : string;
+          [@key "deviceAddress"] [@ocaml.doc "No description provided"]
+      rssi : number; [@key "rssi"] [@ocaml.doc "No description provided"]
+      scanRecord : ScanRecord.t;
+          [@key "scanRecord"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stores the advertisement packet information that is sent by a Bluetooth \
+       device."]
+  end
+
+  and CharacteristicProperties : sig
+    type t = {
+      broadcast : bool option;
+          [@key "broadcast"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      read : bool option;
+          [@key "read"] [@yojson.option] [@ocaml.doc "No description provided"]
+      writeWithoutResponse : bool option;
+          [@key "writeWithoutResponse"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      write : bool option;
+          [@key "write"] [@yojson.option] [@ocaml.doc "No description provided"]
+      notify : bool option;
+          [@key "notify"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      indicate : bool option;
+          [@key "indicate"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      authenticatedSignedWrites : bool option;
+          [@key "authenticatedSignedWrites"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      extendedProperties : bool option;
+          [@key "extendedProperties"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Describes the properties of a characteristic. This follows Bluetooth Core\n\
+       Specification BT 4.2 Vol 3 Part G 3.3.1. Characteristic Properties."]
+  end = struct
+    type t = {
+      broadcast : bool option;
+          [@key "broadcast"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      read : bool option;
+          [@key "read"] [@yojson.option] [@ocaml.doc "No description provided"]
+      writeWithoutResponse : bool option;
+          [@key "writeWithoutResponse"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      write : bool option;
+          [@key "write"] [@yojson.option] [@ocaml.doc "No description provided"]
+      notify : bool option;
+          [@key "notify"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      indicate : bool option;
+          [@key "indicate"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      authenticatedSignedWrites : bool option;
+          [@key "authenticatedSignedWrites"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      extendedProperties : bool option;
+          [@key "extendedProperties"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Describes the properties of a characteristic. This follows Bluetooth Core\n\
+       Specification BT 4.2 Vol 3 Part G 3.3.1. Characteristic Properties."]
   end
 end
 
@@ -13086,6 +13566,65 @@ end = struct
   end
 end
 
+and DeviceAccess : sig
+  module rec RequestId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "Device request id."]
+  end
+
+  and DeviceId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "A device id."]
+  end
+
+  and PromptDevice : sig
+    type t = {
+      id : DeviceId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "Display name as it appears in a device request user prompt."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Device information displayed in a user prompt to select a device."]
+  end
+end = struct
+  module rec RequestId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "Device request id."]
+  end = struct
+    type t = string [@@deriving yojson] [@@ocaml.doc "Device request id."]
+  end
+
+  and DeviceId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "A device id."]
+  end = struct
+    type t = string [@@deriving yojson] [@@ocaml.doc "A device id."]
+  end
+
+  and PromptDevice : sig
+    type t = {
+      id : DeviceId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "Display name as it appears in a device request user prompt."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Device information displayed in a user prompt to select a device."]
+  end = struct
+    type t = {
+      id : DeviceId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "Display name as it appears in a device request user prompt."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Device information displayed in a user prompt to select a device."]
+  end
+end
+
 and Emulation : sig
   module rec SafeAreaInsets : sig
     type t = {
@@ -14033,123 +14572,656 @@ end = struct
   end
 end
 
-and HeadlessExperimental : sig
-  module rec ScreenshotParams : sig
-    type _screenshotparams_format = [ `jpeg | `png | `webp ]
+and Extensions : sig
+  module rec StorageArea : sig
+    type _storagearea = [ `session | `local | `sync | `managed ]
 
-    val _screenshotparams_format_of_yojson :
-      Yojson.Basic.t -> _screenshotparams_format
+    val _storagearea_of_yojson : Yojson.Basic.t -> _storagearea
+    val yojson_of__storagearea : _storagearea -> Yojson.Basic.t
 
-    val yojson_of__screenshotparams_format :
-      _screenshotparams_format -> Yojson.Basic.t
-
-    type t = {
-      format : _screenshotparams_format option;
-          [@key "format"]
-          [@yojson.option]
-          [@ocaml.doc "Image compression format (defaults to png)."]
-      quality : number option;
-          [@key "quality"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Compression quality from range [0..100] (jpeg and webp only)."]
-      optimizeForSpeed : bool option;
-          [@key "optimizeForSpeed"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Optimize image encoding for speed, not for resulting size \
-             (defaults to false)"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Encoding options for a screenshot."]
+    type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
   end
 end = struct
-  module rec ScreenshotParams : sig
-    type _screenshotparams_format = [ `jpeg | `png | `webp ]
+  module rec StorageArea : sig
+    type _storagearea = [ `session | `local | `sync | `managed ]
 
-    val _screenshotparams_format_of_yojson :
-      Yojson.Basic.t -> _screenshotparams_format
+    val _storagearea_of_yojson : Yojson.Basic.t -> _storagearea
+    val yojson_of__storagearea : _storagearea -> Yojson.Basic.t
 
-    val yojson_of__screenshotparams_format :
-      _screenshotparams_format -> Yojson.Basic.t
-
-    type t = {
-      format : _screenshotparams_format option;
-          [@key "format"]
-          [@yojson.option]
-          [@ocaml.doc "Image compression format (defaults to png)."]
-      quality : number option;
-          [@key "quality"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Compression quality from range [0..100] (jpeg and webp only)."]
-      optimizeForSpeed : bool option;
-          [@key "optimizeForSpeed"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Optimize image encoding for speed, not for resulting size \
-             (defaults to false)"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Encoding options for a screenshot."]
+    type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
   end = struct
-    type _screenshotparams_format = [ `jpeg | `png | `webp ]
+    type _storagearea = [ `session | `local | `sync | `managed ]
 
-    let _screenshotparams_format_of_yojson = function
-      | `String "jpeg" -> `jpeg
-      | `String "png" -> `png
-      | `String "webp" -> `webp
+    let _storagearea_of_yojson = function
+      | `String "session" -> `session
+      | `String "local" -> `local
+      | `String "sync" -> `sync
+      | `String "managed" -> `managed
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
-    let yojson_of__screenshotparams_format = function
-      | `jpeg -> `String "jpeg"
-      | `png -> `String "png"
-      | `webp -> `String "webp"
+    let yojson_of__storagearea = function
+      | `session -> `String "session"
+      | `local -> `String "local"
+      | `sync -> `String "sync"
+      | `managed -> `String "managed"
 
-    type t = {
-      format : _screenshotparams_format option;
-          [@key "format"]
-          [@yojson.option]
-          [@ocaml.doc "Image compression format (defaults to png)."]
-      quality : number option;
-          [@key "quality"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Compression quality from range [0..100] (jpeg and webp only)."]
-      optimizeForSpeed : bool option;
-          [@key "optimizeForSpeed"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Optimize image encoding for speed, not for resulting size \
-             (defaults to false)"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Encoding options for a screenshot."]
+    type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
   end
 end
 
-and IO : sig
-  module rec StreamHandle : sig
-    type t = string
+and FedCm : sig
+  module rec LoginState : sig
+    type _loginstate = [ `SignIn | `SignUp ]
+
+    val _loginstate_of_yojson : Yojson.Basic.t -> _loginstate
+    val yojson_of__loginstate : _loginstate -> Yojson.Basic.t
+
+    type t = _loginstate
     [@@deriving yojson]
     [@@ocaml.doc
-      "This is either obtained from another method or specified as \
-       `blob:<uuid>` where\n\
-       `<uuid>` is an UUID of a Blob."]
+      "Whether this is a sign-up or sign-in action for this account, i.e.\n\
+       whether this account has ever been used to sign in to this RP before."]
+  end
+
+  and DialogType : sig
+    type _dialogtype =
+      [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin | `Error ]
+
+    val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
+    val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
+
+    type t = _dialogtype
+    [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
+  end
+
+  and DialogButton : sig
+    type _dialogbutton =
+      [ `ConfirmIdpLoginContinue | `ErrorGotIt | `ErrorMoreDetails ]
+
+    val _dialogbutton_of_yojson : Yojson.Basic.t -> _dialogbutton
+    val yojson_of__dialogbutton : _dialogbutton -> Yojson.Basic.t
+
+    type t = _dialogbutton
+    [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
+  end
+
+  and AccountUrlType : sig
+    type _accounturltype = [ `TermsOfService | `PrivacyPolicy ]
+
+    val _accounturltype_of_yojson : Yojson.Basic.t -> _accounturltype
+    val yojson_of__accounturltype : _accounturltype -> Yojson.Basic.t
+
+    type t = _accounturltype
+    [@@deriving yojson] [@@ocaml.doc "The URLs that each account has"]
+  end
+
+  and Account : sig
+    type t = {
+      accountId : string;
+          [@key "accountId"] [@ocaml.doc "No description provided"]
+      email : string; [@key "email"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      givenName : string;
+          [@key "givenName"] [@ocaml.doc "No description provided"]
+      pictureUrl : string;
+          [@key "pictureUrl"] [@ocaml.doc "No description provided"]
+      idpConfigUrl : string;
+          [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
+      idpLoginUrl : string;
+          [@key "idpLoginUrl"] [@ocaml.doc "No description provided"]
+      loginState : LoginState.t;
+          [@key "loginState"] [@ocaml.doc "No description provided"]
+      termsOfServiceUrl : string option;
+          [@key "termsOfServiceUrl"]
+          [@yojson.option]
+          [@ocaml.doc "These two are only set if the loginState is signUp"]
+      privacyPolicyUrl : string option;
+          [@key "privacyPolicyUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
   end
 end = struct
-  module rec StreamHandle : sig
+  module rec LoginState : sig
+    type _loginstate = [ `SignIn | `SignUp ]
+
+    val _loginstate_of_yojson : Yojson.Basic.t -> _loginstate
+    val yojson_of__loginstate : _loginstate -> Yojson.Basic.t
+
+    type t = _loginstate
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Whether this is a sign-up or sign-in action for this account, i.e.\n\
+       whether this account has ever been used to sign in to this RP before."]
+  end = struct
+    type _loginstate = [ `SignIn | `SignUp ]
+
+    let _loginstate_of_yojson = function
+      | `String "SignIn" -> `SignIn
+      | `String "SignUp" -> `SignUp
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__loginstate = function
+      | `SignIn -> `String "SignIn"
+      | `SignUp -> `String "SignUp"
+
+    type t = _loginstate
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Whether this is a sign-up or sign-in action for this account, i.e.\n\
+       whether this account has ever been used to sign in to this RP before."]
+  end
+
+  and DialogType : sig
+    type _dialogtype =
+      [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin | `Error ]
+
+    val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
+    val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
+
+    type t = _dialogtype
+    [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
+  end = struct
+    type _dialogtype =
+      [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin | `Error ]
+
+    let _dialogtype_of_yojson = function
+      | `String "AccountChooser" -> `AccountChooser
+      | `String "AutoReauthn" -> `AutoReauthn
+      | `String "ConfirmIdpLogin" -> `ConfirmIdpLogin
+      | `String "Error" -> `Error
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__dialogtype = function
+      | `AccountChooser -> `String "AccountChooser"
+      | `AutoReauthn -> `String "AutoReauthn"
+      | `ConfirmIdpLogin -> `String "ConfirmIdpLogin"
+      | `Error -> `String "Error"
+
+    type t = _dialogtype
+    [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
+  end
+
+  and DialogButton : sig
+    type _dialogbutton =
+      [ `ConfirmIdpLoginContinue | `ErrorGotIt | `ErrorMoreDetails ]
+
+    val _dialogbutton_of_yojson : Yojson.Basic.t -> _dialogbutton
+    val yojson_of__dialogbutton : _dialogbutton -> Yojson.Basic.t
+
+    type t = _dialogbutton
+    [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
+  end = struct
+    type _dialogbutton =
+      [ `ConfirmIdpLoginContinue | `ErrorGotIt | `ErrorMoreDetails ]
+
+    let _dialogbutton_of_yojson = function
+      | `String "ConfirmIdpLoginContinue" -> `ConfirmIdpLoginContinue
+      | `String "ErrorGotIt" -> `ErrorGotIt
+      | `String "ErrorMoreDetails" -> `ErrorMoreDetails
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__dialogbutton = function
+      | `ConfirmIdpLoginContinue -> `String "ConfirmIdpLoginContinue"
+      | `ErrorGotIt -> `String "ErrorGotIt"
+      | `ErrorMoreDetails -> `String "ErrorMoreDetails"
+
+    type t = _dialogbutton
+    [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
+  end
+
+  and AccountUrlType : sig
+    type _accounturltype = [ `TermsOfService | `PrivacyPolicy ]
+
+    val _accounturltype_of_yojson : Yojson.Basic.t -> _accounturltype
+    val yojson_of__accounturltype : _accounturltype -> Yojson.Basic.t
+
+    type t = _accounturltype
+    [@@deriving yojson] [@@ocaml.doc "The URLs that each account has"]
+  end = struct
+    type _accounturltype = [ `TermsOfService | `PrivacyPolicy ]
+
+    let _accounturltype_of_yojson = function
+      | `String "TermsOfService" -> `TermsOfService
+      | `String "PrivacyPolicy" -> `PrivacyPolicy
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__accounturltype = function
+      | `TermsOfService -> `String "TermsOfService"
+      | `PrivacyPolicy -> `String "PrivacyPolicy"
+
+    type t = _accounturltype
+    [@@deriving yojson] [@@ocaml.doc "The URLs that each account has"]
+  end
+
+  and Account : sig
+    type t = {
+      accountId : string;
+          [@key "accountId"] [@ocaml.doc "No description provided"]
+      email : string; [@key "email"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      givenName : string;
+          [@key "givenName"] [@ocaml.doc "No description provided"]
+      pictureUrl : string;
+          [@key "pictureUrl"] [@ocaml.doc "No description provided"]
+      idpConfigUrl : string;
+          [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
+      idpLoginUrl : string;
+          [@key "idpLoginUrl"] [@ocaml.doc "No description provided"]
+      loginState : LoginState.t;
+          [@key "loginState"] [@ocaml.doc "No description provided"]
+      termsOfServiceUrl : string option;
+          [@key "termsOfServiceUrl"]
+          [@yojson.option]
+          [@ocaml.doc "These two are only set if the loginState is signUp"]
+      privacyPolicyUrl : string option;
+          [@key "privacyPolicyUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
+  end = struct
+    type t = {
+      accountId : string;
+          [@key "accountId"] [@ocaml.doc "No description provided"]
+      email : string; [@key "email"] [@ocaml.doc "No description provided"]
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      givenName : string;
+          [@key "givenName"] [@ocaml.doc "No description provided"]
+      pictureUrl : string;
+          [@key "pictureUrl"] [@ocaml.doc "No description provided"]
+      idpConfigUrl : string;
+          [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
+      idpLoginUrl : string;
+          [@key "idpLoginUrl"] [@ocaml.doc "No description provided"]
+      loginState : LoginState.t;
+          [@key "loginState"] [@ocaml.doc "No description provided"]
+      termsOfServiceUrl : string option;
+          [@key "termsOfServiceUrl"]
+          [@yojson.option]
+          [@ocaml.doc "These two are only set if the loginState is signUp"]
+      privacyPolicyUrl : string option;
+          [@key "privacyPolicyUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
+  end
+end
+
+and Fetch : sig
+  module rec RequestId : sig
     type t = string
     [@@deriving yojson]
     [@@ocaml.doc
-      "This is either obtained from another method or specified as \
-       `blob:<uuid>` where\n\
-       `<uuid>` is an UUID of a Blob."]
+      "Unique request identifier.\n\
+       Note that this does not identify individual HTTP requests that are part \
+       of\n\
+       a network request."]
+  end
+
+  and RequestStage : sig
+    type _requeststage = [ `Request | `Response ]
+
+    val _requeststage_of_yojson : Yojson.Basic.t -> _requeststage
+    val yojson_of__requeststage : _requeststage -> Yojson.Basic.t
+
+    type t = _requeststage
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stages of the request to handle. Request will intercept before the \
+       request is\n\
+       sent. Response will intercept after the response is received (but \
+       before response\n\
+       body is received)."]
+  end
+
+  and RequestPattern : sig
+    type t = {
+      urlPattern : string option;
+          [@key "urlPattern"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Wildcards (`'*'` -> zero or more, `'?'` -> exactly one) are \
+             allowed. Escape character is\n\
+             backslash. Omitting is equivalent to `\"*\"`."]
+      resourceType : Network.ResourceType.t option;
+          [@key "resourceType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set, only requests for matching resource types will be \
+             intercepted."]
+      requestStage : RequestStage.t option;
+          [@key "requestStage"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Stage at which to begin intercepting requests. Default is Request."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and HeaderEntry : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Response HTTP header entry"]
+  end
+
+  and AuthChallenge : sig
+    type _authchallenge_source = [ `Server | `Proxy ]
+
+    val _authchallenge_source_of_yojson :
+      Yojson.Basic.t -> _authchallenge_source
+
+    val yojson_of__authchallenge_source :
+      _authchallenge_source -> Yojson.Basic.t
+
+    type t = {
+      source : _authchallenge_source option;
+          [@key "source"]
+          [@yojson.option]
+          [@ocaml.doc "Source of the authentication challenge."]
+      origin : string; [@key "origin"] [@ocaml.doc "Origin of the challenger."]
+      scheme : string;
+          [@key "scheme"]
+          [@ocaml.doc "The authentication scheme used, such as basic or digest"]
+      realm : string;
+          [@key "realm"]
+          [@ocaml.doc "The realm of the challenge. May be empty."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Authorization challenge for HTTP status code 401 or 407."]
+  end
+
+  and AuthChallengeResponse : sig
+    type _authchallengeresponse_response =
+      [ `Default | `CancelAuth | `ProvideCredentials ]
+
+    val _authchallengeresponse_response_of_yojson :
+      Yojson.Basic.t -> _authchallengeresponse_response
+
+    val yojson_of__authchallengeresponse_response :
+      _authchallengeresponse_response -> Yojson.Basic.t
+
+    type t = {
+      response : _authchallengeresponse_response;
+          [@key "response"]
+          [@ocaml.doc
+            "The decision on what to do in response to the authorization \
+             challenge.  Default means\n\
+             deferring to the default behavior of the net stack, which will \
+             likely either the Cancel\n\
+             authentication or display a popup dialog box."]
+      username : string option;
+          [@key "username"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The username to provide, possibly empty. Should only be set if \
+             response is\n\
+             ProvideCredentials."]
+      password : string option;
+          [@key "password"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The password to provide, possibly empty. Should only be set if \
+             response is\n\
+             ProvideCredentials."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Response to an AuthChallenge."]
+  end
+end = struct
+  module rec RequestId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Unique request identifier.\n\
+       Note that this does not identify individual HTTP requests that are part \
+       of\n\
+       a network request."]
   end = struct
     type t = string
     [@@deriving yojson]
     [@@ocaml.doc
-      "This is either obtained from another method or specified as \
-       `blob:<uuid>` where\n\
-       `<uuid>` is an UUID of a Blob."]
+      "Unique request identifier.\n\
+       Note that this does not identify individual HTTP requests that are part \
+       of\n\
+       a network request."]
+  end
+
+  and RequestStage : sig
+    type _requeststage = [ `Request | `Response ]
+
+    val _requeststage_of_yojson : Yojson.Basic.t -> _requeststage
+    val yojson_of__requeststage : _requeststage -> Yojson.Basic.t
+
+    type t = _requeststage
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stages of the request to handle. Request will intercept before the \
+       request is\n\
+       sent. Response will intercept after the response is received (but \
+       before response\n\
+       body is received)."]
+  end = struct
+    type _requeststage = [ `Request | `Response ]
+
+    let _requeststage_of_yojson = function
+      | `String "Request" -> `Request
+      | `String "Response" -> `Response
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__requeststage = function
+      | `Request -> `String "Request"
+      | `Response -> `String "Response"
+
+    type t = _requeststage
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Stages of the request to handle. Request will intercept before the \
+       request is\n\
+       sent. Response will intercept after the response is received (but \
+       before response\n\
+       body is received)."]
+  end
+
+  and RequestPattern : sig
+    type t = {
+      urlPattern : string option;
+          [@key "urlPattern"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Wildcards (`'*'` -> zero or more, `'?'` -> exactly one) are \
+             allowed. Escape character is\n\
+             backslash. Omitting is equivalent to `\"*\"`."]
+      resourceType : Network.ResourceType.t option;
+          [@key "resourceType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set, only requests for matching resource types will be \
+             intercepted."]
+      requestStage : RequestStage.t option;
+          [@key "requestStage"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Stage at which to begin intercepting requests. Default is Request."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      urlPattern : string option;
+          [@key "urlPattern"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Wildcards (`'*'` -> zero or more, `'?'` -> exactly one) are \
+             allowed. Escape character is\n\
+             backslash. Omitting is equivalent to `\"*\"`."]
+      resourceType : Network.ResourceType.t option;
+          [@key "resourceType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set, only requests for matching resource types will be \
+             intercepted."]
+      requestStage : RequestStage.t option;
+          [@key "requestStage"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Stage at which to begin intercepting requests. Default is Request."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and HeaderEntry : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Response HTTP header entry"]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Response HTTP header entry"]
+  end
+
+  and AuthChallenge : sig
+    type _authchallenge_source = [ `Server | `Proxy ]
+
+    val _authchallenge_source_of_yojson :
+      Yojson.Basic.t -> _authchallenge_source
+
+    val yojson_of__authchallenge_source :
+      _authchallenge_source -> Yojson.Basic.t
+
+    type t = {
+      source : _authchallenge_source option;
+          [@key "source"]
+          [@yojson.option]
+          [@ocaml.doc "Source of the authentication challenge."]
+      origin : string; [@key "origin"] [@ocaml.doc "Origin of the challenger."]
+      scheme : string;
+          [@key "scheme"]
+          [@ocaml.doc "The authentication scheme used, such as basic or digest"]
+      realm : string;
+          [@key "realm"]
+          [@ocaml.doc "The realm of the challenge. May be empty."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Authorization challenge for HTTP status code 401 or 407."]
+  end = struct
+    type _authchallenge_source = [ `Server | `Proxy ]
+
+    let _authchallenge_source_of_yojson = function
+      | `String "Server" -> `Server
+      | `String "Proxy" -> `Proxy
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__authchallenge_source = function
+      | `Server -> `String "Server"
+      | `Proxy -> `String "Proxy"
+
+    type t = {
+      source : _authchallenge_source option;
+          [@key "source"]
+          [@yojson.option]
+          [@ocaml.doc "Source of the authentication challenge."]
+      origin : string; [@key "origin"] [@ocaml.doc "Origin of the challenger."]
+      scheme : string;
+          [@key "scheme"]
+          [@ocaml.doc "The authentication scheme used, such as basic or digest"]
+      realm : string;
+          [@key "realm"]
+          [@ocaml.doc "The realm of the challenge. May be empty."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Authorization challenge for HTTP status code 401 or 407."]
+  end
+
+  and AuthChallengeResponse : sig
+    type _authchallengeresponse_response =
+      [ `Default | `CancelAuth | `ProvideCredentials ]
+
+    val _authchallengeresponse_response_of_yojson :
+      Yojson.Basic.t -> _authchallengeresponse_response
+
+    val yojson_of__authchallengeresponse_response :
+      _authchallengeresponse_response -> Yojson.Basic.t
+
+    type t = {
+      response : _authchallengeresponse_response;
+          [@key "response"]
+          [@ocaml.doc
+            "The decision on what to do in response to the authorization \
+             challenge.  Default means\n\
+             deferring to the default behavior of the net stack, which will \
+             likely either the Cancel\n\
+             authentication or display a popup dialog box."]
+      username : string option;
+          [@key "username"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The username to provide, possibly empty. Should only be set if \
+             response is\n\
+             ProvideCredentials."]
+      password : string option;
+          [@key "password"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The password to provide, possibly empty. Should only be set if \
+             response is\n\
+             ProvideCredentials."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Response to an AuthChallenge."]
+  end = struct
+    type _authchallengeresponse_response =
+      [ `Default | `CancelAuth | `ProvideCredentials ]
+
+    let _authchallengeresponse_response_of_yojson = function
+      | `String "Default" -> `Default
+      | `String "CancelAuth" -> `CancelAuth
+      | `String "ProvideCredentials" -> `ProvideCredentials
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__authchallengeresponse_response = function
+      | `Default -> `String "Default"
+      | `CancelAuth -> `String "CancelAuth"
+      | `ProvideCredentials -> `String "ProvideCredentials"
+
+    type t = {
+      response : _authchallengeresponse_response;
+          [@key "response"]
+          [@ocaml.doc
+            "The decision on what to do in response to the authorization \
+             challenge.  Default means\n\
+             deferring to the default behavior of the net stack, which will \
+             likely either the Cancel\n\
+             authentication or display a popup dialog box."]
+      username : string option;
+          [@key "username"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The username to provide, possibly empty. Should only be set if \
+             response is\n\
+             ProvideCredentials."]
+      password : string option;
+          [@key "password"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The password to provide, possibly empty. Should only be set if \
+             response is\n\
+             ProvideCredentials."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Response to an AuthChallenge."]
   end
 end
 
@@ -14272,6 +15344,126 @@ end = struct
             "Path to the directory using each path component as an array item."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end
+
+and HeadlessExperimental : sig
+  module rec ScreenshotParams : sig
+    type _screenshotparams_format = [ `jpeg | `png | `webp ]
+
+    val _screenshotparams_format_of_yojson :
+      Yojson.Basic.t -> _screenshotparams_format
+
+    val yojson_of__screenshotparams_format :
+      _screenshotparams_format -> Yojson.Basic.t
+
+    type t = {
+      format : _screenshotparams_format option;
+          [@key "format"]
+          [@yojson.option]
+          [@ocaml.doc "Image compression format (defaults to png)."]
+      quality : number option;
+          [@key "quality"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Compression quality from range [0..100] (jpeg and webp only)."]
+      optimizeForSpeed : bool option;
+          [@key "optimizeForSpeed"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Optimize image encoding for speed, not for resulting size \
+             (defaults to false)"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Encoding options for a screenshot."]
+  end
+end = struct
+  module rec ScreenshotParams : sig
+    type _screenshotparams_format = [ `jpeg | `png | `webp ]
+
+    val _screenshotparams_format_of_yojson :
+      Yojson.Basic.t -> _screenshotparams_format
+
+    val yojson_of__screenshotparams_format :
+      _screenshotparams_format -> Yojson.Basic.t
+
+    type t = {
+      format : _screenshotparams_format option;
+          [@key "format"]
+          [@yojson.option]
+          [@ocaml.doc "Image compression format (defaults to png)."]
+      quality : number option;
+          [@key "quality"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Compression quality from range [0..100] (jpeg and webp only)."]
+      optimizeForSpeed : bool option;
+          [@key "optimizeForSpeed"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Optimize image encoding for speed, not for resulting size \
+             (defaults to false)"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Encoding options for a screenshot."]
+  end = struct
+    type _screenshotparams_format = [ `jpeg | `png | `webp ]
+
+    let _screenshotparams_format_of_yojson = function
+      | `String "jpeg" -> `jpeg
+      | `String "png" -> `png
+      | `String "webp" -> `webp
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__screenshotparams_format = function
+      | `jpeg -> `String "jpeg"
+      | `png -> `String "png"
+      | `webp -> `String "webp"
+
+    type t = {
+      format : _screenshotparams_format option;
+          [@key "format"]
+          [@yojson.option]
+          [@ocaml.doc "Image compression format (defaults to png)."]
+      quality : number option;
+          [@key "quality"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Compression quality from range [0..100] (jpeg and webp only)."]
+      optimizeForSpeed : bool option;
+          [@key "optimizeForSpeed"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Optimize image encoding for speed, not for resulting size \
+             (defaults to false)"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Encoding options for a screenshot."]
+  end
+end
+
+and IO : sig
+  module rec StreamHandle : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This is either obtained from another method or specified as \
+       `blob:<uuid>` where\n\
+       `<uuid>` is an UUID of a Blob."]
+  end
+end = struct
+  module rec StreamHandle : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This is either obtained from another method or specified as \
+       `blob:<uuid>` where\n\
+       `<uuid>` is an UUID of a Blob."]
+  end = struct
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This is either obtained from another method or specified as \
+       `blob:<uuid>` where\n\
+       `<uuid>` is an UUID of a Blob."]
   end
 end
 
@@ -15736,6 +16928,296 @@ end = struct
           [@key "threshold"] [@ocaml.doc "Time threshold to trigger upon."]
     }
     [@@deriving yojson] [@@ocaml.doc "Violation configuration setting."]
+  end
+end
+
+and Media : sig
+  module rec PlayerId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Players will get an ID that is unique within the agent context."]
+  end
+
+  and Timestamp : sig
+    type t = number [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PlayerMessage : sig
+    type _playermessage_level = [ `error | `warning | `info | `debug ]
+
+    val _playermessage_level_of_yojson : Yojson.Basic.t -> _playermessage_level
+    val yojson_of__playermessage_level : _playermessage_level -> Yojson.Basic.t
+
+    type t = {
+      level : _playermessage_level;
+          [@key "level"]
+          [@ocaml.doc
+            "Keep in sync with MediaLogMessageLevel\n\
+             We are currently keeping the message level 'error' separate from \
+             the\n\
+             PlayerError type because right now they represent different things,\n\
+             this one being a DVLOG(ERROR) style log message that gets printed\n\
+             based on what log level is selected in the UI, and the other is a\n\
+             representation of a media::PipelineStatus object. Soon however \
+             we're\n\
+             going to be moving away from using PipelineStatus for errors and\n\
+             introducing a new error type which should hopefully let us \
+             integrate\n\
+             the error log level into the PlayerError type."]
+      message : string; [@key "message"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Have one type per entry in MediaLogRecord::Type\nCorresponds to kMessage"]
+  end
+
+  and PlayerProperty : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaPropertyChange"]
+  end
+
+  and PlayerEvent : sig
+    type t = {
+      timestamp : Timestamp.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaEventTriggered"]
+  end
+
+  and PlayerErrorSourceLocation : sig
+    type t = {
+      file : string; [@key "file"] [@ocaml.doc "No description provided"]
+      line : number; [@key "line"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents logged source line numbers reported in an error.\n\
+       NOTE: file and line are from chromium c++ implementation code, not js."]
+  end
+
+  and PlayerError : sig
+    type t = {
+      errorType : string;
+          [@key "errorType"] [@ocaml.doc "No description provided"]
+      code : number;
+          [@key "code"]
+          [@ocaml.doc
+            "Code is the numeric enum entry for a specific set of error codes, \
+             such\n\
+             as PipelineStatusCodes in media/base/pipeline_status.h"]
+      stack : PlayerErrorSourceLocation.t list;
+          [@key "stack"]
+          [@ocaml.doc
+            "A trace of where this error was caused / where it passed through."]
+      cause : PlayerError.t list;
+          [@key "cause"]
+          [@ocaml.doc
+            "Errors potentially have a root cause error, ie, a DecoderError \
+             might be\n\
+             caused by an WindowsError"]
+      data : assoc;
+          [@key "data"]
+          [@ocaml.doc
+            "Extra data attached to an error, such as an HRESULT, Video Codec, \
+             etc."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaError"]
+  end
+end = struct
+  module rec PlayerId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Players will get an ID that is unique within the agent context."]
+  end = struct
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Players will get an ID that is unique within the agent context."]
+  end
+
+  and Timestamp : sig
+    type t = number [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = number [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PlayerMessage : sig
+    type _playermessage_level = [ `error | `warning | `info | `debug ]
+
+    val _playermessage_level_of_yojson : Yojson.Basic.t -> _playermessage_level
+    val yojson_of__playermessage_level : _playermessage_level -> Yojson.Basic.t
+
+    type t = {
+      level : _playermessage_level;
+          [@key "level"]
+          [@ocaml.doc
+            "Keep in sync with MediaLogMessageLevel\n\
+             We are currently keeping the message level 'error' separate from \
+             the\n\
+             PlayerError type because right now they represent different things,\n\
+             this one being a DVLOG(ERROR) style log message that gets printed\n\
+             based on what log level is selected in the UI, and the other is a\n\
+             representation of a media::PipelineStatus object. Soon however \
+             we're\n\
+             going to be moving away from using PipelineStatus for errors and\n\
+             introducing a new error type which should hopefully let us \
+             integrate\n\
+             the error log level into the PlayerError type."]
+      message : string; [@key "message"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Have one type per entry in MediaLogRecord::Type\nCorresponds to kMessage"]
+  end = struct
+    type _playermessage_level = [ `error | `warning | `info | `debug ]
+
+    let _playermessage_level_of_yojson = function
+      | `String "error" -> `error
+      | `String "warning" -> `warning
+      | `String "info" -> `info
+      | `String "debug" -> `debug
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__playermessage_level = function
+      | `error -> `String "error"
+      | `warning -> `String "warning"
+      | `info -> `String "info"
+      | `debug -> `String "debug"
+
+    type t = {
+      level : _playermessage_level;
+          [@key "level"]
+          [@ocaml.doc
+            "Keep in sync with MediaLogMessageLevel\n\
+             We are currently keeping the message level 'error' separate from \
+             the\n\
+             PlayerError type because right now they represent different things,\n\
+             this one being a DVLOG(ERROR) style log message that gets printed\n\
+             based on what log level is selected in the UI, and the other is a\n\
+             representation of a media::PipelineStatus object. Soon however \
+             we're\n\
+             going to be moving away from using PipelineStatus for errors and\n\
+             introducing a new error type which should hopefully let us \
+             integrate\n\
+             the error log level into the PlayerError type."]
+      message : string; [@key "message"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Have one type per entry in MediaLogRecord::Type\nCorresponds to kMessage"]
+  end
+
+  and PlayerProperty : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaPropertyChange"]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaPropertyChange"]
+  end
+
+  and PlayerEvent : sig
+    type t = {
+      timestamp : Timestamp.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaEventTriggered"]
+  end = struct
+    type t = {
+      timestamp : Timestamp.t;
+          [@key "timestamp"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaEventTriggered"]
+  end
+
+  and PlayerErrorSourceLocation : sig
+    type t = {
+      file : string; [@key "file"] [@ocaml.doc "No description provided"]
+      line : number; [@key "line"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents logged source line numbers reported in an error.\n\
+       NOTE: file and line are from chromium c++ implementation code, not js."]
+  end = struct
+    type t = {
+      file : string; [@key "file"] [@ocaml.doc "No description provided"]
+      line : number; [@key "line"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents logged source line numbers reported in an error.\n\
+       NOTE: file and line are from chromium c++ implementation code, not js."]
+  end
+
+  and PlayerError : sig
+    type t = {
+      errorType : string;
+          [@key "errorType"] [@ocaml.doc "No description provided"]
+      code : number;
+          [@key "code"]
+          [@ocaml.doc
+            "Code is the numeric enum entry for a specific set of error codes, \
+             such\n\
+             as PipelineStatusCodes in media/base/pipeline_status.h"]
+      stack : PlayerErrorSourceLocation.t list;
+          [@key "stack"]
+          [@ocaml.doc
+            "A trace of where this error was caused / where it passed through."]
+      cause : PlayerError.t list;
+          [@key "cause"]
+          [@ocaml.doc
+            "Errors potentially have a root cause error, ie, a DecoderError \
+             might be\n\
+             caused by an WindowsError"]
+      data : assoc;
+          [@key "data"]
+          [@ocaml.doc
+            "Extra data attached to an error, such as an HRESULT, Video Codec, \
+             etc."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaError"]
+  end = struct
+    type t = {
+      errorType : string;
+          [@key "errorType"] [@ocaml.doc "No description provided"]
+      code : number;
+          [@key "code"]
+          [@ocaml.doc
+            "Code is the numeric enum entry for a specific set of error codes, \
+             such\n\
+             as PipelineStatusCodes in media/base/pipeline_status.h"]
+      stack : PlayerErrorSourceLocation.t list;
+          [@key "stack"]
+          [@ocaml.doc
+            "A trace of where this error was caused / where it passed through."]
+      cause : PlayerError.t list;
+          [@key "cause"]
+          [@ocaml.doc
+            "Errors potentially have a root cause error, ie, a DecoderError \
+             might be\n\
+             caused by an WindowsError"]
+      data : assoc;
+          [@key "data"]
+          [@ocaml.doc
+            "Extra data attached to an error, such as an HRESULT, Video Codec, \
+             etc."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaError"]
   end
 end
 
@@ -23134,6 +24616,123 @@ end = struct
   end
 end
 
+and PWA : sig
+  module rec FileHandlerAccept : sig
+    type t = {
+      mediaType : string;
+          [@key "mediaType"]
+          [@ocaml.doc
+            "New name of the mimetype according to\n\
+             https://www.iana.org/assignments/media-types/media-types.xhtml"]
+      fileExtensions : string list;
+          [@key "fileExtensions"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The following types are the replica of\n\
+       https://crsrc.org/c/chrome/browser/web_applications/proto/web_app_os_integration_state.proto;drc=9910d3be894c8f142c977ba1023f30a656bc13fc;l=67"]
+  end
+
+  and FileHandler : sig
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      accepts : FileHandlerAccept.t list;
+          [@key "accepts"] [@ocaml.doc "No description provided"]
+      displayName : string;
+          [@key "displayName"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and DisplayMode : sig
+    type _displaymode = [ `standalone | `browser ]
+
+    val _displaymode_of_yojson : Yojson.Basic.t -> _displaymode
+    val yojson_of__displaymode : _displaymode -> Yojson.Basic.t
+
+    type t = _displaymode
+    [@@deriving yojson]
+    [@@ocaml.doc "If user prefers opening the app in browser or an app window."]
+  end
+end = struct
+  module rec FileHandlerAccept : sig
+    type t = {
+      mediaType : string;
+          [@key "mediaType"]
+          [@ocaml.doc
+            "New name of the mimetype according to\n\
+             https://www.iana.org/assignments/media-types/media-types.xhtml"]
+      fileExtensions : string list;
+          [@key "fileExtensions"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The following types are the replica of\n\
+       https://crsrc.org/c/chrome/browser/web_applications/proto/web_app_os_integration_state.proto;drc=9910d3be894c8f142c977ba1023f30a656bc13fc;l=67"]
+  end = struct
+    type t = {
+      mediaType : string;
+          [@key "mediaType"]
+          [@ocaml.doc
+            "New name of the mimetype according to\n\
+             https://www.iana.org/assignments/media-types/media-types.xhtml"]
+      fileExtensions : string list;
+          [@key "fileExtensions"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The following types are the replica of\n\
+       https://crsrc.org/c/chrome/browser/web_applications/proto/web_app_os_integration_state.proto;drc=9910d3be894c8f142c977ba1023f30a656bc13fc;l=67"]
+  end
+
+  and FileHandler : sig
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      accepts : FileHandlerAccept.t list;
+          [@key "accepts"] [@ocaml.doc "No description provided"]
+      displayName : string;
+          [@key "displayName"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      action : string; [@key "action"] [@ocaml.doc "No description provided"]
+      accepts : FileHandlerAccept.t list;
+          [@key "accepts"] [@ocaml.doc "No description provided"]
+      displayName : string;
+          [@key "displayName"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and DisplayMode : sig
+    type _displaymode = [ `standalone | `browser ]
+
+    val _displaymode_of_yojson : Yojson.Basic.t -> _displaymode
+    val yojson_of__displaymode : _displaymode -> Yojson.Basic.t
+
+    type t = _displaymode
+    [@@deriving yojson]
+    [@@ocaml.doc "If user prefers opening the app in browser or an app window."]
+  end = struct
+    type _displaymode = [ `standalone | `browser ]
+
+    let _displaymode_of_yojson = function
+      | `String "standalone" -> `standalone
+      | `String "browser" -> `browser
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__displaymode = function
+      | `standalone -> `String "standalone"
+      | `browser -> `String "browser"
+
+    type t = _displaymode
+    [@@deriving yojson]
+    [@@ocaml.doc "If user prefers opening the app in browser or an app window."]
+  end
+end
+
 and Page : sig
   module rec FrameId : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "Unique frame identifier."]
@@ -28033,6 +29632,1289 @@ end = struct
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end
+
+and Preload : sig
+  module rec RuleSetId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
+  end
+
+  and RuleSet : sig
+    type t = {
+      id : RuleSetId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"]
+          [@ocaml.doc
+            "Identifies a document which the rule set is associated with."]
+      sourceText : string;
+          [@key "sourceText"]
+          [@ocaml.doc
+            "Source text of JSON representing the rule set. If it comes from\n\
+             `<script>` tag, it is the textContent of the node. Note that it is\n\
+             a JSON for valid case.\n\n\
+             See also:\n\
+             - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
+             - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A speculation rule set is either added through an inline\n\
+             `<script>` tag or through an external resource via the\n\
+             'Speculation-Rules' HTTP header. For the first case, we include\n\
+             the BackendNodeId of the relevant `<script>` tag. For the second\n\
+             case, we include the external URL where the rule set was loaded\n\
+             from, and also RequestId if Network domain is enabled.\n\n\
+             See also:\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header"]
+      url : string option;
+          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      errorType : RuleSetErrorType.t option;
+          [@key "errorType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Error information\n`errorMessage` is null iff `errorType` is null."]
+      errorMessage : string option;
+          [@key "errorMessage"]
+          [@yojson.option]
+          [@ocaml.doc
+            "TODO(https://crbug.com/1425354): Replace this property with \
+             structured error."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
+  end
+
+  and RuleSetErrorType : sig
+    type _ruleseterrortype =
+      [ `SourceIsNotJsonObject | `InvalidRulesSkipped | `InvalidRulesetLevelTag ]
+
+    val _ruleseterrortype_of_yojson : Yojson.Basic.t -> _ruleseterrortype
+    val yojson_of__ruleseterrortype : _ruleseterrortype -> Yojson.Basic.t
+
+    type t = _ruleseterrortype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SpeculationAction : sig
+    type _speculationaction = [ `Prefetch | `Prerender ]
+
+    val _speculationaction_of_yojson : Yojson.Basic.t -> _speculationaction
+    val yojson_of__speculationaction : _speculationaction -> Yojson.Basic.t
+
+    type t = _speculationaction
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The type of preloading attempted. It corresponds to\n\
+       mojom::SpeculationAction (although PrefetchWithSubresources is omitted \
+       as it\n\
+       isn't being used by clients)."]
+  end
+
+  and SpeculationTargetHint : sig
+    type _speculationtargethint = [ `Blank | `Self ]
+
+    val _speculationtargethint_of_yojson :
+      Yojson.Basic.t -> _speculationtargethint
+
+    val yojson_of__speculationtargethint :
+      _speculationtargethint -> Yojson.Basic.t
+
+    type t = _speculationtargethint
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Corresponds to mojom::SpeculationTargetHint.\n\
+       See \
+       https://github.com/WICG/nav-speculation/blob/main/triggers.md#window-name-targeting-hints"]
+  end
+
+  and PreloadingAttemptKey : sig
+    type t = {
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"] [@ocaml.doc "No description provided"]
+      action : SpeculationAction.t;
+          [@key "action"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+      targetHint : SpeculationTargetHint.t option;
+          [@key "targetHint"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A key that identifies a preloading attempt.\n\n\
+       The url used is the url specified by the trigger (i.e. the initial \
+       URL), and\n\
+       not the final url that is navigated to. For example, prerendering allows\n\
+       same-origin main frame navigations during the attempt, but the attempt is\n\
+       still keyed with the initial URL."]
+  end
+
+  and PreloadingAttemptSource : sig
+    type t = {
+      key : PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
+      ruleSetIds : RuleSetId.t list;
+          [@key "ruleSetIds"] [@ocaml.doc "No description provided"]
+      nodeIds : DOM.BackendNodeId.t list;
+          [@key "nodeIds"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Lists sources for a preloading attempt, specifically the ids of rule sets\n\
+       that had a speculation rule that triggered the attempt, and the\n\
+       BackendNodeIds of <a href> or <area href> elements that triggered the\n\
+       attempt (in the case of attempts triggered by a document rule). It is\n\
+       possible for multiple rule sets and links to trigger a single attempt."]
+  end
+
+  and PreloadPipelineId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Chrome manages different types of preloads together using a\n\
+       concept of preloading pipeline. For example, if a site uses a\n\
+       SpeculationRules for prerender, Chrome first starts a prefetch and\n\
+       then upgrades it to prerender.\n\n\
+       CDP events for them are emitted separately but they share\n\
+       `PreloadPipelineId`."]
+  end
+
+  and PrerenderFinalStatus : sig
+    type _prerenderfinalstatus =
+      [ `Activated
+      | `Destroyed
+      | `LowEndDevice
+      | `InvalidSchemeRedirect
+      | `InvalidSchemeNavigation
+      | `NavigationRequestBlockedByCsp
+      | `MojoBinderPolicy
+      | `RendererProcessCrashed
+      | `RendererProcessKilled
+      | `Download
+      | `TriggerDestroyed
+      | `NavigationNotCommitted
+      | `NavigationBadHttpStatus
+      | `ClientCertRequested
+      | `NavigationRequestNetworkError
+      | `CancelAllHostsForTesting
+      | `DidFailLoad
+      | `Stop
+      | `SslCertificateError
+      | `LoginAuthRequested
+      | `UaChangeRequiresReload
+      | `BlockedByClient
+      | `AudioOutputDeviceRequested
+      | `MixedContent
+      | `TriggerBackgrounded
+      | `MemoryLimitExceeded
+      | `DataSaverEnabled
+      | `TriggerUrlHasEffectiveUrl
+      | `ActivatedBeforeStarted
+      | `InactivePageRestriction
+      | `StartFailed
+      | `TimeoutBackgrounded
+      | `CrossSiteRedirectInInitialNavigation
+      | `CrossSiteNavigationInInitialNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
+      | `ActivationNavigationParameterMismatch
+      | `ActivatedInBackground
+      | `EmbedderHostDisallowed
+      | `ActivationNavigationDestroyedBeforeSuccess
+      | `TabClosedByUserGesture
+      | `TabClosedWithoutUserGesture
+      | `PrimaryMainFrameRendererProcessCrashed
+      | `PrimaryMainFrameRendererProcessKilled
+      | `ActivationFramePolicyNotCompatible
+      | `PreloadingDisabled
+      | `BatterySaverEnabled
+      | `ActivatedDuringMainFrameNavigation
+      | `PreloadingUnsupportedByWebContents
+      | `CrossSiteRedirectInMainFrameNavigation
+      | `CrossSiteNavigationInMainFrameNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
+      | `MemoryPressureOnTrigger
+      | `MemoryPressureAfterTriggered
+      | `PrerenderingDisabledByDevTools
+      | `SpeculationRuleRemoved
+      | `ActivatedWithAuxiliaryBrowsingContexts
+      | `MaxNumOfRunningEagerPrerendersExceeded
+      | `MaxNumOfRunningNonEagerPrerendersExceeded
+      | `MaxNumOfRunningEmbedderPrerendersExceeded
+      | `PrerenderingUrlHasEffectiveUrl
+      | `RedirectedPrerenderingUrlHasEffectiveUrl
+      | `ActivationUrlHasEffectiveUrl
+      | `JavaScriptInterfaceAdded
+      | `JavaScriptInterfaceRemoved
+      | `AllPrerenderingCanceled
+      | `WindowClosed
+      | `SlowNetwork
+      | `OtherPrerenderedPageActivated
+      | `V8OptimizerDisabled
+      | `PrerenderFailedDuringPrefetch
+      | `BrowsingDataRemoved
+      | `PrerenderHostReused ]
+
+    val _prerenderfinalstatus_of_yojson :
+      Yojson.Basic.t -> _prerenderfinalstatus
+
+    val yojson_of__prerenderfinalstatus :
+      _prerenderfinalstatus -> Yojson.Basic.t
+
+    type t = _prerenderfinalstatus
+    [@@deriving yojson]
+    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
+  end
+
+  and PreloadingStatus : sig
+    type _preloadingstatus =
+      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
+
+    val _preloadingstatus_of_yojson : Yojson.Basic.t -> _preloadingstatus
+    val yojson_of__preloadingstatus : _preloadingstatus -> Yojson.Basic.t
+
+    type t = _preloadingstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
+       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
+  end
+
+  and PrefetchStatus : sig
+    type _prefetchstatus =
+      [ `PrefetchAllowed
+      | `PrefetchFailedIneligibleRedirect
+      | `PrefetchFailedInvalidRedirect
+      | `PrefetchFailedMIMENotSupported
+      | `PrefetchFailedNetError
+      | `PrefetchFailedNon2XX
+      | `PrefetchEvictedAfterBrowsingDataRemoved
+      | `PrefetchEvictedAfterCandidateRemoved
+      | `PrefetchEvictedForNewerPrefetch
+      | `PrefetchHeldback
+      | `PrefetchIneligibleRetryAfter
+      | `PrefetchIsPrivacyDecoy
+      | `PrefetchIsStale
+      | `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `PrefetchNotEligibleDataSaverEnabled
+      | `PrefetchNotEligibleExistingProxy
+      | `PrefetchNotEligibleHostIsNonUnique
+      | `PrefetchNotEligibleNonDefaultStoragePartition
+      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
+      | `PrefetchNotEligibleSchemeIsNotHttps
+      | `PrefetchNotEligibleUserHasCookies
+      | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
+      | `PrefetchNotEligibleRedirectFromServiceWorker
+      | `PrefetchNotEligibleRedirectToServiceWorker
+      | `PrefetchNotEligibleBatterySaverEnabled
+      | `PrefetchNotEligiblePreloadingDisabled
+      | `PrefetchNotFinishedInTime
+      | `PrefetchNotStarted
+      | `PrefetchNotUsedCookiesChanged
+      | `PrefetchProxyNotAvailable
+      | `PrefetchResponseUsed
+      | `PrefetchSuccessfulButNotUsed
+      | `PrefetchNotUsedProbeFailed ]
+
+    val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
+    val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
+
+    type t = _prefetchstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
+       filter out the ones that aren't necessary to the developers."]
+  end
+
+  and PrerenderMismatchedHeaders : sig
+    type t = {
+      headerName : string;
+          [@key "headerName"] [@ocaml.doc "No description provided"]
+      initialValue : string option;
+          [@key "initialValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      activationValue : string option;
+          [@key "activationValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Information of headers to be displayed when the header mismatch \
+       occurred."]
+  end
+end = struct
+  module rec RuleSetId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
+  end = struct
+    type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
+  end
+
+  and RuleSet : sig
+    type t = {
+      id : RuleSetId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"]
+          [@ocaml.doc
+            "Identifies a document which the rule set is associated with."]
+      sourceText : string;
+          [@key "sourceText"]
+          [@ocaml.doc
+            "Source text of JSON representing the rule set. If it comes from\n\
+             `<script>` tag, it is the textContent of the node. Note that it is\n\
+             a JSON for valid case.\n\n\
+             See also:\n\
+             - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
+             - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A speculation rule set is either added through an inline\n\
+             `<script>` tag or through an external resource via the\n\
+             'Speculation-Rules' HTTP header. For the first case, we include\n\
+             the BackendNodeId of the relevant `<script>` tag. For the second\n\
+             case, we include the external URL where the rule set was loaded\n\
+             from, and also RequestId if Network domain is enabled.\n\n\
+             See also:\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header"]
+      url : string option;
+          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      errorType : RuleSetErrorType.t option;
+          [@key "errorType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Error information\n`errorMessage` is null iff `errorType` is null."]
+      errorMessage : string option;
+          [@key "errorMessage"]
+          [@yojson.option]
+          [@ocaml.doc
+            "TODO(https://crbug.com/1425354): Replace this property with \
+             structured error."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
+  end = struct
+    type t = {
+      id : RuleSetId.t; [@key "id"] [@ocaml.doc "No description provided"]
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"]
+          [@ocaml.doc
+            "Identifies a document which the rule set is associated with."]
+      sourceText : string;
+          [@key "sourceText"]
+          [@ocaml.doc
+            "Source text of JSON representing the rule set. If it comes from\n\
+             `<script>` tag, it is the textContent of the node. Note that it is\n\
+             a JSON for valid case.\n\n\
+             See also:\n\
+             - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
+             - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A speculation rule set is either added through an inline\n\
+             `<script>` tag or through an external resource via the\n\
+             'Speculation-Rules' HTTP header. For the first case, we include\n\
+             the BackendNodeId of the relevant `<script>` tag. For the second\n\
+             case, we include the external URL where the rule set was loaded\n\
+             from, and also RequestId if Network domain is enabled.\n\n\
+             See also:\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script\n\
+             - \
+             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header"]
+      url : string option;
+          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      requestId : Network.RequestId.t option;
+          [@key "requestId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      errorType : RuleSetErrorType.t option;
+          [@key "errorType"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Error information\n`errorMessage` is null iff `errorType` is null."]
+      errorMessage : string option;
+          [@key "errorMessage"]
+          [@yojson.option]
+          [@ocaml.doc
+            "TODO(https://crbug.com/1425354): Replace this property with \
+             structured error."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
+  end
+
+  and RuleSetErrorType : sig
+    type _ruleseterrortype =
+      [ `SourceIsNotJsonObject | `InvalidRulesSkipped | `InvalidRulesetLevelTag ]
+
+    val _ruleseterrortype_of_yojson : Yojson.Basic.t -> _ruleseterrortype
+    val yojson_of__ruleseterrortype : _ruleseterrortype -> Yojson.Basic.t
+
+    type t = _ruleseterrortype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _ruleseterrortype =
+      [ `SourceIsNotJsonObject | `InvalidRulesSkipped | `InvalidRulesetLevelTag ]
+
+    let _ruleseterrortype_of_yojson = function
+      | `String "SourceIsNotJsonObject" -> `SourceIsNotJsonObject
+      | `String "InvalidRulesSkipped" -> `InvalidRulesSkipped
+      | `String "InvalidRulesetLevelTag" -> `InvalidRulesetLevelTag
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__ruleseterrortype = function
+      | `SourceIsNotJsonObject -> `String "SourceIsNotJsonObject"
+      | `InvalidRulesSkipped -> `String "InvalidRulesSkipped"
+      | `InvalidRulesetLevelTag -> `String "InvalidRulesetLevelTag"
+
+    type t = _ruleseterrortype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SpeculationAction : sig
+    type _speculationaction = [ `Prefetch | `Prerender ]
+
+    val _speculationaction_of_yojson : Yojson.Basic.t -> _speculationaction
+    val yojson_of__speculationaction : _speculationaction -> Yojson.Basic.t
+
+    type t = _speculationaction
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The type of preloading attempted. It corresponds to\n\
+       mojom::SpeculationAction (although PrefetchWithSubresources is omitted \
+       as it\n\
+       isn't being used by clients)."]
+  end = struct
+    type _speculationaction = [ `Prefetch | `Prerender ]
+
+    let _speculationaction_of_yojson = function
+      | `String "Prefetch" -> `Prefetch
+      | `String "Prerender" -> `Prerender
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__speculationaction = function
+      | `Prefetch -> `String "Prefetch"
+      | `Prerender -> `String "Prerender"
+
+    type t = _speculationaction
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The type of preloading attempted. It corresponds to\n\
+       mojom::SpeculationAction (although PrefetchWithSubresources is omitted \
+       as it\n\
+       isn't being used by clients)."]
+  end
+
+  and SpeculationTargetHint : sig
+    type _speculationtargethint = [ `Blank | `Self ]
+
+    val _speculationtargethint_of_yojson :
+      Yojson.Basic.t -> _speculationtargethint
+
+    val yojson_of__speculationtargethint :
+      _speculationtargethint -> Yojson.Basic.t
+
+    type t = _speculationtargethint
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Corresponds to mojom::SpeculationTargetHint.\n\
+       See \
+       https://github.com/WICG/nav-speculation/blob/main/triggers.md#window-name-targeting-hints"]
+  end = struct
+    type _speculationtargethint = [ `Blank | `Self ]
+
+    let _speculationtargethint_of_yojson = function
+      | `String "Blank" -> `Blank
+      | `String "Self" -> `Self
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__speculationtargethint = function
+      | `Blank -> `String "Blank"
+      | `Self -> `String "Self"
+
+    type t = _speculationtargethint
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Corresponds to mojom::SpeculationTargetHint.\n\
+       See \
+       https://github.com/WICG/nav-speculation/blob/main/triggers.md#window-name-targeting-hints"]
+  end
+
+  and PreloadingAttemptKey : sig
+    type t = {
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"] [@ocaml.doc "No description provided"]
+      action : SpeculationAction.t;
+          [@key "action"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+      targetHint : SpeculationTargetHint.t option;
+          [@key "targetHint"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A key that identifies a preloading attempt.\n\n\
+       The url used is the url specified by the trigger (i.e. the initial \
+       URL), and\n\
+       not the final url that is navigated to. For example, prerendering allows\n\
+       same-origin main frame navigations during the attempt, but the attempt is\n\
+       still keyed with the initial URL."]
+  end = struct
+    type t = {
+      loaderId : Network.LoaderId.t;
+          [@key "loaderId"] [@ocaml.doc "No description provided"]
+      action : SpeculationAction.t;
+          [@key "action"] [@ocaml.doc "No description provided"]
+      url : string; [@key "url"] [@ocaml.doc "No description provided"]
+      targetHint : SpeculationTargetHint.t option;
+          [@key "targetHint"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A key that identifies a preloading attempt.\n\n\
+       The url used is the url specified by the trigger (i.e. the initial \
+       URL), and\n\
+       not the final url that is navigated to. For example, prerendering allows\n\
+       same-origin main frame navigations during the attempt, but the attempt is\n\
+       still keyed with the initial URL."]
+  end
+
+  and PreloadingAttemptSource : sig
+    type t = {
+      key : PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
+      ruleSetIds : RuleSetId.t list;
+          [@key "ruleSetIds"] [@ocaml.doc "No description provided"]
+      nodeIds : DOM.BackendNodeId.t list;
+          [@key "nodeIds"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Lists sources for a preloading attempt, specifically the ids of rule sets\n\
+       that had a speculation rule that triggered the attempt, and the\n\
+       BackendNodeIds of <a href> or <area href> elements that triggered the\n\
+       attempt (in the case of attempts triggered by a document rule). It is\n\
+       possible for multiple rule sets and links to trigger a single attempt."]
+  end = struct
+    type t = {
+      key : PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
+      ruleSetIds : RuleSetId.t list;
+          [@key "ruleSetIds"] [@ocaml.doc "No description provided"]
+      nodeIds : DOM.BackendNodeId.t list;
+          [@key "nodeIds"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Lists sources for a preloading attempt, specifically the ids of rule sets\n\
+       that had a speculation rule that triggered the attempt, and the\n\
+       BackendNodeIds of <a href> or <area href> elements that triggered the\n\
+       attempt (in the case of attempts triggered by a document rule). It is\n\
+       possible for multiple rule sets and links to trigger a single attempt."]
+  end
+
+  and PreloadPipelineId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Chrome manages different types of preloads together using a\n\
+       concept of preloading pipeline. For example, if a site uses a\n\
+       SpeculationRules for prerender, Chrome first starts a prefetch and\n\
+       then upgrades it to prerender.\n\n\
+       CDP events for them are emitted separately but they share\n\
+       `PreloadPipelineId`."]
+  end = struct
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Chrome manages different types of preloads together using a\n\
+       concept of preloading pipeline. For example, if a site uses a\n\
+       SpeculationRules for prerender, Chrome first starts a prefetch and\n\
+       then upgrades it to prerender.\n\n\
+       CDP events for them are emitted separately but they share\n\
+       `PreloadPipelineId`."]
+  end
+
+  and PrerenderFinalStatus : sig
+    type _prerenderfinalstatus =
+      [ `Activated
+      | `Destroyed
+      | `LowEndDevice
+      | `InvalidSchemeRedirect
+      | `InvalidSchemeNavigation
+      | `NavigationRequestBlockedByCsp
+      | `MojoBinderPolicy
+      | `RendererProcessCrashed
+      | `RendererProcessKilled
+      | `Download
+      | `TriggerDestroyed
+      | `NavigationNotCommitted
+      | `NavigationBadHttpStatus
+      | `ClientCertRequested
+      | `NavigationRequestNetworkError
+      | `CancelAllHostsForTesting
+      | `DidFailLoad
+      | `Stop
+      | `SslCertificateError
+      | `LoginAuthRequested
+      | `UaChangeRequiresReload
+      | `BlockedByClient
+      | `AudioOutputDeviceRequested
+      | `MixedContent
+      | `TriggerBackgrounded
+      | `MemoryLimitExceeded
+      | `DataSaverEnabled
+      | `TriggerUrlHasEffectiveUrl
+      | `ActivatedBeforeStarted
+      | `InactivePageRestriction
+      | `StartFailed
+      | `TimeoutBackgrounded
+      | `CrossSiteRedirectInInitialNavigation
+      | `CrossSiteNavigationInInitialNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
+      | `ActivationNavigationParameterMismatch
+      | `ActivatedInBackground
+      | `EmbedderHostDisallowed
+      | `ActivationNavigationDestroyedBeforeSuccess
+      | `TabClosedByUserGesture
+      | `TabClosedWithoutUserGesture
+      | `PrimaryMainFrameRendererProcessCrashed
+      | `PrimaryMainFrameRendererProcessKilled
+      | `ActivationFramePolicyNotCompatible
+      | `PreloadingDisabled
+      | `BatterySaverEnabled
+      | `ActivatedDuringMainFrameNavigation
+      | `PreloadingUnsupportedByWebContents
+      | `CrossSiteRedirectInMainFrameNavigation
+      | `CrossSiteNavigationInMainFrameNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
+      | `MemoryPressureOnTrigger
+      | `MemoryPressureAfterTriggered
+      | `PrerenderingDisabledByDevTools
+      | `SpeculationRuleRemoved
+      | `ActivatedWithAuxiliaryBrowsingContexts
+      | `MaxNumOfRunningEagerPrerendersExceeded
+      | `MaxNumOfRunningNonEagerPrerendersExceeded
+      | `MaxNumOfRunningEmbedderPrerendersExceeded
+      | `PrerenderingUrlHasEffectiveUrl
+      | `RedirectedPrerenderingUrlHasEffectiveUrl
+      | `ActivationUrlHasEffectiveUrl
+      | `JavaScriptInterfaceAdded
+      | `JavaScriptInterfaceRemoved
+      | `AllPrerenderingCanceled
+      | `WindowClosed
+      | `SlowNetwork
+      | `OtherPrerenderedPageActivated
+      | `V8OptimizerDisabled
+      | `PrerenderFailedDuringPrefetch
+      | `BrowsingDataRemoved
+      | `PrerenderHostReused ]
+
+    val _prerenderfinalstatus_of_yojson :
+      Yojson.Basic.t -> _prerenderfinalstatus
+
+    val yojson_of__prerenderfinalstatus :
+      _prerenderfinalstatus -> Yojson.Basic.t
+
+    type t = _prerenderfinalstatus
+    [@@deriving yojson]
+    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
+  end = struct
+    type _prerenderfinalstatus =
+      [ `Activated
+      | `Destroyed
+      | `LowEndDevice
+      | `InvalidSchemeRedirect
+      | `InvalidSchemeNavigation
+      | `NavigationRequestBlockedByCsp
+      | `MojoBinderPolicy
+      | `RendererProcessCrashed
+      | `RendererProcessKilled
+      | `Download
+      | `TriggerDestroyed
+      | `NavigationNotCommitted
+      | `NavigationBadHttpStatus
+      | `ClientCertRequested
+      | `NavigationRequestNetworkError
+      | `CancelAllHostsForTesting
+      | `DidFailLoad
+      | `Stop
+      | `SslCertificateError
+      | `LoginAuthRequested
+      | `UaChangeRequiresReload
+      | `BlockedByClient
+      | `AudioOutputDeviceRequested
+      | `MixedContent
+      | `TriggerBackgrounded
+      | `MemoryLimitExceeded
+      | `DataSaverEnabled
+      | `TriggerUrlHasEffectiveUrl
+      | `ActivatedBeforeStarted
+      | `InactivePageRestriction
+      | `StartFailed
+      | `TimeoutBackgrounded
+      | `CrossSiteRedirectInInitialNavigation
+      | `CrossSiteNavigationInInitialNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
+      | `ActivationNavigationParameterMismatch
+      | `ActivatedInBackground
+      | `EmbedderHostDisallowed
+      | `ActivationNavigationDestroyedBeforeSuccess
+      | `TabClosedByUserGesture
+      | `TabClosedWithoutUserGesture
+      | `PrimaryMainFrameRendererProcessCrashed
+      | `PrimaryMainFrameRendererProcessKilled
+      | `ActivationFramePolicyNotCompatible
+      | `PreloadingDisabled
+      | `BatterySaverEnabled
+      | `ActivatedDuringMainFrameNavigation
+      | `PreloadingUnsupportedByWebContents
+      | `CrossSiteRedirectInMainFrameNavigation
+      | `CrossSiteNavigationInMainFrameNavigation
+      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
+      | `MemoryPressureOnTrigger
+      | `MemoryPressureAfterTriggered
+      | `PrerenderingDisabledByDevTools
+      | `SpeculationRuleRemoved
+      | `ActivatedWithAuxiliaryBrowsingContexts
+      | `MaxNumOfRunningEagerPrerendersExceeded
+      | `MaxNumOfRunningNonEagerPrerendersExceeded
+      | `MaxNumOfRunningEmbedderPrerendersExceeded
+      | `PrerenderingUrlHasEffectiveUrl
+      | `RedirectedPrerenderingUrlHasEffectiveUrl
+      | `ActivationUrlHasEffectiveUrl
+      | `JavaScriptInterfaceAdded
+      | `JavaScriptInterfaceRemoved
+      | `AllPrerenderingCanceled
+      | `WindowClosed
+      | `SlowNetwork
+      | `OtherPrerenderedPageActivated
+      | `V8OptimizerDisabled
+      | `PrerenderFailedDuringPrefetch
+      | `BrowsingDataRemoved
+      | `PrerenderHostReused ]
+
+    let _prerenderfinalstatus_of_yojson = function
+      | `String "Activated" -> `Activated
+      | `String "Destroyed" -> `Destroyed
+      | `String "LowEndDevice" -> `LowEndDevice
+      | `String "InvalidSchemeRedirect" -> `InvalidSchemeRedirect
+      | `String "InvalidSchemeNavigation" -> `InvalidSchemeNavigation
+      | `String "NavigationRequestBlockedByCsp" ->
+          `NavigationRequestBlockedByCsp
+      | `String "MojoBinderPolicy" -> `MojoBinderPolicy
+      | `String "RendererProcessCrashed" -> `RendererProcessCrashed
+      | `String "RendererProcessKilled" -> `RendererProcessKilled
+      | `String "Download" -> `Download
+      | `String "TriggerDestroyed" -> `TriggerDestroyed
+      | `String "NavigationNotCommitted" -> `NavigationNotCommitted
+      | `String "NavigationBadHttpStatus" -> `NavigationBadHttpStatus
+      | `String "ClientCertRequested" -> `ClientCertRequested
+      | `String "NavigationRequestNetworkError" ->
+          `NavigationRequestNetworkError
+      | `String "CancelAllHostsForTesting" -> `CancelAllHostsForTesting
+      | `String "DidFailLoad" -> `DidFailLoad
+      | `String "Stop" -> `Stop
+      | `String "SslCertificateError" -> `SslCertificateError
+      | `String "LoginAuthRequested" -> `LoginAuthRequested
+      | `String "UaChangeRequiresReload" -> `UaChangeRequiresReload
+      | `String "BlockedByClient" -> `BlockedByClient
+      | `String "AudioOutputDeviceRequested" -> `AudioOutputDeviceRequested
+      | `String "MixedContent" -> `MixedContent
+      | `String "TriggerBackgrounded" -> `TriggerBackgrounded
+      | `String "MemoryLimitExceeded" -> `MemoryLimitExceeded
+      | `String "DataSaverEnabled" -> `DataSaverEnabled
+      | `String "TriggerUrlHasEffectiveUrl" -> `TriggerUrlHasEffectiveUrl
+      | `String "ActivatedBeforeStarted" -> `ActivatedBeforeStarted
+      | `String "InactivePageRestriction" -> `InactivePageRestriction
+      | `String "StartFailed" -> `StartFailed
+      | `String "TimeoutBackgrounded" -> `TimeoutBackgrounded
+      | `String "CrossSiteRedirectInInitialNavigation" ->
+          `CrossSiteRedirectInInitialNavigation
+      | `String "CrossSiteNavigationInInitialNavigation" ->
+          `CrossSiteNavigationInInitialNavigation
+      | `String "SameSiteCrossOriginRedirectNotOptInInInitialNavigation" ->
+          `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
+      | `String "SameSiteCrossOriginNavigationNotOptInInInitialNavigation" ->
+          `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
+      | `String "ActivationNavigationParameterMismatch" ->
+          `ActivationNavigationParameterMismatch
+      | `String "ActivatedInBackground" -> `ActivatedInBackground
+      | `String "EmbedderHostDisallowed" -> `EmbedderHostDisallowed
+      | `String "ActivationNavigationDestroyedBeforeSuccess" ->
+          `ActivationNavigationDestroyedBeforeSuccess
+      | `String "TabClosedByUserGesture" -> `TabClosedByUserGesture
+      | `String "TabClosedWithoutUserGesture" -> `TabClosedWithoutUserGesture
+      | `String "PrimaryMainFrameRendererProcessCrashed" ->
+          `PrimaryMainFrameRendererProcessCrashed
+      | `String "PrimaryMainFrameRendererProcessKilled" ->
+          `PrimaryMainFrameRendererProcessKilled
+      | `String "ActivationFramePolicyNotCompatible" ->
+          `ActivationFramePolicyNotCompatible
+      | `String "PreloadingDisabled" -> `PreloadingDisabled
+      | `String "BatterySaverEnabled" -> `BatterySaverEnabled
+      | `String "ActivatedDuringMainFrameNavigation" ->
+          `ActivatedDuringMainFrameNavigation
+      | `String "PreloadingUnsupportedByWebContents" ->
+          `PreloadingUnsupportedByWebContents
+      | `String "CrossSiteRedirectInMainFrameNavigation" ->
+          `CrossSiteRedirectInMainFrameNavigation
+      | `String "CrossSiteNavigationInMainFrameNavigation" ->
+          `CrossSiteNavigationInMainFrameNavigation
+      | `String "SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation" ->
+          `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
+      | `String "SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation" ->
+          `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
+      | `String "MemoryPressureOnTrigger" -> `MemoryPressureOnTrigger
+      | `String "MemoryPressureAfterTriggered" -> `MemoryPressureAfterTriggered
+      | `String "PrerenderingDisabledByDevTools" ->
+          `PrerenderingDisabledByDevTools
+      | `String "SpeculationRuleRemoved" -> `SpeculationRuleRemoved
+      | `String "ActivatedWithAuxiliaryBrowsingContexts" ->
+          `ActivatedWithAuxiliaryBrowsingContexts
+      | `String "MaxNumOfRunningEagerPrerendersExceeded" ->
+          `MaxNumOfRunningEagerPrerendersExceeded
+      | `String "MaxNumOfRunningNonEagerPrerendersExceeded" ->
+          `MaxNumOfRunningNonEagerPrerendersExceeded
+      | `String "MaxNumOfRunningEmbedderPrerendersExceeded" ->
+          `MaxNumOfRunningEmbedderPrerendersExceeded
+      | `String "PrerenderingUrlHasEffectiveUrl" ->
+          `PrerenderingUrlHasEffectiveUrl
+      | `String "RedirectedPrerenderingUrlHasEffectiveUrl" ->
+          `RedirectedPrerenderingUrlHasEffectiveUrl
+      | `String "ActivationUrlHasEffectiveUrl" -> `ActivationUrlHasEffectiveUrl
+      | `String "JavaScriptInterfaceAdded" -> `JavaScriptInterfaceAdded
+      | `String "JavaScriptInterfaceRemoved" -> `JavaScriptInterfaceRemoved
+      | `String "AllPrerenderingCanceled" -> `AllPrerenderingCanceled
+      | `String "WindowClosed" -> `WindowClosed
+      | `String "SlowNetwork" -> `SlowNetwork
+      | `String "OtherPrerenderedPageActivated" ->
+          `OtherPrerenderedPageActivated
+      | `String "V8OptimizerDisabled" -> `V8OptimizerDisabled
+      | `String "PrerenderFailedDuringPrefetch" ->
+          `PrerenderFailedDuringPrefetch
+      | `String "BrowsingDataRemoved" -> `BrowsingDataRemoved
+      | `String "PrerenderHostReused" -> `PrerenderHostReused
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__prerenderfinalstatus = function
+      | `Activated -> `String "Activated"
+      | `Destroyed -> `String "Destroyed"
+      | `LowEndDevice -> `String "LowEndDevice"
+      | `InvalidSchemeRedirect -> `String "InvalidSchemeRedirect"
+      | `InvalidSchemeNavigation -> `String "InvalidSchemeNavigation"
+      | `NavigationRequestBlockedByCsp ->
+          `String "NavigationRequestBlockedByCsp"
+      | `MojoBinderPolicy -> `String "MojoBinderPolicy"
+      | `RendererProcessCrashed -> `String "RendererProcessCrashed"
+      | `RendererProcessKilled -> `String "RendererProcessKilled"
+      | `Download -> `String "Download"
+      | `TriggerDestroyed -> `String "TriggerDestroyed"
+      | `NavigationNotCommitted -> `String "NavigationNotCommitted"
+      | `NavigationBadHttpStatus -> `String "NavigationBadHttpStatus"
+      | `ClientCertRequested -> `String "ClientCertRequested"
+      | `NavigationRequestNetworkError ->
+          `String "NavigationRequestNetworkError"
+      | `CancelAllHostsForTesting -> `String "CancelAllHostsForTesting"
+      | `DidFailLoad -> `String "DidFailLoad"
+      | `Stop -> `String "Stop"
+      | `SslCertificateError -> `String "SslCertificateError"
+      | `LoginAuthRequested -> `String "LoginAuthRequested"
+      | `UaChangeRequiresReload -> `String "UaChangeRequiresReload"
+      | `BlockedByClient -> `String "BlockedByClient"
+      | `AudioOutputDeviceRequested -> `String "AudioOutputDeviceRequested"
+      | `MixedContent -> `String "MixedContent"
+      | `TriggerBackgrounded -> `String "TriggerBackgrounded"
+      | `MemoryLimitExceeded -> `String "MemoryLimitExceeded"
+      | `DataSaverEnabled -> `String "DataSaverEnabled"
+      | `TriggerUrlHasEffectiveUrl -> `String "TriggerUrlHasEffectiveUrl"
+      | `ActivatedBeforeStarted -> `String "ActivatedBeforeStarted"
+      | `InactivePageRestriction -> `String "InactivePageRestriction"
+      | `StartFailed -> `String "StartFailed"
+      | `TimeoutBackgrounded -> `String "TimeoutBackgrounded"
+      | `CrossSiteRedirectInInitialNavigation ->
+          `String "CrossSiteRedirectInInitialNavigation"
+      | `CrossSiteNavigationInInitialNavigation ->
+          `String "CrossSiteNavigationInInitialNavigation"
+      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation ->
+          `String "SameSiteCrossOriginRedirectNotOptInInInitialNavigation"
+      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation ->
+          `String "SameSiteCrossOriginNavigationNotOptInInInitialNavigation"
+      | `ActivationNavigationParameterMismatch ->
+          `String "ActivationNavigationParameterMismatch"
+      | `ActivatedInBackground -> `String "ActivatedInBackground"
+      | `EmbedderHostDisallowed -> `String "EmbedderHostDisallowed"
+      | `ActivationNavigationDestroyedBeforeSuccess ->
+          `String "ActivationNavigationDestroyedBeforeSuccess"
+      | `TabClosedByUserGesture -> `String "TabClosedByUserGesture"
+      | `TabClosedWithoutUserGesture -> `String "TabClosedWithoutUserGesture"
+      | `PrimaryMainFrameRendererProcessCrashed ->
+          `String "PrimaryMainFrameRendererProcessCrashed"
+      | `PrimaryMainFrameRendererProcessKilled ->
+          `String "PrimaryMainFrameRendererProcessKilled"
+      | `ActivationFramePolicyNotCompatible ->
+          `String "ActivationFramePolicyNotCompatible"
+      | `PreloadingDisabled -> `String "PreloadingDisabled"
+      | `BatterySaverEnabled -> `String "BatterySaverEnabled"
+      | `ActivatedDuringMainFrameNavigation ->
+          `String "ActivatedDuringMainFrameNavigation"
+      | `PreloadingUnsupportedByWebContents ->
+          `String "PreloadingUnsupportedByWebContents"
+      | `CrossSiteRedirectInMainFrameNavigation ->
+          `String "CrossSiteRedirectInMainFrameNavigation"
+      | `CrossSiteNavigationInMainFrameNavigation ->
+          `String "CrossSiteNavigationInMainFrameNavigation"
+      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation ->
+          `String "SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation"
+      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation ->
+          `String "SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation"
+      | `MemoryPressureOnTrigger -> `String "MemoryPressureOnTrigger"
+      | `MemoryPressureAfterTriggered -> `String "MemoryPressureAfterTriggered"
+      | `PrerenderingDisabledByDevTools ->
+          `String "PrerenderingDisabledByDevTools"
+      | `SpeculationRuleRemoved -> `String "SpeculationRuleRemoved"
+      | `ActivatedWithAuxiliaryBrowsingContexts ->
+          `String "ActivatedWithAuxiliaryBrowsingContexts"
+      | `MaxNumOfRunningEagerPrerendersExceeded ->
+          `String "MaxNumOfRunningEagerPrerendersExceeded"
+      | `MaxNumOfRunningNonEagerPrerendersExceeded ->
+          `String "MaxNumOfRunningNonEagerPrerendersExceeded"
+      | `MaxNumOfRunningEmbedderPrerendersExceeded ->
+          `String "MaxNumOfRunningEmbedderPrerendersExceeded"
+      | `PrerenderingUrlHasEffectiveUrl ->
+          `String "PrerenderingUrlHasEffectiveUrl"
+      | `RedirectedPrerenderingUrlHasEffectiveUrl ->
+          `String "RedirectedPrerenderingUrlHasEffectiveUrl"
+      | `ActivationUrlHasEffectiveUrl -> `String "ActivationUrlHasEffectiveUrl"
+      | `JavaScriptInterfaceAdded -> `String "JavaScriptInterfaceAdded"
+      | `JavaScriptInterfaceRemoved -> `String "JavaScriptInterfaceRemoved"
+      | `AllPrerenderingCanceled -> `String "AllPrerenderingCanceled"
+      | `WindowClosed -> `String "WindowClosed"
+      | `SlowNetwork -> `String "SlowNetwork"
+      | `OtherPrerenderedPageActivated ->
+          `String "OtherPrerenderedPageActivated"
+      | `V8OptimizerDisabled -> `String "V8OptimizerDisabled"
+      | `PrerenderFailedDuringPrefetch ->
+          `String "PrerenderFailedDuringPrefetch"
+      | `BrowsingDataRemoved -> `String "BrowsingDataRemoved"
+      | `PrerenderHostReused -> `String "PrerenderHostReused"
+
+    type t = _prerenderfinalstatus
+    [@@deriving yojson]
+    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
+  end
+
+  and PreloadingStatus : sig
+    type _preloadingstatus =
+      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
+
+    val _preloadingstatus_of_yojson : Yojson.Basic.t -> _preloadingstatus
+    val yojson_of__preloadingstatus : _preloadingstatus -> Yojson.Basic.t
+
+    type t = _preloadingstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
+       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
+  end = struct
+    type _preloadingstatus =
+      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
+
+    let _preloadingstatus_of_yojson = function
+      | `String "Pending" -> `Pending
+      | `String "Running" -> `Running
+      | `String "Ready" -> `Ready
+      | `String "Success" -> `Success
+      | `String "Failure" -> `Failure
+      | `String "NotSupported" -> `NotSupported
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__preloadingstatus = function
+      | `Pending -> `String "Pending"
+      | `Running -> `String "Running"
+      | `Ready -> `String "Ready"
+      | `Success -> `String "Success"
+      | `Failure -> `String "Failure"
+      | `NotSupported -> `String "NotSupported"
+
+    type t = _preloadingstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
+       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
+  end
+
+  and PrefetchStatus : sig
+    type _prefetchstatus =
+      [ `PrefetchAllowed
+      | `PrefetchFailedIneligibleRedirect
+      | `PrefetchFailedInvalidRedirect
+      | `PrefetchFailedMIMENotSupported
+      | `PrefetchFailedNetError
+      | `PrefetchFailedNon2XX
+      | `PrefetchEvictedAfterBrowsingDataRemoved
+      | `PrefetchEvictedAfterCandidateRemoved
+      | `PrefetchEvictedForNewerPrefetch
+      | `PrefetchHeldback
+      | `PrefetchIneligibleRetryAfter
+      | `PrefetchIsPrivacyDecoy
+      | `PrefetchIsStale
+      | `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `PrefetchNotEligibleDataSaverEnabled
+      | `PrefetchNotEligibleExistingProxy
+      | `PrefetchNotEligibleHostIsNonUnique
+      | `PrefetchNotEligibleNonDefaultStoragePartition
+      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
+      | `PrefetchNotEligibleSchemeIsNotHttps
+      | `PrefetchNotEligibleUserHasCookies
+      | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
+      | `PrefetchNotEligibleRedirectFromServiceWorker
+      | `PrefetchNotEligibleRedirectToServiceWorker
+      | `PrefetchNotEligibleBatterySaverEnabled
+      | `PrefetchNotEligiblePreloadingDisabled
+      | `PrefetchNotFinishedInTime
+      | `PrefetchNotStarted
+      | `PrefetchNotUsedCookiesChanged
+      | `PrefetchProxyNotAvailable
+      | `PrefetchResponseUsed
+      | `PrefetchSuccessfulButNotUsed
+      | `PrefetchNotUsedProbeFailed ]
+
+    val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
+    val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
+
+    type t = _prefetchstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
+       filter out the ones that aren't necessary to the developers."]
+  end = struct
+    type _prefetchstatus =
+      [ `PrefetchAllowed
+      | `PrefetchFailedIneligibleRedirect
+      | `PrefetchFailedInvalidRedirect
+      | `PrefetchFailedMIMENotSupported
+      | `PrefetchFailedNetError
+      | `PrefetchFailedNon2XX
+      | `PrefetchEvictedAfterBrowsingDataRemoved
+      | `PrefetchEvictedAfterCandidateRemoved
+      | `PrefetchEvictedForNewerPrefetch
+      | `PrefetchHeldback
+      | `PrefetchIneligibleRetryAfter
+      | `PrefetchIsPrivacyDecoy
+      | `PrefetchIsStale
+      | `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `PrefetchNotEligibleDataSaverEnabled
+      | `PrefetchNotEligibleExistingProxy
+      | `PrefetchNotEligibleHostIsNonUnique
+      | `PrefetchNotEligibleNonDefaultStoragePartition
+      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
+      | `PrefetchNotEligibleSchemeIsNotHttps
+      | `PrefetchNotEligibleUserHasCookies
+      | `PrefetchNotEligibleUserHasServiceWorker
+      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
+      | `PrefetchNotEligibleRedirectFromServiceWorker
+      | `PrefetchNotEligibleRedirectToServiceWorker
+      | `PrefetchNotEligibleBatterySaverEnabled
+      | `PrefetchNotEligiblePreloadingDisabled
+      | `PrefetchNotFinishedInTime
+      | `PrefetchNotStarted
+      | `PrefetchNotUsedCookiesChanged
+      | `PrefetchProxyNotAvailable
+      | `PrefetchResponseUsed
+      | `PrefetchSuccessfulButNotUsed
+      | `PrefetchNotUsedProbeFailed ]
+
+    let _prefetchstatus_of_yojson = function
+      | `String "PrefetchAllowed" -> `PrefetchAllowed
+      | `String "PrefetchFailedIneligibleRedirect" ->
+          `PrefetchFailedIneligibleRedirect
+      | `String "PrefetchFailedInvalidRedirect" ->
+          `PrefetchFailedInvalidRedirect
+      | `String "PrefetchFailedMIMENotSupported" ->
+          `PrefetchFailedMIMENotSupported
+      | `String "PrefetchFailedNetError" -> `PrefetchFailedNetError
+      | `String "PrefetchFailedNon2XX" -> `PrefetchFailedNon2XX
+      | `String "PrefetchEvictedAfterBrowsingDataRemoved" ->
+          `PrefetchEvictedAfterBrowsingDataRemoved
+      | `String "PrefetchEvictedAfterCandidateRemoved" ->
+          `PrefetchEvictedAfterCandidateRemoved
+      | `String "PrefetchEvictedForNewerPrefetch" ->
+          `PrefetchEvictedForNewerPrefetch
+      | `String "PrefetchHeldback" -> `PrefetchHeldback
+      | `String "PrefetchIneligibleRetryAfter" -> `PrefetchIneligibleRetryAfter
+      | `String "PrefetchIsPrivacyDecoy" -> `PrefetchIsPrivacyDecoy
+      | `String "PrefetchIsStale" -> `PrefetchIsStale
+      | `String "PrefetchNotEligibleBrowserContextOffTheRecord" ->
+          `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `String "PrefetchNotEligibleDataSaverEnabled" ->
+          `PrefetchNotEligibleDataSaverEnabled
+      | `String "PrefetchNotEligibleExistingProxy" ->
+          `PrefetchNotEligibleExistingProxy
+      | `String "PrefetchNotEligibleHostIsNonUnique" ->
+          `PrefetchNotEligibleHostIsNonUnique
+      | `String "PrefetchNotEligibleNonDefaultStoragePartition" ->
+          `PrefetchNotEligibleNonDefaultStoragePartition
+      | `String "PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy" ->
+          `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
+      | `String "PrefetchNotEligibleSchemeIsNotHttps" ->
+          `PrefetchNotEligibleSchemeIsNotHttps
+      | `String "PrefetchNotEligibleUserHasCookies" ->
+          `PrefetchNotEligibleUserHasCookies
+      | `String "PrefetchNotEligibleUserHasServiceWorker" ->
+          `PrefetchNotEligibleUserHasServiceWorker
+      | `String "PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler" ->
+          `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
+      | `String "PrefetchNotEligibleRedirectFromServiceWorker" ->
+          `PrefetchNotEligibleRedirectFromServiceWorker
+      | `String "PrefetchNotEligibleRedirectToServiceWorker" ->
+          `PrefetchNotEligibleRedirectToServiceWorker
+      | `String "PrefetchNotEligibleBatterySaverEnabled" ->
+          `PrefetchNotEligibleBatterySaverEnabled
+      | `String "PrefetchNotEligiblePreloadingDisabled" ->
+          `PrefetchNotEligiblePreloadingDisabled
+      | `String "PrefetchNotFinishedInTime" -> `PrefetchNotFinishedInTime
+      | `String "PrefetchNotStarted" -> `PrefetchNotStarted
+      | `String "PrefetchNotUsedCookiesChanged" ->
+          `PrefetchNotUsedCookiesChanged
+      | `String "PrefetchProxyNotAvailable" -> `PrefetchProxyNotAvailable
+      | `String "PrefetchResponseUsed" -> `PrefetchResponseUsed
+      | `String "PrefetchSuccessfulButNotUsed" -> `PrefetchSuccessfulButNotUsed
+      | `String "PrefetchNotUsedProbeFailed" -> `PrefetchNotUsedProbeFailed
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__prefetchstatus = function
+      | `PrefetchAllowed -> `String "PrefetchAllowed"
+      | `PrefetchFailedIneligibleRedirect ->
+          `String "PrefetchFailedIneligibleRedirect"
+      | `PrefetchFailedInvalidRedirect ->
+          `String "PrefetchFailedInvalidRedirect"
+      | `PrefetchFailedMIMENotSupported ->
+          `String "PrefetchFailedMIMENotSupported"
+      | `PrefetchFailedNetError -> `String "PrefetchFailedNetError"
+      | `PrefetchFailedNon2XX -> `String "PrefetchFailedNon2XX"
+      | `PrefetchEvictedAfterBrowsingDataRemoved ->
+          `String "PrefetchEvictedAfterBrowsingDataRemoved"
+      | `PrefetchEvictedAfterCandidateRemoved ->
+          `String "PrefetchEvictedAfterCandidateRemoved"
+      | `PrefetchEvictedForNewerPrefetch ->
+          `String "PrefetchEvictedForNewerPrefetch"
+      | `PrefetchHeldback -> `String "PrefetchHeldback"
+      | `PrefetchIneligibleRetryAfter -> `String "PrefetchIneligibleRetryAfter"
+      | `PrefetchIsPrivacyDecoy -> `String "PrefetchIsPrivacyDecoy"
+      | `PrefetchIsStale -> `String "PrefetchIsStale"
+      | `PrefetchNotEligibleBrowserContextOffTheRecord ->
+          `String "PrefetchNotEligibleBrowserContextOffTheRecord"
+      | `PrefetchNotEligibleDataSaverEnabled ->
+          `String "PrefetchNotEligibleDataSaverEnabled"
+      | `PrefetchNotEligibleExistingProxy ->
+          `String "PrefetchNotEligibleExistingProxy"
+      | `PrefetchNotEligibleHostIsNonUnique ->
+          `String "PrefetchNotEligibleHostIsNonUnique"
+      | `PrefetchNotEligibleNonDefaultStoragePartition ->
+          `String "PrefetchNotEligibleNonDefaultStoragePartition"
+      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy ->
+          `String "PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy"
+      | `PrefetchNotEligibleSchemeIsNotHttps ->
+          `String "PrefetchNotEligibleSchemeIsNotHttps"
+      | `PrefetchNotEligibleUserHasCookies ->
+          `String "PrefetchNotEligibleUserHasCookies"
+      | `PrefetchNotEligibleUserHasServiceWorker ->
+          `String "PrefetchNotEligibleUserHasServiceWorker"
+      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler ->
+          `String "PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler"
+      | `PrefetchNotEligibleRedirectFromServiceWorker ->
+          `String "PrefetchNotEligibleRedirectFromServiceWorker"
+      | `PrefetchNotEligibleRedirectToServiceWorker ->
+          `String "PrefetchNotEligibleRedirectToServiceWorker"
+      | `PrefetchNotEligibleBatterySaverEnabled ->
+          `String "PrefetchNotEligibleBatterySaverEnabled"
+      | `PrefetchNotEligiblePreloadingDisabled ->
+          `String "PrefetchNotEligiblePreloadingDisabled"
+      | `PrefetchNotFinishedInTime -> `String "PrefetchNotFinishedInTime"
+      | `PrefetchNotStarted -> `String "PrefetchNotStarted"
+      | `PrefetchNotUsedCookiesChanged ->
+          `String "PrefetchNotUsedCookiesChanged"
+      | `PrefetchProxyNotAvailable -> `String "PrefetchProxyNotAvailable"
+      | `PrefetchResponseUsed -> `String "PrefetchResponseUsed"
+      | `PrefetchSuccessfulButNotUsed -> `String "PrefetchSuccessfulButNotUsed"
+      | `PrefetchNotUsedProbeFailed -> `String "PrefetchNotUsedProbeFailed"
+
+    type t = _prefetchstatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
+       filter out the ones that aren't necessary to the developers."]
+  end
+
+  and PrerenderMismatchedHeaders : sig
+    type t = {
+      headerName : string;
+          [@key "headerName"] [@ocaml.doc "No description provided"]
+      initialValue : string option;
+          [@key "initialValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      activationValue : string option;
+          [@key "activationValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Information of headers to be displayed when the header mismatch \
+       occurred."]
+  end = struct
+    type t = {
+      headerName : string;
+          [@key "headerName"] [@ocaml.doc "No description provided"]
+      initialValue : string option;
+          [@key "initialValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      activationValue : string option;
+          [@key "activationValue"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Information of headers to be displayed when the header mismatch \
+       occurred."]
   end
 end
 
@@ -33047,376 +35929,6 @@ end = struct
   end
 end
 
-and Fetch : sig
-  module rec RequestId : sig
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Unique request identifier.\n\
-       Note that this does not identify individual HTTP requests that are part \
-       of\n\
-       a network request."]
-  end
-
-  and RequestStage : sig
-    type _requeststage = [ `Request | `Response ]
-
-    val _requeststage_of_yojson : Yojson.Basic.t -> _requeststage
-    val yojson_of__requeststage : _requeststage -> Yojson.Basic.t
-
-    type t = _requeststage
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stages of the request to handle. Request will intercept before the \
-       request is\n\
-       sent. Response will intercept after the response is received (but \
-       before response\n\
-       body is received)."]
-  end
-
-  and RequestPattern : sig
-    type t = {
-      urlPattern : string option;
-          [@key "urlPattern"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Wildcards (`'*'` -> zero or more, `'?'` -> exactly one) are \
-             allowed. Escape character is\n\
-             backslash. Omitting is equivalent to `\"*\"`."]
-      resourceType : Network.ResourceType.t option;
-          [@key "resourceType"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If set, only requests for matching resource types will be \
-             intercepted."]
-      requestStage : RequestStage.t option;
-          [@key "requestStage"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Stage at which to begin intercepting requests. Default is Request."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and HeaderEntry : sig
-    type t = {
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Response HTTP header entry"]
-  end
-
-  and AuthChallenge : sig
-    type _authchallenge_source = [ `Server | `Proxy ]
-
-    val _authchallenge_source_of_yojson :
-      Yojson.Basic.t -> _authchallenge_source
-
-    val yojson_of__authchallenge_source :
-      _authchallenge_source -> Yojson.Basic.t
-
-    type t = {
-      source : _authchallenge_source option;
-          [@key "source"]
-          [@yojson.option]
-          [@ocaml.doc "Source of the authentication challenge."]
-      origin : string; [@key "origin"] [@ocaml.doc "Origin of the challenger."]
-      scheme : string;
-          [@key "scheme"]
-          [@ocaml.doc "The authentication scheme used, such as basic or digest"]
-      realm : string;
-          [@key "realm"]
-          [@ocaml.doc "The realm of the challenge. May be empty."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "Authorization challenge for HTTP status code 401 or 407."]
-  end
-
-  and AuthChallengeResponse : sig
-    type _authchallengeresponse_response =
-      [ `Default | `CancelAuth | `ProvideCredentials ]
-
-    val _authchallengeresponse_response_of_yojson :
-      Yojson.Basic.t -> _authchallengeresponse_response
-
-    val yojson_of__authchallengeresponse_response :
-      _authchallengeresponse_response -> Yojson.Basic.t
-
-    type t = {
-      response : _authchallengeresponse_response;
-          [@key "response"]
-          [@ocaml.doc
-            "The decision on what to do in response to the authorization \
-             challenge.  Default means\n\
-             deferring to the default behavior of the net stack, which will \
-             likely either the Cancel\n\
-             authentication or display a popup dialog box."]
-      username : string option;
-          [@key "username"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The username to provide, possibly empty. Should only be set if \
-             response is\n\
-             ProvideCredentials."]
-      password : string option;
-          [@key "password"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The password to provide, possibly empty. Should only be set if \
-             response is\n\
-             ProvideCredentials."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Response to an AuthChallenge."]
-  end
-end = struct
-  module rec RequestId : sig
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Unique request identifier.\n\
-       Note that this does not identify individual HTTP requests that are part \
-       of\n\
-       a network request."]
-  end = struct
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Unique request identifier.\n\
-       Note that this does not identify individual HTTP requests that are part \
-       of\n\
-       a network request."]
-  end
-
-  and RequestStage : sig
-    type _requeststage = [ `Request | `Response ]
-
-    val _requeststage_of_yojson : Yojson.Basic.t -> _requeststage
-    val yojson_of__requeststage : _requeststage -> Yojson.Basic.t
-
-    type t = _requeststage
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stages of the request to handle. Request will intercept before the \
-       request is\n\
-       sent. Response will intercept after the response is received (but \
-       before response\n\
-       body is received)."]
-  end = struct
-    type _requeststage = [ `Request | `Response ]
-
-    let _requeststage_of_yojson = function
-      | `String "Request" -> `Request
-      | `String "Response" -> `Response
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__requeststage = function
-      | `Request -> `String "Request"
-      | `Response -> `String "Response"
-
-    type t = _requeststage
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stages of the request to handle. Request will intercept before the \
-       request is\n\
-       sent. Response will intercept after the response is received (but \
-       before response\n\
-       body is received)."]
-  end
-
-  and RequestPattern : sig
-    type t = {
-      urlPattern : string option;
-          [@key "urlPattern"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Wildcards (`'*'` -> zero or more, `'?'` -> exactly one) are \
-             allowed. Escape character is\n\
-             backslash. Omitting is equivalent to `\"*\"`."]
-      resourceType : Network.ResourceType.t option;
-          [@key "resourceType"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If set, only requests for matching resource types will be \
-             intercepted."]
-      requestStage : RequestStage.t option;
-          [@key "requestStage"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Stage at which to begin intercepting requests. Default is Request."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type t = {
-      urlPattern : string option;
-          [@key "urlPattern"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Wildcards (`'*'` -> zero or more, `'?'` -> exactly one) are \
-             allowed. Escape character is\n\
-             backslash. Omitting is equivalent to `\"*\"`."]
-      resourceType : Network.ResourceType.t option;
-          [@key "resourceType"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If set, only requests for matching resource types will be \
-             intercepted."]
-      requestStage : RequestStage.t option;
-          [@key "requestStage"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Stage at which to begin intercepting requests. Default is Request."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and HeaderEntry : sig
-    type t = {
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Response HTTP header entry"]
-  end = struct
-    type t = {
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Response HTTP header entry"]
-  end
-
-  and AuthChallenge : sig
-    type _authchallenge_source = [ `Server | `Proxy ]
-
-    val _authchallenge_source_of_yojson :
-      Yojson.Basic.t -> _authchallenge_source
-
-    val yojson_of__authchallenge_source :
-      _authchallenge_source -> Yojson.Basic.t
-
-    type t = {
-      source : _authchallenge_source option;
-          [@key "source"]
-          [@yojson.option]
-          [@ocaml.doc "Source of the authentication challenge."]
-      origin : string; [@key "origin"] [@ocaml.doc "Origin of the challenger."]
-      scheme : string;
-          [@key "scheme"]
-          [@ocaml.doc "The authentication scheme used, such as basic or digest"]
-      realm : string;
-          [@key "realm"]
-          [@ocaml.doc "The realm of the challenge. May be empty."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "Authorization challenge for HTTP status code 401 or 407."]
-  end = struct
-    type _authchallenge_source = [ `Server | `Proxy ]
-
-    let _authchallenge_source_of_yojson = function
-      | `String "Server" -> `Server
-      | `String "Proxy" -> `Proxy
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__authchallenge_source = function
-      | `Server -> `String "Server"
-      | `Proxy -> `String "Proxy"
-
-    type t = {
-      source : _authchallenge_source option;
-          [@key "source"]
-          [@yojson.option]
-          [@ocaml.doc "Source of the authentication challenge."]
-      origin : string; [@key "origin"] [@ocaml.doc "Origin of the challenger."]
-      scheme : string;
-          [@key "scheme"]
-          [@ocaml.doc "The authentication scheme used, such as basic or digest"]
-      realm : string;
-          [@key "realm"]
-          [@ocaml.doc "The realm of the challenge. May be empty."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "Authorization challenge for HTTP status code 401 or 407."]
-  end
-
-  and AuthChallengeResponse : sig
-    type _authchallengeresponse_response =
-      [ `Default | `CancelAuth | `ProvideCredentials ]
-
-    val _authchallengeresponse_response_of_yojson :
-      Yojson.Basic.t -> _authchallengeresponse_response
-
-    val yojson_of__authchallengeresponse_response :
-      _authchallengeresponse_response -> Yojson.Basic.t
-
-    type t = {
-      response : _authchallengeresponse_response;
-          [@key "response"]
-          [@ocaml.doc
-            "The decision on what to do in response to the authorization \
-             challenge.  Default means\n\
-             deferring to the default behavior of the net stack, which will \
-             likely either the Cancel\n\
-             authentication or display a popup dialog box."]
-      username : string option;
-          [@key "username"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The username to provide, possibly empty. Should only be set if \
-             response is\n\
-             ProvideCredentials."]
-      password : string option;
-          [@key "password"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The password to provide, possibly empty. Should only be set if \
-             response is\n\
-             ProvideCredentials."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Response to an AuthChallenge."]
-  end = struct
-    type _authchallengeresponse_response =
-      [ `Default | `CancelAuth | `ProvideCredentials ]
-
-    let _authchallengeresponse_response_of_yojson = function
-      | `String "Default" -> `Default
-      | `String "CancelAuth" -> `CancelAuth
-      | `String "ProvideCredentials" -> `ProvideCredentials
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__authchallengeresponse_response = function
-      | `Default -> `String "Default"
-      | `CancelAuth -> `String "CancelAuth"
-      | `ProvideCredentials -> `String "ProvideCredentials"
-
-    type t = {
-      response : _authchallengeresponse_response;
-          [@key "response"]
-          [@ocaml.doc
-            "The decision on what to do in response to the authorization \
-             challenge.  Default means\n\
-             deferring to the default behavior of the net stack, which will \
-             likely either the Cancel\n\
-             authentication or display a popup dialog box."]
-      username : string option;
-          [@key "username"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The username to provide, possibly empty. Should only be set if \
-             response is\n\
-             ProvideCredentials."]
-      password : string option;
-          [@key "password"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The password to provide, possibly empty. Should only be set if \
-             response is\n\
-             ProvideCredentials."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Response to an AuthChallenge."]
-  end
-end
-
 and WebAudio : sig
   module rec GraphObjectId : sig
     type t = string
@@ -34540,2518 +37052,6 @@ end = struct
              https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-displayname"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-end
-
-and Media : sig
-  module rec PlayerId : sig
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Players will get an ID that is unique within the agent context."]
-  end
-
-  and Timestamp : sig
-    type t = number [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and PlayerMessage : sig
-    type _playermessage_level = [ `error | `warning | `info | `debug ]
-
-    val _playermessage_level_of_yojson : Yojson.Basic.t -> _playermessage_level
-    val yojson_of__playermessage_level : _playermessage_level -> Yojson.Basic.t
-
-    type t = {
-      level : _playermessage_level;
-          [@key "level"]
-          [@ocaml.doc
-            "Keep in sync with MediaLogMessageLevel\n\
-             We are currently keeping the message level 'error' separate from \
-             the\n\
-             PlayerError type because right now they represent different things,\n\
-             this one being a DVLOG(ERROR) style log message that gets printed\n\
-             based on what log level is selected in the UI, and the other is a\n\
-             representation of a media::PipelineStatus object. Soon however \
-             we're\n\
-             going to be moving away from using PipelineStatus for errors and\n\
-             introducing a new error type which should hopefully let us \
-             integrate\n\
-             the error log level into the PlayerError type."]
-      message : string; [@key "message"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Have one type per entry in MediaLogRecord::Type\nCorresponds to kMessage"]
-  end
-
-  and PlayerProperty : sig
-    type t = {
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaPropertyChange"]
-  end
-
-  and PlayerEvent : sig
-    type t = {
-      timestamp : Timestamp.t;
-          [@key "timestamp"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaEventTriggered"]
-  end
-
-  and PlayerErrorSourceLocation : sig
-    type t = {
-      file : string; [@key "file"] [@ocaml.doc "No description provided"]
-      line : number; [@key "line"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Represents logged source line numbers reported in an error.\n\
-       NOTE: file and line are from chromium c++ implementation code, not js."]
-  end
-
-  and PlayerError : sig
-    type t = {
-      errorType : string;
-          [@key "errorType"] [@ocaml.doc "No description provided"]
-      code : number;
-          [@key "code"]
-          [@ocaml.doc
-            "Code is the numeric enum entry for a specific set of error codes, \
-             such\n\
-             as PipelineStatusCodes in media/base/pipeline_status.h"]
-      stack : PlayerErrorSourceLocation.t list;
-          [@key "stack"]
-          [@ocaml.doc
-            "A trace of where this error was caused / where it passed through."]
-      cause : PlayerError.t list;
-          [@key "cause"]
-          [@ocaml.doc
-            "Errors potentially have a root cause error, ie, a DecoderError \
-             might be\n\
-             caused by an WindowsError"]
-      data : assoc;
-          [@key "data"]
-          [@ocaml.doc
-            "Extra data attached to an error, such as an HRESULT, Video Codec, \
-             etc."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaError"]
-  end
-end = struct
-  module rec PlayerId : sig
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Players will get an ID that is unique within the agent context."]
-  end = struct
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Players will get an ID that is unique within the agent context."]
-  end
-
-  and Timestamp : sig
-    type t = number [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type t = number [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and PlayerMessage : sig
-    type _playermessage_level = [ `error | `warning | `info | `debug ]
-
-    val _playermessage_level_of_yojson : Yojson.Basic.t -> _playermessage_level
-    val yojson_of__playermessage_level : _playermessage_level -> Yojson.Basic.t
-
-    type t = {
-      level : _playermessage_level;
-          [@key "level"]
-          [@ocaml.doc
-            "Keep in sync with MediaLogMessageLevel\n\
-             We are currently keeping the message level 'error' separate from \
-             the\n\
-             PlayerError type because right now they represent different things,\n\
-             this one being a DVLOG(ERROR) style log message that gets printed\n\
-             based on what log level is selected in the UI, and the other is a\n\
-             representation of a media::PipelineStatus object. Soon however \
-             we're\n\
-             going to be moving away from using PipelineStatus for errors and\n\
-             introducing a new error type which should hopefully let us \
-             integrate\n\
-             the error log level into the PlayerError type."]
-      message : string; [@key "message"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Have one type per entry in MediaLogRecord::Type\nCorresponds to kMessage"]
-  end = struct
-    type _playermessage_level = [ `error | `warning | `info | `debug ]
-
-    let _playermessage_level_of_yojson = function
-      | `String "error" -> `error
-      | `String "warning" -> `warning
-      | `String "info" -> `info
-      | `String "debug" -> `debug
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__playermessage_level = function
-      | `error -> `String "error"
-      | `warning -> `String "warning"
-      | `info -> `String "info"
-      | `debug -> `String "debug"
-
-    type t = {
-      level : _playermessage_level;
-          [@key "level"]
-          [@ocaml.doc
-            "Keep in sync with MediaLogMessageLevel\n\
-             We are currently keeping the message level 'error' separate from \
-             the\n\
-             PlayerError type because right now they represent different things,\n\
-             this one being a DVLOG(ERROR) style log message that gets printed\n\
-             based on what log level is selected in the UI, and the other is a\n\
-             representation of a media::PipelineStatus object. Soon however \
-             we're\n\
-             going to be moving away from using PipelineStatus for errors and\n\
-             introducing a new error type which should hopefully let us \
-             integrate\n\
-             the error log level into the PlayerError type."]
-      message : string; [@key "message"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Have one type per entry in MediaLogRecord::Type\nCorresponds to kMessage"]
-  end
-
-  and PlayerProperty : sig
-    type t = {
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaPropertyChange"]
-  end = struct
-    type t = {
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaPropertyChange"]
-  end
-
-  and PlayerEvent : sig
-    type t = {
-      timestamp : Timestamp.t;
-          [@key "timestamp"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaEventTriggered"]
-  end = struct
-    type t = {
-      timestamp : Timestamp.t;
-          [@key "timestamp"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaEventTriggered"]
-  end
-
-  and PlayerErrorSourceLocation : sig
-    type t = {
-      file : string; [@key "file"] [@ocaml.doc "No description provided"]
-      line : number; [@key "line"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Represents logged source line numbers reported in an error.\n\
-       NOTE: file and line are from chromium c++ implementation code, not js."]
-  end = struct
-    type t = {
-      file : string; [@key "file"] [@ocaml.doc "No description provided"]
-      line : number; [@key "line"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Represents logged source line numbers reported in an error.\n\
-       NOTE: file and line are from chromium c++ implementation code, not js."]
-  end
-
-  and PlayerError : sig
-    type t = {
-      errorType : string;
-          [@key "errorType"] [@ocaml.doc "No description provided"]
-      code : number;
-          [@key "code"]
-          [@ocaml.doc
-            "Code is the numeric enum entry for a specific set of error codes, \
-             such\n\
-             as PipelineStatusCodes in media/base/pipeline_status.h"]
-      stack : PlayerErrorSourceLocation.t list;
-          [@key "stack"]
-          [@ocaml.doc
-            "A trace of where this error was caused / where it passed through."]
-      cause : PlayerError.t list;
-          [@key "cause"]
-          [@ocaml.doc
-            "Errors potentially have a root cause error, ie, a DecoderError \
-             might be\n\
-             caused by an WindowsError"]
-      data : assoc;
-          [@key "data"]
-          [@ocaml.doc
-            "Extra data attached to an error, such as an HRESULT, Video Codec, \
-             etc."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaError"]
-  end = struct
-    type t = {
-      errorType : string;
-          [@key "errorType"] [@ocaml.doc "No description provided"]
-      code : number;
-          [@key "code"]
-          [@ocaml.doc
-            "Code is the numeric enum entry for a specific set of error codes, \
-             such\n\
-             as PipelineStatusCodes in media/base/pipeline_status.h"]
-      stack : PlayerErrorSourceLocation.t list;
-          [@key "stack"]
-          [@ocaml.doc
-            "A trace of where this error was caused / where it passed through."]
-      cause : PlayerError.t list;
-          [@key "cause"]
-          [@ocaml.doc
-            "Errors potentially have a root cause error, ie, a DecoderError \
-             might be\n\
-             caused by an WindowsError"]
-      data : assoc;
-          [@key "data"]
-          [@ocaml.doc
-            "Extra data attached to an error, such as an HRESULT, Video Codec, \
-             etc."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaError"]
-  end
-end
-
-and DeviceAccess : sig
-  module rec RequestId : sig
-    type t = string [@@deriving yojson] [@@ocaml.doc "Device request id."]
-  end
-
-  and DeviceId : sig
-    type t = string [@@deriving yojson] [@@ocaml.doc "A device id."]
-  end
-
-  and PromptDevice : sig
-    type t = {
-      id : DeviceId.t; [@key "id"] [@ocaml.doc "No description provided"]
-      name : string;
-          [@key "name"]
-          [@ocaml.doc
-            "Display name as it appears in a device request user prompt."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Device information displayed in a user prompt to select a device."]
-  end
-end = struct
-  module rec RequestId : sig
-    type t = string [@@deriving yojson] [@@ocaml.doc "Device request id."]
-  end = struct
-    type t = string [@@deriving yojson] [@@ocaml.doc "Device request id."]
-  end
-
-  and DeviceId : sig
-    type t = string [@@deriving yojson] [@@ocaml.doc "A device id."]
-  end = struct
-    type t = string [@@deriving yojson] [@@ocaml.doc "A device id."]
-  end
-
-  and PromptDevice : sig
-    type t = {
-      id : DeviceId.t; [@key "id"] [@ocaml.doc "No description provided"]
-      name : string;
-          [@key "name"]
-          [@ocaml.doc
-            "Display name as it appears in a device request user prompt."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Device information displayed in a user prompt to select a device."]
-  end = struct
-    type t = {
-      id : DeviceId.t; [@key "id"] [@ocaml.doc "No description provided"]
-      name : string;
-          [@key "name"]
-          [@ocaml.doc
-            "Display name as it appears in a device request user prompt."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Device information displayed in a user prompt to select a device."]
-  end
-end
-
-and Preload : sig
-  module rec RuleSetId : sig
-    type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
-  end
-
-  and RuleSet : sig
-    type t = {
-      id : RuleSetId.t; [@key "id"] [@ocaml.doc "No description provided"]
-      loaderId : Network.LoaderId.t;
-          [@key "loaderId"]
-          [@ocaml.doc
-            "Identifies a document which the rule set is associated with."]
-      sourceText : string;
-          [@key "sourceText"]
-          [@ocaml.doc
-            "Source text of JSON representing the rule set. If it comes from\n\
-             `<script>` tag, it is the textContent of the node. Note that it is\n\
-             a JSON for valid case.\n\n\
-             See also:\n\
-             - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
-             - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
-      backendNodeId : DOM.BackendNodeId.t option;
-          [@key "backendNodeId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "A speculation rule set is either added through an inline\n\
-             `<script>` tag or through an external resource via the\n\
-             'Speculation-Rules' HTTP header. For the first case, we include\n\
-             the BackendNodeId of the relevant `<script>` tag. For the second\n\
-             case, we include the external URL where the rule set was loaded\n\
-             from, and also RequestId if Network domain is enabled.\n\n\
-             See also:\n\
-             - \
-             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script\n\
-             - \
-             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header"]
-      url : string option;
-          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
-      requestId : Network.RequestId.t option;
-          [@key "requestId"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      errorType : RuleSetErrorType.t option;
-          [@key "errorType"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Error information\n`errorMessage` is null iff `errorType` is null."]
-      errorMessage : string option;
-          [@key "errorMessage"]
-          [@yojson.option]
-          [@ocaml.doc
-            "TODO(https://crbug.com/1425354): Replace this property with \
-             structured error."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
-  end
-
-  and RuleSetErrorType : sig
-    type _ruleseterrortype =
-      [ `SourceIsNotJsonObject | `InvalidRulesSkipped | `InvalidRulesetLevelTag ]
-
-    val _ruleseterrortype_of_yojson : Yojson.Basic.t -> _ruleseterrortype
-    val yojson_of__ruleseterrortype : _ruleseterrortype -> Yojson.Basic.t
-
-    type t = _ruleseterrortype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and SpeculationAction : sig
-    type _speculationaction = [ `Prefetch | `Prerender ]
-
-    val _speculationaction_of_yojson : Yojson.Basic.t -> _speculationaction
-    val yojson_of__speculationaction : _speculationaction -> Yojson.Basic.t
-
-    type t = _speculationaction
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "The type of preloading attempted. It corresponds to\n\
-       mojom::SpeculationAction (although PrefetchWithSubresources is omitted \
-       as it\n\
-       isn't being used by clients)."]
-  end
-
-  and SpeculationTargetHint : sig
-    type _speculationtargethint = [ `Blank | `Self ]
-
-    val _speculationtargethint_of_yojson :
-      Yojson.Basic.t -> _speculationtargethint
-
-    val yojson_of__speculationtargethint :
-      _speculationtargethint -> Yojson.Basic.t
-
-    type t = _speculationtargethint
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Corresponds to mojom::SpeculationTargetHint.\n\
-       See \
-       https://github.com/WICG/nav-speculation/blob/main/triggers.md#window-name-targeting-hints"]
-  end
-
-  and PreloadingAttemptKey : sig
-    type t = {
-      loaderId : Network.LoaderId.t;
-          [@key "loaderId"] [@ocaml.doc "No description provided"]
-      action : SpeculationAction.t;
-          [@key "action"] [@ocaml.doc "No description provided"]
-      url : string; [@key "url"] [@ocaml.doc "No description provided"]
-      targetHint : SpeculationTargetHint.t option;
-          [@key "targetHint"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "A key that identifies a preloading attempt.\n\n\
-       The url used is the url specified by the trigger (i.e. the initial \
-       URL), and\n\
-       not the final url that is navigated to. For example, prerendering allows\n\
-       same-origin main frame navigations during the attempt, but the attempt is\n\
-       still keyed with the initial URL."]
-  end
-
-  and PreloadingAttemptSource : sig
-    type t = {
-      key : PreloadingAttemptKey.t;
-          [@key "key"] [@ocaml.doc "No description provided"]
-      ruleSetIds : RuleSetId.t list;
-          [@key "ruleSetIds"] [@ocaml.doc "No description provided"]
-      nodeIds : DOM.BackendNodeId.t list;
-          [@key "nodeIds"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Lists sources for a preloading attempt, specifically the ids of rule sets\n\
-       that had a speculation rule that triggered the attempt, and the\n\
-       BackendNodeIds of <a href> or <area href> elements that triggered the\n\
-       attempt (in the case of attempts triggered by a document rule). It is\n\
-       possible for multiple rule sets and links to trigger a single attempt."]
-  end
-
-  and PreloadPipelineId : sig
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Chrome manages different types of preloads together using a\n\
-       concept of preloading pipeline. For example, if a site uses a\n\
-       SpeculationRules for prerender, Chrome first starts a prefetch and\n\
-       then upgrades it to prerender.\n\n\
-       CDP events for them are emitted separately but they share\n\
-       `PreloadPipelineId`."]
-  end
-
-  and PrerenderFinalStatus : sig
-    type _prerenderfinalstatus =
-      [ `Activated
-      | `Destroyed
-      | `LowEndDevice
-      | `InvalidSchemeRedirect
-      | `InvalidSchemeNavigation
-      | `NavigationRequestBlockedByCsp
-      | `MojoBinderPolicy
-      | `RendererProcessCrashed
-      | `RendererProcessKilled
-      | `Download
-      | `TriggerDestroyed
-      | `NavigationNotCommitted
-      | `NavigationBadHttpStatus
-      | `ClientCertRequested
-      | `NavigationRequestNetworkError
-      | `CancelAllHostsForTesting
-      | `DidFailLoad
-      | `Stop
-      | `SslCertificateError
-      | `LoginAuthRequested
-      | `UaChangeRequiresReload
-      | `BlockedByClient
-      | `AudioOutputDeviceRequested
-      | `MixedContent
-      | `TriggerBackgrounded
-      | `MemoryLimitExceeded
-      | `DataSaverEnabled
-      | `TriggerUrlHasEffectiveUrl
-      | `ActivatedBeforeStarted
-      | `InactivePageRestriction
-      | `StartFailed
-      | `TimeoutBackgrounded
-      | `CrossSiteRedirectInInitialNavigation
-      | `CrossSiteNavigationInInitialNavigation
-      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
-      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
-      | `ActivationNavigationParameterMismatch
-      | `ActivatedInBackground
-      | `EmbedderHostDisallowed
-      | `ActivationNavigationDestroyedBeforeSuccess
-      | `TabClosedByUserGesture
-      | `TabClosedWithoutUserGesture
-      | `PrimaryMainFrameRendererProcessCrashed
-      | `PrimaryMainFrameRendererProcessKilled
-      | `ActivationFramePolicyNotCompatible
-      | `PreloadingDisabled
-      | `BatterySaverEnabled
-      | `ActivatedDuringMainFrameNavigation
-      | `PreloadingUnsupportedByWebContents
-      | `CrossSiteRedirectInMainFrameNavigation
-      | `CrossSiteNavigationInMainFrameNavigation
-      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
-      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
-      | `MemoryPressureOnTrigger
-      | `MemoryPressureAfterTriggered
-      | `PrerenderingDisabledByDevTools
-      | `SpeculationRuleRemoved
-      | `ActivatedWithAuxiliaryBrowsingContexts
-      | `MaxNumOfRunningEagerPrerendersExceeded
-      | `MaxNumOfRunningNonEagerPrerendersExceeded
-      | `MaxNumOfRunningEmbedderPrerendersExceeded
-      | `PrerenderingUrlHasEffectiveUrl
-      | `RedirectedPrerenderingUrlHasEffectiveUrl
-      | `ActivationUrlHasEffectiveUrl
-      | `JavaScriptInterfaceAdded
-      | `JavaScriptInterfaceRemoved
-      | `AllPrerenderingCanceled
-      | `WindowClosed
-      | `SlowNetwork
-      | `OtherPrerenderedPageActivated
-      | `V8OptimizerDisabled
-      | `PrerenderFailedDuringPrefetch
-      | `BrowsingDataRemoved
-      | `PrerenderHostReused ]
-
-    val _prerenderfinalstatus_of_yojson :
-      Yojson.Basic.t -> _prerenderfinalstatus
-
-    val yojson_of__prerenderfinalstatus :
-      _prerenderfinalstatus -> Yojson.Basic.t
-
-    type t = _prerenderfinalstatus
-    [@@deriving yojson]
-    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
-  end
-
-  and PreloadingStatus : sig
-    type _preloadingstatus =
-      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
-
-    val _preloadingstatus_of_yojson : Yojson.Basic.t -> _preloadingstatus
-    val yojson_of__preloadingstatus : _preloadingstatus -> Yojson.Basic.t
-
-    type t = _preloadingstatus
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
-       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
-  end
-
-  and PrefetchStatus : sig
-    type _prefetchstatus =
-      [ `PrefetchAllowed
-      | `PrefetchFailedIneligibleRedirect
-      | `PrefetchFailedInvalidRedirect
-      | `PrefetchFailedMIMENotSupported
-      | `PrefetchFailedNetError
-      | `PrefetchFailedNon2XX
-      | `PrefetchEvictedAfterBrowsingDataRemoved
-      | `PrefetchEvictedAfterCandidateRemoved
-      | `PrefetchEvictedForNewerPrefetch
-      | `PrefetchHeldback
-      | `PrefetchIneligibleRetryAfter
-      | `PrefetchIsPrivacyDecoy
-      | `PrefetchIsStale
-      | `PrefetchNotEligibleBrowserContextOffTheRecord
-      | `PrefetchNotEligibleDataSaverEnabled
-      | `PrefetchNotEligibleExistingProxy
-      | `PrefetchNotEligibleHostIsNonUnique
-      | `PrefetchNotEligibleNonDefaultStoragePartition
-      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
-      | `PrefetchNotEligibleSchemeIsNotHttps
-      | `PrefetchNotEligibleUserHasCookies
-      | `PrefetchNotEligibleUserHasServiceWorker
-      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
-      | `PrefetchNotEligibleRedirectFromServiceWorker
-      | `PrefetchNotEligibleRedirectToServiceWorker
-      | `PrefetchNotEligibleBatterySaverEnabled
-      | `PrefetchNotEligiblePreloadingDisabled
-      | `PrefetchNotFinishedInTime
-      | `PrefetchNotStarted
-      | `PrefetchNotUsedCookiesChanged
-      | `PrefetchProxyNotAvailable
-      | `PrefetchResponseUsed
-      | `PrefetchSuccessfulButNotUsed
-      | `PrefetchNotUsedProbeFailed ]
-
-    val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
-    val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
-
-    type t = _prefetchstatus
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
-       filter out the ones that aren't necessary to the developers."]
-  end
-
-  and PrerenderMismatchedHeaders : sig
-    type t = {
-      headerName : string;
-          [@key "headerName"] [@ocaml.doc "No description provided"]
-      initialValue : string option;
-          [@key "initialValue"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      activationValue : string option;
-          [@key "activationValue"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Information of headers to be displayed when the header mismatch \
-       occurred."]
-  end
-end = struct
-  module rec RuleSetId : sig
-    type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
-  end = struct
-    type t = string [@@deriving yojson] [@@ocaml.doc "Unique id"]
-  end
-
-  and RuleSet : sig
-    type t = {
-      id : RuleSetId.t; [@key "id"] [@ocaml.doc "No description provided"]
-      loaderId : Network.LoaderId.t;
-          [@key "loaderId"]
-          [@ocaml.doc
-            "Identifies a document which the rule set is associated with."]
-      sourceText : string;
-          [@key "sourceText"]
-          [@ocaml.doc
-            "Source text of JSON representing the rule set. If it comes from\n\
-             `<script>` tag, it is the textContent of the node. Note that it is\n\
-             a JSON for valid case.\n\n\
-             See also:\n\
-             - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
-             - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
-      backendNodeId : DOM.BackendNodeId.t option;
-          [@key "backendNodeId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "A speculation rule set is either added through an inline\n\
-             `<script>` tag or through an external resource via the\n\
-             'Speculation-Rules' HTTP header. For the first case, we include\n\
-             the BackendNodeId of the relevant `<script>` tag. For the second\n\
-             case, we include the external URL where the rule set was loaded\n\
-             from, and also RequestId if Network domain is enabled.\n\n\
-             See also:\n\
-             - \
-             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script\n\
-             - \
-             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header"]
-      url : string option;
-          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
-      requestId : Network.RequestId.t option;
-          [@key "requestId"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      errorType : RuleSetErrorType.t option;
-          [@key "errorType"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Error information\n`errorMessage` is null iff `errorType` is null."]
-      errorMessage : string option;
-          [@key "errorMessage"]
-          [@yojson.option]
-          [@ocaml.doc
-            "TODO(https://crbug.com/1425354): Replace this property with \
-             structured error."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
-  end = struct
-    type t = {
-      id : RuleSetId.t; [@key "id"] [@ocaml.doc "No description provided"]
-      loaderId : Network.LoaderId.t;
-          [@key "loaderId"]
-          [@ocaml.doc
-            "Identifies a document which the rule set is associated with."]
-      sourceText : string;
-          [@key "sourceText"]
-          [@ocaml.doc
-            "Source text of JSON representing the rule set. If it comes from\n\
-             `<script>` tag, it is the textContent of the node. Note that it is\n\
-             a JSON for valid case.\n\n\
-             See also:\n\
-             - https://wicg.github.io/nav-speculation/speculation-rules.html\n\
-             - https://github.com/WICG/nav-speculation/blob/main/triggers.md"]
-      backendNodeId : DOM.BackendNodeId.t option;
-          [@key "backendNodeId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "A speculation rule set is either added through an inline\n\
-             `<script>` tag or through an external resource via the\n\
-             'Speculation-Rules' HTTP header. For the first case, we include\n\
-             the BackendNodeId of the relevant `<script>` tag. For the second\n\
-             case, we include the external URL where the rule set was loaded\n\
-             from, and also RequestId if Network domain is enabled.\n\n\
-             See also:\n\
-             - \
-             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-script\n\
-             - \
-             https://wicg.github.io/nav-speculation/speculation-rules.html#speculation-rules-header"]
-      url : string option;
-          [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
-      requestId : Network.RequestId.t option;
-          [@key "requestId"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      errorType : RuleSetErrorType.t option;
-          [@key "errorType"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Error information\n`errorMessage` is null iff `errorType` is null."]
-      errorMessage : string option;
-          [@key "errorMessage"]
-          [@yojson.option]
-          [@ocaml.doc
-            "TODO(https://crbug.com/1425354): Replace this property with \
-             structured error."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
-  end
-
-  and RuleSetErrorType : sig
-    type _ruleseterrortype =
-      [ `SourceIsNotJsonObject | `InvalidRulesSkipped | `InvalidRulesetLevelTag ]
-
-    val _ruleseterrortype_of_yojson : Yojson.Basic.t -> _ruleseterrortype
-    val yojson_of__ruleseterrortype : _ruleseterrortype -> Yojson.Basic.t
-
-    type t = _ruleseterrortype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type _ruleseterrortype =
-      [ `SourceIsNotJsonObject | `InvalidRulesSkipped | `InvalidRulesetLevelTag ]
-
-    let _ruleseterrortype_of_yojson = function
-      | `String "SourceIsNotJsonObject" -> `SourceIsNotJsonObject
-      | `String "InvalidRulesSkipped" -> `InvalidRulesSkipped
-      | `String "InvalidRulesetLevelTag" -> `InvalidRulesetLevelTag
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__ruleseterrortype = function
-      | `SourceIsNotJsonObject -> `String "SourceIsNotJsonObject"
-      | `InvalidRulesSkipped -> `String "InvalidRulesSkipped"
-      | `InvalidRulesetLevelTag -> `String "InvalidRulesetLevelTag"
-
-    type t = _ruleseterrortype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and SpeculationAction : sig
-    type _speculationaction = [ `Prefetch | `Prerender ]
-
-    val _speculationaction_of_yojson : Yojson.Basic.t -> _speculationaction
-    val yojson_of__speculationaction : _speculationaction -> Yojson.Basic.t
-
-    type t = _speculationaction
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "The type of preloading attempted. It corresponds to\n\
-       mojom::SpeculationAction (although PrefetchWithSubresources is omitted \
-       as it\n\
-       isn't being used by clients)."]
-  end = struct
-    type _speculationaction = [ `Prefetch | `Prerender ]
-
-    let _speculationaction_of_yojson = function
-      | `String "Prefetch" -> `Prefetch
-      | `String "Prerender" -> `Prerender
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__speculationaction = function
-      | `Prefetch -> `String "Prefetch"
-      | `Prerender -> `String "Prerender"
-
-    type t = _speculationaction
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "The type of preloading attempted. It corresponds to\n\
-       mojom::SpeculationAction (although PrefetchWithSubresources is omitted \
-       as it\n\
-       isn't being used by clients)."]
-  end
-
-  and SpeculationTargetHint : sig
-    type _speculationtargethint = [ `Blank | `Self ]
-
-    val _speculationtargethint_of_yojson :
-      Yojson.Basic.t -> _speculationtargethint
-
-    val yojson_of__speculationtargethint :
-      _speculationtargethint -> Yojson.Basic.t
-
-    type t = _speculationtargethint
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Corresponds to mojom::SpeculationTargetHint.\n\
-       See \
-       https://github.com/WICG/nav-speculation/blob/main/triggers.md#window-name-targeting-hints"]
-  end = struct
-    type _speculationtargethint = [ `Blank | `Self ]
-
-    let _speculationtargethint_of_yojson = function
-      | `String "Blank" -> `Blank
-      | `String "Self" -> `Self
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__speculationtargethint = function
-      | `Blank -> `String "Blank"
-      | `Self -> `String "Self"
-
-    type t = _speculationtargethint
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Corresponds to mojom::SpeculationTargetHint.\n\
-       See \
-       https://github.com/WICG/nav-speculation/blob/main/triggers.md#window-name-targeting-hints"]
-  end
-
-  and PreloadingAttemptKey : sig
-    type t = {
-      loaderId : Network.LoaderId.t;
-          [@key "loaderId"] [@ocaml.doc "No description provided"]
-      action : SpeculationAction.t;
-          [@key "action"] [@ocaml.doc "No description provided"]
-      url : string; [@key "url"] [@ocaml.doc "No description provided"]
-      targetHint : SpeculationTargetHint.t option;
-          [@key "targetHint"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "A key that identifies a preloading attempt.\n\n\
-       The url used is the url specified by the trigger (i.e. the initial \
-       URL), and\n\
-       not the final url that is navigated to. For example, prerendering allows\n\
-       same-origin main frame navigations during the attempt, but the attempt is\n\
-       still keyed with the initial URL."]
-  end = struct
-    type t = {
-      loaderId : Network.LoaderId.t;
-          [@key "loaderId"] [@ocaml.doc "No description provided"]
-      action : SpeculationAction.t;
-          [@key "action"] [@ocaml.doc "No description provided"]
-      url : string; [@key "url"] [@ocaml.doc "No description provided"]
-      targetHint : SpeculationTargetHint.t option;
-          [@key "targetHint"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "A key that identifies a preloading attempt.\n\n\
-       The url used is the url specified by the trigger (i.e. the initial \
-       URL), and\n\
-       not the final url that is navigated to. For example, prerendering allows\n\
-       same-origin main frame navigations during the attempt, but the attempt is\n\
-       still keyed with the initial URL."]
-  end
-
-  and PreloadingAttemptSource : sig
-    type t = {
-      key : PreloadingAttemptKey.t;
-          [@key "key"] [@ocaml.doc "No description provided"]
-      ruleSetIds : RuleSetId.t list;
-          [@key "ruleSetIds"] [@ocaml.doc "No description provided"]
-      nodeIds : DOM.BackendNodeId.t list;
-          [@key "nodeIds"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Lists sources for a preloading attempt, specifically the ids of rule sets\n\
-       that had a speculation rule that triggered the attempt, and the\n\
-       BackendNodeIds of <a href> or <area href> elements that triggered the\n\
-       attempt (in the case of attempts triggered by a document rule). It is\n\
-       possible for multiple rule sets and links to trigger a single attempt."]
-  end = struct
-    type t = {
-      key : PreloadingAttemptKey.t;
-          [@key "key"] [@ocaml.doc "No description provided"]
-      ruleSetIds : RuleSetId.t list;
-          [@key "ruleSetIds"] [@ocaml.doc "No description provided"]
-      nodeIds : DOM.BackendNodeId.t list;
-          [@key "nodeIds"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Lists sources for a preloading attempt, specifically the ids of rule sets\n\
-       that had a speculation rule that triggered the attempt, and the\n\
-       BackendNodeIds of <a href> or <area href> elements that triggered the\n\
-       attempt (in the case of attempts triggered by a document rule). It is\n\
-       possible for multiple rule sets and links to trigger a single attempt."]
-  end
-
-  and PreloadPipelineId : sig
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Chrome manages different types of preloads together using a\n\
-       concept of preloading pipeline. For example, if a site uses a\n\
-       SpeculationRules for prerender, Chrome first starts a prefetch and\n\
-       then upgrades it to prerender.\n\n\
-       CDP events for them are emitted separately but they share\n\
-       `PreloadPipelineId`."]
-  end = struct
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Chrome manages different types of preloads together using a\n\
-       concept of preloading pipeline. For example, if a site uses a\n\
-       SpeculationRules for prerender, Chrome first starts a prefetch and\n\
-       then upgrades it to prerender.\n\n\
-       CDP events for them are emitted separately but they share\n\
-       `PreloadPipelineId`."]
-  end
-
-  and PrerenderFinalStatus : sig
-    type _prerenderfinalstatus =
-      [ `Activated
-      | `Destroyed
-      | `LowEndDevice
-      | `InvalidSchemeRedirect
-      | `InvalidSchemeNavigation
-      | `NavigationRequestBlockedByCsp
-      | `MojoBinderPolicy
-      | `RendererProcessCrashed
-      | `RendererProcessKilled
-      | `Download
-      | `TriggerDestroyed
-      | `NavigationNotCommitted
-      | `NavigationBadHttpStatus
-      | `ClientCertRequested
-      | `NavigationRequestNetworkError
-      | `CancelAllHostsForTesting
-      | `DidFailLoad
-      | `Stop
-      | `SslCertificateError
-      | `LoginAuthRequested
-      | `UaChangeRequiresReload
-      | `BlockedByClient
-      | `AudioOutputDeviceRequested
-      | `MixedContent
-      | `TriggerBackgrounded
-      | `MemoryLimitExceeded
-      | `DataSaverEnabled
-      | `TriggerUrlHasEffectiveUrl
-      | `ActivatedBeforeStarted
-      | `InactivePageRestriction
-      | `StartFailed
-      | `TimeoutBackgrounded
-      | `CrossSiteRedirectInInitialNavigation
-      | `CrossSiteNavigationInInitialNavigation
-      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
-      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
-      | `ActivationNavigationParameterMismatch
-      | `ActivatedInBackground
-      | `EmbedderHostDisallowed
-      | `ActivationNavigationDestroyedBeforeSuccess
-      | `TabClosedByUserGesture
-      | `TabClosedWithoutUserGesture
-      | `PrimaryMainFrameRendererProcessCrashed
-      | `PrimaryMainFrameRendererProcessKilled
-      | `ActivationFramePolicyNotCompatible
-      | `PreloadingDisabled
-      | `BatterySaverEnabled
-      | `ActivatedDuringMainFrameNavigation
-      | `PreloadingUnsupportedByWebContents
-      | `CrossSiteRedirectInMainFrameNavigation
-      | `CrossSiteNavigationInMainFrameNavigation
-      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
-      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
-      | `MemoryPressureOnTrigger
-      | `MemoryPressureAfterTriggered
-      | `PrerenderingDisabledByDevTools
-      | `SpeculationRuleRemoved
-      | `ActivatedWithAuxiliaryBrowsingContexts
-      | `MaxNumOfRunningEagerPrerendersExceeded
-      | `MaxNumOfRunningNonEagerPrerendersExceeded
-      | `MaxNumOfRunningEmbedderPrerendersExceeded
-      | `PrerenderingUrlHasEffectiveUrl
-      | `RedirectedPrerenderingUrlHasEffectiveUrl
-      | `ActivationUrlHasEffectiveUrl
-      | `JavaScriptInterfaceAdded
-      | `JavaScriptInterfaceRemoved
-      | `AllPrerenderingCanceled
-      | `WindowClosed
-      | `SlowNetwork
-      | `OtherPrerenderedPageActivated
-      | `V8OptimizerDisabled
-      | `PrerenderFailedDuringPrefetch
-      | `BrowsingDataRemoved
-      | `PrerenderHostReused ]
-
-    val _prerenderfinalstatus_of_yojson :
-      Yojson.Basic.t -> _prerenderfinalstatus
-
-    val yojson_of__prerenderfinalstatus :
-      _prerenderfinalstatus -> Yojson.Basic.t
-
-    type t = _prerenderfinalstatus
-    [@@deriving yojson]
-    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
-  end = struct
-    type _prerenderfinalstatus =
-      [ `Activated
-      | `Destroyed
-      | `LowEndDevice
-      | `InvalidSchemeRedirect
-      | `InvalidSchemeNavigation
-      | `NavigationRequestBlockedByCsp
-      | `MojoBinderPolicy
-      | `RendererProcessCrashed
-      | `RendererProcessKilled
-      | `Download
-      | `TriggerDestroyed
-      | `NavigationNotCommitted
-      | `NavigationBadHttpStatus
-      | `ClientCertRequested
-      | `NavigationRequestNetworkError
-      | `CancelAllHostsForTesting
-      | `DidFailLoad
-      | `Stop
-      | `SslCertificateError
-      | `LoginAuthRequested
-      | `UaChangeRequiresReload
-      | `BlockedByClient
-      | `AudioOutputDeviceRequested
-      | `MixedContent
-      | `TriggerBackgrounded
-      | `MemoryLimitExceeded
-      | `DataSaverEnabled
-      | `TriggerUrlHasEffectiveUrl
-      | `ActivatedBeforeStarted
-      | `InactivePageRestriction
-      | `StartFailed
-      | `TimeoutBackgrounded
-      | `CrossSiteRedirectInInitialNavigation
-      | `CrossSiteNavigationInInitialNavigation
-      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
-      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
-      | `ActivationNavigationParameterMismatch
-      | `ActivatedInBackground
-      | `EmbedderHostDisallowed
-      | `ActivationNavigationDestroyedBeforeSuccess
-      | `TabClosedByUserGesture
-      | `TabClosedWithoutUserGesture
-      | `PrimaryMainFrameRendererProcessCrashed
-      | `PrimaryMainFrameRendererProcessKilled
-      | `ActivationFramePolicyNotCompatible
-      | `PreloadingDisabled
-      | `BatterySaverEnabled
-      | `ActivatedDuringMainFrameNavigation
-      | `PreloadingUnsupportedByWebContents
-      | `CrossSiteRedirectInMainFrameNavigation
-      | `CrossSiteNavigationInMainFrameNavigation
-      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
-      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
-      | `MemoryPressureOnTrigger
-      | `MemoryPressureAfterTriggered
-      | `PrerenderingDisabledByDevTools
-      | `SpeculationRuleRemoved
-      | `ActivatedWithAuxiliaryBrowsingContexts
-      | `MaxNumOfRunningEagerPrerendersExceeded
-      | `MaxNumOfRunningNonEagerPrerendersExceeded
-      | `MaxNumOfRunningEmbedderPrerendersExceeded
-      | `PrerenderingUrlHasEffectiveUrl
-      | `RedirectedPrerenderingUrlHasEffectiveUrl
-      | `ActivationUrlHasEffectiveUrl
-      | `JavaScriptInterfaceAdded
-      | `JavaScriptInterfaceRemoved
-      | `AllPrerenderingCanceled
-      | `WindowClosed
-      | `SlowNetwork
-      | `OtherPrerenderedPageActivated
-      | `V8OptimizerDisabled
-      | `PrerenderFailedDuringPrefetch
-      | `BrowsingDataRemoved
-      | `PrerenderHostReused ]
-
-    let _prerenderfinalstatus_of_yojson = function
-      | `String "Activated" -> `Activated
-      | `String "Destroyed" -> `Destroyed
-      | `String "LowEndDevice" -> `LowEndDevice
-      | `String "InvalidSchemeRedirect" -> `InvalidSchemeRedirect
-      | `String "InvalidSchemeNavigation" -> `InvalidSchemeNavigation
-      | `String "NavigationRequestBlockedByCsp" ->
-          `NavigationRequestBlockedByCsp
-      | `String "MojoBinderPolicy" -> `MojoBinderPolicy
-      | `String "RendererProcessCrashed" -> `RendererProcessCrashed
-      | `String "RendererProcessKilled" -> `RendererProcessKilled
-      | `String "Download" -> `Download
-      | `String "TriggerDestroyed" -> `TriggerDestroyed
-      | `String "NavigationNotCommitted" -> `NavigationNotCommitted
-      | `String "NavigationBadHttpStatus" -> `NavigationBadHttpStatus
-      | `String "ClientCertRequested" -> `ClientCertRequested
-      | `String "NavigationRequestNetworkError" ->
-          `NavigationRequestNetworkError
-      | `String "CancelAllHostsForTesting" -> `CancelAllHostsForTesting
-      | `String "DidFailLoad" -> `DidFailLoad
-      | `String "Stop" -> `Stop
-      | `String "SslCertificateError" -> `SslCertificateError
-      | `String "LoginAuthRequested" -> `LoginAuthRequested
-      | `String "UaChangeRequiresReload" -> `UaChangeRequiresReload
-      | `String "BlockedByClient" -> `BlockedByClient
-      | `String "AudioOutputDeviceRequested" -> `AudioOutputDeviceRequested
-      | `String "MixedContent" -> `MixedContent
-      | `String "TriggerBackgrounded" -> `TriggerBackgrounded
-      | `String "MemoryLimitExceeded" -> `MemoryLimitExceeded
-      | `String "DataSaverEnabled" -> `DataSaverEnabled
-      | `String "TriggerUrlHasEffectiveUrl" -> `TriggerUrlHasEffectiveUrl
-      | `String "ActivatedBeforeStarted" -> `ActivatedBeforeStarted
-      | `String "InactivePageRestriction" -> `InactivePageRestriction
-      | `String "StartFailed" -> `StartFailed
-      | `String "TimeoutBackgrounded" -> `TimeoutBackgrounded
-      | `String "CrossSiteRedirectInInitialNavigation" ->
-          `CrossSiteRedirectInInitialNavigation
-      | `String "CrossSiteNavigationInInitialNavigation" ->
-          `CrossSiteNavigationInInitialNavigation
-      | `String "SameSiteCrossOriginRedirectNotOptInInInitialNavigation" ->
-          `SameSiteCrossOriginRedirectNotOptInInInitialNavigation
-      | `String "SameSiteCrossOriginNavigationNotOptInInInitialNavigation" ->
-          `SameSiteCrossOriginNavigationNotOptInInInitialNavigation
-      | `String "ActivationNavigationParameterMismatch" ->
-          `ActivationNavigationParameterMismatch
-      | `String "ActivatedInBackground" -> `ActivatedInBackground
-      | `String "EmbedderHostDisallowed" -> `EmbedderHostDisallowed
-      | `String "ActivationNavigationDestroyedBeforeSuccess" ->
-          `ActivationNavigationDestroyedBeforeSuccess
-      | `String "TabClosedByUserGesture" -> `TabClosedByUserGesture
-      | `String "TabClosedWithoutUserGesture" -> `TabClosedWithoutUserGesture
-      | `String "PrimaryMainFrameRendererProcessCrashed" ->
-          `PrimaryMainFrameRendererProcessCrashed
-      | `String "PrimaryMainFrameRendererProcessKilled" ->
-          `PrimaryMainFrameRendererProcessKilled
-      | `String "ActivationFramePolicyNotCompatible" ->
-          `ActivationFramePolicyNotCompatible
-      | `String "PreloadingDisabled" -> `PreloadingDisabled
-      | `String "BatterySaverEnabled" -> `BatterySaverEnabled
-      | `String "ActivatedDuringMainFrameNavigation" ->
-          `ActivatedDuringMainFrameNavigation
-      | `String "PreloadingUnsupportedByWebContents" ->
-          `PreloadingUnsupportedByWebContents
-      | `String "CrossSiteRedirectInMainFrameNavigation" ->
-          `CrossSiteRedirectInMainFrameNavigation
-      | `String "CrossSiteNavigationInMainFrameNavigation" ->
-          `CrossSiteNavigationInMainFrameNavigation
-      | `String "SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation" ->
-          `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation
-      | `String "SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation" ->
-          `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation
-      | `String "MemoryPressureOnTrigger" -> `MemoryPressureOnTrigger
-      | `String "MemoryPressureAfterTriggered" -> `MemoryPressureAfterTriggered
-      | `String "PrerenderingDisabledByDevTools" ->
-          `PrerenderingDisabledByDevTools
-      | `String "SpeculationRuleRemoved" -> `SpeculationRuleRemoved
-      | `String "ActivatedWithAuxiliaryBrowsingContexts" ->
-          `ActivatedWithAuxiliaryBrowsingContexts
-      | `String "MaxNumOfRunningEagerPrerendersExceeded" ->
-          `MaxNumOfRunningEagerPrerendersExceeded
-      | `String "MaxNumOfRunningNonEagerPrerendersExceeded" ->
-          `MaxNumOfRunningNonEagerPrerendersExceeded
-      | `String "MaxNumOfRunningEmbedderPrerendersExceeded" ->
-          `MaxNumOfRunningEmbedderPrerendersExceeded
-      | `String "PrerenderingUrlHasEffectiveUrl" ->
-          `PrerenderingUrlHasEffectiveUrl
-      | `String "RedirectedPrerenderingUrlHasEffectiveUrl" ->
-          `RedirectedPrerenderingUrlHasEffectiveUrl
-      | `String "ActivationUrlHasEffectiveUrl" -> `ActivationUrlHasEffectiveUrl
-      | `String "JavaScriptInterfaceAdded" -> `JavaScriptInterfaceAdded
-      | `String "JavaScriptInterfaceRemoved" -> `JavaScriptInterfaceRemoved
-      | `String "AllPrerenderingCanceled" -> `AllPrerenderingCanceled
-      | `String "WindowClosed" -> `WindowClosed
-      | `String "SlowNetwork" -> `SlowNetwork
-      | `String "OtherPrerenderedPageActivated" ->
-          `OtherPrerenderedPageActivated
-      | `String "V8OptimizerDisabled" -> `V8OptimizerDisabled
-      | `String "PrerenderFailedDuringPrefetch" ->
-          `PrerenderFailedDuringPrefetch
-      | `String "BrowsingDataRemoved" -> `BrowsingDataRemoved
-      | `String "PrerenderHostReused" -> `PrerenderHostReused
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__prerenderfinalstatus = function
-      | `Activated -> `String "Activated"
-      | `Destroyed -> `String "Destroyed"
-      | `LowEndDevice -> `String "LowEndDevice"
-      | `InvalidSchemeRedirect -> `String "InvalidSchemeRedirect"
-      | `InvalidSchemeNavigation -> `String "InvalidSchemeNavigation"
-      | `NavigationRequestBlockedByCsp ->
-          `String "NavigationRequestBlockedByCsp"
-      | `MojoBinderPolicy -> `String "MojoBinderPolicy"
-      | `RendererProcessCrashed -> `String "RendererProcessCrashed"
-      | `RendererProcessKilled -> `String "RendererProcessKilled"
-      | `Download -> `String "Download"
-      | `TriggerDestroyed -> `String "TriggerDestroyed"
-      | `NavigationNotCommitted -> `String "NavigationNotCommitted"
-      | `NavigationBadHttpStatus -> `String "NavigationBadHttpStatus"
-      | `ClientCertRequested -> `String "ClientCertRequested"
-      | `NavigationRequestNetworkError ->
-          `String "NavigationRequestNetworkError"
-      | `CancelAllHostsForTesting -> `String "CancelAllHostsForTesting"
-      | `DidFailLoad -> `String "DidFailLoad"
-      | `Stop -> `String "Stop"
-      | `SslCertificateError -> `String "SslCertificateError"
-      | `LoginAuthRequested -> `String "LoginAuthRequested"
-      | `UaChangeRequiresReload -> `String "UaChangeRequiresReload"
-      | `BlockedByClient -> `String "BlockedByClient"
-      | `AudioOutputDeviceRequested -> `String "AudioOutputDeviceRequested"
-      | `MixedContent -> `String "MixedContent"
-      | `TriggerBackgrounded -> `String "TriggerBackgrounded"
-      | `MemoryLimitExceeded -> `String "MemoryLimitExceeded"
-      | `DataSaverEnabled -> `String "DataSaverEnabled"
-      | `TriggerUrlHasEffectiveUrl -> `String "TriggerUrlHasEffectiveUrl"
-      | `ActivatedBeforeStarted -> `String "ActivatedBeforeStarted"
-      | `InactivePageRestriction -> `String "InactivePageRestriction"
-      | `StartFailed -> `String "StartFailed"
-      | `TimeoutBackgrounded -> `String "TimeoutBackgrounded"
-      | `CrossSiteRedirectInInitialNavigation ->
-          `String "CrossSiteRedirectInInitialNavigation"
-      | `CrossSiteNavigationInInitialNavigation ->
-          `String "CrossSiteNavigationInInitialNavigation"
-      | `SameSiteCrossOriginRedirectNotOptInInInitialNavigation ->
-          `String "SameSiteCrossOriginRedirectNotOptInInInitialNavigation"
-      | `SameSiteCrossOriginNavigationNotOptInInInitialNavigation ->
-          `String "SameSiteCrossOriginNavigationNotOptInInInitialNavigation"
-      | `ActivationNavigationParameterMismatch ->
-          `String "ActivationNavigationParameterMismatch"
-      | `ActivatedInBackground -> `String "ActivatedInBackground"
-      | `EmbedderHostDisallowed -> `String "EmbedderHostDisallowed"
-      | `ActivationNavigationDestroyedBeforeSuccess ->
-          `String "ActivationNavigationDestroyedBeforeSuccess"
-      | `TabClosedByUserGesture -> `String "TabClosedByUserGesture"
-      | `TabClosedWithoutUserGesture -> `String "TabClosedWithoutUserGesture"
-      | `PrimaryMainFrameRendererProcessCrashed ->
-          `String "PrimaryMainFrameRendererProcessCrashed"
-      | `PrimaryMainFrameRendererProcessKilled ->
-          `String "PrimaryMainFrameRendererProcessKilled"
-      | `ActivationFramePolicyNotCompatible ->
-          `String "ActivationFramePolicyNotCompatible"
-      | `PreloadingDisabled -> `String "PreloadingDisabled"
-      | `BatterySaverEnabled -> `String "BatterySaverEnabled"
-      | `ActivatedDuringMainFrameNavigation ->
-          `String "ActivatedDuringMainFrameNavigation"
-      | `PreloadingUnsupportedByWebContents ->
-          `String "PreloadingUnsupportedByWebContents"
-      | `CrossSiteRedirectInMainFrameNavigation ->
-          `String "CrossSiteRedirectInMainFrameNavigation"
-      | `CrossSiteNavigationInMainFrameNavigation ->
-          `String "CrossSiteNavigationInMainFrameNavigation"
-      | `SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation ->
-          `String "SameSiteCrossOriginRedirectNotOptInInMainFrameNavigation"
-      | `SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation ->
-          `String "SameSiteCrossOriginNavigationNotOptInInMainFrameNavigation"
-      | `MemoryPressureOnTrigger -> `String "MemoryPressureOnTrigger"
-      | `MemoryPressureAfterTriggered -> `String "MemoryPressureAfterTriggered"
-      | `PrerenderingDisabledByDevTools ->
-          `String "PrerenderingDisabledByDevTools"
-      | `SpeculationRuleRemoved -> `String "SpeculationRuleRemoved"
-      | `ActivatedWithAuxiliaryBrowsingContexts ->
-          `String "ActivatedWithAuxiliaryBrowsingContexts"
-      | `MaxNumOfRunningEagerPrerendersExceeded ->
-          `String "MaxNumOfRunningEagerPrerendersExceeded"
-      | `MaxNumOfRunningNonEagerPrerendersExceeded ->
-          `String "MaxNumOfRunningNonEagerPrerendersExceeded"
-      | `MaxNumOfRunningEmbedderPrerendersExceeded ->
-          `String "MaxNumOfRunningEmbedderPrerendersExceeded"
-      | `PrerenderingUrlHasEffectiveUrl ->
-          `String "PrerenderingUrlHasEffectiveUrl"
-      | `RedirectedPrerenderingUrlHasEffectiveUrl ->
-          `String "RedirectedPrerenderingUrlHasEffectiveUrl"
-      | `ActivationUrlHasEffectiveUrl -> `String "ActivationUrlHasEffectiveUrl"
-      | `JavaScriptInterfaceAdded -> `String "JavaScriptInterfaceAdded"
-      | `JavaScriptInterfaceRemoved -> `String "JavaScriptInterfaceRemoved"
-      | `AllPrerenderingCanceled -> `String "AllPrerenderingCanceled"
-      | `WindowClosed -> `String "WindowClosed"
-      | `SlowNetwork -> `String "SlowNetwork"
-      | `OtherPrerenderedPageActivated ->
-          `String "OtherPrerenderedPageActivated"
-      | `V8OptimizerDisabled -> `String "V8OptimizerDisabled"
-      | `PrerenderFailedDuringPrefetch ->
-          `String "PrerenderFailedDuringPrefetch"
-      | `BrowsingDataRemoved -> `String "BrowsingDataRemoved"
-      | `PrerenderHostReused -> `String "PrerenderHostReused"
-
-    type t = _prerenderfinalstatus
-    [@@deriving yojson]
-    [@@ocaml.doc "List of FinalStatus reasons for Prerender2."]
-  end
-
-  and PreloadingStatus : sig
-    type _preloadingstatus =
-      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
-
-    val _preloadingstatus_of_yojson : Yojson.Basic.t -> _preloadingstatus
-    val yojson_of__preloadingstatus : _preloadingstatus -> Yojson.Basic.t
-
-    type t = _preloadingstatus
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
-       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
-  end = struct
-    type _preloadingstatus =
-      [ `Pending | `Running | `Ready | `Success | `Failure | `NotSupported ]
-
-    let _preloadingstatus_of_yojson = function
-      | `String "Pending" -> `Pending
-      | `String "Running" -> `Running
-      | `String "Ready" -> `Ready
-      | `String "Success" -> `Success
-      | `String "Failure" -> `Failure
-      | `String "NotSupported" -> `NotSupported
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__preloadingstatus = function
-      | `Pending -> `String "Pending"
-      | `Running -> `String "Running"
-      | `Ready -> `String "Ready"
-      | `Success -> `String "Success"
-      | `Failure -> `String "Failure"
-      | `NotSupported -> `String "NotSupported"
-
-    type t = _preloadingstatus
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Preloading status values, see also PreloadingTriggeringOutcome. This\n\
-       status is shared by prefetchStatusUpdated and prerenderStatusUpdated."]
-  end
-
-  and PrefetchStatus : sig
-    type _prefetchstatus =
-      [ `PrefetchAllowed
-      | `PrefetchFailedIneligibleRedirect
-      | `PrefetchFailedInvalidRedirect
-      | `PrefetchFailedMIMENotSupported
-      | `PrefetchFailedNetError
-      | `PrefetchFailedNon2XX
-      | `PrefetchEvictedAfterBrowsingDataRemoved
-      | `PrefetchEvictedAfterCandidateRemoved
-      | `PrefetchEvictedForNewerPrefetch
-      | `PrefetchHeldback
-      | `PrefetchIneligibleRetryAfter
-      | `PrefetchIsPrivacyDecoy
-      | `PrefetchIsStale
-      | `PrefetchNotEligibleBrowserContextOffTheRecord
-      | `PrefetchNotEligibleDataSaverEnabled
-      | `PrefetchNotEligibleExistingProxy
-      | `PrefetchNotEligibleHostIsNonUnique
-      | `PrefetchNotEligibleNonDefaultStoragePartition
-      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
-      | `PrefetchNotEligibleSchemeIsNotHttps
-      | `PrefetchNotEligibleUserHasCookies
-      | `PrefetchNotEligibleUserHasServiceWorker
-      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
-      | `PrefetchNotEligibleRedirectFromServiceWorker
-      | `PrefetchNotEligibleRedirectToServiceWorker
-      | `PrefetchNotEligibleBatterySaverEnabled
-      | `PrefetchNotEligiblePreloadingDisabled
-      | `PrefetchNotFinishedInTime
-      | `PrefetchNotStarted
-      | `PrefetchNotUsedCookiesChanged
-      | `PrefetchProxyNotAvailable
-      | `PrefetchResponseUsed
-      | `PrefetchSuccessfulButNotUsed
-      | `PrefetchNotUsedProbeFailed ]
-
-    val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
-    val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
-
-    type t = _prefetchstatus
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
-       filter out the ones that aren't necessary to the developers."]
-  end = struct
-    type _prefetchstatus =
-      [ `PrefetchAllowed
-      | `PrefetchFailedIneligibleRedirect
-      | `PrefetchFailedInvalidRedirect
-      | `PrefetchFailedMIMENotSupported
-      | `PrefetchFailedNetError
-      | `PrefetchFailedNon2XX
-      | `PrefetchEvictedAfterBrowsingDataRemoved
-      | `PrefetchEvictedAfterCandidateRemoved
-      | `PrefetchEvictedForNewerPrefetch
-      | `PrefetchHeldback
-      | `PrefetchIneligibleRetryAfter
-      | `PrefetchIsPrivacyDecoy
-      | `PrefetchIsStale
-      | `PrefetchNotEligibleBrowserContextOffTheRecord
-      | `PrefetchNotEligibleDataSaverEnabled
-      | `PrefetchNotEligibleExistingProxy
-      | `PrefetchNotEligibleHostIsNonUnique
-      | `PrefetchNotEligibleNonDefaultStoragePartition
-      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
-      | `PrefetchNotEligibleSchemeIsNotHttps
-      | `PrefetchNotEligibleUserHasCookies
-      | `PrefetchNotEligibleUserHasServiceWorker
-      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
-      | `PrefetchNotEligibleRedirectFromServiceWorker
-      | `PrefetchNotEligibleRedirectToServiceWorker
-      | `PrefetchNotEligibleBatterySaverEnabled
-      | `PrefetchNotEligiblePreloadingDisabled
-      | `PrefetchNotFinishedInTime
-      | `PrefetchNotStarted
-      | `PrefetchNotUsedCookiesChanged
-      | `PrefetchProxyNotAvailable
-      | `PrefetchResponseUsed
-      | `PrefetchSuccessfulButNotUsed
-      | `PrefetchNotUsedProbeFailed ]
-
-    let _prefetchstatus_of_yojson = function
-      | `String "PrefetchAllowed" -> `PrefetchAllowed
-      | `String "PrefetchFailedIneligibleRedirect" ->
-          `PrefetchFailedIneligibleRedirect
-      | `String "PrefetchFailedInvalidRedirect" ->
-          `PrefetchFailedInvalidRedirect
-      | `String "PrefetchFailedMIMENotSupported" ->
-          `PrefetchFailedMIMENotSupported
-      | `String "PrefetchFailedNetError" -> `PrefetchFailedNetError
-      | `String "PrefetchFailedNon2XX" -> `PrefetchFailedNon2XX
-      | `String "PrefetchEvictedAfterBrowsingDataRemoved" ->
-          `PrefetchEvictedAfterBrowsingDataRemoved
-      | `String "PrefetchEvictedAfterCandidateRemoved" ->
-          `PrefetchEvictedAfterCandidateRemoved
-      | `String "PrefetchEvictedForNewerPrefetch" ->
-          `PrefetchEvictedForNewerPrefetch
-      | `String "PrefetchHeldback" -> `PrefetchHeldback
-      | `String "PrefetchIneligibleRetryAfter" -> `PrefetchIneligibleRetryAfter
-      | `String "PrefetchIsPrivacyDecoy" -> `PrefetchIsPrivacyDecoy
-      | `String "PrefetchIsStale" -> `PrefetchIsStale
-      | `String "PrefetchNotEligibleBrowserContextOffTheRecord" ->
-          `PrefetchNotEligibleBrowserContextOffTheRecord
-      | `String "PrefetchNotEligibleDataSaverEnabled" ->
-          `PrefetchNotEligibleDataSaverEnabled
-      | `String "PrefetchNotEligibleExistingProxy" ->
-          `PrefetchNotEligibleExistingProxy
-      | `String "PrefetchNotEligibleHostIsNonUnique" ->
-          `PrefetchNotEligibleHostIsNonUnique
-      | `String "PrefetchNotEligibleNonDefaultStoragePartition" ->
-          `PrefetchNotEligibleNonDefaultStoragePartition
-      | `String "PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy" ->
-          `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy
-      | `String "PrefetchNotEligibleSchemeIsNotHttps" ->
-          `PrefetchNotEligibleSchemeIsNotHttps
-      | `String "PrefetchNotEligibleUserHasCookies" ->
-          `PrefetchNotEligibleUserHasCookies
-      | `String "PrefetchNotEligibleUserHasServiceWorker" ->
-          `PrefetchNotEligibleUserHasServiceWorker
-      | `String "PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler" ->
-          `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler
-      | `String "PrefetchNotEligibleRedirectFromServiceWorker" ->
-          `PrefetchNotEligibleRedirectFromServiceWorker
-      | `String "PrefetchNotEligibleRedirectToServiceWorker" ->
-          `PrefetchNotEligibleRedirectToServiceWorker
-      | `String "PrefetchNotEligibleBatterySaverEnabled" ->
-          `PrefetchNotEligibleBatterySaverEnabled
-      | `String "PrefetchNotEligiblePreloadingDisabled" ->
-          `PrefetchNotEligiblePreloadingDisabled
-      | `String "PrefetchNotFinishedInTime" -> `PrefetchNotFinishedInTime
-      | `String "PrefetchNotStarted" -> `PrefetchNotStarted
-      | `String "PrefetchNotUsedCookiesChanged" ->
-          `PrefetchNotUsedCookiesChanged
-      | `String "PrefetchProxyNotAvailable" -> `PrefetchProxyNotAvailable
-      | `String "PrefetchResponseUsed" -> `PrefetchResponseUsed
-      | `String "PrefetchSuccessfulButNotUsed" -> `PrefetchSuccessfulButNotUsed
-      | `String "PrefetchNotUsedProbeFailed" -> `PrefetchNotUsedProbeFailed
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__prefetchstatus = function
-      | `PrefetchAllowed -> `String "PrefetchAllowed"
-      | `PrefetchFailedIneligibleRedirect ->
-          `String "PrefetchFailedIneligibleRedirect"
-      | `PrefetchFailedInvalidRedirect ->
-          `String "PrefetchFailedInvalidRedirect"
-      | `PrefetchFailedMIMENotSupported ->
-          `String "PrefetchFailedMIMENotSupported"
-      | `PrefetchFailedNetError -> `String "PrefetchFailedNetError"
-      | `PrefetchFailedNon2XX -> `String "PrefetchFailedNon2XX"
-      | `PrefetchEvictedAfterBrowsingDataRemoved ->
-          `String "PrefetchEvictedAfterBrowsingDataRemoved"
-      | `PrefetchEvictedAfterCandidateRemoved ->
-          `String "PrefetchEvictedAfterCandidateRemoved"
-      | `PrefetchEvictedForNewerPrefetch ->
-          `String "PrefetchEvictedForNewerPrefetch"
-      | `PrefetchHeldback -> `String "PrefetchHeldback"
-      | `PrefetchIneligibleRetryAfter -> `String "PrefetchIneligibleRetryAfter"
-      | `PrefetchIsPrivacyDecoy -> `String "PrefetchIsPrivacyDecoy"
-      | `PrefetchIsStale -> `String "PrefetchIsStale"
-      | `PrefetchNotEligibleBrowserContextOffTheRecord ->
-          `String "PrefetchNotEligibleBrowserContextOffTheRecord"
-      | `PrefetchNotEligibleDataSaverEnabled ->
-          `String "PrefetchNotEligibleDataSaverEnabled"
-      | `PrefetchNotEligibleExistingProxy ->
-          `String "PrefetchNotEligibleExistingProxy"
-      | `PrefetchNotEligibleHostIsNonUnique ->
-          `String "PrefetchNotEligibleHostIsNonUnique"
-      | `PrefetchNotEligibleNonDefaultStoragePartition ->
-          `String "PrefetchNotEligibleNonDefaultStoragePartition"
-      | `PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy ->
-          `String "PrefetchNotEligibleSameSiteCrossOriginPrefetchRequiredProxy"
-      | `PrefetchNotEligibleSchemeIsNotHttps ->
-          `String "PrefetchNotEligibleSchemeIsNotHttps"
-      | `PrefetchNotEligibleUserHasCookies ->
-          `String "PrefetchNotEligibleUserHasCookies"
-      | `PrefetchNotEligibleUserHasServiceWorker ->
-          `String "PrefetchNotEligibleUserHasServiceWorker"
-      | `PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler ->
-          `String "PrefetchNotEligibleUserHasServiceWorkerNoFetchHandler"
-      | `PrefetchNotEligibleRedirectFromServiceWorker ->
-          `String "PrefetchNotEligibleRedirectFromServiceWorker"
-      | `PrefetchNotEligibleRedirectToServiceWorker ->
-          `String "PrefetchNotEligibleRedirectToServiceWorker"
-      | `PrefetchNotEligibleBatterySaverEnabled ->
-          `String "PrefetchNotEligibleBatterySaverEnabled"
-      | `PrefetchNotEligiblePreloadingDisabled ->
-          `String "PrefetchNotEligiblePreloadingDisabled"
-      | `PrefetchNotFinishedInTime -> `String "PrefetchNotFinishedInTime"
-      | `PrefetchNotStarted -> `String "PrefetchNotStarted"
-      | `PrefetchNotUsedCookiesChanged ->
-          `String "PrefetchNotUsedCookiesChanged"
-      | `PrefetchProxyNotAvailable -> `String "PrefetchProxyNotAvailable"
-      | `PrefetchResponseUsed -> `String "PrefetchResponseUsed"
-      | `PrefetchSuccessfulButNotUsed -> `String "PrefetchSuccessfulButNotUsed"
-      | `PrefetchNotUsedProbeFailed -> `String "PrefetchNotUsedProbeFailed"
-
-    type t = _prefetchstatus
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "TODO(https://crbug.com/1384419): revisit the list of PrefetchStatus and\n\
-       filter out the ones that aren't necessary to the developers."]
-  end
-
-  and PrerenderMismatchedHeaders : sig
-    type t = {
-      headerName : string;
-          [@key "headerName"] [@ocaml.doc "No description provided"]
-      initialValue : string option;
-          [@key "initialValue"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      activationValue : string option;
-          [@key "activationValue"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Information of headers to be displayed when the header mismatch \
-       occurred."]
-  end = struct
-    type t = {
-      headerName : string;
-          [@key "headerName"] [@ocaml.doc "No description provided"]
-      initialValue : string option;
-          [@key "initialValue"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      activationValue : string option;
-          [@key "activationValue"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Information of headers to be displayed when the header mismatch \
-       occurred."]
-  end
-end
-
-and FedCm : sig
-  module rec LoginState : sig
-    type _loginstate = [ `SignIn | `SignUp ]
-
-    val _loginstate_of_yojson : Yojson.Basic.t -> _loginstate
-    val yojson_of__loginstate : _loginstate -> Yojson.Basic.t
-
-    type t = _loginstate
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Whether this is a sign-up or sign-in action for this account, i.e.\n\
-       whether this account has ever been used to sign in to this RP before."]
-  end
-
-  and DialogType : sig
-    type _dialogtype =
-      [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin | `Error ]
-
-    val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
-    val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
-
-    type t = _dialogtype
-    [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
-  end
-
-  and DialogButton : sig
-    type _dialogbutton =
-      [ `ConfirmIdpLoginContinue | `ErrorGotIt | `ErrorMoreDetails ]
-
-    val _dialogbutton_of_yojson : Yojson.Basic.t -> _dialogbutton
-    val yojson_of__dialogbutton : _dialogbutton -> Yojson.Basic.t
-
-    type t = _dialogbutton
-    [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
-  end
-
-  and AccountUrlType : sig
-    type _accounturltype = [ `TermsOfService | `PrivacyPolicy ]
-
-    val _accounturltype_of_yojson : Yojson.Basic.t -> _accounturltype
-    val yojson_of__accounturltype : _accounturltype -> Yojson.Basic.t
-
-    type t = _accounturltype
-    [@@deriving yojson] [@@ocaml.doc "The URLs that each account has"]
-  end
-
-  and Account : sig
-    type t = {
-      accountId : string;
-          [@key "accountId"] [@ocaml.doc "No description provided"]
-      email : string; [@key "email"] [@ocaml.doc "No description provided"]
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      givenName : string;
-          [@key "givenName"] [@ocaml.doc "No description provided"]
-      pictureUrl : string;
-          [@key "pictureUrl"] [@ocaml.doc "No description provided"]
-      idpConfigUrl : string;
-          [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
-      idpLoginUrl : string;
-          [@key "idpLoginUrl"] [@ocaml.doc "No description provided"]
-      loginState : LoginState.t;
-          [@key "loginState"] [@ocaml.doc "No description provided"]
-      termsOfServiceUrl : string option;
-          [@key "termsOfServiceUrl"]
-          [@yojson.option]
-          [@ocaml.doc "These two are only set if the loginState is signUp"]
-      privacyPolicyUrl : string option;
-          [@key "privacyPolicyUrl"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
-  end
-end = struct
-  module rec LoginState : sig
-    type _loginstate = [ `SignIn | `SignUp ]
-
-    val _loginstate_of_yojson : Yojson.Basic.t -> _loginstate
-    val yojson_of__loginstate : _loginstate -> Yojson.Basic.t
-
-    type t = _loginstate
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Whether this is a sign-up or sign-in action for this account, i.e.\n\
-       whether this account has ever been used to sign in to this RP before."]
-  end = struct
-    type _loginstate = [ `SignIn | `SignUp ]
-
-    let _loginstate_of_yojson = function
-      | `String "SignIn" -> `SignIn
-      | `String "SignUp" -> `SignUp
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__loginstate = function
-      | `SignIn -> `String "SignIn"
-      | `SignUp -> `String "SignUp"
-
-    type t = _loginstate
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Whether this is a sign-up or sign-in action for this account, i.e.\n\
-       whether this account has ever been used to sign in to this RP before."]
-  end
-
-  and DialogType : sig
-    type _dialogtype =
-      [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin | `Error ]
-
-    val _dialogtype_of_yojson : Yojson.Basic.t -> _dialogtype
-    val yojson_of__dialogtype : _dialogtype -> Yojson.Basic.t
-
-    type t = _dialogtype
-    [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
-  end = struct
-    type _dialogtype =
-      [ `AccountChooser | `AutoReauthn | `ConfirmIdpLogin | `Error ]
-
-    let _dialogtype_of_yojson = function
-      | `String "AccountChooser" -> `AccountChooser
-      | `String "AutoReauthn" -> `AutoReauthn
-      | `String "ConfirmIdpLogin" -> `ConfirmIdpLogin
-      | `String "Error" -> `Error
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__dialogtype = function
-      | `AccountChooser -> `String "AccountChooser"
-      | `AutoReauthn -> `String "AutoReauthn"
-      | `ConfirmIdpLogin -> `String "ConfirmIdpLogin"
-      | `Error -> `String "Error"
-
-    type t = _dialogtype
-    [@@deriving yojson] [@@ocaml.doc "The types of FedCM dialogs."]
-  end
-
-  and DialogButton : sig
-    type _dialogbutton =
-      [ `ConfirmIdpLoginContinue | `ErrorGotIt | `ErrorMoreDetails ]
-
-    val _dialogbutton_of_yojson : Yojson.Basic.t -> _dialogbutton
-    val yojson_of__dialogbutton : _dialogbutton -> Yojson.Basic.t
-
-    type t = _dialogbutton
-    [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
-  end = struct
-    type _dialogbutton =
-      [ `ConfirmIdpLoginContinue | `ErrorGotIt | `ErrorMoreDetails ]
-
-    let _dialogbutton_of_yojson = function
-      | `String "ConfirmIdpLoginContinue" -> `ConfirmIdpLoginContinue
-      | `String "ErrorGotIt" -> `ErrorGotIt
-      | `String "ErrorMoreDetails" -> `ErrorMoreDetails
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__dialogbutton = function
-      | `ConfirmIdpLoginContinue -> `String "ConfirmIdpLoginContinue"
-      | `ErrorGotIt -> `String "ErrorGotIt"
-      | `ErrorMoreDetails -> `String "ErrorMoreDetails"
-
-    type t = _dialogbutton
-    [@@deriving yojson] [@@ocaml.doc "The buttons on the FedCM dialog."]
-  end
-
-  and AccountUrlType : sig
-    type _accounturltype = [ `TermsOfService | `PrivacyPolicy ]
-
-    val _accounturltype_of_yojson : Yojson.Basic.t -> _accounturltype
-    val yojson_of__accounturltype : _accounturltype -> Yojson.Basic.t
-
-    type t = _accounturltype
-    [@@deriving yojson] [@@ocaml.doc "The URLs that each account has"]
-  end = struct
-    type _accounturltype = [ `TermsOfService | `PrivacyPolicy ]
-
-    let _accounturltype_of_yojson = function
-      | `String "TermsOfService" -> `TermsOfService
-      | `String "PrivacyPolicy" -> `PrivacyPolicy
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__accounturltype = function
-      | `TermsOfService -> `String "TermsOfService"
-      | `PrivacyPolicy -> `String "PrivacyPolicy"
-
-    type t = _accounturltype
-    [@@deriving yojson] [@@ocaml.doc "The URLs that each account has"]
-  end
-
-  and Account : sig
-    type t = {
-      accountId : string;
-          [@key "accountId"] [@ocaml.doc "No description provided"]
-      email : string; [@key "email"] [@ocaml.doc "No description provided"]
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      givenName : string;
-          [@key "givenName"] [@ocaml.doc "No description provided"]
-      pictureUrl : string;
-          [@key "pictureUrl"] [@ocaml.doc "No description provided"]
-      idpConfigUrl : string;
-          [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
-      idpLoginUrl : string;
-          [@key "idpLoginUrl"] [@ocaml.doc "No description provided"]
-      loginState : LoginState.t;
-          [@key "loginState"] [@ocaml.doc "No description provided"]
-      termsOfServiceUrl : string option;
-          [@key "termsOfServiceUrl"]
-          [@yojson.option]
-          [@ocaml.doc "These two are only set if the loginState is signUp"]
-      privacyPolicyUrl : string option;
-          [@key "privacyPolicyUrl"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
-  end = struct
-    type t = {
-      accountId : string;
-          [@key "accountId"] [@ocaml.doc "No description provided"]
-      email : string; [@key "email"] [@ocaml.doc "No description provided"]
-      name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      givenName : string;
-          [@key "givenName"] [@ocaml.doc "No description provided"]
-      pictureUrl : string;
-          [@key "pictureUrl"] [@ocaml.doc "No description provided"]
-      idpConfigUrl : string;
-          [@key "idpConfigUrl"] [@ocaml.doc "No description provided"]
-      idpLoginUrl : string;
-          [@key "idpLoginUrl"] [@ocaml.doc "No description provided"]
-      loginState : LoginState.t;
-          [@key "loginState"] [@ocaml.doc "No description provided"]
-      termsOfServiceUrl : string option;
-          [@key "termsOfServiceUrl"]
-          [@yojson.option]
-          [@ocaml.doc "These two are only set if the loginState is signUp"]
-      privacyPolicyUrl : string option;
-          [@key "privacyPolicyUrl"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Corresponds to IdentityRequestAccount"]
-  end
-end
-
-and PWA : sig
-  module rec FileHandlerAccept : sig
-    type t = {
-      mediaType : string;
-          [@key "mediaType"]
-          [@ocaml.doc
-            "New name of the mimetype according to\n\
-             https://www.iana.org/assignments/media-types/media-types.xhtml"]
-      fileExtensions : string list;
-          [@key "fileExtensions"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "The following types are the replica of\n\
-       https://crsrc.org/c/chrome/browser/web_applications/proto/web_app_os_integration_state.proto;drc=9910d3be894c8f142c977ba1023f30a656bc13fc;l=67"]
-  end
-
-  and FileHandler : sig
-    type t = {
-      action : string; [@key "action"] [@ocaml.doc "No description provided"]
-      accepts : FileHandlerAccept.t list;
-          [@key "accepts"] [@ocaml.doc "No description provided"]
-      displayName : string;
-          [@key "displayName"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and DisplayMode : sig
-    type _displaymode = [ `standalone | `browser ]
-
-    val _displaymode_of_yojson : Yojson.Basic.t -> _displaymode
-    val yojson_of__displaymode : _displaymode -> Yojson.Basic.t
-
-    type t = _displaymode
-    [@@deriving yojson]
-    [@@ocaml.doc "If user prefers opening the app in browser or an app window."]
-  end
-end = struct
-  module rec FileHandlerAccept : sig
-    type t = {
-      mediaType : string;
-          [@key "mediaType"]
-          [@ocaml.doc
-            "New name of the mimetype according to\n\
-             https://www.iana.org/assignments/media-types/media-types.xhtml"]
-      fileExtensions : string list;
-          [@key "fileExtensions"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "The following types are the replica of\n\
-       https://crsrc.org/c/chrome/browser/web_applications/proto/web_app_os_integration_state.proto;drc=9910d3be894c8f142c977ba1023f30a656bc13fc;l=67"]
-  end = struct
-    type t = {
-      mediaType : string;
-          [@key "mediaType"]
-          [@ocaml.doc
-            "New name of the mimetype according to\n\
-             https://www.iana.org/assignments/media-types/media-types.xhtml"]
-      fileExtensions : string list;
-          [@key "fileExtensions"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "The following types are the replica of\n\
-       https://crsrc.org/c/chrome/browser/web_applications/proto/web_app_os_integration_state.proto;drc=9910d3be894c8f142c977ba1023f30a656bc13fc;l=67"]
-  end
-
-  and FileHandler : sig
-    type t = {
-      action : string; [@key "action"] [@ocaml.doc "No description provided"]
-      accepts : FileHandlerAccept.t list;
-          [@key "accepts"] [@ocaml.doc "No description provided"]
-      displayName : string;
-          [@key "displayName"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type t = {
-      action : string; [@key "action"] [@ocaml.doc "No description provided"]
-      accepts : FileHandlerAccept.t list;
-          [@key "accepts"] [@ocaml.doc "No description provided"]
-      displayName : string;
-          [@key "displayName"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and DisplayMode : sig
-    type _displaymode = [ `standalone | `browser ]
-
-    val _displaymode_of_yojson : Yojson.Basic.t -> _displaymode
-    val yojson_of__displaymode : _displaymode -> Yojson.Basic.t
-
-    type t = _displaymode
-    [@@deriving yojson]
-    [@@ocaml.doc "If user prefers opening the app in browser or an app window."]
-  end = struct
-    type _displaymode = [ `standalone | `browser ]
-
-    let _displaymode_of_yojson = function
-      | `String "standalone" -> `standalone
-      | `String "browser" -> `browser
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__displaymode = function
-      | `standalone -> `String "standalone"
-      | `browser -> `String "browser"
-
-    type t = _displaymode
-    [@@deriving yojson]
-    [@@ocaml.doc "If user prefers opening the app in browser or an app window."]
-  end
-end
-
-and BluetoothEmulation : sig
-  module rec CentralState : sig
-    type _centralstate = [ `absent | `powered_off | `powered_on ]
-
-    val _centralstate_of_yojson : Yojson.Basic.t -> _centralstate
-    val yojson_of__centralstate : _centralstate -> Yojson.Basic.t
-
-    type t = _centralstate
-    [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
-  end
-
-  and GATTOperationType : sig
-    type _gattoperationtype = [ `connection | `discovery ]
-
-    val _gattoperationtype_of_yojson : Yojson.Basic.t -> _gattoperationtype
-    val yojson_of__gattoperationtype : _gattoperationtype -> Yojson.Basic.t
-
-    type t = _gattoperationtype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of GATT event."]
-  end
-
-  and CharacteristicWriteType : sig
-    type _characteristicwritetype =
-      [ `write_default_deprecated
-      | `write_with_response
-      | `write_without_response ]
-
-    val _characteristicwritetype_of_yojson :
-      Yojson.Basic.t -> _characteristicwritetype
-
-    val yojson_of__characteristicwritetype :
-      _characteristicwritetype -> Yojson.Basic.t
-
-    type t = _characteristicwritetype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of characteristic write."]
-  end
-
-  and CharacteristicOperationType : sig
-    type _characteristicoperationtype =
-      [ `read
-      | `write
-      | `subscribe_to_notifications
-      | `unsubscribe_from_notifications ]
-
-    val _characteristicoperationtype_of_yojson :
-      Yojson.Basic.t -> _characteristicoperationtype
-
-    val yojson_of__characteristicoperationtype :
-      _characteristicoperationtype -> Yojson.Basic.t
-
-    type t = _characteristicoperationtype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of characteristic operation."]
-  end
-
-  and DescriptorOperationType : sig
-    type _descriptoroperationtype = [ `read | `write ]
-
-    val _descriptoroperationtype_of_yojson :
-      Yojson.Basic.t -> _descriptoroperationtype
-
-    val yojson_of__descriptoroperationtype :
-      _descriptoroperationtype -> Yojson.Basic.t
-
-    type t = _descriptoroperationtype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of descriptor operation."]
-  end
-
-  and ManufacturerData : sig
-    type t = {
-      key : number;
-          [@key "key"]
-          [@ocaml.doc
-            "Company identifier\n\
-             https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml\n\
-             https://usb.org/developers"]
-      data : string;
-          [@key "data"]
-          [@ocaml.doc
-            "Manufacturer-specific data (Encoded as a base64 string when \
-             passed over JSON)"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Stores the manufacturer data"]
-  end
-
-  and ScanRecord : sig
-    type t = {
-      name : string option;
-          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
-      uuids : string list option;
-          [@key "uuids"] [@yojson.option] [@ocaml.doc "No description provided"]
-      appearance : number option;
-          [@key "appearance"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Stores the external appearance description of the device."]
-      txPower : number option;
-          [@key "txPower"]
-          [@yojson.option]
-          [@ocaml.doc "Stores the transmission power of a broadcasting device."]
-      manufacturerData : ManufacturerData.t list option;
-          [@key "manufacturerData"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Key is the company identifier and the value is an array of bytes of\n\
-             manufacturer specific data."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stores the byte data of the advertisement packet sent by a Bluetooth \
-       device."]
-  end
-
-  and ScanEntry : sig
-    type t = {
-      deviceAddress : string;
-          [@key "deviceAddress"] [@ocaml.doc "No description provided"]
-      rssi : number; [@key "rssi"] [@ocaml.doc "No description provided"]
-      scanRecord : ScanRecord.t;
-          [@key "scanRecord"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stores the advertisement packet information that is sent by a Bluetooth \
-       device."]
-  end
-
-  and CharacteristicProperties : sig
-    type t = {
-      broadcast : bool option;
-          [@key "broadcast"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      read : bool option;
-          [@key "read"] [@yojson.option] [@ocaml.doc "No description provided"]
-      writeWithoutResponse : bool option;
-          [@key "writeWithoutResponse"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      write : bool option;
-          [@key "write"] [@yojson.option] [@ocaml.doc "No description provided"]
-      notify : bool option;
-          [@key "notify"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      indicate : bool option;
-          [@key "indicate"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      authenticatedSignedWrites : bool option;
-          [@key "authenticatedSignedWrites"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      extendedProperties : bool option;
-          [@key "extendedProperties"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Describes the properties of a characteristic. This follows Bluetooth Core\n\
-       Specification BT 4.2 Vol 3 Part G 3.3.1. Characteristic Properties."]
-  end
-end = struct
-  module rec CentralState : sig
-    type _centralstate = [ `absent | `powered_off | `powered_on ]
-
-    val _centralstate_of_yojson : Yojson.Basic.t -> _centralstate
-    val yojson_of__centralstate : _centralstate -> Yojson.Basic.t
-
-    type t = _centralstate
-    [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
-  end = struct
-    type _centralstate = [ `absent | `powered_off | `powered_on ]
-
-    let _centralstate_of_yojson = function
-      | `String "absent" -> `absent
-      | `String "powered-off" -> `powered_off
-      | `String "powered-on" -> `powered_on
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__centralstate = function
-      | `absent -> `String "absent"
-      | `powered_off -> `String "powered-off"
-      | `powered_on -> `String "powered-on"
-
-    type t = _centralstate
-    [@@deriving yojson] [@@ocaml.doc "Indicates the various states of Central."]
-  end
-
-  and GATTOperationType : sig
-    type _gattoperationtype = [ `connection | `discovery ]
-
-    val _gattoperationtype_of_yojson : Yojson.Basic.t -> _gattoperationtype
-    val yojson_of__gattoperationtype : _gattoperationtype -> Yojson.Basic.t
-
-    type t = _gattoperationtype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of GATT event."]
-  end = struct
-    type _gattoperationtype = [ `connection | `discovery ]
-
-    let _gattoperationtype_of_yojson = function
-      | `String "connection" -> `connection
-      | `String "discovery" -> `discovery
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__gattoperationtype = function
-      | `connection -> `String "connection"
-      | `discovery -> `String "discovery"
-
-    type t = _gattoperationtype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of GATT event."]
-  end
-
-  and CharacteristicWriteType : sig
-    type _characteristicwritetype =
-      [ `write_default_deprecated
-      | `write_with_response
-      | `write_without_response ]
-
-    val _characteristicwritetype_of_yojson :
-      Yojson.Basic.t -> _characteristicwritetype
-
-    val yojson_of__characteristicwritetype :
-      _characteristicwritetype -> Yojson.Basic.t
-
-    type t = _characteristicwritetype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of characteristic write."]
-  end = struct
-    type _characteristicwritetype =
-      [ `write_default_deprecated
-      | `write_with_response
-      | `write_without_response ]
-
-    let _characteristicwritetype_of_yojson = function
-      | `String "write-default-deprecated" -> `write_default_deprecated
-      | `String "write-with-response" -> `write_with_response
-      | `String "write-without-response" -> `write_without_response
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__characteristicwritetype = function
-      | `write_default_deprecated -> `String "write-default-deprecated"
-      | `write_with_response -> `String "write-with-response"
-      | `write_without_response -> `String "write-without-response"
-
-    type t = _characteristicwritetype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of characteristic write."]
-  end
-
-  and CharacteristicOperationType : sig
-    type _characteristicoperationtype =
-      [ `read
-      | `write
-      | `subscribe_to_notifications
-      | `unsubscribe_from_notifications ]
-
-    val _characteristicoperationtype_of_yojson :
-      Yojson.Basic.t -> _characteristicoperationtype
-
-    val yojson_of__characteristicoperationtype :
-      _characteristicoperationtype -> Yojson.Basic.t
-
-    type t = _characteristicoperationtype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of characteristic operation."]
-  end = struct
-    type _characteristicoperationtype =
-      [ `read
-      | `write
-      | `subscribe_to_notifications
-      | `unsubscribe_from_notifications ]
-
-    let _characteristicoperationtype_of_yojson = function
-      | `String "read" -> `read
-      | `String "write" -> `write
-      | `String "subscribe-to-notifications" -> `subscribe_to_notifications
-      | `String "unsubscribe-from-notifications" ->
-          `unsubscribe_from_notifications
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__characteristicoperationtype = function
-      | `read -> `String "read"
-      | `write -> `String "write"
-      | `subscribe_to_notifications -> `String "subscribe-to-notifications"
-      | `unsubscribe_from_notifications ->
-          `String "unsubscribe-from-notifications"
-
-    type t = _characteristicoperationtype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of characteristic operation."]
-  end
-
-  and DescriptorOperationType : sig
-    type _descriptoroperationtype = [ `read | `write ]
-
-    val _descriptoroperationtype_of_yojson :
-      Yojson.Basic.t -> _descriptoroperationtype
-
-    val yojson_of__descriptoroperationtype :
-      _descriptoroperationtype -> Yojson.Basic.t
-
-    type t = _descriptoroperationtype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of descriptor operation."]
-  end = struct
-    type _descriptoroperationtype = [ `read | `write ]
-
-    let _descriptoroperationtype_of_yojson = function
-      | `String "read" -> `read
-      | `String "write" -> `write
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__descriptoroperationtype = function
-      | `read -> `String "read"
-      | `write -> `String "write"
-
-    type t = _descriptoroperationtype
-    [@@deriving yojson]
-    [@@ocaml.doc "Indicates the various types of descriptor operation."]
-  end
-
-  and ManufacturerData : sig
-    type t = {
-      key : number;
-          [@key "key"]
-          [@ocaml.doc
-            "Company identifier\n\
-             https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml\n\
-             https://usb.org/developers"]
-      data : string;
-          [@key "data"]
-          [@ocaml.doc
-            "Manufacturer-specific data (Encoded as a base64 string when \
-             passed over JSON)"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Stores the manufacturer data"]
-  end = struct
-    type t = {
-      key : number;
-          [@key "key"]
-          [@ocaml.doc
-            "Company identifier\n\
-             https://bitbucket.org/bluetooth-SIG/public/src/main/assigned_numbers/company_identifiers/company_identifiers.yaml\n\
-             https://usb.org/developers"]
-      data : string;
-          [@key "data"]
-          [@ocaml.doc
-            "Manufacturer-specific data (Encoded as a base64 string when \
-             passed over JSON)"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Stores the manufacturer data"]
-  end
-
-  and ScanRecord : sig
-    type t = {
-      name : string option;
-          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
-      uuids : string list option;
-          [@key "uuids"] [@yojson.option] [@ocaml.doc "No description provided"]
-      appearance : number option;
-          [@key "appearance"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Stores the external appearance description of the device."]
-      txPower : number option;
-          [@key "txPower"]
-          [@yojson.option]
-          [@ocaml.doc "Stores the transmission power of a broadcasting device."]
-      manufacturerData : ManufacturerData.t list option;
-          [@key "manufacturerData"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Key is the company identifier and the value is an array of bytes of\n\
-             manufacturer specific data."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stores the byte data of the advertisement packet sent by a Bluetooth \
-       device."]
-  end = struct
-    type t = {
-      name : string option;
-          [@key "name"] [@yojson.option] [@ocaml.doc "No description provided"]
-      uuids : string list option;
-          [@key "uuids"] [@yojson.option] [@ocaml.doc "No description provided"]
-      appearance : number option;
-          [@key "appearance"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Stores the external appearance description of the device."]
-      txPower : number option;
-          [@key "txPower"]
-          [@yojson.option]
-          [@ocaml.doc "Stores the transmission power of a broadcasting device."]
-      manufacturerData : ManufacturerData.t list option;
-          [@key "manufacturerData"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Key is the company identifier and the value is an array of bytes of\n\
-             manufacturer specific data."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stores the byte data of the advertisement packet sent by a Bluetooth \
-       device."]
-  end
-
-  and ScanEntry : sig
-    type t = {
-      deviceAddress : string;
-          [@key "deviceAddress"] [@ocaml.doc "No description provided"]
-      rssi : number; [@key "rssi"] [@ocaml.doc "No description provided"]
-      scanRecord : ScanRecord.t;
-          [@key "scanRecord"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stores the advertisement packet information that is sent by a Bluetooth \
-       device."]
-  end = struct
-    type t = {
-      deviceAddress : string;
-          [@key "deviceAddress"] [@ocaml.doc "No description provided"]
-      rssi : number; [@key "rssi"] [@ocaml.doc "No description provided"]
-      scanRecord : ScanRecord.t;
-          [@key "scanRecord"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stores the advertisement packet information that is sent by a Bluetooth \
-       device."]
-  end
-
-  and CharacteristicProperties : sig
-    type t = {
-      broadcast : bool option;
-          [@key "broadcast"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      read : bool option;
-          [@key "read"] [@yojson.option] [@ocaml.doc "No description provided"]
-      writeWithoutResponse : bool option;
-          [@key "writeWithoutResponse"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      write : bool option;
-          [@key "write"] [@yojson.option] [@ocaml.doc "No description provided"]
-      notify : bool option;
-          [@key "notify"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      indicate : bool option;
-          [@key "indicate"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      authenticatedSignedWrites : bool option;
-          [@key "authenticatedSignedWrites"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      extendedProperties : bool option;
-          [@key "extendedProperties"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Describes the properties of a characteristic. This follows Bluetooth Core\n\
-       Specification BT 4.2 Vol 3 Part G 3.3.1. Characteristic Properties."]
-  end = struct
-    type t = {
-      broadcast : bool option;
-          [@key "broadcast"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      read : bool option;
-          [@key "read"] [@yojson.option] [@ocaml.doc "No description provided"]
-      writeWithoutResponse : bool option;
-          [@key "writeWithoutResponse"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      write : bool option;
-          [@key "write"] [@yojson.option] [@ocaml.doc "No description provided"]
-      notify : bool option;
-          [@key "notify"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      indicate : bool option;
-          [@key "indicate"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      authenticatedSignedWrites : bool option;
-          [@key "authenticatedSignedWrites"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      extendedProperties : bool option;
-          [@key "extendedProperties"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Describes the properties of a characteristic. This follows Bluetooth Core\n\
-       Specification BT 4.2 Vol 3 Part G 3.3.1. Characteristic Properties."]
   end
 end
 

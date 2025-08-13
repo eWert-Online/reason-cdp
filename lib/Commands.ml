@@ -1435,360 +1435,6 @@ using Audits.issueAdded event. |desc}]
 using Audits.issueAdded event. |desc}]
 end
 
-module Extensions = struct
-  module LoadUnpacked = struct
-    module Response : sig
-      type result = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        path : string; [@key "path"] [@ocaml.doc "Absolute file path."]
-      }
-      [@@deriving yojson]
-
-      let make ~path () = { path }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Extensions.loadUnpacked"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Installs an unpacked extension from the filesystem similar to
---load-extension CLI flags. Returns extension ID once the extension
-has been installed. Available if the client is connected using the
---remote-debugging-pipe flag and the --enable-unsafe-extension-debugging
-flag is set. |desc}]
-
-  module Uninstall = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
-      [@@deriving yojson]
-
-      let make ~id () = { id }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Extensions.uninstall"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Uninstalls an unpacked extension (others not supported) from the profile.
-Available if the client is connected using the --remote-debugging-pipe flag
-and the --enable-unsafe-extension-debugging. |desc}]
-
-  module GetStorageItems = struct
-    module Response : sig
-      type result = {
-        data : Types.assoc; [@key "data"] [@ocaml.doc "No description provided"]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        data : Types.assoc; [@key "data"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        id : string; [@key "id"] [@ocaml.doc "ID of extension."]
-        storageArea : Types.Extensions.StorageArea.t;
-            [@key "storageArea"]
-            [@ocaml.doc "StorageArea to retrieve data from."]
-        keys : string list option;
-            [@key "keys"] [@yojson.option] [@ocaml.doc "Keys to retrieve."]
-      }
-      [@@deriving yojson]
-
-      let make ~id ~storageArea ?keys () = { id; storageArea; keys }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Extensions.getStorageItems"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Gets data from extension storage in the given `storageArea`. If `keys` is
-specified, these are used to filter the result. |desc}]
-
-  module RemoveStorageItems = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        id : string; [@key "id"] [@ocaml.doc "ID of extension."]
-        storageArea : Types.Extensions.StorageArea.t;
-            [@key "storageArea"] [@ocaml.doc "StorageArea to remove data from."]
-        keys : string list; [@key "keys"] [@ocaml.doc "Keys to remove."]
-      }
-      [@@deriving yojson]
-
-      let make ~id ~storageArea ~keys () = { id; storageArea; keys }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Extensions.removeStorageItems"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Removes `keys` from extension storage in the given `storageArea`. |desc}]
-
-  module ClearStorageItems = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        id : string; [@key "id"] [@ocaml.doc "ID of extension."]
-        storageArea : Types.Extensions.StorageArea.t;
-            [@key "storageArea"] [@ocaml.doc "StorageArea to remove data from."]
-      }
-      [@@deriving yojson]
-
-      let make ~id ~storageArea () = { id; storageArea }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Extensions.clearStorageItems"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Clears extension storage in the given `storageArea`. |desc}]
-
-  module SetStorageItems = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        id : string; [@key "id"] [@ocaml.doc "ID of extension."]
-        storageArea : Types.Extensions.StorageArea.t;
-            [@key "storageArea"] [@ocaml.doc "StorageArea to set data in."]
-        values : Types.assoc; [@key "values"] [@ocaml.doc "Values to set."]
-      }
-      [@@deriving yojson]
-
-      let make ~id ~storageArea ~values () = { id; storageArea; values }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Extensions.setStorageItems"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Sets `values` in extension storage in the given `storageArea`. The provided `values`
-will be merged with existing values in the storage area. |desc}]
-end
-
 module Autofill = struct
   module Trigger = struct
     module Response : sig
@@ -2217,6 +1863,960 @@ module BackgroundService = struct
     end
   end
   [@@ocaml.doc {desc|Clears all stored data for the service. |desc}]
+end
+
+module BluetoothEmulation = struct
+  module Enable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        state : Types.BluetoothEmulation.CentralState.t;
+            [@key "state"] [@ocaml.doc "State of the simulated central."]
+        leSupported : bool;
+            [@key "leSupported"]
+            [@ocaml.doc "If the simulated central supports low-energy."]
+      }
+      [@@deriving yojson]
+
+      let make ~state ~leSupported () = { state; leSupported }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "BluetoothEmulation.enable"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Enable the BluetoothEmulation domain. |desc}]
+
+  module SetSimulatedCentralState = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        state : Types.BluetoothEmulation.CentralState.t;
+            [@key "state"] [@ocaml.doc "State of the simulated central."]
+      }
+      [@@deriving yojson]
+
+      let make ~state () = { state }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.setSimulatedCentralState";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Set the state of the simulated central. |desc}]
+
+  module Disable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "BluetoothEmulation.disable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Disable the BluetoothEmulation domain. |desc}]
+
+  module SimulatePreconnectedPeripheral = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string;
+            [@key "address"] [@ocaml.doc "No description provided"]
+        name : string; [@key "name"] [@ocaml.doc "No description provided"]
+        manufacturerData : Types.BluetoothEmulation.ManufacturerData.t list;
+            [@key "manufacturerData"] [@ocaml.doc "No description provided"]
+        knownServiceUuids : string list;
+            [@key "knownServiceUuids"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address ~name ~manufacturerData ~knownServiceUuids () =
+        { address; name; manufacturerData; knownServiceUuids }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.simulatePreconnectedPeripheral";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Simulates a peripheral with |address|, |name| and |knownServiceUuids|
+that has already been connected to the system. |desc}]
+
+  module SimulateAdvertisement = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        entry : Types.BluetoothEmulation.ScanEntry.t;
+            [@key "entry"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~entry () = { entry }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.simulateAdvertisement";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Simulates an advertisement packet described in |entry| being received by
+the central. |desc}]
+
+  module SimulateGATTOperationResponse = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string;
+            [@key "address"] [@ocaml.doc "No description provided"]
+        type_ : Types.BluetoothEmulation.GATTOperationType.t;
+            [@key "type"] [@ocaml.doc "No description provided"]
+        code : Types.number; [@key "code"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address ~type_ ~code () = { address; type_; code }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.simulateGATTOperationResponse";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Simulates the response code from the peripheral with |address| for a
+GATT operation of |type|. The |code| value follows the HCI Error Codes from
+Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
+
+  module SimulateCharacteristicOperationResponse = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        characteristicId : string;
+            [@key "characteristicId"] [@ocaml.doc "No description provided"]
+        type_ : Types.BluetoothEmulation.CharacteristicOperationType.t;
+            [@key "type"] [@ocaml.doc "No description provided"]
+        code : Types.number;
+            [@key "code"] [@ocaml.doc "No description provided"]
+        data : string option;
+            [@key "data"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~characteristicId ~type_ ~code ?data () =
+        { characteristicId; type_; code; data }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.simulateCharacteristicOperationResponse";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Simulates the response from the characteristic with |characteristicId| for a
+characteristic operation of |type|. The |code| value follows the Error
+Codes from Bluetooth Core Specification Vol 3 Part F 3.4.1.1 Error Response.
+The |data| is expected to exist when simulating a successful read operation
+response. |desc}]
+
+  module SimulateDescriptorOperationResponse = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        descriptorId : string;
+            [@key "descriptorId"] [@ocaml.doc "No description provided"]
+        type_ : Types.BluetoothEmulation.DescriptorOperationType.t;
+            [@key "type"] [@ocaml.doc "No description provided"]
+        code : Types.number;
+            [@key "code"] [@ocaml.doc "No description provided"]
+        data : string option;
+            [@key "data"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~descriptorId ~type_ ~code ?data () =
+        { descriptorId; type_; code; data }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.simulateDescriptorOperationResponse";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Simulates the response from the descriptor with |descriptorId| for a
+descriptor operation of |type|. The |code| value follows the Error
+Codes from Bluetooth Core Specification Vol 3 Part F 3.4.1.1 Error Response.
+The |data| is expected to exist when simulating a successful read operation
+response. |desc}]
+
+  module AddService = struct
+    module Response : sig
+      type result = {
+        serviceId : string;
+            [@key "serviceId"]
+            [@ocaml.doc "An identifier that uniquely represents this service."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        serviceId : string;
+            [@key "serviceId"]
+            [@ocaml.doc "An identifier that uniquely represents this service."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string;
+            [@key "address"] [@ocaml.doc "No description provided"]
+        serviceUuid : string;
+            [@key "serviceUuid"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address ~serviceUuid () = { address; serviceUuid }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "BluetoothEmulation.addService"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Adds a service with |serviceUuid| to the peripheral with |address|. |desc}]
+
+  module RemoveService = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        serviceId : string;
+            [@key "serviceId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~serviceId () = { serviceId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "BluetoothEmulation.removeService"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Removes the service respresented by |serviceId| from the simulated central. |desc}]
+
+  module AddCharacteristic = struct
+    module Response : sig
+      type result = {
+        characteristicId : string;
+            [@key "characteristicId"]
+            [@ocaml.doc
+              "An identifier that uniquely represents this characteristic."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        characteristicId : string;
+            [@key "characteristicId"]
+            [@ocaml.doc
+              "An identifier that uniquely represents this characteristic."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        serviceId : string;
+            [@key "serviceId"] [@ocaml.doc "No description provided"]
+        characteristicUuid : string;
+            [@key "characteristicUuid"] [@ocaml.doc "No description provided"]
+        properties : Types.BluetoothEmulation.CharacteristicProperties.t;
+            [@key "properties"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~serviceId ~characteristicUuid ~properties () =
+        { serviceId; characteristicUuid; properties }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.addCharacteristic";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Adds a characteristic with |characteristicUuid| and |properties| to the
+service represented by |serviceId|. |desc}]
+
+  module RemoveCharacteristic = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        characteristicId : string;
+            [@key "characteristicId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~characteristicId () = { characteristicId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.removeCharacteristic";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Removes the characteristic respresented by |characteristicId| from the
+simulated central. |desc}]
+
+  module AddDescriptor = struct
+    module Response : sig
+      type result = {
+        descriptorId : string;
+            [@key "descriptorId"]
+            [@ocaml.doc
+              "An identifier that uniquely represents this descriptor."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        descriptorId : string;
+            [@key "descriptorId"]
+            [@ocaml.doc
+              "An identifier that uniquely represents this descriptor."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        characteristicId : string;
+            [@key "characteristicId"] [@ocaml.doc "No description provided"]
+        descriptorUuid : string;
+            [@key "descriptorUuid"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~characteristicId ~descriptorUuid () =
+        { characteristicId; descriptorUuid }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "BluetoothEmulation.addDescriptor"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Adds a descriptor with |descriptorUuid| to the characteristic respresented
+by |characteristicId|. |desc}]
+
+  module RemoveDescriptor = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        descriptorId : string;
+            [@key "descriptorId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~descriptorId () = { descriptorId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.removeDescriptor";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Removes the descriptor with |descriptorId| from the simulated central. |desc}]
+
+  module SimulateGATTDisconnection = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        address : string; [@key "address"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~address () = { address }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "BluetoothEmulation.simulateGATTDisconnection";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Simulates a GATT disconnection from the peripheral with |address|. |desc}]
 end
 
 module Browser = struct
@@ -10924,169 +11524,6 @@ module DOMDebugger = struct
   [@@ocaml.doc {desc|Sets breakpoint on XMLHttpRequest. |desc}]
 end
 
-module EventBreakpoints = struct
-  module SetInstrumentationBreakpoint = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        eventName : string;
-            [@key "eventName"] [@ocaml.doc "Instrumentation name to stop on."]
-      }
-      [@@deriving yojson]
-
-      let make ~eventName () = { eventName }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "EventBreakpoints.setInstrumentationBreakpoint";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Sets breakpoint on particular native event. |desc}]
-
-  module RemoveInstrumentationBreakpoint = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        eventName : string;
-            [@key "eventName"] [@ocaml.doc "Instrumentation name to stop on."]
-      }
-      [@@deriving yojson]
-
-      let make ~eventName () = { eventName }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "EventBreakpoints.removeInstrumentationBreakpoint";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Removes breakpoint on particular native event. |desc}]
-
-  module Disable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "EventBreakpoints.disable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Removes all breakpoints |desc}]
-end
-
 module DOMSnapshot = struct
   module Disable = struct
     module Response : sig
@@ -11728,6 +12165,206 @@ module DOMStorage = struct
     end
   end
   [@@ocaml.doc {desc|No description provided |desc}]
+end
+
+module DeviceAccess = struct
+  module Enable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "DeviceAccess.enable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Enable events in this domain. |desc}]
+
+  module Disable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "DeviceAccess.disable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Disable events in this domain. |desc}]
+
+  module SelectPrompt = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : Types.DeviceAccess.RequestId.t;
+            [@key "id"] [@ocaml.doc "No description provided"]
+        deviceId : Types.DeviceAccess.DeviceId.t;
+            [@key "deviceId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~id ~deviceId () = { id; deviceId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "DeviceAccess.selectPrompt"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Select a device in response to a DeviceAccess.deviceRequestPrompted event. |desc}]
+
+  module CancelPrompt = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : Types.DeviceAccess.RequestId.t;
+            [@key "id"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~id () = { id }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "DeviceAccess.cancelPrompt"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Cancel a prompt in response to a DeviceAccess.deviceRequestPrompted event. |desc}]
 end
 
 module DeviceOrientation = struct
@@ -14559,6 +15196,1632 @@ on Android. |desc}]
 value of the `svh` and `lvh` unit, respectively. Only supported for top-level frames. |desc}]
 end
 
+module EventBreakpoints = struct
+  module SetInstrumentationBreakpoint = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        eventName : string;
+            [@key "eventName"] [@ocaml.doc "Instrumentation name to stop on."]
+      }
+      [@@deriving yojson]
+
+      let make ~eventName () = { eventName }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "EventBreakpoints.setInstrumentationBreakpoint";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Sets breakpoint on particular native event. |desc}]
+
+  module RemoveInstrumentationBreakpoint = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        eventName : string;
+            [@key "eventName"] [@ocaml.doc "Instrumentation name to stop on."]
+      }
+      [@@deriving yojson]
+
+      let make ~eventName () = { eventName }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "EventBreakpoints.removeInstrumentationBreakpoint";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Removes breakpoint on particular native event. |desc}]
+
+  module Disable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "EventBreakpoints.disable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Removes all breakpoints |desc}]
+end
+
+module Extensions = struct
+  module LoadUnpacked = struct
+    module Response : sig
+      type result = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        path : string; [@key "path"] [@ocaml.doc "Absolute file path."]
+      }
+      [@@deriving yojson]
+
+      let make ~path () = { path }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Extensions.loadUnpacked"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Installs an unpacked extension from the filesystem similar to
+--load-extension CLI flags. Returns extension ID once the extension
+has been installed. Available if the client is connected using the
+--remote-debugging-pipe flag and the --enable-unsafe-extension-debugging
+flag is set. |desc}]
+
+  module Uninstall = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
+      [@@deriving yojson]
+
+      let make ~id () = { id }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Extensions.uninstall"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Uninstalls an unpacked extension (others not supported) from the profile.
+Available if the client is connected using the --remote-debugging-pipe flag
+and the --enable-unsafe-extension-debugging. |desc}]
+
+  module GetStorageItems = struct
+    module Response : sig
+      type result = {
+        data : Types.assoc; [@key "data"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        data : Types.assoc; [@key "data"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : string; [@key "id"] [@ocaml.doc "ID of extension."]
+        storageArea : Types.Extensions.StorageArea.t;
+            [@key "storageArea"]
+            [@ocaml.doc "StorageArea to retrieve data from."]
+        keys : string list option;
+            [@key "keys"] [@yojson.option] [@ocaml.doc "Keys to retrieve."]
+      }
+      [@@deriving yojson]
+
+      let make ~id ~storageArea ?keys () = { id; storageArea; keys }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Extensions.getStorageItems"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Gets data from extension storage in the given `storageArea`. If `keys` is
+specified, these are used to filter the result. |desc}]
+
+  module RemoveStorageItems = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : string; [@key "id"] [@ocaml.doc "ID of extension."]
+        storageArea : Types.Extensions.StorageArea.t;
+            [@key "storageArea"] [@ocaml.doc "StorageArea to remove data from."]
+        keys : string list; [@key "keys"] [@ocaml.doc "Keys to remove."]
+      }
+      [@@deriving yojson]
+
+      let make ~id ~storageArea ~keys () = { id; storageArea; keys }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Extensions.removeStorageItems"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Removes `keys` from extension storage in the given `storageArea`. |desc}]
+
+  module ClearStorageItems = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : string; [@key "id"] [@ocaml.doc "ID of extension."]
+        storageArea : Types.Extensions.StorageArea.t;
+            [@key "storageArea"] [@ocaml.doc "StorageArea to remove data from."]
+      }
+      [@@deriving yojson]
+
+      let make ~id ~storageArea () = { id; storageArea }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Extensions.clearStorageItems"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Clears extension storage in the given `storageArea`. |desc}]
+
+  module SetStorageItems = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : string; [@key "id"] [@ocaml.doc "ID of extension."]
+        storageArea : Types.Extensions.StorageArea.t;
+            [@key "storageArea"] [@ocaml.doc "StorageArea to set data in."]
+        values : Types.assoc; [@key "values"] [@ocaml.doc "Values to set."]
+      }
+      [@@deriving yojson]
+
+      let make ~id ~storageArea ~values () = { id; storageArea; values }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Extensions.setStorageItems"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Sets `values` in extension storage in the given `storageArea`. The provided `values`
+will be merged with existing values in the storage area. |desc}]
+end
+
+module FedCm = struct
+  module Enable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        disableRejectionDelay : bool option;
+            [@key "disableRejectionDelay"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Allows callers to disable the promise rejection delay that would\n\
+               normally happen, if this is unimportant to what's being tested.\n\
+               (step 4 of \
+               https://fedidcg.github.io/FedCM/#browser-api-rp-sign-in)"]
+      }
+      [@@deriving yojson]
+
+      let make ?disableRejectionDelay () = { disableRejectionDelay }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "FedCm.enable"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
+  module Disable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "FedCm.disable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
+  module SelectAccount = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        dialogId : string;
+            [@key "dialogId"] [@ocaml.doc "No description provided"]
+        accountIndex : Types.number;
+            [@key "accountIndex"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~dialogId ~accountIndex () = { dialogId; accountIndex }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "FedCm.selectAccount"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
+  module ClickDialogButton = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        dialogId : string;
+            [@key "dialogId"] [@ocaml.doc "No description provided"]
+        dialogButton : Types.FedCm.DialogButton.t;
+            [@key "dialogButton"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~dialogId ~dialogButton () = { dialogId; dialogButton }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "FedCm.clickDialogButton"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
+  module OpenUrl = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        dialogId : string;
+            [@key "dialogId"] [@ocaml.doc "No description provided"]
+        accountIndex : Types.number;
+            [@key "accountIndex"] [@ocaml.doc "No description provided"]
+        accountUrlType : Types.FedCm.AccountUrlType.t;
+            [@key "accountUrlType"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~dialogId ~accountIndex ~accountUrlType () =
+        { dialogId; accountIndex; accountUrlType }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "FedCm.openUrl"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
+  module DismissDialog = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        dialogId : string;
+            [@key "dialogId"] [@ocaml.doc "No description provided"]
+        triggerCooldown : bool option;
+            [@key "triggerCooldown"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~dialogId ?triggerCooldown () = { dialogId; triggerCooldown }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "FedCm.dismissDialog"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
+  module ResetCooldown = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "FedCm.resetCooldown"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Resets the cooldown time, if any, to allow the next FedCM call to show
+a dialog even if one was recently dismissed by the user. |desc}]
+end
+
+module Fetch = struct
+  module Disable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Fetch.disable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Disables the fetch domain. |desc}]
+
+  module Enable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        patterns : Types.Fetch.RequestPattern.t list option;
+            [@key "patterns"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If specified, only requests matching any of these patterns will \
+               produce\n\
+               fetchRequested event and will be paused until clients response. \
+               If not set,\n\
+               all requests will be affected."]
+        handleAuthRequests : bool option;
+            [@key "handleAuthRequests"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If true, authRequired events will be issued and requests will \
+               be paused\n\
+               expecting a call to continueWithAuth."]
+      }
+      [@@deriving yojson]
+
+      let make ?patterns ?handleAuthRequests () =
+        { patterns; handleAuthRequests }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Fetch.enable"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Enables issuing of requestPaused events. A request will be paused until client
+calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. |desc}]
+
+  module FailRequest = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        requestId : Types.Fetch.RequestId.t;
+            [@key "requestId"]
+            [@ocaml.doc "An id the client received in requestPaused event."]
+        errorReason : Types.Network.ErrorReason.t;
+            [@key "errorReason"]
+            [@ocaml.doc "Causes the request to fail with the given reason."]
+      }
+      [@@deriving yojson]
+
+      let make ~requestId ~errorReason () = { requestId; errorReason }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Fetch.failRequest"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Causes the request to fail with specified reason. |desc}]
+
+  module FulfillRequest = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        requestId : Types.Fetch.RequestId.t;
+            [@key "requestId"]
+            [@ocaml.doc "An id the client received in requestPaused event."]
+        responseCode : Types.number;
+            [@key "responseCode"] [@ocaml.doc "An HTTP response code."]
+        responseHeaders : Types.Fetch.HeaderEntry.t list option;
+            [@key "responseHeaders"]
+            [@yojson.option]
+            [@ocaml.doc "Response headers."]
+        binaryResponseHeaders : string option;
+            [@key "binaryResponseHeaders"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Alternative way of specifying response headers as a \\0-separated\n\
+               series of name: value pairs. Prefer the above method unless you\n\
+               need to represent some non-UTF8 values that can't be transmitted\n\
+               over the protocol as text. (Encoded as a base64 string when \
+               passed over JSON)"]
+        body : string option;
+            [@key "body"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A response body. If absent, original response body will be used \
+               if\n\
+               the request is intercepted at the response stage and empty body\n\
+               will be used if the request is intercepted at the request \
+               stage. (Encoded as a base64 string when passed over JSON)"]
+        responsePhrase : string option;
+            [@key "responsePhrase"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A textual representation of responseCode.\n\
+               If absent, a standard phrase matching responseCode is used."]
+      }
+      [@@deriving yojson]
+
+      let make ~requestId ~responseCode ?responseHeaders ?binaryResponseHeaders
+          ?body ?responsePhrase () =
+        {
+          requestId;
+          responseCode;
+          responseHeaders;
+          binaryResponseHeaders;
+          body;
+          responsePhrase;
+        }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Fetch.fulfillRequest"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Provides response to the request. |desc}]
+
+  module ContinueRequest = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        requestId : Types.Fetch.RequestId.t;
+            [@key "requestId"]
+            [@ocaml.doc "An id the client received in requestPaused event."]
+        url : string option;
+            [@key "url"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If set, the request url will be modified in a way that's not \
+               observable by page."]
+        method_ : string option;
+            [@key "method"]
+            [@yojson.option]
+            [@ocaml.doc "If set, the request method is overridden."]
+        postData : string option;
+            [@key "postData"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If set, overrides the post data in the request. (Encoded as a \
+               base64 string when passed over JSON)"]
+        headers : Types.Fetch.HeaderEntry.t list option;
+            [@key "headers"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If set, overrides the request headers. Note that the overrides \
+               do not\n\
+               extend to subsequent redirect hops, if a redirect happens. \
+               Another override\n\
+               may be applied to a different request produced by a redirect."]
+        interceptResponse : bool option;
+            [@key "interceptResponse"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If set, overrides response interception behavior for this \
+               request."]
+      }
+      [@@deriving yojson]
+
+      let make ~requestId ?url ?method_ ?postData ?headers ?interceptResponse ()
+          =
+        { requestId; url; method_; postData; headers; interceptResponse }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Fetch.continueRequest"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Continues the request, optionally modifying some of its parameters. |desc}]
+
+  module ContinueWithAuth = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        requestId : Types.Fetch.RequestId.t;
+            [@key "requestId"]
+            [@ocaml.doc "An id the client received in authRequired event."]
+        authChallengeResponse : Types.Fetch.AuthChallengeResponse.t;
+            [@key "authChallengeResponse"]
+            [@ocaml.doc "Response to  with an authChallenge."]
+      }
+      [@@deriving yojson]
+
+      let make ~requestId ~authChallengeResponse () =
+        { requestId; authChallengeResponse }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Fetch.continueWithAuth"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Continues a request supplying authChallengeResponse following authRequired event. |desc}]
+
+  module ContinueResponse = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        requestId : Types.Fetch.RequestId.t;
+            [@key "requestId"]
+            [@ocaml.doc "An id the client received in requestPaused event."]
+        responseCode : Types.number option;
+            [@key "responseCode"]
+            [@yojson.option]
+            [@ocaml.doc
+              "An HTTP response code. If absent, original response code will \
+               be used."]
+        responsePhrase : string option;
+            [@key "responsePhrase"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A textual representation of responseCode.\n\
+               If absent, a standard phrase matching responseCode is used."]
+        responseHeaders : Types.Fetch.HeaderEntry.t list option;
+            [@key "responseHeaders"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Response headers. If absent, original response headers will be \
+               used."]
+        binaryResponseHeaders : string option;
+            [@key "binaryResponseHeaders"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Alternative way of specifying response headers as a \\0-separated\n\
+               series of name: value pairs. Prefer the above method unless you\n\
+               need to represent some non-UTF8 values that can't be transmitted\n\
+               over the protocol as text. (Encoded as a base64 string when \
+               passed over JSON)"]
+      }
+      [@@deriving yojson]
+
+      let make ~requestId ?responseCode ?responsePhrase ?responseHeaders
+          ?binaryResponseHeaders () =
+        {
+          requestId;
+          responseCode;
+          responsePhrase;
+          responseHeaders;
+          binaryResponseHeaders;
+        }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Fetch.continueResponse"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Continues loading of the paused response, optionally modifying the
+response headers. If either responseCode or headers are modified, all of them
+must be present. |desc}]
+
+  module GetResponseBody = struct
+    module Response : sig
+      type result = {
+        body : string; [@key "body"] [@ocaml.doc "Response body."]
+        base64Encoded : bool;
+            [@key "base64Encoded"]
+            [@ocaml.doc "True, if content was sent as base64."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        body : string; [@key "body"] [@ocaml.doc "Response body."]
+        base64Encoded : bool;
+            [@key "base64Encoded"]
+            [@ocaml.doc "True, if content was sent as base64."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        requestId : Types.Fetch.RequestId.t;
+            [@key "requestId"]
+            [@ocaml.doc
+              "Identifier for the intercepted request to get body for."]
+      }
+      [@@deriving yojson]
+
+      let make ~requestId () = { requestId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Fetch.getResponseBody"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Causes the body of the response to be received from the server and
+returned as a single string. May only be issued for a request that
+is paused in the Response stage and is mutually exclusive with
+takeResponseBodyForInterceptionAsStream. Calling other methods that
+affect the request or disabling fetch domain before body is received
+results in an undefined behavior.
+Note that the response body is not available for redirects. Requests
+paused in the _redirect received_ state may be differentiated by
+`responseCode` and presence of `location` response header, see
+comments to `requestPaused` for details. |desc}]
+
+  module TakeResponseBodyAsStream = struct
+    module Response : sig
+      type result = {
+        stream : Types.IO.StreamHandle.t;
+            [@key "stream"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        stream : Types.IO.StreamHandle.t;
+            [@key "stream"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        requestId : Types.Fetch.RequestId.t;
+            [@key "requestId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~requestId () = { requestId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Fetch.takeResponseBodyAsStream"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns a handle to the stream representing the response body.
+The request must be paused in the HeadersReceived stage.
+Note that after this command the request can't be continued
+as is -- client either needs to cancel it or to provide the
+response body.
+The stream only supports sequential read, IO.read will fail if the position
+is specified.
+This method is mutually exclusive with getResponseBody.
+Calling other methods that affect the request or disabling fetch
+domain before body is received results in an undefined behavior. |desc}]
+end
+
+module FileSystem = struct
+  module GetDirectory = struct
+    module Response : sig
+      type result = {
+        directory : Types.FileSystem.Directory.t;
+            [@key "directory"]
+            [@ocaml.doc "Returns the directory object at the path."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        directory : Types.FileSystem.Directory.t;
+            [@key "directory"]
+            [@ocaml.doc "Returns the directory object at the path."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        bucketFileSystemLocator : Types.FileSystem.BucketFileSystemLocator.t;
+            [@key "bucketFileSystemLocator"]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~bucketFileSystemLocator () = { bucketFileSystemLocator }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "FileSystem.getDirectory"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+end
+
 module HeadlessExperimental = struct
   module BeginFrame = struct
     module Response : sig
@@ -14980,74 +17243,6 @@ module IO = struct
   end
   [@@ocaml.doc
     {desc|Return UUID of Blob object specified by a remote object id. |desc}]
-end
-
-module FileSystem = struct
-  module GetDirectory = struct
-    module Response : sig
-      type result = {
-        directory : Types.FileSystem.Directory.t;
-            [@key "directory"]
-            [@ocaml.doc "Returns the directory object at the path."]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        directory : Types.FileSystem.Directory.t;
-            [@key "directory"]
-            [@ocaml.doc "Returns the directory object at the path."]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        bucketFileSystemLocator : Types.FileSystem.BucketFileSystemLocator.t;
-            [@key "bucketFileSystemLocator"]
-            [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~bucketFileSystemLocator () = { bucketFileSystemLocator }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "FileSystem.getDirectory"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module IndexedDB = struct
@@ -17877,6 +20072,94 @@ module Log = struct
     end
   end
   [@@ocaml.doc {desc|Stop violation reporting. |desc}]
+end
+
+module Media = struct
+  module Enable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Media.enable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Enables the Media domain |desc}]
+
+  module Disable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Media.disable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Disables the Media domain. |desc}]
 end
 
 module Memory = struct
@@ -21441,7 +23724,10 @@ objectId must be specified. |desc}]
     end
   end
   [@@ocaml.doc
-    {desc|Highlights given rectangle. Coordinates are absolute with respect to the main frame viewport. |desc}]
+    {desc|Highlights given rectangle. Coordinates are absolute with respect to the main frame viewport.
+Issue: the method does not handle device pixel ratio (DPR) correctly.
+The coordinates currently have to be adjusted by the client
+if DPR is not 1 (see crbug.com/437807128). |desc}]
 
   module HighlightSourceOrder = struct
     module Response : sig
@@ -22549,6 +24835,513 @@ Backend then generates 'inspectNodeRequested' event upon element selection. |des
     end
   end
   [@@ocaml.doc {desc|Show Window Controls Overlay for PWA |desc}]
+end
+
+module PWA = struct
+  module GetOsAppState = struct
+    module Response : sig
+      type result = {
+        badgeCount : Types.number;
+            [@key "badgeCount"] [@ocaml.doc "No description provided"]
+        fileHandlers : Types.PWA.FileHandler.t list;
+            [@key "fileHandlers"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        badgeCount : Types.number;
+            [@key "badgeCount"] [@ocaml.doc "No description provided"]
+        fileHandlers : Types.PWA.FileHandler.t list;
+            [@key "fileHandlers"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"]
+            [@ocaml.doc
+              "The id from the webapp's manifest file, commonly it's the url \
+               of the\n\
+               site installing the webapp. See\n\
+               https://web.dev/learn/pwa/web-app-manifest."]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId () = { manifestId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.getOsAppState"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns the following OS state for the given manifest id. |desc}]
+
+  module Install = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+        installUrlOrBundleUrl : string option;
+            [@key "installUrlOrBundleUrl"]
+            [@yojson.option]
+            [@ocaml.doc
+              "The location of the app or bundle overriding the one derived \
+               from the\n\
+               manifestId."]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId ?installUrlOrBundleUrl () =
+        { manifestId; installUrlOrBundleUrl }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.install"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Installs the given manifest identity, optionally using the given installUrlOrBundleUrl
+
+IWA-specific install description:
+manifestId corresponds to isolated-app:// + web_package::SignedWebBundleId
+
+File installation mode:
+The installUrlOrBundleUrl can be either file:// or http(s):// pointing
+to a signed web bundle (.swbn). In this case SignedWebBundleId must correspond to
+The .swbn file's signing key.
+
+Dev proxy installation mode:
+installUrlOrBundleUrl must be http(s):// that serves dev mode IWA.
+web_package::SignedWebBundleId must be of type dev proxy.
+
+The advantage of dev proxy mode is that all changes to IWA
+automatically will be reflected in the running app without
+reinstallation.
+
+To generate bundle id for proxy mode:
+1. Generate 32 random bytes.
+2. Add a specific suffix 0x00 at the end.
+3. Encode the entire sequence using Base32 without padding.
+
+If Chrome is not in IWA dev
+mode, the installation will fail, regardless of the state of the allowlist. |desc}]
+
+  module Uninstall = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId () = { manifestId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.uninstall"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Uninstalls the given manifest_id and closes any opened app windows. |desc}]
+
+  module Launch = struct
+    module Response : sig
+      type result = {
+        targetId : Types.Target.TargetID.t;
+            [@key "targetId"]
+            [@ocaml.doc "ID of the tab target created as a result."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        targetId : Types.Target.TargetID.t;
+            [@key "targetId"]
+            [@ocaml.doc "ID of the tab target created as a result."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+        url : string option;
+            [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId ?url () = { manifestId; url }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.launch"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Launches the installed web app, or an url in the same web app instead of the
+default start url if it is provided. Returns a page Target.TargetID which
+can be used to attach to via Target.attachToTarget or similar APIs. |desc}]
+
+  module LaunchFilesInApp = struct
+    module Response : sig
+      type result = {
+        targetIds : Types.Target.TargetID.t list;
+            [@key "targetIds"]
+            [@ocaml.doc "IDs of the tab targets created as the result."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        targetIds : Types.Target.TargetID.t list;
+            [@key "targetIds"]
+            [@ocaml.doc "IDs of the tab targets created as the result."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+        files : string list;
+            [@key "files"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId ~files () = { manifestId; files }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.launchFilesInApp"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Opens one or more local files from an installed web app identified by its
+manifestId. The web app needs to have file handlers registered to process
+the files. The API returns one or more page Target.TargetIDs which can be
+used to attach to via Target.attachToTarget or similar APIs.
+If some files in the parameters cannot be handled by the web app, they will
+be ignored. If none of the files can be handled, this API returns an error.
+If no files are provided as the parameter, this API also returns an error.
+
+According to the definition of the file handlers in the manifest file, one
+Target.TargetID may represent a page handling one or more files. The order
+of the returned Target.TargetIDs is not guaranteed.
+
+TODO(crbug.com/339454034): Check the existences of the input files. |desc}]
+
+  module OpenCurrentPageInApp = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId () = { manifestId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.openCurrentPageInApp"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Opens the current page in its web app identified by the manifest id, needs
+to be called on a page target. This function returns immediately without
+waiting for the app to finish loading. |desc}]
+
+  module ChangeAppUserSettings = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        manifestId : string;
+            [@key "manifestId"] [@ocaml.doc "No description provided"]
+        linkCapturing : bool option;
+            [@key "linkCapturing"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If user allows the links clicked on by the user in the app's \
+               scope, or\n\
+               extended scope if the manifest has scope extensions and the flags\n\
+               `DesktopPWAsLinkCapturingWithScopeExtensions` and\n\
+               `WebAppEnableScopeExtensions` are enabled.\n\n\
+               Note, the API does not support resetting the linkCapturing to the\n\
+               initial value, uninstalling and installing the web app again \
+               will reset\n\
+               it.\n\n\
+               TODO(crbug.com/339453269): Setting this value on ChromeOS is not\n\
+               supported yet."]
+        displayMode : Types.PWA.DisplayMode.t option;
+            [@key "displayMode"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~manifestId ?linkCapturing ?displayMode () =
+        { manifestId; linkCapturing; displayMode }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "PWA.changeAppUserSettings"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Changes user settings of the web app identified by its manifestId. If the
+app was not installed, this command returns an error. Unset parameters will
+be ignored; unrecognized values will cause an error.
+
+Unlike the ones defined in the manifest files of the web apps, these
+settings are provided by the browser and controlled by the users, they
+impact the way the browser handling the web apps.
+
+See the comment of each parameter. |desc}]
 end
 
 module Page = struct
@@ -26850,6 +29643,94 @@ module PerformanceTimeline = struct
   [@@ocaml.doc
     {desc|Previously buffered events would be reported before method returns.
 See also: timelineEventAdded |desc}]
+end
+
+module Preload = struct
+  module Enable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Preload.enable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
+  module Disable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Preload.disable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Security = struct
@@ -31945,668 +34826,6 @@ module Tracing = struct
   [@@ocaml.doc {desc|Start trace events collection. |desc}]
 end
 
-module Fetch = struct
-  module Disable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Fetch.disable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Disables the fetch domain. |desc}]
-
-  module Enable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        patterns : Types.Fetch.RequestPattern.t list option;
-            [@key "patterns"]
-            [@yojson.option]
-            [@ocaml.doc
-              "If specified, only requests matching any of these patterns will \
-               produce\n\
-               fetchRequested event and will be paused until clients response. \
-               If not set,\n\
-               all requests will be affected."]
-        handleAuthRequests : bool option;
-            [@key "handleAuthRequests"]
-            [@yojson.option]
-            [@ocaml.doc
-              "If true, authRequired events will be issued and requests will \
-               be paused\n\
-               expecting a call to continueWithAuth."]
-      }
-      [@@deriving yojson]
-
-      let make ?patterns ?handleAuthRequests () =
-        { patterns; handleAuthRequests }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Fetch.enable"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Enables issuing of requestPaused events. A request will be paused until client
-calls one of failRequest, fulfillRequest or continueRequest/continueWithAuth. |desc}]
-
-  module FailRequest = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        requestId : Types.Fetch.RequestId.t;
-            [@key "requestId"]
-            [@ocaml.doc "An id the client received in requestPaused event."]
-        errorReason : Types.Network.ErrorReason.t;
-            [@key "errorReason"]
-            [@ocaml.doc "Causes the request to fail with the given reason."]
-      }
-      [@@deriving yojson]
-
-      let make ~requestId ~errorReason () = { requestId; errorReason }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Fetch.failRequest"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Causes the request to fail with specified reason. |desc}]
-
-  module FulfillRequest = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        requestId : Types.Fetch.RequestId.t;
-            [@key "requestId"]
-            [@ocaml.doc "An id the client received in requestPaused event."]
-        responseCode : Types.number;
-            [@key "responseCode"] [@ocaml.doc "An HTTP response code."]
-        responseHeaders : Types.Fetch.HeaderEntry.t list option;
-            [@key "responseHeaders"]
-            [@yojson.option]
-            [@ocaml.doc "Response headers."]
-        binaryResponseHeaders : string option;
-            [@key "binaryResponseHeaders"]
-            [@yojson.option]
-            [@ocaml.doc
-              "Alternative way of specifying response headers as a \\0-separated\n\
-               series of name: value pairs. Prefer the above method unless you\n\
-               need to represent some non-UTF8 values that can't be transmitted\n\
-               over the protocol as text. (Encoded as a base64 string when \
-               passed over JSON)"]
-        body : string option;
-            [@key "body"]
-            [@yojson.option]
-            [@ocaml.doc
-              "A response body. If absent, original response body will be used \
-               if\n\
-               the request is intercepted at the response stage and empty body\n\
-               will be used if the request is intercepted at the request \
-               stage. (Encoded as a base64 string when passed over JSON)"]
-        responsePhrase : string option;
-            [@key "responsePhrase"]
-            [@yojson.option]
-            [@ocaml.doc
-              "A textual representation of responseCode.\n\
-               If absent, a standard phrase matching responseCode is used."]
-      }
-      [@@deriving yojson]
-
-      let make ~requestId ~responseCode ?responseHeaders ?binaryResponseHeaders
-          ?body ?responsePhrase () =
-        {
-          requestId;
-          responseCode;
-          responseHeaders;
-          binaryResponseHeaders;
-          body;
-          responsePhrase;
-        }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Fetch.fulfillRequest"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Provides response to the request. |desc}]
-
-  module ContinueRequest = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        requestId : Types.Fetch.RequestId.t;
-            [@key "requestId"]
-            [@ocaml.doc "An id the client received in requestPaused event."]
-        url : string option;
-            [@key "url"]
-            [@yojson.option]
-            [@ocaml.doc
-              "If set, the request url will be modified in a way that's not \
-               observable by page."]
-        method_ : string option;
-            [@key "method"]
-            [@yojson.option]
-            [@ocaml.doc "If set, the request method is overridden."]
-        postData : string option;
-            [@key "postData"]
-            [@yojson.option]
-            [@ocaml.doc
-              "If set, overrides the post data in the request. (Encoded as a \
-               base64 string when passed over JSON)"]
-        headers : Types.Fetch.HeaderEntry.t list option;
-            [@key "headers"]
-            [@yojson.option]
-            [@ocaml.doc
-              "If set, overrides the request headers. Note that the overrides \
-               do not\n\
-               extend to subsequent redirect hops, if a redirect happens. \
-               Another override\n\
-               may be applied to a different request produced by a redirect."]
-        interceptResponse : bool option;
-            [@key "interceptResponse"]
-            [@yojson.option]
-            [@ocaml.doc
-              "If set, overrides response interception behavior for this \
-               request."]
-      }
-      [@@deriving yojson]
-
-      let make ~requestId ?url ?method_ ?postData ?headers ?interceptResponse ()
-          =
-        { requestId; url; method_; postData; headers; interceptResponse }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Fetch.continueRequest"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Continues the request, optionally modifying some of its parameters. |desc}]
-
-  module ContinueWithAuth = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        requestId : Types.Fetch.RequestId.t;
-            [@key "requestId"]
-            [@ocaml.doc "An id the client received in authRequired event."]
-        authChallengeResponse : Types.Fetch.AuthChallengeResponse.t;
-            [@key "authChallengeResponse"]
-            [@ocaml.doc "Response to  with an authChallenge."]
-      }
-      [@@deriving yojson]
-
-      let make ~requestId ~authChallengeResponse () =
-        { requestId; authChallengeResponse }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Fetch.continueWithAuth"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Continues a request supplying authChallengeResponse following authRequired event. |desc}]
-
-  module ContinueResponse = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        requestId : Types.Fetch.RequestId.t;
-            [@key "requestId"]
-            [@ocaml.doc "An id the client received in requestPaused event."]
-        responseCode : Types.number option;
-            [@key "responseCode"]
-            [@yojson.option]
-            [@ocaml.doc
-              "An HTTP response code. If absent, original response code will \
-               be used."]
-        responsePhrase : string option;
-            [@key "responsePhrase"]
-            [@yojson.option]
-            [@ocaml.doc
-              "A textual representation of responseCode.\n\
-               If absent, a standard phrase matching responseCode is used."]
-        responseHeaders : Types.Fetch.HeaderEntry.t list option;
-            [@key "responseHeaders"]
-            [@yojson.option]
-            [@ocaml.doc
-              "Response headers. If absent, original response headers will be \
-               used."]
-        binaryResponseHeaders : string option;
-            [@key "binaryResponseHeaders"]
-            [@yojson.option]
-            [@ocaml.doc
-              "Alternative way of specifying response headers as a \\0-separated\n\
-               series of name: value pairs. Prefer the above method unless you\n\
-               need to represent some non-UTF8 values that can't be transmitted\n\
-               over the protocol as text. (Encoded as a base64 string when \
-               passed over JSON)"]
-      }
-      [@@deriving yojson]
-
-      let make ~requestId ?responseCode ?responsePhrase ?responseHeaders
-          ?binaryResponseHeaders () =
-        {
-          requestId;
-          responseCode;
-          responsePhrase;
-          responseHeaders;
-          binaryResponseHeaders;
-        }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Fetch.continueResponse"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Continues loading of the paused response, optionally modifying the
-response headers. If either responseCode or headers are modified, all of them
-must be present. |desc}]
-
-  module GetResponseBody = struct
-    module Response : sig
-      type result = {
-        body : string; [@key "body"] [@ocaml.doc "Response body."]
-        base64Encoded : bool;
-            [@key "base64Encoded"]
-            [@ocaml.doc "True, if content was sent as base64."]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        body : string; [@key "body"] [@ocaml.doc "Response body."]
-        base64Encoded : bool;
-            [@key "base64Encoded"]
-            [@ocaml.doc "True, if content was sent as base64."]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        requestId : Types.Fetch.RequestId.t;
-            [@key "requestId"]
-            [@ocaml.doc
-              "Identifier for the intercepted request to get body for."]
-      }
-      [@@deriving yojson]
-
-      let make ~requestId () = { requestId }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Fetch.getResponseBody"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Causes the body of the response to be received from the server and
-returned as a single string. May only be issued for a request that
-is paused in the Response stage and is mutually exclusive with
-takeResponseBodyForInterceptionAsStream. Calling other methods that
-affect the request or disabling fetch domain before body is received
-results in an undefined behavior.
-Note that the response body is not available for redirects. Requests
-paused in the _redirect received_ state may be differentiated by
-`responseCode` and presence of `location` response header, see
-comments to `requestPaused` for details. |desc}]
-
-  module TakeResponseBodyAsStream = struct
-    module Response : sig
-      type result = {
-        stream : Types.IO.StreamHandle.t;
-            [@key "stream"] [@ocaml.doc "No description provided"]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        stream : Types.IO.StreamHandle.t;
-            [@key "stream"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        requestId : Types.Fetch.RequestId.t;
-            [@key "requestId"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~requestId () = { requestId }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Fetch.takeResponseBodyAsStream"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Returns a handle to the stream representing the response body.
-The request must be paused in the HeadersReceived stage.
-Note that after this command the request can't be continued
-as is -- client either needs to cancel it or to provide the
-response body.
-The stream only supports sequential read, IO.read will fail if the position
-is specified.
-This method is mutually exclusive with getResponseBody.
-Calling other methods that affect the request or disabling fetch
-domain before body is received results in an undefined behavior. |desc}]
-end
-
 module WebAudio = struct
   module Enable = struct
     module Response : sig
@@ -33556,2222 +35775,6 @@ The default is true. |desc}]
   [@@ocaml.doc
     {desc|Allows setting credential properties.
 https://w3c.github.io/webauthn/#sctn-automation-set-credential-properties |desc}]
-end
-
-module Media = struct
-  module Enable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Media.enable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Enables the Media domain |desc}]
-
-  module Disable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Media.disable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Disables the Media domain. |desc}]
-end
-
-module DeviceAccess = struct
-  module Enable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "DeviceAccess.enable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Enable events in this domain. |desc}]
-
-  module Disable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "DeviceAccess.disable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Disable events in this domain. |desc}]
-
-  module SelectPrompt = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        id : Types.DeviceAccess.RequestId.t;
-            [@key "id"] [@ocaml.doc "No description provided"]
-        deviceId : Types.DeviceAccess.DeviceId.t;
-            [@key "deviceId"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~id ~deviceId () = { id; deviceId }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "DeviceAccess.selectPrompt"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Select a device in response to a DeviceAccess.deviceRequestPrompted event. |desc}]
-
-  module CancelPrompt = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        id : Types.DeviceAccess.RequestId.t;
-            [@key "id"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~id () = { id }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "DeviceAccess.cancelPrompt"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Cancel a prompt in response to a DeviceAccess.deviceRequestPrompted event. |desc}]
-end
-
-module Preload = struct
-  module Enable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Preload.enable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module Disable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Preload.disable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-end
-
-module FedCm = struct
-  module Enable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        disableRejectionDelay : bool option;
-            [@key "disableRejectionDelay"]
-            [@yojson.option]
-            [@ocaml.doc
-              "Allows callers to disable the promise rejection delay that would\n\
-               normally happen, if this is unimportant to what's being tested.\n\
-               (step 4 of \
-               https://fedidcg.github.io/FedCM/#browser-api-rp-sign-in)"]
-      }
-      [@@deriving yojson]
-
-      let make ?disableRejectionDelay () = { disableRejectionDelay }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "FedCm.enable"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module Disable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "FedCm.disable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module SelectAccount = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        dialogId : string;
-            [@key "dialogId"] [@ocaml.doc "No description provided"]
-        accountIndex : Types.number;
-            [@key "accountIndex"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~dialogId ~accountIndex () = { dialogId; accountIndex }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "FedCm.selectAccount"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module ClickDialogButton = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        dialogId : string;
-            [@key "dialogId"] [@ocaml.doc "No description provided"]
-        dialogButton : Types.FedCm.DialogButton.t;
-            [@key "dialogButton"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~dialogId ~dialogButton () = { dialogId; dialogButton }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "FedCm.clickDialogButton"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module OpenUrl = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        dialogId : string;
-            [@key "dialogId"] [@ocaml.doc "No description provided"]
-        accountIndex : Types.number;
-            [@key "accountIndex"] [@ocaml.doc "No description provided"]
-        accountUrlType : Types.FedCm.AccountUrlType.t;
-            [@key "accountUrlType"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~dialogId ~accountIndex ~accountUrlType () =
-        { dialogId; accountIndex; accountUrlType }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "FedCm.openUrl"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module DismissDialog = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        dialogId : string;
-            [@key "dialogId"] [@ocaml.doc "No description provided"]
-        triggerCooldown : bool option;
-            [@key "triggerCooldown"]
-            [@yojson.option]
-            [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~dialogId ?triggerCooldown () = { dialogId; triggerCooldown }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "FedCm.dismissDialog"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module ResetCooldown = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "FedCm.resetCooldown"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Resets the cooldown time, if any, to allow the next FedCM call to show
-a dialog even if one was recently dismissed by the user. |desc}]
-end
-
-module PWA = struct
-  module GetOsAppState = struct
-    module Response : sig
-      type result = {
-        badgeCount : Types.number;
-            [@key "badgeCount"] [@ocaml.doc "No description provided"]
-        fileHandlers : Types.PWA.FileHandler.t list;
-            [@key "fileHandlers"] [@ocaml.doc "No description provided"]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        badgeCount : Types.number;
-            [@key "badgeCount"] [@ocaml.doc "No description provided"]
-        fileHandlers : Types.PWA.FileHandler.t list;
-            [@key "fileHandlers"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        manifestId : string;
-            [@key "manifestId"]
-            [@ocaml.doc
-              "The id from the webapp's manifest file, commonly it's the url \
-               of the\n\
-               site installing the webapp. See\n\
-               https://web.dev/learn/pwa/web-app-manifest."]
-      }
-      [@@deriving yojson]
-
-      let make ~manifestId () = { manifestId }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "PWA.getOsAppState"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Returns the following OS state for the given manifest id. |desc}]
-
-  module Install = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        manifestId : string;
-            [@key "manifestId"] [@ocaml.doc "No description provided"]
-        installUrlOrBundleUrl : string option;
-            [@key "installUrlOrBundleUrl"]
-            [@yojson.option]
-            [@ocaml.doc
-              "The location of the app or bundle overriding the one derived \
-               from the\n\
-               manifestId."]
-      }
-      [@@deriving yojson]
-
-      let make ~manifestId ?installUrlOrBundleUrl () =
-        { manifestId; installUrlOrBundleUrl }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "PWA.install"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Installs the given manifest identity, optionally using the given installUrlOrBundleUrl
-
-IWA-specific install description:
-manifestId corresponds to isolated-app:// + web_package::SignedWebBundleId
-
-File installation mode:
-The installUrlOrBundleUrl can be either file:// or http(s):// pointing
-to a signed web bundle (.swbn). In this case SignedWebBundleId must correspond to
-The .swbn file's signing key.
-
-Dev proxy installation mode:
-installUrlOrBundleUrl must be http(s):// that serves dev mode IWA.
-web_package::SignedWebBundleId must be of type dev proxy.
-
-The advantage of dev proxy mode is that all changes to IWA
-automatically will be reflected in the running app without
-reinstallation.
-
-To generate bundle id for proxy mode:
-1. Generate 32 random bytes.
-2. Add a specific suffix 0x00 at the end.
-3. Encode the entire sequence using Base32 without padding.
-
-If Chrome is not in IWA dev
-mode, the installation will fail, regardless of the state of the allowlist. |desc}]
-
-  module Uninstall = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        manifestId : string;
-            [@key "manifestId"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~manifestId () = { manifestId }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "PWA.uninstall"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Uninstalls the given manifest_id and closes any opened app windows. |desc}]
-
-  module Launch = struct
-    module Response : sig
-      type result = {
-        targetId : Types.Target.TargetID.t;
-            [@key "targetId"]
-            [@ocaml.doc "ID of the tab target created as a result."]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        targetId : Types.Target.TargetID.t;
-            [@key "targetId"]
-            [@ocaml.doc "ID of the tab target created as a result."]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        manifestId : string;
-            [@key "manifestId"] [@ocaml.doc "No description provided"]
-        url : string option;
-            [@key "url"] [@yojson.option] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~manifestId ?url () = { manifestId; url }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "PWA.launch"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Launches the installed web app, or an url in the same web app instead of the
-default start url if it is provided. Returns a page Target.TargetID which
-can be used to attach to via Target.attachToTarget or similar APIs. |desc}]
-
-  module LaunchFilesInApp = struct
-    module Response : sig
-      type result = {
-        targetIds : Types.Target.TargetID.t list;
-            [@key "targetIds"]
-            [@ocaml.doc "IDs of the tab targets created as the result."]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        targetIds : Types.Target.TargetID.t list;
-            [@key "targetIds"]
-            [@ocaml.doc "IDs of the tab targets created as the result."]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        manifestId : string;
-            [@key "manifestId"] [@ocaml.doc "No description provided"]
-        files : string list;
-            [@key "files"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~manifestId ~files () = { manifestId; files }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "PWA.launchFilesInApp"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Opens one or more local files from an installed web app identified by its
-manifestId. The web app needs to have file handlers registered to process
-the files. The API returns one or more page Target.TargetIDs which can be
-used to attach to via Target.attachToTarget or similar APIs.
-If some files in the parameters cannot be handled by the web app, they will
-be ignored. If none of the files can be handled, this API returns an error.
-If no files are provided as the parameter, this API also returns an error.
-
-According to the definition of the file handlers in the manifest file, one
-Target.TargetID may represent a page handling one or more files. The order
-of the returned Target.TargetIDs is not guaranteed.
-
-TODO(crbug.com/339454034): Check the existences of the input files. |desc}]
-
-  module OpenCurrentPageInApp = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        manifestId : string;
-            [@key "manifestId"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~manifestId () = { manifestId }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "PWA.openCurrentPageInApp"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Opens the current page in its web app identified by the manifest id, needs
-to be called on a page target. This function returns immediately without
-waiting for the app to finish loading. |desc}]
-
-  module ChangeAppUserSettings = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        manifestId : string;
-            [@key "manifestId"] [@ocaml.doc "No description provided"]
-        linkCapturing : bool option;
-            [@key "linkCapturing"]
-            [@yojson.option]
-            [@ocaml.doc
-              "If user allows the links clicked on by the user in the app's \
-               scope, or\n\
-               extended scope if the manifest has scope extensions and the flags\n\
-               `DesktopPWAsLinkCapturingWithScopeExtensions` and\n\
-               `WebAppEnableScopeExtensions` are enabled.\n\n\
-               Note, the API does not support resetting the linkCapturing to the\n\
-               initial value, uninstalling and installing the web app again \
-               will reset\n\
-               it.\n\n\
-               TODO(crbug.com/339453269): Setting this value on ChromeOS is not\n\
-               supported yet."]
-        displayMode : Types.PWA.DisplayMode.t option;
-            [@key "displayMode"]
-            [@yojson.option]
-            [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~manifestId ?linkCapturing ?displayMode () =
-        { manifestId; linkCapturing; displayMode }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "PWA.changeAppUserSettings"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Changes user settings of the web app identified by its manifestId. If the
-app was not installed, this command returns an error. Unset parameters will
-be ignored; unrecognized values will cause an error.
-
-Unlike the ones defined in the manifest files of the web apps, these
-settings are provided by the browser and controlled by the users, they
-impact the way the browser handling the web apps.
-
-See the comment of each parameter. |desc}]
-end
-
-module BluetoothEmulation = struct
-  module Enable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        state : Types.BluetoothEmulation.CentralState.t;
-            [@key "state"] [@ocaml.doc "State of the simulated central."]
-        leSupported : bool;
-            [@key "leSupported"]
-            [@ocaml.doc "If the simulated central supports low-energy."]
-      }
-      [@@deriving yojson]
-
-      let make ~state ~leSupported () = { state; leSupported }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "BluetoothEmulation.enable"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Enable the BluetoothEmulation domain. |desc}]
-
-  module SetSimulatedCentralState = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        state : Types.BluetoothEmulation.CentralState.t;
-            [@key "state"] [@ocaml.doc "State of the simulated central."]
-      }
-      [@@deriving yojson]
-
-      let make ~state () = { state }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "BluetoothEmulation.setSimulatedCentralState";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Set the state of the simulated central. |desc}]
-
-  module Disable = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "BluetoothEmulation.disable"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|Disable the BluetoothEmulation domain. |desc}]
-
-  module SimulatePreconnectedPeripheral = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        address : string;
-            [@key "address"] [@ocaml.doc "No description provided"]
-        name : string; [@key "name"] [@ocaml.doc "No description provided"]
-        manufacturerData : Types.BluetoothEmulation.ManufacturerData.t list;
-            [@key "manufacturerData"] [@ocaml.doc "No description provided"]
-        knownServiceUuids : string list;
-            [@key "knownServiceUuids"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~address ~name ~manufacturerData ~knownServiceUuids () =
-        { address; name; manufacturerData; knownServiceUuids }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "BluetoothEmulation.simulatePreconnectedPeripheral";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Simulates a peripheral with |address|, |name| and |knownServiceUuids|
-that has already been connected to the system. |desc}]
-
-  module SimulateAdvertisement = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        entry : Types.BluetoothEmulation.ScanEntry.t;
-            [@key "entry"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~entry () = { entry }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "BluetoothEmulation.simulateAdvertisement";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Simulates an advertisement packet described in |entry| being received by
-the central. |desc}]
-
-  module SimulateGATTOperationResponse = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        address : string;
-            [@key "address"] [@ocaml.doc "No description provided"]
-        type_ : Types.BluetoothEmulation.GATTOperationType.t;
-            [@key "type"] [@ocaml.doc "No description provided"]
-        code : Types.number; [@key "code"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~address ~type_ ~code () = { address; type_; code }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "BluetoothEmulation.simulateGATTOperationResponse";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Simulates the response code from the peripheral with |address| for a
-GATT operation of |type|. The |code| value follows the HCI Error Codes from
-Bluetooth Core Specification Vol 2 Part D 1.3 List Of Error Codes. |desc}]
-
-  module SimulateCharacteristicOperationResponse = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        characteristicId : string;
-            [@key "characteristicId"] [@ocaml.doc "No description provided"]
-        type_ : Types.BluetoothEmulation.CharacteristicOperationType.t;
-            [@key "type"] [@ocaml.doc "No description provided"]
-        code : Types.number;
-            [@key "code"] [@ocaml.doc "No description provided"]
-        data : string option;
-            [@key "data"]
-            [@yojson.option]
-            [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~characteristicId ~type_ ~code ?data () =
-        { characteristicId; type_; code; data }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "BluetoothEmulation.simulateCharacteristicOperationResponse";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Simulates the response from the characteristic with |characteristicId| for a
-characteristic operation of |type|. The |code| value follows the Error
-Codes from Bluetooth Core Specification Vol 3 Part F 3.4.1.1 Error Response.
-The |data| is expected to exist when simulating a successful read operation
-response. |desc}]
-
-  module SimulateDescriptorOperationResponse = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        descriptorId : string;
-            [@key "descriptorId"] [@ocaml.doc "No description provided"]
-        type_ : Types.BluetoothEmulation.DescriptorOperationType.t;
-            [@key "type"] [@ocaml.doc "No description provided"]
-        code : Types.number;
-            [@key "code"] [@ocaml.doc "No description provided"]
-        data : string option;
-            [@key "data"]
-            [@yojson.option]
-            [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~descriptorId ~type_ ~code ?data () =
-        { descriptorId; type_; code; data }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "BluetoothEmulation.simulateDescriptorOperationResponse";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Simulates the response from the descriptor with |descriptorId| for a
-descriptor operation of |type|. The |code| value follows the Error
-Codes from Bluetooth Core Specification Vol 3 Part F 3.4.1.1 Error Response.
-The |data| is expected to exist when simulating a successful read operation
-response. |desc}]
-
-  module AddService = struct
-    module Response : sig
-      type result = {
-        serviceId : string;
-            [@key "serviceId"]
-            [@ocaml.doc "An identifier that uniquely represents this service."]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        serviceId : string;
-            [@key "serviceId"]
-            [@ocaml.doc "An identifier that uniquely represents this service."]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        address : string;
-            [@key "address"] [@ocaml.doc "No description provided"]
-        serviceUuid : string;
-            [@key "serviceUuid"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~address ~serviceUuid () = { address; serviceUuid }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "BluetoothEmulation.addService"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Adds a service with |serviceUuid| to the peripheral with |address|. |desc}]
-
-  module RemoveService = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        serviceId : string;
-            [@key "serviceId"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~serviceId () = { serviceId }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "BluetoothEmulation.removeService"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Removes the service respresented by |serviceId| from the simulated central. |desc}]
-
-  module AddCharacteristic = struct
-    module Response : sig
-      type result = {
-        characteristicId : string;
-            [@key "characteristicId"]
-            [@ocaml.doc
-              "An identifier that uniquely represents this characteristic."]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        characteristicId : string;
-            [@key "characteristicId"]
-            [@ocaml.doc
-              "An identifier that uniquely represents this characteristic."]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        serviceId : string;
-            [@key "serviceId"] [@ocaml.doc "No description provided"]
-        characteristicUuid : string;
-            [@key "characteristicUuid"] [@ocaml.doc "No description provided"]
-        properties : Types.BluetoothEmulation.CharacteristicProperties.t;
-            [@key "properties"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~serviceId ~characteristicUuid ~properties () =
-        { serviceId; characteristicUuid; properties }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "BluetoothEmulation.addCharacteristic";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Adds a characteristic with |characteristicUuid| and |properties| to the
-service represented by |serviceId|. |desc}]
-
-  module RemoveCharacteristic = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        characteristicId : string;
-            [@key "characteristicId"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~characteristicId () = { characteristicId }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "BluetoothEmulation.removeCharacteristic";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Removes the characteristic respresented by |characteristicId| from the
-simulated central. |desc}]
-
-  module AddDescriptor = struct
-    module Response : sig
-      type result = {
-        descriptorId : string;
-            [@key "descriptorId"]
-            [@ocaml.doc
-              "An identifier that uniquely represents this descriptor."]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        descriptorId : string;
-            [@key "descriptorId"]
-            [@ocaml.doc
-              "An identifier that uniquely represents this descriptor."]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        characteristicId : string;
-            [@key "characteristicId"] [@ocaml.doc "No description provided"]
-        descriptorUuid : string;
-            [@key "descriptorUuid"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~characteristicId ~descriptorUuid () =
-        { characteristicId; descriptorUuid }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "BluetoothEmulation.addDescriptor"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Adds a descriptor with |descriptorUuid| to the characteristic respresented
-by |characteristicId|. |desc}]
-
-  module RemoveDescriptor = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        descriptorId : string;
-            [@key "descriptorId"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~descriptorId () = { descriptorId }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "BluetoothEmulation.removeDescriptor";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Removes the descriptor with |descriptorId| from the simulated central. |desc}]
-
-  module SimulateGATTDisconnection = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        address : string; [@key "address"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~address () = { address }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "BluetoothEmulation.simulateGATTDisconnection";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Simulates a GATT disconnection from the peripheral with |address|. |desc}]
 end
 
 module Console = struct

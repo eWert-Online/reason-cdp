@@ -225,6 +225,89 @@ module BackgroundService = struct
 events afterwards if enabled and recording. |desc}]
 end
 
+module BluetoothEmulation = struct
+  module GattOperationReceived = struct
+    let name = "BluetoothEmulation.gattOperationReceived"
+
+    type result = {
+      address : string; [@key "address"] [@ocaml.doc "No description provided"]
+      type_ : Types.BluetoothEmulation.GATTOperationType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Event for when a GATT operation of |type| to the peripheral with |address|
+happened. |desc}]
+
+  module CharacteristicOperationReceived = struct
+    let name = "BluetoothEmulation.characteristicOperationReceived"
+
+    type result = {
+      characteristicId : string;
+          [@key "characteristicId"] [@ocaml.doc "No description provided"]
+      type_ : Types.BluetoothEmulation.CharacteristicOperationType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      data : string option;
+          [@key "data"] [@yojson.option] [@ocaml.doc "No description provided"]
+      writeType : Types.BluetoothEmulation.CharacteristicWriteType.t option;
+          [@key "writeType"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Event for when a characteristic operation of |type| to the characteristic
+respresented by |characteristicId| happened. |data| and |writeType| is
+expected to exist when |type| is write. |desc}]
+
+  module DescriptorOperationReceived = struct
+    let name = "BluetoothEmulation.descriptorOperationReceived"
+
+    type result = {
+      descriptorId : string;
+          [@key "descriptorId"] [@ocaml.doc "No description provided"]
+      type_ : Types.BluetoothEmulation.DescriptorOperationType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      data : string option;
+          [@key "data"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Event for when a descriptor operation of |type| to the descriptor
+respresented by |descriptorId| happened. |data| is expected to exist when
+|type| is write. |desc}]
+end
+
 module Browser = struct
   module DownloadWillBegin = struct
     let name = "Browser.downloadWillBegin"
@@ -922,6 +1005,32 @@ module DOMStorage = struct
   [@@ocaml.doc {desc|No description provided |desc}]
 end
 
+module DeviceAccess = struct
+  module DeviceRequestPrompted = struct
+    let name = "DeviceAccess.deviceRequestPrompted"
+
+    type result = {
+      id : Types.DeviceAccess.RequestId.t;
+          [@key "id"] [@ocaml.doc "No description provided"]
+      devices : Types.DeviceAccess.PromptDevice.t list;
+          [@key "devices"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|A device request opened a user prompt to select a device. Respond with the
+selectPrompt or cancelPrompt command. |desc}]
+end
+
 module Emulation = struct
   module VirtualTimeBudgetExpired = struct
     let name = "Emulation.virtualTimeBudgetExpired"
@@ -939,6 +1048,172 @@ module Emulation = struct
   end
   [@@ocaml.doc
     {desc|Notification sent after the virtual time budget for the current VirtualTimePolicy has run out. |desc}]
+end
+
+module FedCm = struct
+  module DialogShown = struct
+    let name = "FedCm.dialogShown"
+
+    type result = {
+      dialogId : string;
+          [@key "dialogId"] [@ocaml.doc "No description provided"]
+      dialogType : Types.FedCm.DialogType.t;
+          [@key "dialogType"] [@ocaml.doc "No description provided"]
+      accounts : Types.FedCm.Account.t list;
+          [@key "accounts"] [@ocaml.doc "No description provided"]
+      title : string;
+          [@key "title"]
+          [@ocaml.doc
+            "These exist primarily so that the caller can verify the\n\
+             RP context was used appropriately."]
+      subtitle : string option;
+          [@key "subtitle"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
+  module DialogClosed = struct
+    let name = "FedCm.dialogClosed"
+
+    type result = {
+      dialogId : string; [@key "dialogId"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Triggered when a dialog is closed, either by user action, JS abort,
+or a command below. |desc}]
+end
+
+module Fetch = struct
+  module RequestPaused = struct
+    let name = "Fetch.requestPaused"
+
+    type result = {
+      requestId : Types.Fetch.RequestId.t;
+          [@key "requestId"]
+          [@ocaml.doc "Each request the page makes will have a unique id."]
+      request : Types.Network.Request.t;
+          [@key "request"] [@ocaml.doc "The details of the request."]
+      frameId : Types.Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "The id of the frame that initiated the request."]
+      resourceType : Types.Network.ResourceType.t;
+          [@key "resourceType"]
+          [@ocaml.doc "How the requested resource will be used."]
+      responseErrorReason : Types.Network.ErrorReason.t option;
+          [@key "responseErrorReason"]
+          [@yojson.option]
+          [@ocaml.doc "Response error if intercepted at response stage."]
+      responseStatusCode : Types.number option;
+          [@key "responseStatusCode"]
+          [@yojson.option]
+          [@ocaml.doc "Response code if intercepted at response stage."]
+      responseStatusText : string option;
+          [@key "responseStatusText"]
+          [@yojson.option]
+          [@ocaml.doc "Response status text if intercepted at response stage."]
+      responseHeaders : Types.Fetch.HeaderEntry.t list option;
+          [@key "responseHeaders"]
+          [@yojson.option]
+          [@ocaml.doc "Response headers if intercepted at the response stage."]
+      networkId : Types.Network.RequestId.t option;
+          [@key "networkId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the intercepted request had a corresponding \
+             Network.requestWillBeSent event fired for it,\n\
+             then this networkId will be the same as the requestId present in \
+             the requestWillBeSent event."]
+      redirectedRequestId : Types.Fetch.RequestId.t option;
+          [@key "redirectedRequestId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the request is due to a redirect response from the server, the \
+             id of the request that\n\
+             has caused the redirect."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Issued when the domain is enabled and the request URL matches the
+specified filter. The request is paused until the client responds
+with one of continueRequest, failRequest or fulfillRequest.
+The stage of the request can be determined by presence of responseErrorReason
+and responseStatusCode -- the request is at the response stage if either
+of these fields is present and in the request stage otherwise.
+Redirect responses and subsequent requests are reported similarly to regular
+responses and requests. Redirect responses may be distinguished by the value
+of `responseStatusCode` (which is one of 301, 302, 303, 307, 308) along with
+presence of the `location` header. Requests resulting from a redirect will
+have `redirectedRequestId` field set. |desc}]
+
+  module AuthRequired = struct
+    let name = "Fetch.authRequired"
+
+    type result = {
+      requestId : Types.Fetch.RequestId.t;
+          [@key "requestId"]
+          [@ocaml.doc "Each request the page makes will have a unique id."]
+      request : Types.Network.Request.t;
+          [@key "request"] [@ocaml.doc "The details of the request."]
+      frameId : Types.Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "The id of the frame that initiated the request."]
+      resourceType : Types.Network.ResourceType.t;
+          [@key "resourceType"]
+          [@ocaml.doc "How the requested resource will be used."]
+      authChallenge : Types.Fetch.AuthChallenge.t;
+          [@key "authChallenge"]
+          [@ocaml.doc
+            "Details of the Authorization Challenge encountered.\n\
+             If this is set, client should respond with continueRequest that\n\
+             contains AuthChallengeResponse."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Issued when the domain is enabled with handleAuthRequests set to true.
+The request is paused until client responds with continueWithAuth. |desc}]
 end
 
 module Input = struct
@@ -1086,6 +1361,125 @@ module Log = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
   [@@ocaml.doc {desc|Issued when new message was logged. |desc}]
+end
+
+module Media = struct
+  module PlayerPropertiesChanged = struct
+    let name = "Media.playerPropertiesChanged"
+
+    type result = {
+      playerId : Types.Media.PlayerId.t;
+          [@key "playerId"] [@ocaml.doc "No description provided"]
+      properties : Types.Media.PlayerProperty.t list;
+          [@key "properties"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|This can be called multiple times, and can be used to set / override /
+remove player properties. A null propValue indicates removal. |desc}]
+
+  module PlayerEventsAdded = struct
+    let name = "Media.playerEventsAdded"
+
+    type result = {
+      playerId : Types.Media.PlayerId.t;
+          [@key "playerId"] [@ocaml.doc "No description provided"]
+      events : Types.Media.PlayerEvent.t list;
+          [@key "events"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Send events as a list, allowing them to be batched on the browser for less
+congestion. If batched, events must ALWAYS be in chronological order. |desc}]
+
+  module PlayerMessagesLogged = struct
+    let name = "Media.playerMessagesLogged"
+
+    type result = {
+      playerId : Types.Media.PlayerId.t;
+          [@key "playerId"] [@ocaml.doc "No description provided"]
+      messages : Types.Media.PlayerMessage.t list;
+          [@key "messages"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Send a list of any messages that need to be delivered. |desc}]
+
+  module PlayerErrorsRaised = struct
+    let name = "Media.playerErrorsRaised"
+
+    type result = {
+      playerId : Types.Media.PlayerId.t;
+          [@key "playerId"] [@ocaml.doc "No description provided"]
+      errors : Types.Media.PlayerError.t list;
+          [@key "errors"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Send a list of any errors that need to be delivered. |desc}]
+
+  module PlayersCreated = struct
+    let name = "Media.playersCreated"
+
+    type result = {
+      players : Types.Media.PlayerId.t list;
+          [@key "players"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Called whenever a player is created, or when a new agent joins and receives
+a list of active players. If an agent is restored, it will receive the full
+list of player ids and all events again. |desc}]
 end
 
 module Network = struct
@@ -3446,6 +3840,176 @@ module PerformanceTimeline = struct
     {desc|Sent when a performance timeline event is added. See reportPerformanceTimeline method. |desc}]
 end
 
+module Preload = struct
+  module RuleSetUpdated = struct
+    let name = "Preload.ruleSetUpdated"
+
+    type result = {
+      ruleSet : Types.Preload.RuleSet.t;
+          [@key "ruleSet"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Upsert. Currently, it is only emitted when a rule set added. |desc}]
+
+  module RuleSetRemoved = struct
+    let name = "Preload.ruleSetRemoved"
+
+    type result = {
+      id : Types.Preload.RuleSetId.t;
+          [@key "id"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
+  module PreloadEnabledStateUpdated = struct
+    let name = "Preload.preloadEnabledStateUpdated"
+
+    type result = {
+      disabledByPreference : bool;
+          [@key "disabledByPreference"] [@ocaml.doc "No description provided"]
+      disabledByDataSaver : bool;
+          [@key "disabledByDataSaver"] [@ocaml.doc "No description provided"]
+      disabledByBatterySaver : bool;
+          [@key "disabledByBatterySaver"] [@ocaml.doc "No description provided"]
+      disabledByHoldbackPrefetchSpeculationRules : bool;
+          [@key "disabledByHoldbackPrefetchSpeculationRules"]
+          [@ocaml.doc "No description provided"]
+      disabledByHoldbackPrerenderSpeculationRules : bool;
+          [@key "disabledByHoldbackPrerenderSpeculationRules"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Fired when a preload enabled state is updated. |desc}]
+
+  module PrefetchStatusUpdated = struct
+    let name = "Preload.prefetchStatusUpdated"
+
+    type result = {
+      key : Types.Preload.PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
+      pipelineId : Types.Preload.PreloadPipelineId.t;
+          [@key "pipelineId"] [@ocaml.doc "No description provided"]
+      initiatingFrameId : Types.Page.FrameId.t;
+          [@key "initiatingFrameId"]
+          [@ocaml.doc "The frame id of the frame initiating prefetch."]
+      prefetchUrl : string;
+          [@key "prefetchUrl"] [@ocaml.doc "No description provided"]
+      status : Types.Preload.PreloadingStatus.t;
+          [@key "status"] [@ocaml.doc "No description provided"]
+      prefetchStatus : Types.Preload.PrefetchStatus.t;
+          [@key "prefetchStatus"] [@ocaml.doc "No description provided"]
+      requestId : Types.Network.RequestId.t;
+          [@key "requestId"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Fired when a prefetch attempt is updated. |desc}]
+
+  module PrerenderStatusUpdated = struct
+    let name = "Preload.prerenderStatusUpdated"
+
+    type result = {
+      key : Types.Preload.PreloadingAttemptKey.t;
+          [@key "key"] [@ocaml.doc "No description provided"]
+      pipelineId : Types.Preload.PreloadPipelineId.t;
+          [@key "pipelineId"] [@ocaml.doc "No description provided"]
+      status : Types.Preload.PreloadingStatus.t;
+          [@key "status"] [@ocaml.doc "No description provided"]
+      prerenderStatus : Types.Preload.PrerenderFinalStatus.t option;
+          [@key "prerenderStatus"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      disallowedMojoInterface : string option;
+          [@key "disallowedMojoInterface"]
+          [@yojson.option]
+          [@ocaml.doc
+            "This is used to give users more information about the name of \
+             Mojo interface\n\
+             that is incompatible with prerender and has caused the \
+             cancellation of the attempt."]
+      mismatchedHeaders : Types.Preload.PrerenderMismatchedHeaders.t list option;
+          [@key "mismatchedHeaders"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Fired when a prerender attempt is updated. |desc}]
+
+  module PreloadingAttemptSourcesUpdated = struct
+    let name = "Preload.preloadingAttemptSourcesUpdated"
+
+    type result = {
+      loaderId : Types.Network.LoaderId.t;
+          [@key "loaderId"] [@ocaml.doc "No description provided"]
+      preloadingAttemptSources : Types.Preload.PreloadingAttemptSource.t list;
+          [@key "preloadingAttemptSources"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Send a list of sources for all preloading attempts in a document. |desc}]
+end
+
 module Security = struct
   module CertificateError = struct
     let name = "Security.certificateError"
@@ -4347,116 +4911,6 @@ sent as a sequence of dataCollected events followed by tracingComplete event. |d
 delivered via dataCollected events. |desc}]
 end
 
-module Fetch = struct
-  module RequestPaused = struct
-    let name = "Fetch.requestPaused"
-
-    type result = {
-      requestId : Types.Fetch.RequestId.t;
-          [@key "requestId"]
-          [@ocaml.doc "Each request the page makes will have a unique id."]
-      request : Types.Network.Request.t;
-          [@key "request"] [@ocaml.doc "The details of the request."]
-      frameId : Types.Page.FrameId.t;
-          [@key "frameId"]
-          [@ocaml.doc "The id of the frame that initiated the request."]
-      resourceType : Types.Network.ResourceType.t;
-          [@key "resourceType"]
-          [@ocaml.doc "How the requested resource will be used."]
-      responseErrorReason : Types.Network.ErrorReason.t option;
-          [@key "responseErrorReason"]
-          [@yojson.option]
-          [@ocaml.doc "Response error if intercepted at response stage."]
-      responseStatusCode : Types.number option;
-          [@key "responseStatusCode"]
-          [@yojson.option]
-          [@ocaml.doc "Response code if intercepted at response stage."]
-      responseStatusText : string option;
-          [@key "responseStatusText"]
-          [@yojson.option]
-          [@ocaml.doc "Response status text if intercepted at response stage."]
-      responseHeaders : Types.Fetch.HeaderEntry.t list option;
-          [@key "responseHeaders"]
-          [@yojson.option]
-          [@ocaml.doc "Response headers if intercepted at the response stage."]
-      networkId : Types.Network.RequestId.t option;
-          [@key "networkId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If the intercepted request had a corresponding \
-             Network.requestWillBeSent event fired for it,\n\
-             then this networkId will be the same as the requestId present in \
-             the requestWillBeSent event."]
-      redirectedRequestId : Types.Fetch.RequestId.t option;
-          [@key "redirectedRequestId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If the request is due to a redirect response from the server, the \
-             id of the request that\n\
-             has caused the redirect."]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Issued when the domain is enabled and the request URL matches the
-specified filter. The request is paused until the client responds
-with one of continueRequest, failRequest or fulfillRequest.
-The stage of the request can be determined by presence of responseErrorReason
-and responseStatusCode -- the request is at the response stage if either
-of these fields is present and in the request stage otherwise.
-Redirect responses and subsequent requests are reported similarly to regular
-responses and requests. Redirect responses may be distinguished by the value
-of `responseStatusCode` (which is one of 301, 302, 303, 307, 308) along with
-presence of the `location` header. Requests resulting from a redirect will
-have `redirectedRequestId` field set. |desc}]
-
-  module AuthRequired = struct
-    let name = "Fetch.authRequired"
-
-    type result = {
-      requestId : Types.Fetch.RequestId.t;
-          [@key "requestId"]
-          [@ocaml.doc "Each request the page makes will have a unique id."]
-      request : Types.Network.Request.t;
-          [@key "request"] [@ocaml.doc "The details of the request."]
-      frameId : Types.Page.FrameId.t;
-          [@key "frameId"]
-          [@ocaml.doc "The id of the frame that initiated the request."]
-      resourceType : Types.Network.ResourceType.t;
-          [@key "resourceType"]
-          [@ocaml.doc "How the requested resource will be used."]
-      authChallenge : Types.Fetch.AuthChallenge.t;
-          [@key "authChallenge"]
-          [@ocaml.doc
-            "Details of the Authorization Challenge encountered.\n\
-             If this is set, client should respond with continueRequest that\n\
-             contains AuthChallengeResponse."]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Issued when the domain is enabled with handleAuthRequests set to true.
-The request is paused until client responds with continueWithAuth. |desc}]
-end
-
 module WebAudio = struct
   module ContextCreated = struct
     let name = "WebAudio.contextCreated"
@@ -4870,460 +5324,6 @@ PublicKeyCredential.signalCurrentUserDetails(). |desc}]
   end
   [@@ocaml.doc
     {desc|Triggered when a credential is used in a webauthn assertion. |desc}]
-end
-
-module Media = struct
-  module PlayerPropertiesChanged = struct
-    let name = "Media.playerPropertiesChanged"
-
-    type result = {
-      playerId : Types.Media.PlayerId.t;
-          [@key "playerId"] [@ocaml.doc "No description provided"]
-      properties : Types.Media.PlayerProperty.t list;
-          [@key "properties"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|This can be called multiple times, and can be used to set / override /
-remove player properties. A null propValue indicates removal. |desc}]
-
-  module PlayerEventsAdded = struct
-    let name = "Media.playerEventsAdded"
-
-    type result = {
-      playerId : Types.Media.PlayerId.t;
-          [@key "playerId"] [@ocaml.doc "No description provided"]
-      events : Types.Media.PlayerEvent.t list;
-          [@key "events"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Send events as a list, allowing them to be batched on the browser for less
-congestion. If batched, events must ALWAYS be in chronological order. |desc}]
-
-  module PlayerMessagesLogged = struct
-    let name = "Media.playerMessagesLogged"
-
-    type result = {
-      playerId : Types.Media.PlayerId.t;
-          [@key "playerId"] [@ocaml.doc "No description provided"]
-      messages : Types.Media.PlayerMessage.t list;
-          [@key "messages"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Send a list of any messages that need to be delivered. |desc}]
-
-  module PlayerErrorsRaised = struct
-    let name = "Media.playerErrorsRaised"
-
-    type result = {
-      playerId : Types.Media.PlayerId.t;
-          [@key "playerId"] [@ocaml.doc "No description provided"]
-      errors : Types.Media.PlayerError.t list;
-          [@key "errors"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Send a list of any errors that need to be delivered. |desc}]
-
-  module PlayersCreated = struct
-    let name = "Media.playersCreated"
-
-    type result = {
-      players : Types.Media.PlayerId.t list;
-          [@key "players"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Called whenever a player is created, or when a new agent joins and receives
-a list of active players. If an agent is restored, it will receive the full
-list of player ids and all events again. |desc}]
-end
-
-module DeviceAccess = struct
-  module DeviceRequestPrompted = struct
-    let name = "DeviceAccess.deviceRequestPrompted"
-
-    type result = {
-      id : Types.DeviceAccess.RequestId.t;
-          [@key "id"] [@ocaml.doc "No description provided"]
-      devices : Types.DeviceAccess.PromptDevice.t list;
-          [@key "devices"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|A device request opened a user prompt to select a device. Respond with the
-selectPrompt or cancelPrompt command. |desc}]
-end
-
-module Preload = struct
-  module RuleSetUpdated = struct
-    let name = "Preload.ruleSetUpdated"
-
-    type result = {
-      ruleSet : Types.Preload.RuleSet.t;
-          [@key "ruleSet"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Upsert. Currently, it is only emitted when a rule set added. |desc}]
-
-  module RuleSetRemoved = struct
-    let name = "Preload.ruleSetRemoved"
-
-    type result = {
-      id : Types.Preload.RuleSetId.t;
-          [@key "id"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module PreloadEnabledStateUpdated = struct
-    let name = "Preload.preloadEnabledStateUpdated"
-
-    type result = {
-      disabledByPreference : bool;
-          [@key "disabledByPreference"] [@ocaml.doc "No description provided"]
-      disabledByDataSaver : bool;
-          [@key "disabledByDataSaver"] [@ocaml.doc "No description provided"]
-      disabledByBatterySaver : bool;
-          [@key "disabledByBatterySaver"] [@ocaml.doc "No description provided"]
-      disabledByHoldbackPrefetchSpeculationRules : bool;
-          [@key "disabledByHoldbackPrefetchSpeculationRules"]
-          [@ocaml.doc "No description provided"]
-      disabledByHoldbackPrerenderSpeculationRules : bool;
-          [@key "disabledByHoldbackPrerenderSpeculationRules"]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc {desc|Fired when a preload enabled state is updated. |desc}]
-
-  module PrefetchStatusUpdated = struct
-    let name = "Preload.prefetchStatusUpdated"
-
-    type result = {
-      key : Types.Preload.PreloadingAttemptKey.t;
-          [@key "key"] [@ocaml.doc "No description provided"]
-      pipelineId : Types.Preload.PreloadPipelineId.t;
-          [@key "pipelineId"] [@ocaml.doc "No description provided"]
-      initiatingFrameId : Types.Page.FrameId.t;
-          [@key "initiatingFrameId"]
-          [@ocaml.doc "The frame id of the frame initiating prefetch."]
-      prefetchUrl : string;
-          [@key "prefetchUrl"] [@ocaml.doc "No description provided"]
-      status : Types.Preload.PreloadingStatus.t;
-          [@key "status"] [@ocaml.doc "No description provided"]
-      prefetchStatus : Types.Preload.PrefetchStatus.t;
-          [@key "prefetchStatus"] [@ocaml.doc "No description provided"]
-      requestId : Types.Network.RequestId.t;
-          [@key "requestId"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc {desc|Fired when a prefetch attempt is updated. |desc}]
-
-  module PrerenderStatusUpdated = struct
-    let name = "Preload.prerenderStatusUpdated"
-
-    type result = {
-      key : Types.Preload.PreloadingAttemptKey.t;
-          [@key "key"] [@ocaml.doc "No description provided"]
-      pipelineId : Types.Preload.PreloadPipelineId.t;
-          [@key "pipelineId"] [@ocaml.doc "No description provided"]
-      status : Types.Preload.PreloadingStatus.t;
-          [@key "status"] [@ocaml.doc "No description provided"]
-      prerenderStatus : Types.Preload.PrerenderFinalStatus.t option;
-          [@key "prerenderStatus"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      disallowedMojoInterface : string option;
-          [@key "disallowedMojoInterface"]
-          [@yojson.option]
-          [@ocaml.doc
-            "This is used to give users more information about the name of \
-             Mojo interface\n\
-             that is incompatible with prerender and has caused the \
-             cancellation of the attempt."]
-      mismatchedHeaders : Types.Preload.PrerenderMismatchedHeaders.t list option;
-          [@key "mismatchedHeaders"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc {desc|Fired when a prerender attempt is updated. |desc}]
-
-  module PreloadingAttemptSourcesUpdated = struct
-    let name = "Preload.preloadingAttemptSourcesUpdated"
-
-    type result = {
-      loaderId : Types.Network.LoaderId.t;
-          [@key "loaderId"] [@ocaml.doc "No description provided"]
-      preloadingAttemptSources : Types.Preload.PreloadingAttemptSource.t list;
-          [@key "preloadingAttemptSources"]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Send a list of sources for all preloading attempts in a document. |desc}]
-end
-
-module FedCm = struct
-  module DialogShown = struct
-    let name = "FedCm.dialogShown"
-
-    type result = {
-      dialogId : string;
-          [@key "dialogId"] [@ocaml.doc "No description provided"]
-      dialogType : Types.FedCm.DialogType.t;
-          [@key "dialogType"] [@ocaml.doc "No description provided"]
-      accounts : Types.FedCm.Account.t list;
-          [@key "accounts"] [@ocaml.doc "No description provided"]
-      title : string;
-          [@key "title"]
-          [@ocaml.doc
-            "These exist primarily so that the caller can verify the\n\
-             RP context was used appropriately."]
-      subtitle : string option;
-          [@key "subtitle"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module DialogClosed = struct
-    let name = "FedCm.dialogClosed"
-
-    type result = {
-      dialogId : string; [@key "dialogId"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Triggered when a dialog is closed, either by user action, JS abort,
-or a command below. |desc}]
-end
-
-module BluetoothEmulation = struct
-  module GattOperationReceived = struct
-    let name = "BluetoothEmulation.gattOperationReceived"
-
-    type result = {
-      address : string; [@key "address"] [@ocaml.doc "No description provided"]
-      type_ : Types.BluetoothEmulation.GATTOperationType.t;
-          [@key "type"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Event for when a GATT operation of |type| to the peripheral with |address|
-happened. |desc}]
-
-  module CharacteristicOperationReceived = struct
-    let name = "BluetoothEmulation.characteristicOperationReceived"
-
-    type result = {
-      characteristicId : string;
-          [@key "characteristicId"] [@ocaml.doc "No description provided"]
-      type_ : Types.BluetoothEmulation.CharacteristicOperationType.t;
-          [@key "type"] [@ocaml.doc "No description provided"]
-      data : string option;
-          [@key "data"] [@yojson.option] [@ocaml.doc "No description provided"]
-      writeType : Types.BluetoothEmulation.CharacteristicWriteType.t option;
-          [@key "writeType"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Event for when a characteristic operation of |type| to the characteristic
-respresented by |characteristicId| happened. |data| and |writeType| is
-expected to exist when |type| is write. |desc}]
-
-  module DescriptorOperationReceived = struct
-    let name = "BluetoothEmulation.descriptorOperationReceived"
-
-    type result = {
-      descriptorId : string;
-          [@key "descriptorId"] [@ocaml.doc "No description provided"]
-      type_ : Types.BluetoothEmulation.DescriptorOperationType.t;
-          [@key "type"] [@ocaml.doc "No description provided"]
-      data : string option;
-          [@key "data"] [@yojson.option] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Event for when a descriptor operation of |type| to the descriptor
-respresented by |descriptorId| happened. |data| is expected to exist when
-|type| is write. |desc}]
 end
 
 module Console = struct
