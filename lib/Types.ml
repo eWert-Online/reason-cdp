@@ -13919,6 +13919,87 @@ and Emulation : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and WorkAreaInsets : sig
+    type t = {
+      top : number option;
+          [@key "top"]
+          [@yojson.option]
+          [@ocaml.doc "Work area top inset in pixels. Default is 0;"]
+      left : number option;
+          [@key "left"]
+          [@yojson.option]
+          [@ocaml.doc "Work area left inset in pixels. Default is 0;"]
+      bottom : number option;
+          [@key "bottom"]
+          [@yojson.option]
+          [@ocaml.doc "Work area bottom inset in pixels. Default is 0;"]
+      right : number option;
+          [@key "right"]
+          [@yojson.option]
+          [@ocaml.doc "Work area right inset in pixels. Default is 0;"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ScreenId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ScreenInfo : sig
+    type t = {
+      left : number;
+          [@key "left"] [@ocaml.doc "Offset of the left edge of the screen."]
+      top : number;
+          [@key "top"] [@ocaml.doc "Offset of the top edge of the screen."]
+      width : number; [@key "width"] [@ocaml.doc "Width of the screen."]
+      height : number; [@key "height"] [@ocaml.doc "Height of the screen."]
+      availLeft : number;
+          [@key "availLeft"]
+          [@ocaml.doc "Offset of the left edge of the available screen area."]
+      availTop : number;
+          [@key "availTop"]
+          [@ocaml.doc "Offset of the top edge of the available screen area."]
+      availWidth : number;
+          [@key "availWidth"] [@ocaml.doc "Width of the available screen area."]
+      availHeight : number;
+          [@key "availHeight"]
+          [@ocaml.doc "Height of the available screen area."]
+      devicePixelRatio : number;
+          [@key "devicePixelRatio"]
+          [@ocaml.doc "Specifies the screen's device pixel ratio."]
+      orientation : ScreenOrientation.t;
+          [@key "orientation"]
+          [@ocaml.doc "Specifies the screen's orientation."]
+      colorDepth : number;
+          [@key "colorDepth"]
+          [@ocaml.doc "Specifies the screen's color depth in bits."]
+      isExtended : bool;
+          [@key "isExtended"]
+          [@ocaml.doc "Indicates whether the device has multiple screens."]
+      isInternal : bool;
+          [@key "isInternal"]
+          [@ocaml.doc
+            "Indicates whether the screen is internal to the device or \
+             external, attached to the device."]
+      isPrimary : bool;
+          [@key "isPrimary"]
+          [@ocaml.doc
+            "Indicates whether the screen is set as the the operating system \
+             primary screen."]
+      label : string;
+          [@key "label"]
+          [@ocaml.doc "Specifies the descriptive label for the screen."]
+      id : ScreenId.t;
+          [@key "id"]
+          [@ocaml.doc "Specifies the unique identifier of the screen."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Screen information similar to the one returned by \
+       window.getScreenDetails() method,\n\
+       see https://w3c.github.io/window-management/#screendetailed."]
+  end
+
   and DisabledImageType : sig
     type _disabledimagetype = [ `avif | `webp ]
 
@@ -14542,6 +14623,162 @@ end = struct
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and WorkAreaInsets : sig
+    type t = {
+      top : number option;
+          [@key "top"]
+          [@yojson.option]
+          [@ocaml.doc "Work area top inset in pixels. Default is 0;"]
+      left : number option;
+          [@key "left"]
+          [@yojson.option]
+          [@ocaml.doc "Work area left inset in pixels. Default is 0;"]
+      bottom : number option;
+          [@key "bottom"]
+          [@yojson.option]
+          [@ocaml.doc "Work area bottom inset in pixels. Default is 0;"]
+      right : number option;
+          [@key "right"]
+          [@yojson.option]
+          [@ocaml.doc "Work area right inset in pixels. Default is 0;"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      top : number option;
+          [@key "top"]
+          [@yojson.option]
+          [@ocaml.doc "Work area top inset in pixels. Default is 0;"]
+      left : number option;
+          [@key "left"]
+          [@yojson.option]
+          [@ocaml.doc "Work area left inset in pixels. Default is 0;"]
+      bottom : number option;
+          [@key "bottom"]
+          [@yojson.option]
+          [@ocaml.doc "Work area bottom inset in pixels. Default is 0;"]
+      right : number option;
+          [@key "right"]
+          [@yojson.option]
+          [@ocaml.doc "Work area right inset in pixels. Default is 0;"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ScreenId : sig
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ScreenInfo : sig
+    type t = {
+      left : number;
+          [@key "left"] [@ocaml.doc "Offset of the left edge of the screen."]
+      top : number;
+          [@key "top"] [@ocaml.doc "Offset of the top edge of the screen."]
+      width : number; [@key "width"] [@ocaml.doc "Width of the screen."]
+      height : number; [@key "height"] [@ocaml.doc "Height of the screen."]
+      availLeft : number;
+          [@key "availLeft"]
+          [@ocaml.doc "Offset of the left edge of the available screen area."]
+      availTop : number;
+          [@key "availTop"]
+          [@ocaml.doc "Offset of the top edge of the available screen area."]
+      availWidth : number;
+          [@key "availWidth"] [@ocaml.doc "Width of the available screen area."]
+      availHeight : number;
+          [@key "availHeight"]
+          [@ocaml.doc "Height of the available screen area."]
+      devicePixelRatio : number;
+          [@key "devicePixelRatio"]
+          [@ocaml.doc "Specifies the screen's device pixel ratio."]
+      orientation : ScreenOrientation.t;
+          [@key "orientation"]
+          [@ocaml.doc "Specifies the screen's orientation."]
+      colorDepth : number;
+          [@key "colorDepth"]
+          [@ocaml.doc "Specifies the screen's color depth in bits."]
+      isExtended : bool;
+          [@key "isExtended"]
+          [@ocaml.doc "Indicates whether the device has multiple screens."]
+      isInternal : bool;
+          [@key "isInternal"]
+          [@ocaml.doc
+            "Indicates whether the screen is internal to the device or \
+             external, attached to the device."]
+      isPrimary : bool;
+          [@key "isPrimary"]
+          [@ocaml.doc
+            "Indicates whether the screen is set as the the operating system \
+             primary screen."]
+      label : string;
+          [@key "label"]
+          [@ocaml.doc "Specifies the descriptive label for the screen."]
+      id : ScreenId.t;
+          [@key "id"]
+          [@ocaml.doc "Specifies the unique identifier of the screen."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Screen information similar to the one returned by \
+       window.getScreenDetails() method,\n\
+       see https://w3c.github.io/window-management/#screendetailed."]
+  end = struct
+    type t = {
+      left : number;
+          [@key "left"] [@ocaml.doc "Offset of the left edge of the screen."]
+      top : number;
+          [@key "top"] [@ocaml.doc "Offset of the top edge of the screen."]
+      width : number; [@key "width"] [@ocaml.doc "Width of the screen."]
+      height : number; [@key "height"] [@ocaml.doc "Height of the screen."]
+      availLeft : number;
+          [@key "availLeft"]
+          [@ocaml.doc "Offset of the left edge of the available screen area."]
+      availTop : number;
+          [@key "availTop"]
+          [@ocaml.doc "Offset of the top edge of the available screen area."]
+      availWidth : number;
+          [@key "availWidth"] [@ocaml.doc "Width of the available screen area."]
+      availHeight : number;
+          [@key "availHeight"]
+          [@ocaml.doc "Height of the available screen area."]
+      devicePixelRatio : number;
+          [@key "devicePixelRatio"]
+          [@ocaml.doc "Specifies the screen's device pixel ratio."]
+      orientation : ScreenOrientation.t;
+          [@key "orientation"]
+          [@ocaml.doc "Specifies the screen's orientation."]
+      colorDepth : number;
+          [@key "colorDepth"]
+          [@ocaml.doc "Specifies the screen's color depth in bits."]
+      isExtended : bool;
+          [@key "isExtended"]
+          [@ocaml.doc "Indicates whether the device has multiple screens."]
+      isInternal : bool;
+          [@key "isInternal"]
+          [@ocaml.doc
+            "Indicates whether the screen is internal to the device or \
+             external, attached to the device."]
+      isPrimary : bool;
+          [@key "isPrimary"]
+          [@ocaml.doc
+            "Indicates whether the screen is set as the the operating system \
+             primary screen."]
+      label : string;
+          [@key "label"]
+          [@ocaml.doc "Specifies the descriptive label for the screen."]
+      id : ScreenId.t;
+          [@key "id"]
+          [@ocaml.doc "Specifies the unique identifier of the screen."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Screen information similar to the one returned by \
+       window.getScreenDetails() method,\n\
+       see https://w3c.github.io/window-management/#screendetailed."]
   end
 
   and DisabledImageType : sig

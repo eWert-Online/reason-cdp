@@ -15194,6 +15194,230 @@ on Android. |desc}]
   [@@ocaml.doc
     {desc|Allows overriding the difference between the small and large viewport sizes, which determine the
 value of the `svh` and `lvh` unit, respectively. Only supported for top-level frames. |desc}]
+
+  module GetScreenInfos = struct
+    module Response : sig
+      type result = {
+        screenInfos : Types.Emulation.ScreenInfo.t list;
+            [@key "screenInfos"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        screenInfos : Types.Emulation.ScreenInfo.t list;
+            [@key "screenInfos"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Emulation.getScreenInfos"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Returns device's screen configuration. |desc}]
+
+  module AddScreen = struct
+    module Response : sig
+      type result = {
+        screenInfo : Types.Emulation.ScreenInfo.t;
+            [@key "screenInfo"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        screenInfo : Types.Emulation.ScreenInfo.t;
+            [@key "screenInfo"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        left : Types.number;
+            [@key "left"]
+            [@ocaml.doc "Offset of the left edge of the screen in pixels."]
+        top : Types.number;
+            [@key "top"]
+            [@ocaml.doc "Offset of the top edge of the screen in pixels."]
+        width : Types.number;
+            [@key "width"] [@ocaml.doc "The width of the screen in pixels."]
+        height : Types.number;
+            [@key "height"] [@ocaml.doc "The height of the screen in pixels."]
+        workAreaInsets : Types.Emulation.WorkAreaInsets.t option;
+            [@key "workAreaInsets"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Specifies the screen's work area. Default is entire screen."]
+        devicePixelRatio : Types.number option;
+            [@key "devicePixelRatio"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Specifies the screen's device pixel ratio. Default is 1."]
+        rotation : Types.number option;
+            [@key "rotation"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Specifies the screen's rotation angle. Available values are 0, \
+               90, 180 and 270. Default is 0."]
+        colorDepth : Types.number option;
+            [@key "colorDepth"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Specifies the screen's color depth in bits. Default is 24."]
+        label : string option;
+            [@key "label"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Specifies the descriptive label for the screen. Default is none."]
+        isInternal : bool option;
+            [@key "isInternal"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Indicates whether the screen is internal to the device or \
+               external, attached to the device. Default is false."]
+      }
+      [@@deriving yojson]
+
+      let make ~left ~top ~width ~height ?workAreaInsets ?devicePixelRatio
+          ?rotation ?colorDepth ?label ?isInternal () =
+        {
+          left;
+          top;
+          width;
+          height;
+          workAreaInsets;
+          devicePixelRatio;
+          rotation;
+          colorDepth;
+          label;
+          isInternal;
+        }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Emulation.addScreen"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Add a new screen to the device. Only supported in headless mode. |desc}]
+
+  module RemoveScreen = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        screenId : Types.Emulation.ScreenId.t;
+            [@key "screenId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~screenId () = { screenId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Emulation.removeScreen"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Remove screen from the device. Only supported in headless mode. |desc}]
 end
 
 module EventBreakpoints = struct
