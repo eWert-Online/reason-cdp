@@ -35502,6 +35502,11 @@ and Target : sig
           [@ocaml.doc
             "Frame id of originating window (is only set if target has an \
              opener)."]
+      parentFrameId : Page.FrameId.t option;
+          [@key "parentFrameId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Id of the parent frame, only present for the \"iframe\" targets."]
       browserContextId : Browser.BrowserContextID.t option;
           [@key "browserContextId"]
           [@yojson.option]
@@ -35606,6 +35611,11 @@ end = struct
           [@ocaml.doc
             "Frame id of originating window (is only set if target has an \
              opener)."]
+      parentFrameId : Page.FrameId.t option;
+          [@key "parentFrameId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Id of the parent frame, only present for the \"iframe\" targets."]
       browserContextId : Browser.BrowserContextID.t option;
           [@key "browserContextId"]
           [@yojson.option]
@@ -35645,6 +35655,11 @@ end = struct
           [@ocaml.doc
             "Frame id of originating window (is only set if target has an \
              opener)."]
+      parentFrameId : Page.FrameId.t option;
+          [@key "parentFrameId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Id of the parent frame, only present for the \"iframe\" targets."]
       browserContextId : Browser.BrowserContextID.t option;
           [@key "browserContextId"]
           [@yojson.option]
