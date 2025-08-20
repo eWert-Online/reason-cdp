@@ -21733,26 +21733,16 @@ Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failReques
             [@ocaml.doc
               "Whether DirectSocket chunk send/receive events should be \
                reported."]
-        enableDurableMessages : bool option;
-            [@key "enableDurableMessages"]
-            [@yojson.option]
-            [@ocaml.doc
-              "Enable storing response bodies outside of renderer, so that \
-               these survive\n\
-               a cross-process navigation. Requires maxTotalBufferSize to be \
-               set.\n\
-               Currently defaults to false."]
       }
       [@@deriving yojson]
 
       let make ?maxTotalBufferSize ?maxResourceBufferSize ?maxPostDataSize
-          ?reportDirectSocketTraffic ?enableDurableMessages () =
+          ?reportDirectSocketTraffic () =
         {
           maxTotalBufferSize;
           maxResourceBufferSize;
           maxPostDataSize;
           reportDirectSocketTraffic;
-          enableDurableMessages;
         }
     end
 
