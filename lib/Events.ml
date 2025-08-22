@@ -1458,12 +1458,12 @@ congestion. If batched, events must ALWAYS be in chronological order. |desc}]
   [@@ocaml.doc
     {desc|Send a list of any errors that need to be delivered. |desc}]
 
-  module PlayersCreated = struct
-    let name = "Media.playersCreated"
+  module PlayerCreated = struct
+    let name = "Media.playerCreated"
 
     type result = {
-      players : Types.Media.PlayerId.t list;
-          [@key "players"] [@ocaml.doc "No description provided"]
+      player : Types.Media.Player.t;
+          [@key "player"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
 
@@ -1478,8 +1478,8 @@ congestion. If batched, events must ALWAYS be in chronological order. |desc}]
   end
   [@@ocaml.doc
     {desc|Called whenever a player is created, or when a new agent joins and receives
-a list of active players. If an agent is restored, it will receive the full
-list of player ids and all events again. |desc}]
+a list of active players. If an agent is restored, it will receive one
+event for each active player. |desc}]
 end
 
 module Network = struct

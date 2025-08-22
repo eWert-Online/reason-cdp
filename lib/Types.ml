@@ -17265,6 +17265,18 @@ and Media : sig
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaError"]
   end
+
+  and Player : sig
+    type t = {
+      playerId : PlayerId.t;
+          [@key "playerId"] [@ocaml.doc "No description provided"]
+      domNodeId : DOM.BackendNodeId.t option;
+          [@key "domNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
 end = struct
   module rec PlayerId : sig
     type t = string
@@ -17455,6 +17467,28 @@ end = struct
              etc."]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to kMediaError"]
+  end
+
+  and Player : sig
+    type t = {
+      playerId : PlayerId.t;
+          [@key "playerId"] [@ocaml.doc "No description provided"]
+      domNodeId : DOM.BackendNodeId.t option;
+          [@key "domNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      playerId : PlayerId.t;
+          [@key "playerId"] [@ocaml.doc "No description provided"]
+      domNodeId : DOM.BackendNodeId.t option;
+          [@key "domNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 end
 
@@ -18075,6 +18109,26 @@ and Network : sig
 
     type t = _blockedreason
     [@@deriving yojson] [@@ocaml.doc "The reason why request was blocked."]
+  end
+
+  and IpProxyStatus : sig
+    type _ipproxystatus =
+      [ `Available
+      | `FeatureNotEnabled
+      | `MaskedDomainListNotEnabled
+      | `MaskedDomainListNotPopulated
+      | `AuthTokensUnavailable
+      | `Unavailable
+      | `BypassedByDevTools ]
+
+    val _ipproxystatus_of_yojson : Yojson.Basic.t -> _ipproxystatus
+    val yojson_of__ipproxystatus : _ipproxystatus -> Yojson.Basic.t
+
+    type t = _ipproxystatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Sets Controls for IP Proxy of requests.\n\
+       Page reload is required before the new behavior will be observed."]
   end
 
   and CorsError : sig
@@ -20419,6 +20473,61 @@ end = struct
 
     type t = _blockedreason
     [@@deriving yojson] [@@ocaml.doc "The reason why request was blocked."]
+  end
+
+  and IpProxyStatus : sig
+    type _ipproxystatus =
+      [ `Available
+      | `FeatureNotEnabled
+      | `MaskedDomainListNotEnabled
+      | `MaskedDomainListNotPopulated
+      | `AuthTokensUnavailable
+      | `Unavailable
+      | `BypassedByDevTools ]
+
+    val _ipproxystatus_of_yojson : Yojson.Basic.t -> _ipproxystatus
+    val yojson_of__ipproxystatus : _ipproxystatus -> Yojson.Basic.t
+
+    type t = _ipproxystatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Sets Controls for IP Proxy of requests.\n\
+       Page reload is required before the new behavior will be observed."]
+  end = struct
+    type _ipproxystatus =
+      [ `Available
+      | `FeatureNotEnabled
+      | `MaskedDomainListNotEnabled
+      | `MaskedDomainListNotPopulated
+      | `AuthTokensUnavailable
+      | `Unavailable
+      | `BypassedByDevTools ]
+
+    let _ipproxystatus_of_yojson = function
+      | `String "Available" -> `Available
+      | `String "FeatureNotEnabled" -> `FeatureNotEnabled
+      | `String "MaskedDomainListNotEnabled" -> `MaskedDomainListNotEnabled
+      | `String "MaskedDomainListNotPopulated" -> `MaskedDomainListNotPopulated
+      | `String "AuthTokensUnavailable" -> `AuthTokensUnavailable
+      | `String "Unavailable" -> `Unavailable
+      | `String "BypassedByDevTools" -> `BypassedByDevTools
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__ipproxystatus = function
+      | `Available -> `String "Available"
+      | `FeatureNotEnabled -> `String "FeatureNotEnabled"
+      | `MaskedDomainListNotEnabled -> `String "MaskedDomainListNotEnabled"
+      | `MaskedDomainListNotPopulated -> `String "MaskedDomainListNotPopulated"
+      | `AuthTokensUnavailable -> `String "AuthTokensUnavailable"
+      | `Unavailable -> `String "Unavailable"
+      | `BypassedByDevTools -> `String "BypassedByDevTools"
+
+    type t = _ipproxystatus
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Sets Controls for IP Proxy of requests.\n\
+       Page reload is required before the new behavior will be observed."]
   end
 
   and CorsError : sig

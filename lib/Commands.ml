@@ -20979,6 +20979,60 @@ collected since browser process startup. |desc}]
 end
 
 module Network = struct
+  module GetIPProtectionProxyStatus = struct
+    module Response : sig
+      type result = {
+        status : Types.Network.IpProxyStatus.t;
+            [@key "status"] [@ocaml.doc "Whether IP proxy is available"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        status : Types.Network.IpProxyStatus.t;
+            [@key "status"] [@ocaml.doc "Whether IP proxy is available"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Network.getIPProtectionProxyStatus"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns enum representing if IP Proxy of requests is available
+or reason it is not active. |desc}]
+
   module SetAcceptedEncodings = struct
     module Response : sig
       type result = Types.assoc
@@ -21733,16 +21787,26 @@ Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failReques
             [@ocaml.doc
               "Whether DirectSocket chunk send/receive events should be \
                reported."]
+        enableDurableMessages : bool option;
+            [@key "enableDurableMessages"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Enable storing response bodies outside of renderer, so that \
+               these survive\n\
+               a cross-process navigation. Requires maxTotalBufferSize to be \
+               set.\n\
+               Currently defaults to false."]
       }
       [@@deriving yojson]
 
       let make ?maxTotalBufferSize ?maxResourceBufferSize ?maxPostDataSize
-          ?reportDirectSocketTraffic () =
+          ?reportDirectSocketTraffic ?enableDurableMessages () =
         {
           maxTotalBufferSize;
           maxResourceBufferSize;
           maxPostDataSize;
           reportDirectSocketTraffic;
+          enableDurableMessages;
         }
     end
 
