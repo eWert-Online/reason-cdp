@@ -4644,6 +4644,12 @@ the browser. |desc}]
         computedStyle : Types.CSS.CSSComputedStyleProperty.t list;
             [@key "computedStyle"]
             [@ocaml.doc "Computed style for the specified DOM node."]
+        extraFields : Types.CSS.ComputedStyleExtraFields.t;
+            [@key "extraFields"]
+            [@ocaml.doc
+              "A list of non-standard \"extra fields\" which blink stores \
+               alongside each\n\
+               computed style."]
       }
 
       type error = { code : int; message : string }
@@ -4661,6 +4667,12 @@ the browser. |desc}]
         computedStyle : Types.CSS.CSSComputedStyleProperty.t list;
             [@key "computedStyle"]
             [@ocaml.doc "Computed style for the specified DOM node."]
+        extraFields : Types.CSS.ComputedStyleExtraFields.t;
+            [@key "extraFields"]
+            [@ocaml.doc
+              "A list of non-standard \"extra fields\" which blink stores \
+               alongside each\n\
+               computed style."]
       }
       [@@deriving yojson]
 
@@ -21787,26 +21799,16 @@ Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failReques
             [@ocaml.doc
               "Whether DirectSocket chunk send/receive events should be \
                reported."]
-        enableDurableMessages : bool option;
-            [@key "enableDurableMessages"]
-            [@yojson.option]
-            [@ocaml.doc
-              "Enable storing response bodies outside of renderer, so that \
-               these survive\n\
-               a cross-process navigation. Requires maxTotalBufferSize to be \
-               set.\n\
-               Currently defaults to false."]
       }
       [@@deriving yojson]
 
       let make ?maxTotalBufferSize ?maxResourceBufferSize ?maxPostDataSize
-          ?reportDirectSocketTraffic ?enableDurableMessages () =
+          ?reportDirectSocketTraffic () =
         {
           maxTotalBufferSize;
           maxResourceBufferSize;
           maxPostDataSize;
           reportDirectSocketTraffic;
-          enableDurableMessages;
         }
     end
 

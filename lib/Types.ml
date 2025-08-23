@@ -7996,6 +7996,21 @@ and CSS : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and ComputedStyleExtraFields : sig
+    type t = {
+      isAppearanceBase : bool;
+          [@key "isAppearanceBase"]
+          [@ocaml.doc
+            "Returns whether or not this node is being rendered with base \
+             appearance,\n\
+             which happens when it has its appearance property set to \
+             base/base-select\n\
+             or it is in the subtree of an element being rendered with base \
+             appearance."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and CSSStyle : sig
     type t = {
       styleSheetId : StyleSheetId.t option;
@@ -9360,6 +9375,34 @@ end = struct
       name : string; [@key "name"] [@ocaml.doc "Computed style property name."]
       value : string;
           [@key "value"] [@ocaml.doc "Computed style property value."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ComputedStyleExtraFields : sig
+    type t = {
+      isAppearanceBase : bool;
+          [@key "isAppearanceBase"]
+          [@ocaml.doc
+            "Returns whether or not this node is being rendered with base \
+             appearance,\n\
+             which happens when it has its appearance property set to \
+             base/base-select\n\
+             or it is in the subtree of an element being rendered with base \
+             appearance."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      isAppearanceBase : bool;
+          [@key "isAppearanceBase"]
+          [@ocaml.doc
+            "Returns whether or not this node is being rendered with base \
+             appearance,\n\
+             which happens when it has its appearance property set to \
+             base/base-select\n\
+             or it is in the subtree of an element being rendered with base \
+             appearance."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
