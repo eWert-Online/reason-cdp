@@ -2859,7 +2859,17 @@ module Browser = struct
             [@key "origin"]
             [@yojson.option]
             [@ocaml.doc
-              "Origin the permission applies to, all origins if not specified."]
+              "Requesting origin the permission applies to, all origins if not \
+               specified."]
+        embeddingOrigin : string option;
+            [@key "embeddingOrigin"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Embedding origin the permission applies to. It is ignored \
+               unless the requesting origin is\n\
+               present and valid. If the requesting origin is provided but the \
+               embedding origin isn't, the\n\
+               requesting origin is used as the embedding origin."]
         browserContextId : Types.Browser.BrowserContextID.t option;
             [@key "browserContextId"]
             [@yojson.option]
@@ -2869,8 +2879,9 @@ module Browser = struct
       }
       [@@deriving yojson]
 
-      let make ~permission ~setting ?origin ?browserContextId () =
-        { permission; setting; origin; browserContextId }
+      let make ~permission ~setting ?origin ?embeddingOrigin ?browserContextId
+          () =
+        { permission; setting; origin; embeddingOrigin; browserContextId }
     end
 
     module Request = struct
@@ -2887,7 +2898,8 @@ module Browser = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
-  [@@ocaml.doc {desc|Set permission settings for given origin. |desc}]
+  [@@ocaml.doc
+    {desc|Set permission settings for given requesting and embedding origins. |desc}]
 
   module GrantPermissions = struct
     module Response : sig
