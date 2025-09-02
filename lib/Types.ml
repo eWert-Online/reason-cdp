@@ -26307,9 +26307,9 @@ and Page : sig
       | `IndexedDBEvent
       | `Dummy
       | `JsNetworkRequestReceivedCacheControlNoStoreResource
-      | `WebRTCSticky
-      | `WebTransportSticky
-      | `WebSocketSticky
+      | `WebRTCUsedWithCCNS
+      | `WebTransportUsedWithCCNS
+      | `WebSocketUsedWithCCNS
       | `SmartCard
       | `LiveMediaStreamTrack
       | `UnloadHandler
@@ -28995,9 +28995,9 @@ end = struct
       | `IndexedDBEvent
       | `Dummy
       | `JsNetworkRequestReceivedCacheControlNoStoreResource
-      | `WebRTCSticky
-      | `WebTransportSticky
-      | `WebSocketSticky
+      | `WebRTCUsedWithCCNS
+      | `WebTransportUsedWithCCNS
+      | `WebSocketUsedWithCCNS
       | `SmartCard
       | `LiveMediaStreamTrack
       | `UnloadHandler
@@ -29150,9 +29150,9 @@ end = struct
       | `IndexedDBEvent
       | `Dummy
       | `JsNetworkRequestReceivedCacheControlNoStoreResource
-      | `WebRTCSticky
-      | `WebTransportSticky
-      | `WebSocketSticky
+      | `WebRTCUsedWithCCNS
+      | `WebTransportUsedWithCCNS
+      | `WebSocketUsedWithCCNS
       | `SmartCard
       | `LiveMediaStreamTrack
       | `UnloadHandler
@@ -29327,9 +29327,9 @@ end = struct
       | `String "Dummy" -> `Dummy
       | `String "JsNetworkRequestReceivedCacheControlNoStoreResource" ->
           `JsNetworkRequestReceivedCacheControlNoStoreResource
-      | `String "WebRTCSticky" -> `WebRTCSticky
-      | `String "WebTransportSticky" -> `WebTransportSticky
-      | `String "WebSocketSticky" -> `WebSocketSticky
+      | `String "WebRTCUsedWithCCNS" -> `WebRTCUsedWithCCNS
+      | `String "WebTransportUsedWithCCNS" -> `WebTransportUsedWithCCNS
+      | `String "WebSocketUsedWithCCNS" -> `WebSocketUsedWithCCNS
       | `String "SmartCard" -> `SmartCard
       | `String "LiveMediaStreamTrack" -> `LiveMediaStreamTrack
       | `String "UnloadHandler" -> `UnloadHandler
@@ -29520,9 +29520,9 @@ end = struct
       | `Dummy -> `String "Dummy"
       | `JsNetworkRequestReceivedCacheControlNoStoreResource ->
           `String "JsNetworkRequestReceivedCacheControlNoStoreResource"
-      | `WebRTCSticky -> `String "WebRTCSticky"
-      | `WebTransportSticky -> `String "WebTransportSticky"
-      | `WebSocketSticky -> `String "WebSocketSticky"
+      | `WebRTCUsedWithCCNS -> `String "WebRTCUsedWithCCNS"
+      | `WebTransportUsedWithCCNS -> `String "WebTransportUsedWithCCNS"
+      | `WebSocketUsedWithCCNS -> `String "WebSocketUsedWithCCNS"
       | `SmartCard -> `String "SmartCard"
       | `LiveMediaStreamTrack -> `String "LiveMediaStreamTrack"
       | `UnloadHandler -> `String "UnloadHandler"
