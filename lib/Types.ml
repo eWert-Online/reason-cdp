@@ -5955,7 +5955,10 @@ and Autofill : sig
     type t = {
       name : string;
           [@key "name"]
-          [@ocaml.doc "address field name, for example GIVEN_NAME."]
+          [@ocaml.doc
+            "address field name, for example GIVEN_NAME.\n\
+             The full list of supported field names:\n\
+             https://source.chromium.org/chromium/chromium/src/+/main:components/autofill/core/browser/field_types.cc;l=38"]
       value : string;
           [@key "value"]
           [@ocaml.doc "address field value, for example Jon Doe."]
@@ -6067,7 +6070,10 @@ end = struct
     type t = {
       name : string;
           [@key "name"]
-          [@ocaml.doc "address field name, for example GIVEN_NAME."]
+          [@ocaml.doc
+            "address field name, for example GIVEN_NAME.\n\
+             The full list of supported field names:\n\
+             https://source.chromium.org/chromium/chromium/src/+/main:components/autofill/core/browser/field_types.cc;l=38"]
       value : string;
           [@key "value"]
           [@ocaml.doc "address field value, for example Jon Doe."]
@@ -6077,7 +6083,10 @@ end = struct
     type t = {
       name : string;
           [@key "name"]
-          [@ocaml.doc "address field name, for example GIVEN_NAME."]
+          [@ocaml.doc
+            "address field name, for example GIVEN_NAME.\n\
+             The full list of supported field names:\n\
+             https://source.chromium.org/chromium/chromium/src/+/main:components/autofill/core/browser/field_types.cc;l=38"]
       value : string;
           [@key "value"]
           [@ocaml.doc "address field value, for example Jon Doe."]

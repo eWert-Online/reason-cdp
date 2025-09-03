@@ -1474,15 +1474,23 @@ module Autofill = struct
             [@key "frameId"]
             [@yojson.option]
             [@ocaml.doc "Identifies the frame that field belongs to."]
-        card : Types.Autofill.CreditCard.t;
+        card : Types.Autofill.CreditCard.t option;
             [@key "card"]
+            [@yojson.option]
             [@ocaml.doc
               "Credit card information to fill out the form. Credit card data \
-               is not saved."]
+               is not saved.  Mutually exclusive with `address`."]
+        address : Types.Autofill.Address.t option;
+            [@key "address"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Address to fill out the form. Address data is not saved. \
+               Mutually exclusive with `card`."]
       }
       [@@deriving yojson]
 
-      let make ~fieldId ?frameId ~card () = { fieldId; frameId; card }
+      let make ~fieldId ?frameId ?card ?address () =
+        { fieldId; frameId; card; address }
     end
 
     module Request = struct
