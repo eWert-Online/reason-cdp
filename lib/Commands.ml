@@ -21057,6 +21057,68 @@ module Network = struct
     {desc|Returns enum representing if IP Proxy of requests is available
 or reason it is not active. |desc}]
 
+  module SetIPProtectionProxyBypassEnabled = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        enabled : bool;
+            [@key "enabled"]
+            [@ocaml.doc
+              "Whether IP Proxy is being bypassed by devtools; false by \
+               default."]
+      }
+      [@@deriving yojson]
+
+      let make ~enabled () = { enabled }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Network.setIPProtectionProxyBypassEnabled";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Sets bypass IP Protection Proxy boolean. |desc}]
+
   module SetAcceptedEncodings = struct
     module Response : sig
       type result = Types.assoc
