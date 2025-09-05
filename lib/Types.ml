@@ -25307,6 +25307,7 @@ and Page : sig
       | `digital_credentials_create
       | `digital_credentials_get
       | `direct_sockets
+      | `direct_sockets_multicast
       | `direct_sockets_private
       | `display_capture
       | `document_domain
@@ -26771,6 +26772,7 @@ end = struct
       | `digital_credentials_create
       | `digital_credentials_get
       | `direct_sockets
+      | `direct_sockets_multicast
       | `direct_sockets_private
       | `display_capture
       | `document_domain
@@ -26894,6 +26896,7 @@ end = struct
       | `digital_credentials_create
       | `digital_credentials_get
       | `direct_sockets
+      | `direct_sockets_multicast
       | `direct_sockets_private
       | `display_capture
       | `document_domain
@@ -27004,6 +27007,7 @@ end = struct
       | `String "digital-credentials-create" -> `digital_credentials_create
       | `String "digital-credentials-get" -> `digital_credentials_get
       | `String "direct-sockets" -> `direct_sockets
+      | `String "direct-sockets-multicast" -> `direct_sockets_multicast
       | `String "direct-sockets-private" -> `direct_sockets_private
       | `String "display-capture" -> `display_capture
       | `String "document-domain" -> `document_domain
@@ -27121,6 +27125,7 @@ end = struct
       | `digital_credentials_create -> `String "digital-credentials-create"
       | `digital_credentials_get -> `String "digital-credentials-get"
       | `direct_sockets -> `String "direct-sockets"
+      | `direct_sockets_multicast -> `String "direct-sockets-multicast"
       | `direct_sockets_private -> `String "direct-sockets-private"
       | `display_capture -> `String "display-capture"
       | `document_domain -> `String "document-domain"
