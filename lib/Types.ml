@@ -30091,6 +30091,12 @@ and Preload : sig
           [@ocaml.doc
             "TODO(https://crbug.com/1425354): Replace this property with \
              structured error."]
+      tag : string option;
+          [@key "tag"]
+          [@yojson.option]
+          [@ocaml.doc
+            "For more details, see:\n\
+             https://github.com/WICG/nav-speculation/blob/main/speculation-rules-tags.md"]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
   end
@@ -30412,6 +30418,12 @@ end = struct
           [@ocaml.doc
             "TODO(https://crbug.com/1425354): Replace this property with \
              structured error."]
+      tag : string option;
+          [@key "tag"]
+          [@yojson.option]
+          [@ocaml.doc
+            "For more details, see:\n\
+             https://github.com/WICG/nav-speculation/blob/main/speculation-rules-tags.md"]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
   end = struct
@@ -30462,6 +30474,12 @@ end = struct
           [@ocaml.doc
             "TODO(https://crbug.com/1425354): Replace this property with \
              structured error."]
+      tag : string option;
+          [@key "tag"]
+          [@yojson.option]
+          [@ocaml.doc
+            "For more details, see:\n\
+             https://github.com/WICG/nav-speculation/blob/main/speculation-rules-tags.md"]
     }
     [@@deriving yojson] [@@ocaml.doc "Corresponds to SpeculationRuleSet"]
   end
