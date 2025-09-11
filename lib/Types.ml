@@ -231,7 +231,24 @@ module rec Accessibility : sig
       | `flowto
       | `labelledby
       | `owns
-      | `url ]
+      | `url
+      | `activeFullscreenElement
+      | `activeModalDialog
+      | `activeAriaModalDialog
+      | `ariaHiddenElement
+      | `ariaHiddenSubtree
+      | `emptyAlt
+      | `emptyText
+      | `inertElement
+      | `inertSubtree
+      | `labelContainer
+      | `labelFor
+      | `notRendered
+      | `notVisible
+      | `presentationalRole
+      | `probablyPresentational
+      | `inactiveCarouselTabContent
+      | `uninteresting ]
 
     val _axpropertyname_of_yojson : Yojson.Basic.t -> _axpropertyname
     val yojson_of__axpropertyname : _axpropertyname -> Yojson.Basic.t
@@ -244,8 +261,10 @@ module rec Accessibility : sig
        - from 'live' to 'root': attributes which apply to nodes in live regions\n\
        - from 'autocomplete' to 'valuetext': attributes which apply to widgets\n\
        - from 'checked' to 'selected': states which apply to widgets\n\
-       - from 'activedescendant' to 'owns' - relationships between elements \
-       other than parent/child/sibling."]
+       - from 'activedescendant' to 'owns': relationships between elements \
+       other than parent/child/sibling\n\
+       - from 'activeFullscreenElement' to 'uninteresting': reasons why this \
+       noode is hidden"]
   end
 
   and AXNode : sig
@@ -736,7 +755,24 @@ end = struct
       | `flowto
       | `labelledby
       | `owns
-      | `url ]
+      | `url
+      | `activeFullscreenElement
+      | `activeModalDialog
+      | `activeAriaModalDialog
+      | `ariaHiddenElement
+      | `ariaHiddenSubtree
+      | `emptyAlt
+      | `emptyText
+      | `inertElement
+      | `inertSubtree
+      | `labelContainer
+      | `labelFor
+      | `notRendered
+      | `notVisible
+      | `presentationalRole
+      | `probablyPresentational
+      | `inactiveCarouselTabContent
+      | `uninteresting ]
 
     val _axpropertyname_of_yojson : Yojson.Basic.t -> _axpropertyname
     val yojson_of__axpropertyname : _axpropertyname -> Yojson.Basic.t
@@ -749,8 +785,10 @@ end = struct
        - from 'live' to 'root': attributes which apply to nodes in live regions\n\
        - from 'autocomplete' to 'valuetext': attributes which apply to widgets\n\
        - from 'checked' to 'selected': states which apply to widgets\n\
-       - from 'activedescendant' to 'owns' - relationships between elements \
-       other than parent/child/sibling."]
+       - from 'activedescendant' to 'owns': relationships between elements \
+       other than parent/child/sibling\n\
+       - from 'activeFullscreenElement' to 'uninteresting': reasons why this \
+       noode is hidden"]
   end = struct
     type _axpropertyname =
       [ `actions
@@ -793,7 +831,24 @@ end = struct
       | `flowto
       | `labelledby
       | `owns
-      | `url ]
+      | `url
+      | `activeFullscreenElement
+      | `activeModalDialog
+      | `activeAriaModalDialog
+      | `ariaHiddenElement
+      | `ariaHiddenSubtree
+      | `emptyAlt
+      | `emptyText
+      | `inertElement
+      | `inertSubtree
+      | `labelContainer
+      | `labelFor
+      | `notRendered
+      | `notVisible
+      | `presentationalRole
+      | `probablyPresentational
+      | `inactiveCarouselTabContent
+      | `uninteresting ]
 
     let _axpropertyname_of_yojson = function
       | `String "actions" -> `actions
@@ -837,6 +892,23 @@ end = struct
       | `String "labelledby" -> `labelledby
       | `String "owns" -> `owns
       | `String "url" -> `url
+      | `String "activeFullscreenElement" -> `activeFullscreenElement
+      | `String "activeModalDialog" -> `activeModalDialog
+      | `String "activeAriaModalDialog" -> `activeAriaModalDialog
+      | `String "ariaHiddenElement" -> `ariaHiddenElement
+      | `String "ariaHiddenSubtree" -> `ariaHiddenSubtree
+      | `String "emptyAlt" -> `emptyAlt
+      | `String "emptyText" -> `emptyText
+      | `String "inertElement" -> `inertElement
+      | `String "inertSubtree" -> `inertSubtree
+      | `String "labelContainer" -> `labelContainer
+      | `String "labelFor" -> `labelFor
+      | `String "notRendered" -> `notRendered
+      | `String "notVisible" -> `notVisible
+      | `String "presentationalRole" -> `presentationalRole
+      | `String "probablyPresentational" -> `probablyPresentational
+      | `String "inactiveCarouselTabContent" -> `inactiveCarouselTabContent
+      | `String "uninteresting" -> `uninteresting
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -882,6 +954,23 @@ end = struct
       | `labelledby -> `String "labelledby"
       | `owns -> `String "owns"
       | `url -> `String "url"
+      | `activeFullscreenElement -> `String "activeFullscreenElement"
+      | `activeModalDialog -> `String "activeModalDialog"
+      | `activeAriaModalDialog -> `String "activeAriaModalDialog"
+      | `ariaHiddenElement -> `String "ariaHiddenElement"
+      | `ariaHiddenSubtree -> `String "ariaHiddenSubtree"
+      | `emptyAlt -> `String "emptyAlt"
+      | `emptyText -> `String "emptyText"
+      | `inertElement -> `String "inertElement"
+      | `inertSubtree -> `String "inertSubtree"
+      | `labelContainer -> `String "labelContainer"
+      | `labelFor -> `String "labelFor"
+      | `notRendered -> `String "notRendered"
+      | `notVisible -> `String "notVisible"
+      | `presentationalRole -> `String "presentationalRole"
+      | `probablyPresentational -> `String "probablyPresentational"
+      | `inactiveCarouselTabContent -> `String "inactiveCarouselTabContent"
+      | `uninteresting -> `String "uninteresting"
 
     type t = _axpropertyname
     [@@deriving yojson]
@@ -891,8 +980,10 @@ end = struct
        - from 'live' to 'root': attributes which apply to nodes in live regions\n\
        - from 'autocomplete' to 'valuetext': attributes which apply to widgets\n\
        - from 'checked' to 'selected': states which apply to widgets\n\
-       - from 'activedescendant' to 'owns' - relationships between elements \
-       other than parent/child/sibling."]
+       - from 'activedescendant' to 'owns': relationships between elements \
+       other than parent/child/sibling\n\
+       - from 'activeFullscreenElement' to 'uninteresting': reasons why this \
+       noode is hidden"]
   end
 
   and AXNode : sig
@@ -11025,6 +11116,10 @@ and DOM : sig
           [@key "isScrollable"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      affectedByStartingStyles : bool option;
+          [@key "affectedByStartingStyles"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -11600,6 +11695,10 @@ end = struct
           [@key "isScrollable"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      affectedByStartingStyles : bool option;
+          [@key "affectedByStartingStyles"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -11732,6 +11831,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       isScrollable : bool option;
           [@key "isScrollable"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      affectedByStartingStyles : bool option;
+          [@key "affectedByStartingStyles"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }

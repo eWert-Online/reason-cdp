@@ -825,6 +825,29 @@ module DOM = struct
   end
   [@@ocaml.doc {desc|Fired when a node's scrollability state changes. |desc}]
 
+  module AffectedByStartingStylesFlagUpdated = struct
+    let name = "DOM.affectedByStartingStylesFlagUpdated"
+
+    type result = {
+      nodeId : Types.DOM.NodeId.t;
+          [@key "nodeId"] [@ocaml.doc "The id of the node."]
+      affectedByStartingStyles : bool;
+          [@key "affectedByStartingStyles"]
+          [@ocaml.doc "If the node has starting styles."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Fired when a node's starting styles changes. |desc}]
+
   module PseudoElementRemoved = struct
     let name = "DOM.pseudoElementRemoved"
 
