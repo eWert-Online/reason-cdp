@@ -26396,8 +26396,10 @@ and Page : sig
       | `WebXR
       | `SharedWorker
       | `SharedWorkerMessage
+      | `SharedWorkerWithNoActiveClient
       | `WebLocks
       | `WebHID
+      | `WebBluetooth
       | `WebShare
       | `RequestedStorageAccessGrant
       | `WebNfc
@@ -29088,8 +29090,10 @@ end = struct
       | `WebXR
       | `SharedWorker
       | `SharedWorkerMessage
+      | `SharedWorkerWithNoActiveClient
       | `WebLocks
       | `WebHID
+      | `WebBluetooth
       | `WebShare
       | `RequestedStorageAccessGrant
       | `WebNfc
@@ -29243,8 +29247,10 @@ end = struct
       | `WebXR
       | `SharedWorker
       | `SharedWorkerMessage
+      | `SharedWorkerWithNoActiveClient
       | `WebLocks
       | `WebHID
+      | `WebBluetooth
       | `WebShare
       | `RequestedStorageAccessGrant
       | `WebNfc
@@ -29417,8 +29423,11 @@ end = struct
       | `String "WebXR" -> `WebXR
       | `String "SharedWorker" -> `SharedWorker
       | `String "SharedWorkerMessage" -> `SharedWorkerMessage
+      | `String "SharedWorkerWithNoActiveClient" ->
+          `SharedWorkerWithNoActiveClient
       | `String "WebLocks" -> `WebLocks
       | `String "WebHID" -> `WebHID
+      | `String "WebBluetooth" -> `WebBluetooth
       | `String "WebShare" -> `WebShare
       | `String "RequestedStorageAccessGrant" -> `RequestedStorageAccessGrant
       | `String "WebNfc" -> `WebNfc
@@ -29610,8 +29619,11 @@ end = struct
       | `WebXR -> `String "WebXR"
       | `SharedWorker -> `String "SharedWorker"
       | `SharedWorkerMessage -> `String "SharedWorkerMessage"
+      | `SharedWorkerWithNoActiveClient ->
+          `String "SharedWorkerWithNoActiveClient"
       | `WebLocks -> `String "WebLocks"
       | `WebHID -> `String "WebHID"
+      | `WebBluetooth -> `String "WebBluetooth"
       | `WebShare -> `String "WebShare"
       | `RequestedStorageAccessGrant -> `String "RequestedStorageAccessGrant"
       | `WebNfc -> `String "WebNfc"

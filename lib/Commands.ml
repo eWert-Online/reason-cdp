@@ -17888,10 +17888,12 @@ module IndexedDB = struct
             [@key "databaseName"] [@ocaml.doc "Database name."]
         objectStoreName : string;
             [@key "objectStoreName"] [@ocaml.doc "Object store name."]
-        indexName : string;
+        indexName : string option;
             [@key "indexName"]
+            [@yojson.option]
             [@ocaml.doc
-              "Index name, empty string for object store data requests."]
+              "Index name. If not specified, it performs an object store data \
+               request."]
         skipCount : Types.number;
             [@key "skipCount"] [@ocaml.doc "Number of records to skip."]
         pageSize : Types.number;
@@ -17902,7 +17904,7 @@ module IndexedDB = struct
       [@@deriving yojson]
 
       let make ?securityOrigin ?storageKey ?storageBucket ~databaseName
-          ~objectStoreName ~indexName ~skipCount ~pageSize ?keyRange () =
+          ~objectStoreName ?indexName ~skipCount ~pageSize ?keyRange () =
         {
           securityOrigin;
           storageKey;
@@ -39154,6 +39156,10 @@ $x functions). |desc}]
               "Average sample interval in bytes. Poisson distribution is used \
                for the intervals. The\n\
                default value is 32768 bytes."]
+        stackDepth : Types.number option;
+            [@key "stackDepth"]
+            [@yojson.option]
+            [@ocaml.doc "Maximum stack depth. The default value is 128."]
         includeObjectsCollectedByMajorGC : bool option;
             [@key "includeObjectsCollectedByMajorGC"]
             [@yojson.option]
@@ -39191,10 +39197,11 @@ $x functions). |desc}]
       }
       [@@deriving yojson]
 
-      let make ?samplingInterval ?includeObjectsCollectedByMajorGC
+      let make ?samplingInterval ?stackDepth ?includeObjectsCollectedByMajorGC
           ?includeObjectsCollectedByMinorGC () =
         {
           samplingInterval;
+          stackDepth;
           includeObjectsCollectedByMajorGC;
           includeObjectsCollectedByMinorGC;
         }
