@@ -18737,7 +18737,10 @@ and Network : sig
           [@key "expires"]
           [@ocaml.doc
             "Cookie expiration date as the number of seconds since the UNIX \
-             epoch."]
+             epoch.\n\
+             The value is set to -1 if the expiry date is not set.\n\
+             The value can be null for values that cannot be represented in\n\
+             JSON (\194\177Inf)."]
       size : number; [@key "size"] [@ocaml.doc "Cookie size."]
       httpOnly : bool;
           [@key "httpOnly"] [@ocaml.doc "True if cookie is http-only."]
@@ -21719,7 +21722,10 @@ end = struct
           [@key "expires"]
           [@ocaml.doc
             "Cookie expiration date as the number of seconds since the UNIX \
-             epoch."]
+             epoch.\n\
+             The value is set to -1 if the expiry date is not set.\n\
+             The value can be null for values that cannot be represented in\n\
+             JSON (\194\177Inf)."]
       size : number; [@key "size"] [@ocaml.doc "Cookie size."]
       httpOnly : bool;
           [@key "httpOnly"] [@ocaml.doc "True if cookie is http-only."]
@@ -21764,7 +21770,10 @@ end = struct
           [@key "expires"]
           [@ocaml.doc
             "Cookie expiration date as the number of seconds since the UNIX \
-             epoch."]
+             epoch.\n\
+             The value is set to -1 if the expiry date is not set.\n\
+             The value can be null for values that cannot be represented in\n\
+             JSON (\194\177Inf)."]
       size : number; [@key "size"] [@ocaml.doc "Cookie size."]
       httpOnly : bool;
           [@key "httpOnly"] [@ocaml.doc "True if cookie is http-only."]
