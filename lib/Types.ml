@@ -18141,6 +18141,10 @@ and Network : sig
             "True if this resource request is considered to be the 'same site' \
              as the\n\
              request corresponding to the main frame."]
+      isAdRelated : bool option;
+          [@key "isAdRelated"]
+          [@yojson.option]
+          [@ocaml.doc "True when the resource request is ad-related."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP request data."]
   end
@@ -20245,6 +20249,10 @@ end = struct
             "True if this resource request is considered to be the 'same site' \
              as the\n\
              request corresponding to the main frame."]
+      isAdRelated : bool option;
+          [@key "isAdRelated"]
+          [@yojson.option]
+          [@ocaml.doc "True when the resource request is ad-related."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP request data."]
   end = struct
@@ -20339,6 +20347,10 @@ end = struct
             "True if this resource request is considered to be the 'same site' \
              as the\n\
              request corresponding to the main frame."]
+      isAdRelated : bool option;
+          [@key "isAdRelated"]
+          [@yojson.option]
+          [@ocaml.doc "True when the resource request is ad-related."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP request data."]
   end
@@ -39102,7 +39114,8 @@ and Runtime : sig
       | `arraybuffer
       | `dataview
       | `webassemblymemory
-      | `wasmvalue ]
+      | `wasmvalue
+      | `trustedtype ]
 
     val _remoteobject_subtype_of_yojson :
       Yojson.Basic.t -> _remoteobject_subtype
@@ -39219,7 +39232,8 @@ and Runtime : sig
       | `arraybuffer
       | `dataview
       | `webassemblymemory
-      | `wasmvalue ]
+      | `wasmvalue
+      | `trustedtype ]
 
     val _objectpreview_subtype_of_yojson :
       Yojson.Basic.t -> _objectpreview_subtype
@@ -39293,7 +39307,8 @@ and Runtime : sig
       | `arraybuffer
       | `dataview
       | `webassemblymemory
-      | `wasmvalue ]
+      | `wasmvalue
+      | `trustedtype ]
 
     val _propertypreview_subtype_of_yojson :
       Yojson.Basic.t -> _propertypreview_subtype
@@ -39910,7 +39925,8 @@ end = struct
       | `arraybuffer
       | `dataview
       | `webassemblymemory
-      | `wasmvalue ]
+      | `wasmvalue
+      | `trustedtype ]
 
     val _remoteobject_subtype_of_yojson :
       Yojson.Basic.t -> _remoteobject_subtype
@@ -40023,7 +40039,8 @@ end = struct
       | `arraybuffer
       | `dataview
       | `webassemblymemory
-      | `wasmvalue ]
+      | `wasmvalue
+      | `trustedtype ]
 
     let _remoteobject_subtype_of_yojson = function
       | `String "array" -> `array
@@ -40045,6 +40062,7 @@ end = struct
       | `String "dataview" -> `dataview
       | `String "webassemblymemory" -> `webassemblymemory
       | `String "wasmvalue" -> `wasmvalue
+      | `String "trustedtype" -> `trustedtype
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -40068,6 +40086,7 @@ end = struct
       | `dataview -> `String "dataview"
       | `webassemblymemory -> `String "webassemblymemory"
       | `wasmvalue -> `String "wasmvalue"
+      | `trustedtype -> `String "trustedtype"
 
     type t = {
       type_ : _remoteobject_type; [@key "type"] [@ocaml.doc "Object type."]
@@ -40197,7 +40216,8 @@ end = struct
       | `arraybuffer
       | `dataview
       | `webassemblymemory
-      | `wasmvalue ]
+      | `wasmvalue
+      | `trustedtype ]
 
     val _objectpreview_subtype_of_yojson :
       Yojson.Basic.t -> _objectpreview_subtype
@@ -40284,7 +40304,8 @@ end = struct
       | `arraybuffer
       | `dataview
       | `webassemblymemory
-      | `wasmvalue ]
+      | `wasmvalue
+      | `trustedtype ]
 
     let _objectpreview_subtype_of_yojson = function
       | `String "array" -> `array
@@ -40306,6 +40327,7 @@ end = struct
       | `String "dataview" -> `dataview
       | `String "webassemblymemory" -> `webassemblymemory
       | `String "wasmvalue" -> `wasmvalue
+      | `String "trustedtype" -> `trustedtype
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -40329,6 +40351,7 @@ end = struct
       | `dataview -> `String "dataview"
       | `webassemblymemory -> `String "webassemblymemory"
       | `wasmvalue -> `String "wasmvalue"
+      | `trustedtype -> `String "trustedtype"
 
     type t = {
       type_ : _objectpreview_type; [@key "type"] [@ocaml.doc "Object type."]
@@ -40396,7 +40419,8 @@ end = struct
       | `arraybuffer
       | `dataview
       | `webassemblymemory
-      | `wasmvalue ]
+      | `wasmvalue
+      | `trustedtype ]
 
     val _propertypreview_subtype_of_yojson :
       Yojson.Basic.t -> _propertypreview_subtype
@@ -40481,7 +40505,8 @@ end = struct
       | `arraybuffer
       | `dataview
       | `webassemblymemory
-      | `wasmvalue ]
+      | `wasmvalue
+      | `trustedtype ]
 
     let _propertypreview_subtype_of_yojson = function
       | `String "array" -> `array
@@ -40503,6 +40528,7 @@ end = struct
       | `String "dataview" -> `dataview
       | `String "webassemblymemory" -> `webassemblymemory
       | `String "wasmvalue" -> `wasmvalue
+      | `String "trustedtype" -> `trustedtype
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -40526,6 +40552,7 @@ end = struct
       | `dataview -> `String "dataview"
       | `webassemblymemory -> `String "webassemblymemory"
       | `wasmvalue -> `String "wasmvalue"
+      | `trustedtype -> `String "trustedtype"
 
     type t = {
       name : string; [@key "name"] [@ocaml.doc "Property name."]
