@@ -2038,8 +2038,10 @@ and Audits : sig
       | `WriteErrorInsufficientResources
       | `WriteErrorInvalidMatchField
       | `WriteErrorInvalidStructuredHeader
+      | `WriteErrorInvalidTTLField
       | `WriteErrorNavigationRequest
       | `WriteErrorNoMatchField
+      | `WriteErrorNonIntegerTTLField
       | `WriteErrorNonListMatchDestField
       | `WriteErrorNonSecureContext
       | `WriteErrorNonStringIdField
@@ -4102,8 +4104,10 @@ end = struct
       | `WriteErrorInsufficientResources
       | `WriteErrorInvalidMatchField
       | `WriteErrorInvalidStructuredHeader
+      | `WriteErrorInvalidTTLField
       | `WriteErrorNavigationRequest
       | `WriteErrorNoMatchField
+      | `WriteErrorNonIntegerTTLField
       | `WriteErrorNonListMatchDestField
       | `WriteErrorNonSecureContext
       | `WriteErrorNonStringIdField
@@ -4136,8 +4140,10 @@ end = struct
       | `WriteErrorInsufficientResources
       | `WriteErrorInvalidMatchField
       | `WriteErrorInvalidStructuredHeader
+      | `WriteErrorInvalidTTLField
       | `WriteErrorNavigationRequest
       | `WriteErrorNoMatchField
+      | `WriteErrorNonIntegerTTLField
       | `WriteErrorNonListMatchDestField
       | `WriteErrorNonSecureContext
       | `WriteErrorNonStringIdField
@@ -4169,8 +4175,10 @@ end = struct
       | `String "WriteErrorInvalidMatchField" -> `WriteErrorInvalidMatchField
       | `String "WriteErrorInvalidStructuredHeader" ->
           `WriteErrorInvalidStructuredHeader
+      | `String "WriteErrorInvalidTTLField" -> `WriteErrorInvalidTTLField
       | `String "WriteErrorNavigationRequest" -> `WriteErrorNavigationRequest
       | `String "WriteErrorNoMatchField" -> `WriteErrorNoMatchField
+      | `String "WriteErrorNonIntegerTTLField" -> `WriteErrorNonIntegerTTLField
       | `String "WriteErrorNonListMatchDestField" ->
           `WriteErrorNonListMatchDestField
       | `String "WriteErrorNonSecureContext" -> `WriteErrorNonSecureContext
@@ -4207,8 +4215,10 @@ end = struct
       | `WriteErrorInvalidMatchField -> `String "WriteErrorInvalidMatchField"
       | `WriteErrorInvalidStructuredHeader ->
           `String "WriteErrorInvalidStructuredHeader"
+      | `WriteErrorInvalidTTLField -> `String "WriteErrorInvalidTTLField"
       | `WriteErrorNavigationRequest -> `String "WriteErrorNavigationRequest"
       | `WriteErrorNoMatchField -> `String "WriteErrorNoMatchField"
+      | `WriteErrorNonIntegerTTLField -> `String "WriteErrorNonIntegerTTLField"
       | `WriteErrorNonListMatchDestField ->
           `String "WriteErrorNonListMatchDestField"
       | `WriteErrorNonSecureContext -> `String "WriteErrorNonSecureContext"
