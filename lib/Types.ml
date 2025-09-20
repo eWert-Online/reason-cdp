@@ -19259,6 +19259,55 @@ and Network : sig
     [@@ocaml.doc "List of content encodings supported by the backend."]
   end
 
+  and NetworkConditions : sig
+    type t = {
+      urlPattern : string;
+          [@key "urlPattern"]
+          [@ocaml.doc
+            "Only matching requests will be affected by these conditions. \
+             Patterns use the URLPattern constructor string\n\
+             syntax (https://urlpattern.spec.whatwg.org/). If the pattern is \
+             empty, all requests are matched (including p2p\n\
+             connections)."]
+      latency : number;
+          [@key "latency"]
+          [@ocaml.doc
+            "Minimum latency from request sent to response headers received \
+             (ms)."]
+      downloadThroughput : number;
+          [@key "downloadThroughput"]
+          [@ocaml.doc
+            "Maximal aggregated download throughput (bytes/sec). -1 disables \
+             download throttling."]
+      uploadThroughput : number;
+          [@key "uploadThroughput"]
+          [@ocaml.doc
+            "Maximal aggregated upload throughput (bytes/sec).  -1 disables \
+             upload throttling."]
+      connectionType : ConnectionType.t option;
+          [@key "connectionType"]
+          [@yojson.option]
+          [@ocaml.doc "Connection type if known."]
+      packetLoss : number option;
+          [@key "packetLoss"]
+          [@yojson.option]
+          [@ocaml.doc
+            "WebRTC packet loss (percent, 0-100). 0 disables packet loss \
+             emulation, 100 drops all the packets."]
+      packetQueueLength : number option;
+          [@key "packetQueueLength"]
+          [@yojson.option]
+          [@ocaml.doc
+            "WebRTC packet queue length (packet). 0 removes any queue length \
+             limitations."]
+      packetReordering : bool option;
+          [@key "packetReordering"]
+          [@yojson.option]
+          [@ocaml.doc "WebRTC packetReordering feature."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and DirectSocketDnsQueryType : sig
     type _directsocketdnsquerytype = [ `ipv4 | `ipv6 ]
 
@@ -22897,6 +22946,102 @@ end = struct
     type t = _contentencoding
     [@@deriving yojson]
     [@@ocaml.doc "List of content encodings supported by the backend."]
+  end
+
+  and NetworkConditions : sig
+    type t = {
+      urlPattern : string;
+          [@key "urlPattern"]
+          [@ocaml.doc
+            "Only matching requests will be affected by these conditions. \
+             Patterns use the URLPattern constructor string\n\
+             syntax (https://urlpattern.spec.whatwg.org/). If the pattern is \
+             empty, all requests are matched (including p2p\n\
+             connections)."]
+      latency : number;
+          [@key "latency"]
+          [@ocaml.doc
+            "Minimum latency from request sent to response headers received \
+             (ms)."]
+      downloadThroughput : number;
+          [@key "downloadThroughput"]
+          [@ocaml.doc
+            "Maximal aggregated download throughput (bytes/sec). -1 disables \
+             download throttling."]
+      uploadThroughput : number;
+          [@key "uploadThroughput"]
+          [@ocaml.doc
+            "Maximal aggregated upload throughput (bytes/sec).  -1 disables \
+             upload throttling."]
+      connectionType : ConnectionType.t option;
+          [@key "connectionType"]
+          [@yojson.option]
+          [@ocaml.doc "Connection type if known."]
+      packetLoss : number option;
+          [@key "packetLoss"]
+          [@yojson.option]
+          [@ocaml.doc
+            "WebRTC packet loss (percent, 0-100). 0 disables packet loss \
+             emulation, 100 drops all the packets."]
+      packetQueueLength : number option;
+          [@key "packetQueueLength"]
+          [@yojson.option]
+          [@ocaml.doc
+            "WebRTC packet queue length (packet). 0 removes any queue length \
+             limitations."]
+      packetReordering : bool option;
+          [@key "packetReordering"]
+          [@yojson.option]
+          [@ocaml.doc "WebRTC packetReordering feature."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      urlPattern : string;
+          [@key "urlPattern"]
+          [@ocaml.doc
+            "Only matching requests will be affected by these conditions. \
+             Patterns use the URLPattern constructor string\n\
+             syntax (https://urlpattern.spec.whatwg.org/). If the pattern is \
+             empty, all requests are matched (including p2p\n\
+             connections)."]
+      latency : number;
+          [@key "latency"]
+          [@ocaml.doc
+            "Minimum latency from request sent to response headers received \
+             (ms)."]
+      downloadThroughput : number;
+          [@key "downloadThroughput"]
+          [@ocaml.doc
+            "Maximal aggregated download throughput (bytes/sec). -1 disables \
+             download throttling."]
+      uploadThroughput : number;
+          [@key "uploadThroughput"]
+          [@ocaml.doc
+            "Maximal aggregated upload throughput (bytes/sec).  -1 disables \
+             upload throttling."]
+      connectionType : ConnectionType.t option;
+          [@key "connectionType"]
+          [@yojson.option]
+          [@ocaml.doc "Connection type if known."]
+      packetLoss : number option;
+          [@key "packetLoss"]
+          [@yojson.option]
+          [@ocaml.doc
+            "WebRTC packet loss (percent, 0-100). 0 disables packet loss \
+             emulation, 100 drops all the packets."]
+      packetQueueLength : number option;
+          [@key "packetQueueLength"]
+          [@yojson.option]
+          [@ocaml.doc
+            "WebRTC packet queue length (packet). 0 removes any queue length \
+             limitations."]
+      packetReordering : bool option;
+          [@key "packetReordering"]
+          [@yojson.option]
+          [@ocaml.doc "WebRTC packetReordering feature."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
   and DirectSocketDnsQueryType : sig

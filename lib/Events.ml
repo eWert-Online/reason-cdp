@@ -2479,6 +2479,13 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
           [@ocaml.doc
             "Whether the site has partitioned cookies stored in a partition \
              different than the current one."]
+      appliedNetworkConditionsId : string option;
+          [@key "appliedNetworkConditionsId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The network conditions id if this request was affected by network \
+             conditions configured via\n\
+             emulateNetworkConditionsByRule."]
     }
     [@@deriving yojson]
 

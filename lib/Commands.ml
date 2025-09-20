@@ -21827,7 +21827,179 @@ Deprecated, use Fetch.continueRequest, Fetch.fulfillRequest and Fetch.failReques
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
-  [@@ocaml.doc {desc|Activates emulation of network conditions. |desc}]
+  [@@ocaml.doc
+    {desc|Activates emulation of network conditions. This command is deprecated in favor of the emulateNetworkConditionsByRule
+and overrideNetworkState commands, which can be used together to the same effect. |desc}]
+
+  module EmulateNetworkConditionsByRule = struct
+    module Response : sig
+      type result = {
+        ruleIds : string list;
+            [@key "ruleIds"]
+            [@ocaml.doc
+              "An id for each entry in matchedNetworkConditions. The id will \
+               be included in the requestWillBeSentExtraInfo for\n\
+               requests affected by a rule."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        ruleIds : string list;
+            [@key "ruleIds"]
+            [@ocaml.doc
+              "An id for each entry in matchedNetworkConditions. The id will \
+               be included in the requestWillBeSentExtraInfo for\n\
+               requests affected by a rule."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        offline : bool;
+            [@key "offline"]
+            [@ocaml.doc "True to emulate internet disconnection."]
+        matchedNetworkConditions : Types.Network.NetworkConditions.t list;
+            [@key "matchedNetworkConditions"]
+            [@ocaml.doc
+              "Configure conditions for matching requests. If multiple entries \
+               match a request, the first entry wins.  Global\n\
+               conditions can be configured by leaving the urlPattern for the \
+               conditions empty. These global conditions are\n\
+               also applied for throttling of p2p connections."]
+      }
+      [@@deriving yojson]
+
+      let make ~offline ~matchedNetworkConditions () =
+        { offline; matchedNetworkConditions }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Network.emulateNetworkConditionsByRule";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Activates emulation of network conditions for individual requests using URL match patterns. |desc}]
+
+  module OverrideNetworkState = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        offline : bool;
+            [@key "offline"]
+            [@ocaml.doc "True to emulate internet disconnection."]
+        latency : Types.number;
+            [@key "latency"]
+            [@ocaml.doc
+              "Minimum latency from request sent to response headers received \
+               (ms)."]
+        downloadThroughput : Types.number;
+            [@key "downloadThroughput"]
+            [@ocaml.doc
+              "Maximal aggregated download throughput (bytes/sec). -1 disables \
+               download throttling."]
+        uploadThroughput : Types.number;
+            [@key "uploadThroughput"]
+            [@ocaml.doc
+              "Maximal aggregated upload throughput (bytes/sec).  -1 disables \
+               upload throttling."]
+        connectionType : Types.Network.ConnectionType.t option;
+            [@key "connectionType"]
+            [@yojson.option]
+            [@ocaml.doc "Connection type if known."]
+      }
+      [@@deriving yojson]
+
+      let make ~offline ~latency ~downloadThroughput ~uploadThroughput
+          ?connectionType () =
+        {
+          offline;
+          latency;
+          downloadThroughput;
+          uploadThroughput;
+          connectionType;
+        }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Network.overrideNetworkState"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Override the state of navigator.onLine and navigator.connection. |desc}]
 
   module Enable = struct
     module Response : sig
