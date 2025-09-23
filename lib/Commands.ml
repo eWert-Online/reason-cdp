@@ -29898,67 +29898,6 @@ See https://docs.google.com/document/d/12HVmFxYj5Jc-eJr5OmWsa2bqTJsbgGLKI6ZIyx0_
 for more details.
 
 TODO(https://crbug.com/1440085): Remove this once Puppeteer supports tab targets. |desc}]
-
-  module SetPrewarmingAllowed = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        isAllowed : bool;
-            [@key "isAllowed"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~isAllowed () = { isAllowed }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Page.setPrewarmingAllowed"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Enable/disable prewarming triggers manually.
-
-This command manages DSE Prewarming triggers. While a client is connected,
-prewarming triggers are disabled by default. This command can change this
-default behavior to allow the triggers, or to disallow them again.
-See https://chromestatus.com/feature/6266608741908480 for more details on
-the DSE Prewarming feature. |desc}]
 end
 
 module Performance = struct
