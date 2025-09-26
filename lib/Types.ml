@@ -7969,6 +7969,12 @@ and CSS : sig
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
       style : CSSStyle.t;
           [@key "style"] [@ocaml.doc "Associated style declaration."]
+      originTreeScopeNodeId : DOM.BackendNodeId.t option;
+          [@key "originTreeScopeNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The BackendNodeId of the DOM node that constitutes the origin \
+             tree scope of this rule."]
       media : CSSMedia.t list option;
           [@key "media"]
           [@yojson.option]
@@ -9189,6 +9195,12 @@ end = struct
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
       style : CSSStyle.t;
           [@key "style"] [@ocaml.doc "Associated style declaration."]
+      originTreeScopeNodeId : DOM.BackendNodeId.t option;
+          [@key "originTreeScopeNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The BackendNodeId of the DOM node that constitutes the origin \
+             tree scope of this rule."]
       media : CSSMedia.t list option;
           [@key "media"]
           [@yojson.option]
@@ -9260,6 +9272,12 @@ end = struct
           [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
       style : CSSStyle.t;
           [@key "style"] [@ocaml.doc "Associated style declaration."]
+      originTreeScopeNodeId : DOM.BackendNodeId.t option;
+          [@key "originTreeScopeNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The BackendNodeId of the DOM node that constitutes the origin \
+             tree scope of this rule."]
       media : CSSMedia.t list option;
           [@key "media"]
           [@yojson.option]

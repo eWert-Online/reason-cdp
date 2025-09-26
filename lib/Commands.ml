@@ -31259,7 +31259,76 @@ module Storage = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
-  [@@ocaml.doc {desc|Returns a storage key given a frame id. |desc}]
+  [@@ocaml.doc
+    {desc|Returns a storage key given a frame id.
+Deprecated. Please use Storage.getStorageKey instead. |desc}]
+
+  module GetStorageKey = struct
+    module Response : sig
+      type result = {
+        storageKey : Types.Storage.SerializedStorageKey.t;
+            [@key "storageKey"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        storageKey : Types.Storage.SerializedStorageKey.t;
+            [@key "storageKey"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        frameId : Types.Page.FrameId.t option;
+            [@key "frameId"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ?frameId () = { frameId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Storage.getStorageKey"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns storage key for the given frame. If no frame ID is provided,
+the storage key of the target executing this command is returned. |desc}]
 
   module ClearDataForOrigin = struct
     module Response : sig
