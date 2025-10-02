@@ -7,7 +7,7 @@ license: "MIT"
 homepage: "https://github.com/eWert-Online/reason-cdp"
 bug-reports: "https://github.com/eWert-Online/reason-cdp/issues"
 depends: [
-  "cmdliner"
+  "cmdliner" {< "2.0.0"}
   "dune" {>= "2.8"}
   "fileutils"
   "ocamlformat"

@@ -21,4 +21,11 @@
 (package
  (name "cdp-generator")
  (synopsis "Chrome DevTools Protocol types generator")
- (depends cmdliner dune fileutils ocamlformat ocaml yojson))
+ (depends
+  (cmdliner
+   (< 2.0.0))
+  dune
+  fileutils
+  ocamlformat
+  ocaml
+  yojson))
