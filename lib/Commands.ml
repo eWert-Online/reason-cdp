@@ -22728,13 +22728,21 @@ attribute, user, password. |desc}]
 
     module Params = struct
       type t = {
-        urls : string list;
+        urlPatterns : string list option;
+            [@key "urlPatterns"]
+            [@yojson.option]
+            [@ocaml.doc
+              "URL patterns to block. Patterns use the URLPattern constructor \
+               string syntax\n\
+               (https://urlpattern.spec.whatwg.org/). Example: `*://*:*/*.css`."]
+        urls : string list option;
             [@key "urls"]
+            [@yojson.option]
             [@ocaml.doc "URL patterns to block. Wildcards ('*') are allowed."]
       }
       [@@deriving yojson]
 
-      let make ~urls () = { urls }
+      let make ?urlPatterns ?urls () = { urlPatterns; urls }
     end
 
     module Request = struct
