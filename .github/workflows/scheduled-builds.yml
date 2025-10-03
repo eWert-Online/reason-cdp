@@ -1,6 +1,17 @@
 name: Check CDP Versions
 
 on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: "Log level"
+        required: true
+        default: "warning"
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
   schedule:
     - cron: "0 * * * *"
 
@@ -17,21 +28,22 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout CDP
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Checkout devtools-protocol
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           repository: ChromeDevTools/devtools-protocol
           path: devtools-protocol
+          fetch-depth: 0
 
       - name: Check for modified version in devtools-protocol
         id: git-check
         run: |
           cd devtools-protocol
-          last_commit=$(git log -1 --pretty="%B" | cat);
+          last_commit=$(git log --pretty="%B" | grep "Roll protocol to " | head -1 | cat);
           echo "$last_commit";
           cdp_version=$(echo "$last_commit" | grep -o "[0-9]\+");
           echo "$cdp_version";
