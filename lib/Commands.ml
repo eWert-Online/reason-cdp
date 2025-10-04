@@ -2974,7 +2974,8 @@ module Browser = struct
     end
   end
   [@@ocaml.doc
-    {desc|Grant specific permissions to the given origin and reject all others. |desc}]
+    {desc|Grant specific permissions to the given origin and reject all others. Deprecated. Use
+setPermission instead. |desc}]
 
   module ResetPermissions = struct
     module Response : sig
