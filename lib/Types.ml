@@ -19284,9 +19284,9 @@ and Network : sig
           [@ocaml.doc
             "Only matching requests will be affected by these conditions. \
              Patterns use the URLPattern constructor string\n\
-             syntax (https://urlpattern.spec.whatwg.org/). If the pattern is \
-             empty, all requests are matched (including p2p\n\
-             connections)."]
+             syntax (https://urlpattern.spec.whatwg.org/) and must be \
+             absolute. If the pattern is empty, all requests are\n\
+             matched (including p2p connections)."]
       latency : number;
           [@key "latency"]
           [@ocaml.doc
@@ -22973,9 +22973,9 @@ end = struct
           [@ocaml.doc
             "Only matching requests will be affected by these conditions. \
              Patterns use the URLPattern constructor string\n\
-             syntax (https://urlpattern.spec.whatwg.org/). If the pattern is \
-             empty, all requests are matched (including p2p\n\
-             connections)."]
+             syntax (https://urlpattern.spec.whatwg.org/) and must be \
+             absolute. If the pattern is empty, all requests are\n\
+             matched (including p2p connections)."]
       latency : number;
           [@key "latency"]
           [@ocaml.doc
@@ -23020,9 +23020,9 @@ end = struct
           [@ocaml.doc
             "Only matching requests will be affected by these conditions. \
              Patterns use the URLPattern constructor string\n\
-             syntax (https://urlpattern.spec.whatwg.org/). If the pattern is \
-             empty, all requests are matched (including p2p\n\
-             connections)."]
+             syntax (https://urlpattern.spec.whatwg.org/) and must be \
+             absolute. If the pattern is empty, all requests are\n\
+             matched (including p2p connections)."]
       latency : number;
           [@key "latency"]
           [@ocaml.doc
@@ -30422,7 +30422,7 @@ and Preload : sig
   end
 
   and SpeculationAction : sig
-    type _speculationaction = [ `Prefetch | `Prerender ]
+    type _speculationaction = [ `Prefetch | `Prerender | `PrerenderUntilScript ]
 
     val _speculationaction_of_yojson : Yojson.Basic.t -> _speculationaction
     val yojson_of__speculationaction : _speculationaction -> Yojson.Basic.t
@@ -30823,7 +30823,7 @@ end = struct
   end
 
   and SpeculationAction : sig
-    type _speculationaction = [ `Prefetch | `Prerender ]
+    type _speculationaction = [ `Prefetch | `Prerender | `PrerenderUntilScript ]
 
     val _speculationaction_of_yojson : Yojson.Basic.t -> _speculationaction
     val yojson_of__speculationaction : _speculationaction -> Yojson.Basic.t
@@ -30836,17 +30836,19 @@ end = struct
        as it\n\
        isn't being used by clients)."]
   end = struct
-    type _speculationaction = [ `Prefetch | `Prerender ]
+    type _speculationaction = [ `Prefetch | `Prerender | `PrerenderUntilScript ]
 
     let _speculationaction_of_yojson = function
       | `String "Prefetch" -> `Prefetch
       | `String "Prerender" -> `Prerender
+      | `String "PrerenderUntilScript" -> `PrerenderUntilScript
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__speculationaction = function
       | `Prefetch -> `String "Prefetch"
       | `Prerender -> `String "Prerender"
+      | `PrerenderUntilScript -> `String "PrerenderUntilScript"
 
     type t = _speculationaction
     [@@deriving yojson]

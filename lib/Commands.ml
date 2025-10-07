@@ -2867,17 +2867,17 @@ module Browser = struct
             [@key "origin"]
             [@yojson.option]
             [@ocaml.doc
-              "Requesting origin the permission applies to, all origins if not \
+              "Embedding origin the permission applies to, all origins if not \
                specified."]
-        embeddingOrigin : string option;
-            [@key "embeddingOrigin"]
+        embeddedOrigin : string option;
+            [@key "embeddedOrigin"]
             [@yojson.option]
             [@ocaml.doc
-              "Embedding origin the permission applies to. It is ignored \
-               unless the requesting origin is\n\
-               present and valid. If the requesting origin is provided but the \
-               embedding origin isn't, the\n\
-               requesting origin is used as the embedding origin."]
+              "Embedded origin the permission applies to. It is ignored unless \
+               the embedding origin is\n\
+               present and valid. If the embedding origin is provided but the \
+               embedded origin isn't, the\n\
+               embedding origin is used as the embedded origin."]
         browserContextId : Types.Browser.BrowserContextID.t option;
             [@key "browserContextId"]
             [@yojson.option]
@@ -2887,9 +2887,9 @@ module Browser = struct
       }
       [@@deriving yojson]
 
-      let make ~permission ~setting ?origin ?embeddingOrigin ?browserContextId
-          () =
-        { permission; setting; origin; embeddingOrigin; browserContextId }
+      let make ~permission ~setting ?origin ?embeddedOrigin ?browserContextId ()
+          =
+        { permission; setting; origin; embeddedOrigin; browserContextId }
     end
 
     module Request = struct
@@ -2907,7 +2907,7 @@ module Browser = struct
     end
   end
   [@@ocaml.doc
-    {desc|Set permission settings for given requesting and embedding origins. |desc}]
+    {desc|Set permission settings for given embedding and embedded origins. |desc}]
 
   module GrantPermissions = struct
     module Response : sig
@@ -22735,7 +22735,8 @@ attribute, user, password. |desc}]
             [@ocaml.doc
               "URL patterns to block. Patterns use the URLPattern constructor \
                string syntax\n\
-               (https://urlpattern.spec.whatwg.org/). Example: `*://*:*/*.css`."]
+               (https://urlpattern.spec.whatwg.org/) and must be absolute. \
+               Example: `*://*:*/*.css`."]
         urls : string list option;
             [@key "urls"]
             [@yojson.option]
