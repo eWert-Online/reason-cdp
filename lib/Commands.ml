@@ -21917,7 +21917,9 @@ and overrideNetworkState commands, which can be used together to the same effect
     end
   end
   [@@ocaml.doc
-    {desc|Activates emulation of network conditions for individual requests using URL match patterns. |desc}]
+    {desc|Activates emulation of network conditions for individual requests using URL match patterns. Unlike the deprecated
+Network.emulateNetworkConditions this method does not affect `navigator` state. Use Network.overrideNetworkState to
+explicitly modify `navigator` behavior. |desc}]
 
   module OverrideNetworkState = struct
     module Response : sig
