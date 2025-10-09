@@ -22731,14 +22731,14 @@ attribute, user, password. |desc}]
 
     module Params = struct
       type t = {
-        urlPatterns : string list option;
+        urlPatterns : Types.Network.BlockPattern.t list option;
             [@key "urlPatterns"]
             [@yojson.option]
             [@ocaml.doc
-              "URL patterns to block. Patterns use the URLPattern constructor \
-               string syntax\n\
-               (https://urlpattern.spec.whatwg.org/) and must be absolute. \
-               Example: `*://*:*/*.css`."]
+              "Patterns to match in the order in which they are given. These \
+               patterns\n\
+               also take precedence over any wildcard patterns defined in \
+               `urls`."]
         urls : string list option;
             [@key "urls"]
             [@yojson.option]

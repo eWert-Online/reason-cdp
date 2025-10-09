@@ -19326,6 +19326,25 @@ and Network : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and BlockPattern : sig
+    type t = {
+      urlPattern : string;
+          [@key "urlPattern"]
+          [@ocaml.doc
+            "URL pattern to match. Patterns use the URLPattern constructor \
+             string syntax\n\
+             (https://urlpattern.spec.whatwg.org/) and must be absolute. \
+             Example: `*://*:*/*.css`."]
+      block : bool;
+          [@key "block"]
+          [@ocaml.doc
+            "Whether or not to block the pattern. If false, a matching request \
+             will not be blocked even if it matches a later\n\
+             `BlockPattern`."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and DirectSocketDnsQueryType : sig
     type _directsocketdnsquerytype = [ `ipv4 | `ipv6 ]
 
@@ -23058,6 +23077,42 @@ end = struct
           [@key "packetReordering"]
           [@yojson.option]
           [@ocaml.doc "WebRTC packetReordering feature."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and BlockPattern : sig
+    type t = {
+      urlPattern : string;
+          [@key "urlPattern"]
+          [@ocaml.doc
+            "URL pattern to match. Patterns use the URLPattern constructor \
+             string syntax\n\
+             (https://urlpattern.spec.whatwg.org/) and must be absolute. \
+             Example: `*://*:*/*.css`."]
+      block : bool;
+          [@key "block"]
+          [@ocaml.doc
+            "Whether or not to block the pattern. If false, a matching request \
+             will not be blocked even if it matches a later\n\
+             `BlockPattern`."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      urlPattern : string;
+          [@key "urlPattern"]
+          [@ocaml.doc
+            "URL pattern to match. Patterns use the URLPattern constructor \
+             string syntax\n\
+             (https://urlpattern.spec.whatwg.org/) and must be absolute. \
+             Example: `*://*:*/*.css`."]
+      block : bool;
+          [@key "block"]
+          [@ocaml.doc
+            "Whether or not to block the pattern. If false, a matching request \
+             will not be blocked even if it matches a later\n\
+             `BlockPattern`."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
