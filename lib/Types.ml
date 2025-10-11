@@ -18695,7 +18695,13 @@ and Network : sig
 
   and Initiator : sig
     type _initiator_type =
-      [ `parser | `script | `preload | `SignedExchange | `preflight | `other ]
+      [ `parser
+      | `script
+      | `preload
+      | `SignedExchange
+      | `preflight
+      | `FedCM
+      | `other ]
 
     val _initiator_type_of_yojson : Yojson.Basic.t -> _initiator_type
     val yojson_of__initiator_type : _initiator_type -> Yojson.Basic.t
@@ -21679,7 +21685,13 @@ end = struct
 
   and Initiator : sig
     type _initiator_type =
-      [ `parser | `script | `preload | `SignedExchange | `preflight | `other ]
+      [ `parser
+      | `script
+      | `preload
+      | `SignedExchange
+      | `preflight
+      | `FedCM
+      | `other ]
 
     val _initiator_type_of_yojson : Yojson.Basic.t -> _initiator_type
     val yojson_of__initiator_type : _initiator_type -> Yojson.Basic.t
@@ -21722,7 +21734,13 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Information about the request initiator."]
   end = struct
     type _initiator_type =
-      [ `parser | `script | `preload | `SignedExchange | `preflight | `other ]
+      [ `parser
+      | `script
+      | `preload
+      | `SignedExchange
+      | `preflight
+      | `FedCM
+      | `other ]
 
     let _initiator_type_of_yojson = function
       | `String "parser" -> `parser
@@ -21730,6 +21748,7 @@ end = struct
       | `String "preload" -> `preload
       | `String "SignedExchange" -> `SignedExchange
       | `String "preflight" -> `preflight
+      | `String "FedCM" -> `FedCM
       | `String "other" -> `other
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -21740,6 +21759,7 @@ end = struct
       | `preload -> `String "preload"
       | `SignedExchange -> `String "SignedExchange"
       | `preflight -> `String "preflight"
+      | `FedCM -> `String "FedCM"
       | `other -> `String "other"
 
     type t = {
