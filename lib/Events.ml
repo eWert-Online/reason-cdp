@@ -1318,6 +1318,23 @@ module Inspector = struct
   end
   [@@ocaml.doc
     {desc|Fired when debugging target has reloaded after crash |desc}]
+
+  module WorkerScriptLoaded = struct
+    let name = "Inspector.workerScriptLoaded"
+
+    type result = Types.empty [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Fired on worker targets when main worker script and any imported scripts have been evaluated. |desc}]
 end
 
 module LayerTree = struct
