@@ -35599,29 +35599,6 @@ and SystemInfo : sig
     [@@deriving yojson] [@@ocaml.doc "Image format of a given image."]
   end
 
-  and ImageDecodeAcceleratorCapability : sig
-    type t = {
-      imageType : ImageType.t;
-          [@key "imageType"] [@ocaml.doc "Image coded, e.g. Jpeg."]
-      maxDimensions : Size.t;
-          [@key "maxDimensions"]
-          [@ocaml.doc "Maximum supported dimensions of the image in pixels."]
-      minDimensions : Size.t;
-          [@key "minDimensions"]
-          [@ocaml.doc "Minimum supported dimensions of the image in pixels."]
-      subsamplings : SubsamplingFormat.t list;
-          [@key "subsamplings"]
-          [@ocaml.doc
-            "Optional array of supported subsampling formats, e.g. 4:2:0, if \
-             known."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Describes a supported image decoding profile with its associated \
-       minimum and\n\
-       maximum resolutions and subsampling."]
-  end
-
   and GPUInfo : sig
     type t = {
       devices : GPUDevice.t list;
@@ -35647,9 +35624,6 @@ and SystemInfo : sig
       videoEncoding : VideoEncodeAcceleratorCapability.t list;
           [@key "videoEncoding"]
           [@ocaml.doc "Supported accelerated video encoding capabilities."]
-      imageDecoding : ImageDecodeAcceleratorCapability.t list;
-          [@key "imageDecoding"]
-          [@ocaml.doc "Supported accelerated image decoding capabilities."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Provides information about the GPU(s) on the system."]
@@ -35902,50 +35876,6 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Image format of a given image."]
   end
 
-  and ImageDecodeAcceleratorCapability : sig
-    type t = {
-      imageType : ImageType.t;
-          [@key "imageType"] [@ocaml.doc "Image coded, e.g. Jpeg."]
-      maxDimensions : Size.t;
-          [@key "maxDimensions"]
-          [@ocaml.doc "Maximum supported dimensions of the image in pixels."]
-      minDimensions : Size.t;
-          [@key "minDimensions"]
-          [@ocaml.doc "Minimum supported dimensions of the image in pixels."]
-      subsamplings : SubsamplingFormat.t list;
-          [@key "subsamplings"]
-          [@ocaml.doc
-            "Optional array of supported subsampling formats, e.g. 4:2:0, if \
-             known."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Describes a supported image decoding profile with its associated \
-       minimum and\n\
-       maximum resolutions and subsampling."]
-  end = struct
-    type t = {
-      imageType : ImageType.t;
-          [@key "imageType"] [@ocaml.doc "Image coded, e.g. Jpeg."]
-      maxDimensions : Size.t;
-          [@key "maxDimensions"]
-          [@ocaml.doc "Maximum supported dimensions of the image in pixels."]
-      minDimensions : Size.t;
-          [@key "minDimensions"]
-          [@ocaml.doc "Minimum supported dimensions of the image in pixels."]
-      subsamplings : SubsamplingFormat.t list;
-          [@key "subsamplings"]
-          [@ocaml.doc
-            "Optional array of supported subsampling formats, e.g. 4:2:0, if \
-             known."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Describes a supported image decoding profile with its associated \
-       minimum and\n\
-       maximum resolutions and subsampling."]
-  end
-
   and GPUInfo : sig
     type t = {
       devices : GPUDevice.t list;
@@ -35971,9 +35901,6 @@ end = struct
       videoEncoding : VideoEncodeAcceleratorCapability.t list;
           [@key "videoEncoding"]
           [@ocaml.doc "Supported accelerated video encoding capabilities."]
-      imageDecoding : ImageDecodeAcceleratorCapability.t list;
-          [@key "imageDecoding"]
-          [@ocaml.doc "Supported accelerated image decoding capabilities."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Provides information about the GPU(s) on the system."]
@@ -36002,9 +35929,6 @@ end = struct
       videoEncoding : VideoEncodeAcceleratorCapability.t list;
           [@key "videoEncoding"]
           [@ocaml.doc "Supported accelerated video encoding capabilities."]
-      imageDecoding : ImageDecodeAcceleratorCapability.t list;
-          [@key "imageDecoding"]
-          [@ocaml.doc "Supported accelerated image decoding capabilities."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Provides information about the GPU(s) on the system."]
