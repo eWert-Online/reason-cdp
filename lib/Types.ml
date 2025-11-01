@@ -19438,8 +19438,6 @@ and Network : sig
       [ `Allow
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
-      | `PreflightBlock
-      | `PreflightWarn
       | `PermissionBlock
       | `PermissionWarn ]
 
@@ -23302,8 +23300,6 @@ end = struct
       [ `Allow
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
-      | `PreflightBlock
-      | `PreflightWarn
       | `PermissionBlock
       | `PermissionWarn ]
 
@@ -23320,8 +23316,6 @@ end = struct
       [ `Allow
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
-      | `PreflightBlock
-      | `PreflightWarn
       | `PermissionBlock
       | `PermissionWarn ]
 
@@ -23331,8 +23325,6 @@ end = struct
           `BlockFromInsecureToMorePrivate
       | `String "WarnFromInsecureToMorePrivate" ->
           `WarnFromInsecureToMorePrivate
-      | `String "PreflightBlock" -> `PreflightBlock
-      | `String "PreflightWarn" -> `PreflightWarn
       | `String "PermissionBlock" -> `PermissionBlock
       | `String "PermissionWarn" -> `PermissionWarn
       | `String s -> failwith ("unknown enum: " ^ s)
@@ -23344,8 +23336,6 @@ end = struct
           `String "BlockFromInsecureToMorePrivate"
       | `WarnFromInsecureToMorePrivate ->
           `String "WarnFromInsecureToMorePrivate"
-      | `PreflightBlock -> `String "PreflightBlock"
-      | `PreflightWarn -> `String "PreflightWarn"
       | `PermissionBlock -> `String "PermissionBlock"
       | `PermissionWarn -> `String "PermissionWarn"
 
