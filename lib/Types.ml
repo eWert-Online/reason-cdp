@@ -1183,8 +1183,11 @@ and Animation : sig
       iterationStart : number;
           [@key "iterationStart"]
           [@ocaml.doc "`AnimationEffect`'s iteration start."]
-      iterations : number;
-          [@key "iterations"] [@ocaml.doc "`AnimationEffect`'s iterations."]
+      iterations : number option;
+          [@key "iterations"]
+          [@yojson.option]
+          [@ocaml.doc
+            "`AnimationEffect`'s iterations. Omitted if the value is infinite."]
       duration : number;
           [@key "duration"]
           [@ocaml.doc
@@ -1398,8 +1401,11 @@ end = struct
       iterationStart : number;
           [@key "iterationStart"]
           [@ocaml.doc "`AnimationEffect`'s iteration start."]
-      iterations : number;
-          [@key "iterations"] [@ocaml.doc "`AnimationEffect`'s iterations."]
+      iterations : number option;
+          [@key "iterations"]
+          [@yojson.option]
+          [@ocaml.doc
+            "`AnimationEffect`'s iterations. Omitted if the value is infinite."]
       duration : number;
           [@key "duration"]
           [@ocaml.doc
@@ -1431,8 +1437,11 @@ end = struct
       iterationStart : number;
           [@key "iterationStart"]
           [@ocaml.doc "`AnimationEffect`'s iteration start."]
-      iterations : number;
-          [@key "iterations"] [@ocaml.doc "`AnimationEffect`'s iterations."]
+      iterations : number option;
+          [@key "iterations"]
+          [@yojson.option]
+          [@ocaml.doc
+            "`AnimationEffect`'s iterations. Omitted if the value is infinite."]
       duration : number;
           [@key "duration"]
           [@ocaml.doc
@@ -10956,7 +10965,9 @@ and DOM : sig
       | `file_selector_button
       | `details_content
       | `picker
-      | `permission_icon ]
+      | `permission_icon
+      | `overscroll_area_parent
+      | `overscroll_client_area ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
     val yojson_of__pseudotype : _pseudotype -> Yojson.Basic.t
@@ -11321,7 +11332,9 @@ end = struct
       | `file_selector_button
       | `details_content
       | `picker
-      | `permission_icon ]
+      | `permission_icon
+      | `overscroll_area_parent
+      | `overscroll_client_area ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
     val yojson_of__pseudotype : _pseudotype -> Yojson.Basic.t
@@ -11368,7 +11381,9 @@ end = struct
       | `file_selector_button
       | `details_content
       | `picker
-      | `permission_icon ]
+      | `permission_icon
+      | `overscroll_area_parent
+      | `overscroll_client_area ]
 
     let _pseudotype_of_yojson = function
       | `String "first-line" -> `first_line
@@ -11411,6 +11426,8 @@ end = struct
       | `String "details-content" -> `details_content
       | `String "picker" -> `picker
       | `String "permission-icon" -> `permission_icon
+      | `String "overscroll-area-parent" -> `overscroll_area_parent
+      | `String "overscroll-client-area" -> `overscroll_client_area
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -11455,6 +11472,8 @@ end = struct
       | `details_content -> `String "details-content"
       | `picker -> `String "picker"
       | `permission_icon -> `String "permission-icon"
+      | `overscroll_area_parent -> `String "overscroll-area-parent"
+      | `overscroll_client_area -> `String "overscroll-client-area"
 
     type t = _pseudotype
     [@@deriving yojson] [@@ocaml.doc "Pseudo element type."]
