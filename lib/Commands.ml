@@ -5134,6 +5134,12 @@ including the animation & transition styles coming from inheritance chain. |desc
             [@key "cssFontPaletteValuesRule"]
             [@yojson.option]
             [@ocaml.doc "A font-palette-values rule matching this node."]
+        cssAtRules : Types.CSS.CSSAtRule.t list option;
+            [@key "cssAtRules"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A list of simple @rules matching this node or its \
+               pseudo-elements."]
         parentLayoutNodeId : Types.DOM.NodeId.t option;
             [@key "parentLayoutNodeId"]
             [@yojson.option]
@@ -5224,6 +5230,12 @@ including the animation & transition styles coming from inheritance chain. |desc
             [@key "cssFontPaletteValuesRule"]
             [@yojson.option]
             [@ocaml.doc "A font-palette-values rule matching this node."]
+        cssAtRules : Types.CSS.CSSAtRule.t list option;
+            [@key "cssAtRules"]
+            [@yojson.option]
+            [@ocaml.doc
+              "A list of simple @rules matching this node or its \
+               pseudo-elements."]
         parentLayoutNodeId : Types.DOM.NodeId.t option;
             [@key "parentLayoutNodeId"]
             [@yojson.option]
@@ -34972,10 +34984,17 @@ This cancels the effect of any previous `setAutoAttach` and is also cancelled by
         targetId : Types.Target.TargetID.t;
             [@key "targetId"]
             [@ocaml.doc "This can be the page or tab target ID."]
+        panelId : string option;
+            [@key "panelId"]
+            [@yojson.option]
+            [@ocaml.doc
+              "The id of the panel we want DevTools to open initially. Currently\n\
+               supported panels are elements, console, network, sources and \
+               resources."]
       }
       [@@deriving yojson]
 
-      let make ~targetId () = { targetId }
+      let make ~targetId ?panelId () = { targetId; panelId }
     end
 
     module Request = struct

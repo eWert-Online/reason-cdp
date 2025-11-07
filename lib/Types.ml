@@ -8574,6 +8574,55 @@ and CSS : sig
     [@@ocaml.doc "CSS font-palette-values rule representation."]
   end
 
+  and CSSAtRule : sig
+    type _cssatrule_type =
+      [ `font_face | `font_feature_values | `font_palette_values ]
+
+    val _cssatrule_type_of_yojson : Yojson.Basic.t -> _cssatrule_type
+    val yojson_of__cssatrule_type : _cssatrule_type -> Yojson.Basic.t
+
+    type _cssatrule_subsection =
+      [ `swash
+      | `annotation
+      | `ornaments
+      | `stylistic
+      | `styleset
+      | `character_variant ]
+
+    val _cssatrule_subsection_of_yojson :
+      Yojson.Basic.t -> _cssatrule_subsection
+
+    val yojson_of__cssatrule_subsection :
+      _cssatrule_subsection -> Yojson.Basic.t
+
+    type t = {
+      type_ : _cssatrule_type; [@key "type"] [@ocaml.doc "Type of at-rule."]
+      subsection : _cssatrule_subsection option;
+          [@key "subsection"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Subsection of font-feature-values, if this is a subsection."]
+      name : Value.t option;
+          [@key "name"]
+          [@yojson.option]
+          [@ocaml.doc
+            "LINT.ThenChange(//third_party/blink/renderer/core/inspector/inspector_style_sheet.cc:FontVariantAlternatesFeatureType,//third_party/blink/renderer/core/inspector/inspector_css_agent.cc:FontVariantAlternatesFeatureType)\n\
+             Associated name, if applicable."]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS generic @rule representation."]
+  end
+
   and CSSPropertyRule : sig
     type t = {
       styleSheetId : StyleSheetId.t option;
@@ -10391,6 +10440,123 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc "CSS font-palette-values rule representation."]
+  end
+
+  and CSSAtRule : sig
+    type _cssatrule_type =
+      [ `font_face | `font_feature_values | `font_palette_values ]
+
+    val _cssatrule_type_of_yojson : Yojson.Basic.t -> _cssatrule_type
+    val yojson_of__cssatrule_type : _cssatrule_type -> Yojson.Basic.t
+
+    type _cssatrule_subsection =
+      [ `swash
+      | `annotation
+      | `ornaments
+      | `stylistic
+      | `styleset
+      | `character_variant ]
+
+    val _cssatrule_subsection_of_yojson :
+      Yojson.Basic.t -> _cssatrule_subsection
+
+    val yojson_of__cssatrule_subsection :
+      _cssatrule_subsection -> Yojson.Basic.t
+
+    type t = {
+      type_ : _cssatrule_type; [@key "type"] [@ocaml.doc "Type of at-rule."]
+      subsection : _cssatrule_subsection option;
+          [@key "subsection"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Subsection of font-feature-values, if this is a subsection."]
+      name : Value.t option;
+          [@key "name"]
+          [@yojson.option]
+          [@ocaml.doc
+            "LINT.ThenChange(//third_party/blink/renderer/core/inspector/inspector_style_sheet.cc:FontVariantAlternatesFeatureType,//third_party/blink/renderer/core/inspector/inspector_css_agent.cc:FontVariantAlternatesFeatureType)\n\
+             Associated name, if applicable."]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS generic @rule representation."]
+  end = struct
+    type _cssatrule_type =
+      [ `font_face | `font_feature_values | `font_palette_values ]
+
+    let _cssatrule_type_of_yojson = function
+      | `String "font-face" -> `font_face
+      | `String "font-feature-values" -> `font_feature_values
+      | `String "font-palette-values" -> `font_palette_values
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__cssatrule_type = function
+      | `font_face -> `String "font-face"
+      | `font_feature_values -> `String "font-feature-values"
+      | `font_palette_values -> `String "font-palette-values"
+
+    type _cssatrule_subsection =
+      [ `swash
+      | `annotation
+      | `ornaments
+      | `stylistic
+      | `styleset
+      | `character_variant ]
+
+    let _cssatrule_subsection_of_yojson = function
+      | `String "swash" -> `swash
+      | `String "annotation" -> `annotation
+      | `String "ornaments" -> `ornaments
+      | `String "stylistic" -> `stylistic
+      | `String "styleset" -> `styleset
+      | `String "character-variant" -> `character_variant
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__cssatrule_subsection = function
+      | `swash -> `String "swash"
+      | `annotation -> `String "annotation"
+      | `ornaments -> `String "ornaments"
+      | `stylistic -> `String "stylistic"
+      | `styleset -> `String "styleset"
+      | `character_variant -> `String "character-variant"
+
+    type t = {
+      type_ : _cssatrule_type; [@key "type"] [@ocaml.doc "Type of at-rule."]
+      subsection : _cssatrule_subsection option;
+          [@key "subsection"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Subsection of font-feature-values, if this is a subsection."]
+      name : Value.t option;
+          [@key "name"]
+          [@yojson.option]
+          [@ocaml.doc
+            "LINT.ThenChange(//third_party/blink/renderer/core/inspector/inspector_style_sheet.cc:FontVariantAlternatesFeatureType,//third_party/blink/renderer/core/inspector/inspector_css_agent.cc:FontVariantAlternatesFeatureType)\n\
+             Associated name, if applicable."]
+      styleSheetId : StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The css style sheet identifier (absent for user agent stylesheet \
+             and user-specified\n\
+             stylesheet rules) this rule came from."]
+      origin : StyleSheetOrigin.t;
+          [@key "origin"] [@ocaml.doc "Parent stylesheet's origin."]
+      style : CSSStyle.t;
+          [@key "style"] [@ocaml.doc "Associated style declaration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS generic @rule representation."]
   end
 
   and CSSPropertyRule : sig
