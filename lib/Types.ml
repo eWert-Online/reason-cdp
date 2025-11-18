@@ -2219,12 +2219,13 @@ and Audits : sig
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
       | `FormEmptyIdAndNameAttributesForInputError
-      | `FormAriaLabelledByToNonExistingId
+      | `FormAriaLabelledByToNonExistingIdError
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
-      | `FormLabelHasNeitherForNorNestedInput
+      | `FormLabelHasNeitherForNorNestedInputError
       | `FormLabelForMatchesNonExistingIdError
       | `FormInputHasWrongButWellIntendedAutocompleteValueError
-      | `ResponseWasBlockedByORB ]
+      | `ResponseWasBlockedByORB
+      | `NavigationEntryMarkedSkippable ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -4601,12 +4602,13 @@ end = struct
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
       | `FormEmptyIdAndNameAttributesForInputError
-      | `FormAriaLabelledByToNonExistingId
+      | `FormAriaLabelledByToNonExistingIdError
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
-      | `FormLabelHasNeitherForNorNestedInput
+      | `FormLabelHasNeitherForNorNestedInputError
       | `FormLabelForMatchesNonExistingIdError
       | `FormInputHasWrongButWellIntendedAutocompleteValueError
-      | `ResponseWasBlockedByORB ]
+      | `ResponseWasBlockedByORB
+      | `NavigationEntryMarkedSkippable ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -4623,12 +4625,13 @@ end = struct
       | `FormInputWithNoLabelError
       | `FormAutocompleteAttributeEmptyError
       | `FormEmptyIdAndNameAttributesForInputError
-      | `FormAriaLabelledByToNonExistingId
+      | `FormAriaLabelledByToNonExistingIdError
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
-      | `FormLabelHasNeitherForNorNestedInput
+      | `FormLabelHasNeitherForNorNestedInputError
       | `FormLabelForMatchesNonExistingIdError
       | `FormInputHasWrongButWellIntendedAutocompleteValueError
-      | `ResponseWasBlockedByORB ]
+      | `ResponseWasBlockedByORB
+      | `NavigationEntryMarkedSkippable ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "FormLabelForNameError" -> `FormLabelForNameError
@@ -4638,17 +4641,19 @@ end = struct
           `FormAutocompleteAttributeEmptyError
       | `String "FormEmptyIdAndNameAttributesForInputError" ->
           `FormEmptyIdAndNameAttributesForInputError
-      | `String "FormAriaLabelledByToNonExistingId" ->
-          `FormAriaLabelledByToNonExistingId
+      | `String "FormAriaLabelledByToNonExistingIdError" ->
+          `FormAriaLabelledByToNonExistingIdError
       | `String "FormInputAssignedAutocompleteValueToIdOrNameAttributeError" ->
           `FormInputAssignedAutocompleteValueToIdOrNameAttributeError
-      | `String "FormLabelHasNeitherForNorNestedInput" ->
-          `FormLabelHasNeitherForNorNestedInput
+      | `String "FormLabelHasNeitherForNorNestedInputError" ->
+          `FormLabelHasNeitherForNorNestedInputError
       | `String "FormLabelForMatchesNonExistingIdError" ->
           `FormLabelForMatchesNonExistingIdError
       | `String "FormInputHasWrongButWellIntendedAutocompleteValueError" ->
           `FormInputHasWrongButWellIntendedAutocompleteValueError
       | `String "ResponseWasBlockedByORB" -> `ResponseWasBlockedByORB
+      | `String "NavigationEntryMarkedSkippable" ->
+          `NavigationEntryMarkedSkippable
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4660,17 +4665,19 @@ end = struct
           `String "FormAutocompleteAttributeEmptyError"
       | `FormEmptyIdAndNameAttributesForInputError ->
           `String "FormEmptyIdAndNameAttributesForInputError"
-      | `FormAriaLabelledByToNonExistingId ->
-          `String "FormAriaLabelledByToNonExistingId"
+      | `FormAriaLabelledByToNonExistingIdError ->
+          `String "FormAriaLabelledByToNonExistingIdError"
       | `FormInputAssignedAutocompleteValueToIdOrNameAttributeError ->
           `String "FormInputAssignedAutocompleteValueToIdOrNameAttributeError"
-      | `FormLabelHasNeitherForNorNestedInput ->
-          `String "FormLabelHasNeitherForNorNestedInput"
+      | `FormLabelHasNeitherForNorNestedInputError ->
+          `String "FormLabelHasNeitherForNorNestedInputError"
       | `FormLabelForMatchesNonExistingIdError ->
           `String "FormLabelForMatchesNonExistingIdError"
       | `FormInputHasWrongButWellIntendedAutocompleteValueError ->
           `String "FormInputHasWrongButWellIntendedAutocompleteValueError"
       | `ResponseWasBlockedByORB -> `String "ResponseWasBlockedByORB"
+      | `NavigationEntryMarkedSkippable ->
+          `String "NavigationEntryMarkedSkippable"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
