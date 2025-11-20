@@ -2305,6 +2305,50 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
   [@@ocaml.doc
     {desc|Fired when data is received from tcp direct socket stream. |desc}]
 
+  module DirectUDPSocketJoinedMulticastGroup = struct
+    let name = "Network.directUDPSocketJoinedMulticastGroup"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      iPAddress : string;
+          [@key "IPAddress"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
+  module DirectUDPSocketLeftMulticastGroup = struct
+    let name = "Network.directUDPSocketLeftMulticastGroup"
+
+    type result = {
+      identifier : Types.Network.RequestId.t;
+          [@key "identifier"] [@ocaml.doc "No description provided"]
+      iPAddress : string;
+          [@key "IPAddress"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
   module DirectUDPSocketCreated = struct
     let name = "Network.directUDPSocketCreated"
 

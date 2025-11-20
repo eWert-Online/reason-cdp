@@ -19578,6 +19578,18 @@ and Network : sig
           [@key "receiveBufferSize"]
           [@yojson.option]
           [@ocaml.doc "Expected to be unsigned integer."]
+      multicastLoopback : bool option;
+          [@key "multicastLoopback"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      multicastTimeToLive : number option;
+          [@key "multicastTimeToLive"]
+          [@yojson.option]
+          [@ocaml.doc "Unsigned int 8."]
+      multicastAllowAddressSharing : bool option;
+          [@key "multicastAllowAddressSharing"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -23329,6 +23341,18 @@ end = struct
           [@key "receiveBufferSize"]
           [@yojson.option]
           [@ocaml.doc "Expected to be unsigned integer."]
+      multicastLoopback : bool option;
+          [@key "multicastLoopback"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      multicastTimeToLive : number option;
+          [@key "multicastTimeToLive"]
+          [@yojson.option]
+          [@ocaml.doc "Unsigned int 8."]
+      multicastAllowAddressSharing : bool option;
+          [@key "multicastAllowAddressSharing"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -23357,6 +23381,18 @@ end = struct
           [@key "receiveBufferSize"]
           [@yojson.option]
           [@ocaml.doc "Expected to be unsigned integer."]
+      multicastLoopback : bool option;
+          [@key "multicastLoopback"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      multicastTimeToLive : number option;
+          [@key "multicastTimeToLive"]
+          [@yojson.option]
+          [@ocaml.doc "Unsigned int 8."]
+      multicastAllowAddressSharing : bool option;
+          [@key "multicastAllowAddressSharing"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
