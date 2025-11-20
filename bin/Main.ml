@@ -100,7 +100,7 @@ and map_object ?(key = "properties") ?(additional_ref_path_segment = "") ~enums
                 |> Yojson.Basic.Util.member "name"
                 |> Yojson.Basic.Util.to_string
               in
-              let key = name |> map_reserved_words in
+              let key = name |> map_reserved_words |> String.uncapitalize_ascii in
               let description =
                 prop
                 |> Yojson.Basic.Util.member "description"
