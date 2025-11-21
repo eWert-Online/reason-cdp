@@ -5130,10 +5130,6 @@ including the animation & transition styles coming from inheritance chain. |desc
             [@yojson.option]
             [@ocaml.doc
               "A list of CSS property registrations matching this node."]
-        cssFontPaletteValuesRule : Types.CSS.CSSFontPaletteValuesRule.t option;
-            [@key "cssFontPaletteValuesRule"]
-            [@yojson.option]
-            [@ocaml.doc "A font-palette-values rule matching this node."]
         cssAtRules : Types.CSS.CSSAtRule.t list option;
             [@key "cssAtRules"]
             [@yojson.option]
@@ -5226,10 +5222,6 @@ including the animation & transition styles coming from inheritance chain. |desc
             [@yojson.option]
             [@ocaml.doc
               "A list of CSS property registrations matching this node."]
-        cssFontPaletteValuesRule : Types.CSS.CSSFontPaletteValuesRule.t option;
-            [@key "cssFontPaletteValuesRule"]
-            [@yojson.option]
-            [@ocaml.doc "A font-palette-values rule matching this node."]
         cssAtRules : Types.CSS.CSSAtRule.t list option;
             [@key "cssAtRules"]
             [@yojson.option]
