@@ -29798,6 +29798,85 @@ See https://docs.google.com/document/d/12HVmFxYj5Jc-eJr5OmWsa2bqTJsbgGLKI6ZIyx0_
 for more details.
 
 TODO(https://crbug.com/1440085): Remove this once Puppeteer supports tab targets. |desc}]
+
+  module GetAnnotatedPageContent = struct
+    module Response : sig
+      type result = {
+        content : string;
+            [@key "content"]
+            [@ocaml.doc
+              "The annotated page content as a base64 encoded protobuf.\n\
+               The format is defined by the `AnnotatedPageContent` message in\n\
+               components/optimization_guide/proto/features/common_quality_data.proto \
+               (Encoded as a base64 string when passed over JSON)"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        content : string;
+            [@key "content"]
+            [@ocaml.doc
+              "The annotated page content as a base64 encoded protobuf.\n\
+               The format is defined by the `AnnotatedPageContent` message in\n\
+               components/optimization_guide/proto/features/common_quality_data.proto \
+               (Encoded as a base64 string when passed over JSON)"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        includeActionableInformation : bool option;
+            [@key "includeActionableInformation"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Whether to include actionable information. Defaults to true."]
+      }
+      [@@deriving yojson]
+
+      let make ?includeActionableInformation () =
+        { includeActionableInformation }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Page.getAnnotatedPageContent"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Get the annotated page content for the main frame.
+This is an experimental command that is subject to change. |desc}]
 end
 
 module Performance = struct
