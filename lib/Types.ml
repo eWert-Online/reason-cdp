@@ -25703,6 +25703,7 @@ and Page : sig
       | `ambient_light_sensor
       | `aria_notify
       | `attribution_reporting
+      | `autofill
       | `autoplay
       | `bluetooth
       | `browsing_topics
@@ -25768,6 +25769,7 @@ and Page : sig
       | `local_fonts
       | `local_network_access
       | `magnetometer
+      | `manual_text
       | `media_playback_while_not_visible
       | `microphone
       | `midi
@@ -25785,7 +25787,6 @@ and Page : sig
       | `run_ad_auction
       | `screen_wake_lock
       | `serial
-      | `shared_autofill
       | `shared_storage
       | `shared_storage_select_url
       | `smart_card
@@ -27169,6 +27170,7 @@ end = struct
       | `ambient_light_sensor
       | `aria_notify
       | `attribution_reporting
+      | `autofill
       | `autoplay
       | `bluetooth
       | `browsing_topics
@@ -27234,6 +27236,7 @@ end = struct
       | `local_fonts
       | `local_network_access
       | `magnetometer
+      | `manual_text
       | `media_playback_while_not_visible
       | `microphone
       | `midi
@@ -27251,7 +27254,6 @@ end = struct
       | `run_ad_auction
       | `screen_wake_lock
       | `serial
-      | `shared_autofill
       | `shared_storage
       | `shared_storage_select_url
       | `smart_card
@@ -27292,6 +27294,7 @@ end = struct
       | `ambient_light_sensor
       | `aria_notify
       | `attribution_reporting
+      | `autofill
       | `autoplay
       | `bluetooth
       | `browsing_topics
@@ -27357,6 +27360,7 @@ end = struct
       | `local_fonts
       | `local_network_access
       | `magnetometer
+      | `manual_text
       | `media_playback_while_not_visible
       | `microphone
       | `midi
@@ -27374,7 +27378,6 @@ end = struct
       | `run_ad_auction
       | `screen_wake_lock
       | `serial
-      | `shared_autofill
       | `shared_storage
       | `shared_storage_select_url
       | `smart_card
@@ -27401,6 +27404,7 @@ end = struct
       | `String "ambient-light-sensor" -> `ambient_light_sensor
       | `String "aria-notify" -> `aria_notify
       | `String "attribution-reporting" -> `attribution_reporting
+      | `String "autofill" -> `autofill
       | `String "autoplay" -> `autoplay
       | `String "bluetooth" -> `bluetooth
       | `String "browsing-topics" -> `browsing_topics
@@ -27470,6 +27474,7 @@ end = struct
       | `String "local-fonts" -> `local_fonts
       | `String "local-network-access" -> `local_network_access
       | `String "magnetometer" -> `magnetometer
+      | `String "manual-text" -> `manual_text
       | `String "media-playback-while-not-visible" ->
           `media_playback_while_not_visible
       | `String "microphone" -> `microphone
@@ -27489,7 +27494,6 @@ end = struct
       | `String "run-ad-auction" -> `run_ad_auction
       | `String "screen-wake-lock" -> `screen_wake_lock
       | `String "serial" -> `serial
-      | `String "shared-autofill" -> `shared_autofill
       | `String "shared-storage" -> `shared_storage
       | `String "shared-storage-select-url" -> `shared_storage_select_url
       | `String "smart-card" -> `smart_card
@@ -27518,6 +27522,7 @@ end = struct
       | `ambient_light_sensor -> `String "ambient-light-sensor"
       | `aria_notify -> `String "aria-notify"
       | `attribution_reporting -> `String "attribution-reporting"
+      | `autofill -> `String "autofill"
       | `autoplay -> `String "autoplay"
       | `bluetooth -> `String "bluetooth"
       | `browsing_topics -> `String "browsing-topics"
@@ -27587,6 +27592,7 @@ end = struct
       | `local_fonts -> `String "local-fonts"
       | `local_network_access -> `String "local-network-access"
       | `magnetometer -> `String "magnetometer"
+      | `manual_text -> `String "manual-text"
       | `media_playback_while_not_visible ->
           `String "media-playback-while-not-visible"
       | `microphone -> `String "microphone"
@@ -27606,7 +27612,6 @@ end = struct
       | `run_ad_auction -> `String "run-ad-auction"
       | `screen_wake_lock -> `String "screen-wake-lock"
       | `serial -> `String "serial"
-      | `shared_autofill -> `String "shared-autofill"
       | `shared_storage -> `String "shared-storage"
       | `shared_storage_select_url -> `String "shared-storage-select-url"
       | `smart_card -> `String "smart-card"
