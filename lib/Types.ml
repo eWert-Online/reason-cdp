@@ -2641,6 +2641,81 @@ and Audits : sig
        re-identify users."]
   end
 
+  and PermissionElementIssueType : sig
+    type _permissionelementissuetype =
+      [ `InvalidType
+      | `FencedFrameDisallowed
+      | `CspFrameAncestorsMissing
+      | `PermissionsPolicyBlocked
+      | `PaddingRightUnsupported
+      | `PaddingBottomUnsupported
+      | `InsetBoxShadowUnsupported
+      | `RequestInProgress
+      | `UntrustedEvent
+      | `RegistrationFailed
+      | `TypeNotSupported
+      | `InvalidTypeActivation
+      | `SecurityChecksFailed
+      | `ActivationDisabled
+      | `GeolocationDeprecated
+      | `InvalidDisplayStyle
+      | `NonOpaqueColor
+      | `LowContrast
+      | `FontSizeTooSmall
+      | `FontSizeTooLarge
+      | `InvalidSizeValue ]
+
+    val _permissionelementissuetype_of_yojson :
+      Yojson.Basic.t -> _permissionelementissuetype
+
+    val yojson_of__permissionelementissuetype :
+      _permissionelementissuetype -> Yojson.Basic.t
+
+    type t = _permissionelementissuetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PermissionElementIssueDetails : sig
+    type t = {
+      issueType : PermissionElementIssueType.t;
+          [@key "issueType"] [@ocaml.doc "No description provided"]
+      type_ : string option;
+          [@key "type"]
+          [@yojson.option]
+          [@ocaml.doc "The value of the type attribute."]
+      nodeId : DOM.BackendNodeId.t option;
+          [@key "nodeId"]
+          [@yojson.option]
+          [@ocaml.doc "The node ID of the <permission> element."]
+      isWarning : bool option;
+          [@key "isWarning"]
+          [@yojson.option]
+          [@ocaml.doc
+            "True if the issue is a warning, false if it is an error."]
+      permissionName : string option;
+          [@key "permissionName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Fields for message construction:\n\
+             Used for messages that reference a specific permission name"]
+      occluderNodeInfo : string option;
+          [@key "occluderNodeInfo"]
+          [@yojson.option]
+          [@ocaml.doc "Used for messages about occlusion"]
+      occluderParentNodeInfo : string option;
+          [@key "occluderParentNodeInfo"]
+          [@yojson.option]
+          [@ocaml.doc "Used for messages about occluder's parent"]
+      disableReason : string option;
+          [@key "disableReason"]
+          [@yojson.option]
+          [@ocaml.doc "Used for messages about activation disabled reason"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about improper usage of the <permission> element."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -2668,7 +2743,8 @@ and Audits : sig
       | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
       | `UnencodedDigestIssue
-      | `UserReidentificationIssue ]
+      | `UserReidentificationIssue
+      | `PermissionElementIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2794,6 +2870,10 @@ and Audits : sig
       userReidentificationIssueDetails :
         UserReidentificationIssueDetails.t option;
           [@key "userReidentificationIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      permissionElementIssueDetails : PermissionElementIssueDetails.t option;
+          [@key "permissionElementIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -5625,6 +5705,194 @@ end = struct
        re-identify users."]
   end
 
+  and PermissionElementIssueType : sig
+    type _permissionelementissuetype =
+      [ `InvalidType
+      | `FencedFrameDisallowed
+      | `CspFrameAncestorsMissing
+      | `PermissionsPolicyBlocked
+      | `PaddingRightUnsupported
+      | `PaddingBottomUnsupported
+      | `InsetBoxShadowUnsupported
+      | `RequestInProgress
+      | `UntrustedEvent
+      | `RegistrationFailed
+      | `TypeNotSupported
+      | `InvalidTypeActivation
+      | `SecurityChecksFailed
+      | `ActivationDisabled
+      | `GeolocationDeprecated
+      | `InvalidDisplayStyle
+      | `NonOpaqueColor
+      | `LowContrast
+      | `FontSizeTooSmall
+      | `FontSizeTooLarge
+      | `InvalidSizeValue ]
+
+    val _permissionelementissuetype_of_yojson :
+      Yojson.Basic.t -> _permissionelementissuetype
+
+    val yojson_of__permissionelementissuetype :
+      _permissionelementissuetype -> Yojson.Basic.t
+
+    type t = _permissionelementissuetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _permissionelementissuetype =
+      [ `InvalidType
+      | `FencedFrameDisallowed
+      | `CspFrameAncestorsMissing
+      | `PermissionsPolicyBlocked
+      | `PaddingRightUnsupported
+      | `PaddingBottomUnsupported
+      | `InsetBoxShadowUnsupported
+      | `RequestInProgress
+      | `UntrustedEvent
+      | `RegistrationFailed
+      | `TypeNotSupported
+      | `InvalidTypeActivation
+      | `SecurityChecksFailed
+      | `ActivationDisabled
+      | `GeolocationDeprecated
+      | `InvalidDisplayStyle
+      | `NonOpaqueColor
+      | `LowContrast
+      | `FontSizeTooSmall
+      | `FontSizeTooLarge
+      | `InvalidSizeValue ]
+
+    let _permissionelementissuetype_of_yojson = function
+      | `String "InvalidType" -> `InvalidType
+      | `String "FencedFrameDisallowed" -> `FencedFrameDisallowed
+      | `String "CspFrameAncestorsMissing" -> `CspFrameAncestorsMissing
+      | `String "PermissionsPolicyBlocked" -> `PermissionsPolicyBlocked
+      | `String "PaddingRightUnsupported" -> `PaddingRightUnsupported
+      | `String "PaddingBottomUnsupported" -> `PaddingBottomUnsupported
+      | `String "InsetBoxShadowUnsupported" -> `InsetBoxShadowUnsupported
+      | `String "RequestInProgress" -> `RequestInProgress
+      | `String "UntrustedEvent" -> `UntrustedEvent
+      | `String "RegistrationFailed" -> `RegistrationFailed
+      | `String "TypeNotSupported" -> `TypeNotSupported
+      | `String "InvalidTypeActivation" -> `InvalidTypeActivation
+      | `String "SecurityChecksFailed" -> `SecurityChecksFailed
+      | `String "ActivationDisabled" -> `ActivationDisabled
+      | `String "GeolocationDeprecated" -> `GeolocationDeprecated
+      | `String "InvalidDisplayStyle" -> `InvalidDisplayStyle
+      | `String "NonOpaqueColor" -> `NonOpaqueColor
+      | `String "LowContrast" -> `LowContrast
+      | `String "FontSizeTooSmall" -> `FontSizeTooSmall
+      | `String "FontSizeTooLarge" -> `FontSizeTooLarge
+      | `String "InvalidSizeValue" -> `InvalidSizeValue
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__permissionelementissuetype = function
+      | `InvalidType -> `String "InvalidType"
+      | `FencedFrameDisallowed -> `String "FencedFrameDisallowed"
+      | `CspFrameAncestorsMissing -> `String "CspFrameAncestorsMissing"
+      | `PermissionsPolicyBlocked -> `String "PermissionsPolicyBlocked"
+      | `PaddingRightUnsupported -> `String "PaddingRightUnsupported"
+      | `PaddingBottomUnsupported -> `String "PaddingBottomUnsupported"
+      | `InsetBoxShadowUnsupported -> `String "InsetBoxShadowUnsupported"
+      | `RequestInProgress -> `String "RequestInProgress"
+      | `UntrustedEvent -> `String "UntrustedEvent"
+      | `RegistrationFailed -> `String "RegistrationFailed"
+      | `TypeNotSupported -> `String "TypeNotSupported"
+      | `InvalidTypeActivation -> `String "InvalidTypeActivation"
+      | `SecurityChecksFailed -> `String "SecurityChecksFailed"
+      | `ActivationDisabled -> `String "ActivationDisabled"
+      | `GeolocationDeprecated -> `String "GeolocationDeprecated"
+      | `InvalidDisplayStyle -> `String "InvalidDisplayStyle"
+      | `NonOpaqueColor -> `String "NonOpaqueColor"
+      | `LowContrast -> `String "LowContrast"
+      | `FontSizeTooSmall -> `String "FontSizeTooSmall"
+      | `FontSizeTooLarge -> `String "FontSizeTooLarge"
+      | `InvalidSizeValue -> `String "InvalidSizeValue"
+
+    type t = _permissionelementissuetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PermissionElementIssueDetails : sig
+    type t = {
+      issueType : PermissionElementIssueType.t;
+          [@key "issueType"] [@ocaml.doc "No description provided"]
+      type_ : string option;
+          [@key "type"]
+          [@yojson.option]
+          [@ocaml.doc "The value of the type attribute."]
+      nodeId : DOM.BackendNodeId.t option;
+          [@key "nodeId"]
+          [@yojson.option]
+          [@ocaml.doc "The node ID of the <permission> element."]
+      isWarning : bool option;
+          [@key "isWarning"]
+          [@yojson.option]
+          [@ocaml.doc
+            "True if the issue is a warning, false if it is an error."]
+      permissionName : string option;
+          [@key "permissionName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Fields for message construction:\n\
+             Used for messages that reference a specific permission name"]
+      occluderNodeInfo : string option;
+          [@key "occluderNodeInfo"]
+          [@yojson.option]
+          [@ocaml.doc "Used for messages about occlusion"]
+      occluderParentNodeInfo : string option;
+          [@key "occluderParentNodeInfo"]
+          [@yojson.option]
+          [@ocaml.doc "Used for messages about occluder's parent"]
+      disableReason : string option;
+          [@key "disableReason"]
+          [@yojson.option]
+          [@ocaml.doc "Used for messages about activation disabled reason"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about improper usage of the <permission> element."]
+  end = struct
+    type t = {
+      issueType : PermissionElementIssueType.t;
+          [@key "issueType"] [@ocaml.doc "No description provided"]
+      type_ : string option;
+          [@key "type"]
+          [@yojson.option]
+          [@ocaml.doc "The value of the type attribute."]
+      nodeId : DOM.BackendNodeId.t option;
+          [@key "nodeId"]
+          [@yojson.option]
+          [@ocaml.doc "The node ID of the <permission> element."]
+      isWarning : bool option;
+          [@key "isWarning"]
+          [@yojson.option]
+          [@ocaml.doc
+            "True if the issue is a warning, false if it is an error."]
+      permissionName : string option;
+          [@key "permissionName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Fields for message construction:\n\
+             Used for messages that reference a specific permission name"]
+      occluderNodeInfo : string option;
+          [@key "occluderNodeInfo"]
+          [@yojson.option]
+          [@ocaml.doc "Used for messages about occlusion"]
+      occluderParentNodeInfo : string option;
+          [@key "occluderParentNodeInfo"]
+          [@yojson.option]
+          [@ocaml.doc "Used for messages about occluder's parent"]
+      disableReason : string option;
+          [@key "disableReason"]
+          [@yojson.option]
+          [@ocaml.doc "Used for messages about activation disabled reason"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue warns about improper usage of the <permission> element."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -5652,7 +5920,8 @@ end = struct
       | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
       | `UnencodedDigestIssue
-      | `UserReidentificationIssue ]
+      | `UserReidentificationIssue
+      | `PermissionElementIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -5690,7 +5959,8 @@ end = struct
       | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
       | `UnencodedDigestIssue
-      | `UserReidentificationIssue ]
+      | `UserReidentificationIssue
+      | `PermissionElementIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -5721,6 +5991,7 @@ end = struct
       | `String "SRIMessageSignatureIssue" -> `SRIMessageSignatureIssue
       | `String "UnencodedDigestIssue" -> `UnencodedDigestIssue
       | `String "UserReidentificationIssue" -> `UserReidentificationIssue
+      | `String "PermissionElementIssue" -> `PermissionElementIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -5753,6 +6024,7 @@ end = struct
       | `SRIMessageSignatureIssue -> `String "SRIMessageSignatureIssue"
       | `UnencodedDigestIssue -> `String "UnencodedDigestIssue"
       | `UserReidentificationIssue -> `String "UserReidentificationIssue"
+      | `PermissionElementIssue -> `String "PermissionElementIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -5877,6 +6149,10 @@ end = struct
           [@key "userReidentificationIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      permissionElementIssueDetails : PermissionElementIssueDetails.t option;
+          [@key "permissionElementIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -5996,6 +6272,10 @@ end = struct
       userReidentificationIssueDetails :
         UserReidentificationIssueDetails.t option;
           [@key "userReidentificationIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      permissionElementIssueDetails : PermissionElementIssueDetails.t option;
+          [@key "permissionElementIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -7715,11 +7995,7 @@ end = struct
 end
 
 and CSS : sig
-  module rec StyleSheetId : sig
-    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and StyleSheetOrigin : sig
+  module rec StyleSheetOrigin : sig
     type _stylesheetorigin = [ `injected | `user_agent | `inspector | `regular ]
 
     val _stylesheetorigin_of_yojson : Yojson.Basic.t -> _stylesheetorigin
@@ -7879,7 +8155,7 @@ and CSS : sig
 
   and CSSStyleSheetHeader : sig
     type t = {
-      styleSheetId : StyleSheetId.t;
+      styleSheetId : DOM.StyleSheetId.t;
           [@key "styleSheetId"] [@ocaml.doc "The stylesheet identifier."]
       frameId : Page.FrameId.t;
           [@key "frameId"] [@ocaml.doc "Owner frame identifier."]
@@ -7966,7 +8242,7 @@ and CSS : sig
 
   and CSSRule : sig
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8067,7 +8343,7 @@ and CSS : sig
 
   and RuleUsage : sig
     type t = {
-      styleSheetId : StyleSheetId.t;
+      styleSheetId : DOM.StyleSheetId.t;
           [@key "styleSheetId"]
           [@ocaml.doc
             "The css style sheet identifier (absent for user agent stylesheet \
@@ -8145,7 +8421,7 @@ and CSS : sig
 
   and CSSStyle : sig
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8249,7 +8525,7 @@ and CSS : sig
             "The associated rule (@media or @import) header range in the \
              enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8304,7 +8580,7 @@ and CSS : sig
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8345,7 +8621,7 @@ and CSS : sig
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8363,7 +8639,7 @@ and CSS : sig
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8381,7 +8657,7 @@ and CSS : sig
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8398,7 +8674,7 @@ and CSS : sig
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8500,7 +8776,7 @@ and CSS : sig
 
   and CSSTryRule : sig
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8518,7 +8794,7 @@ and CSS : sig
   and CSSPositionTryRule : sig
     type t = {
       name : Value.t; [@key "name"] [@ocaml.doc "The prelude dashed-ident name"]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8595,7 +8871,7 @@ and CSS : sig
           [@ocaml.doc
             "LINT.ThenChange(//third_party/blink/renderer/core/inspector/inspector_style_sheet.cc:FontVariantAlternatesFeatureType,//third_party/blink/renderer/core/inspector/inspector_css_agent.cc:FontVariantAlternatesFeatureType)\n\
              Associated name, if applicable."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8612,7 +8888,7 @@ and CSS : sig
 
   and CSSPropertyRule : sig
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8685,7 +8961,7 @@ and CSS : sig
   and CSSFunctionRule : sig
     type t = {
       name : Value.t; [@key "name"] [@ocaml.doc "Name of the function."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8704,7 +8980,7 @@ and CSS : sig
 
   and CSSKeyframeRule : sig
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -8722,7 +8998,7 @@ and CSS : sig
 
   and StyleDeclarationEdit : sig
     type t = {
-      styleSheetId : StyleSheetId.t;
+      styleSheetId : DOM.StyleSheetId.t;
           [@key "styleSheetId"] [@ocaml.doc "The css style sheet identifier."]
       range : SourceRange.t;
           [@key "range"]
@@ -8734,13 +9010,7 @@ and CSS : sig
     [@@ocaml.doc "A descriptor of operation to mutate style declaration text."]
   end
 end = struct
-  module rec StyleSheetId : sig
-    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and StyleSheetOrigin : sig
+  module rec StyleSheetOrigin : sig
     type _stylesheetorigin = [ `injected | `user_agent | `inspector | `regular ]
 
     val _stylesheetorigin_of_yojson : Yojson.Basic.t -> _stylesheetorigin
@@ -9049,7 +9319,7 @@ end = struct
 
   and CSSStyleSheetHeader : sig
     type t = {
-      styleSheetId : StyleSheetId.t;
+      styleSheetId : DOM.StyleSheetId.t;
           [@key "styleSheetId"] [@ocaml.doc "The stylesheet identifier."]
       frameId : Page.FrameId.t;
           [@key "frameId"] [@ocaml.doc "Owner frame identifier."]
@@ -9134,7 +9404,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "CSS stylesheet metainformation."]
   end = struct
     type t = {
-      styleSheetId : StyleSheetId.t;
+      styleSheetId : DOM.StyleSheetId.t;
           [@key "styleSheetId"] [@ocaml.doc "The stylesheet identifier."]
       frameId : Page.FrameId.t;
           [@key "frameId"] [@ocaml.doc "Owner frame identifier."]
@@ -9221,7 +9491,7 @@ end = struct
 
   and CSSRule : sig
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -9298,7 +9568,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "CSS rule representation."]
   end = struct
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -9436,7 +9706,7 @@ end = struct
 
   and RuleUsage : sig
     type t = {
-      styleSheetId : StyleSheetId.t;
+      styleSheetId : DOM.StyleSheetId.t;
           [@key "styleSheetId"]
           [@ocaml.doc
             "The css style sheet identifier (absent for user agent stylesheet \
@@ -9461,7 +9731,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "CSS coverage information."]
   end = struct
     type t = {
-      styleSheetId : StyleSheetId.t;
+      styleSheetId : DOM.StyleSheetId.t;
           [@key "styleSheetId"]
           [@ocaml.doc
             "The css style sheet identifier (absent for user agent stylesheet \
@@ -9582,7 +9852,7 @@ end = struct
 
   and CSSStyle : sig
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -9608,7 +9878,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "CSS style representation."]
   end = struct
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -9757,7 +10027,7 @@ end = struct
             "The associated rule (@media or @import) header range in the \
              enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -9810,7 +10080,7 @@ end = struct
             "The associated rule (@media or @import) header range in the \
              enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -9894,7 +10164,7 @@ end = struct
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -9930,7 +10200,7 @@ end = struct
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -9971,7 +10241,7 @@ end = struct
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -9990,7 +10260,7 @@ end = struct
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10008,7 +10278,7 @@ end = struct
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10024,7 +10294,7 @@ end = struct
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10042,7 +10312,7 @@ end = struct
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10058,7 +10328,7 @@ end = struct
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10075,7 +10345,7 @@ end = struct
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10090,7 +10360,7 @@ end = struct
           [@ocaml.doc
             "The associated rule header range in the enclosing stylesheet (if\n\
              available)."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10275,7 +10545,7 @@ end = struct
 
   and CSSTryRule : sig
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10290,7 +10560,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "CSS try rule representation."]
   end = struct
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10308,7 +10578,7 @@ end = struct
   and CSSPositionTryRule : sig
     type t = {
       name : Value.t; [@key "name"] [@ocaml.doc "The prelude dashed-ident name"]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10325,7 +10595,7 @@ end = struct
   end = struct
     type t = {
       name : Value.t; [@key "name"] [@ocaml.doc "The prelude dashed-ident name"]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10425,7 +10695,7 @@ end = struct
           [@ocaml.doc
             "LINT.ThenChange(//third_party/blink/renderer/core/inspector/inspector_style_sheet.cc:FontVariantAlternatesFeatureType,//third_party/blink/renderer/core/inspector/inspector_css_agent.cc:FontVariantAlternatesFeatureType)\n\
              Associated name, if applicable."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10493,7 +10763,7 @@ end = struct
           [@ocaml.doc
             "LINT.ThenChange(//third_party/blink/renderer/core/inspector/inspector_style_sheet.cc:FontVariantAlternatesFeatureType,//third_party/blink/renderer/core/inspector/inspector_css_agent.cc:FontVariantAlternatesFeatureType)\n\
              Associated name, if applicable."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10510,7 +10780,7 @@ end = struct
 
   and CSSPropertyRule : sig
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10527,7 +10797,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "CSS property at-rule representation."]
   end = struct
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10647,7 +10917,7 @@ end = struct
   and CSSFunctionRule : sig
     type t = {
       name : Value.t; [@key "name"] [@ocaml.doc "Name of the function."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10665,7 +10935,7 @@ end = struct
   end = struct
     type t = {
       name : Value.t; [@key "name"] [@ocaml.doc "Name of the function."]
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10684,7 +10954,7 @@ end = struct
 
   and CSSKeyframeRule : sig
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10700,7 +10970,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "CSS keyframe rule representation."]
   end = struct
     type t = {
-      styleSheetId : StyleSheetId.t option;
+      styleSheetId : DOM.StyleSheetId.t option;
           [@key "styleSheetId"]
           [@yojson.option]
           [@ocaml.doc
@@ -10718,7 +10988,7 @@ end = struct
 
   and StyleDeclarationEdit : sig
     type t = {
-      styleSheetId : StyleSheetId.t;
+      styleSheetId : DOM.StyleSheetId.t;
           [@key "styleSheetId"] [@ocaml.doc "The css style sheet identifier."]
       range : SourceRange.t;
           [@key "range"]
@@ -10730,7 +11000,7 @@ end = struct
     [@@ocaml.doc "A descriptor of operation to mutate style declaration text."]
   end = struct
     type t = {
-      styleSheetId : StyleSheetId.t;
+      styleSheetId : DOM.StyleSheetId.t;
           [@key "styleSheetId"] [@ocaml.doc "The css style sheet identifier."]
       range : SourceRange.t;
           [@key "range"]
@@ -11030,6 +11300,11 @@ and DOM : sig
        front-end."]
   end
 
+  and StyleSheetId : sig
+    type t = string
+    [@@deriving yojson] [@@ocaml.doc "Unique identifier for a CSS stylesheet."]
+  end
+
   and BackendNode : sig
     type t = {
       nodeType : number; [@key "nodeType"] [@ocaml.doc "`Node`'s nodeType."]
@@ -11274,6 +11549,10 @@ and DOM : sig
           [@key "affectedByStartingStyles"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      adoptedStyleSheets : StyleSheetId.t list option;
+          [@key "adoptedStyleSheets"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -11387,6 +11666,14 @@ end = struct
       "Unique DOM node identifier used to reference a node that may not have \
        been pushed to the\n\
        front-end."]
+  end
+
+  and StyleSheetId : sig
+    type t = string
+    [@@deriving yojson] [@@ocaml.doc "Unique identifier for a CSS stylesheet."]
+  end = struct
+    type t = string
+    [@@deriving yojson] [@@ocaml.doc "Unique identifier for a CSS stylesheet."]
   end
 
   and BackendNode : sig
@@ -11861,6 +12148,10 @@ end = struct
           [@key "affectedByStartingStyles"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      adoptedStyleSheets : StyleSheetId.t list option;
+          [@key "adoptedStyleSheets"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -11997,6 +12288,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       affectedByStartingStyles : bool option;
           [@key "affectedByStartingStyles"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      adoptedStyleSheets : StyleSheetId.t list option;
+          [@key "adoptedStyleSheets"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }

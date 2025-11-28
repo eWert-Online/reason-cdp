@@ -4147,7 +4147,7 @@ module CSS = struct
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"]
             [@ocaml.doc
               "The css style sheet identifier where a new rule should be \
@@ -4233,7 +4233,7 @@ position specified by `location`. |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
@@ -4260,7 +4260,7 @@ position specified by `location`. |desc}]
   module CreateStyleSheet = struct
     module Response : sig
       type result = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"]
             [@ocaml.doc
               "Identifier of the created \"via-inspector\" stylesheet."]
@@ -4278,7 +4278,7 @@ position specified by `location`. |desc}]
       val parse : string -> t
     end = struct
       type result = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"]
             [@ocaml.doc
               "Identifier of the created \"via-inspector\" stylesheet."]
@@ -5493,7 +5493,7 @@ node. |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
@@ -5624,7 +5624,7 @@ the full layer tree for the tree scope and their ordering. |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
         selectorText : string;
             [@key "selectorText"] [@ocaml.doc "No description provided"]
@@ -5943,7 +5943,7 @@ property |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
         range : Types.CSS.SourceRange.t;
             [@key "range"] [@ocaml.doc "No description provided"]
@@ -6013,7 +6013,7 @@ property |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
         range : Types.CSS.SourceRange.t;
             [@key "range"] [@ocaml.doc "No description provided"]
@@ -6082,7 +6082,7 @@ property |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
         range : Types.CSS.SourceRange.t;
             [@key "range"] [@ocaml.doc "No description provided"]
@@ -6152,7 +6152,7 @@ property |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
         range : Types.CSS.SourceRange.t;
             [@key "range"] [@ocaml.doc "No description provided"]
@@ -6220,7 +6220,7 @@ property |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
         range : Types.CSS.SourceRange.t;
             [@key "range"] [@ocaml.doc "No description provided"]
@@ -6288,7 +6288,7 @@ property |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
         range : Types.CSS.SourceRange.t;
             [@key "range"] [@ocaml.doc "No description provided"]
@@ -6356,7 +6356,7 @@ property |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
         range : Types.CSS.SourceRange.t;
             [@key "range"] [@ocaml.doc "No description provided"]
@@ -6428,7 +6428,7 @@ property |desc}]
 
     module Params = struct
       type t = {
-        styleSheetId : Types.CSS.StyleSheetId.t;
+        styleSheetId : Types.DOM.StyleSheetId.t;
             [@key "styleSheetId"] [@ocaml.doc "No description provided"]
         text : string; [@key "text"] [@ocaml.doc "No description provided"]
       }
@@ -34894,6 +34894,75 @@ This cancels the effect of any previous `setAutoAttach` and is also cancelled by
   [@@ocaml.doc
     {desc|Enables target discovery for the specified locations, when `setDiscoverTargets` was set to
 `true`. |desc}]
+
+  module GetDevToolsTarget = struct
+    module Response : sig
+      type result = {
+        targetId : Types.Target.TargetID.t option;
+            [@key "targetId"]
+            [@yojson.option]
+            [@ocaml.doc "The targetId of DevTools page target if exists."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        targetId : Types.Target.TargetID.t option;
+            [@key "targetId"]
+            [@yojson.option]
+            [@ocaml.doc "The targetId of DevTools page target if exists."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        targetId : Types.Target.TargetID.t;
+            [@key "targetId"] [@ocaml.doc "Page or tab target ID."]
+      }
+      [@@deriving yojson]
+
+      let make ~targetId () = { targetId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Target.getDevToolsTarget"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Gets the targetId of the DevTools page target opened for the given target
+(if any). |desc}]
 
   module OpenDevTools = struct
     module Response : sig

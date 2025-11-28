@@ -458,7 +458,7 @@ resized.) The current implementation considers only viewport-dependent media fea
     let name = "CSS.styleSheetChanged"
 
     type result = {
-      styleSheetId : Types.CSS.StyleSheetId.t;
+      styleSheetId : Types.DOM.StyleSheetId.t;
           [@key "styleSheetId"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
@@ -479,7 +479,7 @@ resized.) The current implementation considers only viewport-dependent media fea
     let name = "CSS.styleSheetRemoved"
 
     type result = {
-      styleSheetId : Types.CSS.StyleSheetId.t;
+      styleSheetId : Types.DOM.StyleSheetId.t;
           [@key "styleSheetId"]
           [@ocaml.doc "Identifier of the removed stylesheet."]
     }
@@ -587,6 +587,30 @@ module DOM = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
   [@@ocaml.doc {desc|Fired when `Element`'s attribute is modified. |desc}]
+
+  module AdoptedStyleSheetsModified = struct
+    let name = "DOM.adoptedStyleSheetsModified"
+
+    type result = {
+      nodeId : Types.DOM.NodeId.t;
+          [@key "nodeId"] [@ocaml.doc "Id of the node that has changed."]
+      adoptedStyleSheets : Types.DOM.StyleSheetId.t list;
+          [@key "adoptedStyleSheets"]
+          [@ocaml.doc "New adoptedStyleSheets array."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Fired when `Element`'s adoptedStyleSheets are modified. |desc}]
 
   module AttributeRemoved = struct
     let name = "DOM.attributeRemoved"
