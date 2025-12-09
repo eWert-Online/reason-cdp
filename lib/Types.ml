@@ -11356,8 +11356,7 @@ and DOM : sig
       | `details_content
       | `picker
       | `permission_icon
-      | `overscroll_area_parent
-      | `overscroll_client_area ]
+      | `overscroll_area_parent ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
     val yojson_of__pseudotype : _pseudotype -> Yojson.Basic.t
@@ -11735,8 +11734,7 @@ end = struct
       | `details_content
       | `picker
       | `permission_icon
-      | `overscroll_area_parent
-      | `overscroll_client_area ]
+      | `overscroll_area_parent ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
     val yojson_of__pseudotype : _pseudotype -> Yojson.Basic.t
@@ -11784,8 +11782,7 @@ end = struct
       | `details_content
       | `picker
       | `permission_icon
-      | `overscroll_area_parent
-      | `overscroll_client_area ]
+      | `overscroll_area_parent ]
 
     let _pseudotype_of_yojson = function
       | `String "first-line" -> `first_line
@@ -11829,7 +11826,6 @@ end = struct
       | `String "picker" -> `picker
       | `String "permission-icon" -> `permission_icon
       | `String "overscroll-area-parent" -> `overscroll_area_parent
-      | `String "overscroll-client-area" -> `overscroll_client_area
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -11875,7 +11871,6 @@ end = struct
       | `picker -> `String "picker"
       | `permission_icon -> `String "permission-icon"
       | `overscroll_area_parent -> `String "overscroll-area-parent"
-      | `overscroll_client_area -> `String "overscroll-client-area"
 
     type t = _pseudotype
     [@@deriving yojson] [@@ocaml.doc "Pseudo element type."]
