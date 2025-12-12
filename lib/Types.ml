@@ -2225,7 +2225,10 @@ and Audits : sig
       | `FormLabelForMatchesNonExistingIdError
       | `FormInputHasWrongButWellIntendedAutocompleteValueError
       | `ResponseWasBlockedByORB
-      | `NavigationEntryMarkedSkippable ]
+      | `NavigationEntryMarkedSkippable
+      | `AutofillAndManualTextPolicyControlledFeaturesInfo
+      | `AutofillPolicyControlledFeatureInfo
+      | `ManualTextPolicyControlledFeatureInfo ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -4688,7 +4691,10 @@ end = struct
       | `FormLabelForMatchesNonExistingIdError
       | `FormInputHasWrongButWellIntendedAutocompleteValueError
       | `ResponseWasBlockedByORB
-      | `NavigationEntryMarkedSkippable ]
+      | `NavigationEntryMarkedSkippable
+      | `AutofillAndManualTextPolicyControlledFeaturesInfo
+      | `AutofillPolicyControlledFeatureInfo
+      | `ManualTextPolicyControlledFeatureInfo ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -4711,7 +4717,10 @@ end = struct
       | `FormLabelForMatchesNonExistingIdError
       | `FormInputHasWrongButWellIntendedAutocompleteValueError
       | `ResponseWasBlockedByORB
-      | `NavigationEntryMarkedSkippable ]
+      | `NavigationEntryMarkedSkippable
+      | `AutofillAndManualTextPolicyControlledFeaturesInfo
+      | `AutofillPolicyControlledFeatureInfo
+      | `ManualTextPolicyControlledFeatureInfo ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "FormLabelForNameError" -> `FormLabelForNameError
@@ -4734,6 +4743,12 @@ end = struct
       | `String "ResponseWasBlockedByORB" -> `ResponseWasBlockedByORB
       | `String "NavigationEntryMarkedSkippable" ->
           `NavigationEntryMarkedSkippable
+      | `String "AutofillAndManualTextPolicyControlledFeaturesInfo" ->
+          `AutofillAndManualTextPolicyControlledFeaturesInfo
+      | `String "AutofillPolicyControlledFeatureInfo" ->
+          `AutofillPolicyControlledFeatureInfo
+      | `String "ManualTextPolicyControlledFeatureInfo" ->
+          `ManualTextPolicyControlledFeatureInfo
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4758,6 +4773,12 @@ end = struct
       | `ResponseWasBlockedByORB -> `String "ResponseWasBlockedByORB"
       | `NavigationEntryMarkedSkippable ->
           `String "NavigationEntryMarkedSkippable"
+      | `AutofillAndManualTextPolicyControlledFeaturesInfo ->
+          `String "AutofillAndManualTextPolicyControlledFeaturesInfo"
+      | `AutofillPolicyControlledFeatureInfo ->
+          `String "AutofillPolicyControlledFeatureInfo"
+      | `ManualTextPolicyControlledFeatureInfo ->
+          `String "ManualTextPolicyControlledFeatureInfo"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
