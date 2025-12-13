@@ -34111,6 +34111,10 @@ one. |desc}]
         browserContextIds : Types.Browser.BrowserContextID.t list;
             [@key "browserContextIds"]
             [@ocaml.doc "An array of browser context ids."]
+        defaultBrowserContextId : Types.Browser.BrowserContextID.t option;
+            [@key "defaultBrowserContextId"]
+            [@yojson.option]
+            [@ocaml.doc "The id of the default browser context if available."]
       }
 
       type error = { code : int; message : string }
@@ -34128,6 +34132,10 @@ one. |desc}]
         browserContextIds : Types.Browser.BrowserContextID.t list;
             [@key "browserContextIds"]
             [@ocaml.doc "An array of browser context ids."]
+        defaultBrowserContextId : Types.Browser.BrowserContextID.t option;
+            [@key "defaultBrowserContextId"]
+            [@yojson.option]
+            [@ocaml.doc "The id of the default browser context if available."]
       }
       [@@deriving yojson]
 

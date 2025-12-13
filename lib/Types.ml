@@ -7422,7 +7422,9 @@ and Browser : sig
       | `idleDetection
       | `keyboardLock
       | `localFonts
+      | `localNetwork
       | `localNetworkAccess
+      | `loopbackNetwork
       | `midi
       | `midiSysex
       | `nfc
@@ -7662,7 +7664,9 @@ end = struct
       | `idleDetection
       | `keyboardLock
       | `localFonts
+      | `localNetwork
       | `localNetworkAccess
+      | `loopbackNetwork
       | `midi
       | `midiSysex
       | `nfc
@@ -7707,7 +7711,9 @@ end = struct
       | `idleDetection
       | `keyboardLock
       | `localFonts
+      | `localNetwork
       | `localNetworkAccess
+      | `loopbackNetwork
       | `midi
       | `midiSysex
       | `nfc
@@ -7746,7 +7752,9 @@ end = struct
       | `String "idleDetection" -> `idleDetection
       | `String "keyboardLock" -> `keyboardLock
       | `String "localFonts" -> `localFonts
+      | `String "localNetwork" -> `localNetwork
       | `String "localNetworkAccess" -> `localNetworkAccess
+      | `String "loopbackNetwork" -> `loopbackNetwork
       | `String "midi" -> `midi
       | `String "midiSysex" -> `midiSysex
       | `String "nfc" -> `nfc
@@ -7787,7 +7795,9 @@ end = struct
       | `idleDetection -> `String "idleDetection"
       | `keyboardLock -> `String "keyboardLock"
       | `localFonts -> `String "localFonts"
+      | `localNetwork -> `String "localNetwork"
       | `localNetworkAccess -> `String "localNetworkAccess"
+      | `loopbackNetwork -> `String "loopbackNetwork"
       | `midi -> `String "midi"
       | `midiSysex -> `String "midiSysex"
       | `nfc -> `String "nfc"
