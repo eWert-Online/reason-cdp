@@ -21954,7 +21954,11 @@ explicitly modify `navigator` behavior. |desc}]
                these survive\n\
                a cross-process navigation. Requires maxTotalBufferSize to be \
                set.\n\
-               Currently defaults to false."]
+               Currently defaults to false. This field is being deprecated in \
+               favor of the dedicated\n\
+               configureDurableMessages command, due to the possibility of \
+               deadlocks when awaiting\n\
+               Network.enable before issuing Runtime.runIfWaitingForDebugger."]
       }
       [@@deriving yojson]
 
@@ -21985,6 +21989,74 @@ explicitly modify `navigator` behavior. |desc}]
   end
   [@@ocaml.doc
     {desc|Enables network tracking, network events will now be delivered to the client. |desc}]
+
+  module ConfigureDurableMessages = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        maxTotalBufferSize : Types.number option;
+            [@key "maxTotalBufferSize"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Buffer size in bytes to use when preserving network payloads \
+               (XHRs, etc)."]
+        maxResourceBufferSize : Types.number option;
+            [@key "maxResourceBufferSize"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Per-resource buffer size in bytes to use when preserving \
+               network payloads (XHRs, etc)."]
+      }
+      [@@deriving yojson]
+
+      let make ?maxTotalBufferSize ?maxResourceBufferSize () =
+        { maxTotalBufferSize; maxResourceBufferSize }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Network.configureDurableMessages"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Configures storing response bodies outside of renderer, so that these survive
+a cross-process navigation.
+If maxTotalBufferSize is not set, durable messages are disabled. |desc}]
 
   module GetAllCookies = struct
     module Response : sig
