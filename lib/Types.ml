@@ -18542,6 +18542,25 @@ and Network : sig
     [@@deriving yojson] [@@ocaml.doc "Loading priority of a resource request."]
   end
 
+  and RenderBlockingBehavior : sig
+    type _renderblockingbehavior =
+      [ `Blocking
+      | `InBodyParserBlocking
+      | `NonBlocking
+      | `NonBlockingDynamic
+      | `PotentiallyBlocking ]
+
+    val _renderblockingbehavior_of_yojson :
+      Yojson.Basic.t -> _renderblockingbehavior
+
+    val yojson_of__renderblockingbehavior :
+      _renderblockingbehavior -> Yojson.Basic.t
+
+    type t = _renderblockingbehavior
+    [@@deriving yojson]
+    [@@ocaml.doc "The render blocking behavior of a resource request."]
+  end
+
   and PostDataEntry : sig
     type t = {
       bytes : string option;
@@ -20699,6 +20718,52 @@ end = struct
 
     type t = _resourcepriority
     [@@deriving yojson] [@@ocaml.doc "Loading priority of a resource request."]
+  end
+
+  and RenderBlockingBehavior : sig
+    type _renderblockingbehavior =
+      [ `Blocking
+      | `InBodyParserBlocking
+      | `NonBlocking
+      | `NonBlockingDynamic
+      | `PotentiallyBlocking ]
+
+    val _renderblockingbehavior_of_yojson :
+      Yojson.Basic.t -> _renderblockingbehavior
+
+    val yojson_of__renderblockingbehavior :
+      _renderblockingbehavior -> Yojson.Basic.t
+
+    type t = _renderblockingbehavior
+    [@@deriving yojson]
+    [@@ocaml.doc "The render blocking behavior of a resource request."]
+  end = struct
+    type _renderblockingbehavior =
+      [ `Blocking
+      | `InBodyParserBlocking
+      | `NonBlocking
+      | `NonBlockingDynamic
+      | `PotentiallyBlocking ]
+
+    let _renderblockingbehavior_of_yojson = function
+      | `String "Blocking" -> `Blocking
+      | `String "InBodyParserBlocking" -> `InBodyParserBlocking
+      | `String "NonBlocking" -> `NonBlocking
+      | `String "NonBlockingDynamic" -> `NonBlockingDynamic
+      | `String "PotentiallyBlocking" -> `PotentiallyBlocking
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__renderblockingbehavior = function
+      | `Blocking -> `String "Blocking"
+      | `InBodyParserBlocking -> `String "InBodyParserBlocking"
+      | `NonBlocking -> `String "NonBlocking"
+      | `NonBlockingDynamic -> `String "NonBlockingDynamic"
+      | `PotentiallyBlocking -> `String "PotentiallyBlocking"
+
+    type t = _renderblockingbehavior
+    [@@deriving yojson]
+    [@@ocaml.doc "The render blocking behavior of a resource request."]
   end
 
   and PostDataEntry : sig
@@ -26088,7 +26153,9 @@ and Page : sig
       | `language_detector
       | `language_model
       | `local_fonts
+      | `local_network
       | `local_network_access
+      | `loopback_network
       | `magnetometer
       | `manual_text
       | `media_playback_while_not_visible
@@ -27555,7 +27622,9 @@ end = struct
       | `language_detector
       | `language_model
       | `local_fonts
+      | `local_network
       | `local_network_access
+      | `loopback_network
       | `magnetometer
       | `manual_text
       | `media_playback_while_not_visible
@@ -27679,7 +27748,9 @@ end = struct
       | `language_detector
       | `language_model
       | `local_fonts
+      | `local_network
       | `local_network_access
+      | `loopback_network
       | `magnetometer
       | `manual_text
       | `media_playback_while_not_visible
@@ -27793,7 +27864,9 @@ end = struct
       | `String "language-detector" -> `language_detector
       | `String "language-model" -> `language_model
       | `String "local-fonts" -> `local_fonts
+      | `String "local-network" -> `local_network
       | `String "local-network-access" -> `local_network_access
+      | `String "loopback-network" -> `loopback_network
       | `String "magnetometer" -> `magnetometer
       | `String "manual-text" -> `manual_text
       | `String "media-playback-while-not-visible" ->
@@ -27911,7 +27984,9 @@ end = struct
       | `language_detector -> `String "language-detector"
       | `language_model -> `String "language-model"
       | `local_fonts -> `String "local-fonts"
+      | `local_network -> `String "local-network"
       | `local_network_access -> `String "local-network-access"
+      | `loopback_network -> `String "loopback-network"
       | `magnetometer -> `String "magnetometer"
       | `manual_text -> `String "manual-text"
       | `media_playback_while_not_visible ->

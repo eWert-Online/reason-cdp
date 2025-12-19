@@ -35325,6 +35325,67 @@ module Tracing = struct
   end
   [@@ocaml.doc {desc|Gets supported tracing categories. |desc}]
 
+  module GetTrackEventDescriptor = struct
+    module Response : sig
+      type result = {
+        descriptor : string;
+            [@key "descriptor"]
+            [@ocaml.doc
+              "Base64-encoded serialized perfetto.protos.TrackEventDescriptor \
+               protobuf message. (Encoded as a base64 string when passed over \
+               JSON)"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        descriptor : string;
+            [@key "descriptor"]
+            [@ocaml.doc
+              "Base64-encoded serialized perfetto.protos.TrackEventDescriptor \
+               protobuf message. (Encoded as a base64 string when passed over \
+               JSON)"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Tracing.getTrackEventDescriptor"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Return a descriptor for all available tracing categories. |desc}]
+
   module RecordClockSyncMarker = struct
     module Response : sig
       type result = Types.assoc

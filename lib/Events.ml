@@ -1829,6 +1829,10 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
           [@ocaml.doc
             "Whether the request is initiated by a user gesture. Defaults to \
              false."]
+      renderBlockingBehavior : Types.Network.RenderBlockingBehavior.t option;
+          [@key "renderBlockingBehavior"]
+          [@yojson.option]
+          [@ocaml.doc "The render blocking behavior of the request."]
     }
     [@@deriving yojson]
 
