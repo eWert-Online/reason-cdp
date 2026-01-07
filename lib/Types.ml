@@ -20117,6 +20117,128 @@ and Network : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and DeviceBoundSessionKey : sig
+    type t = {
+      site : string;
+          [@key "site"] [@ocaml.doc "The site the session is set up for."]
+      id : string; [@key "id"] [@ocaml.doc "The id of the session."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Unique identifier for a device bound session."]
+  end
+
+  and DeviceBoundSessionCookieCraving : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "The name of the craving."]
+      domain : string; [@key "domain"] [@ocaml.doc "The domain of the craving."]
+      path : string; [@key "path"] [@ocaml.doc "The path of the craving."]
+      secure : bool;
+          [@key "secure"]
+          [@ocaml.doc "The `Secure` attribute of the craving attributes."]
+      httpOnly : bool;
+          [@key "httpOnly"]
+          [@ocaml.doc "The `HttpOnly` attribute of the craving attributes."]
+      sameSite : CookieSameSite.t option;
+          [@key "sameSite"]
+          [@yojson.option]
+          [@ocaml.doc "The `SameSite` attribute of the craving attributes."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A device bound session's cookie craving."]
+  end
+
+  and DeviceBoundSessionUrlRule : sig
+    type _deviceboundsessionurlrule_ruletype = [ `Exclude | `Include ]
+
+    val _deviceboundsessionurlrule_ruletype_of_yojson :
+      Yojson.Basic.t -> _deviceboundsessionurlrule_ruletype
+
+    val yojson_of__deviceboundsessionurlrule_ruletype :
+      _deviceboundsessionurlrule_ruletype -> Yojson.Basic.t
+
+    type t = {
+      ruleType : _deviceboundsessionurlrule_ruletype;
+          [@key "ruleType"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::UrlRule::rule_type`."]
+      hostPattern : string;
+          [@key "hostPattern"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::UrlRule::host_pattern`."]
+      pathPrefix : string;
+          [@key "pathPrefix"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::UrlRule::path_prefix`."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "A device bound session's inclusion URL rule."]
+  end
+
+  and DeviceBoundSessionInclusionRules : sig
+    type t = {
+      origin : string;
+          [@key "origin"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::origin_`."]
+      includeSite : bool;
+          [@key "includeSite"]
+          [@ocaml.doc
+            "Whether the whole site is included. See comments on\n\
+             `net::device_bound_sessions::SessionInclusionRules::include_site_` \
+             for more\n\
+             details; this boolean is true if that value is populated."]
+      urlRules : DeviceBoundSessionUrlRule.t list;
+          [@key "urlRules"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::url_rules_`."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "A device bound session's inclusion rules."]
+  end
+
+  and DeviceBoundSession : sig
+    type t = {
+      key : DeviceBoundSessionKey.t;
+          [@key "key"] [@ocaml.doc "The site and session ID of the session."]
+      refreshUrl : string;
+          [@key "refreshUrl"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::refresh_url_`."]
+      inclusionRules : DeviceBoundSessionInclusionRules.t;
+          [@key "inclusionRules"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::inclusion_rules_`."]
+      cookieCravings : DeviceBoundSessionCookieCraving.t list;
+          [@key "cookieCravings"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::cookie_cravings_`."]
+      expiryDate : Network.TimeSinceEpoch.t;
+          [@key "expiryDate"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::expiry_date_`."]
+      cachedChallenge : string option;
+          [@key "cachedChallenge"]
+          [@yojson.option]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::cached_challenge__`."]
+      allowedRefreshInitiators : string list;
+          [@key "allowedRefreshInitiators"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::allowed_refresh_initiators_`."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A device bound session."]
+  end
+
   and LoadNetworkResourcePageResult : sig
     type t = {
       success : bool; [@key "success"] [@ocaml.doc "No description provided"]
@@ -24233,6 +24355,244 @@ end = struct
           [@key "groupName"] [@ocaml.doc "Name of the endpoint group."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and DeviceBoundSessionKey : sig
+    type t = {
+      site : string;
+          [@key "site"] [@ocaml.doc "The site the session is set up for."]
+      id : string; [@key "id"] [@ocaml.doc "The id of the session."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Unique identifier for a device bound session."]
+  end = struct
+    type t = {
+      site : string;
+          [@key "site"] [@ocaml.doc "The site the session is set up for."]
+      id : string; [@key "id"] [@ocaml.doc "The id of the session."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Unique identifier for a device bound session."]
+  end
+
+  and DeviceBoundSessionCookieCraving : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "The name of the craving."]
+      domain : string; [@key "domain"] [@ocaml.doc "The domain of the craving."]
+      path : string; [@key "path"] [@ocaml.doc "The path of the craving."]
+      secure : bool;
+          [@key "secure"]
+          [@ocaml.doc "The `Secure` attribute of the craving attributes."]
+      httpOnly : bool;
+          [@key "httpOnly"]
+          [@ocaml.doc "The `HttpOnly` attribute of the craving attributes."]
+      sameSite : CookieSameSite.t option;
+          [@key "sameSite"]
+          [@yojson.option]
+          [@ocaml.doc "The `SameSite` attribute of the craving attributes."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A device bound session's cookie craving."]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "The name of the craving."]
+      domain : string; [@key "domain"] [@ocaml.doc "The domain of the craving."]
+      path : string; [@key "path"] [@ocaml.doc "The path of the craving."]
+      secure : bool;
+          [@key "secure"]
+          [@ocaml.doc "The `Secure` attribute of the craving attributes."]
+      httpOnly : bool;
+          [@key "httpOnly"]
+          [@ocaml.doc "The `HttpOnly` attribute of the craving attributes."]
+      sameSite : CookieSameSite.t option;
+          [@key "sameSite"]
+          [@yojson.option]
+          [@ocaml.doc "The `SameSite` attribute of the craving attributes."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A device bound session's cookie craving."]
+  end
+
+  and DeviceBoundSessionUrlRule : sig
+    type _deviceboundsessionurlrule_ruletype = [ `Exclude | `Include ]
+
+    val _deviceboundsessionurlrule_ruletype_of_yojson :
+      Yojson.Basic.t -> _deviceboundsessionurlrule_ruletype
+
+    val yojson_of__deviceboundsessionurlrule_ruletype :
+      _deviceboundsessionurlrule_ruletype -> Yojson.Basic.t
+
+    type t = {
+      ruleType : _deviceboundsessionurlrule_ruletype;
+          [@key "ruleType"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::UrlRule::rule_type`."]
+      hostPattern : string;
+          [@key "hostPattern"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::UrlRule::host_pattern`."]
+      pathPrefix : string;
+          [@key "pathPrefix"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::UrlRule::path_prefix`."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "A device bound session's inclusion URL rule."]
+  end = struct
+    type _deviceboundsessionurlrule_ruletype = [ `Exclude | `Include ]
+
+    let _deviceboundsessionurlrule_ruletype_of_yojson = function
+      | `String "Exclude" -> `Exclude
+      | `String "Include" -> `Include
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__deviceboundsessionurlrule_ruletype = function
+      | `Exclude -> `String "Exclude"
+      | `Include -> `String "Include"
+
+    type t = {
+      ruleType : _deviceboundsessionurlrule_ruletype;
+          [@key "ruleType"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::UrlRule::rule_type`."]
+      hostPattern : string;
+          [@key "hostPattern"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::UrlRule::host_pattern`."]
+      pathPrefix : string;
+          [@key "pathPrefix"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::UrlRule::path_prefix`."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "A device bound session's inclusion URL rule."]
+  end
+
+  and DeviceBoundSessionInclusionRules : sig
+    type t = {
+      origin : string;
+          [@key "origin"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::origin_`."]
+      includeSite : bool;
+          [@key "includeSite"]
+          [@ocaml.doc
+            "Whether the whole site is included. See comments on\n\
+             `net::device_bound_sessions::SessionInclusionRules::include_site_` \
+             for more\n\
+             details; this boolean is true if that value is populated."]
+      urlRules : DeviceBoundSessionUrlRule.t list;
+          [@key "urlRules"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::url_rules_`."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "A device bound session's inclusion rules."]
+  end = struct
+    type t = {
+      origin : string;
+          [@key "origin"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::origin_`."]
+      includeSite : bool;
+          [@key "includeSite"]
+          [@ocaml.doc
+            "Whether the whole site is included. See comments on\n\
+             `net::device_bound_sessions::SessionInclusionRules::include_site_` \
+             for more\n\
+             details; this boolean is true if that value is populated."]
+      urlRules : DeviceBoundSessionUrlRule.t list;
+          [@key "urlRules"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::SessionInclusionRules::url_rules_`."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "A device bound session's inclusion rules."]
+  end
+
+  and DeviceBoundSession : sig
+    type t = {
+      key : DeviceBoundSessionKey.t;
+          [@key "key"] [@ocaml.doc "The site and session ID of the session."]
+      refreshUrl : string;
+          [@key "refreshUrl"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::refresh_url_`."]
+      inclusionRules : DeviceBoundSessionInclusionRules.t;
+          [@key "inclusionRules"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::inclusion_rules_`."]
+      cookieCravings : DeviceBoundSessionCookieCraving.t list;
+          [@key "cookieCravings"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::cookie_cravings_`."]
+      expiryDate : Network.TimeSinceEpoch.t;
+          [@key "expiryDate"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::expiry_date_`."]
+      cachedChallenge : string option;
+          [@key "cachedChallenge"]
+          [@yojson.option]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::cached_challenge__`."]
+      allowedRefreshInitiators : string list;
+          [@key "allowedRefreshInitiators"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::allowed_refresh_initiators_`."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A device bound session."]
+  end = struct
+    type t = {
+      key : DeviceBoundSessionKey.t;
+          [@key "key"] [@ocaml.doc "The site and session ID of the session."]
+      refreshUrl : string;
+          [@key "refreshUrl"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::refresh_url_`."]
+      inclusionRules : DeviceBoundSessionInclusionRules.t;
+          [@key "inclusionRules"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::inclusion_rules_`."]
+      cookieCravings : DeviceBoundSessionCookieCraving.t list;
+          [@key "cookieCravings"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::cookie_cravings_`."]
+      expiryDate : Network.TimeSinceEpoch.t;
+          [@key "expiryDate"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::expiry_date_`."]
+      cachedChallenge : string option;
+          [@key "cachedChallenge"]
+          [@yojson.option]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::cached_challenge__`."]
+      allowedRefreshInitiators : string list;
+          [@key "allowedRefreshInitiators"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::Session::allowed_refresh_initiators_`."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "A device bound session."]
   end
 
   and LoadNetworkResourcePageResult : sig

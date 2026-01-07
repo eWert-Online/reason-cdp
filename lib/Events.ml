@@ -2893,6 +2893,27 @@ And after 'enableReportingApi' for all existing reports. |desc}]
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
   [@@ocaml.doc {desc|No description provided |desc}]
+
+  module DeviceBoundSessionsAdded = struct
+    let name = "Network.deviceBoundSessionsAdded"
+
+    type result = {
+      sessions : Types.Network.DeviceBoundSession.t list;
+          [@key "sessions"] [@ocaml.doc "The device bound sessions."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Triggered when the initial set of device bound sessions is added. |desc}]
 end
 
 module Overlay = struct
