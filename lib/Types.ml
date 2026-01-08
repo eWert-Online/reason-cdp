@@ -20239,6 +20239,196 @@ and Network : sig
     [@@deriving yojson] [@@ocaml.doc "A device bound session."]
   end
 
+  and DeviceBoundSessionEventId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc "A unique identifier for a device bound session event."]
+  end
+
+  and DeviceBoundSessionFetchResult : sig
+    type _deviceboundsessionfetchresult =
+      [ `Success
+      | `KeyError
+      | `SigningError
+      | `ServerRequestedTermination
+      | `InvalidSessionId
+      | `InvalidChallenge
+      | `TooManyChallenges
+      | `InvalidFetcherUrl
+      | `InvalidRefreshUrl
+      | `TransientHttpError
+      | `ScopeOriginSameSiteMismatch
+      | `RefreshUrlSameSiteMismatch
+      | `MismatchedSessionId
+      | `MissingScope
+      | `NoCredentials
+      | `SubdomainRegistrationWellKnownUnavailable
+      | `SubdomainRegistrationUnauthorized
+      | `SubdomainRegistrationWellKnownMalformed
+      | `SessionProviderWellKnownUnavailable
+      | `RelyingPartyWellKnownUnavailable
+      | `FederatedKeyThumbprintMismatch
+      | `InvalidFederatedSessionUrl
+      | `InvalidFederatedKey
+      | `TooManyRelyingOriginLabels
+      | `BoundCookieSetForbidden
+      | `NetError
+      | `ProxyError
+      | `EmptySessionConfig
+      | `InvalidCredentialsConfig
+      | `InvalidCredentialsType
+      | `InvalidCredentialsEmptyName
+      | `InvalidCredentialsCookie
+      | `PersistentHttpError
+      | `RegistrationAttemptedChallenge
+      | `InvalidScopeOrigin
+      | `ScopeOriginContainsPath
+      | `RefreshInitiatorNotString
+      | `RefreshInitiatorInvalidHostPattern
+      | `InvalidScopeSpecification
+      | `MissingScopeSpecificationType
+      | `EmptyScopeSpecificationDomain
+      | `EmptyScopeSpecificationPath
+      | `InvalidScopeSpecificationType
+      | `InvalidScopeIncludeSite
+      | `MissingScopeIncludeSite
+      | `FederatedNotAuthorizedByProvider
+      | `FederatedNotAuthorizedByRelyingParty
+      | `SessionProviderWellKnownMalformed
+      | `SessionProviderWellKnownHasProviderOrigin
+      | `RelyingPartyWellKnownMalformed
+      | `RelyingPartyWellKnownHasRelyingOrigins
+      | `InvalidFederatedSessionProviderSessionMissing
+      | `InvalidFederatedSessionWrongProviderOrigin
+      | `InvalidCredentialsCookieCreationTime
+      | `InvalidCredentialsCookieName
+      | `InvalidCredentialsCookieParsing
+      | `InvalidCredentialsCookieUnpermittedAttribute
+      | `InvalidCredentialsCookieInvalidDomain
+      | `InvalidCredentialsCookiePrefix
+      | `InvalidScopeRulePath
+      | `InvalidScopeRuleHostPattern
+      | `ScopeRuleOriginScopedHostPatternMismatch
+      | `ScopeRuleSiteScopedHostPatternMismatch
+      | `SigningQuotaExceeded
+      | `InvalidConfigJson
+      | `InvalidFederatedSessionProviderFailedToRestoreKey
+      | `FailedToUnwrapKey
+      | `SessionDeletedDuringRefresh ]
+
+    val _deviceboundsessionfetchresult_of_yojson :
+      Yojson.Basic.t -> _deviceboundsessionfetchresult
+
+    val yojson_of__deviceboundsessionfetchresult :
+      _deviceboundsessionfetchresult -> Yojson.Basic.t
+
+    type t = _deviceboundsessionfetchresult
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A fetch result for a device bound session creation or refresh."]
+  end
+
+  and CreationEventDetails : sig
+    type t = {
+      fetchResult : DeviceBoundSessionFetchResult.t;
+          [@key "fetchResult"] [@ocaml.doc "The result of the fetch attempt."]
+      newSession : DeviceBoundSession.t option;
+          [@key "newSession"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The session if there was a newly created session. This is \
+             populated for\n\
+             all successful creation events."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to creation."]
+  end
+
+  and RefreshEventDetails : sig
+    type _refresheventdetails_refreshresult =
+      [ `Refreshed
+      | `InitializedService
+      | `Unreachable
+      | `ServerError
+      | `RefreshQuotaExceeded
+      | `FatalError
+      | `SigningQuotaExceeded ]
+
+    val _refresheventdetails_refreshresult_of_yojson :
+      Yojson.Basic.t -> _refresheventdetails_refreshresult
+
+    val yojson_of__refresheventdetails_refreshresult :
+      _refresheventdetails_refreshresult -> Yojson.Basic.t
+
+    type t = {
+      refreshResult : _refresheventdetails_refreshresult;
+          [@key "refreshResult"] [@ocaml.doc "The result of a refresh."]
+      fetchResult : DeviceBoundSessionFetchResult.t option;
+          [@key "fetchResult"]
+          [@yojson.option]
+          [@ocaml.doc "If there was a fetch attempt, the result of that."]
+      newSession : DeviceBoundSession.t option;
+          [@key "newSession"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The session display if there was a newly created session. This is \
+             populated\n\
+             for any refresh event that modifies the session config."]
+      wasFullyProactiveRefresh : bool;
+          [@key "wasFullyProactiveRefresh"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::RefreshEventResult::was_fully_proactive_refresh`."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to refresh."]
+  end
+
+  and TerminationEventDetails : sig
+    type _terminationeventdetails_deletionreason =
+      [ `Expired
+      | `FailedToRestoreKey
+      | `FailedToUnwrapKey
+      | `StoragePartitionCleared
+      | `ClearBrowsingData
+      | `ServerRequested
+      | `InvalidSessionParams
+      | `RefreshFatalError ]
+
+    val _terminationeventdetails_deletionreason_of_yojson :
+      Yojson.Basic.t -> _terminationeventdetails_deletionreason
+
+    val yojson_of__terminationeventdetails_deletionreason :
+      _terminationeventdetails_deletionreason -> Yojson.Basic.t
+
+    type t = {
+      deletionReason : _terminationeventdetails_deletionreason;
+          [@key "deletionReason"]
+          [@ocaml.doc "The reason for a session being deleted."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to termination."]
+  end
+
+  and ChallengeEventDetails : sig
+    type _challengeeventdetails_challengeresult =
+      [ `Success | `NoSessionId | `NoSessionMatch | `CantSetBoundCookie ]
+
+    val _challengeeventdetails_challengeresult_of_yojson :
+      Yojson.Basic.t -> _challengeeventdetails_challengeresult
+
+    val yojson_of__challengeeventdetails_challengeresult :
+      _challengeeventdetails_challengeresult -> Yojson.Basic.t
+
+    type t = {
+      challengeResult : _challengeeventdetails_challengeresult;
+          [@key "challengeResult"] [@ocaml.doc "The result of a challenge."]
+      challenge : string; [@key "challenge"] [@ocaml.doc "The challenge set."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to challenges."]
+  end
+
   and LoadNetworkResourcePageResult : sig
     type t = {
       success : bool; [@key "success"] [@ocaml.doc "No description provided"]
@@ -24593,6 +24783,602 @@ end = struct
              `net::device_bound_sessions::Session::allowed_refresh_initiators_`."]
     }
     [@@deriving yojson] [@@ocaml.doc "A device bound session."]
+  end
+
+  and DeviceBoundSessionEventId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc "A unique identifier for a device bound session event."]
+  end = struct
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc "A unique identifier for a device bound session event."]
+  end
+
+  and DeviceBoundSessionFetchResult : sig
+    type _deviceboundsessionfetchresult =
+      [ `Success
+      | `KeyError
+      | `SigningError
+      | `ServerRequestedTermination
+      | `InvalidSessionId
+      | `InvalidChallenge
+      | `TooManyChallenges
+      | `InvalidFetcherUrl
+      | `InvalidRefreshUrl
+      | `TransientHttpError
+      | `ScopeOriginSameSiteMismatch
+      | `RefreshUrlSameSiteMismatch
+      | `MismatchedSessionId
+      | `MissingScope
+      | `NoCredentials
+      | `SubdomainRegistrationWellKnownUnavailable
+      | `SubdomainRegistrationUnauthorized
+      | `SubdomainRegistrationWellKnownMalformed
+      | `SessionProviderWellKnownUnavailable
+      | `RelyingPartyWellKnownUnavailable
+      | `FederatedKeyThumbprintMismatch
+      | `InvalidFederatedSessionUrl
+      | `InvalidFederatedKey
+      | `TooManyRelyingOriginLabels
+      | `BoundCookieSetForbidden
+      | `NetError
+      | `ProxyError
+      | `EmptySessionConfig
+      | `InvalidCredentialsConfig
+      | `InvalidCredentialsType
+      | `InvalidCredentialsEmptyName
+      | `InvalidCredentialsCookie
+      | `PersistentHttpError
+      | `RegistrationAttemptedChallenge
+      | `InvalidScopeOrigin
+      | `ScopeOriginContainsPath
+      | `RefreshInitiatorNotString
+      | `RefreshInitiatorInvalidHostPattern
+      | `InvalidScopeSpecification
+      | `MissingScopeSpecificationType
+      | `EmptyScopeSpecificationDomain
+      | `EmptyScopeSpecificationPath
+      | `InvalidScopeSpecificationType
+      | `InvalidScopeIncludeSite
+      | `MissingScopeIncludeSite
+      | `FederatedNotAuthorizedByProvider
+      | `FederatedNotAuthorizedByRelyingParty
+      | `SessionProviderWellKnownMalformed
+      | `SessionProviderWellKnownHasProviderOrigin
+      | `RelyingPartyWellKnownMalformed
+      | `RelyingPartyWellKnownHasRelyingOrigins
+      | `InvalidFederatedSessionProviderSessionMissing
+      | `InvalidFederatedSessionWrongProviderOrigin
+      | `InvalidCredentialsCookieCreationTime
+      | `InvalidCredentialsCookieName
+      | `InvalidCredentialsCookieParsing
+      | `InvalidCredentialsCookieUnpermittedAttribute
+      | `InvalidCredentialsCookieInvalidDomain
+      | `InvalidCredentialsCookiePrefix
+      | `InvalidScopeRulePath
+      | `InvalidScopeRuleHostPattern
+      | `ScopeRuleOriginScopedHostPatternMismatch
+      | `ScopeRuleSiteScopedHostPatternMismatch
+      | `SigningQuotaExceeded
+      | `InvalidConfigJson
+      | `InvalidFederatedSessionProviderFailedToRestoreKey
+      | `FailedToUnwrapKey
+      | `SessionDeletedDuringRefresh ]
+
+    val _deviceboundsessionfetchresult_of_yojson :
+      Yojson.Basic.t -> _deviceboundsessionfetchresult
+
+    val yojson_of__deviceboundsessionfetchresult :
+      _deviceboundsessionfetchresult -> Yojson.Basic.t
+
+    type t = _deviceboundsessionfetchresult
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A fetch result for a device bound session creation or refresh."]
+  end = struct
+    type _deviceboundsessionfetchresult =
+      [ `Success
+      | `KeyError
+      | `SigningError
+      | `ServerRequestedTermination
+      | `InvalidSessionId
+      | `InvalidChallenge
+      | `TooManyChallenges
+      | `InvalidFetcherUrl
+      | `InvalidRefreshUrl
+      | `TransientHttpError
+      | `ScopeOriginSameSiteMismatch
+      | `RefreshUrlSameSiteMismatch
+      | `MismatchedSessionId
+      | `MissingScope
+      | `NoCredentials
+      | `SubdomainRegistrationWellKnownUnavailable
+      | `SubdomainRegistrationUnauthorized
+      | `SubdomainRegistrationWellKnownMalformed
+      | `SessionProviderWellKnownUnavailable
+      | `RelyingPartyWellKnownUnavailable
+      | `FederatedKeyThumbprintMismatch
+      | `InvalidFederatedSessionUrl
+      | `InvalidFederatedKey
+      | `TooManyRelyingOriginLabels
+      | `BoundCookieSetForbidden
+      | `NetError
+      | `ProxyError
+      | `EmptySessionConfig
+      | `InvalidCredentialsConfig
+      | `InvalidCredentialsType
+      | `InvalidCredentialsEmptyName
+      | `InvalidCredentialsCookie
+      | `PersistentHttpError
+      | `RegistrationAttemptedChallenge
+      | `InvalidScopeOrigin
+      | `ScopeOriginContainsPath
+      | `RefreshInitiatorNotString
+      | `RefreshInitiatorInvalidHostPattern
+      | `InvalidScopeSpecification
+      | `MissingScopeSpecificationType
+      | `EmptyScopeSpecificationDomain
+      | `EmptyScopeSpecificationPath
+      | `InvalidScopeSpecificationType
+      | `InvalidScopeIncludeSite
+      | `MissingScopeIncludeSite
+      | `FederatedNotAuthorizedByProvider
+      | `FederatedNotAuthorizedByRelyingParty
+      | `SessionProviderWellKnownMalformed
+      | `SessionProviderWellKnownHasProviderOrigin
+      | `RelyingPartyWellKnownMalformed
+      | `RelyingPartyWellKnownHasRelyingOrigins
+      | `InvalidFederatedSessionProviderSessionMissing
+      | `InvalidFederatedSessionWrongProviderOrigin
+      | `InvalidCredentialsCookieCreationTime
+      | `InvalidCredentialsCookieName
+      | `InvalidCredentialsCookieParsing
+      | `InvalidCredentialsCookieUnpermittedAttribute
+      | `InvalidCredentialsCookieInvalidDomain
+      | `InvalidCredentialsCookiePrefix
+      | `InvalidScopeRulePath
+      | `InvalidScopeRuleHostPattern
+      | `ScopeRuleOriginScopedHostPatternMismatch
+      | `ScopeRuleSiteScopedHostPatternMismatch
+      | `SigningQuotaExceeded
+      | `InvalidConfigJson
+      | `InvalidFederatedSessionProviderFailedToRestoreKey
+      | `FailedToUnwrapKey
+      | `SessionDeletedDuringRefresh ]
+
+    let _deviceboundsessionfetchresult_of_yojson = function
+      | `String "Success" -> `Success
+      | `String "KeyError" -> `KeyError
+      | `String "SigningError" -> `SigningError
+      | `String "ServerRequestedTermination" -> `ServerRequestedTermination
+      | `String "InvalidSessionId" -> `InvalidSessionId
+      | `String "InvalidChallenge" -> `InvalidChallenge
+      | `String "TooManyChallenges" -> `TooManyChallenges
+      | `String "InvalidFetcherUrl" -> `InvalidFetcherUrl
+      | `String "InvalidRefreshUrl" -> `InvalidRefreshUrl
+      | `String "TransientHttpError" -> `TransientHttpError
+      | `String "ScopeOriginSameSiteMismatch" -> `ScopeOriginSameSiteMismatch
+      | `String "RefreshUrlSameSiteMismatch" -> `RefreshUrlSameSiteMismatch
+      | `String "MismatchedSessionId" -> `MismatchedSessionId
+      | `String "MissingScope" -> `MissingScope
+      | `String "NoCredentials" -> `NoCredentials
+      | `String "SubdomainRegistrationWellKnownUnavailable" ->
+          `SubdomainRegistrationWellKnownUnavailable
+      | `String "SubdomainRegistrationUnauthorized" ->
+          `SubdomainRegistrationUnauthorized
+      | `String "SubdomainRegistrationWellKnownMalformed" ->
+          `SubdomainRegistrationWellKnownMalformed
+      | `String "SessionProviderWellKnownUnavailable" ->
+          `SessionProviderWellKnownUnavailable
+      | `String "RelyingPartyWellKnownUnavailable" ->
+          `RelyingPartyWellKnownUnavailable
+      | `String "FederatedKeyThumbprintMismatch" ->
+          `FederatedKeyThumbprintMismatch
+      | `String "InvalidFederatedSessionUrl" -> `InvalidFederatedSessionUrl
+      | `String "InvalidFederatedKey" -> `InvalidFederatedKey
+      | `String "TooManyRelyingOriginLabels" -> `TooManyRelyingOriginLabels
+      | `String "BoundCookieSetForbidden" -> `BoundCookieSetForbidden
+      | `String "NetError" -> `NetError
+      | `String "ProxyError" -> `ProxyError
+      | `String "EmptySessionConfig" -> `EmptySessionConfig
+      | `String "InvalidCredentialsConfig" -> `InvalidCredentialsConfig
+      | `String "InvalidCredentialsType" -> `InvalidCredentialsType
+      | `String "InvalidCredentialsEmptyName" -> `InvalidCredentialsEmptyName
+      | `String "InvalidCredentialsCookie" -> `InvalidCredentialsCookie
+      | `String "PersistentHttpError" -> `PersistentHttpError
+      | `String "RegistrationAttemptedChallenge" ->
+          `RegistrationAttemptedChallenge
+      | `String "InvalidScopeOrigin" -> `InvalidScopeOrigin
+      | `String "ScopeOriginContainsPath" -> `ScopeOriginContainsPath
+      | `String "RefreshInitiatorNotString" -> `RefreshInitiatorNotString
+      | `String "RefreshInitiatorInvalidHostPattern" ->
+          `RefreshInitiatorInvalidHostPattern
+      | `String "InvalidScopeSpecification" -> `InvalidScopeSpecification
+      | `String "MissingScopeSpecificationType" ->
+          `MissingScopeSpecificationType
+      | `String "EmptyScopeSpecificationDomain" ->
+          `EmptyScopeSpecificationDomain
+      | `String "EmptyScopeSpecificationPath" -> `EmptyScopeSpecificationPath
+      | `String "InvalidScopeSpecificationType" ->
+          `InvalidScopeSpecificationType
+      | `String "InvalidScopeIncludeSite" -> `InvalidScopeIncludeSite
+      | `String "MissingScopeIncludeSite" -> `MissingScopeIncludeSite
+      | `String "FederatedNotAuthorizedByProvider" ->
+          `FederatedNotAuthorizedByProvider
+      | `String "FederatedNotAuthorizedByRelyingParty" ->
+          `FederatedNotAuthorizedByRelyingParty
+      | `String "SessionProviderWellKnownMalformed" ->
+          `SessionProviderWellKnownMalformed
+      | `String "SessionProviderWellKnownHasProviderOrigin" ->
+          `SessionProviderWellKnownHasProviderOrigin
+      | `String "RelyingPartyWellKnownMalformed" ->
+          `RelyingPartyWellKnownMalformed
+      | `String "RelyingPartyWellKnownHasRelyingOrigins" ->
+          `RelyingPartyWellKnownHasRelyingOrigins
+      | `String "InvalidFederatedSessionProviderSessionMissing" ->
+          `InvalidFederatedSessionProviderSessionMissing
+      | `String "InvalidFederatedSessionWrongProviderOrigin" ->
+          `InvalidFederatedSessionWrongProviderOrigin
+      | `String "InvalidCredentialsCookieCreationTime" ->
+          `InvalidCredentialsCookieCreationTime
+      | `String "InvalidCredentialsCookieName" -> `InvalidCredentialsCookieName
+      | `String "InvalidCredentialsCookieParsing" ->
+          `InvalidCredentialsCookieParsing
+      | `String "InvalidCredentialsCookieUnpermittedAttribute" ->
+          `InvalidCredentialsCookieUnpermittedAttribute
+      | `String "InvalidCredentialsCookieInvalidDomain" ->
+          `InvalidCredentialsCookieInvalidDomain
+      | `String "InvalidCredentialsCookiePrefix" ->
+          `InvalidCredentialsCookiePrefix
+      | `String "InvalidScopeRulePath" -> `InvalidScopeRulePath
+      | `String "InvalidScopeRuleHostPattern" -> `InvalidScopeRuleHostPattern
+      | `String "ScopeRuleOriginScopedHostPatternMismatch" ->
+          `ScopeRuleOriginScopedHostPatternMismatch
+      | `String "ScopeRuleSiteScopedHostPatternMismatch" ->
+          `ScopeRuleSiteScopedHostPatternMismatch
+      | `String "SigningQuotaExceeded" -> `SigningQuotaExceeded
+      | `String "InvalidConfigJson" -> `InvalidConfigJson
+      | `String "InvalidFederatedSessionProviderFailedToRestoreKey" ->
+          `InvalidFederatedSessionProviderFailedToRestoreKey
+      | `String "FailedToUnwrapKey" -> `FailedToUnwrapKey
+      | `String "SessionDeletedDuringRefresh" -> `SessionDeletedDuringRefresh
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__deviceboundsessionfetchresult = function
+      | `Success -> `String "Success"
+      | `KeyError -> `String "KeyError"
+      | `SigningError -> `String "SigningError"
+      | `ServerRequestedTermination -> `String "ServerRequestedTermination"
+      | `InvalidSessionId -> `String "InvalidSessionId"
+      | `InvalidChallenge -> `String "InvalidChallenge"
+      | `TooManyChallenges -> `String "TooManyChallenges"
+      | `InvalidFetcherUrl -> `String "InvalidFetcherUrl"
+      | `InvalidRefreshUrl -> `String "InvalidRefreshUrl"
+      | `TransientHttpError -> `String "TransientHttpError"
+      | `ScopeOriginSameSiteMismatch -> `String "ScopeOriginSameSiteMismatch"
+      | `RefreshUrlSameSiteMismatch -> `String "RefreshUrlSameSiteMismatch"
+      | `MismatchedSessionId -> `String "MismatchedSessionId"
+      | `MissingScope -> `String "MissingScope"
+      | `NoCredentials -> `String "NoCredentials"
+      | `SubdomainRegistrationWellKnownUnavailable ->
+          `String "SubdomainRegistrationWellKnownUnavailable"
+      | `SubdomainRegistrationUnauthorized ->
+          `String "SubdomainRegistrationUnauthorized"
+      | `SubdomainRegistrationWellKnownMalformed ->
+          `String "SubdomainRegistrationWellKnownMalformed"
+      | `SessionProviderWellKnownUnavailable ->
+          `String "SessionProviderWellKnownUnavailable"
+      | `RelyingPartyWellKnownUnavailable ->
+          `String "RelyingPartyWellKnownUnavailable"
+      | `FederatedKeyThumbprintMismatch ->
+          `String "FederatedKeyThumbprintMismatch"
+      | `InvalidFederatedSessionUrl -> `String "InvalidFederatedSessionUrl"
+      | `InvalidFederatedKey -> `String "InvalidFederatedKey"
+      | `TooManyRelyingOriginLabels -> `String "TooManyRelyingOriginLabels"
+      | `BoundCookieSetForbidden -> `String "BoundCookieSetForbidden"
+      | `NetError -> `String "NetError"
+      | `ProxyError -> `String "ProxyError"
+      | `EmptySessionConfig -> `String "EmptySessionConfig"
+      | `InvalidCredentialsConfig -> `String "InvalidCredentialsConfig"
+      | `InvalidCredentialsType -> `String "InvalidCredentialsType"
+      | `InvalidCredentialsEmptyName -> `String "InvalidCredentialsEmptyName"
+      | `InvalidCredentialsCookie -> `String "InvalidCredentialsCookie"
+      | `PersistentHttpError -> `String "PersistentHttpError"
+      | `RegistrationAttemptedChallenge ->
+          `String "RegistrationAttemptedChallenge"
+      | `InvalidScopeOrigin -> `String "InvalidScopeOrigin"
+      | `ScopeOriginContainsPath -> `String "ScopeOriginContainsPath"
+      | `RefreshInitiatorNotString -> `String "RefreshInitiatorNotString"
+      | `RefreshInitiatorInvalidHostPattern ->
+          `String "RefreshInitiatorInvalidHostPattern"
+      | `InvalidScopeSpecification -> `String "InvalidScopeSpecification"
+      | `MissingScopeSpecificationType ->
+          `String "MissingScopeSpecificationType"
+      | `EmptyScopeSpecificationDomain ->
+          `String "EmptyScopeSpecificationDomain"
+      | `EmptyScopeSpecificationPath -> `String "EmptyScopeSpecificationPath"
+      | `InvalidScopeSpecificationType ->
+          `String "InvalidScopeSpecificationType"
+      | `InvalidScopeIncludeSite -> `String "InvalidScopeIncludeSite"
+      | `MissingScopeIncludeSite -> `String "MissingScopeIncludeSite"
+      | `FederatedNotAuthorizedByProvider ->
+          `String "FederatedNotAuthorizedByProvider"
+      | `FederatedNotAuthorizedByRelyingParty ->
+          `String "FederatedNotAuthorizedByRelyingParty"
+      | `SessionProviderWellKnownMalformed ->
+          `String "SessionProviderWellKnownMalformed"
+      | `SessionProviderWellKnownHasProviderOrigin ->
+          `String "SessionProviderWellKnownHasProviderOrigin"
+      | `RelyingPartyWellKnownMalformed ->
+          `String "RelyingPartyWellKnownMalformed"
+      | `RelyingPartyWellKnownHasRelyingOrigins ->
+          `String "RelyingPartyWellKnownHasRelyingOrigins"
+      | `InvalidFederatedSessionProviderSessionMissing ->
+          `String "InvalidFederatedSessionProviderSessionMissing"
+      | `InvalidFederatedSessionWrongProviderOrigin ->
+          `String "InvalidFederatedSessionWrongProviderOrigin"
+      | `InvalidCredentialsCookieCreationTime ->
+          `String "InvalidCredentialsCookieCreationTime"
+      | `InvalidCredentialsCookieName -> `String "InvalidCredentialsCookieName"
+      | `InvalidCredentialsCookieParsing ->
+          `String "InvalidCredentialsCookieParsing"
+      | `InvalidCredentialsCookieUnpermittedAttribute ->
+          `String "InvalidCredentialsCookieUnpermittedAttribute"
+      | `InvalidCredentialsCookieInvalidDomain ->
+          `String "InvalidCredentialsCookieInvalidDomain"
+      | `InvalidCredentialsCookiePrefix ->
+          `String "InvalidCredentialsCookiePrefix"
+      | `InvalidScopeRulePath -> `String "InvalidScopeRulePath"
+      | `InvalidScopeRuleHostPattern -> `String "InvalidScopeRuleHostPattern"
+      | `ScopeRuleOriginScopedHostPatternMismatch ->
+          `String "ScopeRuleOriginScopedHostPatternMismatch"
+      | `ScopeRuleSiteScopedHostPatternMismatch ->
+          `String "ScopeRuleSiteScopedHostPatternMismatch"
+      | `SigningQuotaExceeded -> `String "SigningQuotaExceeded"
+      | `InvalidConfigJson -> `String "InvalidConfigJson"
+      | `InvalidFederatedSessionProviderFailedToRestoreKey ->
+          `String "InvalidFederatedSessionProviderFailedToRestoreKey"
+      | `FailedToUnwrapKey -> `String "FailedToUnwrapKey"
+      | `SessionDeletedDuringRefresh -> `String "SessionDeletedDuringRefresh"
+
+    type t = _deviceboundsessionfetchresult
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "A fetch result for a device bound session creation or refresh."]
+  end
+
+  and CreationEventDetails : sig
+    type t = {
+      fetchResult : DeviceBoundSessionFetchResult.t;
+          [@key "fetchResult"] [@ocaml.doc "The result of the fetch attempt."]
+      newSession : DeviceBoundSession.t option;
+          [@key "newSession"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The session if there was a newly created session. This is \
+             populated for\n\
+             all successful creation events."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to creation."]
+  end = struct
+    type t = {
+      fetchResult : DeviceBoundSessionFetchResult.t;
+          [@key "fetchResult"] [@ocaml.doc "The result of the fetch attempt."]
+      newSession : DeviceBoundSession.t option;
+          [@key "newSession"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The session if there was a newly created session. This is \
+             populated for\n\
+             all successful creation events."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to creation."]
+  end
+
+  and RefreshEventDetails : sig
+    type _refresheventdetails_refreshresult =
+      [ `Refreshed
+      | `InitializedService
+      | `Unreachable
+      | `ServerError
+      | `RefreshQuotaExceeded
+      | `FatalError
+      | `SigningQuotaExceeded ]
+
+    val _refresheventdetails_refreshresult_of_yojson :
+      Yojson.Basic.t -> _refresheventdetails_refreshresult
+
+    val yojson_of__refresheventdetails_refreshresult :
+      _refresheventdetails_refreshresult -> Yojson.Basic.t
+
+    type t = {
+      refreshResult : _refresheventdetails_refreshresult;
+          [@key "refreshResult"] [@ocaml.doc "The result of a refresh."]
+      fetchResult : DeviceBoundSessionFetchResult.t option;
+          [@key "fetchResult"]
+          [@yojson.option]
+          [@ocaml.doc "If there was a fetch attempt, the result of that."]
+      newSession : DeviceBoundSession.t option;
+          [@key "newSession"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The session display if there was a newly created session. This is \
+             populated\n\
+             for any refresh event that modifies the session config."]
+      wasFullyProactiveRefresh : bool;
+          [@key "wasFullyProactiveRefresh"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::RefreshEventResult::was_fully_proactive_refresh`."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to refresh."]
+  end = struct
+    type _refresheventdetails_refreshresult =
+      [ `Refreshed
+      | `InitializedService
+      | `Unreachable
+      | `ServerError
+      | `RefreshQuotaExceeded
+      | `FatalError
+      | `SigningQuotaExceeded ]
+
+    let _refresheventdetails_refreshresult_of_yojson = function
+      | `String "Refreshed" -> `Refreshed
+      | `String "InitializedService" -> `InitializedService
+      | `String "Unreachable" -> `Unreachable
+      | `String "ServerError" -> `ServerError
+      | `String "RefreshQuotaExceeded" -> `RefreshQuotaExceeded
+      | `String "FatalError" -> `FatalError
+      | `String "SigningQuotaExceeded" -> `SigningQuotaExceeded
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__refresheventdetails_refreshresult = function
+      | `Refreshed -> `String "Refreshed"
+      | `InitializedService -> `String "InitializedService"
+      | `Unreachable -> `String "Unreachable"
+      | `ServerError -> `String "ServerError"
+      | `RefreshQuotaExceeded -> `String "RefreshQuotaExceeded"
+      | `FatalError -> `String "FatalError"
+      | `SigningQuotaExceeded -> `String "SigningQuotaExceeded"
+
+    type t = {
+      refreshResult : _refresheventdetails_refreshresult;
+          [@key "refreshResult"] [@ocaml.doc "The result of a refresh."]
+      fetchResult : DeviceBoundSessionFetchResult.t option;
+          [@key "fetchResult"]
+          [@yojson.option]
+          [@ocaml.doc "If there was a fetch attempt, the result of that."]
+      newSession : DeviceBoundSession.t option;
+          [@key "newSession"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The session display if there was a newly created session. This is \
+             populated\n\
+             for any refresh event that modifies the session config."]
+      wasFullyProactiveRefresh : bool;
+          [@key "wasFullyProactiveRefresh"]
+          [@ocaml.doc
+            "See comments on \
+             `net::device_bound_sessions::RefreshEventResult::was_fully_proactive_refresh`."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to refresh."]
+  end
+
+  and TerminationEventDetails : sig
+    type _terminationeventdetails_deletionreason =
+      [ `Expired
+      | `FailedToRestoreKey
+      | `FailedToUnwrapKey
+      | `StoragePartitionCleared
+      | `ClearBrowsingData
+      | `ServerRequested
+      | `InvalidSessionParams
+      | `RefreshFatalError ]
+
+    val _terminationeventdetails_deletionreason_of_yojson :
+      Yojson.Basic.t -> _terminationeventdetails_deletionreason
+
+    val yojson_of__terminationeventdetails_deletionreason :
+      _terminationeventdetails_deletionreason -> Yojson.Basic.t
+
+    type t = {
+      deletionReason : _terminationeventdetails_deletionreason;
+          [@key "deletionReason"]
+          [@ocaml.doc "The reason for a session being deleted."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to termination."]
+  end = struct
+    type _terminationeventdetails_deletionreason =
+      [ `Expired
+      | `FailedToRestoreKey
+      | `FailedToUnwrapKey
+      | `StoragePartitionCleared
+      | `ClearBrowsingData
+      | `ServerRequested
+      | `InvalidSessionParams
+      | `RefreshFatalError ]
+
+    let _terminationeventdetails_deletionreason_of_yojson = function
+      | `String "Expired" -> `Expired
+      | `String "FailedToRestoreKey" -> `FailedToRestoreKey
+      | `String "FailedToUnwrapKey" -> `FailedToUnwrapKey
+      | `String "StoragePartitionCleared" -> `StoragePartitionCleared
+      | `String "ClearBrowsingData" -> `ClearBrowsingData
+      | `String "ServerRequested" -> `ServerRequested
+      | `String "InvalidSessionParams" -> `InvalidSessionParams
+      | `String "RefreshFatalError" -> `RefreshFatalError
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__terminationeventdetails_deletionreason = function
+      | `Expired -> `String "Expired"
+      | `FailedToRestoreKey -> `String "FailedToRestoreKey"
+      | `FailedToUnwrapKey -> `String "FailedToUnwrapKey"
+      | `StoragePartitionCleared -> `String "StoragePartitionCleared"
+      | `ClearBrowsingData -> `String "ClearBrowsingData"
+      | `ServerRequested -> `String "ServerRequested"
+      | `InvalidSessionParams -> `String "InvalidSessionParams"
+      | `RefreshFatalError -> `String "RefreshFatalError"
+
+    type t = {
+      deletionReason : _terminationeventdetails_deletionreason;
+          [@key "deletionReason"]
+          [@ocaml.doc "The reason for a session being deleted."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to termination."]
+  end
+
+  and ChallengeEventDetails : sig
+    type _challengeeventdetails_challengeresult =
+      [ `Success | `NoSessionId | `NoSessionMatch | `CantSetBoundCookie ]
+
+    val _challengeeventdetails_challengeresult_of_yojson :
+      Yojson.Basic.t -> _challengeeventdetails_challengeresult
+
+    val yojson_of__challengeeventdetails_challengeresult :
+      _challengeeventdetails_challengeresult -> Yojson.Basic.t
+
+    type t = {
+      challengeResult : _challengeeventdetails_challengeresult;
+          [@key "challengeResult"] [@ocaml.doc "The result of a challenge."]
+      challenge : string; [@key "challenge"] [@ocaml.doc "The challenge set."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to challenges."]
+  end = struct
+    type _challengeeventdetails_challengeresult =
+      [ `Success | `NoSessionId | `NoSessionMatch | `CantSetBoundCookie ]
+
+    let _challengeeventdetails_challengeresult_of_yojson = function
+      | `String "Success" -> `Success
+      | `String "NoSessionId" -> `NoSessionId
+      | `String "NoSessionMatch" -> `NoSessionMatch
+      | `String "CantSetBoundCookie" -> `CantSetBoundCookie
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__challengeeventdetails_challengeresult = function
+      | `Success -> `String "Success"
+      | `NoSessionId -> `String "NoSessionId"
+      | `NoSessionMatch -> `String "NoSessionMatch"
+      | `CantSetBoundCookie -> `String "CantSetBoundCookie"
+
+    type t = {
+      challengeResult : _challengeeventdetails_challengeresult;
+          [@key "challengeResult"] [@ocaml.doc "The result of a challenge."]
+      challenge : string; [@key "challenge"] [@ocaml.doc "The challenge set."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Session event details specific to challenges."]
   end
 
   and LoadNetworkResourcePageResult : sig

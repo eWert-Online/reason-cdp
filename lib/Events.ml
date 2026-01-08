@@ -2914,6 +2914,58 @@ And after 'enableReportingApi' for all existing reports. |desc}]
   end
   [@@ocaml.doc
     {desc|Triggered when the initial set of device bound sessions is added. |desc}]
+
+  module DeviceBoundSessionEventOccurred = struct
+    let name = "Network.deviceBoundSessionEventOccurred"
+
+    type result = {
+      eventId : Types.Network.DeviceBoundSessionEventId.t;
+          [@key "eventId"]
+          [@ocaml.doc "A unique identifier for this session event."]
+      site : string;
+          [@key "site"]
+          [@ocaml.doc "The site this session event is associated with."]
+      succeeded : bool;
+          [@key "succeeded"]
+          [@ocaml.doc "Whether this event was considered successful."]
+      sessionId : string option;
+          [@key "sessionId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The session ID this event is associated with. May not be \
+             populated for\n\
+             failed events."]
+      creationEventDetails : Types.Network.CreationEventDetails.t option;
+          [@key "creationEventDetails"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The below are the different session event type details. Exactly \
+             one is populated."]
+      refreshEventDetails : Types.Network.RefreshEventDetails.t option;
+          [@key "refreshEventDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      terminationEventDetails : Types.Network.TerminationEventDetails.t option;
+          [@key "terminationEventDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      challengeEventDetails : Types.Network.ChallengeEventDetails.t option;
+          [@key "challengeEventDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Triggered when a device bound session event occurs. |desc}]
 end
 
 module Overlay = struct
