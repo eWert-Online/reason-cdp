@@ -22321,6 +22321,9 @@ detailed cookie information in the `cookies` field. |desc}]
             [@key "postData"]
             [@ocaml.doc
               "Request body string, omitting files from multipart requests"]
+        base64Encoded : bool;
+            [@key "base64Encoded"]
+            [@ocaml.doc "True, if content was sent as base64."]
       }
 
       type error = { code : int; message : string }
@@ -22339,6 +22342,9 @@ detailed cookie information in the `cookies` field. |desc}]
             [@key "postData"]
             [@ocaml.doc
               "Request body string, omitting files from multipart requests"]
+        base64Encoded : bool;
+            [@key "base64Encoded"]
+            [@ocaml.doc "True, if content was sent as base64."]
       }
       [@@deriving yojson]
 
