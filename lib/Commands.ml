@@ -22921,10 +22921,6 @@ attribute, user, password. |desc}]
             [@key "priority"]
             [@yojson.option]
             [@ocaml.doc "Cookie Priority type."]
-        sameParty : bool option;
-            [@key "sameParty"]
-            [@yojson.option]
-            [@ocaml.doc "True if cookie is SameParty."]
         sourceScheme : Types.Network.CookieSourceScheme.t option;
             [@key "sourceScheme"]
             [@yojson.option]
@@ -22949,8 +22945,7 @@ attribute, user, password. |desc}]
       [@@deriving yojson]
 
       let make ~name ~value ?url ?domain ?path ?secure ?httpOnly ?sameSite
-          ?expires ?priority ?sameParty ?sourceScheme ?sourcePort ?partitionKey
-          () =
+          ?expires ?priority ?sourceScheme ?sourcePort ?partitionKey () =
         {
           name;
           value;
@@ -22962,7 +22957,6 @@ attribute, user, password. |desc}]
           sameSite;
           expires;
           priority;
-          sameParty;
           sourceScheme;
           sourcePort;
           partitionKey;

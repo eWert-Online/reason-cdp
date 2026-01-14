@@ -1549,8 +1549,6 @@ and Audits : sig
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
-      | `ExcludeInvalidSameParty
-      | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
       | `ExcludeThirdPartyCookieBlockedInFirstPartySet
       | `ExcludeThirdPartyPhaseout
@@ -2984,8 +2982,6 @@ end = struct
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
-      | `ExcludeInvalidSameParty
-      | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
       | `ExcludeThirdPartyCookieBlockedInFirstPartySet
       | `ExcludeThirdPartyPhaseout
@@ -3006,8 +3002,6 @@ end = struct
       | `ExcludeSameSiteNoneInsecure
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
-      | `ExcludeInvalidSameParty
-      | `ExcludeSamePartyCrossPartyContext
       | `ExcludeDomainNonASCII
       | `ExcludeThirdPartyCookieBlockedInFirstPartySet
       | `ExcludeThirdPartyPhaseout
@@ -3020,9 +3014,6 @@ end = struct
       | `String "ExcludeSameSiteNoneInsecure" -> `ExcludeSameSiteNoneInsecure
       | `String "ExcludeSameSiteLax" -> `ExcludeSameSiteLax
       | `String "ExcludeSameSiteStrict" -> `ExcludeSameSiteStrict
-      | `String "ExcludeInvalidSameParty" -> `ExcludeInvalidSameParty
-      | `String "ExcludeSamePartyCrossPartyContext" ->
-          `ExcludeSamePartyCrossPartyContext
       | `String "ExcludeDomainNonASCII" -> `ExcludeDomainNonASCII
       | `String "ExcludeThirdPartyCookieBlockedInFirstPartySet" ->
           `ExcludeThirdPartyCookieBlockedInFirstPartySet
@@ -3038,9 +3029,6 @@ end = struct
       | `ExcludeSameSiteNoneInsecure -> `String "ExcludeSameSiteNoneInsecure"
       | `ExcludeSameSiteLax -> `String "ExcludeSameSiteLax"
       | `ExcludeSameSiteStrict -> `String "ExcludeSameSiteStrict"
-      | `ExcludeInvalidSameParty -> `String "ExcludeInvalidSameParty"
-      | `ExcludeSamePartyCrossPartyContext ->
-          `String "ExcludeSamePartyCrossPartyContext"
       | `ExcludeDomainNonASCII -> `String "ExcludeDomainNonASCII"
       | `ExcludeThirdPartyCookieBlockedInFirstPartySet ->
           `String "ExcludeThirdPartyCookieBlockedInFirstPartySet"
@@ -19238,8 +19226,6 @@ and Network : sig
           [@ocaml.doc "Cookie SameSite type."]
       priority : CookiePriority.t;
           [@key "priority"] [@ocaml.doc "Cookie Priority"]
-      sameParty : bool;
-          [@key "sameParty"] [@ocaml.doc "True if cookie is SameParty."]
       sourceScheme : CookieSourceScheme.t;
           [@key "sourceScheme"] [@ocaml.doc "Cookie source scheme type."]
       sourcePort : number;
@@ -19281,8 +19267,6 @@ and Network : sig
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
-      | `SamePartyFromCrossPartyContext
-      | `SamePartyConflictsWithOtherAttributes
       | `NameValuePairExceedsMaxSize
       | `DisallowedCharacter
       | `NoCookieContent ]
@@ -19315,7 +19299,6 @@ and Network : sig
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
-      | `SamePartyFromCrossPartyContext
       | `NameValuePairExceedsMaxSize
       | `PortMismatch
       | `SchemeMismatch
@@ -19467,10 +19450,6 @@ and Network : sig
           [@ocaml.doc "Cookie expiration date, session cookie if not set"]
       priority : CookiePriority.t option;
           [@key "priority"] [@yojson.option] [@ocaml.doc "Cookie Priority."]
-      sameParty : bool option;
-          [@key "sameParty"]
-          [@yojson.option]
-          [@ocaml.doc "True if cookie is SameParty."]
       sourceScheme : CookieSourceScheme.t option;
           [@key "sourceScheme"]
           [@yojson.option]
@@ -22612,8 +22591,6 @@ end = struct
           [@ocaml.doc "Cookie SameSite type."]
       priority : CookiePriority.t;
           [@key "priority"] [@ocaml.doc "Cookie Priority"]
-      sameParty : bool;
-          [@key "sameParty"] [@ocaml.doc "True if cookie is SameParty."]
       sourceScheme : CookieSourceScheme.t;
           [@key "sourceScheme"] [@ocaml.doc "Cookie source scheme type."]
       sourcePort : number;
@@ -22660,8 +22637,6 @@ end = struct
           [@ocaml.doc "Cookie SameSite type."]
       priority : CookiePriority.t;
           [@key "priority"] [@ocaml.doc "Cookie Priority"]
-      sameParty : bool;
-          [@key "sameParty"] [@ocaml.doc "True if cookie is SameParty."]
       sourceScheme : CookieSourceScheme.t;
           [@key "sourceScheme"] [@ocaml.doc "Cookie source scheme type."]
       sourcePort : number;
@@ -22703,8 +22678,6 @@ end = struct
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
-      | `SamePartyFromCrossPartyContext
-      | `SamePartyConflictsWithOtherAttributes
       | `NameValuePairExceedsMaxSize
       | `DisallowedCharacter
       | `NoCookieContent ]
@@ -22738,8 +22711,6 @@ end = struct
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
-      | `SamePartyFromCrossPartyContext
-      | `SamePartyConflictsWithOtherAttributes
       | `NameValuePairExceedsMaxSize
       | `DisallowedCharacter
       | `NoCookieContent ]
@@ -22765,10 +22736,6 @@ end = struct
       | `String "SchemefulSameSiteLax" -> `SchemefulSameSiteLax
       | `String "SchemefulSameSiteUnspecifiedTreatedAsLax" ->
           `SchemefulSameSiteUnspecifiedTreatedAsLax
-      | `String "SamePartyFromCrossPartyContext" ->
-          `SamePartyFromCrossPartyContext
-      | `String "SamePartyConflictsWithOtherAttributes" ->
-          `SamePartyConflictsWithOtherAttributes
       | `String "NameValuePairExceedsMaxSize" -> `NameValuePairExceedsMaxSize
       | `String "DisallowedCharacter" -> `DisallowedCharacter
       | `String "NoCookieContent" -> `NoCookieContent
@@ -22796,10 +22763,6 @@ end = struct
       | `SchemefulSameSiteLax -> `String "SchemefulSameSiteLax"
       | `SchemefulSameSiteUnspecifiedTreatedAsLax ->
           `String "SchemefulSameSiteUnspecifiedTreatedAsLax"
-      | `SamePartyFromCrossPartyContext ->
-          `String "SamePartyFromCrossPartyContext"
-      | `SamePartyConflictsWithOtherAttributes ->
-          `String "SamePartyConflictsWithOtherAttributes"
       | `NameValuePairExceedsMaxSize -> `String "NameValuePairExceedsMaxSize"
       | `DisallowedCharacter -> `String "DisallowedCharacter"
       | `NoCookieContent -> `String "NoCookieContent"
@@ -22826,7 +22789,6 @@ end = struct
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
-      | `SamePartyFromCrossPartyContext
       | `NameValuePairExceedsMaxSize
       | `PortMismatch
       | `SchemeMismatch
@@ -22855,7 +22817,6 @@ end = struct
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
       | `SchemefulSameSiteUnspecifiedTreatedAsLax
-      | `SamePartyFromCrossPartyContext
       | `NameValuePairExceedsMaxSize
       | `PortMismatch
       | `SchemeMismatch
@@ -22879,8 +22840,6 @@ end = struct
       | `String "SchemefulSameSiteLax" -> `SchemefulSameSiteLax
       | `String "SchemefulSameSiteUnspecifiedTreatedAsLax" ->
           `SchemefulSameSiteUnspecifiedTreatedAsLax
-      | `String "SamePartyFromCrossPartyContext" ->
-          `SamePartyFromCrossPartyContext
       | `String "NameValuePairExceedsMaxSize" -> `NameValuePairExceedsMaxSize
       | `String "PortMismatch" -> `PortMismatch
       | `String "SchemeMismatch" -> `SchemeMismatch
@@ -22906,8 +22865,6 @@ end = struct
       | `SchemefulSameSiteLax -> `String "SchemefulSameSiteLax"
       | `SchemefulSameSiteUnspecifiedTreatedAsLax ->
           `String "SchemefulSameSiteUnspecifiedTreatedAsLax"
-      | `SamePartyFromCrossPartyContext ->
-          `String "SamePartyFromCrossPartyContext"
       | `NameValuePairExceedsMaxSize -> `String "NameValuePairExceedsMaxSize"
       | `PortMismatch -> `String "PortMismatch"
       | `SchemeMismatch -> `String "SchemeMismatch"
@@ -23173,10 +23130,6 @@ end = struct
           [@ocaml.doc "Cookie expiration date, session cookie if not set"]
       priority : CookiePriority.t option;
           [@key "priority"] [@yojson.option] [@ocaml.doc "Cookie Priority."]
-      sameParty : bool option;
-          [@key "sameParty"]
-          [@yojson.option]
-          [@ocaml.doc "True if cookie is SameParty."]
       sourceScheme : CookieSourceScheme.t option;
           [@key "sourceScheme"]
           [@yojson.option]
@@ -23232,10 +23185,6 @@ end = struct
           [@ocaml.doc "Cookie expiration date, session cookie if not set"]
       priority : CookiePriority.t option;
           [@key "priority"] [@yojson.option] [@ocaml.doc "Cookie Priority."]
-      sameParty : bool option;
-          [@key "sameParty"]
-          [@yojson.option]
-          [@ocaml.doc "True if cookie is SameParty."]
       sourceScheme : CookieSourceScheme.t option;
           [@key "sourceScheme"]
           [@yojson.option]
