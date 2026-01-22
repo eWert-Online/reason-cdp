@@ -18781,8 +18781,6 @@ and Network : sig
       | `PreflightInvalidAllowCredentials
       | `PreflightMissingAllowExternal
       | `PreflightInvalidAllowExternal
-      | `PreflightMissingAllowPrivateNetwork
-      | `PreflightInvalidAllowPrivateNetwork
       | `InvalidAllowMethodsPreflightResponse
       | `InvalidAllowHeadersPreflightResponse
       | `MethodDisallowedByPreflightResponse
@@ -18790,12 +18788,7 @@ and Network : sig
       | `RedirectContainsCredentials
       | `InsecurePrivateNetwork
       | `InvalidPrivateNetworkAccess
-      | `UnexpectedPrivateNetworkAccess
       | `NoCorsRedirectModeNotFollow
-      | `PreflightMissingPrivateNetworkAccessId
-      | `PreflightMissingPrivateNetworkAccessName
-      | `PrivateNetworkAccessPermissionUnavailable
-      | `PrivateNetworkAccessPermissionDenied
       | `LocalNetworkAccessPermissionDenied ]
 
     val _corserror_of_yojson : Yojson.Basic.t -> _corserror
@@ -21562,8 +21555,6 @@ end = struct
       | `PreflightInvalidAllowCredentials
       | `PreflightMissingAllowExternal
       | `PreflightInvalidAllowExternal
-      | `PreflightMissingAllowPrivateNetwork
-      | `PreflightInvalidAllowPrivateNetwork
       | `InvalidAllowMethodsPreflightResponse
       | `InvalidAllowHeadersPreflightResponse
       | `MethodDisallowedByPreflightResponse
@@ -21571,12 +21562,7 @@ end = struct
       | `RedirectContainsCredentials
       | `InsecurePrivateNetwork
       | `InvalidPrivateNetworkAccess
-      | `UnexpectedPrivateNetworkAccess
       | `NoCorsRedirectModeNotFollow
-      | `PreflightMissingPrivateNetworkAccessId
-      | `PreflightMissingPrivateNetworkAccessName
-      | `PrivateNetworkAccessPermissionUnavailable
-      | `PrivateNetworkAccessPermissionDenied
       | `LocalNetworkAccessPermissionDenied ]
 
     val _corserror_of_yojson : Yojson.Basic.t -> _corserror
@@ -21605,8 +21591,6 @@ end = struct
       | `PreflightInvalidAllowCredentials
       | `PreflightMissingAllowExternal
       | `PreflightInvalidAllowExternal
-      | `PreflightMissingAllowPrivateNetwork
-      | `PreflightInvalidAllowPrivateNetwork
       | `InvalidAllowMethodsPreflightResponse
       | `InvalidAllowHeadersPreflightResponse
       | `MethodDisallowedByPreflightResponse
@@ -21614,12 +21598,7 @@ end = struct
       | `RedirectContainsCredentials
       | `InsecurePrivateNetwork
       | `InvalidPrivateNetworkAccess
-      | `UnexpectedPrivateNetworkAccess
       | `NoCorsRedirectModeNotFollow
-      | `PreflightMissingPrivateNetworkAccessId
-      | `PreflightMissingPrivateNetworkAccessName
-      | `PrivateNetworkAccessPermissionUnavailable
-      | `PrivateNetworkAccessPermissionDenied
       | `LocalNetworkAccessPermissionDenied ]
 
     let _corserror_of_yojson = function
@@ -21649,10 +21628,6 @@ end = struct
           `PreflightMissingAllowExternal
       | `String "PreflightInvalidAllowExternal" ->
           `PreflightInvalidAllowExternal
-      | `String "PreflightMissingAllowPrivateNetwork" ->
-          `PreflightMissingAllowPrivateNetwork
-      | `String "PreflightInvalidAllowPrivateNetwork" ->
-          `PreflightInvalidAllowPrivateNetwork
       | `String "InvalidAllowMethodsPreflightResponse" ->
           `InvalidAllowMethodsPreflightResponse
       | `String "InvalidAllowHeadersPreflightResponse" ->
@@ -21664,17 +21639,7 @@ end = struct
       | `String "RedirectContainsCredentials" -> `RedirectContainsCredentials
       | `String "InsecurePrivateNetwork" -> `InsecurePrivateNetwork
       | `String "InvalidPrivateNetworkAccess" -> `InvalidPrivateNetworkAccess
-      | `String "UnexpectedPrivateNetworkAccess" ->
-          `UnexpectedPrivateNetworkAccess
       | `String "NoCorsRedirectModeNotFollow" -> `NoCorsRedirectModeNotFollow
-      | `String "PreflightMissingPrivateNetworkAccessId" ->
-          `PreflightMissingPrivateNetworkAccessId
-      | `String "PreflightMissingPrivateNetworkAccessName" ->
-          `PreflightMissingPrivateNetworkAccessName
-      | `String "PrivateNetworkAccessPermissionUnavailable" ->
-          `PrivateNetworkAccessPermissionUnavailable
-      | `String "PrivateNetworkAccessPermissionDenied" ->
-          `PrivateNetworkAccessPermissionDenied
       | `String "LocalNetworkAccessPermissionDenied" ->
           `LocalNetworkAccessPermissionDenied
       | `String s -> failwith ("unknown enum: " ^ s)
@@ -21707,10 +21672,6 @@ end = struct
           `String "PreflightMissingAllowExternal"
       | `PreflightInvalidAllowExternal ->
           `String "PreflightInvalidAllowExternal"
-      | `PreflightMissingAllowPrivateNetwork ->
-          `String "PreflightMissingAllowPrivateNetwork"
-      | `PreflightInvalidAllowPrivateNetwork ->
-          `String "PreflightInvalidAllowPrivateNetwork"
       | `InvalidAllowMethodsPreflightResponse ->
           `String "InvalidAllowMethodsPreflightResponse"
       | `InvalidAllowHeadersPreflightResponse ->
@@ -21722,17 +21683,7 @@ end = struct
       | `RedirectContainsCredentials -> `String "RedirectContainsCredentials"
       | `InsecurePrivateNetwork -> `String "InsecurePrivateNetwork"
       | `InvalidPrivateNetworkAccess -> `String "InvalidPrivateNetworkAccess"
-      | `UnexpectedPrivateNetworkAccess ->
-          `String "UnexpectedPrivateNetworkAccess"
       | `NoCorsRedirectModeNotFollow -> `String "NoCorsRedirectModeNotFollow"
-      | `PreflightMissingPrivateNetworkAccessId ->
-          `String "PreflightMissingPrivateNetworkAccessId"
-      | `PreflightMissingPrivateNetworkAccessName ->
-          `String "PreflightMissingPrivateNetworkAccessName"
-      | `PrivateNetworkAccessPermissionUnavailable ->
-          `String "PrivateNetworkAccessPermissionUnavailable"
-      | `PrivateNetworkAccessPermissionDenied ->
-          `String "PrivateNetworkAccessPermissionDenied"
       | `LocalNetworkAccessPermissionDenied ->
           `String "LocalNetworkAccessPermissionDenied"
 
