@@ -20099,6 +20099,31 @@ and Network : sig
     [@@ocaml.doc "Unique identifier for a device bound session."]
   end
 
+  and DeviceBoundSessionWithUsage : sig
+    type _deviceboundsessionwithusage_usage =
+      [ `NotInScope
+      | `InScopeRefreshNotYetNeeded
+      | `InScopeRefreshNotAllowed
+      | `ProactiveRefreshNotPossible
+      | `ProactiveRefreshAttempted
+      | `Deferred ]
+
+    val _deviceboundsessionwithusage_usage_of_yojson :
+      Yojson.Basic.t -> _deviceboundsessionwithusage_usage
+
+    val yojson_of__deviceboundsessionwithusage_usage :
+      _deviceboundsessionwithusage_usage -> Yojson.Basic.t
+
+    type t = {
+      sessionKey : DeviceBoundSessionKey.t;
+          [@key "sessionKey"] [@ocaml.doc "The key for the session."]
+      usage : _deviceboundsessionwithusage_usage;
+          [@key "usage"] [@ocaml.doc "How the session was used (or not used)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "How a device bound session was used during a request."]
+  end
+
   and DeviceBoundSessionCookieCraving : sig
     type t = {
       name : string; [@key "name"] [@ocaml.doc "The name of the craving."]
@@ -24463,6 +24488,66 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc "Unique identifier for a device bound session."]
+  end
+
+  and DeviceBoundSessionWithUsage : sig
+    type _deviceboundsessionwithusage_usage =
+      [ `NotInScope
+      | `InScopeRefreshNotYetNeeded
+      | `InScopeRefreshNotAllowed
+      | `ProactiveRefreshNotPossible
+      | `ProactiveRefreshAttempted
+      | `Deferred ]
+
+    val _deviceboundsessionwithusage_usage_of_yojson :
+      Yojson.Basic.t -> _deviceboundsessionwithusage_usage
+
+    val yojson_of__deviceboundsessionwithusage_usage :
+      _deviceboundsessionwithusage_usage -> Yojson.Basic.t
+
+    type t = {
+      sessionKey : DeviceBoundSessionKey.t;
+          [@key "sessionKey"] [@ocaml.doc "The key for the session."]
+      usage : _deviceboundsessionwithusage_usage;
+          [@key "usage"] [@ocaml.doc "How the session was used (or not used)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "How a device bound session was used during a request."]
+  end = struct
+    type _deviceboundsessionwithusage_usage =
+      [ `NotInScope
+      | `InScopeRefreshNotYetNeeded
+      | `InScopeRefreshNotAllowed
+      | `ProactiveRefreshNotPossible
+      | `ProactiveRefreshAttempted
+      | `Deferred ]
+
+    let _deviceboundsessionwithusage_usage_of_yojson = function
+      | `String "NotInScope" -> `NotInScope
+      | `String "InScopeRefreshNotYetNeeded" -> `InScopeRefreshNotYetNeeded
+      | `String "InScopeRefreshNotAllowed" -> `InScopeRefreshNotAllowed
+      | `String "ProactiveRefreshNotPossible" -> `ProactiveRefreshNotPossible
+      | `String "ProactiveRefreshAttempted" -> `ProactiveRefreshAttempted
+      | `String "Deferred" -> `Deferred
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__deviceboundsessionwithusage_usage = function
+      | `NotInScope -> `String "NotInScope"
+      | `InScopeRefreshNotYetNeeded -> `String "InScopeRefreshNotYetNeeded"
+      | `InScopeRefreshNotAllowed -> `String "InScopeRefreshNotAllowed"
+      | `ProactiveRefreshNotPossible -> `String "ProactiveRefreshNotPossible"
+      | `ProactiveRefreshAttempted -> `String "ProactiveRefreshAttempted"
+      | `Deferred -> `String "Deferred"
+
+    type t = {
+      sessionKey : DeviceBoundSessionKey.t;
+          [@key "sessionKey"] [@ocaml.doc "The key for the session."]
+      usage : _deviceboundsessionwithusage_usage;
+          [@key "usage"] [@ocaml.doc "How the session was used (or not used)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "How a device bound session was used during a request."]
   end
 
   and DeviceBoundSessionCookieCraving : sig

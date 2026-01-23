@@ -2558,6 +2558,13 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
       connectTiming : Types.Network.ConnectTiming.t;
           [@key "connectTiming"]
           [@ocaml.doc "Connection timing information for the request."]
+      deviceBoundSessionUsages :
+        Types.Network.DeviceBoundSessionWithUsage.t list option;
+          [@key "deviceBoundSessionUsages"]
+          [@yojson.option]
+          [@ocaml.doc
+            "How the request site's device bound sessions were used during \
+             this request."]
       clientSecurityState : Types.Network.ClientSecurityState.t option;
           [@key "clientSecurityState"]
           [@yojson.option]
