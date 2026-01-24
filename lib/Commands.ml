@@ -4829,7 +4829,9 @@ If the `propertyName` was specified the `values` are resolved as if
 they were property's declaration. If a value cannot be parsed according
 to the provided property syntax, the value is parsed using combined
 syntax as if null `propertyName` was provided. If the value cannot be
-resolved even then, return the provided value without any changes. |desc}]
+resolved even then, return the provided value without any changes.
+Note: this function currently does not resolve CSS random() function,
+it returns unmodified random() function parts.` |desc}]
 
   module GetLonghandProperties = struct
     module Response : sig
@@ -34472,11 +34474,29 @@ one. |desc}]
                true`, `newWindow: true` or\n\
                `background: false`. The life-time of the tab is limited to the \
                life-time of the session."]
+        focus : bool option;
+            [@key "focus"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If specified, the option is used to determine if the new target \
+               should\n\
+               be focused or not. By default, the focus behavior depends on the\n\
+               value of the background field. For example, background=false \
+               and focus=false\n\
+               will result in the target tab being opened but the browser \
+               window remain\n\
+               unchanged (if it was in the background, it will remain in the \
+               background)\n\
+               and background=false with focus=undefined will result in the \
+               window being focused.\n\
+               Using background: true and focus: true is not supported and \
+               will result in an error."]
       }
       [@@deriving yojson]
 
       let make ~url ?left ?top ?width ?height ?windowState ?browserContextId
-          ?enableBeginFrameControl ?newWindow ?background ?forTab ?hidden () =
+          ?enableBeginFrameControl ?newWindow ?background ?forTab ?hidden ?focus
+          () =
         {
           url;
           left;
@@ -34490,6 +34510,7 @@ one. |desc}]
           background;
           forTab;
           hidden;
+          focus;
         }
     end
 
