@@ -34303,6 +34303,614 @@ end = struct
   end
 end
 
+and SmartCardEmulation : sig
+  module rec ResultCode : sig
+    type _resultcode =
+      [ `success
+      | `removed_card
+      | `reset_card
+      | `unpowered_card
+      | `unresponsive_card
+      | `unsupported_card
+      | `reader_unavailable
+      | `sharing_violation
+      | `not_transacted
+      | `no_smartcard
+      | `proto_mismatch
+      | `system_cancelled
+      | `not_ready
+      | `cancelled
+      | `insufficient_buffer
+      | `invalid_handle
+      | `invalid_parameter
+      | `invalid_value
+      | `no_memory
+      | `timeout
+      | `unknown_reader
+      | `unsupported_feature
+      | `no_readers_available
+      | `service_stopped
+      | `no_service
+      | `comm_error
+      | `internal_error
+      | `server_too_busy
+      | `unexpected
+      | `shutdown
+      | `unknown_card
+      | `unknown ]
+
+    val _resultcode_of_yojson : Yojson.Basic.t -> _resultcode
+    val yojson_of__resultcode : _resultcode -> Yojson.Basic.t
+
+    type t = _resultcode
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Indicates the PC/SC error code.\n\n\
+       This maps to:\n\
+       PC/SC Lite: https://pcsclite.apdu.fr/api/group__ErrorCodes.html\n\
+       Microsoft: \
+       https://learn.microsoft.com/en-us/windows/win32/secauthn/authentication-return-values"]
+  end
+
+  and ShareMode : sig
+    type _sharemode = [ `shared | `exclusive | `direct ]
+
+    val _sharemode_of_yojson : Yojson.Basic.t -> _sharemode
+    val yojson_of__sharemode : _sharemode -> Yojson.Basic.t
+
+    type t = _sharemode
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_SHARE_*| values."]
+  end
+
+  and Disposition : sig
+    type _disposition =
+      [ `leave_card | `reset_card | `unpower_card | `eject_card ]
+
+    val _disposition_of_yojson : Yojson.Basic.t -> _disposition
+    val yojson_of__disposition : _disposition -> Yojson.Basic.t
+
+    type t = _disposition
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates what the reader should do with the card."]
+  end
+
+  and ConnectionState : sig
+    type _connectionstate =
+      [ `absent | `present | `swallowed | `powered | `negotiable | `specific ]
+
+    val _connectionstate_of_yojson : Yojson.Basic.t -> _connectionstate
+    val yojson_of__connectionstate : _connectionstate -> Yojson.Basic.t
+
+    type t = _connectionstate
+    [@@deriving yojson]
+    [@@ocaml.doc "Maps to |SCARD_*| connection state values."]
+  end
+
+  and ReaderStateFlags : sig
+    type t = {
+      unaware : bool option;
+          [@key "unaware"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      ignore : bool option;
+          [@key "ignore"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      changed : bool option;
+          [@key "changed"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      unknown : bool option;
+          [@key "unknown"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      unavailable : bool option;
+          [@key "unavailable"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      empty : bool option;
+          [@key "empty"] [@yojson.option] [@ocaml.doc "No description provided"]
+      present : bool option;
+          [@key "present"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      exclusive : bool option;
+          [@key "exclusive"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      inuse : bool option;
+          [@key "inuse"] [@yojson.option] [@ocaml.doc "No description provided"]
+      mute : bool option;
+          [@key "mute"] [@yojson.option] [@ocaml.doc "No description provided"]
+      unpowered : bool option;
+          [@key "unpowered"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_STATE_*| flags."]
+  end
+
+  and ProtocolSet : sig
+    type t = {
+      t0 : bool option;
+          [@key "t0"] [@yojson.option] [@ocaml.doc "No description provided"]
+      t1 : bool option;
+          [@key "t1"] [@yojson.option] [@ocaml.doc "No description provided"]
+      raw : bool option;
+          [@key "raw"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_PROTOCOL_*| flags."]
+  end
+
+  and Protocol : sig
+    type _protocol = [ `t0 | `t1 | `raw ]
+
+    val _protocol_of_yojson : Yojson.Basic.t -> _protocol
+    val yojson_of__protocol : _protocol -> Yojson.Basic.t
+
+    type t = _protocol
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_PROTOCOL_*| values."]
+  end
+
+  and ReaderStateIn : sig
+    type t = {
+      reader : string; [@key "reader"] [@ocaml.doc "No description provided"]
+      currentState : ReaderStateFlags.t;
+          [@key "currentState"] [@ocaml.doc "No description provided"]
+      currentInsertionCount : number;
+          [@key "currentInsertionCount"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ReaderStateOut : sig
+    type t = {
+      reader : string; [@key "reader"] [@ocaml.doc "No description provided"]
+      eventState : ReaderStateFlags.t;
+          [@key "eventState"] [@ocaml.doc "No description provided"]
+      eventCount : number;
+          [@key "eventCount"] [@ocaml.doc "No description provided"]
+      atr : string; [@key "atr"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end = struct
+  module rec ResultCode : sig
+    type _resultcode =
+      [ `success
+      | `removed_card
+      | `reset_card
+      | `unpowered_card
+      | `unresponsive_card
+      | `unsupported_card
+      | `reader_unavailable
+      | `sharing_violation
+      | `not_transacted
+      | `no_smartcard
+      | `proto_mismatch
+      | `system_cancelled
+      | `not_ready
+      | `cancelled
+      | `insufficient_buffer
+      | `invalid_handle
+      | `invalid_parameter
+      | `invalid_value
+      | `no_memory
+      | `timeout
+      | `unknown_reader
+      | `unsupported_feature
+      | `no_readers_available
+      | `service_stopped
+      | `no_service
+      | `comm_error
+      | `internal_error
+      | `server_too_busy
+      | `unexpected
+      | `shutdown
+      | `unknown_card
+      | `unknown ]
+
+    val _resultcode_of_yojson : Yojson.Basic.t -> _resultcode
+    val yojson_of__resultcode : _resultcode -> Yojson.Basic.t
+
+    type t = _resultcode
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Indicates the PC/SC error code.\n\n\
+       This maps to:\n\
+       PC/SC Lite: https://pcsclite.apdu.fr/api/group__ErrorCodes.html\n\
+       Microsoft: \
+       https://learn.microsoft.com/en-us/windows/win32/secauthn/authentication-return-values"]
+  end = struct
+    type _resultcode =
+      [ `success
+      | `removed_card
+      | `reset_card
+      | `unpowered_card
+      | `unresponsive_card
+      | `unsupported_card
+      | `reader_unavailable
+      | `sharing_violation
+      | `not_transacted
+      | `no_smartcard
+      | `proto_mismatch
+      | `system_cancelled
+      | `not_ready
+      | `cancelled
+      | `insufficient_buffer
+      | `invalid_handle
+      | `invalid_parameter
+      | `invalid_value
+      | `no_memory
+      | `timeout
+      | `unknown_reader
+      | `unsupported_feature
+      | `no_readers_available
+      | `service_stopped
+      | `no_service
+      | `comm_error
+      | `internal_error
+      | `server_too_busy
+      | `unexpected
+      | `shutdown
+      | `unknown_card
+      | `unknown ]
+
+    let _resultcode_of_yojson = function
+      | `String "success" -> `success
+      | `String "removed-card" -> `removed_card
+      | `String "reset-card" -> `reset_card
+      | `String "unpowered-card" -> `unpowered_card
+      | `String "unresponsive-card" -> `unresponsive_card
+      | `String "unsupported-card" -> `unsupported_card
+      | `String "reader-unavailable" -> `reader_unavailable
+      | `String "sharing-violation" -> `sharing_violation
+      | `String "not-transacted" -> `not_transacted
+      | `String "no-smartcard" -> `no_smartcard
+      | `String "proto-mismatch" -> `proto_mismatch
+      | `String "system-cancelled" -> `system_cancelled
+      | `String "not-ready" -> `not_ready
+      | `String "cancelled" -> `cancelled
+      | `String "insufficient-buffer" -> `insufficient_buffer
+      | `String "invalid-handle" -> `invalid_handle
+      | `String "invalid-parameter" -> `invalid_parameter
+      | `String "invalid-value" -> `invalid_value
+      | `String "no-memory" -> `no_memory
+      | `String "timeout" -> `timeout
+      | `String "unknown-reader" -> `unknown_reader
+      | `String "unsupported-feature" -> `unsupported_feature
+      | `String "no-readers-available" -> `no_readers_available
+      | `String "service-stopped" -> `service_stopped
+      | `String "no-service" -> `no_service
+      | `String "comm-error" -> `comm_error
+      | `String "internal-error" -> `internal_error
+      | `String "server-too-busy" -> `server_too_busy
+      | `String "unexpected" -> `unexpected
+      | `String "shutdown" -> `shutdown
+      | `String "unknown-card" -> `unknown_card
+      | `String "unknown" -> `unknown
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__resultcode = function
+      | `success -> `String "success"
+      | `removed_card -> `String "removed-card"
+      | `reset_card -> `String "reset-card"
+      | `unpowered_card -> `String "unpowered-card"
+      | `unresponsive_card -> `String "unresponsive-card"
+      | `unsupported_card -> `String "unsupported-card"
+      | `reader_unavailable -> `String "reader-unavailable"
+      | `sharing_violation -> `String "sharing-violation"
+      | `not_transacted -> `String "not-transacted"
+      | `no_smartcard -> `String "no-smartcard"
+      | `proto_mismatch -> `String "proto-mismatch"
+      | `system_cancelled -> `String "system-cancelled"
+      | `not_ready -> `String "not-ready"
+      | `cancelled -> `String "cancelled"
+      | `insufficient_buffer -> `String "insufficient-buffer"
+      | `invalid_handle -> `String "invalid-handle"
+      | `invalid_parameter -> `String "invalid-parameter"
+      | `invalid_value -> `String "invalid-value"
+      | `no_memory -> `String "no-memory"
+      | `timeout -> `String "timeout"
+      | `unknown_reader -> `String "unknown-reader"
+      | `unsupported_feature -> `String "unsupported-feature"
+      | `no_readers_available -> `String "no-readers-available"
+      | `service_stopped -> `String "service-stopped"
+      | `no_service -> `String "no-service"
+      | `comm_error -> `String "comm-error"
+      | `internal_error -> `String "internal-error"
+      | `server_too_busy -> `String "server-too-busy"
+      | `unexpected -> `String "unexpected"
+      | `shutdown -> `String "shutdown"
+      | `unknown_card -> `String "unknown-card"
+      | `unknown -> `String "unknown"
+
+    type t = _resultcode
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Indicates the PC/SC error code.\n\n\
+       This maps to:\n\
+       PC/SC Lite: https://pcsclite.apdu.fr/api/group__ErrorCodes.html\n\
+       Microsoft: \
+       https://learn.microsoft.com/en-us/windows/win32/secauthn/authentication-return-values"]
+  end
+
+  and ShareMode : sig
+    type _sharemode = [ `shared | `exclusive | `direct ]
+
+    val _sharemode_of_yojson : Yojson.Basic.t -> _sharemode
+    val yojson_of__sharemode : _sharemode -> Yojson.Basic.t
+
+    type t = _sharemode
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_SHARE_*| values."]
+  end = struct
+    type _sharemode = [ `shared | `exclusive | `direct ]
+
+    let _sharemode_of_yojson = function
+      | `String "shared" -> `shared
+      | `String "exclusive" -> `exclusive
+      | `String "direct" -> `direct
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__sharemode = function
+      | `shared -> `String "shared"
+      | `exclusive -> `String "exclusive"
+      | `direct -> `String "direct"
+
+    type t = _sharemode
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_SHARE_*| values."]
+  end
+
+  and Disposition : sig
+    type _disposition =
+      [ `leave_card | `reset_card | `unpower_card | `eject_card ]
+
+    val _disposition_of_yojson : Yojson.Basic.t -> _disposition
+    val yojson_of__disposition : _disposition -> Yojson.Basic.t
+
+    type t = _disposition
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates what the reader should do with the card."]
+  end = struct
+    type _disposition =
+      [ `leave_card | `reset_card | `unpower_card | `eject_card ]
+
+    let _disposition_of_yojson = function
+      | `String "leave-card" -> `leave_card
+      | `String "reset-card" -> `reset_card
+      | `String "unpower-card" -> `unpower_card
+      | `String "eject-card" -> `eject_card
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__disposition = function
+      | `leave_card -> `String "leave-card"
+      | `reset_card -> `String "reset-card"
+      | `unpower_card -> `String "unpower-card"
+      | `eject_card -> `String "eject-card"
+
+    type t = _disposition
+    [@@deriving yojson]
+    [@@ocaml.doc "Indicates what the reader should do with the card."]
+  end
+
+  and ConnectionState : sig
+    type _connectionstate =
+      [ `absent | `present | `swallowed | `powered | `negotiable | `specific ]
+
+    val _connectionstate_of_yojson : Yojson.Basic.t -> _connectionstate
+    val yojson_of__connectionstate : _connectionstate -> Yojson.Basic.t
+
+    type t = _connectionstate
+    [@@deriving yojson]
+    [@@ocaml.doc "Maps to |SCARD_*| connection state values."]
+  end = struct
+    type _connectionstate =
+      [ `absent | `present | `swallowed | `powered | `negotiable | `specific ]
+
+    let _connectionstate_of_yojson = function
+      | `String "absent" -> `absent
+      | `String "present" -> `present
+      | `String "swallowed" -> `swallowed
+      | `String "powered" -> `powered
+      | `String "negotiable" -> `negotiable
+      | `String "specific" -> `specific
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__connectionstate = function
+      | `absent -> `String "absent"
+      | `present -> `String "present"
+      | `swallowed -> `String "swallowed"
+      | `powered -> `String "powered"
+      | `negotiable -> `String "negotiable"
+      | `specific -> `String "specific"
+
+    type t = _connectionstate
+    [@@deriving yojson]
+    [@@ocaml.doc "Maps to |SCARD_*| connection state values."]
+  end
+
+  and ReaderStateFlags : sig
+    type t = {
+      unaware : bool option;
+          [@key "unaware"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      ignore : bool option;
+          [@key "ignore"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      changed : bool option;
+          [@key "changed"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      unknown : bool option;
+          [@key "unknown"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      unavailable : bool option;
+          [@key "unavailable"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      empty : bool option;
+          [@key "empty"] [@yojson.option] [@ocaml.doc "No description provided"]
+      present : bool option;
+          [@key "present"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      exclusive : bool option;
+          [@key "exclusive"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      inuse : bool option;
+          [@key "inuse"] [@yojson.option] [@ocaml.doc "No description provided"]
+      mute : bool option;
+          [@key "mute"] [@yojson.option] [@ocaml.doc "No description provided"]
+      unpowered : bool option;
+          [@key "unpowered"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_STATE_*| flags."]
+  end = struct
+    type t = {
+      unaware : bool option;
+          [@key "unaware"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      ignore : bool option;
+          [@key "ignore"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      changed : bool option;
+          [@key "changed"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      unknown : bool option;
+          [@key "unknown"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      unavailable : bool option;
+          [@key "unavailable"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      empty : bool option;
+          [@key "empty"] [@yojson.option] [@ocaml.doc "No description provided"]
+      present : bool option;
+          [@key "present"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      exclusive : bool option;
+          [@key "exclusive"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      inuse : bool option;
+          [@key "inuse"] [@yojson.option] [@ocaml.doc "No description provided"]
+      mute : bool option;
+          [@key "mute"] [@yojson.option] [@ocaml.doc "No description provided"]
+      unpowered : bool option;
+          [@key "unpowered"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_STATE_*| flags."]
+  end
+
+  and ProtocolSet : sig
+    type t = {
+      t0 : bool option;
+          [@key "t0"] [@yojson.option] [@ocaml.doc "No description provided"]
+      t1 : bool option;
+          [@key "t1"] [@yojson.option] [@ocaml.doc "No description provided"]
+      raw : bool option;
+          [@key "raw"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_PROTOCOL_*| flags."]
+  end = struct
+    type t = {
+      t0 : bool option;
+          [@key "t0"] [@yojson.option] [@ocaml.doc "No description provided"]
+      t1 : bool option;
+          [@key "t1"] [@yojson.option] [@ocaml.doc "No description provided"]
+      raw : bool option;
+          [@key "raw"] [@yojson.option] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_PROTOCOL_*| flags."]
+  end
+
+  and Protocol : sig
+    type _protocol = [ `t0 | `t1 | `raw ]
+
+    val _protocol_of_yojson : Yojson.Basic.t -> _protocol
+    val yojson_of__protocol : _protocol -> Yojson.Basic.t
+
+    type t = _protocol
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_PROTOCOL_*| values."]
+  end = struct
+    type _protocol = [ `t0 | `t1 | `raw ]
+
+    let _protocol_of_yojson = function
+      | `String "t0" -> `t0
+      | `String "t1" -> `t1
+      | `String "raw" -> `raw
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__protocol = function
+      | `t0 -> `String "t0"
+      | `t1 -> `String "t1"
+      | `raw -> `String "raw"
+
+    type t = _protocol
+    [@@deriving yojson] [@@ocaml.doc "Maps to the |SCARD_PROTOCOL_*| values."]
+  end
+
+  and ReaderStateIn : sig
+    type t = {
+      reader : string; [@key "reader"] [@ocaml.doc "No description provided"]
+      currentState : ReaderStateFlags.t;
+          [@key "currentState"] [@ocaml.doc "No description provided"]
+      currentInsertionCount : number;
+          [@key "currentInsertionCount"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      reader : string; [@key "reader"] [@ocaml.doc "No description provided"]
+      currentState : ReaderStateFlags.t;
+          [@key "currentState"] [@ocaml.doc "No description provided"]
+      currentInsertionCount : number;
+          [@key "currentInsertionCount"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ReaderStateOut : sig
+    type t = {
+      reader : string; [@key "reader"] [@ocaml.doc "No description provided"]
+      eventState : ReaderStateFlags.t;
+          [@key "eventState"] [@ocaml.doc "No description provided"]
+      eventCount : number;
+          [@key "eventCount"] [@ocaml.doc "No description provided"]
+      atr : string; [@key "atr"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      reader : string; [@key "reader"] [@ocaml.doc "No description provided"]
+      eventState : ReaderStateFlags.t;
+          [@key "eventState"] [@ocaml.doc "No description provided"]
+      eventCount : number;
+          [@key "eventCount"] [@ocaml.doc "No description provided"]
+      atr : string; [@key "atr"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+end
+
 and Storage : sig
   module rec SerializedStorageKey : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
