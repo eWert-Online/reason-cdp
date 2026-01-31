@@ -15623,6 +15623,66 @@ module EventBreakpoints = struct
 end
 
 module Extensions = struct
+  module TriggerAction = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        id : string; [@key "id"] [@ocaml.doc "Extension id."]
+        targetId : string;
+            [@key "targetId"]
+            [@ocaml.doc
+              "A tab target ID to trigger the default extension action on."]
+      }
+      [@@deriving yojson]
+
+      let make ~id ~targetId () = { id; targetId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Extensions.triggerAction"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Runs an extension default action.
+Available if the client is connected using the --remote-debugging-pipe
+flag and the --enable-unsafe-extension-debugging flag is set. |desc}]
+
   module LoadUnpacked = struct
     module Response : sig
       type result = { id : string [@key "id"] [@ocaml.doc "Extension id."] }
@@ -15656,10 +15716,14 @@ module Extensions = struct
     module Params = struct
       type t = {
         path : string; [@key "path"] [@ocaml.doc "Absolute file path."]
+        enableInIncognito : bool option;
+            [@key "enableInIncognito"]
+            [@yojson.option]
+            [@ocaml.doc "Enable the extension in incognito"]
       }
       [@@deriving yojson]
 
-      let make ~path () = { path }
+      let make ~path ?enableInIncognito () = { path; enableInIncognito }
     end
 
     module Request = struct
@@ -31750,10 +31814,12 @@ Microsoft: https://learn.microsoft.com/en-us/windows/win32/api/winscard/nf-winsc
       type t = {
         requestId : string;
             [@key "requestId"] [@ocaml.doc "No description provided"]
+        handle : Types.number;
+            [@key "handle"] [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
-      let make ~requestId () = { requestId }
+      let make ~requestId ~handle () = { requestId; handle }
     end
 
     module Request = struct
