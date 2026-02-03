@@ -19864,21 +19864,21 @@ and Network : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
-  and PrivateNetworkRequestPolicy : sig
-    type _privatenetworkrequestpolicy =
+  and LocalNetworkAccessRequestPolicy : sig
+    type _localnetworkaccessrequestpolicy =
       [ `Allow
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
       | `PermissionBlock
       | `PermissionWarn ]
 
-    val _privatenetworkrequestpolicy_of_yojson :
-      Yojson.Basic.t -> _privatenetworkrequestpolicy
+    val _localnetworkaccessrequestpolicy_of_yojson :
+      Yojson.Basic.t -> _localnetworkaccessrequestpolicy
 
-    val yojson_of__privatenetworkrequestpolicy :
-      _privatenetworkrequestpolicy -> Yojson.Basic.t
+    val yojson_of__localnetworkaccessrequestpolicy :
+      _localnetworkaccessrequestpolicy -> Yojson.Basic.t
 
-    type t = _privatenetworkrequestpolicy
+    type t = _localnetworkaccessrequestpolicy
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
@@ -19914,8 +19914,8 @@ and Network : sig
       initiatorIPAddressSpace : IPAddressSpace.t;
           [@key "initiatorIPAddressSpace"]
           [@ocaml.doc "No description provided"]
-      privateNetworkRequestPolicy : PrivateNetworkRequestPolicy.t;
-          [@key "privateNetworkRequestPolicy"]
+      localNetworkAccessRequestPolicy : LocalNetworkAccessRequestPolicy.t;
+          [@key "localNetworkAccessRequestPolicy"]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -23992,31 +23992,31 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
-  and PrivateNetworkRequestPolicy : sig
-    type _privatenetworkrequestpolicy =
+  and LocalNetworkAccessRequestPolicy : sig
+    type _localnetworkaccessrequestpolicy =
       [ `Allow
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
       | `PermissionBlock
       | `PermissionWarn ]
 
-    val _privatenetworkrequestpolicy_of_yojson :
-      Yojson.Basic.t -> _privatenetworkrequestpolicy
+    val _localnetworkaccessrequestpolicy_of_yojson :
+      Yojson.Basic.t -> _localnetworkaccessrequestpolicy
 
-    val yojson_of__privatenetworkrequestpolicy :
-      _privatenetworkrequestpolicy -> Yojson.Basic.t
+    val yojson_of__localnetworkaccessrequestpolicy :
+      _localnetworkaccessrequestpolicy -> Yojson.Basic.t
 
-    type t = _privatenetworkrequestpolicy
+    type t = _localnetworkaccessrequestpolicy
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
-    type _privatenetworkrequestpolicy =
+    type _localnetworkaccessrequestpolicy =
       [ `Allow
       | `BlockFromInsecureToMorePrivate
       | `WarnFromInsecureToMorePrivate
       | `PermissionBlock
       | `PermissionWarn ]
 
-    let _privatenetworkrequestpolicy_of_yojson = function
+    let _localnetworkaccessrequestpolicy_of_yojson = function
       | `String "Allow" -> `Allow
       | `String "BlockFromInsecureToMorePrivate" ->
           `BlockFromInsecureToMorePrivate
@@ -24027,7 +24027,7 @@ end = struct
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
-    let yojson_of__privatenetworkrequestpolicy = function
+    let yojson_of__localnetworkaccessrequestpolicy = function
       | `Allow -> `String "Allow"
       | `BlockFromInsecureToMorePrivate ->
           `String "BlockFromInsecureToMorePrivate"
@@ -24036,7 +24036,7 @@ end = struct
       | `PermissionBlock -> `String "PermissionBlock"
       | `PermissionWarn -> `String "PermissionWarn"
 
-    type t = _privatenetworkrequestpolicy
+    type t = _localnetworkaccessrequestpolicy
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
@@ -24103,8 +24103,8 @@ end = struct
       initiatorIPAddressSpace : IPAddressSpace.t;
           [@key "initiatorIPAddressSpace"]
           [@ocaml.doc "No description provided"]
-      privateNetworkRequestPolicy : PrivateNetworkRequestPolicy.t;
-          [@key "privateNetworkRequestPolicy"]
+      localNetworkAccessRequestPolicy : LocalNetworkAccessRequestPolicy.t;
+          [@key "localNetworkAccessRequestPolicy"]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -24116,8 +24116,8 @@ end = struct
       initiatorIPAddressSpace : IPAddressSpace.t;
           [@key "initiatorIPAddressSpace"]
           [@ocaml.doc "No description provided"]
-      privateNetworkRequestPolicy : PrivateNetworkRequestPolicy.t;
-          [@key "privateNetworkRequestPolicy"]
+      localNetworkAccessRequestPolicy : LocalNetworkAccessRequestPolicy.t;
+          [@key "localNetworkAccessRequestPolicy"]
           [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
