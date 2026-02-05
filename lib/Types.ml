@@ -28250,6 +28250,7 @@ and Page : sig
       | `SharedWorkerMessage
       | `SharedWorkerWithNoActiveClient
       | `WebLocks
+      | `WebLocksContention
       | `WebHID
       | `WebBluetooth
       | `WebShare
@@ -30952,6 +30953,7 @@ end = struct
       | `SharedWorkerMessage
       | `SharedWorkerWithNoActiveClient
       | `WebLocks
+      | `WebLocksContention
       | `WebHID
       | `WebBluetooth
       | `WebShare
@@ -31109,6 +31111,7 @@ end = struct
       | `SharedWorkerMessage
       | `SharedWorkerWithNoActiveClient
       | `WebLocks
+      | `WebLocksContention
       | `WebHID
       | `WebBluetooth
       | `WebShare
@@ -31286,6 +31289,7 @@ end = struct
       | `String "SharedWorkerWithNoActiveClient" ->
           `SharedWorkerWithNoActiveClient
       | `String "WebLocks" -> `WebLocks
+      | `String "WebLocksContention" -> `WebLocksContention
       | `String "WebHID" -> `WebHID
       | `String "WebBluetooth" -> `WebBluetooth
       | `String "WebShare" -> `WebShare
@@ -31482,6 +31486,7 @@ end = struct
       | `SharedWorkerWithNoActiveClient ->
           `String "SharedWorkerWithNoActiveClient"
       | `WebLocks -> `String "WebLocks"
+      | `WebLocksContention -> `String "WebLocksContention"
       | `WebHID -> `String "WebHID"
       | `WebBluetooth -> `String "WebBluetooth"
       | `WebShare -> `String "WebShare"
