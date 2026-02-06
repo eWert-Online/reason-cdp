@@ -2121,6 +2121,25 @@ and Audits : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and ConnectionAllowlistError : sig
+    type _connectionallowlisterror =
+      [ `InvalidHeader
+      | `MoreThanOneList
+      | `ItemNotInnerList
+      | `InvalidAllowlistItemType
+      | `ReportingEndpointNotToken
+      | `InvalidUrlPattern ]
+
+    val _connectionallowlisterror_of_yojson :
+      Yojson.Basic.t -> _connectionallowlisterror
+
+    val yojson_of__connectionallowlisterror :
+      _connectionallowlisterror -> Yojson.Basic.t
+
+    type t = _connectionallowlisterror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingIssueDetails : sig
     type t = {
       violationType : AttributionReportingIssueType.t;
@@ -2203,6 +2222,16 @@ and Audits : sig
   and UnencodedDigestIssueDetails : sig
     type t = {
       error : UnencodedDigestError.t;
+          [@key "error"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ConnectionAllowlistIssueDetails : sig
+    type t = {
+      error : ConnectionAllowlistError.t;
           [@key "error"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
@@ -2744,6 +2773,7 @@ and Audits : sig
       | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
       | `UnencodedDigestIssue
+      | `ConnectionAllowlistIssue
       | `UserReidentificationIssue
       | `PermissionElementIssue ]
 
@@ -2866,6 +2896,11 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       unencodedDigestIssueDetails : UnencodedDigestIssueDetails.t option;
           [@key "unencodedDigestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      connectionAllowlistIssueDetails :
+        ConnectionAllowlistIssueDetails.t option;
+          [@key "connectionAllowlistIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       userReidentificationIssueDetails :
@@ -4500,6 +4535,54 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and ConnectionAllowlistError : sig
+    type _connectionallowlisterror =
+      [ `InvalidHeader
+      | `MoreThanOneList
+      | `ItemNotInnerList
+      | `InvalidAllowlistItemType
+      | `ReportingEndpointNotToken
+      | `InvalidUrlPattern ]
+
+    val _connectionallowlisterror_of_yojson :
+      Yojson.Basic.t -> _connectionallowlisterror
+
+    val yojson_of__connectionallowlisterror :
+      _connectionallowlisterror -> Yojson.Basic.t
+
+    type t = _connectionallowlisterror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _connectionallowlisterror =
+      [ `InvalidHeader
+      | `MoreThanOneList
+      | `ItemNotInnerList
+      | `InvalidAllowlistItemType
+      | `ReportingEndpointNotToken
+      | `InvalidUrlPattern ]
+
+    let _connectionallowlisterror_of_yojson = function
+      | `String "InvalidHeader" -> `InvalidHeader
+      | `String "MoreThanOneList" -> `MoreThanOneList
+      | `String "ItemNotInnerList" -> `ItemNotInnerList
+      | `String "InvalidAllowlistItemType" -> `InvalidAllowlistItemType
+      | `String "ReportingEndpointNotToken" -> `ReportingEndpointNotToken
+      | `String "InvalidUrlPattern" -> `InvalidUrlPattern
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__connectionallowlisterror = function
+      | `InvalidHeader -> `String "InvalidHeader"
+      | `MoreThanOneList -> `String "MoreThanOneList"
+      | `ItemNotInnerList -> `String "ItemNotInnerList"
+      | `InvalidAllowlistItemType -> `String "InvalidAllowlistItemType"
+      | `ReportingEndpointNotToken -> `String "ReportingEndpointNotToken"
+      | `InvalidUrlPattern -> `String "InvalidUrlPattern"
+
+    type t = _connectionallowlisterror
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and AttributionReportingIssueDetails : sig
     type t = {
       violationType : AttributionReportingIssueType.t;
@@ -4659,6 +4742,24 @@ end = struct
   end = struct
     type t = {
       error : UnencodedDigestError.t;
+          [@key "error"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ConnectionAllowlistIssueDetails : sig
+    type t = {
+      error : ConnectionAllowlistError.t;
+          [@key "error"] [@ocaml.doc "No description provided"]
+      request : AffectedRequest.t;
+          [@key "request"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      error : ConnectionAllowlistError.t;
           [@key "error"] [@ocaml.doc "No description provided"]
       request : AffectedRequest.t;
           [@key "request"] [@ocaml.doc "No description provided"]
@@ -5929,6 +6030,7 @@ end = struct
       | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
       | `UnencodedDigestIssue
+      | `ConnectionAllowlistIssue
       | `UserReidentificationIssue
       | `PermissionElementIssue ]
 
@@ -5968,6 +6070,7 @@ end = struct
       | `ElementAccessibilityIssue
       | `SRIMessageSignatureIssue
       | `UnencodedDigestIssue
+      | `ConnectionAllowlistIssue
       | `UserReidentificationIssue
       | `PermissionElementIssue ]
 
@@ -5999,6 +6102,7 @@ end = struct
       | `String "ElementAccessibilityIssue" -> `ElementAccessibilityIssue
       | `String "SRIMessageSignatureIssue" -> `SRIMessageSignatureIssue
       | `String "UnencodedDigestIssue" -> `UnencodedDigestIssue
+      | `String "ConnectionAllowlistIssue" -> `ConnectionAllowlistIssue
       | `String "UserReidentificationIssue" -> `UserReidentificationIssue
       | `String "PermissionElementIssue" -> `PermissionElementIssue
       | `String s -> failwith ("unknown enum: " ^ s)
@@ -6032,6 +6136,7 @@ end = struct
       | `ElementAccessibilityIssue -> `String "ElementAccessibilityIssue"
       | `SRIMessageSignatureIssue -> `String "SRIMessageSignatureIssue"
       | `UnencodedDigestIssue -> `String "UnencodedDigestIssue"
+      | `ConnectionAllowlistIssue -> `String "ConnectionAllowlistIssue"
       | `UserReidentificationIssue -> `String "UserReidentificationIssue"
       | `PermissionElementIssue -> `String "PermissionElementIssue"
 
@@ -6151,6 +6256,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       unencodedDigestIssueDetails : UnencodedDigestIssueDetails.t option;
           [@key "unencodedDigestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      connectionAllowlistIssueDetails :
+        ConnectionAllowlistIssueDetails.t option;
+          [@key "connectionAllowlistIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       userReidentificationIssueDetails :
@@ -6276,6 +6386,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       unencodedDigestIssueDetails : UnencodedDigestIssueDetails.t option;
           [@key "unencodedDigestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      connectionAllowlistIssueDetails :
+        ConnectionAllowlistIssueDetails.t option;
+          [@key "connectionAllowlistIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       userReidentificationIssueDetails :
@@ -25951,6 +26066,20 @@ and Overlay : sig
     type t = _inspectmode
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
+
+  and InspectedElementAnchorConfig : sig
+    type t = {
+      nodeId : DOM.NodeId.t option;
+          [@key "nodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Identifier of the node to highlight."]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Identifier of the backend node to highlight."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
 end = struct
   module rec SourceOrderConfig : sig
     type t = {
@@ -26963,6 +27092,32 @@ end = struct
       | `none -> `String "none"
 
     type t = _inspectmode
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and InspectedElementAnchorConfig : sig
+    type t = {
+      nodeId : DOM.NodeId.t option;
+          [@key "nodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Identifier of the node to highlight."]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Identifier of the backend node to highlight."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      nodeId : DOM.NodeId.t option;
+          [@key "nodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Identifier of the node to highlight."]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Identifier of the backend node to highlight."]
+    }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 end

@@ -3042,6 +3042,49 @@ user manually inspects an element. |desc}]
   [@@ocaml.doc
     {desc|Fired when user asks to capture screenshot of some area on the page. |desc}]
 
+  module InspectPanelShowRequested = struct
+    let name = "Overlay.inspectPanelShowRequested"
+
+    type result = {
+      backendNodeId : Types.DOM.BackendNodeId.t;
+          [@key "backendNodeId"]
+          [@ocaml.doc "Id of the node to show in the panel."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Fired when user asks to show the Inspect panel. |desc}]
+
+  module InspectedElementWindowRestored = struct
+    let name = "Overlay.inspectedElementWindowRestored"
+
+    type result = {
+      backendNodeId : Types.DOM.BackendNodeId.t;
+          [@key "backendNodeId"]
+          [@ocaml.doc "Id of the node to restore the floating window for."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Fired when user asks to restore the Inspected Element floating window. |desc}]
+
   module InspectModeCanceled = struct
     let name = "Overlay.inspectModeCanceled"
 

@@ -25037,6 +25037,68 @@ Backend then generates 'inspectNodeRequested' event upon element selection. |des
   end
   [@@ocaml.doc {desc|No description provided |desc}]
 
+  module SetShowInspectedElementAnchor = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        inspectedElementAnchorConfig :
+          Types.Overlay.InspectedElementAnchorConfig.t;
+            [@key "inspectedElementAnchorConfig"]
+            [@ocaml.doc "Node identifier for which to show an anchor for."]
+      }
+      [@@deriving yojson]
+
+      let make ~inspectedElementAnchorConfig () =
+        { inspectedElementAnchorConfig }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Overlay.setShowInspectedElementAnchor";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|No description provided |desc}]
+
   module SetShowPaintRects = struct
     module Response : sig
       type result = Types.assoc
