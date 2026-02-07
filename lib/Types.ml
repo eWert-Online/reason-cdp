@@ -18901,8 +18901,8 @@ and Network : sig
       | `MethodDisallowedByPreflightResponse
       | `HeaderDisallowedByPreflightResponse
       | `RedirectContainsCredentials
-      | `InsecurePrivateNetwork
-      | `InvalidPrivateNetworkAccess
+      | `InsecureLocalNetwork
+      | `InvalidLocalNetworkAccess
       | `NoCorsRedirectModeNotFollow
       | `LocalNetworkAccessPermissionDenied ]
 
@@ -21700,8 +21700,8 @@ end = struct
       | `MethodDisallowedByPreflightResponse
       | `HeaderDisallowedByPreflightResponse
       | `RedirectContainsCredentials
-      | `InsecurePrivateNetwork
-      | `InvalidPrivateNetworkAccess
+      | `InsecureLocalNetwork
+      | `InvalidLocalNetworkAccess
       | `NoCorsRedirectModeNotFollow
       | `LocalNetworkAccessPermissionDenied ]
 
@@ -21736,8 +21736,8 @@ end = struct
       | `MethodDisallowedByPreflightResponse
       | `HeaderDisallowedByPreflightResponse
       | `RedirectContainsCredentials
-      | `InsecurePrivateNetwork
-      | `InvalidPrivateNetworkAccess
+      | `InsecureLocalNetwork
+      | `InvalidLocalNetworkAccess
       | `NoCorsRedirectModeNotFollow
       | `LocalNetworkAccessPermissionDenied ]
 
@@ -21777,8 +21777,8 @@ end = struct
       | `String "HeaderDisallowedByPreflightResponse" ->
           `HeaderDisallowedByPreflightResponse
       | `String "RedirectContainsCredentials" -> `RedirectContainsCredentials
-      | `String "InsecurePrivateNetwork" -> `InsecurePrivateNetwork
-      | `String "InvalidPrivateNetworkAccess" -> `InvalidPrivateNetworkAccess
+      | `String "InsecureLocalNetwork" -> `InsecureLocalNetwork
+      | `String "InvalidLocalNetworkAccess" -> `InvalidLocalNetworkAccess
       | `String "NoCorsRedirectModeNotFollow" -> `NoCorsRedirectModeNotFollow
       | `String "LocalNetworkAccessPermissionDenied" ->
           `LocalNetworkAccessPermissionDenied
@@ -21821,8 +21821,8 @@ end = struct
       | `HeaderDisallowedByPreflightResponse ->
           `String "HeaderDisallowedByPreflightResponse"
       | `RedirectContainsCredentials -> `String "RedirectContainsCredentials"
-      | `InsecurePrivateNetwork -> `String "InsecurePrivateNetwork"
-      | `InvalidPrivateNetworkAccess -> `String "InvalidPrivateNetworkAccess"
+      | `InsecureLocalNetwork -> `String "InsecureLocalNetwork"
+      | `InvalidLocalNetworkAccess -> `String "InvalidLocalNetworkAccess"
       | `NoCorsRedirectModeNotFollow -> `String "NoCorsRedirectModeNotFollow"
       | `LocalNetworkAccessPermissionDenied ->
           `String "LocalNetworkAccessPermissionDenied"
