@@ -2393,10 +2393,6 @@ and Audits : sig
       | `ConfigNoResponse
       | `ConfigInvalidResponse
       | `ConfigInvalidContentType
-      | `ClientMetadataHttpNotFound
-      | `ClientMetadataNoResponse
-      | `ClientMetadataInvalidResponse
-      | `ClientMetadataInvalidContentType
       | `IdpNotPotentiallyTrustworthy
       | `DisabledInSettings
       | `DisabledInFlags
@@ -2418,11 +2414,9 @@ and Audits : sig
       | `Canceled
       | `RpPageNotVisible
       | `SilentMediationFailure
-      | `ThirdPartyCookiesBlocked
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
       | `ReplacedByActiveMode
-      | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching
       | `UiDismissedNoEmbargo
@@ -5104,10 +5098,6 @@ end = struct
       | `ConfigNoResponse
       | `ConfigInvalidResponse
       | `ConfigInvalidContentType
-      | `ClientMetadataHttpNotFound
-      | `ClientMetadataNoResponse
-      | `ClientMetadataInvalidResponse
-      | `ClientMetadataInvalidContentType
       | `IdpNotPotentiallyTrustworthy
       | `DisabledInSettings
       | `DisabledInFlags
@@ -5129,11 +5119,9 @@ end = struct
       | `Canceled
       | `RpPageNotVisible
       | `SilentMediationFailure
-      | `ThirdPartyCookiesBlocked
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
       | `ReplacedByActiveMode
-      | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching
       | `UiDismissedNoEmbargo
@@ -5169,10 +5157,6 @@ end = struct
       | `ConfigNoResponse
       | `ConfigInvalidResponse
       | `ConfigInvalidContentType
-      | `ClientMetadataHttpNotFound
-      | `ClientMetadataNoResponse
-      | `ClientMetadataInvalidResponse
-      | `ClientMetadataInvalidContentType
       | `IdpNotPotentiallyTrustworthy
       | `DisabledInSettings
       | `DisabledInFlags
@@ -5194,11 +5178,9 @@ end = struct
       | `Canceled
       | `RpPageNotVisible
       | `SilentMediationFailure
-      | `ThirdPartyCookiesBlocked
       | `NotSignedInWithIdp
       | `MissingTransientUserActivation
       | `ReplacedByActiveMode
-      | `InvalidFieldsSpecified
       | `RelyingPartyOriginIsOpaque
       | `TypeNotMatching
       | `UiDismissedNoEmbargo
@@ -5219,12 +5201,6 @@ end = struct
       | `String "ConfigNoResponse" -> `ConfigNoResponse
       | `String "ConfigInvalidResponse" -> `ConfigInvalidResponse
       | `String "ConfigInvalidContentType" -> `ConfigInvalidContentType
-      | `String "ClientMetadataHttpNotFound" -> `ClientMetadataHttpNotFound
-      | `String "ClientMetadataNoResponse" -> `ClientMetadataNoResponse
-      | `String "ClientMetadataInvalidResponse" ->
-          `ClientMetadataInvalidResponse
-      | `String "ClientMetadataInvalidContentType" ->
-          `ClientMetadataInvalidContentType
       | `String "IdpNotPotentiallyTrustworthy" -> `IdpNotPotentiallyTrustworthy
       | `String "DisabledInSettings" -> `DisabledInSettings
       | `String "DisabledInFlags" -> `DisabledInFlags
@@ -5247,12 +5223,10 @@ end = struct
       | `String "Canceled" -> `Canceled
       | `String "RpPageNotVisible" -> `RpPageNotVisible
       | `String "SilentMediationFailure" -> `SilentMediationFailure
-      | `String "ThirdPartyCookiesBlocked" -> `ThirdPartyCookiesBlocked
       | `String "NotSignedInWithIdp" -> `NotSignedInWithIdp
       | `String "MissingTransientUserActivation" ->
           `MissingTransientUserActivation
       | `String "ReplacedByActiveMode" -> `ReplacedByActiveMode
-      | `String "InvalidFieldsSpecified" -> `InvalidFieldsSpecified
       | `String "RelyingPartyOriginIsOpaque" -> `RelyingPartyOriginIsOpaque
       | `String "TypeNotMatching" -> `TypeNotMatching
       | `String "UiDismissedNoEmbargo" -> `UiDismissedNoEmbargo
@@ -5276,12 +5250,6 @@ end = struct
       | `ConfigNoResponse -> `String "ConfigNoResponse"
       | `ConfigInvalidResponse -> `String "ConfigInvalidResponse"
       | `ConfigInvalidContentType -> `String "ConfigInvalidContentType"
-      | `ClientMetadataHttpNotFound -> `String "ClientMetadataHttpNotFound"
-      | `ClientMetadataNoResponse -> `String "ClientMetadataNoResponse"
-      | `ClientMetadataInvalidResponse ->
-          `String "ClientMetadataInvalidResponse"
-      | `ClientMetadataInvalidContentType ->
-          `String "ClientMetadataInvalidContentType"
       | `IdpNotPotentiallyTrustworthy -> `String "IdpNotPotentiallyTrustworthy"
       | `DisabledInSettings -> `String "DisabledInSettings"
       | `DisabledInFlags -> `String "DisabledInFlags"
@@ -5304,12 +5272,10 @@ end = struct
       | `Canceled -> `String "Canceled"
       | `RpPageNotVisible -> `String "RpPageNotVisible"
       | `SilentMediationFailure -> `String "SilentMediationFailure"
-      | `ThirdPartyCookiesBlocked -> `String "ThirdPartyCookiesBlocked"
       | `NotSignedInWithIdp -> `String "NotSignedInWithIdp"
       | `MissingTransientUserActivation ->
           `String "MissingTransientUserActivation"
       | `ReplacedByActiveMode -> `String "ReplacedByActiveMode"
-      | `InvalidFieldsSpecified -> `String "InvalidFieldsSpecified"
       | `RelyingPartyOriginIsOpaque -> `String "RelyingPartyOriginIsOpaque"
       | `TypeNotMatching -> `String "TypeNotMatching"
       | `UiDismissedNoEmbargo -> `String "UiDismissedNoEmbargo"
