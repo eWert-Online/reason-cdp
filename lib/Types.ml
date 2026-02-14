@@ -1674,6 +1674,31 @@ and Audits : sig
        information without the cookie."]
   end
 
+  and PerformanceIssueType : sig
+    type _performanceissuetype = [ `DocumentCookie ]
+
+    val _performanceissuetype_of_yojson :
+      Yojson.Basic.t -> _performanceissuetype
+
+    val yojson_of__performanceissuetype :
+      _performanceissuetype -> Yojson.Basic.t
+
+    type t = _performanceissuetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PerformanceIssueDetails : sig
+    type t = {
+      performanceIssueType : PerformanceIssueType.t;
+          [@key "performanceIssueType"] [@ocaml.doc "No description provided"]
+      sourceCodeLocation : SourceCodeLocation.t option;
+          [@key "sourceCodeLocation"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Details for a performance issue."]
+  end
+
   and MixedContentResolutionStatus : sig
     type _mixedcontentresolutionstatus =
       [ `MixedContentBlocked
@@ -2769,7 +2794,8 @@ and Audits : sig
       | `UnencodedDigestIssue
       | `ConnectionAllowlistIssue
       | `UserReidentificationIssue
-      | `PermissionElementIssue ]
+      | `PermissionElementIssue
+      | `PerformanceIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2904,6 +2930,10 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       permissionElementIssueDetails : PermissionElementIssueDetails.t option;
           [@key "permissionElementIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      performanceIssueDetails : PerformanceIssueDetails.t option;
+          [@key "performanceIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -3342,6 +3372,54 @@ end = struct
       "This information is currently necessary, as the front-end has a difficult\n\
        time finding a specific cookie. With this, we can convey specific error\n\
        information without the cookie."]
+  end
+
+  and PerformanceIssueType : sig
+    type _performanceissuetype = [ `DocumentCookie ]
+
+    val _performanceissuetype_of_yojson :
+      Yojson.Basic.t -> _performanceissuetype
+
+    val yojson_of__performanceissuetype :
+      _performanceissuetype -> Yojson.Basic.t
+
+    type t = _performanceissuetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _performanceissuetype = [ `DocumentCookie ]
+
+    let _performanceissuetype_of_yojson = function
+      | `String "DocumentCookie" -> `DocumentCookie
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__performanceissuetype = function
+      | `DocumentCookie -> `String "DocumentCookie"
+
+    type t = _performanceissuetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and PerformanceIssueDetails : sig
+    type t = {
+      performanceIssueType : PerformanceIssueType.t;
+          [@key "performanceIssueType"] [@ocaml.doc "No description provided"]
+      sourceCodeLocation : SourceCodeLocation.t option;
+          [@key "sourceCodeLocation"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Details for a performance issue."]
+  end = struct
+    type t = {
+      performanceIssueType : PerformanceIssueType.t;
+          [@key "performanceIssueType"] [@ocaml.doc "No description provided"]
+      sourceCodeLocation : SourceCodeLocation.t option;
+          [@key "sourceCodeLocation"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Details for a performance issue."]
   end
 
   and MixedContentResolutionStatus : sig
@@ -5998,7 +6076,8 @@ end = struct
       | `UnencodedDigestIssue
       | `ConnectionAllowlistIssue
       | `UserReidentificationIssue
-      | `PermissionElementIssue ]
+      | `PermissionElementIssue
+      | `PerformanceIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -6038,7 +6117,8 @@ end = struct
       | `UnencodedDigestIssue
       | `ConnectionAllowlistIssue
       | `UserReidentificationIssue
-      | `PermissionElementIssue ]
+      | `PermissionElementIssue
+      | `PerformanceIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -6071,6 +6151,7 @@ end = struct
       | `String "ConnectionAllowlistIssue" -> `ConnectionAllowlistIssue
       | `String "UserReidentificationIssue" -> `UserReidentificationIssue
       | `String "PermissionElementIssue" -> `PermissionElementIssue
+      | `String "PerformanceIssue" -> `PerformanceIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -6105,6 +6186,7 @@ end = struct
       | `ConnectionAllowlistIssue -> `String "ConnectionAllowlistIssue"
       | `UserReidentificationIssue -> `String "UserReidentificationIssue"
       | `PermissionElementIssue -> `String "PermissionElementIssue"
+      | `PerformanceIssue -> `String "PerformanceIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -6238,6 +6320,10 @@ end = struct
           [@key "permissionElementIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      performanceIssueDetails : PerformanceIssueDetails.t option;
+          [@key "performanceIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -6366,6 +6452,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       permissionElementIssueDetails : PermissionElementIssueDetails.t option;
           [@key "permissionElementIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      performanceIssueDetails : PerformanceIssueDetails.t option;
+          [@key "performanceIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }

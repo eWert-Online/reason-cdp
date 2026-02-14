@@ -15284,7 +15284,9 @@ value of the `svh` and `lvh` unit, respectively. Only supported for top-level fr
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
-  [@@ocaml.doc {desc|Returns device's screen configuration. |desc}]
+  [@@ocaml.doc
+    {desc|Returns device's screen configuration. In headful mode, the physical screens configuration is returned,
+whereas in headless mode, a virtual headless screen configuration is provided instead. |desc}]
 
   module AddScreen = struct
     module Response : sig
