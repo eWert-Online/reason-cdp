@@ -21995,7 +21995,10 @@ explicitly modify `navigator` behavior. |desc}]
             [@yojson.option]
             [@ocaml.doc
               "Buffer size in bytes to use when preserving network payloads \
-               (XHRs, etc)."]
+               (XHRs, etc).\n\
+               This is the maximum number of bytes that will be collected by \
+               this\n\
+               DevTools session."]
         maxResourceBufferSize : Types.number option;
             [@key "maxResourceBufferSize"]
             [@yojson.option]
