@@ -20496,6 +20496,33 @@ and Network : sig
       "A fetch result for a device bound session creation or refresh."]
   end
 
+  and DeviceBoundSessionFailedRequest : sig
+    type t = {
+      requestUrl : string;
+          [@key "requestUrl"] [@ocaml.doc "The failed request URL."]
+      netError : string option;
+          [@key "netError"]
+          [@yojson.option]
+          [@ocaml.doc "The net error of the response if it was not OK."]
+      responseError : number option;
+          [@key "responseError"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The response code if the net error was OK and the response code \
+             was not\n\
+             200."]
+      responseErrorBody : string option;
+          [@key "responseErrorBody"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The body of the response if the net error was OK, the response \
+             code was\n\
+             not 200, and the response body was not empty."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Details about a failed device bound session network request."]
+  end
+
   and CreationEventDetails : sig
     type t = {
       fetchResult : DeviceBoundSessionFetchResult.t;
@@ -20507,6 +20534,13 @@ and Network : sig
             "The session if there was a newly created session. This is \
              populated for\n\
              all successful creation events."]
+      failedRequest : DeviceBoundSessionFailedRequest.t option;
+          [@key "failedRequest"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Details about a failed device bound session network request if \
+             there was\n\
+             one."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Session event details specific to creation."]
@@ -20547,6 +20581,13 @@ and Network : sig
           [@ocaml.doc
             "See comments on \
              `net::device_bound_sessions::RefreshEventResult::was_fully_proactive_refresh`."]
+      failedRequest : DeviceBoundSessionFailedRequest.t option;
+          [@key "failedRequest"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Details about a failed device bound session network request if \
+             there was\n\
+             one."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Session event details specific to refresh."]
@@ -25305,6 +25346,58 @@ end = struct
       "A fetch result for a device bound session creation or refresh."]
   end
 
+  and DeviceBoundSessionFailedRequest : sig
+    type t = {
+      requestUrl : string;
+          [@key "requestUrl"] [@ocaml.doc "The failed request URL."]
+      netError : string option;
+          [@key "netError"]
+          [@yojson.option]
+          [@ocaml.doc "The net error of the response if it was not OK."]
+      responseError : number option;
+          [@key "responseError"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The response code if the net error was OK and the response code \
+             was not\n\
+             200."]
+      responseErrorBody : string option;
+          [@key "responseErrorBody"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The body of the response if the net error was OK, the response \
+             code was\n\
+             not 200, and the response body was not empty."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Details about a failed device bound session network request."]
+  end = struct
+    type t = {
+      requestUrl : string;
+          [@key "requestUrl"] [@ocaml.doc "The failed request URL."]
+      netError : string option;
+          [@key "netError"]
+          [@yojson.option]
+          [@ocaml.doc "The net error of the response if it was not OK."]
+      responseError : number option;
+          [@key "responseError"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The response code if the net error was OK and the response code \
+             was not\n\
+             200."]
+      responseErrorBody : string option;
+          [@key "responseErrorBody"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The body of the response if the net error was OK, the response \
+             code was\n\
+             not 200, and the response body was not empty."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Details about a failed device bound session network request."]
+  end
+
   and CreationEventDetails : sig
     type t = {
       fetchResult : DeviceBoundSessionFetchResult.t;
@@ -25316,6 +25409,13 @@ end = struct
             "The session if there was a newly created session. This is \
              populated for\n\
              all successful creation events."]
+      failedRequest : DeviceBoundSessionFailedRequest.t option;
+          [@key "failedRequest"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Details about a failed device bound session network request if \
+             there was\n\
+             one."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Session event details specific to creation."]
@@ -25330,6 +25430,13 @@ end = struct
             "The session if there was a newly created session. This is \
              populated for\n\
              all successful creation events."]
+      failedRequest : DeviceBoundSessionFailedRequest.t option;
+          [@key "failedRequest"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Details about a failed device bound session network request if \
+             there was\n\
+             one."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Session event details specific to creation."]
@@ -25370,6 +25477,13 @@ end = struct
           [@ocaml.doc
             "See comments on \
              `net::device_bound_sessions::RefreshEventResult::was_fully_proactive_refresh`."]
+      failedRequest : DeviceBoundSessionFailedRequest.t option;
+          [@key "failedRequest"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Details about a failed device bound session network request if \
+             there was\n\
+             one."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Session event details specific to refresh."]
@@ -25422,6 +25536,13 @@ end = struct
           [@ocaml.doc
             "See comments on \
              `net::device_bound_sessions::RefreshEventResult::was_fully_proactive_refresh`."]
+      failedRequest : DeviceBoundSessionFailedRequest.t option;
+          [@key "failedRequest"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Details about a failed device bound session network request if \
+             there was\n\
+             one."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Session event details specific to refresh."]
