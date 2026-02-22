@@ -11742,6 +11742,10 @@ and DOM : sig
           [@key "adoptedStyleSheets"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      isAdRelated : bool option;
+          [@key "isAdRelated"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -12337,6 +12341,10 @@ end = struct
           [@key "adoptedStyleSheets"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      isAdRelated : bool option;
+          [@key "isAdRelated"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -12477,6 +12485,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       adoptedStyleSheets : StyleSheetId.t list option;
           [@key "adoptedStyleSheets"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      isAdRelated : bool option;
+          [@key "isAdRelated"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
