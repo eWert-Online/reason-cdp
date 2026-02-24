@@ -14810,7 +14810,7 @@ and Emulation : sig
   end
 
   and DisabledImageType : sig
-    type _disabledimagetype = [ `avif | `webp ]
+    type _disabledimagetype = [ `avif | `jxl | `webp ]
 
     val _disabledimagetype_of_yojson : Yojson.Basic.t -> _disabledimagetype
     val yojson_of__disabledimagetype : _disabledimagetype -> Yojson.Basic.t
@@ -15591,7 +15591,7 @@ end = struct
   end
 
   and DisabledImageType : sig
-    type _disabledimagetype = [ `avif | `webp ]
+    type _disabledimagetype = [ `avif | `jxl | `webp ]
 
     val _disabledimagetype_of_yojson : Yojson.Basic.t -> _disabledimagetype
     val yojson_of__disabledimagetype : _disabledimagetype -> Yojson.Basic.t
@@ -15600,16 +15600,18 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc "Enum of image types that can be disabled."]
   end = struct
-    type _disabledimagetype = [ `avif | `webp ]
+    type _disabledimagetype = [ `avif | `jxl | `webp ]
 
     let _disabledimagetype_of_yojson = function
       | `String "avif" -> `avif
+      | `String "jxl" -> `jxl
       | `String "webp" -> `webp
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__disabledimagetype = function
       | `avif -> `String "avif"
+      | `jxl -> `String "jxl"
       | `webp -> `String "webp"
 
     type t = _disabledimagetype
