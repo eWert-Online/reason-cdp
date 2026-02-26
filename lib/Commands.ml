@@ -13032,6 +13032,18 @@ respective variables to be undefined, even if previously overridden. |desc}]
     end
 
     module Params = struct
+      type setdevicemetricsoverride_scrollbartype = [ `overlay | `default ]
+
+      let setdevicemetricsoverride_scrollbartype_of_yojson = function
+        | `String "overlay" -> `overlay
+        | `String "default" -> `default
+        | `String s -> failwith ("unknown enum: " ^ s)
+        | _ -> failwith "unknown enum type"
+
+      let yojson_of_setdevicemetricsoverride_scrollbartype = function
+        | `overlay -> `String "overlay"
+        | `default -> `String "default"
+
       type t = {
         width : Types.number;
             [@key "width"]
@@ -13115,12 +13127,17 @@ respective variables to be undefined, even if previously overridden. |desc}]
                posture is set\n\
                to continuous.\n\
                Deprecated, use Emulation.setDevicePostureOverride."]
+        scrollbarType : setdevicemetricsoverride_scrollbartype option;
+            [@key "scrollbarType"]
+            [@yojson.option]
+            [@ocaml.doc "Scrollbar type. Default: `default`."]
       }
       [@@deriving yojson]
 
       let make ~width ~height ~deviceScaleFactor ~mobile ?scale ?screenWidth
           ?screenHeight ?positionX ?positionY ?dontSetVisibleSize
-          ?screenOrientation ?viewport ?displayFeature ?devicePosture () =
+          ?screenOrientation ?viewport ?displayFeature ?devicePosture
+          ?scrollbarType () =
         {
           width;
           height;
@@ -13136,6 +13153,7 @@ respective variables to be undefined, even if previously overridden. |desc}]
           viewport;
           displayFeature;
           devicePosture;
+          scrollbarType;
         }
     end
 
@@ -15748,6 +15766,61 @@ flag and the --enable-unsafe-extension-debugging flag is set. |desc}]
 has been installed. Available if the client is connected using the
 --remote-debugging-pipe flag and the --enable-unsafe-extension-debugging
 flag is set. |desc}]
+
+  module GetExtensions = struct
+    module Response : sig
+      type result = {
+        extensions : Types.Extensions.ExtensionInfo.t list;
+            [@key "extensions"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        extensions : Types.Extensions.ExtensionInfo.t list;
+            [@key "extensions"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Extensions.getExtensions"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Gets a list of all unpacked extensions.
+Available if the client is connected using the --remote-debugging-pipe flag
+and the --enable-unsafe-extension-debugging flag is set. |desc}]
 
   module Uninstall = struct
     module Response : sig

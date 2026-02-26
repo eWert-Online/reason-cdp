@@ -2765,6 +2765,68 @@ and Audits : sig
       "This issue warns about improper usage of the <permission> element."]
   end
 
+  and AdScriptIdentifier : sig
+    type t = {
+      scriptId : Runtime.ScriptId.t;
+          [@key "scriptId"] [@ocaml.doc "The script's v8 identifier."]
+      debuggerId : Runtime.UniqueDebuggerId.t;
+          [@key "debuggerId"]
+          [@ocaml.doc "v8's debugging id for the v8::Context."]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "The script's url (or generated name based on id if inline script)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Metadata about the ad script that was on the stack that caused the \
+       current\n\
+       script in the `AdAncestry` to be considered ad related."]
+  end
+
+  and AdAncestry : sig
+    type t = {
+      adAncestryChain : AdScriptIdentifier.t list;
+          [@key "adAncestryChain"]
+          [@ocaml.doc
+            "The ad-script in the stack when the offending script was loaded. \
+             This is\n\
+             recursive down to the root script that was tagged due to the \
+             filterlist\n\
+             rule."]
+      rootScriptFilterlistRule : string option;
+          [@key "rootScriptFilterlistRule"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The filterlist rule that caused the root (last) script in\n\
+             `adAncestry` to be ad-tagged."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Providence about how an ad script was determined to be such. It is an ad\n\
+       because its url matched a filterlist rule, or because some other ad \
+       script\n\
+       was on the stack when this script was loaded."]
+  end
+
+  and SelectivePermissionsInterventionIssueDetails : sig
+    type t = {
+      apiName : string;
+          [@key "apiName"] [@ocaml.doc "Which API was intervened on."]
+      adAncestry : AdAncestry.t;
+          [@key "adAncestry"]
+          [@ocaml.doc "Why the ad script using the API is considered an ad."]
+      stackTrace : Runtime.StackTrace.t option;
+          [@key "stackTrace"]
+          [@yojson.option]
+          [@ocaml.doc "The stack trace at the time of the intervention."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The issue warns about blocked calls to privacy sensitive APIs via the\n\
+       Selective Permissions Intervention."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -2795,7 +2857,8 @@ and Audits : sig
       | `ConnectionAllowlistIssue
       | `UserReidentificationIssue
       | `PermissionElementIssue
-      | `PerformanceIssue ]
+      | `PerformanceIssue
+      | `SelectivePermissionsInterventionIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2934,6 +2997,11 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       performanceIssueDetails : PerformanceIssueDetails.t option;
           [@key "performanceIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      selectivePermissionsInterventionIssueDetails :
+        SelectivePermissionsInterventionIssueDetails.t option;
+          [@key "selectivePermissionsInterventionIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -6047,6 +6115,124 @@ end = struct
       "This issue warns about improper usage of the <permission> element."]
   end
 
+  and AdScriptIdentifier : sig
+    type t = {
+      scriptId : Runtime.ScriptId.t;
+          [@key "scriptId"] [@ocaml.doc "The script's v8 identifier."]
+      debuggerId : Runtime.UniqueDebuggerId.t;
+          [@key "debuggerId"]
+          [@ocaml.doc "v8's debugging id for the v8::Context."]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "The script's url (or generated name based on id if inline script)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Metadata about the ad script that was on the stack that caused the \
+       current\n\
+       script in the `AdAncestry` to be considered ad related."]
+  end = struct
+    type t = {
+      scriptId : Runtime.ScriptId.t;
+          [@key "scriptId"] [@ocaml.doc "The script's v8 identifier."]
+      debuggerId : Runtime.UniqueDebuggerId.t;
+          [@key "debuggerId"]
+          [@ocaml.doc "v8's debugging id for the v8::Context."]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "The script's url (or generated name based on id if inline script)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Metadata about the ad script that was on the stack that caused the \
+       current\n\
+       script in the `AdAncestry` to be considered ad related."]
+  end
+
+  and AdAncestry : sig
+    type t = {
+      adAncestryChain : AdScriptIdentifier.t list;
+          [@key "adAncestryChain"]
+          [@ocaml.doc
+            "The ad-script in the stack when the offending script was loaded. \
+             This is\n\
+             recursive down to the root script that was tagged due to the \
+             filterlist\n\
+             rule."]
+      rootScriptFilterlistRule : string option;
+          [@key "rootScriptFilterlistRule"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The filterlist rule that caused the root (last) script in\n\
+             `adAncestry` to be ad-tagged."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Providence about how an ad script was determined to be such. It is an ad\n\
+       because its url matched a filterlist rule, or because some other ad \
+       script\n\
+       was on the stack when this script was loaded."]
+  end = struct
+    type t = {
+      adAncestryChain : AdScriptIdentifier.t list;
+          [@key "adAncestryChain"]
+          [@ocaml.doc
+            "The ad-script in the stack when the offending script was loaded. \
+             This is\n\
+             recursive down to the root script that was tagged due to the \
+             filterlist\n\
+             rule."]
+      rootScriptFilterlistRule : string option;
+          [@key "rootScriptFilterlistRule"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The filterlist rule that caused the root (last) script in\n\
+             `adAncestry` to be ad-tagged."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Providence about how an ad script was determined to be such. It is an ad\n\
+       because its url matched a filterlist rule, or because some other ad \
+       script\n\
+       was on the stack when this script was loaded."]
+  end
+
+  and SelectivePermissionsInterventionIssueDetails : sig
+    type t = {
+      apiName : string;
+          [@key "apiName"] [@ocaml.doc "Which API was intervened on."]
+      adAncestry : AdAncestry.t;
+          [@key "adAncestry"]
+          [@ocaml.doc "Why the ad script using the API is considered an ad."]
+      stackTrace : Runtime.StackTrace.t option;
+          [@key "stackTrace"]
+          [@yojson.option]
+          [@ocaml.doc "The stack trace at the time of the intervention."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The issue warns about blocked calls to privacy sensitive APIs via the\n\
+       Selective Permissions Intervention."]
+  end = struct
+    type t = {
+      apiName : string;
+          [@key "apiName"] [@ocaml.doc "Which API was intervened on."]
+      adAncestry : AdAncestry.t;
+          [@key "adAncestry"]
+          [@ocaml.doc "Why the ad script using the API is considered an ad."]
+      stackTrace : Runtime.StackTrace.t option;
+          [@key "stackTrace"]
+          [@yojson.option]
+          [@ocaml.doc "The stack trace at the time of the intervention."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "The issue warns about blocked calls to privacy sensitive APIs via the\n\
+       Selective Permissions Intervention."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -6077,7 +6263,8 @@ end = struct
       | `ConnectionAllowlistIssue
       | `UserReidentificationIssue
       | `PermissionElementIssue
-      | `PerformanceIssue ]
+      | `PerformanceIssue
+      | `SelectivePermissionsInterventionIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -6118,7 +6305,8 @@ end = struct
       | `ConnectionAllowlistIssue
       | `UserReidentificationIssue
       | `PermissionElementIssue
-      | `PerformanceIssue ]
+      | `PerformanceIssue
+      | `SelectivePermissionsInterventionIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -6152,6 +6340,8 @@ end = struct
       | `String "UserReidentificationIssue" -> `UserReidentificationIssue
       | `String "PermissionElementIssue" -> `PermissionElementIssue
       | `String "PerformanceIssue" -> `PerformanceIssue
+      | `String "SelectivePermissionsInterventionIssue" ->
+          `SelectivePermissionsInterventionIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -6187,6 +6377,8 @@ end = struct
       | `UserReidentificationIssue -> `String "UserReidentificationIssue"
       | `PermissionElementIssue -> `String "PermissionElementIssue"
       | `PerformanceIssue -> `String "PerformanceIssue"
+      | `SelectivePermissionsInterventionIssue ->
+          `String "SelectivePermissionsInterventionIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -6324,6 +6516,11 @@ end = struct
           [@key "performanceIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      selectivePermissionsInterventionIssueDetails :
+        SelectivePermissionsInterventionIssueDetails.t option;
+          [@key "selectivePermissionsInterventionIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -6456,6 +6653,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       performanceIssueDetails : PerformanceIssueDetails.t option;
           [@key "performanceIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      selectivePermissionsInterventionIssueDetails :
+        SelectivePermissionsInterventionIssueDetails.t option;
+          [@key "selectivePermissionsInterventionIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -15629,6 +15831,19 @@ and Extensions : sig
 
     type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
   end
+
+  and ExtensionInfo : sig
+    type t = {
+      id : string; [@key "id"] [@ocaml.doc "Extension id."]
+      name : string; [@key "name"] [@ocaml.doc "Extension name."]
+      version : string; [@key "version"] [@ocaml.doc "Extension version."]
+      path : string;
+          [@key "path"]
+          [@ocaml.doc "The path from which the extension was loaded."]
+      enabled : bool; [@key "enabled"] [@ocaml.doc "Extension enabled status."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Detailed information about an extension."]
+  end
 end = struct
   module rec StorageArea : sig
     type _storagearea = [ `session | `local | `sync | `managed ]
@@ -15655,6 +15870,30 @@ end = struct
       | `managed -> `String "managed"
 
     type t = _storagearea [@@deriving yojson] [@@ocaml.doc "Storage areas."]
+  end
+
+  and ExtensionInfo : sig
+    type t = {
+      id : string; [@key "id"] [@ocaml.doc "Extension id."]
+      name : string; [@key "name"] [@ocaml.doc "Extension name."]
+      version : string; [@key "version"] [@ocaml.doc "Extension version."]
+      path : string;
+          [@key "path"]
+          [@ocaml.doc "The path from which the extension was loaded."]
+      enabled : bool; [@key "enabled"] [@ocaml.doc "Extension enabled status."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Detailed information about an extension."]
+  end = struct
+    type t = {
+      id : string; [@key "id"] [@ocaml.doc "Extension id."]
+      name : string; [@key "name"] [@ocaml.doc "Extension name."]
+      version : string; [@key "version"] [@ocaml.doc "Extension version."]
+      path : string;
+          [@key "path"]
+          [@ocaml.doc "The path from which the extension was loaded."]
+      enabled : bool; [@key "enabled"] [@ocaml.doc "Extension enabled status."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Detailed information about an extension."]
   end
 end
 
