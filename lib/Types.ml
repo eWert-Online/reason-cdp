@@ -18970,7 +18970,7 @@ and Network : sig
 
     type t = _renderblockingbehavior
     [@@deriving yojson]
-    [@@ocaml.doc "The render blocking behavior of a resource request."]
+    [@@ocaml.doc "The render-blocking behavior of a resource request."]
   end
 
   and PostDataEntry : sig
@@ -21510,7 +21510,7 @@ end = struct
 
     type t = _renderblockingbehavior
     [@@deriving yojson]
-    [@@ocaml.doc "The render blocking behavior of a resource request."]
+    [@@ocaml.doc "The render-blocking behavior of a resource request."]
   end = struct
     type _renderblockingbehavior =
       [ `Blocking
@@ -21537,7 +21537,7 @@ end = struct
 
     type t = _renderblockingbehavior
     [@@deriving yojson]
-    [@@ocaml.doc "The render blocking behavior of a resource request."]
+    [@@ocaml.doc "The render-blocking behavior of a resource request."]
   end
 
   and PostDataEntry : sig

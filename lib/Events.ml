@@ -1854,7 +1854,7 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
       renderBlockingBehavior : Types.Network.RenderBlockingBehavior.t option;
           [@key "renderBlockingBehavior"]
           [@yojson.option]
-          [@ocaml.doc "The render blocking behavior of the request."]
+          [@ocaml.doc "The render-blocking behavior of the request."]
     }
     [@@deriving yojson]
 
