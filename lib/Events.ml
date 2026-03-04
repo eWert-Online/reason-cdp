@@ -1117,6 +1117,36 @@ module Emulation = struct
   end
   [@@ocaml.doc
     {desc|Notification sent after the virtual time budget for the current VirtualTimePolicy has run out. |desc}]
+
+  module ScreenOrientationLockChanged = struct
+    let name = "Emulation.screenOrientationLockChanged"
+
+    type result = {
+      locked : bool;
+          [@key "locked"]
+          [@ocaml.doc "Whether the screen orientation is currently locked."]
+      orientation : Types.Emulation.ScreenOrientation.t option;
+          [@key "orientation"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The orientation lock type requested by the page. Only set when \
+             locked is true."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Fired when a page calls screen.orientation.lock() or screen.orientation.unlock()
+while device emulation is enabled. This allows the DevTools frontend to update the
+emulated device orientation accordingly. |desc}]
 end
 
 module FedCm = struct
