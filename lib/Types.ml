@@ -2280,7 +2280,8 @@ and Audits : sig
       | `NavigationEntryMarkedSkippable
       | `AutofillAndManualTextPolicyControlledFeaturesInfo
       | `AutofillPolicyControlledFeatureInfo
-      | `ManualTextPolicyControlledFeatureInfo ]
+      | `ManualTextPolicyControlledFeatureInfo
+      | `FormModelContextParameterMissingTitleAndDescription ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -4923,7 +4924,8 @@ end = struct
       | `NavigationEntryMarkedSkippable
       | `AutofillAndManualTextPolicyControlledFeaturesInfo
       | `AutofillPolicyControlledFeatureInfo
-      | `ManualTextPolicyControlledFeatureInfo ]
+      | `ManualTextPolicyControlledFeatureInfo
+      | `FormModelContextParameterMissingTitleAndDescription ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -4949,7 +4951,8 @@ end = struct
       | `NavigationEntryMarkedSkippable
       | `AutofillAndManualTextPolicyControlledFeaturesInfo
       | `AutofillPolicyControlledFeatureInfo
-      | `ManualTextPolicyControlledFeatureInfo ]
+      | `ManualTextPolicyControlledFeatureInfo
+      | `FormModelContextParameterMissingTitleAndDescription ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "FormLabelForNameError" -> `FormLabelForNameError
@@ -4978,6 +4981,8 @@ end = struct
           `AutofillPolicyControlledFeatureInfo
       | `String "ManualTextPolicyControlledFeatureInfo" ->
           `ManualTextPolicyControlledFeatureInfo
+      | `String "FormModelContextParameterMissingTitleAndDescription" ->
+          `FormModelContextParameterMissingTitleAndDescription
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -5008,6 +5013,8 @@ end = struct
           `String "AutofillPolicyControlledFeatureInfo"
       | `ManualTextPolicyControlledFeatureInfo ->
           `String "ManualTextPolicyControlledFeatureInfo"
+      | `FormModelContextParameterMissingTitleAndDescription ->
+          `String "FormModelContextParameterMissingTitleAndDescription"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -8707,6 +8714,13 @@ and CSS : sig
             "@starting-style CSS at-rule array.\n\
              The array enumerates @starting-style at-rules starting with the \
              innermost one, going outwards."]
+      navigations : CSSNavigation.t list option;
+          [@key "navigations"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@navigation CSS at-rule array.\n\
+             The array enumerates @navigation at-rules starting with the \
+             innermost one, going outwards."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS rule representation."]
   end
@@ -8719,7 +8733,8 @@ and CSS : sig
       | `LayerRule
       | `ScopeRule
       | `StyleRule
-      | `StartingStyleRule ]
+      | `StartingStyleRule
+      | `NavigationRule ]
 
     val _cssruletype_of_yojson : Yojson.Basic.t -> _cssruletype
     val yojson_of__cssruletype : _cssruletype -> Yojson.Basic.t
@@ -9020,6 +9035,28 @@ and CSS : sig
             "Identifier of the stylesheet containing this object (if exists)."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS Supports at-rule descriptor."]
+  end
+
+  and CSSNavigation : sig
+    type t = {
+      text : string; [@key "text"] [@ocaml.doc "Navigation rule text."]
+      active : bool option;
+          [@key "active"]
+          [@yojson.option]
+          [@ocaml.doc "Whether the navigation condition is satisfied."]
+      range : SourceRange.t option;
+          [@key "range"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The associated rule header range in the enclosing stylesheet (if\n\
+             available)."]
+      styleSheetId : DOM.StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Identifier of the stylesheet containing this object (if exists)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS Navigation at-rule descriptor."]
   end
 
   and CSSScope : sig
@@ -9325,6 +9362,11 @@ and CSS : sig
           [@ocaml.doc
             "@supports CSS at-rule condition. Only one type of condition \
              should be set."]
+      navigation : CSSNavigation.t option;
+          [@key "navigation"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@navigation condition. Only one type of condition should be set."]
       children : CSSFunctionNode.t list;
           [@key "children"] [@ocaml.doc "Block body."]
       conditionText : string;
@@ -9956,6 +9998,13 @@ end = struct
             "@starting-style CSS at-rule array.\n\
              The array enumerates @starting-style at-rules starting with the \
              innermost one, going outwards."]
+      navigations : CSSNavigation.t list option;
+          [@key "navigations"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@navigation CSS at-rule array.\n\
+             The array enumerates @navigation at-rules starting with the \
+             innermost one, going outwards."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS rule representation."]
   end = struct
@@ -10033,6 +10082,13 @@ end = struct
             "@starting-style CSS at-rule array.\n\
              The array enumerates @starting-style at-rules starting with the \
              innermost one, going outwards."]
+      navigations : CSSNavigation.t list option;
+          [@key "navigations"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@navigation CSS at-rule array.\n\
+             The array enumerates @navigation at-rules starting with the \
+             innermost one, going outwards."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS rule representation."]
   end
@@ -10045,7 +10101,8 @@ end = struct
       | `LayerRule
       | `ScopeRule
       | `StyleRule
-      | `StartingStyleRule ]
+      | `StartingStyleRule
+      | `NavigationRule ]
 
     val _cssruletype_of_yojson : Yojson.Basic.t -> _cssruletype
     val yojson_of__cssruletype : _cssruletype -> Yojson.Basic.t
@@ -10065,7 +10122,8 @@ end = struct
       | `LayerRule
       | `ScopeRule
       | `StyleRule
-      | `StartingStyleRule ]
+      | `StartingStyleRule
+      | `NavigationRule ]
 
     let _cssruletype_of_yojson = function
       | `String "MediaRule" -> `MediaRule
@@ -10075,6 +10133,7 @@ end = struct
       | `String "ScopeRule" -> `ScopeRule
       | `String "StyleRule" -> `StyleRule
       | `String "StartingStyleRule" -> `StartingStyleRule
+      | `String "NavigationRule" -> `NavigationRule
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -10086,6 +10145,7 @@ end = struct
       | `ScopeRule -> `String "ScopeRule"
       | `StyleRule -> `String "StyleRule"
       | `StartingStyleRule -> `String "StartingStyleRule"
+      | `NavigationRule -> `String "NavigationRule"
 
     type t = _cssruletype
     [@@deriving yojson]
@@ -10659,6 +10719,48 @@ end = struct
             "Identifier of the stylesheet containing this object (if exists)."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS Supports at-rule descriptor."]
+  end
+
+  and CSSNavigation : sig
+    type t = {
+      text : string; [@key "text"] [@ocaml.doc "Navigation rule text."]
+      active : bool option;
+          [@key "active"]
+          [@yojson.option]
+          [@ocaml.doc "Whether the navigation condition is satisfied."]
+      range : SourceRange.t option;
+          [@key "range"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The associated rule header range in the enclosing stylesheet (if\n\
+             available)."]
+      styleSheetId : DOM.StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Identifier of the stylesheet containing this object (if exists)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS Navigation at-rule descriptor."]
+  end = struct
+    type t = {
+      text : string; [@key "text"] [@ocaml.doc "Navigation rule text."]
+      active : bool option;
+          [@key "active"]
+          [@yojson.option]
+          [@ocaml.doc "Whether the navigation condition is satisfied."]
+      range : SourceRange.t option;
+          [@key "range"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The associated rule header range in the enclosing stylesheet (if\n\
+             available)."]
+      styleSheetId : DOM.StyleSheetId.t option;
+          [@key "styleSheetId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Identifier of the stylesheet containing this object (if exists)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "CSS Navigation at-rule descriptor."]
   end
 
   and CSSScope : sig
@@ -11240,6 +11342,11 @@ end = struct
           [@ocaml.doc
             "@supports CSS at-rule condition. Only one type of condition \
              should be set."]
+      navigation : CSSNavigation.t option;
+          [@key "navigation"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@navigation condition. Only one type of condition should be set."]
       children : CSSFunctionNode.t list;
           [@key "children"] [@ocaml.doc "Block body."]
       conditionText : string;
@@ -11267,6 +11374,11 @@ end = struct
           [@ocaml.doc
             "@supports CSS at-rule condition. Only one type of condition \
              should be set."]
+      navigation : CSSNavigation.t option;
+          [@key "navigation"]
+          [@yojson.option]
+          [@ocaml.doc
+            "@navigation condition. Only one type of condition should be set."]
       children : CSSFunctionNode.t list;
           [@key "children"] [@ocaml.doc "Block body."]
       conditionText : string;
