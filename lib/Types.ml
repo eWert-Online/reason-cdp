@@ -1972,26 +1972,6 @@ and Audits : sig
        transferred to a context that is not cross-origin isolated."]
   end
 
-  and LowTextContrastIssueDetails : sig
-    type t = {
-      violatingNodeId : DOM.BackendNodeId.t;
-          [@key "violatingNodeId"] [@ocaml.doc "No description provided"]
-      violatingNodeSelector : string;
-          [@key "violatingNodeSelector"] [@ocaml.doc "No description provided"]
-      contrastRatio : number;
-          [@key "contrastRatio"] [@ocaml.doc "No description provided"]
-      thresholdAA : number;
-          [@key "thresholdAA"] [@ocaml.doc "No description provided"]
-      thresholdAAA : number;
-          [@key "thresholdAAA"] [@ocaml.doc "No description provided"]
-      fontSize : string;
-          [@key "fontSize"] [@ocaml.doc "No description provided"]
-      fontWeight : string;
-          [@key "fontWeight"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
   and CorsIssueDetails : sig
     type t = {
       corsErrorStatus : Network.CorsErrorStatus.t;
@@ -2836,7 +2816,6 @@ and Audits : sig
       | `HeavyAdIssue
       | `ContentSecurityPolicyIssue
       | `SharedArrayBufferIssue
-      | `LowTextContrastIssue
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
@@ -2897,10 +2876,6 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       sharedArrayBufferIssueDetails : SharedArrayBufferIssueDetails.t option;
           [@key "sharedArrayBufferIssueDetails"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      lowTextContrastIssueDetails : LowTextContrastIssueDetails.t option;
-          [@key "lowTextContrastIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       corsIssueDetails : CorsIssueDetails.t option;
@@ -4132,44 +4107,6 @@ end = struct
     [@@ocaml.doc
       "Details for a issue arising from an SAB being instantiated in, or\n\
        transferred to a context that is not cross-origin isolated."]
-  end
-
-  and LowTextContrastIssueDetails : sig
-    type t = {
-      violatingNodeId : DOM.BackendNodeId.t;
-          [@key "violatingNodeId"] [@ocaml.doc "No description provided"]
-      violatingNodeSelector : string;
-          [@key "violatingNodeSelector"] [@ocaml.doc "No description provided"]
-      contrastRatio : number;
-          [@key "contrastRatio"] [@ocaml.doc "No description provided"]
-      thresholdAA : number;
-          [@key "thresholdAA"] [@ocaml.doc "No description provided"]
-      thresholdAAA : number;
-          [@key "thresholdAAA"] [@ocaml.doc "No description provided"]
-      fontSize : string;
-          [@key "fontSize"] [@ocaml.doc "No description provided"]
-      fontWeight : string;
-          [@key "fontWeight"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type t = {
-      violatingNodeId : DOM.BackendNodeId.t;
-          [@key "violatingNodeId"] [@ocaml.doc "No description provided"]
-      violatingNodeSelector : string;
-          [@key "violatingNodeSelector"] [@ocaml.doc "No description provided"]
-      contrastRatio : number;
-          [@key "contrastRatio"] [@ocaml.doc "No description provided"]
-      thresholdAA : number;
-          [@key "thresholdAA"] [@ocaml.doc "No description provided"]
-      thresholdAAA : number;
-          [@key "thresholdAAA"] [@ocaml.doc "No description provided"]
-      fontSize : string;
-          [@key "fontSize"] [@ocaml.doc "No description provided"]
-      fontWeight : string;
-          [@key "fontWeight"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
   and CorsIssueDetails : sig
@@ -6248,7 +6185,6 @@ end = struct
       | `HeavyAdIssue
       | `ContentSecurityPolicyIssue
       | `SharedArrayBufferIssue
-      | `LowTextContrastIssue
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
@@ -6290,7 +6226,6 @@ end = struct
       | `HeavyAdIssue
       | `ContentSecurityPolicyIssue
       | `SharedArrayBufferIssue
-      | `LowTextContrastIssue
       | `CorsIssue
       | `AttributionReportingIssue
       | `QuirksModeIssue
@@ -6322,7 +6257,6 @@ end = struct
       | `String "HeavyAdIssue" -> `HeavyAdIssue
       | `String "ContentSecurityPolicyIssue" -> `ContentSecurityPolicyIssue
       | `String "SharedArrayBufferIssue" -> `SharedArrayBufferIssue
-      | `String "LowTextContrastIssue" -> `LowTextContrastIssue
       | `String "CorsIssue" -> `CorsIssue
       | `String "AttributionReportingIssue" -> `AttributionReportingIssue
       | `String "QuirksModeIssue" -> `QuirksModeIssue
@@ -6359,7 +6293,6 @@ end = struct
       | `HeavyAdIssue -> `String "HeavyAdIssue"
       | `ContentSecurityPolicyIssue -> `String "ContentSecurityPolicyIssue"
       | `SharedArrayBufferIssue -> `String "SharedArrayBufferIssue"
-      | `LowTextContrastIssue -> `String "LowTextContrastIssue"
       | `CorsIssue -> `String "CorsIssue"
       | `AttributionReportingIssue -> `String "AttributionReportingIssue"
       | `QuirksModeIssue -> `String "QuirksModeIssue"
@@ -6420,10 +6353,6 @@ end = struct
           [@ocaml.doc "No description provided"]
       sharedArrayBufferIssueDetails : SharedArrayBufferIssueDetails.t option;
           [@key "sharedArrayBufferIssueDetails"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      lowTextContrastIssueDetails : LowTextContrastIssueDetails.t option;
-          [@key "lowTextContrastIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       corsIssueDetails : CorsIssueDetails.t option;
@@ -6559,10 +6488,6 @@ end = struct
           [@ocaml.doc "No description provided"]
       sharedArrayBufferIssueDetails : SharedArrayBufferIssueDetails.t option;
           [@key "sharedArrayBufferIssueDetails"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      lowTextContrastIssueDetails : LowTextContrastIssueDetails.t option;
-          [@key "lowTextContrastIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       corsIssueDetails : CorsIssueDetails.t option;
@@ -28904,6 +28829,7 @@ and Page : sig
       | `BackForwardCacheDisabledForPrerender
       | `UserAgentOverrideDiffers
       | `ForegroundCacheLimit
+      | `ForwardCacheDisabled
       | `BrowsingInstanceNotSwapped
       | `BackForwardCacheDisabledForDelegate
       | `UnloadHandlerExistsInMainFrame
@@ -31607,6 +31533,7 @@ end = struct
       | `BackForwardCacheDisabledForPrerender
       | `UserAgentOverrideDiffers
       | `ForegroundCacheLimit
+      | `ForwardCacheDisabled
       | `BrowsingInstanceNotSwapped
       | `BackForwardCacheDisabledForDelegate
       | `UnloadHandlerExistsInMainFrame
@@ -31765,6 +31692,7 @@ end = struct
       | `BackForwardCacheDisabledForPrerender
       | `UserAgentOverrideDiffers
       | `ForegroundCacheLimit
+      | `ForwardCacheDisabled
       | `BrowsingInstanceNotSwapped
       | `BackForwardCacheDisabledForDelegate
       | `UnloadHandlerExistsInMainFrame
@@ -31923,6 +31851,7 @@ end = struct
           `BackForwardCacheDisabledForPrerender
       | `String "UserAgentOverrideDiffers" -> `UserAgentOverrideDiffers
       | `String "ForegroundCacheLimit" -> `ForegroundCacheLimit
+      | `String "ForwardCacheDisabled" -> `ForwardCacheDisabled
       | `String "BrowsingInstanceNotSwapped" -> `BrowsingInstanceNotSwapped
       | `String "BackForwardCacheDisabledForDelegate" ->
           `BackForwardCacheDisabledForDelegate
@@ -32120,6 +32049,7 @@ end = struct
           `String "BackForwardCacheDisabledForPrerender"
       | `UserAgentOverrideDiffers -> `String "UserAgentOverrideDiffers"
       | `ForegroundCacheLimit -> `String "ForegroundCacheLimit"
+      | `ForwardCacheDisabled -> `String "ForwardCacheDisabled"
       | `BrowsingInstanceNotSwapped -> `String "BrowsingInstanceNotSwapped"
       | `BackForwardCacheDisabledForDelegate ->
           `String "BackForwardCacheDisabledForDelegate"

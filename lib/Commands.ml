@@ -1321,65 +1321,6 @@ applies to images. |desc}]
     {desc|Enables issues domain, sends the issues collected so far to the client by means of the
 `issueAdded` event. |desc}]
 
-  module CheckContrast = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        reportAAA : bool option;
-            [@key "reportAAA"]
-            [@yojson.option]
-            [@ocaml.doc
-              "Whether to report WCAG AAA level issues. Default is false."]
-      }
-      [@@deriving yojson]
-
-      let make ?reportAAA () = { reportAAA }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Audits.checkContrast"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Runs the contrast check for the target page. Found issues are reported
-using Audits.issueAdded event. |desc}]
-
   module CheckFormsIssues = struct
     module Response : sig
       type result = {
