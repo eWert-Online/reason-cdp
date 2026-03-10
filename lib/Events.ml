@@ -5903,6 +5903,48 @@ PublicKeyCredential.signalCurrentUserDetails(). |desc}]
     {desc|Triggered when a credential is used in a webauthn assertion. |desc}]
 end
 
+module WebMCP = struct
+  module ToolsAdded = struct
+    let name = "WebMCP.toolsAdded"
+
+    type result = {
+      tools : Types.WebMCP.Tool.t list;
+          [@key "tools"] [@ocaml.doc "Array of tools that were added."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Event fired when new tools are added. |desc}]
+
+  module ToolsRemoved = struct
+    let name = "WebMCP.toolsRemoved"
+
+    type result = {
+      tools : Types.WebMCP.Tool.t list;
+          [@key "tools"] [@ocaml.doc "Array of tools that were removed."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Event fired when tools are removed. |desc}]
+end
+
 module Console = struct
   module MessageAdded = struct
     let name = "Console.messageAdded"

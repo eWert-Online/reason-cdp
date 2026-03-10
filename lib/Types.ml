@@ -40632,6 +40632,142 @@ end = struct
   end
 end
 
+and WebMCP : sig
+  module rec Annotation : sig
+    type t = {
+      readOnly : bool option;
+          [@key "readOnly"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A hint indicating that the tool does not modify any state."]
+      autosubmit : bool option;
+          [@key "autosubmit"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the declarative tool was declared with the autosubmit \
+             attribute."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Tool annotations"]
+  end
+
+  and Tool : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "Tool name."]
+      description : string;
+          [@key "description"] [@ocaml.doc "Tool description."]
+      inputSchema : assoc option;
+          [@key "inputSchema"]
+          [@yojson.option]
+          [@ocaml.doc "Schema for the tool's input parameters."]
+      annotations : Annotation.t option;
+          [@key "annotations"]
+          [@yojson.option]
+          [@ocaml.doc "Optional annotations for the tool."]
+      frameId : Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "Frame identifier associated with the tool registration."]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Optional node ID for declarative tools."]
+      stackTrace : Runtime.StackTrace.t option;
+          [@key "stackTrace"]
+          [@yojson.option]
+          [@ocaml.doc "The stack trace at the time of the registration."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Definition of a tool that can be invoked."]
+  end
+end = struct
+  module rec Annotation : sig
+    type t = {
+      readOnly : bool option;
+          [@key "readOnly"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A hint indicating that the tool does not modify any state."]
+      autosubmit : bool option;
+          [@key "autosubmit"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the declarative tool was declared with the autosubmit \
+             attribute."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Tool annotations"]
+  end = struct
+    type t = {
+      readOnly : bool option;
+          [@key "readOnly"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A hint indicating that the tool does not modify any state."]
+      autosubmit : bool option;
+          [@key "autosubmit"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If the declarative tool was declared with the autosubmit \
+             attribute."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Tool annotations"]
+  end
+
+  and Tool : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "Tool name."]
+      description : string;
+          [@key "description"] [@ocaml.doc "Tool description."]
+      inputSchema : assoc option;
+          [@key "inputSchema"]
+          [@yojson.option]
+          [@ocaml.doc "Schema for the tool's input parameters."]
+      annotations : Annotation.t option;
+          [@key "annotations"]
+          [@yojson.option]
+          [@ocaml.doc "Optional annotations for the tool."]
+      frameId : Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "Frame identifier associated with the tool registration."]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Optional node ID for declarative tools."]
+      stackTrace : Runtime.StackTrace.t option;
+          [@key "stackTrace"]
+          [@yojson.option]
+          [@ocaml.doc "The stack trace at the time of the registration."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Definition of a tool that can be invoked."]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "Tool name."]
+      description : string;
+          [@key "description"] [@ocaml.doc "Tool description."]
+      inputSchema : assoc option;
+          [@key "inputSchema"]
+          [@yojson.option]
+          [@ocaml.doc "Schema for the tool's input parameters."]
+      annotations : Annotation.t option;
+          [@key "annotations"]
+          [@yojson.option]
+          [@ocaml.doc "Optional annotations for the tool."]
+      frameId : Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "Frame identifier associated with the tool registration."]
+      backendNodeId : DOM.BackendNodeId.t option;
+          [@key "backendNodeId"]
+          [@yojson.option]
+          [@ocaml.doc "Optional node ID for declarative tools."]
+      stackTrace : Runtime.StackTrace.t option;
+          [@key "stackTrace"]
+          [@yojson.option]
+          [@ocaml.doc "The stack trace at the time of the registration."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Definition of a tool that can be invoked."]
+  end
+end
+
 and Console : sig
   module rec ConsoleMessage : sig
     type _consolemessage_source =
