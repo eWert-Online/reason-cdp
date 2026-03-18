@@ -27439,7 +27439,7 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |des
   module GetAdScriptAncestry = struct
     module Response : sig
       type result = {
-        adScriptAncestry : Types.Page.AdScriptAncestry.t option;
+        adScriptAncestry : Types.Network.AdAncestry.t option;
             [@key "adScriptAncestry"]
             [@yojson.option]
             [@ocaml.doc
@@ -27467,7 +27467,7 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |des
       val parse : string -> t
     end = struct
       type result = {
-        adScriptAncestry : Types.Page.AdScriptAncestry.t option;
+        adScriptAncestry : Types.Network.AdAncestry.t option;
             [@key "adScriptAncestry"]
             [@yojson.option]
             [@ocaml.doc

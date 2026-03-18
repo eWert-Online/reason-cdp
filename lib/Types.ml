@@ -2746,55 +2746,11 @@ and Audits : sig
       "This issue warns about improper usage of the <permission> element."]
   end
 
-  and AdScriptIdentifier : sig
-    type t = {
-      scriptId : Runtime.ScriptId.t;
-          [@key "scriptId"] [@ocaml.doc "The script's v8 identifier."]
-      debuggerId : Runtime.UniqueDebuggerId.t;
-          [@key "debuggerId"]
-          [@ocaml.doc "v8's debugging id for the v8::Context."]
-      name : string;
-          [@key "name"]
-          [@ocaml.doc
-            "The script's url (or generated name based on id if inline script)."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Metadata about the ad script that was on the stack that caused the \
-       current\n\
-       script in the `AdAncestry` to be considered ad related."]
-  end
-
-  and AdAncestry : sig
-    type t = {
-      adAncestryChain : AdScriptIdentifier.t list;
-          [@key "adAncestryChain"]
-          [@ocaml.doc
-            "The ad-script in the stack when the offending script was loaded. \
-             This is\n\
-             recursive down to the root script that was tagged due to the \
-             filterlist\n\
-             rule."]
-      rootScriptFilterlistRule : string option;
-          [@key "rootScriptFilterlistRule"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The filterlist rule that caused the root (last) script in\n\
-             `adAncestry` to be ad-tagged."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Providence about how an ad script was determined to be such. It is an ad\n\
-       because its url matched a filterlist rule, or because some other ad \
-       script\n\
-       was on the stack when this script was loaded."]
-  end
-
   and SelectivePermissionsInterventionIssueDetails : sig
     type t = {
       apiName : string;
           [@key "apiName"] [@ocaml.doc "Which API was intervened on."]
-      adAncestry : AdAncestry.t;
+      adAncestry : Network.AdAncestry.t;
           [@key "adAncestry"]
           [@ocaml.doc "Why the ad script using the API is considered an ad."]
       stackTrace : Runtime.StackTrace.t option;
@@ -6059,95 +6015,11 @@ end = struct
       "This issue warns about improper usage of the <permission> element."]
   end
 
-  and AdScriptIdentifier : sig
-    type t = {
-      scriptId : Runtime.ScriptId.t;
-          [@key "scriptId"] [@ocaml.doc "The script's v8 identifier."]
-      debuggerId : Runtime.UniqueDebuggerId.t;
-          [@key "debuggerId"]
-          [@ocaml.doc "v8's debugging id for the v8::Context."]
-      name : string;
-          [@key "name"]
-          [@ocaml.doc
-            "The script's url (or generated name based on id if inline script)."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Metadata about the ad script that was on the stack that caused the \
-       current\n\
-       script in the `AdAncestry` to be considered ad related."]
-  end = struct
-    type t = {
-      scriptId : Runtime.ScriptId.t;
-          [@key "scriptId"] [@ocaml.doc "The script's v8 identifier."]
-      debuggerId : Runtime.UniqueDebuggerId.t;
-          [@key "debuggerId"]
-          [@ocaml.doc "v8's debugging id for the v8::Context."]
-      name : string;
-          [@key "name"]
-          [@ocaml.doc
-            "The script's url (or generated name based on id if inline script)."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Metadata about the ad script that was on the stack that caused the \
-       current\n\
-       script in the `AdAncestry` to be considered ad related."]
-  end
-
-  and AdAncestry : sig
-    type t = {
-      adAncestryChain : AdScriptIdentifier.t list;
-          [@key "adAncestryChain"]
-          [@ocaml.doc
-            "The ad-script in the stack when the offending script was loaded. \
-             This is\n\
-             recursive down to the root script that was tagged due to the \
-             filterlist\n\
-             rule."]
-      rootScriptFilterlistRule : string option;
-          [@key "rootScriptFilterlistRule"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The filterlist rule that caused the root (last) script in\n\
-             `adAncestry` to be ad-tagged."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Providence about how an ad script was determined to be such. It is an ad\n\
-       because its url matched a filterlist rule, or because some other ad \
-       script\n\
-       was on the stack when this script was loaded."]
-  end = struct
-    type t = {
-      adAncestryChain : AdScriptIdentifier.t list;
-          [@key "adAncestryChain"]
-          [@ocaml.doc
-            "The ad-script in the stack when the offending script was loaded. \
-             This is\n\
-             recursive down to the root script that was tagged due to the \
-             filterlist\n\
-             rule."]
-      rootScriptFilterlistRule : string option;
-          [@key "rootScriptFilterlistRule"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The filterlist rule that caused the root (last) script in\n\
-             `adAncestry` to be ad-tagged."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Providence about how an ad script was determined to be such. It is an ad\n\
-       because its url matched a filterlist rule, or because some other ad \
-       script\n\
-       was on the stack when this script was loaded."]
-  end
-
   and SelectivePermissionsInterventionIssueDetails : sig
     type t = {
       apiName : string;
           [@key "apiName"] [@ocaml.doc "Which API was intervened on."]
-      adAncestry : AdAncestry.t;
+      adAncestry : Network.AdAncestry.t;
           [@key "adAncestry"]
           [@ocaml.doc "Why the ad script using the API is considered an ad."]
       stackTrace : Runtime.StackTrace.t option;
@@ -6163,7 +6035,7 @@ end = struct
     type t = {
       apiName : string;
           [@key "apiName"] [@ocaml.doc "Which API was intervened on."]
-      adAncestry : AdAncestry.t;
+      adAncestry : Network.AdAncestry.t;
           [@key "adAncestry"]
           [@ocaml.doc "Why the ad script using the API is considered an ad."]
       stackTrace : Runtime.StackTrace.t option;
@@ -20382,6 +20254,54 @@ and Network : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AdScriptIdentifier : sig
+    type t = {
+      scriptId : Runtime.ScriptId.t;
+          [@key "scriptId"] [@ocaml.doc "The script's V8 identifier."]
+      debuggerId : Runtime.UniqueDebuggerId.t;
+          [@key "debuggerId"]
+          [@ocaml.doc "V8's debugging ID for the v8::Context."]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "The script's url (or generated name based on id if inline script)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Identifies the script on the stack that caused a resource or element to \
+       be\n\
+       labeled as an ad. For resources, this indicates the context that \
+       triggered\n\
+       the fetch. For elements, this indicates the context that caused the \
+       element\n\
+       to be appended to the DOM."]
+  end
+
+  and AdAncestry : sig
+    type t = {
+      ancestryChain : AdScriptIdentifier.t list;
+          [@key "ancestryChain"]
+          [@ocaml.doc
+            "A chain of `AdScriptIdentifier`s representing the ancestry of an ad\n\
+             script that led to the creation of a resource or element. The \
+             chain is\n\
+             ordered from the script itself (lowest level) up to its root \
+             ancestor\n\
+             that was flagged by a filter list."]
+      rootScriptFilterlistRule : string option;
+          [@key "rootScriptFilterlistRule"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The filter list rule that caused the root (last) script in\n\
+             `ancestryChain` to be tagged as an ad."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Encapsulates the script ancestry and the root script filter list rule \
+       that\n\
+       caused the resource or element to be labeled as an ad."]
+  end
+
   and CrossOriginOpenerPolicyValue : sig
     type _crossoriginopenerpolicyvalue =
       [ `SameOrigin
@@ -24625,6 +24545,98 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and AdScriptIdentifier : sig
+    type t = {
+      scriptId : Runtime.ScriptId.t;
+          [@key "scriptId"] [@ocaml.doc "The script's V8 identifier."]
+      debuggerId : Runtime.UniqueDebuggerId.t;
+          [@key "debuggerId"]
+          [@ocaml.doc "V8's debugging ID for the v8::Context."]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "The script's url (or generated name based on id if inline script)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Identifies the script on the stack that caused a resource or element to \
+       be\n\
+       labeled as an ad. For resources, this indicates the context that \
+       triggered\n\
+       the fetch. For elements, this indicates the context that caused the \
+       element\n\
+       to be appended to the DOM."]
+  end = struct
+    type t = {
+      scriptId : Runtime.ScriptId.t;
+          [@key "scriptId"] [@ocaml.doc "The script's V8 identifier."]
+      debuggerId : Runtime.UniqueDebuggerId.t;
+          [@key "debuggerId"]
+          [@ocaml.doc "V8's debugging ID for the v8::Context."]
+      name : string;
+          [@key "name"]
+          [@ocaml.doc
+            "The script's url (or generated name based on id if inline script)."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Identifies the script on the stack that caused a resource or element to \
+       be\n\
+       labeled as an ad. For resources, this indicates the context that \
+       triggered\n\
+       the fetch. For elements, this indicates the context that caused the \
+       element\n\
+       to be appended to the DOM."]
+  end
+
+  and AdAncestry : sig
+    type t = {
+      ancestryChain : AdScriptIdentifier.t list;
+          [@key "ancestryChain"]
+          [@ocaml.doc
+            "A chain of `AdScriptIdentifier`s representing the ancestry of an ad\n\
+             script that led to the creation of a resource or element. The \
+             chain is\n\
+             ordered from the script itself (lowest level) up to its root \
+             ancestor\n\
+             that was flagged by a filter list."]
+      rootScriptFilterlistRule : string option;
+          [@key "rootScriptFilterlistRule"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The filter list rule that caused the root (last) script in\n\
+             `ancestryChain` to be tagged as an ad."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Encapsulates the script ancestry and the root script filter list rule \
+       that\n\
+       caused the resource or element to be labeled as an ad."]
+  end = struct
+    type t = {
+      ancestryChain : AdScriptIdentifier.t list;
+          [@key "ancestryChain"]
+          [@ocaml.doc
+            "A chain of `AdScriptIdentifier`s representing the ancestry of an ad\n\
+             script that led to the creation of a resource or element. The \
+             chain is\n\
+             ordered from the script itself (lowest level) up to its root \
+             ancestor\n\
+             that was flagged by a filter list."]
+      rootScriptFilterlistRule : string option;
+          [@key "rootScriptFilterlistRule"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The filter list rule that caused the root (last) script in\n\
+             `ancestryChain` to be tagged as an ad."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Encapsulates the script ancestry and the root script filter list rule \
+       that\n\
+       caused the resource or element to be labeled as an ad."]
+  end
+
   and CrossOriginOpenerPolicyValue : sig
     type _crossoriginopenerpolicyvalue =
       [ `SameOrigin
@@ -27747,50 +27759,6 @@ and Page : sig
       "Indicates whether a frame has been identified as an ad and why."]
   end
 
-  and AdScriptId : sig
-    type t = {
-      scriptId : Runtime.ScriptId.t;
-          [@key "scriptId"]
-          [@ocaml.doc
-            "Script Id of the script which caused a script or frame to be \
-             labelled as\n\
-             an ad."]
-      debuggerId : Runtime.UniqueDebuggerId.t;
-          [@key "debuggerId"] [@ocaml.doc "Id of scriptId's debugger."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Identifies the script which caused a script or frame to be labelled as an\n\
-       ad."]
-  end
-
-  and AdScriptAncestry : sig
-    type t = {
-      ancestryChain : AdScriptId.t list;
-          [@key "ancestryChain"]
-          [@ocaml.doc
-            "A chain of `AdScriptId`s representing the ancestry of an ad \
-             script that\n\
-             led to the creation of a frame. The chain is ordered from the \
-             script\n\
-             itself (lower level) up to its root ancestor that was flagged by\n\
-             filterlist."]
-      rootScriptFilterlistRule : string option;
-          [@key "rootScriptFilterlistRule"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The filterlist rule that caused the root (last) script in\n\
-             `ancestryChain` to be ad-tagged. Only populated if the rule is\n\
-             available."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Encapsulates the script ancestry and the root script filterlist rule that\n\
-       caused the frame to be labelled as an ad. Only created when \
-       `ancestryChain`\n\
-       is not empty."]
-  end
-
   and SecureContextType : sig
     type _securecontexttype =
       [ `Secure | `SecureLocalhost | `InsecureScheme | `InsecureAncestor ]
@@ -29108,90 +29076,6 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc
       "Indicates whether a frame has been identified as an ad and why."]
-  end
-
-  and AdScriptId : sig
-    type t = {
-      scriptId : Runtime.ScriptId.t;
-          [@key "scriptId"]
-          [@ocaml.doc
-            "Script Id of the script which caused a script or frame to be \
-             labelled as\n\
-             an ad."]
-      debuggerId : Runtime.UniqueDebuggerId.t;
-          [@key "debuggerId"] [@ocaml.doc "Id of scriptId's debugger."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Identifies the script which caused a script or frame to be labelled as an\n\
-       ad."]
-  end = struct
-    type t = {
-      scriptId : Runtime.ScriptId.t;
-          [@key "scriptId"]
-          [@ocaml.doc
-            "Script Id of the script which caused a script or frame to be \
-             labelled as\n\
-             an ad."]
-      debuggerId : Runtime.UniqueDebuggerId.t;
-          [@key "debuggerId"] [@ocaml.doc "Id of scriptId's debugger."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Identifies the script which caused a script or frame to be labelled as an\n\
-       ad."]
-  end
-
-  and AdScriptAncestry : sig
-    type t = {
-      ancestryChain : AdScriptId.t list;
-          [@key "ancestryChain"]
-          [@ocaml.doc
-            "A chain of `AdScriptId`s representing the ancestry of an ad \
-             script that\n\
-             led to the creation of a frame. The chain is ordered from the \
-             script\n\
-             itself (lower level) up to its root ancestor that was flagged by\n\
-             filterlist."]
-      rootScriptFilterlistRule : string option;
-          [@key "rootScriptFilterlistRule"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The filterlist rule that caused the root (last) script in\n\
-             `ancestryChain` to be ad-tagged. Only populated if the rule is\n\
-             available."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Encapsulates the script ancestry and the root script filterlist rule that\n\
-       caused the frame to be labelled as an ad. Only created when \
-       `ancestryChain`\n\
-       is not empty."]
-  end = struct
-    type t = {
-      ancestryChain : AdScriptId.t list;
-          [@key "ancestryChain"]
-          [@ocaml.doc
-            "A chain of `AdScriptId`s representing the ancestry of an ad \
-             script that\n\
-             led to the creation of a frame. The chain is ordered from the \
-             script\n\
-             itself (lower level) up to its root ancestor that was flagged by\n\
-             filterlist."]
-      rootScriptFilterlistRule : string option;
-          [@key "rootScriptFilterlistRule"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The filterlist rule that caused the root (last) script in\n\
-             `ancestryChain` to be ad-tagged. Only populated if the rule is\n\
-             available."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Encapsulates the script ancestry and the root script filterlist rule that\n\
-       caused the frame to be labelled as an ad. Only created when \
-       `ancestryChain`\n\
-       is not empty."]
   end
 
   and SecureContextType : sig
