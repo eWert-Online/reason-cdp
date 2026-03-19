@@ -9205,6 +9205,12 @@ and CSS : sig
           [@key "parameters"] [@ocaml.doc "List of parameters."]
       children : CSSFunctionNode.t list;
           [@key "children"] [@ocaml.doc "Function body."]
+      originTreeScopeNodeId : DOM.BackendNodeId.t option;
+          [@key "originTreeScopeNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The BackendNodeId of the DOM node that constitutes the origin \
+             tree scope of this rule."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS function at-rule representation."]
   end
@@ -11231,6 +11237,12 @@ end = struct
           [@key "parameters"] [@ocaml.doc "List of parameters."]
       children : CSSFunctionNode.t list;
           [@key "children"] [@ocaml.doc "Function body."]
+      originTreeScopeNodeId : DOM.BackendNodeId.t option;
+          [@key "originTreeScopeNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The BackendNodeId of the DOM node that constitutes the origin \
+             tree scope of this rule."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS function at-rule representation."]
   end = struct
@@ -11249,6 +11261,12 @@ end = struct
           [@key "parameters"] [@ocaml.doc "List of parameters."]
       children : CSSFunctionNode.t list;
           [@key "children"] [@ocaml.doc "Function body."]
+      originTreeScopeNodeId : DOM.BackendNodeId.t option;
+          [@key "originTreeScopeNodeId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The BackendNodeId of the DOM node that constitutes the origin \
+             tree scope of this rule."]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS function at-rule representation."]
   end
@@ -11623,6 +11641,7 @@ and DOM : sig
       | `checkmark
       | `before
       | `after
+      | `expand_icon
       | `picker_icon
       | `interest_hint
       | `marker
@@ -12005,6 +12024,7 @@ end = struct
       | `checkmark
       | `before
       | `after
+      | `expand_icon
       | `picker_icon
       | `interest_hint
       | `marker
@@ -12053,6 +12073,7 @@ end = struct
       | `checkmark
       | `before
       | `after
+      | `expand_icon
       | `picker_icon
       | `interest_hint
       | `marker
@@ -12095,6 +12116,7 @@ end = struct
       | `String "checkmark" -> `checkmark
       | `String "before" -> `before
       | `String "after" -> `after
+      | `String "expand-icon" -> `expand_icon
       | `String "picker-icon" -> `picker_icon
       | `String "interest-hint" -> `interest_hint
       | `String "marker" -> `marker
@@ -12140,6 +12162,7 @@ end = struct
       | `checkmark -> `String "checkmark"
       | `before -> `String "before"
       | `after -> `String "after"
+      | `expand_icon -> `String "expand-icon"
       | `picker_icon -> `String "picker-icon"
       | `interest_hint -> `String "interest-hint"
       | `marker -> `String "marker"
@@ -39945,7 +39968,7 @@ and WebAuthn : sig
   end
 
   and Ctap2Version : sig
-    type _ctap2version = [ `ctap2_0 | `ctap2_1 ]
+    type _ctap2version = [ `ctap2_0 | `ctap2_1 | `ctap2_2 ]
 
     val _ctap2version_of_yojson : Yojson.Basic.t -> _ctap2version
     val yojson_of__ctap2version : _ctap2version -> Yojson.Basic.t
@@ -40015,6 +40038,22 @@ and WebAuthn : sig
           [@ocaml.doc
             "If set to true, the authenticator will support the prf extension.\n\
              https://w3c.github.io/webauthn/#prf-extension\n\
+             Defaults to false."]
+      hasHmacSecret : bool option;
+          [@key "hasHmacSecret"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the hmac-secret \
+             extension.\n\
+             https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-hmac-secret-extension\n\
+             Defaults to false."]
+      hasHmacSecretMc : bool option;
+          [@key "hasHmacSecretMc"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the hmac-secret-mc \
+             extension.\n\
+             https://fidoalliance.org/specs/fido-v2.2-rd-20241003/fido-client-to-authenticator-protocol-v2.2-rd-20241003.html#sctn-hmac-secret-make-cred-extension\n\
              Defaults to false."]
       automaticPresenceSimulation : bool option;
           [@key "automaticPresenceSimulation"]
@@ -40155,7 +40194,7 @@ end = struct
   end
 
   and Ctap2Version : sig
-    type _ctap2version = [ `ctap2_0 | `ctap2_1 ]
+    type _ctap2version = [ `ctap2_0 | `ctap2_1 | `ctap2_2 ]
 
     val _ctap2version_of_yojson : Yojson.Basic.t -> _ctap2version
     val yojson_of__ctap2version : _ctap2version -> Yojson.Basic.t
@@ -40163,17 +40202,19 @@ end = struct
     type t = _ctap2version
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
-    type _ctap2version = [ `ctap2_0 | `ctap2_1 ]
+    type _ctap2version = [ `ctap2_0 | `ctap2_1 | `ctap2_2 ]
 
     let _ctap2version_of_yojson = function
       | `String "ctap2_0" -> `ctap2_0
       | `String "ctap2_1" -> `ctap2_1
+      | `String "ctap2_2" -> `ctap2_2
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__ctap2version = function
       | `ctap2_0 -> `String "ctap2_0"
       | `ctap2_1 -> `String "ctap2_1"
+      | `ctap2_2 -> `String "ctap2_2"
 
     type t = _ctap2version
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -40262,6 +40303,22 @@ end = struct
             "If set to true, the authenticator will support the prf extension.\n\
              https://w3c.github.io/webauthn/#prf-extension\n\
              Defaults to false."]
+      hasHmacSecret : bool option;
+          [@key "hasHmacSecret"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the hmac-secret \
+             extension.\n\
+             https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-hmac-secret-extension\n\
+             Defaults to false."]
+      hasHmacSecretMc : bool option;
+          [@key "hasHmacSecretMc"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the hmac-secret-mc \
+             extension.\n\
+             https://fidoalliance.org/specs/fido-v2.2-rd-20241003/fido-client-to-authenticator-protocol-v2.2-rd-20241003.html#sctn-hmac-secret-make-cred-extension\n\
+             Defaults to false."]
       automaticPresenceSimulation : bool option;
           [@key "automaticPresenceSimulation"]
           [@yojson.option]
@@ -40340,6 +40397,22 @@ end = struct
           [@ocaml.doc
             "If set to true, the authenticator will support the prf extension.\n\
              https://w3c.github.io/webauthn/#prf-extension\n\
+             Defaults to false."]
+      hasHmacSecret : bool option;
+          [@key "hasHmacSecret"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the hmac-secret \
+             extension.\n\
+             https://fidoalliance.org/specs/fido-v2.1-ps-20210615/fido-client-to-authenticator-protocol-v2.1-ps-20210615.html#sctn-hmac-secret-extension\n\
+             Defaults to false."]
+      hasHmacSecretMc : bool option;
+          [@key "hasHmacSecretMc"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the hmac-secret-mc \
+             extension.\n\
+             https://fidoalliance.org/specs/fido-v2.2-rd-20241003/fido-client-to-authenticator-protocol-v2.2-rd-20241003.html#sctn-hmac-secret-make-cred-extension\n\
              Defaults to false."]
       automaticPresenceSimulation : bool option;
           [@key "automaticPresenceSimulation"]
