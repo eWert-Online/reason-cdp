@@ -11872,8 +11872,8 @@ and DOM : sig
           [@key "adoptedStyleSheets"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      isAdRelated : bool option;
-          [@key "isAdRelated"]
+      adProvenance : Network.AdProvenance.t option;
+          [@key "adProvenance"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -12475,8 +12475,8 @@ end = struct
           [@key "adoptedStyleSheets"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      isAdRelated : bool option;
-          [@key "isAdRelated"]
+      adProvenance : Network.AdProvenance.t option;
+          [@key "adProvenance"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -12621,8 +12621,8 @@ end = struct
           [@key "adoptedStyleSheets"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      isAdRelated : bool option;
-          [@key "isAdRelated"]
+      adProvenance : Network.AdProvenance.t option;
+          [@key "adProvenance"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -20325,6 +20325,28 @@ and Network : sig
        caused the resource or element to be labeled as an ad."]
   end
 
+  and AdProvenance : sig
+    type t = {
+      filterlistRule : string option;
+          [@key "filterlistRule"]
+          [@yojson.option]
+          [@ocaml.doc "The filterlist rule that matched, if any."]
+      adScriptAncestry : AdAncestry.t option;
+          [@key "adScriptAncestry"]
+          [@yojson.option]
+          [@ocaml.doc "The script ancestry that created the ad, if any."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the provenance of an ad resource or element. Only one of\n\
+       `filterlistRule` or `adScriptAncestry` can be set. If `filterlistRule`\n\
+       is provided, the resource URL directly matches a filter list rule. If\n\
+       `adScriptAncestry` is provided, an ad script initiated the resource \
+       fetch or\n\
+       appended the element to the DOM. If neither is provided, the entity is\n\
+       known to be an ad, but provenance tracking information is unavailable."]
+  end
+
   and CrossOriginOpenerPolicyValue : sig
     type _crossoriginopenerpolicyvalue =
       [ `SameOrigin
@@ -24658,6 +24680,48 @@ end = struct
       "Encapsulates the script ancestry and the root script filter list rule \
        that\n\
        caused the resource or element to be labeled as an ad."]
+  end
+
+  and AdProvenance : sig
+    type t = {
+      filterlistRule : string option;
+          [@key "filterlistRule"]
+          [@yojson.option]
+          [@ocaml.doc "The filterlist rule that matched, if any."]
+      adScriptAncestry : AdAncestry.t option;
+          [@key "adScriptAncestry"]
+          [@yojson.option]
+          [@ocaml.doc "The script ancestry that created the ad, if any."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the provenance of an ad resource or element. Only one of\n\
+       `filterlistRule` or `adScriptAncestry` can be set. If `filterlistRule`\n\
+       is provided, the resource URL directly matches a filter list rule. If\n\
+       `adScriptAncestry` is provided, an ad script initiated the resource \
+       fetch or\n\
+       appended the element to the DOM. If neither is provided, the entity is\n\
+       known to be an ad, but provenance tracking information is unavailable."]
+  end = struct
+    type t = {
+      filterlistRule : string option;
+          [@key "filterlistRule"]
+          [@yojson.option]
+          [@ocaml.doc "The filterlist rule that matched, if any."]
+      adScriptAncestry : AdAncestry.t option;
+          [@key "adScriptAncestry"]
+          [@yojson.option]
+          [@ocaml.doc "The script ancestry that created the ad, if any."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the provenance of an ad resource or element. Only one of\n\
+       `filterlistRule` or `adScriptAncestry` can be set. If `filterlistRule`\n\
+       is provided, the resource URL directly matches a filter list rule. If\n\
+       `adScriptAncestry` is provided, an ad script initiated the resource \
+       fetch or\n\
+       appended the element to the DOM. If neither is provided, the entity is\n\
+       known to be an ad, but provenance tracking information is unavailable."]
   end
 
   and CrossOriginOpenerPolicyValue : sig

@@ -855,8 +855,11 @@ module DOM = struct
     type result = {
       nodeId : Types.DOM.NodeId.t;
           [@key "nodeId"] [@ocaml.doc "The id of the node."]
-      isAdRelated : bool;
-          [@key "isAdRelated"] [@ocaml.doc "If the node is ad related."]
+      adProvenance : Types.Network.AdProvenance.t option;
+          [@key "adProvenance"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The provenance of the ad related node, if it is ad related."]
     }
     [@@deriving yojson]
 
