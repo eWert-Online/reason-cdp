@@ -5946,6 +5946,70 @@ module WebMCP = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
   [@@ocaml.doc {desc|Event fired when tools are removed. |desc}]
+
+  module ToolInvoked = struct
+    let name = "WebMCP.toolInvoked"
+
+    type result = {
+      toolName : string;
+          [@key "toolName"] [@ocaml.doc "Name of the tool to invoke."]
+      frameId : Types.Page.FrameId.t; [@key "frameId"] [@ocaml.doc "Frame id"]
+      invocationId : string;
+          [@key "invocationId"] [@ocaml.doc "Invocation identifier."]
+      input : string;
+          [@key "input"]
+          [@ocaml.doc "The input parameters used for the invocation."]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc {desc|Event fired when a tool invocation starts. |desc}]
+
+  module ToolResponded = struct
+    let name = "WebMCP.toolResponded"
+
+    type result = {
+      invocationId : string;
+          [@key "invocationId"] [@ocaml.doc "Invocation identifier."]
+      status : Types.WebMCP.InvocationStatus.t;
+          [@key "status"] [@ocaml.doc "Status of the invocation."]
+      output : Types.assoc option;
+          [@key "output"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Output or error delivered as delivered to the agent. Missing if \
+             `status` is anything other than Success."]
+      errorText : string option;
+          [@key "errorText"]
+          [@yojson.option]
+          [@ocaml.doc "Error text for protocol users."]
+      exception_ : Types.Runtime.RemoteObject.t option;
+          [@key "exception"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The exception object, if the javascript tool threw an error>"]
+    }
+    [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Event fired when a tool invocation completes or fails. |desc}]
 end
 
 module Console = struct

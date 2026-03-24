@@ -40671,6 +40671,17 @@ and WebMCP : sig
     [@@deriving yojson] [@@ocaml.doc "Tool annotations"]
   end
 
+  and InvocationStatus : sig
+    type _invocationstatus = [ `Success | `Canceled | `Error ]
+
+    val _invocationstatus_of_yojson : Yojson.Basic.t -> _invocationstatus
+    val yojson_of__invocationstatus : _invocationstatus -> Yojson.Basic.t
+
+    type t = _invocationstatus
+    [@@deriving yojson]
+    [@@ocaml.doc "Represents the status of a tool invocation."]
+  end
+
   and Tool : sig
     type t = {
       name : string; [@key "name"] [@ocaml.doc "Tool name."]
@@ -40730,6 +40741,35 @@ end = struct
              attribute."]
     }
     [@@deriving yojson] [@@ocaml.doc "Tool annotations"]
+  end
+
+  and InvocationStatus : sig
+    type _invocationstatus = [ `Success | `Canceled | `Error ]
+
+    val _invocationstatus_of_yojson : Yojson.Basic.t -> _invocationstatus
+    val yojson_of__invocationstatus : _invocationstatus -> Yojson.Basic.t
+
+    type t = _invocationstatus
+    [@@deriving yojson]
+    [@@ocaml.doc "Represents the status of a tool invocation."]
+  end = struct
+    type _invocationstatus = [ `Success | `Canceled | `Error ]
+
+    let _invocationstatus_of_yojson = function
+      | `String "Success" -> `Success
+      | `String "Canceled" -> `Canceled
+      | `String "Error" -> `Error
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__invocationstatus = function
+      | `Success -> `String "Success"
+      | `Canceled -> `String "Canceled"
+      | `Error -> `String "Error"
+
+    type t = _invocationstatus
+    [@@deriving yojson]
+    [@@ocaml.doc "Represents the status of a tool invocation."]
   end
 
   and Tool : sig
