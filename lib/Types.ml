@@ -11604,6 +11604,39 @@ end = struct
   end
 end
 
+and CrashReportContext : sig
+  module rec CrashReportContextEntry : sig
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+      frameId : Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "The ID of the frame where the key-value pair was set."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Key-value pair in CrashReportContext."]
+  end
+end = struct
+  module rec CrashReportContextEntry : sig
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+      frameId : Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "The ID of the frame where the key-value pair was set."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Key-value pair in CrashReportContext."]
+  end = struct
+    type t = {
+      key : string; [@key "key"] [@ocaml.doc "No description provided"]
+      value : string; [@key "value"] [@ocaml.doc "No description provided"]
+      frameId : Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "The ID of the frame where the key-value pair was set."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Key-value pair in CrashReportContext."]
+  end
+end
+
 and DOM : sig
   module rec NodeId : sig
     type t = number

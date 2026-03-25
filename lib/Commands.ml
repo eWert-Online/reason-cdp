@@ -7433,6 +7433,61 @@ sink via Presentation API, Remote Playback API, or Cast SDK. |desc}]
   [@@ocaml.doc {desc|Stops the active Cast session on the sink. |desc}]
 end
 
+module CrashReportContext = struct
+  module GetEntries = struct
+    module Response : sig
+      type result = {
+        entries : Types.CrashReportContext.CrashReportContextEntry.t list;
+            [@key "entries"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        entries : Types.CrashReportContext.CrashReportContextEntry.t list;
+            [@key "entries"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "CrashReportContext.getEntries"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns all entries in the CrashReportContext across all frames in the page. |desc}]
+end
+
 module DOM = struct
   module CollectClassNamesFromSubtree = struct
     module Response : sig
