@@ -34524,183 +34524,6 @@ interestGroupAuctionNetworkRequestCreated. |desc}]
   [@@ocaml.doc
     {desc|Deletes state for sites identified as potential bounce trackers, immediately. |desc}]
 
-  module SetAttributionReportingLocalTestingMode = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        enabled : bool;
-            [@key "enabled"]
-            [@ocaml.doc
-              "If enabled, noise is suppressed and reports are sent \
-               immediately."]
-      }
-      [@@deriving yojson]
-
-      let make ~enabled () = { enabled }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "Storage.setAttributionReportingLocalTestingMode";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc {desc|https://wicg.github.io/attribution-reporting-api/ |desc}]
-
-  module SetAttributionReportingTracking = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        enable : bool; [@key "enable"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      let make ~enable () = { enable }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        {
-          id;
-          method_ = "Storage.setAttributionReportingTracking";
-          sessionId;
-          params;
-        }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Enables/disables issuing of Attribution Reporting events. |desc}]
-
-  module SendPendingAttributionReports = struct
-    module Response : sig
-      type result = {
-        numSent : Types.number;
-            [@key "numSent"]
-            [@ocaml.doc "The number of reports that were sent."]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        numSent : Types.number;
-            [@key "numSent"]
-            [@ocaml.doc "The number of reports that were sent."]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Storage.sendPendingAttributionReports"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Sends all pending Attribution Reports immediately, regardless of their
-scheduled report time. |desc}]
-
   module GetRelatedWebsiteSets = struct
     module Response : sig
       type result = {
@@ -38016,6 +37839,49 @@ module WebMCP = struct
   [@@ocaml.doc
     {desc|Enables the WebMCP domain, allowing events to be sent. Enabling the domain will trigger a toolsAdded event for
 all currently registered tools. |desc}]
+
+  module Disable = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "WebMCP.disable"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Disables the WebMCP domain. |desc}]
 end
 
 module Console = struct

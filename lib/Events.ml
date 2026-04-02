@@ -5088,119 +5088,6 @@ The following parameters are included in all events. |desc}]
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
   [@@ocaml.doc {desc|No description provided |desc}]
-
-  module AttributionReportingSourceRegistered = struct
-    let name = "Storage.attributionReportingSourceRegistered"
-
-    type result = {
-      registration : Types.Storage.AttributionReportingSourceRegistration.t;
-          [@key "registration"] [@ocaml.doc "No description provided"]
-      result : Types.Storage.AttributionReportingSourceRegistrationResult.t;
-          [@key "result"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module AttributionReportingTriggerRegistered = struct
-    let name = "Storage.attributionReportingTriggerRegistered"
-
-    type result = {
-      registration : Types.Storage.AttributionReportingTriggerRegistration.t;
-          [@key "registration"] [@ocaml.doc "No description provided"]
-      eventLevel : Types.Storage.AttributionReportingEventLevelResult.t;
-          [@key "eventLevel"] [@ocaml.doc "No description provided"]
-      aggregatable : Types.Storage.AttributionReportingAggregatableResult.t;
-          [@key "aggregatable"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module AttributionReportingReportSent = struct
-    let name = "Storage.attributionReportingReportSent"
-
-    type result = {
-      url : string; [@key "url"] [@ocaml.doc "No description provided"]
-      body : Types.assoc; [@key "body"] [@ocaml.doc "No description provided"]
-      result : Types.Storage.AttributionReportingReportResult.t;
-          [@key "result"] [@ocaml.doc "No description provided"]
-      netError : Types.number option;
-          [@key "netError"]
-          [@yojson.option]
-          [@ocaml.doc "If result is `sent`, populated with net/HTTP status."]
-      netErrorName : string option;
-          [@key "netErrorName"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      httpStatusCode : Types.number option;
-          [@key "httpStatusCode"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
-
-  module AttributionReportingVerboseDebugReportSent = struct
-    let name = "Storage.attributionReportingVerboseDebugReportSent"
-
-    type result = {
-      url : string; [@key "url"] [@ocaml.doc "No description provided"]
-      body : Types.assoc list option;
-          [@key "body"] [@yojson.option] [@ocaml.doc "No description provided"]
-      netError : Types.number option;
-          [@key "netError"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      netErrorName : string option;
-          [@key "netErrorName"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      httpStatusCode : Types.number option;
-          [@key "httpStatusCode"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc {desc|No description provided |desc}]
 end
 
 module Target = struct
@@ -5981,7 +5868,7 @@ module WebMCP = struct
           [@key "invocationId"] [@ocaml.doc "Invocation identifier."]
       status : Types.WebMCP.InvocationStatus.t;
           [@key "status"] [@ocaml.doc "Status of the invocation."]
-      output : Types.assoc option;
+      output : string option;
           [@key "output"]
           [@yojson.option]
           [@ocaml.doc
