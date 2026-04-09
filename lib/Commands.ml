@@ -24100,27 +24100,11 @@ Enabling triggers 'reportingApiReportAdded' for all existing reports. |desc}]
         enableThirdPartyCookieRestriction : bool;
             [@key "enableThirdPartyCookieRestriction"]
             [@ocaml.doc "Whether 3pc restriction is enabled."]
-        disableThirdPartyCookieMetadata : bool;
-            [@key "disableThirdPartyCookieMetadata"]
-            [@ocaml.doc
-              "Whether 3pc grace period exception should be enabled; false by \
-               default."]
-        disableThirdPartyCookieHeuristics : bool;
-            [@key "disableThirdPartyCookieHeuristics"]
-            [@ocaml.doc
-              "Whether 3pc heuristics exceptions should be enabled; false by \
-               default."]
       }
       [@@deriving yojson]
 
-      let make ~enableThirdPartyCookieRestriction
-          ~disableThirdPartyCookieMetadata ~disableThirdPartyCookieHeuristics ()
-          =
-        {
-          enableThirdPartyCookieRestriction;
-          disableThirdPartyCookieMetadata;
-          disableThirdPartyCookieHeuristics;
-        }
+      let make ~enableThirdPartyCookieRestriction () =
+        { enableThirdPartyCookieRestriction }
     end
 
     module Request = struct
