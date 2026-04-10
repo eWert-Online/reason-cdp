@@ -20136,6 +20136,10 @@ and Network : sig
           [@key "packetReordering"]
           [@yojson.option]
           [@ocaml.doc "WebRTC packetReordering feature."]
+      offline : bool option;
+          [@key "offline"]
+          [@yojson.option]
+          [@ocaml.doc "True to emulate internet disconnection."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -24221,6 +24225,10 @@ end = struct
           [@key "packetReordering"]
           [@yojson.option]
           [@ocaml.doc "WebRTC packetReordering feature."]
+      offline : bool option;
+          [@key "offline"]
+          [@yojson.option]
+          [@ocaml.doc "True to emulate internet disconnection."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -24268,6 +24276,10 @@ end = struct
           [@key "packetReordering"]
           [@yojson.option]
           [@ocaml.doc "WebRTC packetReordering feature."]
+      offline : bool option;
+          [@key "offline"]
+          [@yojson.option]
+          [@ocaml.doc "True to emulate internet disconnection."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end

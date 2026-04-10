@@ -22164,9 +22164,17 @@ and overrideNetworkState commands, which can be used together to the same effect
 
     module Params = struct
       type t = {
-        offline : bool;
+        offline : bool option;
             [@key "offline"]
-            [@ocaml.doc "True to emulate internet disconnection."]
+            [@yojson.option]
+            [@ocaml.doc
+              "True to emulate internet disconnection. Deprecated, use the \
+               offline property in matchedNetworkConditions\n\
+               or emulateOfflineServiceWorker instead."]
+        emulateOfflineServiceWorker : bool option;
+            [@key "emulateOfflineServiceWorker"]
+            [@yojson.option]
+            [@ocaml.doc "True to emulate offline service worker."]
         matchedNetworkConditions : Types.Network.NetworkConditions.t list;
             [@key "matchedNetworkConditions"]
             [@ocaml.doc
@@ -22178,8 +22186,9 @@ and overrideNetworkState commands, which can be used together to the same effect
       }
       [@@deriving yojson]
 
-      let make ~offline ~matchedNetworkConditions () =
-        { offline; matchedNetworkConditions }
+      let make ?offline ?emulateOfflineServiceWorker ~matchedNetworkConditions
+          () =
+        { offline; emulateOfflineServiceWorker; matchedNetworkConditions }
     end
 
     module Request = struct
