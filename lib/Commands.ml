@@ -23940,6 +23940,60 @@ Enabling triggers 'reportingApiReportAdded' for all existing reports. |desc}]
   [@@ocaml.doc
     {desc|Sets up tracking device bound sessions and fetching of initial set of sessions. |desc}]
 
+  module DeleteDeviceBoundSession = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        key : Types.Network.DeviceBoundSessionKey.t;
+            [@key "key"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~key () = { key }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Network.deleteDeviceBoundSession"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Deletes a device bound session. |desc}]
+
   module FetchSchemefulSite = struct
     module Response : sig
       type result = {
@@ -37791,6 +37845,81 @@ all currently registered tools. |desc}]
     end
   end
   [@@ocaml.doc {desc|Disables the WebMCP domain. |desc}]
+
+  module InvokeTool = struct
+    module Response : sig
+      type result = {
+        invocationId : string;
+            [@key "invocationId"]
+            [@ocaml.doc
+              "Unique identifier for this invocation. Response is sent before \
+               tool events."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        invocationId : string;
+            [@key "invocationId"]
+            [@ocaml.doc
+              "Unique identifier for this invocation. Response is sent before \
+               tool events."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        frameId : Types.Page.FrameId.t;
+            [@key "frameId"] [@ocaml.doc "Frame in which to invoke the tool."]
+        toolName : string;
+            [@key "toolName"] [@ocaml.doc "Name of the tool to invoke."]
+        input : Types.assoc;
+            [@key "input"]
+            [@ocaml.doc
+              "Input parameters for the tool, matching the tool's inputSchema."]
+      }
+      [@@deriving yojson]
+
+      let make ~frameId ~toolName ~input () = { frameId; toolName; input }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "WebMCP.invokeTool"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Invokes a registered tool. |desc}]
 end
 
 module Console = struct

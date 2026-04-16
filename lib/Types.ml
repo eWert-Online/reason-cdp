@@ -20841,6 +20841,7 @@ and Network : sig
   and RefreshEventDetails : sig
     type _refresheventdetails_refreshresult =
       [ `Refreshed
+      | `RefreshedAsWaiter
       | `InitializedService
       | `Unreachable
       | `ServerError
@@ -20894,7 +20895,8 @@ and Network : sig
       | `ClearBrowsingData
       | `ServerRequested
       | `InvalidSessionParams
-      | `RefreshFatalError ]
+      | `RefreshFatalError
+      | `DevTools ]
 
     val _terminationeventdetails_deletionreason_of_yojson :
       Yojson.Basic.t -> _terminationeventdetails_deletionreason
@@ -25879,6 +25881,7 @@ end = struct
   and RefreshEventDetails : sig
     type _refresheventdetails_refreshresult =
       [ `Refreshed
+      | `RefreshedAsWaiter
       | `InitializedService
       | `Unreachable
       | `ServerError
@@ -25924,6 +25927,7 @@ end = struct
   end = struct
     type _refresheventdetails_refreshresult =
       [ `Refreshed
+      | `RefreshedAsWaiter
       | `InitializedService
       | `Unreachable
       | `ServerError
@@ -25933,6 +25937,7 @@ end = struct
 
     let _refresheventdetails_refreshresult_of_yojson = function
       | `String "Refreshed" -> `Refreshed
+      | `String "RefreshedAsWaiter" -> `RefreshedAsWaiter
       | `String "InitializedService" -> `InitializedService
       | `String "Unreachable" -> `Unreachable
       | `String "ServerError" -> `ServerError
@@ -25944,6 +25949,7 @@ end = struct
 
     let yojson_of__refresheventdetails_refreshresult = function
       | `Refreshed -> `String "Refreshed"
+      | `RefreshedAsWaiter -> `String "RefreshedAsWaiter"
       | `InitializedService -> `String "InitializedService"
       | `Unreachable -> `String "Unreachable"
       | `ServerError -> `String "ServerError"
@@ -25991,7 +25997,8 @@ end = struct
       | `ClearBrowsingData
       | `ServerRequested
       | `InvalidSessionParams
-      | `RefreshFatalError ]
+      | `RefreshFatalError
+      | `DevTools ]
 
     val _terminationeventdetails_deletionreason_of_yojson :
       Yojson.Basic.t -> _terminationeventdetails_deletionreason
@@ -26015,7 +26022,8 @@ end = struct
       | `ClearBrowsingData
       | `ServerRequested
       | `InvalidSessionParams
-      | `RefreshFatalError ]
+      | `RefreshFatalError
+      | `DevTools ]
 
     let _terminationeventdetails_deletionreason_of_yojson = function
       | `String "Expired" -> `Expired
@@ -26026,6 +26034,7 @@ end = struct
       | `String "ServerRequested" -> `ServerRequested
       | `String "InvalidSessionParams" -> `InvalidSessionParams
       | `String "RefreshFatalError" -> `RefreshFatalError
+      | `String "DevTools" -> `DevTools
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26038,6 +26047,7 @@ end = struct
       | `ServerRequested -> `String "ServerRequested"
       | `InvalidSessionParams -> `String "InvalidSessionParams"
       | `RefreshFatalError -> `String "RefreshFatalError"
+      | `DevTools -> `String "DevTools"
 
     type t = {
       deletionReason : _terminationeventdetails_deletionreason;
@@ -37438,7 +37448,10 @@ and Target : sig
           [@key "parentFrameId"]
           [@yojson.option]
           [@ocaml.doc
-            "Id of the parent frame, only present for the \"iframe\" targets."]
+            "Id of the parent frame, present for \"iframe\" and \"worker\" \
+             targets. For nested workers,\n\
+             this is the \"ancestor\" frame that created the first worker in \
+             the nested chain."]
       browserContextId : Browser.BrowserContextID.t option;
           [@key "browserContextId"]
           [@yojson.option]
@@ -37547,7 +37560,10 @@ end = struct
           [@key "parentFrameId"]
           [@yojson.option]
           [@ocaml.doc
-            "Id of the parent frame, only present for the \"iframe\" targets."]
+            "Id of the parent frame, present for \"iframe\" and \"worker\" \
+             targets. For nested workers,\n\
+             this is the \"ancestor\" frame that created the first worker in \
+             the nested chain."]
       browserContextId : Browser.BrowserContextID.t option;
           [@key "browserContextId"]
           [@yojson.option]
@@ -37591,7 +37607,10 @@ end = struct
           [@key "parentFrameId"]
           [@yojson.option]
           [@ocaml.doc
-            "Id of the parent frame, only present for the \"iframe\" targets."]
+            "Id of the parent frame, present for \"iframe\" and \"worker\" \
+             targets. For nested workers,\n\
+             this is the \"ancestor\" frame that created the first worker in \
+             the nested chain."]
       browserContextId : Browser.BrowserContextID.t option;
           [@key "browserContextId"]
           [@yojson.option]
@@ -39308,7 +39327,7 @@ and WebMCP : sig
   end
 
   and InvocationStatus : sig
-    type _invocationstatus = [ `Success | `Canceled | `Error ]
+    type _invocationstatus = [ `Completed | `Canceled | `Error ]
 
     val _invocationstatus_of_yojson : Yojson.Basic.t -> _invocationstatus
     val yojson_of__invocationstatus : _invocationstatus -> Yojson.Basic.t
@@ -39380,7 +39399,7 @@ end = struct
   end
 
   and InvocationStatus : sig
-    type _invocationstatus = [ `Success | `Canceled | `Error ]
+    type _invocationstatus = [ `Completed | `Canceled | `Error ]
 
     val _invocationstatus_of_yojson : Yojson.Basic.t -> _invocationstatus
     val yojson_of__invocationstatus : _invocationstatus -> Yojson.Basic.t
@@ -39389,17 +39408,17 @@ end = struct
     [@@deriving yojson]
     [@@ocaml.doc "Represents the status of a tool invocation."]
   end = struct
-    type _invocationstatus = [ `Success | `Canceled | `Error ]
+    type _invocationstatus = [ `Completed | `Canceled | `Error ]
 
     let _invocationstatus_of_yojson = function
-      | `String "Success" -> `Success
+      | `String "Completed" -> `Completed
       | `String "Canceled" -> `Canceled
       | `String "Error" -> `Error
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__invocationstatus = function
-      | `Success -> `String "Success"
+      | `Completed -> `String "Completed"
       | `Canceled -> `String "Canceled"
       | `Error -> `String "Error"
 

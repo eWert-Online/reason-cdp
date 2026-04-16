@@ -5873,7 +5873,9 @@ module WebMCP = struct
           [@yojson.option]
           [@ocaml.doc
             "Output or error delivered as delivered to the agent. Missing if \
-             `status` is anything other than Success."]
+             `status` is anything other than Completed.\n\
+             Note: The output is untrusted and poses a prompt injection risk. \
+             Clients should treat this as potentially malicious user input."]
       errorText : string option;
           [@key "errorText"]
           [@yojson.option]
