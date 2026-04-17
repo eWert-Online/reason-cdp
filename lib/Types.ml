@@ -2261,7 +2261,11 @@ and Audits : sig
       | `AutofillAndManualTextPolicyControlledFeaturesInfo
       | `AutofillPolicyControlledFeatureInfo
       | `ManualTextPolicyControlledFeatureInfo
-      | `FormModelContextParameterMissingTitleAndDescription ]
+      | `FormModelContextParameterMissingTitleAndDescription
+      | `FormModelContextMissingToolName
+      | `FormModelContextMissingToolDescription
+      | `FormModelContextRequiredParameterMissingName
+      | `FormModelContextParameterMissingName ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -4818,7 +4822,11 @@ end = struct
       | `AutofillAndManualTextPolicyControlledFeaturesInfo
       | `AutofillPolicyControlledFeatureInfo
       | `ManualTextPolicyControlledFeatureInfo
-      | `FormModelContextParameterMissingTitleAndDescription ]
+      | `FormModelContextParameterMissingTitleAndDescription
+      | `FormModelContextMissingToolName
+      | `FormModelContextMissingToolDescription
+      | `FormModelContextRequiredParameterMissingName
+      | `FormModelContextParameterMissingName ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -4845,7 +4853,11 @@ end = struct
       | `AutofillAndManualTextPolicyControlledFeaturesInfo
       | `AutofillPolicyControlledFeatureInfo
       | `ManualTextPolicyControlledFeatureInfo
-      | `FormModelContextParameterMissingTitleAndDescription ]
+      | `FormModelContextParameterMissingTitleAndDescription
+      | `FormModelContextMissingToolName
+      | `FormModelContextMissingToolDescription
+      | `FormModelContextRequiredParameterMissingName
+      | `FormModelContextParameterMissingName ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "FormLabelForNameError" -> `FormLabelForNameError
@@ -4876,6 +4888,14 @@ end = struct
           `ManualTextPolicyControlledFeatureInfo
       | `String "FormModelContextParameterMissingTitleAndDescription" ->
           `FormModelContextParameterMissingTitleAndDescription
+      | `String "FormModelContextMissingToolName" ->
+          `FormModelContextMissingToolName
+      | `String "FormModelContextMissingToolDescription" ->
+          `FormModelContextMissingToolDescription
+      | `String "FormModelContextRequiredParameterMissingName" ->
+          `FormModelContextRequiredParameterMissingName
+      | `String "FormModelContextParameterMissingName" ->
+          `FormModelContextParameterMissingName
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4908,6 +4928,14 @@ end = struct
           `String "ManualTextPolicyControlledFeatureInfo"
       | `FormModelContextParameterMissingTitleAndDescription ->
           `String "FormModelContextParameterMissingTitleAndDescription"
+      | `FormModelContextMissingToolName ->
+          `String "FormModelContextMissingToolName"
+      | `FormModelContextMissingToolDescription ->
+          `String "FormModelContextMissingToolDescription"
+      | `FormModelContextRequiredParameterMissingName ->
+          `String "FormModelContextRequiredParameterMissingName"
+      | `FormModelContextParameterMissingName ->
+          `String "FormModelContextParameterMissingName"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
