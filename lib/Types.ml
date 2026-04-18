@@ -37460,6 +37460,12 @@ and Target : sig
       attached : bool;
           [@key "attached"]
           [@ocaml.doc "Whether the target has an attached client."]
+      parentId : TargetID.t option;
+          [@key "parentId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Id of the parent target, if any. For example, \"iframe\" target \
+             may have a \"page\" parent."]
       openerId : TargetID.t option;
           [@key "openerId"] [@yojson.option] [@ocaml.doc "Opener target Id"]
       canAccessOpener : bool;
@@ -37572,6 +37578,12 @@ end = struct
       attached : bool;
           [@key "attached"]
           [@ocaml.doc "Whether the target has an attached client."]
+      parentId : TargetID.t option;
+          [@key "parentId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Id of the parent target, if any. For example, \"iframe\" target \
+             may have a \"page\" parent."]
       openerId : TargetID.t option;
           [@key "openerId"] [@yojson.option] [@ocaml.doc "Opener target Id"]
       canAccessOpener : bool;
@@ -37619,6 +37631,12 @@ end = struct
       attached : bool;
           [@key "attached"]
           [@ocaml.doc "Whether the target has an attached client."]
+      parentId : TargetID.t option;
+          [@key "parentId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Id of the parent target, if any. For example, \"iframe\" target \
+             may have a \"page\" parent."]
       openerId : TargetID.t option;
           [@key "openerId"] [@yojson.option] [@ocaml.doc "Opener target Id"]
       canAccessOpener : bool;
