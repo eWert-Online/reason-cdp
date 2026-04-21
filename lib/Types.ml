@@ -39411,6 +39411,16 @@ and WebMCP : sig
     [@@deriving yojson]
     [@@ocaml.doc "Definition of a tool that can be invoked."]
   end
+
+  and RemovedTool : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "Tool name."]
+      frameId : Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "Frame identifier associated with the tool registration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Definition of a tool that was removed."]
+  end
 end = struct
   module rec Annotation : sig
     type t = {
@@ -39527,6 +39537,24 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc "Definition of a tool that can be invoked."]
+  end
+
+  and RemovedTool : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "Tool name."]
+      frameId : Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "Frame identifier associated with the tool registration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Definition of a tool that was removed."]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "Tool name."]
+      frameId : Page.FrameId.t;
+          [@key "frameId"]
+          [@ocaml.doc "Frame identifier associated with the tool registration."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Definition of a tool that was removed."]
   end
 end
 

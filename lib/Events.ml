@@ -5818,7 +5818,7 @@ module WebMCP = struct
     let name = "WebMCP.toolsRemoved"
 
     type result = {
-      tools : Types.WebMCP.Tool.t list;
+      tools : Types.WebMCP.RemovedTool.t list;
           [@key "tools"] [@ocaml.doc "Array of tools that were removed."]
     }
     [@@deriving yojson]
