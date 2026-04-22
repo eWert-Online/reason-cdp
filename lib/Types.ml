@@ -29068,6 +29068,7 @@ and Page : sig
       | `EmbedderExtensionMessaging
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
+      | `EmbedderExtensionFrame
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
       | `CacheControlNoStoreDeviceBoundSessionTerminated
@@ -31682,6 +31683,7 @@ end = struct
       | `EmbedderExtensionMessaging
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
+      | `EmbedderExtensionFrame
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
       | `CacheControlNoStoreDeviceBoundSessionTerminated
@@ -31841,6 +31843,7 @@ end = struct
       | `EmbedderExtensionMessaging
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
+      | `EmbedderExtensionFrame
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
       | `CacheControlNoStoreDeviceBoundSessionTerminated
@@ -32034,6 +32037,7 @@ end = struct
           `EmbedderExtensionMessagingForOpenPort
       | `String "EmbedderExtensionSentMessageToCachedFrame" ->
           `EmbedderExtensionSentMessageToCachedFrame
+      | `String "EmbedderExtensionFrame" -> `EmbedderExtensionFrame
       | `String "RequestedByWebViewClient" -> `RequestedByWebViewClient
       | `String "PostMessageByWebViewClient" -> `PostMessageByWebViewClient
       | `String "CacheControlNoStoreDeviceBoundSessionTerminated" ->
@@ -32232,6 +32236,7 @@ end = struct
           `String "EmbedderExtensionMessagingForOpenPort"
       | `EmbedderExtensionSentMessageToCachedFrame ->
           `String "EmbedderExtensionSentMessageToCachedFrame"
+      | `EmbedderExtensionFrame -> `String "EmbedderExtensionFrame"
       | `RequestedByWebViewClient -> `String "RequestedByWebViewClient"
       | `PostMessageByWebViewClient -> `String "PostMessageByWebViewClient"
       | `CacheControlNoStoreDeviceBoundSessionTerminated ->
