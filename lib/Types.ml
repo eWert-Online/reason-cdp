@@ -39367,6 +39367,12 @@ and WebMCP : sig
           [@yojson.option]
           [@ocaml.doc
             "A hint indicating that the tool does not modify any state."]
+      untrustedContent : bool option;
+          [@key "untrustedContent"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A hint indicating that the tool output may contain untrusted \
+             content, ex: UGC, 3rd party data."]
       autosubmit : bool option;
           [@key "autosubmit"]
           [@yojson.option]
@@ -39434,6 +39440,12 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "A hint indicating that the tool does not modify any state."]
+      untrustedContent : bool option;
+          [@key "untrustedContent"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A hint indicating that the tool output may contain untrusted \
+             content, ex: UGC, 3rd party data."]
       autosubmit : bool option;
           [@key "autosubmit"]
           [@yojson.option]
@@ -39449,6 +39461,12 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "A hint indicating that the tool does not modify any state."]
+      untrustedContent : bool option;
+          [@key "untrustedContent"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A hint indicating that the tool output may contain untrusted \
+             content, ex: UGC, 3rd party data."]
       autosubmit : bool option;
           [@key "autosubmit"]
           [@yojson.option]

@@ -15954,10 +15954,7 @@ module Extensions = struct
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
-  [@@ocaml.doc
-    {desc|Runs an extension default action.
-Available if the client is connected using the --remote-debugging-pipe
-flag and the --enable-unsafe-extension-debugging flag is set. |desc}]
+  [@@ocaml.doc {desc|Runs an extension default action. |desc}]
 
   module LoadUnpacked = struct
     module Response : sig
@@ -16019,9 +16016,7 @@ flag and the --enable-unsafe-extension-debugging flag is set. |desc}]
   [@@ocaml.doc
     {desc|Installs an unpacked extension from the filesystem similar to
 --load-extension CLI flags. Returns extension ID once the extension
-has been installed. Available if the client is connected using the
---remote-debugging-pipe flag and the --enable-unsafe-extension-debugging
-flag is set. |desc}]
+has been installed. |desc}]
 
   module GetExtensions = struct
     module Response : sig
@@ -16073,10 +16068,7 @@ flag is set. |desc}]
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
-  [@@ocaml.doc
-    {desc|Gets a list of all unpacked extensions.
-Available if the client is connected using the --remote-debugging-pipe flag
-and the --enable-unsafe-extension-debugging flag is set. |desc}]
+  [@@ocaml.doc {desc|Gets a list of all unpacked extensions. |desc}]
 
   module Uninstall = struct
     module Response : sig
@@ -16128,9 +16120,7 @@ and the --enable-unsafe-extension-debugging flag is set. |desc}]
     end
   end
   [@@ocaml.doc
-    {desc|Uninstalls an unpacked extension (others not supported) from the profile.
-Available if the client is connected using the --remote-debugging-pipe flag
-and the --enable-unsafe-extension-debugging. |desc}]
+    {desc|Uninstalls an unpacked extension (others not supported) from the profile. |desc}]
 
   module GetStorageItems = struct
     module Response : sig
