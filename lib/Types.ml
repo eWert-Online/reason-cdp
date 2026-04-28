@@ -11704,7 +11704,7 @@ and DOM : sig
       | `after
       | `expand_icon
       | `picker_icon
-      | `interest_hint
+      | `interest_button
       | `marker
       | `backdrop
       | `column
@@ -12087,7 +12087,7 @@ end = struct
       | `after
       | `expand_icon
       | `picker_icon
-      | `interest_hint
+      | `interest_button
       | `marker
       | `backdrop
       | `column
@@ -12136,7 +12136,7 @@ end = struct
       | `after
       | `expand_icon
       | `picker_icon
-      | `interest_hint
+      | `interest_button
       | `marker
       | `backdrop
       | `column
@@ -12179,7 +12179,7 @@ end = struct
       | `String "after" -> `after
       | `String "expand-icon" -> `expand_icon
       | `String "picker-icon" -> `picker_icon
-      | `String "interest-hint" -> `interest_hint
+      | `String "interest-button" -> `interest_button
       | `String "marker" -> `marker
       | `String "backdrop" -> `backdrop
       | `String "column" -> `column
@@ -12225,7 +12225,7 @@ end = struct
       | `after -> `String "after"
       | `expand_icon -> `String "expand-icon"
       | `picker_icon -> `String "picker-icon"
-      | `interest_hint -> `String "interest-hint"
+      | `interest_button -> `String "interest-button"
       | `marker -> `String "marker"
       | `backdrop -> `String "backdrop"
       | `column -> `String "column"
