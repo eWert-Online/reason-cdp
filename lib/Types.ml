@@ -28073,6 +28073,7 @@ and Page : sig
       | `sub_apps
       | `summarizer
       | `sync_xhr
+      | `tools
       | `translator
       | `unload
       | `usb
@@ -29460,6 +29461,7 @@ end = struct
       | `sub_apps
       | `summarizer
       | `sync_xhr
+      | `tools
       | `translator
       | `unload
       | `usb
@@ -29585,6 +29587,7 @@ end = struct
       | `sub_apps
       | `summarizer
       | `sync_xhr
+      | `tools
       | `translator
       | `unload
       | `usb
@@ -29701,6 +29704,7 @@ end = struct
       | `String "sub-apps" -> `sub_apps
       | `String "summarizer" -> `summarizer
       | `String "sync-xhr" -> `sync_xhr
+      | `String "tools" -> `tools
       | `String "translator" -> `translator
       | `String "unload" -> `unload
       | `String "usb" -> `usb
@@ -29819,6 +29823,7 @@ end = struct
       | `sub_apps -> `String "sub-apps"
       | `summarizer -> `String "summarizer"
       | `sync_xhr -> `String "sync-xhr"
+      | `tools -> `String "tools"
       | `translator -> `String "translator"
       | `unload -> `String "unload"
       | `usb -> `String "usb"
