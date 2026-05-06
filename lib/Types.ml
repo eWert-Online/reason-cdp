@@ -9093,7 +9093,10 @@ and CSS : sig
 
   and CSSAtRule : sig
     type _cssatrule_type =
-      [ `font_face | `font_feature_values | `font_palette_values ]
+      [ `font_face
+      | `font_feature_values
+      | `font_palette_values
+      | `counter_style ]
 
     val _cssatrule_type_of_yojson : Yojson.Basic.t -> _cssatrule_type
     val yojson_of__cssatrule_type : _cssatrule_type -> Yojson.Basic.t
@@ -10988,7 +10991,10 @@ end = struct
 
   and CSSAtRule : sig
     type _cssatrule_type =
-      [ `font_face | `font_feature_values | `font_palette_values ]
+      [ `font_face
+      | `font_feature_values
+      | `font_palette_values
+      | `counter_style ]
 
     val _cssatrule_type_of_yojson : Yojson.Basic.t -> _cssatrule_type
     val yojson_of__cssatrule_type : _cssatrule_type -> Yojson.Basic.t
@@ -11035,12 +11041,16 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "CSS generic @rule representation."]
   end = struct
     type _cssatrule_type =
-      [ `font_face | `font_feature_values | `font_palette_values ]
+      [ `font_face
+      | `font_feature_values
+      | `font_palette_values
+      | `counter_style ]
 
     let _cssatrule_type_of_yojson = function
       | `String "font-face" -> `font_face
       | `String "font-feature-values" -> `font_feature_values
       | `String "font-palette-values" -> `font_palette_values
+      | `String "counter-style" -> `counter_style
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -11048,6 +11058,7 @@ end = struct
       | `font_face -> `String "font-face"
       | `font_feature_values -> `String "font-feature-values"
       | `font_palette_values -> `String "font-palette-values"
+      | `counter_style -> `String "counter-style"
 
     type _cssatrule_subsection =
       [ `swash
@@ -20738,6 +20749,7 @@ and Network : sig
       [ `Success
       | `KeyError
       | `SigningError
+      | `TransientSigningError
       | `ServerRequestedTermination
       | `InvalidSessionId
       | `InvalidChallenge
@@ -20869,13 +20881,14 @@ and Network : sig
   and RefreshEventDetails : sig
     type _refresheventdetails_refreshresult =
       [ `Refreshed
-      | `RefreshedAsWaiter
       | `InitializedService
       | `Unreachable
       | `ServerError
       | `RefreshQuotaExceeded
       | `FatalError
-      | `SigningQuotaExceeded ]
+      | `SigningQuotaExceeded
+      | `RefreshedAsWaiter
+      | `TransientSigningError ]
 
     val _refresheventdetails_refreshresult_of_yojson :
       Yojson.Basic.t -> _refresheventdetails_refreshresult
@@ -25461,6 +25474,7 @@ end = struct
       [ `Success
       | `KeyError
       | `SigningError
+      | `TransientSigningError
       | `ServerRequestedTermination
       | `InvalidSessionId
       | `InvalidChallenge
@@ -25542,6 +25556,7 @@ end = struct
       [ `Success
       | `KeyError
       | `SigningError
+      | `TransientSigningError
       | `ServerRequestedTermination
       | `InvalidSessionId
       | `InvalidChallenge
@@ -25612,6 +25627,7 @@ end = struct
       | `String "Success" -> `Success
       | `String "KeyError" -> `KeyError
       | `String "SigningError" -> `SigningError
+      | `String "TransientSigningError" -> `TransientSigningError
       | `String "ServerRequestedTermination" -> `ServerRequestedTermination
       | `String "InvalidSessionId" -> `InvalidSessionId
       | `String "InvalidChallenge" -> `InvalidChallenge
@@ -25711,6 +25727,7 @@ end = struct
       | `Success -> `String "Success"
       | `KeyError -> `String "KeyError"
       | `SigningError -> `String "SigningError"
+      | `TransientSigningError -> `String "TransientSigningError"
       | `ServerRequestedTermination -> `String "ServerRequestedTermination"
       | `InvalidSessionId -> `String "InvalidSessionId"
       | `InvalidChallenge -> `String "InvalidChallenge"
@@ -25909,13 +25926,14 @@ end = struct
   and RefreshEventDetails : sig
     type _refresheventdetails_refreshresult =
       [ `Refreshed
-      | `RefreshedAsWaiter
       | `InitializedService
       | `Unreachable
       | `ServerError
       | `RefreshQuotaExceeded
       | `FatalError
-      | `SigningQuotaExceeded ]
+      | `SigningQuotaExceeded
+      | `RefreshedAsWaiter
+      | `TransientSigningError ]
 
     val _refresheventdetails_refreshresult_of_yojson :
       Yojson.Basic.t -> _refresheventdetails_refreshresult
@@ -25955,35 +25973,38 @@ end = struct
   end = struct
     type _refresheventdetails_refreshresult =
       [ `Refreshed
-      | `RefreshedAsWaiter
       | `InitializedService
       | `Unreachable
       | `ServerError
       | `RefreshQuotaExceeded
       | `FatalError
-      | `SigningQuotaExceeded ]
+      | `SigningQuotaExceeded
+      | `RefreshedAsWaiter
+      | `TransientSigningError ]
 
     let _refresheventdetails_refreshresult_of_yojson = function
       | `String "Refreshed" -> `Refreshed
-      | `String "RefreshedAsWaiter" -> `RefreshedAsWaiter
       | `String "InitializedService" -> `InitializedService
       | `String "Unreachable" -> `Unreachable
       | `String "ServerError" -> `ServerError
       | `String "RefreshQuotaExceeded" -> `RefreshQuotaExceeded
       | `String "FatalError" -> `FatalError
       | `String "SigningQuotaExceeded" -> `SigningQuotaExceeded
+      | `String "RefreshedAsWaiter" -> `RefreshedAsWaiter
+      | `String "TransientSigningError" -> `TransientSigningError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
     let yojson_of__refresheventdetails_refreshresult = function
       | `Refreshed -> `String "Refreshed"
-      | `RefreshedAsWaiter -> `String "RefreshedAsWaiter"
       | `InitializedService -> `String "InitializedService"
       | `Unreachable -> `String "Unreachable"
       | `ServerError -> `String "ServerError"
       | `RefreshQuotaExceeded -> `String "RefreshQuotaExceeded"
       | `FatalError -> `String "FatalError"
       | `SigningQuotaExceeded -> `String "SigningQuotaExceeded"
+      | `RefreshedAsWaiter -> `String "RefreshedAsWaiter"
+      | `TransientSigningError -> `String "TransientSigningError"
 
     type t = {
       refreshResult : _refresheventdetails_refreshresult;
