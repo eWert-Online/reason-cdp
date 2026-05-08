@@ -8805,7 +8805,15 @@ and CSS : sig
 
   and CSSContainerQuery : sig
     type t = {
-      text : string; [@key "text"] [@ocaml.doc "Container query text."]
+      text : string;
+          [@key "text"]
+          [@ocaml.doc
+            "Container query text.\n\
+             Contains the query part without the container name for a single \
+             query.\n\
+             Deprecated in favor of conditionText which contains the full \
+             prelude\n\
+             after @container."]
       range : SourceRange.t option;
           [@key "range"]
           [@yojson.option]
@@ -8837,6 +8845,8 @@ and CSS : sig
           [@key "queriesAnchored"]
           [@yojson.option]
           [@ocaml.doc "true if the query contains anchored() queries."]
+      conditionText : string;
+          [@key "conditionText"] [@ocaml.doc "CSSContainerRule.conditionText"]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS container query rule descriptor."]
   end
@@ -10443,7 +10453,15 @@ end = struct
 
   and CSSContainerQuery : sig
     type t = {
-      text : string; [@key "text"] [@ocaml.doc "Container query text."]
+      text : string;
+          [@key "text"]
+          [@ocaml.doc
+            "Container query text.\n\
+             Contains the query part without the container name for a single \
+             query.\n\
+             Deprecated in favor of conditionText which contains the full \
+             prelude\n\
+             after @container."]
       range : SourceRange.t option;
           [@key "range"]
           [@yojson.option]
@@ -10475,11 +10493,21 @@ end = struct
           [@key "queriesAnchored"]
           [@yojson.option]
           [@ocaml.doc "true if the query contains anchored() queries."]
+      conditionText : string;
+          [@key "conditionText"] [@ocaml.doc "CSSContainerRule.conditionText"]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS container query rule descriptor."]
   end = struct
     type t = {
-      text : string; [@key "text"] [@ocaml.doc "Container query text."]
+      text : string;
+          [@key "text"]
+          [@ocaml.doc
+            "Container query text.\n\
+             Contains the query part without the container name for a single \
+             query.\n\
+             Deprecated in favor of conditionText which contains the full \
+             prelude\n\
+             after @container."]
       range : SourceRange.t option;
           [@key "range"]
           [@yojson.option]
@@ -10511,6 +10539,8 @@ end = struct
           [@key "queriesAnchored"]
           [@yojson.option]
           [@ocaml.doc "true if the query contains anchored() queries."]
+      conditionText : string;
+          [@key "conditionText"] [@ocaml.doc "CSSContainerRule.conditionText"]
     }
     [@@deriving yojson] [@@ocaml.doc "CSS container query rule descriptor."]
   end
