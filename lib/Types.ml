@@ -2258,6 +2258,7 @@ and Audits : sig
       | `FormInputHasWrongButWellIntendedAutocompleteValueError
       | `ResponseWasBlockedByORB
       | `NavigationEntryMarkedSkippable
+      | `BackUINavigationWouldSkipAd
       | `AutofillAndManualTextPolicyControlledFeaturesInfo
       | `AutofillPolicyControlledFeatureInfo
       | `ManualTextPolicyControlledFeatureInfo
@@ -4819,6 +4820,7 @@ end = struct
       | `FormInputHasWrongButWellIntendedAutocompleteValueError
       | `ResponseWasBlockedByORB
       | `NavigationEntryMarkedSkippable
+      | `BackUINavigationWouldSkipAd
       | `AutofillAndManualTextPolicyControlledFeaturesInfo
       | `AutofillPolicyControlledFeatureInfo
       | `ManualTextPolicyControlledFeatureInfo
@@ -4850,6 +4852,7 @@ end = struct
       | `FormInputHasWrongButWellIntendedAutocompleteValueError
       | `ResponseWasBlockedByORB
       | `NavigationEntryMarkedSkippable
+      | `BackUINavigationWouldSkipAd
       | `AutofillAndManualTextPolicyControlledFeaturesInfo
       | `AutofillPolicyControlledFeatureInfo
       | `ManualTextPolicyControlledFeatureInfo
@@ -4880,6 +4883,7 @@ end = struct
       | `String "ResponseWasBlockedByORB" -> `ResponseWasBlockedByORB
       | `String "NavigationEntryMarkedSkippable" ->
           `NavigationEntryMarkedSkippable
+      | `String "BackUINavigationWouldSkipAd" -> `BackUINavigationWouldSkipAd
       | `String "AutofillAndManualTextPolicyControlledFeaturesInfo" ->
           `AutofillAndManualTextPolicyControlledFeaturesInfo
       | `String "AutofillPolicyControlledFeatureInfo" ->
@@ -4920,6 +4924,7 @@ end = struct
       | `ResponseWasBlockedByORB -> `String "ResponseWasBlockedByORB"
       | `NavigationEntryMarkedSkippable ->
           `String "NavigationEntryMarkedSkippable"
+      | `BackUINavigationWouldSkipAd -> `String "BackUINavigationWouldSkipAd"
       | `AutofillAndManualTextPolicyControlledFeaturesInfo ->
           `String "AutofillAndManualTextPolicyControlledFeaturesInfo"
       | `AutofillPolicyControlledFeatureInfo ->
