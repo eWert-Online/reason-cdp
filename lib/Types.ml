@@ -2097,7 +2097,11 @@ and Audits : sig
       | `ValidationFailedSignatureExpired
       | `ValidationFailedInvalidLength
       | `ValidationFailedSignatureMismatch
-      | `ValidationFailedIntegrityMismatch ]
+      | `ValidationFailedIntegrityMismatch
+      | `SignatureBaseUnknownDerivedComponent
+      | `SignatureBaseMissingHeader
+      | `SignatureBaseInvalidUnencodedDigest
+      | `SignatureBaseUnsupportedComponent ]
 
     val _srimessagesignatureerror_of_yojson :
       Yojson.Basic.t -> _srimessagesignatureerror
@@ -4414,7 +4418,11 @@ end = struct
       | `ValidationFailedSignatureExpired
       | `ValidationFailedInvalidLength
       | `ValidationFailedSignatureMismatch
-      | `ValidationFailedIntegrityMismatch ]
+      | `ValidationFailedIntegrityMismatch
+      | `SignatureBaseUnknownDerivedComponent
+      | `SignatureBaseMissingHeader
+      | `SignatureBaseInvalidUnencodedDigest
+      | `SignatureBaseUnsupportedComponent ]
 
     val _srimessagesignatureerror_of_yojson :
       Yojson.Basic.t -> _srimessagesignatureerror
@@ -4446,7 +4454,11 @@ end = struct
       | `ValidationFailedSignatureExpired
       | `ValidationFailedInvalidLength
       | `ValidationFailedSignatureMismatch
-      | `ValidationFailedIntegrityMismatch ]
+      | `ValidationFailedIntegrityMismatch
+      | `SignatureBaseUnknownDerivedComponent
+      | `SignatureBaseMissingHeader
+      | `SignatureBaseInvalidUnencodedDigest
+      | `SignatureBaseUnsupportedComponent ]
 
     let _srimessagesignatureerror_of_yojson = function
       | `String "MissingSignatureHeader" -> `MissingSignatureHeader
@@ -4487,6 +4499,13 @@ end = struct
           `ValidationFailedSignatureMismatch
       | `String "ValidationFailedIntegrityMismatch" ->
           `ValidationFailedIntegrityMismatch
+      | `String "SignatureBaseUnknownDerivedComponent" ->
+          `SignatureBaseUnknownDerivedComponent
+      | `String "SignatureBaseMissingHeader" -> `SignatureBaseMissingHeader
+      | `String "SignatureBaseInvalidUnencodedDigest" ->
+          `SignatureBaseInvalidUnencodedDigest
+      | `String "SignatureBaseUnsupportedComponent" ->
+          `SignatureBaseUnsupportedComponent
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4529,6 +4548,13 @@ end = struct
           `String "ValidationFailedSignatureMismatch"
       | `ValidationFailedIntegrityMismatch ->
           `String "ValidationFailedIntegrityMismatch"
+      | `SignatureBaseUnknownDerivedComponent ->
+          `String "SignatureBaseUnknownDerivedComponent"
+      | `SignatureBaseMissingHeader -> `String "SignatureBaseMissingHeader"
+      | `SignatureBaseInvalidUnencodedDigest ->
+          `String "SignatureBaseInvalidUnencodedDigest"
+      | `SignatureBaseUnsupportedComponent ->
+          `String "SignatureBaseUnsupportedComponent"
 
     type t = _srimessagesignatureerror
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -32996,7 +33022,8 @@ and Preload : sig
       | `PrerenderFailedDuringPrefetch
       | `BrowsingDataRemoved
       | `PrerenderHostReused
-      | `FormSubmitWhenPrerendering ]
+      | `FormSubmitWhenPrerendering
+      | `CrossDocumentRestart ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -33493,7 +33520,8 @@ end = struct
       | `PrerenderFailedDuringPrefetch
       | `BrowsingDataRemoved
       | `PrerenderHostReused
-      | `FormSubmitWhenPrerendering ]
+      | `FormSubmitWhenPrerendering
+      | `CrossDocumentRestart ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -33580,7 +33608,8 @@ end = struct
       | `PrerenderFailedDuringPrefetch
       | `BrowsingDataRemoved
       | `PrerenderHostReused
-      | `FormSubmitWhenPrerendering ]
+      | `FormSubmitWhenPrerendering
+      | `CrossDocumentRestart ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -33684,6 +33713,7 @@ end = struct
       | `String "BrowsingDataRemoved" -> `BrowsingDataRemoved
       | `String "PrerenderHostReused" -> `PrerenderHostReused
       | `String "FormSubmitWhenPrerendering" -> `FormSubmitWhenPrerendering
+      | `String "CrossDocumentRestart" -> `CrossDocumentRestart
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -33789,6 +33819,7 @@ end = struct
       | `BrowsingDataRemoved -> `String "BrowsingDataRemoved"
       | `PrerenderHostReused -> `String "PrerenderHostReused"
       | `FormSubmitWhenPrerendering -> `String "FormSubmitWhenPrerendering"
+      | `CrossDocumentRestart -> `String "CrossDocumentRestart"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
