@@ -37594,6 +37594,12 @@ and Target : sig
             "Provides additional details for specific target types. For \
              example, for\n\
              the type of \"page\", this may be set to \"prerender\"."]
+      embedderData : assoc option;
+          [@key "embedderData"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Embedder-specific target metadata. This is only set for targets of\n\
+             type \"tab\"."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -37712,6 +37718,12 @@ end = struct
             "Provides additional details for specific target types. For \
              example, for\n\
              the type of \"page\", this may be set to \"prerender\"."]
+      embedderData : assoc option;
+          [@key "embedderData"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Embedder-specific target metadata. This is only set for targets of\n\
+             type \"tab\"."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -37765,6 +37777,12 @@ end = struct
             "Provides additional details for specific target types. For \
              example, for\n\
              the type of \"page\", this may be set to \"prerender\"."]
+      embedderData : assoc option;
+          [@key "embedderData"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Embedder-specific target metadata. This is only set for targets of\n\
+             type \"tab\"."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
