@@ -2058,6 +2058,7 @@ and Audits : sig
       | `WriteErrorNonSecureContext
       | `WriteErrorNonStringIdField
       | `WriteErrorNonStringInMatchDestList
+      | `WriteErrorInvalidMatchDestList
       | `WriteErrorNonStringMatchField
       | `WriteErrorNonTokenTypeField
       | `WriteErrorRequestAborted
@@ -2490,6 +2491,55 @@ and Audits : sig
        third_party/blink/public/mojom/devtools/inspector_issue.mojom."]
   end
 
+  and EmailVerificationRequestIssueDetails : sig
+    type t = {
+      emailVerificationRequestIssueReason :
+        EmailVerificationRequestIssueReason.t;
+          [@key "emailVerificationRequestIssueReason"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and EmailVerificationRequestIssueReason : sig
+    type _emailverificationrequestissuereason =
+      [ `InvalidEmail
+      | `DnsFetchFailed
+      | `DnsInvalidRecord
+      | `WellKnownHttpNotFound
+      | `WellKnownNoResponse
+      | `WellKnownInvalidResponse
+      | `WellKnownListEmpty
+      | `WellKnownInvalidContentType
+      | `WellKnownMissingIssuanceEndpoint
+      | `WellKnownIssuanceEndpointCrossOrigin
+      | `WellKnownUnsupportedSigningAlgorithm
+      | `TokenHttpNotFound
+      | `TokenNoResponse
+      | `TokenInvalidResponse
+      | `TokenInvalidContentType
+      | `TokenMalformedSdJwt
+      | `TokenInvalidSdJwt
+      | `KeyBindingSigningFailed
+      | `RpOriginIsOpaque
+      | `WellKnownMissingAccountsEndpoint
+      | `UserLoggedOut
+      | `WellKnownAccountsEndpointCrossOrigin ]
+
+    val _emailverificationrequestissuereason_of_yojson :
+      Yojson.Basic.t -> _emailverificationrequestissuereason
+
+    val yojson_of__emailverificationrequestissuereason :
+      _emailverificationrequestissuereason -> Yojson.Basic.t
+
+    type t = _emailverificationrequestissuereason
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the failure reason when an email verification request fails.\n\
+       Should be updated alongside EmailVerificationRequestResult in\n\
+       third_party/blink/public/mojom/devtools/inspector_issue.mojom."]
+  end
+
   and ClientHintIssueDetails : sig
     type t = {
       sourceCodeLocation : SourceCodeLocation.t;
@@ -2803,7 +2853,8 @@ and Audits : sig
       | `UserReidentificationIssue
       | `PermissionElementIssue
       | `PerformanceIssue
-      | `SelectivePermissionsInterventionIssue ]
+      | `SelectivePermissionsInterventionIssue
+      | `EmailVerificationRequestIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -2943,6 +2994,11 @@ and Audits : sig
       selectivePermissionsInterventionIssueDetails :
         SelectivePermissionsInterventionIssueDetails.t option;
           [@key "selectivePermissionsInterventionIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      emailVerificationRequestIssueDetails :
+        EmailVerificationRequestIssueDetails.t option;
+          [@key "emailVerificationRequestIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -4271,6 +4327,7 @@ end = struct
       | `WriteErrorNonSecureContext
       | `WriteErrorNonStringIdField
       | `WriteErrorNonStringInMatchDestList
+      | `WriteErrorInvalidMatchDestList
       | `WriteErrorNonStringMatchField
       | `WriteErrorNonTokenTypeField
       | `WriteErrorRequestAborted
@@ -4307,6 +4364,7 @@ end = struct
       | `WriteErrorNonSecureContext
       | `WriteErrorNonStringIdField
       | `WriteErrorNonStringInMatchDestList
+      | `WriteErrorInvalidMatchDestList
       | `WriteErrorNonStringMatchField
       | `WriteErrorNonTokenTypeField
       | `WriteErrorRequestAborted
@@ -4344,6 +4402,8 @@ end = struct
       | `String "WriteErrorNonStringIdField" -> `WriteErrorNonStringIdField
       | `String "WriteErrorNonStringInMatchDestList" ->
           `WriteErrorNonStringInMatchDestList
+      | `String "WriteErrorInvalidMatchDestList" ->
+          `WriteErrorInvalidMatchDestList
       | `String "WriteErrorNonStringMatchField" ->
           `WriteErrorNonStringMatchField
       | `String "WriteErrorNonTokenTypeField" -> `WriteErrorNonTokenTypeField
@@ -4384,6 +4444,8 @@ end = struct
       | `WriteErrorNonStringIdField -> `String "WriteErrorNonStringIdField"
       | `WriteErrorNonStringInMatchDestList ->
           `String "WriteErrorNonStringInMatchDestList"
+      | `WriteErrorInvalidMatchDestList ->
+          `String "WriteErrorInvalidMatchDestList"
       | `WriteErrorNonStringMatchField ->
           `String "WriteErrorNonStringMatchField"
       | `WriteErrorNonTokenTypeField -> `String "WriteErrorNonTokenTypeField"
@@ -5486,6 +5548,154 @@ end = struct
        third_party/blink/public/mojom/devtools/inspector_issue.mojom."]
   end
 
+  and EmailVerificationRequestIssueDetails : sig
+    type t = {
+      emailVerificationRequestIssueReason :
+        EmailVerificationRequestIssueReason.t;
+          [@key "emailVerificationRequestIssueReason"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      emailVerificationRequestIssueReason :
+        EmailVerificationRequestIssueReason.t;
+          [@key "emailVerificationRequestIssueReason"]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and EmailVerificationRequestIssueReason : sig
+    type _emailverificationrequestissuereason =
+      [ `InvalidEmail
+      | `DnsFetchFailed
+      | `DnsInvalidRecord
+      | `WellKnownHttpNotFound
+      | `WellKnownNoResponse
+      | `WellKnownInvalidResponse
+      | `WellKnownListEmpty
+      | `WellKnownInvalidContentType
+      | `WellKnownMissingIssuanceEndpoint
+      | `WellKnownIssuanceEndpointCrossOrigin
+      | `WellKnownUnsupportedSigningAlgorithm
+      | `TokenHttpNotFound
+      | `TokenNoResponse
+      | `TokenInvalidResponse
+      | `TokenInvalidContentType
+      | `TokenMalformedSdJwt
+      | `TokenInvalidSdJwt
+      | `KeyBindingSigningFailed
+      | `RpOriginIsOpaque
+      | `WellKnownMissingAccountsEndpoint
+      | `UserLoggedOut
+      | `WellKnownAccountsEndpointCrossOrigin ]
+
+    val _emailverificationrequestissuereason_of_yojson :
+      Yojson.Basic.t -> _emailverificationrequestissuereason
+
+    val yojson_of__emailverificationrequestissuereason :
+      _emailverificationrequestissuereason -> Yojson.Basic.t
+
+    type t = _emailverificationrequestissuereason
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the failure reason when an email verification request fails.\n\
+       Should be updated alongside EmailVerificationRequestResult in\n\
+       third_party/blink/public/mojom/devtools/inspector_issue.mojom."]
+  end = struct
+    type _emailverificationrequestissuereason =
+      [ `InvalidEmail
+      | `DnsFetchFailed
+      | `DnsInvalidRecord
+      | `WellKnownHttpNotFound
+      | `WellKnownNoResponse
+      | `WellKnownInvalidResponse
+      | `WellKnownListEmpty
+      | `WellKnownInvalidContentType
+      | `WellKnownMissingIssuanceEndpoint
+      | `WellKnownIssuanceEndpointCrossOrigin
+      | `WellKnownUnsupportedSigningAlgorithm
+      | `TokenHttpNotFound
+      | `TokenNoResponse
+      | `TokenInvalidResponse
+      | `TokenInvalidContentType
+      | `TokenMalformedSdJwt
+      | `TokenInvalidSdJwt
+      | `KeyBindingSigningFailed
+      | `RpOriginIsOpaque
+      | `WellKnownMissingAccountsEndpoint
+      | `UserLoggedOut
+      | `WellKnownAccountsEndpointCrossOrigin ]
+
+    let _emailverificationrequestissuereason_of_yojson = function
+      | `String "InvalidEmail" -> `InvalidEmail
+      | `String "DnsFetchFailed" -> `DnsFetchFailed
+      | `String "DnsInvalidRecord" -> `DnsInvalidRecord
+      | `String "WellKnownHttpNotFound" -> `WellKnownHttpNotFound
+      | `String "WellKnownNoResponse" -> `WellKnownNoResponse
+      | `String "WellKnownInvalidResponse" -> `WellKnownInvalidResponse
+      | `String "WellKnownListEmpty" -> `WellKnownListEmpty
+      | `String "WellKnownInvalidContentType" -> `WellKnownInvalidContentType
+      | `String "WellKnownMissingIssuanceEndpoint" ->
+          `WellKnownMissingIssuanceEndpoint
+      | `String "WellKnownIssuanceEndpointCrossOrigin" ->
+          `WellKnownIssuanceEndpointCrossOrigin
+      | `String "WellKnownUnsupportedSigningAlgorithm" ->
+          `WellKnownUnsupportedSigningAlgorithm
+      | `String "TokenHttpNotFound" -> `TokenHttpNotFound
+      | `String "TokenNoResponse" -> `TokenNoResponse
+      | `String "TokenInvalidResponse" -> `TokenInvalidResponse
+      | `String "TokenInvalidContentType" -> `TokenInvalidContentType
+      | `String "TokenMalformedSdJwt" -> `TokenMalformedSdJwt
+      | `String "TokenInvalidSdJwt" -> `TokenInvalidSdJwt
+      | `String "KeyBindingSigningFailed" -> `KeyBindingSigningFailed
+      | `String "RpOriginIsOpaque" -> `RpOriginIsOpaque
+      | `String "WellKnownMissingAccountsEndpoint" ->
+          `WellKnownMissingAccountsEndpoint
+      | `String "UserLoggedOut" -> `UserLoggedOut
+      | `String "WellKnownAccountsEndpointCrossOrigin" ->
+          `WellKnownAccountsEndpointCrossOrigin
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__emailverificationrequestissuereason = function
+      | `InvalidEmail -> `String "InvalidEmail"
+      | `DnsFetchFailed -> `String "DnsFetchFailed"
+      | `DnsInvalidRecord -> `String "DnsInvalidRecord"
+      | `WellKnownHttpNotFound -> `String "WellKnownHttpNotFound"
+      | `WellKnownNoResponse -> `String "WellKnownNoResponse"
+      | `WellKnownInvalidResponse -> `String "WellKnownInvalidResponse"
+      | `WellKnownListEmpty -> `String "WellKnownListEmpty"
+      | `WellKnownInvalidContentType -> `String "WellKnownInvalidContentType"
+      | `WellKnownMissingIssuanceEndpoint ->
+          `String "WellKnownMissingIssuanceEndpoint"
+      | `WellKnownIssuanceEndpointCrossOrigin ->
+          `String "WellKnownIssuanceEndpointCrossOrigin"
+      | `WellKnownUnsupportedSigningAlgorithm ->
+          `String "WellKnownUnsupportedSigningAlgorithm"
+      | `TokenHttpNotFound -> `String "TokenHttpNotFound"
+      | `TokenNoResponse -> `String "TokenNoResponse"
+      | `TokenInvalidResponse -> `String "TokenInvalidResponse"
+      | `TokenInvalidContentType -> `String "TokenInvalidContentType"
+      | `TokenMalformedSdJwt -> `String "TokenMalformedSdJwt"
+      | `TokenInvalidSdJwt -> `String "TokenInvalidSdJwt"
+      | `KeyBindingSigningFailed -> `String "KeyBindingSigningFailed"
+      | `RpOriginIsOpaque -> `String "RpOriginIsOpaque"
+      | `WellKnownMissingAccountsEndpoint ->
+          `String "WellKnownMissingAccountsEndpoint"
+      | `UserLoggedOut -> `String "UserLoggedOut"
+      | `WellKnownAccountsEndpointCrossOrigin ->
+          `String "WellKnownAccountsEndpointCrossOrigin"
+
+    type t = _emailverificationrequestissuereason
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Represents the failure reason when an email verification request fails.\n\
+       Should be updated alongside EmailVerificationRequestResult in\n\
+       third_party/blink/public/mojom/devtools/inspector_issue.mojom."]
+  end
+
   and ClientHintIssueDetails : sig
     type t = {
       sourceCodeLocation : SourceCodeLocation.t;
@@ -6138,7 +6348,8 @@ end = struct
       | `UserReidentificationIssue
       | `PermissionElementIssue
       | `PerformanceIssue
-      | `SelectivePermissionsInterventionIssue ]
+      | `SelectivePermissionsInterventionIssue
+      | `EmailVerificationRequestIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -6179,7 +6390,8 @@ end = struct
       | `UserReidentificationIssue
       | `PermissionElementIssue
       | `PerformanceIssue
-      | `SelectivePermissionsInterventionIssue ]
+      | `SelectivePermissionsInterventionIssue
+      | `EmailVerificationRequestIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -6214,6 +6426,8 @@ end = struct
       | `String "PerformanceIssue" -> `PerformanceIssue
       | `String "SelectivePermissionsInterventionIssue" ->
           `SelectivePermissionsInterventionIssue
+      | `String "EmailVerificationRequestIssue" ->
+          `EmailVerificationRequestIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -6250,6 +6464,8 @@ end = struct
       | `PerformanceIssue -> `String "PerformanceIssue"
       | `SelectivePermissionsInterventionIssue ->
           `String "SelectivePermissionsInterventionIssue"
+      | `EmailVerificationRequestIssue ->
+          `String "EmailVerificationRequestIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -6388,6 +6604,11 @@ end = struct
           [@key "selectivePermissionsInterventionIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      emailVerificationRequestIssueDetails :
+        EmailVerificationRequestIssueDetails.t option;
+          [@key "emailVerificationRequestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -6521,6 +6742,11 @@ end = struct
       selectivePermissionsInterventionIssueDetails :
         SelectivePermissionsInterventionIssueDetails.t option;
           [@key "selectivePermissionsInterventionIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      emailVerificationRequestIssueDetails :
+        EmailVerificationRequestIssueDetails.t option;
+          [@key "emailVerificationRequestIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
