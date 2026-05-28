@@ -21101,7 +21101,8 @@ and Network : sig
       | `InvalidConfigJson
       | `InvalidFederatedSessionProviderFailedToRestoreKey
       | `FailedToUnwrapKey
-      | `SessionDeletedDuringRefresh ]
+      | `SessionDeletedDuringRefresh
+      | `CrossOriginRegistrationSiteNotIncluded ]
 
     val _deviceboundsessionfetchresult_of_yojson :
       Yojson.Basic.t -> _deviceboundsessionfetchresult
@@ -25826,7 +25827,8 @@ end = struct
       | `InvalidConfigJson
       | `InvalidFederatedSessionProviderFailedToRestoreKey
       | `FailedToUnwrapKey
-      | `SessionDeletedDuringRefresh ]
+      | `SessionDeletedDuringRefresh
+      | `CrossOriginRegistrationSiteNotIncluded ]
 
     val _deviceboundsessionfetchresult_of_yojson :
       Yojson.Basic.t -> _deviceboundsessionfetchresult
@@ -25908,7 +25910,8 @@ end = struct
       | `InvalidConfigJson
       | `InvalidFederatedSessionProviderFailedToRestoreKey
       | `FailedToUnwrapKey
-      | `SessionDeletedDuringRefresh ]
+      | `SessionDeletedDuringRefresh
+      | `CrossOriginRegistrationSiteNotIncluded ]
 
     let _deviceboundsessionfetchresult_of_yojson = function
       | `String "Success" -> `Success
@@ -26007,6 +26010,8 @@ end = struct
           `InvalidFederatedSessionProviderFailedToRestoreKey
       | `String "FailedToUnwrapKey" -> `FailedToUnwrapKey
       | `String "SessionDeletedDuringRefresh" -> `SessionDeletedDuringRefresh
+      | `String "CrossOriginRegistrationSiteNotIncluded" ->
+          `CrossOriginRegistrationSiteNotIncluded
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26107,6 +26112,8 @@ end = struct
           `String "InvalidFederatedSessionProviderFailedToRestoreKey"
       | `FailedToUnwrapKey -> `String "FailedToUnwrapKey"
       | `SessionDeletedDuringRefresh -> `String "SessionDeletedDuringRefresh"
+      | `CrossOriginRegistrationSiteNotIncluded ->
+          `String "CrossOriginRegistrationSiteNotIncluded"
 
     type t = _deviceboundsessionfetchresult
     [@@deriving yojson]
