@@ -36253,8 +36253,9 @@ This cancels the effect of any previous `setAutoAttach` and is also cancelled by
             [@ocaml.doc
               "The id of the panel we want DevTools to open initially. Currently\n\
                supported panels are elements, console, network, sources, \
-               resources\n\
-               and performance."]
+               resources,\n\
+               timeline, chrome-recorder, heap-profiler, lighthouse, and \
+               security."]
       }
       [@@deriving yojson]
 
