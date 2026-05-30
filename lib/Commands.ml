@@ -577,6 +577,60 @@ node is specified, or the DOM node does not exist, the command returns an error.
 `accessibleName` or `role` is specified, it returns all the accessibility nodes in the subtree. |desc}]
 end
 
+module Ads = struct
+  module GetAdMetrics = struct
+    module Response : sig
+      type result = {
+        metrics : Types.Ads.AdMetrics.t;
+            [@key "metrics"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        metrics : Types.Ads.AdMetrics.t;
+            [@key "metrics"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Ads.getAdMetrics"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Retrieves ad metrics for the current page. |desc}]
+end
+
 module Animation = struct
   module Disable = struct
     module Response : sig

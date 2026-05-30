@@ -1097,6 +1097,108 @@ end = struct
   end
 end
 
+and Ads : sig
+  module rec AdMetrics : sig
+    type t = {
+      viewportAdDensityByArea : number;
+          [@key "viewportAdDensityByArea"]
+          [@ocaml.doc
+            "The viewport ad density by area, represented as a percentage (an \
+             integer\n\
+             between 0 and 100)."]
+      averageViewportAdDensityByArea : number;
+          [@key "averageViewportAdDensityByArea"]
+          [@ocaml.doc
+            "The time-weighted average of the viewport ad density by area, \
+             measured\n\
+             across the duration of the page."]
+      viewportAdCount : number;
+          [@key "viewportAdCount"]
+          [@ocaml.doc
+            "The number of ads currently visible within the viewport."]
+      averageViewportAdCount : number;
+          [@key "averageViewportAdCount"]
+          [@ocaml.doc
+            "The time-weighted average of the viewport ad count, measured \
+             across the\n\
+             duration of the page."]
+      totalAdCpuTime : number;
+          [@key "totalAdCpuTime"]
+          [@ocaml.doc "The total ad CPU usage, in milliseconds."]
+      totalAdNetworkBytes : number;
+          [@key "totalAdNetworkBytes"]
+          [@ocaml.doc "The total ad network bytes."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Ad metrics for a page."]
+  end
+end = struct
+  module rec AdMetrics : sig
+    type t = {
+      viewportAdDensityByArea : number;
+          [@key "viewportAdDensityByArea"]
+          [@ocaml.doc
+            "The viewport ad density by area, represented as a percentage (an \
+             integer\n\
+             between 0 and 100)."]
+      averageViewportAdDensityByArea : number;
+          [@key "averageViewportAdDensityByArea"]
+          [@ocaml.doc
+            "The time-weighted average of the viewport ad density by area, \
+             measured\n\
+             across the duration of the page."]
+      viewportAdCount : number;
+          [@key "viewportAdCount"]
+          [@ocaml.doc
+            "The number of ads currently visible within the viewport."]
+      averageViewportAdCount : number;
+          [@key "averageViewportAdCount"]
+          [@ocaml.doc
+            "The time-weighted average of the viewport ad count, measured \
+             across the\n\
+             duration of the page."]
+      totalAdCpuTime : number;
+          [@key "totalAdCpuTime"]
+          [@ocaml.doc "The total ad CPU usage, in milliseconds."]
+      totalAdNetworkBytes : number;
+          [@key "totalAdNetworkBytes"]
+          [@ocaml.doc "The total ad network bytes."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Ad metrics for a page."]
+  end = struct
+    type t = {
+      viewportAdDensityByArea : number;
+          [@key "viewportAdDensityByArea"]
+          [@ocaml.doc
+            "The viewport ad density by area, represented as a percentage (an \
+             integer\n\
+             between 0 and 100)."]
+      averageViewportAdDensityByArea : number;
+          [@key "averageViewportAdDensityByArea"]
+          [@ocaml.doc
+            "The time-weighted average of the viewport ad density by area, \
+             measured\n\
+             across the duration of the page."]
+      viewportAdCount : number;
+          [@key "viewportAdCount"]
+          [@ocaml.doc
+            "The number of ads currently visible within the viewport."]
+      averageViewportAdCount : number;
+          [@key "averageViewportAdCount"]
+          [@ocaml.doc
+            "The time-weighted average of the viewport ad count, measured \
+             across the\n\
+             duration of the page."]
+      totalAdCpuTime : number;
+          [@key "totalAdCpuTime"]
+          [@ocaml.doc "The total ad CPU usage, in milliseconds."]
+      totalAdNetworkBytes : number;
+          [@key "totalAdNetworkBytes"]
+          [@ocaml.doc "The total ad network bytes."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Ad metrics for a page."]
+  end
+end
+
 and Animation : sig
   module rec Animation : sig
     type _animation_type = [ `CSSTransition | `CSSAnimation | `WebAnimation ]
@@ -2524,7 +2626,18 @@ and Audits : sig
       | `RpOriginIsOpaque
       | `WellKnownMissingAccountsEndpoint
       | `UserLoggedOut
-      | `WellKnownAccountsEndpointCrossOrigin ]
+      | `WellKnownAccountsEndpointCrossOrigin
+      | `AccountsHttpNotFound
+      | `AccountsNoResponse
+      | `AccountsInvalidResponse
+      | `AccountsInvalidContentType
+      | `AccountsEmptyList
+      | `EmailVerificationWellKnownHttpNotFound
+      | `EmailVerificationWellKnownNoResponse
+      | `EmailVerificationWellKnownInvalidResponse
+      | `EmailVerificationWellKnownInvalidContentType
+      | `JwksHttpNotFound
+      | `JwksInvalidResponse ]
 
     val _emailverificationrequestissuereason_of_yojson :
       Yojson.Basic.t -> _emailverificationrequestissuereason
@@ -5589,7 +5702,18 @@ end = struct
       | `RpOriginIsOpaque
       | `WellKnownMissingAccountsEndpoint
       | `UserLoggedOut
-      | `WellKnownAccountsEndpointCrossOrigin ]
+      | `WellKnownAccountsEndpointCrossOrigin
+      | `AccountsHttpNotFound
+      | `AccountsNoResponse
+      | `AccountsInvalidResponse
+      | `AccountsInvalidContentType
+      | `AccountsEmptyList
+      | `EmailVerificationWellKnownHttpNotFound
+      | `EmailVerificationWellKnownNoResponse
+      | `EmailVerificationWellKnownInvalidResponse
+      | `EmailVerificationWellKnownInvalidContentType
+      | `JwksHttpNotFound
+      | `JwksInvalidResponse ]
 
     val _emailverificationrequestissuereason_of_yojson :
       Yojson.Basic.t -> _emailverificationrequestissuereason
@@ -5626,7 +5750,18 @@ end = struct
       | `RpOriginIsOpaque
       | `WellKnownMissingAccountsEndpoint
       | `UserLoggedOut
-      | `WellKnownAccountsEndpointCrossOrigin ]
+      | `WellKnownAccountsEndpointCrossOrigin
+      | `AccountsHttpNotFound
+      | `AccountsNoResponse
+      | `AccountsInvalidResponse
+      | `AccountsInvalidContentType
+      | `AccountsEmptyList
+      | `EmailVerificationWellKnownHttpNotFound
+      | `EmailVerificationWellKnownNoResponse
+      | `EmailVerificationWellKnownInvalidResponse
+      | `EmailVerificationWellKnownInvalidContentType
+      | `JwksHttpNotFound
+      | `JwksInvalidResponse ]
 
     let _emailverificationrequestissuereason_of_yojson = function
       | `String "InvalidEmail" -> `InvalidEmail
@@ -5656,6 +5791,21 @@ end = struct
       | `String "UserLoggedOut" -> `UserLoggedOut
       | `String "WellKnownAccountsEndpointCrossOrigin" ->
           `WellKnownAccountsEndpointCrossOrigin
+      | `String "AccountsHttpNotFound" -> `AccountsHttpNotFound
+      | `String "AccountsNoResponse" -> `AccountsNoResponse
+      | `String "AccountsInvalidResponse" -> `AccountsInvalidResponse
+      | `String "AccountsInvalidContentType" -> `AccountsInvalidContentType
+      | `String "AccountsEmptyList" -> `AccountsEmptyList
+      | `String "EmailVerificationWellKnownHttpNotFound" ->
+          `EmailVerificationWellKnownHttpNotFound
+      | `String "EmailVerificationWellKnownNoResponse" ->
+          `EmailVerificationWellKnownNoResponse
+      | `String "EmailVerificationWellKnownInvalidResponse" ->
+          `EmailVerificationWellKnownInvalidResponse
+      | `String "EmailVerificationWellKnownInvalidContentType" ->
+          `EmailVerificationWellKnownInvalidContentType
+      | `String "JwksHttpNotFound" -> `JwksHttpNotFound
+      | `String "JwksInvalidResponse" -> `JwksInvalidResponse
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -5687,6 +5837,21 @@ end = struct
       | `UserLoggedOut -> `String "UserLoggedOut"
       | `WellKnownAccountsEndpointCrossOrigin ->
           `String "WellKnownAccountsEndpointCrossOrigin"
+      | `AccountsHttpNotFound -> `String "AccountsHttpNotFound"
+      | `AccountsNoResponse -> `String "AccountsNoResponse"
+      | `AccountsInvalidResponse -> `String "AccountsInvalidResponse"
+      | `AccountsInvalidContentType -> `String "AccountsInvalidContentType"
+      | `AccountsEmptyList -> `String "AccountsEmptyList"
+      | `EmailVerificationWellKnownHttpNotFound ->
+          `String "EmailVerificationWellKnownHttpNotFound"
+      | `EmailVerificationWellKnownNoResponse ->
+          `String "EmailVerificationWellKnownNoResponse"
+      | `EmailVerificationWellKnownInvalidResponse ->
+          `String "EmailVerificationWellKnownInvalidResponse"
+      | `EmailVerificationWellKnownInvalidContentType ->
+          `String "EmailVerificationWellKnownInvalidContentType"
+      | `JwksHttpNotFound -> `String "JwksHttpNotFound"
+      | `JwksInvalidResponse -> `String "JwksInvalidResponse"
 
     type t = _emailverificationrequestissuereason
     [@@deriving yojson]
@@ -33318,7 +33483,8 @@ and Preload : sig
       | `PrefetchProxyNotAvailable
       | `PrefetchResponseUsed
       | `PrefetchSuccessfulButNotUsed
-      | `PrefetchNotUsedProbeFailed ]
+      | `PrefetchNotUsedProbeFailed
+      | `PrefetchCancelledOnUserNavigation ]
 
     val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
     val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
@@ -34135,7 +34301,8 @@ end = struct
       | `PrefetchProxyNotAvailable
       | `PrefetchResponseUsed
       | `PrefetchSuccessfulButNotUsed
-      | `PrefetchNotUsedProbeFailed ]
+      | `PrefetchNotUsedProbeFailed
+      | `PrefetchCancelledOnUserNavigation ]
 
     val _prefetchstatus_of_yojson : Yojson.Basic.t -> _prefetchstatus
     val yojson_of__prefetchstatus : _prefetchstatus -> Yojson.Basic.t
@@ -34180,7 +34347,8 @@ end = struct
       | `PrefetchProxyNotAvailable
       | `PrefetchResponseUsed
       | `PrefetchSuccessfulButNotUsed
-      | `PrefetchNotUsedProbeFailed ]
+      | `PrefetchNotUsedProbeFailed
+      | `PrefetchCancelledOnUserNavigation ]
 
     let _prefetchstatus_of_yojson = function
       | `String "PrefetchAllowed" -> `PrefetchAllowed
@@ -34238,6 +34406,8 @@ end = struct
       | `String "PrefetchResponseUsed" -> `PrefetchResponseUsed
       | `String "PrefetchSuccessfulButNotUsed" -> `PrefetchSuccessfulButNotUsed
       | `String "PrefetchNotUsedProbeFailed" -> `PrefetchNotUsedProbeFailed
+      | `String "PrefetchCancelledOnUserNavigation" ->
+          `PrefetchCancelledOnUserNavigation
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -34297,6 +34467,8 @@ end = struct
       | `PrefetchResponseUsed -> `String "PrefetchResponseUsed"
       | `PrefetchSuccessfulButNotUsed -> `String "PrefetchSuccessfulButNotUsed"
       | `PrefetchNotUsedProbeFailed -> `String "PrefetchNotUsedProbeFailed"
+      | `PrefetchCancelledOnUserNavigation ->
+          `String "PrefetchCancelledOnUserNavigation"
 
     type t = _prefetchstatus
     [@@deriving yojson]
