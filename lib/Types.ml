@@ -2637,7 +2637,30 @@ and Audits : sig
       | `EmailVerificationWellKnownInvalidResponse
       | `EmailVerificationWellKnownInvalidContentType
       | `JwksHttpNotFound
-      | `JwksInvalidResponse ]
+      | `JwksInvalidResponse
+      | `TokenVerificationSdJwtUnsupportedHeaderAlg
+      | `TokenVerificationSdJwtMissingIss
+      | `TokenVerificationSdJwtMissingIat
+      | `TokenVerificationSdJwtMissingCnf
+      | `TokenVerificationSdJwtMissingEmail
+      | `TokenVerificationSdJwtInvalidIssuedAt
+      | `TokenVerificationSdJwtInvalidIssuer
+      | `TokenVerificationSdJwtJwksMissingKeys
+      | `TokenVerificationSdJwtSignatureFailed
+      | `TokenVerificationSdJwtInvalidEmailVerified
+      | `TokenVerificationSdJwtInvalidEmail
+      | `TokenVerificationSdJwtInvalidHolderKey
+      | `TokenVerificationKbInvalidTyp
+      | `TokenVerificationKbMissingAud
+      | `TokenVerificationKbMissingNonce
+      | `TokenVerificationKbMissingIat
+      | `TokenVerificationKbMissingSdHash
+      | `TokenVerificationKbInvalidIssuedAt
+      | `TokenVerificationKbInvalidAudience
+      | `TokenVerificationKbInvalidNonce
+      | `TokenVerificationKbInvalidSdHash
+      | `TokenVerificationKbMissingCnf
+      | `TokenVerificationKbSignatureFailed ]
 
     val _emailverificationrequestissuereason_of_yojson :
       Yojson.Basic.t -> _emailverificationrequestissuereason
@@ -5713,7 +5736,30 @@ end = struct
       | `EmailVerificationWellKnownInvalidResponse
       | `EmailVerificationWellKnownInvalidContentType
       | `JwksHttpNotFound
-      | `JwksInvalidResponse ]
+      | `JwksInvalidResponse
+      | `TokenVerificationSdJwtUnsupportedHeaderAlg
+      | `TokenVerificationSdJwtMissingIss
+      | `TokenVerificationSdJwtMissingIat
+      | `TokenVerificationSdJwtMissingCnf
+      | `TokenVerificationSdJwtMissingEmail
+      | `TokenVerificationSdJwtInvalidIssuedAt
+      | `TokenVerificationSdJwtInvalidIssuer
+      | `TokenVerificationSdJwtJwksMissingKeys
+      | `TokenVerificationSdJwtSignatureFailed
+      | `TokenVerificationSdJwtInvalidEmailVerified
+      | `TokenVerificationSdJwtInvalidEmail
+      | `TokenVerificationSdJwtInvalidHolderKey
+      | `TokenVerificationKbInvalidTyp
+      | `TokenVerificationKbMissingAud
+      | `TokenVerificationKbMissingNonce
+      | `TokenVerificationKbMissingIat
+      | `TokenVerificationKbMissingSdHash
+      | `TokenVerificationKbInvalidIssuedAt
+      | `TokenVerificationKbInvalidAudience
+      | `TokenVerificationKbInvalidNonce
+      | `TokenVerificationKbInvalidSdHash
+      | `TokenVerificationKbMissingCnf
+      | `TokenVerificationKbSignatureFailed ]
 
     val _emailverificationrequestissuereason_of_yojson :
       Yojson.Basic.t -> _emailverificationrequestissuereason
@@ -5761,7 +5807,30 @@ end = struct
       | `EmailVerificationWellKnownInvalidResponse
       | `EmailVerificationWellKnownInvalidContentType
       | `JwksHttpNotFound
-      | `JwksInvalidResponse ]
+      | `JwksInvalidResponse
+      | `TokenVerificationSdJwtUnsupportedHeaderAlg
+      | `TokenVerificationSdJwtMissingIss
+      | `TokenVerificationSdJwtMissingIat
+      | `TokenVerificationSdJwtMissingCnf
+      | `TokenVerificationSdJwtMissingEmail
+      | `TokenVerificationSdJwtInvalidIssuedAt
+      | `TokenVerificationSdJwtInvalidIssuer
+      | `TokenVerificationSdJwtJwksMissingKeys
+      | `TokenVerificationSdJwtSignatureFailed
+      | `TokenVerificationSdJwtInvalidEmailVerified
+      | `TokenVerificationSdJwtInvalidEmail
+      | `TokenVerificationSdJwtInvalidHolderKey
+      | `TokenVerificationKbInvalidTyp
+      | `TokenVerificationKbMissingAud
+      | `TokenVerificationKbMissingNonce
+      | `TokenVerificationKbMissingIat
+      | `TokenVerificationKbMissingSdHash
+      | `TokenVerificationKbInvalidIssuedAt
+      | `TokenVerificationKbInvalidAudience
+      | `TokenVerificationKbInvalidNonce
+      | `TokenVerificationKbInvalidSdHash
+      | `TokenVerificationKbMissingCnf
+      | `TokenVerificationKbSignatureFailed ]
 
     let _emailverificationrequestissuereason_of_yojson = function
       | `String "InvalidEmail" -> `InvalidEmail
@@ -5806,6 +5875,52 @@ end = struct
           `EmailVerificationWellKnownInvalidContentType
       | `String "JwksHttpNotFound" -> `JwksHttpNotFound
       | `String "JwksInvalidResponse" -> `JwksInvalidResponse
+      | `String "TokenVerificationSdJwtUnsupportedHeaderAlg" ->
+          `TokenVerificationSdJwtUnsupportedHeaderAlg
+      | `String "TokenVerificationSdJwtMissingIss" ->
+          `TokenVerificationSdJwtMissingIss
+      | `String "TokenVerificationSdJwtMissingIat" ->
+          `TokenVerificationSdJwtMissingIat
+      | `String "TokenVerificationSdJwtMissingCnf" ->
+          `TokenVerificationSdJwtMissingCnf
+      | `String "TokenVerificationSdJwtMissingEmail" ->
+          `TokenVerificationSdJwtMissingEmail
+      | `String "TokenVerificationSdJwtInvalidIssuedAt" ->
+          `TokenVerificationSdJwtInvalidIssuedAt
+      | `String "TokenVerificationSdJwtInvalidIssuer" ->
+          `TokenVerificationSdJwtInvalidIssuer
+      | `String "TokenVerificationSdJwtJwksMissingKeys" ->
+          `TokenVerificationSdJwtJwksMissingKeys
+      | `String "TokenVerificationSdJwtSignatureFailed" ->
+          `TokenVerificationSdJwtSignatureFailed
+      | `String "TokenVerificationSdJwtInvalidEmailVerified" ->
+          `TokenVerificationSdJwtInvalidEmailVerified
+      | `String "TokenVerificationSdJwtInvalidEmail" ->
+          `TokenVerificationSdJwtInvalidEmail
+      | `String "TokenVerificationSdJwtInvalidHolderKey" ->
+          `TokenVerificationSdJwtInvalidHolderKey
+      | `String "TokenVerificationKbInvalidTyp" ->
+          `TokenVerificationKbInvalidTyp
+      | `String "TokenVerificationKbMissingAud" ->
+          `TokenVerificationKbMissingAud
+      | `String "TokenVerificationKbMissingNonce" ->
+          `TokenVerificationKbMissingNonce
+      | `String "TokenVerificationKbMissingIat" ->
+          `TokenVerificationKbMissingIat
+      | `String "TokenVerificationKbMissingSdHash" ->
+          `TokenVerificationKbMissingSdHash
+      | `String "TokenVerificationKbInvalidIssuedAt" ->
+          `TokenVerificationKbInvalidIssuedAt
+      | `String "TokenVerificationKbInvalidAudience" ->
+          `TokenVerificationKbInvalidAudience
+      | `String "TokenVerificationKbInvalidNonce" ->
+          `TokenVerificationKbInvalidNonce
+      | `String "TokenVerificationKbInvalidSdHash" ->
+          `TokenVerificationKbInvalidSdHash
+      | `String "TokenVerificationKbMissingCnf" ->
+          `TokenVerificationKbMissingCnf
+      | `String "TokenVerificationKbSignatureFailed" ->
+          `TokenVerificationKbSignatureFailed
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -5852,6 +5967,52 @@ end = struct
           `String "EmailVerificationWellKnownInvalidContentType"
       | `JwksHttpNotFound -> `String "JwksHttpNotFound"
       | `JwksInvalidResponse -> `String "JwksInvalidResponse"
+      | `TokenVerificationSdJwtUnsupportedHeaderAlg ->
+          `String "TokenVerificationSdJwtUnsupportedHeaderAlg"
+      | `TokenVerificationSdJwtMissingIss ->
+          `String "TokenVerificationSdJwtMissingIss"
+      | `TokenVerificationSdJwtMissingIat ->
+          `String "TokenVerificationSdJwtMissingIat"
+      | `TokenVerificationSdJwtMissingCnf ->
+          `String "TokenVerificationSdJwtMissingCnf"
+      | `TokenVerificationSdJwtMissingEmail ->
+          `String "TokenVerificationSdJwtMissingEmail"
+      | `TokenVerificationSdJwtInvalidIssuedAt ->
+          `String "TokenVerificationSdJwtInvalidIssuedAt"
+      | `TokenVerificationSdJwtInvalidIssuer ->
+          `String "TokenVerificationSdJwtInvalidIssuer"
+      | `TokenVerificationSdJwtJwksMissingKeys ->
+          `String "TokenVerificationSdJwtJwksMissingKeys"
+      | `TokenVerificationSdJwtSignatureFailed ->
+          `String "TokenVerificationSdJwtSignatureFailed"
+      | `TokenVerificationSdJwtInvalidEmailVerified ->
+          `String "TokenVerificationSdJwtInvalidEmailVerified"
+      | `TokenVerificationSdJwtInvalidEmail ->
+          `String "TokenVerificationSdJwtInvalidEmail"
+      | `TokenVerificationSdJwtInvalidHolderKey ->
+          `String "TokenVerificationSdJwtInvalidHolderKey"
+      | `TokenVerificationKbInvalidTyp ->
+          `String "TokenVerificationKbInvalidTyp"
+      | `TokenVerificationKbMissingAud ->
+          `String "TokenVerificationKbMissingAud"
+      | `TokenVerificationKbMissingNonce ->
+          `String "TokenVerificationKbMissingNonce"
+      | `TokenVerificationKbMissingIat ->
+          `String "TokenVerificationKbMissingIat"
+      | `TokenVerificationKbMissingSdHash ->
+          `String "TokenVerificationKbMissingSdHash"
+      | `TokenVerificationKbInvalidIssuedAt ->
+          `String "TokenVerificationKbInvalidIssuedAt"
+      | `TokenVerificationKbInvalidAudience ->
+          `String "TokenVerificationKbInvalidAudience"
+      | `TokenVerificationKbInvalidNonce ->
+          `String "TokenVerificationKbInvalidNonce"
+      | `TokenVerificationKbInvalidSdHash ->
+          `String "TokenVerificationKbInvalidSdHash"
+      | `TokenVerificationKbMissingCnf ->
+          `String "TokenVerificationKbMissingCnf"
+      | `TokenVerificationKbSignatureFailed ->
+          `String "TokenVerificationKbSignatureFailed"
 
     type t = _emailverificationrequestissuereason
     [@@deriving yojson]
