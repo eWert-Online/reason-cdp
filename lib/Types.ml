@@ -12361,7 +12361,8 @@ and DOM : sig
       | `details_content
       | `picker
       | `permission_icon
-      | `overscroll_area_parent ]
+      | `overscroll_area_parent
+      | `skeleton ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
     val yojson_of__pseudotype : _pseudotype -> Yojson.Basic.t
@@ -12744,7 +12745,8 @@ end = struct
       | `details_content
       | `picker
       | `permission_icon
-      | `overscroll_area_parent ]
+      | `overscroll_area_parent
+      | `skeleton ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
     val yojson_of__pseudotype : _pseudotype -> Yojson.Basic.t
@@ -12793,7 +12795,8 @@ end = struct
       | `details_content
       | `picker
       | `permission_icon
-      | `overscroll_area_parent ]
+      | `overscroll_area_parent
+      | `skeleton ]
 
     let _pseudotype_of_yojson = function
       | `String "first-line" -> `first_line
@@ -12838,6 +12841,7 @@ end = struct
       | `String "picker" -> `picker
       | `String "permission-icon" -> `permission_icon
       | `String "overscroll-area-parent" -> `overscroll_area_parent
+      | `String "skeleton" -> `skeleton
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -12884,6 +12888,7 @@ end = struct
       | `picker -> `String "picker"
       | `permission_icon -> `String "permission-icon"
       | `overscroll_area_parent -> `String "overscroll-area-parent"
+      | `skeleton -> `String "skeleton"
 
     type t = _pseudotype
     [@@deriving yojson] [@@ocaml.doc "Pseudo element type."]
@@ -33624,6 +33629,7 @@ and Preload : sig
       | `PrefetchIneligibleRetryAfter
       | `PrefetchIsPrivacyDecoy
       | `PrefetchIsStale
+      | `PrefetchNotEligibleBlockedByConnectionAllowlist
       | `PrefetchNotEligibleBrowserContextOffTheRecord
       | `PrefetchNotEligibleDataSaverEnabled
       | `PrefetchNotEligibleExistingProxy
@@ -34442,6 +34448,7 @@ end = struct
       | `PrefetchIneligibleRetryAfter
       | `PrefetchIsPrivacyDecoy
       | `PrefetchIsStale
+      | `PrefetchNotEligibleBlockedByConnectionAllowlist
       | `PrefetchNotEligibleBrowserContextOffTheRecord
       | `PrefetchNotEligibleDataSaverEnabled
       | `PrefetchNotEligibleExistingProxy
@@ -34488,6 +34495,7 @@ end = struct
       | `PrefetchIneligibleRetryAfter
       | `PrefetchIsPrivacyDecoy
       | `PrefetchIsStale
+      | `PrefetchNotEligibleBlockedByConnectionAllowlist
       | `PrefetchNotEligibleBrowserContextOffTheRecord
       | `PrefetchNotEligibleDataSaverEnabled
       | `PrefetchNotEligibleExistingProxy
@@ -34531,6 +34539,8 @@ end = struct
       | `String "PrefetchIneligibleRetryAfter" -> `PrefetchIneligibleRetryAfter
       | `String "PrefetchIsPrivacyDecoy" -> `PrefetchIsPrivacyDecoy
       | `String "PrefetchIsStale" -> `PrefetchIsStale
+      | `String "PrefetchNotEligibleBlockedByConnectionAllowlist" ->
+          `PrefetchNotEligibleBlockedByConnectionAllowlist
       | `String "PrefetchNotEligibleBrowserContextOffTheRecord" ->
           `PrefetchNotEligibleBrowserContextOffTheRecord
       | `String "PrefetchNotEligibleDataSaverEnabled" ->
@@ -34592,6 +34602,8 @@ end = struct
       | `PrefetchIneligibleRetryAfter -> `String "PrefetchIneligibleRetryAfter"
       | `PrefetchIsPrivacyDecoy -> `String "PrefetchIsPrivacyDecoy"
       | `PrefetchIsStale -> `String "PrefetchIsStale"
+      | `PrefetchNotEligibleBlockedByConnectionAllowlist ->
+          `String "PrefetchNotEligibleBlockedByConnectionAllowlist"
       | `PrefetchNotEligibleBrowserContextOffTheRecord ->
           `String "PrefetchNotEligibleBrowserContextOffTheRecord"
       | `PrefetchNotEligibleDataSaverEnabled ->
