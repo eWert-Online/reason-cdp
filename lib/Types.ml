@@ -28726,6 +28726,7 @@ and Page : sig
       | `usb_unrestricted
       | `vertical_scroll
       | `web_app_installation
+      | `webnn
       | `web_printing
       | `web_share
       | `window_management
@@ -30114,6 +30115,7 @@ end = struct
       | `usb_unrestricted
       | `vertical_scroll
       | `web_app_installation
+      | `webnn
       | `web_printing
       | `web_share
       | `window_management
@@ -30240,6 +30242,7 @@ end = struct
       | `usb_unrestricted
       | `vertical_scroll
       | `web_app_installation
+      | `webnn
       | `web_printing
       | `web_share
       | `window_management
@@ -30357,6 +30360,7 @@ end = struct
       | `String "usb-unrestricted" -> `usb_unrestricted
       | `String "vertical-scroll" -> `vertical_scroll
       | `String "web-app-installation" -> `web_app_installation
+      | `String "webnn" -> `webnn
       | `String "web-printing" -> `web_printing
       | `String "web-share" -> `web_share
       | `String "window-management" -> `window_management
@@ -30476,6 +30480,7 @@ end = struct
       | `usb_unrestricted -> `String "usb-unrestricted"
       | `vertical_scroll -> `String "vertical-scroll"
       | `web_app_installation -> `String "web-app-installation"
+      | `webnn -> `String "webnn"
       | `web_printing -> `String "web-printing"
       | `web_share -> `String "web-share"
       | `window_management -> `String "window-management"
