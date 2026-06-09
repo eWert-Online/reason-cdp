@@ -11121,10 +11121,22 @@ https://www.w3.org/TR/css-anchor-position-1/#target. |desc}]
               "If true, opens the popover and keeps it open. If false, closes \
                the\n\
                popover if it was previously force-opened."]
+        invokerNodeId : Types.DOM.BackendNodeId.t option;
+            [@key "invokerNodeId"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Optional ID of the element invoking this popover, used to \
+               establish the implicit anchor.\n\
+               If not provided, it will fall back to the first invoker in the \
+               document, preferring\n\
+               elements with a popovertarget attribute over those with a \
+               commandfor attribute. Note that\n\
+               if there are multiple invokers, this is just an estimate."]
       }
       [@@deriving yojson]
 
-      let make ~nodeId ~enable () = { nodeId; enable }
+      let make ~nodeId ~enable ?invokerNodeId () =
+        { nodeId; enable; invokerNodeId }
     end
 
     module Request = struct
