@@ -8928,6 +8928,21 @@ and CSS : sig
        list)."]
   end
 
+  and SpecificityComponent : sig
+    type t = {
+      text : string;
+          [@key "text"]
+          [@ocaml.doc
+            "The simple selector text that contributes to specificity."]
+      a : number; [@key "a"] [@ocaml.doc "The a component contribution."]
+      b : number; [@key "b"] [@ocaml.doc "The b component contribution."]
+      c : number; [@key "c"] [@ocaml.doc "The c component contribution."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Contribution of an individual simple selector to specificity."]
+  end
+
   and Specificity : sig
     type t = {
       a : number;
@@ -8945,6 +8960,12 @@ and CSS : sig
           [@ocaml.doc
             "The c component, which represents the number of type selectors \
              and pseudo-elements."]
+      components : SpecificityComponent.t list option;
+          [@key "components"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Per-simple-selector contributions used to explain this \
+             specificity."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -10118,6 +10139,34 @@ end = struct
        list)."]
   end
 
+  and SpecificityComponent : sig
+    type t = {
+      text : string;
+          [@key "text"]
+          [@ocaml.doc
+            "The simple selector text that contributes to specificity."]
+      a : number; [@key "a"] [@ocaml.doc "The a component contribution."]
+      b : number; [@key "b"] [@ocaml.doc "The b component contribution."]
+      c : number; [@key "c"] [@ocaml.doc "The c component contribution."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Contribution of an individual simple selector to specificity."]
+  end = struct
+    type t = {
+      text : string;
+          [@key "text"]
+          [@ocaml.doc
+            "The simple selector text that contributes to specificity."]
+      a : number; [@key "a"] [@ocaml.doc "The a component contribution."]
+      b : number; [@key "b"] [@ocaml.doc "The b component contribution."]
+      c : number; [@key "c"] [@ocaml.doc "The c component contribution."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Contribution of an individual simple selector to specificity."]
+  end
+
   and Specificity : sig
     type t = {
       a : number;
@@ -10135,6 +10184,12 @@ end = struct
           [@ocaml.doc
             "The c component, which represents the number of type selectors \
              and pseudo-elements."]
+      components : SpecificityComponent.t list option;
+          [@key "components"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Per-simple-selector contributions used to explain this \
+             specificity."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -10156,6 +10211,12 @@ end = struct
           [@ocaml.doc
             "The c component, which represents the number of type selectors \
              and pseudo-elements."]
+      components : SpecificityComponent.t list option;
+          [@key "components"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Per-simple-selector contributions used to explain this \
+             specificity."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
