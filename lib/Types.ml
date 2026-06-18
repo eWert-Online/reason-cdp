@@ -20417,10 +20417,6 @@ and Network : sig
     type _cookieexemptionreason =
       [ `None
       | `UserSetting
-      | `TPCDMetadata
-      | `TPCDDeprecationTrial
-      | `TopLevelTPCDDeprecationTrial
-      | `TPCDHeuristics
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
@@ -24083,10 +24079,6 @@ end = struct
     type _cookieexemptionreason =
       [ `None
       | `UserSetting
-      | `TPCDMetadata
-      | `TPCDDeprecationTrial
-      | `TopLevelTPCDDeprecationTrial
-      | `TPCDHeuristics
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
@@ -24108,10 +24100,6 @@ end = struct
     type _cookieexemptionreason =
       [ `None
       | `UserSetting
-      | `TPCDMetadata
-      | `TPCDDeprecationTrial
-      | `TopLevelTPCDDeprecationTrial
-      | `TPCDHeuristics
       | `EnterprisePolicy
       | `StorageAccess
       | `TopLevelStorageAccess
@@ -24121,10 +24109,6 @@ end = struct
     let _cookieexemptionreason_of_yojson = function
       | `String "None" -> `None
       | `String "UserSetting" -> `UserSetting
-      | `String "TPCDMetadata" -> `TPCDMetadata
-      | `String "TPCDDeprecationTrial" -> `TPCDDeprecationTrial
-      | `String "TopLevelTPCDDeprecationTrial" -> `TopLevelTPCDDeprecationTrial
-      | `String "TPCDHeuristics" -> `TPCDHeuristics
       | `String "EnterprisePolicy" -> `EnterprisePolicy
       | `String "StorageAccess" -> `StorageAccess
       | `String "TopLevelStorageAccess" -> `TopLevelStorageAccess
@@ -24136,10 +24120,6 @@ end = struct
     let yojson_of__cookieexemptionreason = function
       | `None -> `String "None"
       | `UserSetting -> `String "UserSetting"
-      | `TPCDMetadata -> `String "TPCDMetadata"
-      | `TPCDDeprecationTrial -> `String "TPCDDeprecationTrial"
-      | `TopLevelTPCDDeprecationTrial -> `String "TopLevelTPCDDeprecationTrial"
-      | `TPCDHeuristics -> `String "TPCDHeuristics"
       | `EnterprisePolicy -> `String "EnterprisePolicy"
       | `StorageAccess -> `String "StorageAccess"
       | `TopLevelStorageAccess -> `String "TopLevelStorageAccess"
