@@ -25937,6 +25937,62 @@ Backend then generates 'inspectNodeRequested' event upon element selection. |des
   end
   [@@ocaml.doc {desc|Add a dual screen device hinge |desc}]
 
+  module SetShowDisplayCutout = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        displayCutoutConfig : Types.Overlay.DisplayCutoutConfig.t option;
+            [@key "displayCutoutConfig"]
+            [@yojson.option]
+            [@ocaml.doc "display cutout data, null means hide display cutout"]
+      }
+      [@@deriving yojson]
+
+      let make ?displayCutoutConfig () = { displayCutoutConfig }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Overlay.setShowDisplayCutout"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Add a display cutout overlay. |desc}]
+
   module SetShowIsolatedElements = struct
     module Response : sig
       type result = Types.assoc

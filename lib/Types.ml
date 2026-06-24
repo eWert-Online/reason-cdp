@@ -2639,6 +2639,7 @@ and Audits : sig
       | `JwksHttpNotFound
       | `JwksInvalidResponse
       | `TokenVerificationSdJwtUnsupportedHeaderAlg
+      | `TokenVerificationSdJwtInvalidTyp
       | `TokenVerificationSdJwtMissingIss
       | `TokenVerificationSdJwtMissingIat
       | `TokenVerificationSdJwtMissingCnf
@@ -5738,6 +5739,7 @@ end = struct
       | `JwksHttpNotFound
       | `JwksInvalidResponse
       | `TokenVerificationSdJwtUnsupportedHeaderAlg
+      | `TokenVerificationSdJwtInvalidTyp
       | `TokenVerificationSdJwtMissingIss
       | `TokenVerificationSdJwtMissingIat
       | `TokenVerificationSdJwtMissingCnf
@@ -5809,6 +5811,7 @@ end = struct
       | `JwksHttpNotFound
       | `JwksInvalidResponse
       | `TokenVerificationSdJwtUnsupportedHeaderAlg
+      | `TokenVerificationSdJwtInvalidTyp
       | `TokenVerificationSdJwtMissingIss
       | `TokenVerificationSdJwtMissingIat
       | `TokenVerificationSdJwtMissingCnf
@@ -5877,6 +5880,8 @@ end = struct
       | `String "JwksInvalidResponse" -> `JwksInvalidResponse
       | `String "TokenVerificationSdJwtUnsupportedHeaderAlg" ->
           `TokenVerificationSdJwtUnsupportedHeaderAlg
+      | `String "TokenVerificationSdJwtInvalidTyp" ->
+          `TokenVerificationSdJwtInvalidTyp
       | `String "TokenVerificationSdJwtMissingIss" ->
           `TokenVerificationSdJwtMissingIss
       | `String "TokenVerificationSdJwtMissingIat" ->
@@ -5969,6 +5974,8 @@ end = struct
       | `JwksInvalidResponse -> `String "JwksInvalidResponse"
       | `TokenVerificationSdJwtUnsupportedHeaderAlg ->
           `String "TokenVerificationSdJwtUnsupportedHeaderAlg"
+      | `TokenVerificationSdJwtInvalidTyp ->
+          `String "TokenVerificationSdJwtInvalidTyp"
       | `TokenVerificationSdJwtMissingIss ->
           `String "TokenVerificationSdJwtMissingIss"
       | `TokenVerificationSdJwtMissingIat ->
@@ -27310,6 +27317,55 @@ and Overlay : sig
     [@@deriving yojson] [@@ocaml.doc "Configuration for dual screen hinge"]
   end
 
+  and DisplayCutoutShape : sig
+    type _displaycutoutshape = [ `pill | `notch | `circle | `rectangle ]
+
+    val _displaycutoutshape_of_yojson : Yojson.Basic.t -> _displaycutoutshape
+    val yojson_of__displaycutoutshape : _displaycutoutshape -> Yojson.Basic.t
+
+    type t = _displaycutoutshape
+    [@@deriving yojson] [@@ocaml.doc "Supported display cutout shapes."]
+  end
+
+  and DisplayCutoutConfig : sig
+    type t = {
+      rect : DOM.Rect.t;
+          [@key "rect"]
+          [@ocaml.doc "A rectangle representing the cutout bounds."]
+      shape : DisplayCutoutShape.t;
+          [@key "shape"] [@ocaml.doc "Shape used to draw the cutout."]
+      borderRadius : number option;
+          [@key "borderRadius"]
+          [@yojson.option]
+          [@ocaml.doc "Border radius for rounded cutout shapes."]
+      upperRadius : number option;
+          [@key "upperRadius"]
+          [@yojson.option]
+          [@ocaml.doc "Upper shoulder radius for notch cutout shapes."]
+      lowerRadius : number option;
+          [@key "lowerRadius"]
+          [@yojson.option]
+          [@ocaml.doc "Lower transition radius for notch cutout shapes."]
+      cx : number option;
+          [@key "cx"]
+          [@yojson.option]
+          [@ocaml.doc "Center x coordinate for circle cutout shapes."]
+      cy : number option;
+          [@key "cy"]
+          [@yojson.option]
+          [@ocaml.doc "Center y coordinate for circle cutout shapes."]
+      radius : number option;
+          [@key "radius"]
+          [@yojson.option]
+          [@ocaml.doc "Radius for circle cutout shapes."]
+      contentColor : DOM.RGBA.t option;
+          [@key "contentColor"]
+          [@yojson.option]
+          [@ocaml.doc "The cutout fill color (default: black)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Configuration for a display cutout."]
+  end
+
   and WindowControlsOverlayConfig : sig
     type t = {
       showCSS : bool;
@@ -28244,6 +28300,111 @@ end = struct
             "The content box highlight outline color (default: transparent)."]
     }
     [@@deriving yojson] [@@ocaml.doc "Configuration for dual screen hinge"]
+  end
+
+  and DisplayCutoutShape : sig
+    type _displaycutoutshape = [ `pill | `notch | `circle | `rectangle ]
+
+    val _displaycutoutshape_of_yojson : Yojson.Basic.t -> _displaycutoutshape
+    val yojson_of__displaycutoutshape : _displaycutoutshape -> Yojson.Basic.t
+
+    type t = _displaycutoutshape
+    [@@deriving yojson] [@@ocaml.doc "Supported display cutout shapes."]
+  end = struct
+    type _displaycutoutshape = [ `pill | `notch | `circle | `rectangle ]
+
+    let _displaycutoutshape_of_yojson = function
+      | `String "pill" -> `pill
+      | `String "notch" -> `notch
+      | `String "circle" -> `circle
+      | `String "rectangle" -> `rectangle
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__displaycutoutshape = function
+      | `pill -> `String "pill"
+      | `notch -> `String "notch"
+      | `circle -> `String "circle"
+      | `rectangle -> `String "rectangle"
+
+    type t = _displaycutoutshape
+    [@@deriving yojson] [@@ocaml.doc "Supported display cutout shapes."]
+  end
+
+  and DisplayCutoutConfig : sig
+    type t = {
+      rect : DOM.Rect.t;
+          [@key "rect"]
+          [@ocaml.doc "A rectangle representing the cutout bounds."]
+      shape : DisplayCutoutShape.t;
+          [@key "shape"] [@ocaml.doc "Shape used to draw the cutout."]
+      borderRadius : number option;
+          [@key "borderRadius"]
+          [@yojson.option]
+          [@ocaml.doc "Border radius for rounded cutout shapes."]
+      upperRadius : number option;
+          [@key "upperRadius"]
+          [@yojson.option]
+          [@ocaml.doc "Upper shoulder radius for notch cutout shapes."]
+      lowerRadius : number option;
+          [@key "lowerRadius"]
+          [@yojson.option]
+          [@ocaml.doc "Lower transition radius for notch cutout shapes."]
+      cx : number option;
+          [@key "cx"]
+          [@yojson.option]
+          [@ocaml.doc "Center x coordinate for circle cutout shapes."]
+      cy : number option;
+          [@key "cy"]
+          [@yojson.option]
+          [@ocaml.doc "Center y coordinate for circle cutout shapes."]
+      radius : number option;
+          [@key "radius"]
+          [@yojson.option]
+          [@ocaml.doc "Radius for circle cutout shapes."]
+      contentColor : DOM.RGBA.t option;
+          [@key "contentColor"]
+          [@yojson.option]
+          [@ocaml.doc "The cutout fill color (default: black)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Configuration for a display cutout."]
+  end = struct
+    type t = {
+      rect : DOM.Rect.t;
+          [@key "rect"]
+          [@ocaml.doc "A rectangle representing the cutout bounds."]
+      shape : DisplayCutoutShape.t;
+          [@key "shape"] [@ocaml.doc "Shape used to draw the cutout."]
+      borderRadius : number option;
+          [@key "borderRadius"]
+          [@yojson.option]
+          [@ocaml.doc "Border radius for rounded cutout shapes."]
+      upperRadius : number option;
+          [@key "upperRadius"]
+          [@yojson.option]
+          [@ocaml.doc "Upper shoulder radius for notch cutout shapes."]
+      lowerRadius : number option;
+          [@key "lowerRadius"]
+          [@yojson.option]
+          [@ocaml.doc "Lower transition radius for notch cutout shapes."]
+      cx : number option;
+          [@key "cx"]
+          [@yojson.option]
+          [@ocaml.doc "Center x coordinate for circle cutout shapes."]
+      cy : number option;
+          [@key "cy"]
+          [@yojson.option]
+          [@ocaml.doc "Center y coordinate for circle cutout shapes."]
+      radius : number option;
+          [@key "radius"]
+          [@yojson.option]
+          [@ocaml.doc "Radius for circle cutout shapes."]
+      contentColor : DOM.RGBA.t option;
+          [@key "contentColor"]
+          [@yojson.option]
+          [@ocaml.doc "The cutout fill color (default: black)."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Configuration for a display cutout."]
   end
 
   and WindowControlsOverlayConfig : sig
