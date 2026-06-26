@@ -27206,11 +27206,25 @@ iframes, shadow DOM, external resources, and element-inline styles. |desc}]
               "Whether or not universal access should be granted to the \
                isolated world. This is a powerful\n\
                option, use with caution."]
+        contentSecurityPolicy : string option;
+            [@key "contentSecurityPolicy"]
+            [@yojson.option]
+            [@ocaml.doc
+              "An optional content security policy to set for the isolated \
+               world.\n\
+               If omitted, any existing CSP for the world will be cleared.\n\
+               Note that clearing or updating the CSP does not immediately \
+               affect the active\n\
+               context in the same document because LocalDOMWindow caches the\n\
+               ContentSecurityPolicy object. The change takes effect on \
+               subsequent\n\
+               navigations when a new window context is created."]
       }
       [@@deriving yojson]
 
-      let make ~frameId ?worldName ?grantUniveralAccess () =
-        { frameId; worldName; grantUniveralAccess }
+      let make ~frameId ?worldName ?grantUniveralAccess ?contentSecurityPolicy
+          () =
+        { frameId; worldName; grantUniveralAccess; contentSecurityPolicy }
     end
 
     module Request = struct
@@ -35619,19 +35633,18 @@ one. |desc}]
             [@key "focus"]
             [@yojson.option]
             [@ocaml.doc
-              "If specified, the option is used to determine if the new target \
-               should\n\
-               be focused or not. By default, the focus behavior depends on the\n\
-               value of the background field. For example, background=false \
-               and focus=false\n\
-               will result in the target tab being opened but the browser \
-               window remain\n\
-               unchanged (if it was in the background, it will remain in the \
-               background)\n\
-               and background=false with focus=undefined will result in the \
-               window being focused.\n\
-               Using background: true and focus: true is not supported and \
-               will result in an error."]
+              "If specified, determines whether the new target should be \
+               focused.\n\
+               By default, the focus behavior depends on the `background` \
+               parameter:\n\
+               - If `background` is false (default) and `focus` is omitted, \
+               the new target is focused and the browser window is brought to \
+               the foreground.\n\
+               - If `background` is false and `focus` is false, the target is \
+               opened but the browser window's focus remains unchanged (e.g., \
+               if the window was in the background, it stays there).\n\
+               - If `background` is true, setting `focus` to true is not \
+               supported and will result in an error."]
       }
       [@@deriving yojson]
 
@@ -36895,12 +36908,35 @@ module Tracing = struct
             [@key "tracingBackend"]
             [@yojson.option]
             [@ocaml.doc "Backend type (defaults to `auto`)"]
+        screenshotMaxSize : Types.number option;
+            [@key "screenshotMaxSize"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Maximum width and height (in pixels) of each captured screenshot.\n\
+               Only used when the `disabled-by-default-devtools.screenshot` \
+               category is\n\
+               enabled. Defaults to 500. The combined memory footprint of \
+               screenshots\n\
+               (`screenshotMaxSize` * `screenshotMaxSize` * 4 * \
+               `screenshotMaxCount`)\n\
+               is clamped to the existing per-session budget."]
+        screenshotMaxCount : Types.number option;
+            [@key "screenshotMaxCount"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Maximum number of screenshots captured during a single tracing \
+               session.\n\
+               Only used when the `disabled-by-default-devtools.screenshot` \
+               category is\n\
+               enabled. Defaults to 450. Clamped together with \
+               `screenshotMaxSize` to\n\
+               stay within the per-session screenshot memory budget."]
       }
       [@@deriving yojson]
 
       let make ?categories ?options ?bufferUsageReportingInterval ?transferMode
           ?streamFormat ?streamCompression ?traceConfig ?perfettoConfig
-          ?tracingBackend () =
+          ?tracingBackend ?screenshotMaxSize ?screenshotMaxCount () =
         {
           categories;
           options;
@@ -36911,6 +36947,8 @@ module Tracing = struct
           traceConfig;
           perfettoConfig;
           tracingBackend;
+          screenshotMaxSize;
+          screenshotMaxCount;
         }
     end
 

@@ -1098,7 +1098,27 @@ end = struct
 end
 
 and Ads : sig
-  module rec AdMetrics : sig
+  module rec AdFrameData : sig
+    type t = {
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "The DevTools frame token."]
+      initialOrigin : string option;
+          [@key "initialOrigin"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The initial origin of the frame. To minimize the payload size, \
+             this is\n\
+             only sent once per frame."]
+      networkBytes : number;
+          [@key "networkBytes"] [@ocaml.doc "The network bytes of the frame."]
+      cpuTime : number;
+          [@key "cpuTime"]
+          [@ocaml.doc "The CPU time of the frame, in milliseconds."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Ad frame data."]
+  end
+
+  and AdMetrics : sig
     type t = {
       viewportAdDensityByArea : number;
           [@key "viewportAdDensityByArea"]
@@ -1128,11 +1148,58 @@ and Ads : sig
       totalAdNetworkBytes : number;
           [@key "totalAdNetworkBytes"]
           [@ocaml.doc "The total ad network bytes."]
+      updateAdFrames : AdFrameData.t list;
+          [@key "updateAdFrames"]
+          [@ocaml.doc
+            "The list of ad frames that have been updated since the last event."]
+      removeAdFrames : Page.FrameId.t list;
+          [@key "removeAdFrames"]
+          [@ocaml.doc
+            "The list of ad frame IDs that have been removed since the last \
+             event."]
     }
     [@@deriving yojson] [@@ocaml.doc "Ad metrics for a page."]
   end
 end = struct
-  module rec AdMetrics : sig
+  module rec AdFrameData : sig
+    type t = {
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "The DevTools frame token."]
+      initialOrigin : string option;
+          [@key "initialOrigin"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The initial origin of the frame. To minimize the payload size, \
+             this is\n\
+             only sent once per frame."]
+      networkBytes : number;
+          [@key "networkBytes"] [@ocaml.doc "The network bytes of the frame."]
+      cpuTime : number;
+          [@key "cpuTime"]
+          [@ocaml.doc "The CPU time of the frame, in milliseconds."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Ad frame data."]
+  end = struct
+    type t = {
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "The DevTools frame token."]
+      initialOrigin : string option;
+          [@key "initialOrigin"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The initial origin of the frame. To minimize the payload size, \
+             this is\n\
+             only sent once per frame."]
+      networkBytes : number;
+          [@key "networkBytes"] [@ocaml.doc "The network bytes of the frame."]
+      cpuTime : number;
+          [@key "cpuTime"]
+          [@ocaml.doc "The CPU time of the frame, in milliseconds."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "Ad frame data."]
+  end
+
+  and AdMetrics : sig
     type t = {
       viewportAdDensityByArea : number;
           [@key "viewportAdDensityByArea"]
@@ -1162,6 +1229,15 @@ end = struct
       totalAdNetworkBytes : number;
           [@key "totalAdNetworkBytes"]
           [@ocaml.doc "The total ad network bytes."]
+      updateAdFrames : AdFrameData.t list;
+          [@key "updateAdFrames"]
+          [@ocaml.doc
+            "The list of ad frames that have been updated since the last event."]
+      removeAdFrames : Page.FrameId.t list;
+          [@key "removeAdFrames"]
+          [@ocaml.doc
+            "The list of ad frame IDs that have been removed since the last \
+             event."]
     }
     [@@deriving yojson] [@@ocaml.doc "Ad metrics for a page."]
   end = struct
@@ -1194,6 +1270,15 @@ end = struct
       totalAdNetworkBytes : number;
           [@key "totalAdNetworkBytes"]
           [@ocaml.doc "The total ad network bytes."]
+      updateAdFrames : AdFrameData.t list;
+          [@key "updateAdFrames"]
+          [@ocaml.doc
+            "The list of ad frames that have been updated since the last event."]
+      removeAdFrames : Page.FrameId.t list;
+          [@key "removeAdFrames"]
+          [@ocaml.doc
+            "The list of ad frame IDs that have been removed since the last \
+             event."]
     }
     [@@deriving yojson] [@@ocaml.doc "Ad metrics for a page."]
   end
@@ -12428,8 +12513,10 @@ and DOM : sig
       | `file_selector_button
       | `details_content
       | `picker
+      | `select_listbox
       | `permission_icon
       | `overscroll_area_parent
+      | `overscroll_backdrop
       | `skeleton ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
@@ -12812,8 +12899,10 @@ end = struct
       | `file_selector_button
       | `details_content
       | `picker
+      | `select_listbox
       | `permission_icon
       | `overscroll_area_parent
+      | `overscroll_backdrop
       | `skeleton ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
@@ -12862,8 +12951,10 @@ end = struct
       | `file_selector_button
       | `details_content
       | `picker
+      | `select_listbox
       | `permission_icon
       | `overscroll_area_parent
+      | `overscroll_backdrop
       | `skeleton ]
 
     let _pseudotype_of_yojson = function
@@ -12907,8 +12998,10 @@ end = struct
       | `String "file-selector-button" -> `file_selector_button
       | `String "details-content" -> `details_content
       | `String "picker" -> `picker
+      | `String "select-listbox" -> `select_listbox
       | `String "permission-icon" -> `permission_icon
       | `String "overscroll-area-parent" -> `overscroll_area_parent
+      | `String "overscroll-backdrop" -> `overscroll_backdrop
       | `String "skeleton" -> `skeleton
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -12954,8 +13047,10 @@ end = struct
       | `file_selector_button -> `String "file-selector-button"
       | `details_content -> `String "details-content"
       | `picker -> `String "picker"
+      | `select_listbox -> `String "select-listbox"
       | `permission_icon -> `String "permission-icon"
       | `overscroll_area_parent -> `String "overscroll-area-parent"
+      | `overscroll_backdrop -> `String "overscroll-backdrop"
       | `skeleton -> `String "skeleton"
 
     type t = _pseudotype
