@@ -2974,7 +2974,9 @@ and Audits : sig
       | `LowContrast
       | `FontSizeTooSmall
       | `FontSizeTooLarge
-      | `InvalidSizeValue ]
+      | `InvalidSizeValue
+      | `NonSecureContext
+      | `MissingTransientUserActivation ]
 
     val _permissionelementissuetype_of_yojson :
       Yojson.Basic.t -> _permissionelementissuetype
@@ -6536,7 +6538,9 @@ end = struct
       | `LowContrast
       | `FontSizeTooSmall
       | `FontSizeTooLarge
-      | `InvalidSizeValue ]
+      | `InvalidSizeValue
+      | `NonSecureContext
+      | `MissingTransientUserActivation ]
 
     val _permissionelementissuetype_of_yojson :
       Yojson.Basic.t -> _permissionelementissuetype
@@ -6568,7 +6572,9 @@ end = struct
       | `LowContrast
       | `FontSizeTooSmall
       | `FontSizeTooLarge
-      | `InvalidSizeValue ]
+      | `InvalidSizeValue
+      | `NonSecureContext
+      | `MissingTransientUserActivation ]
 
     let _permissionelementissuetype_of_yojson = function
       | `String "InvalidType" -> `InvalidType
@@ -6592,6 +6598,9 @@ end = struct
       | `String "FontSizeTooSmall" -> `FontSizeTooSmall
       | `String "FontSizeTooLarge" -> `FontSizeTooLarge
       | `String "InvalidSizeValue" -> `InvalidSizeValue
+      | `String "NonSecureContext" -> `NonSecureContext
+      | `String "MissingTransientUserActivation" ->
+          `MissingTransientUserActivation
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -6617,6 +6626,9 @@ end = struct
       | `FontSizeTooSmall -> `String "FontSizeTooSmall"
       | `FontSizeTooLarge -> `String "FontSizeTooLarge"
       | `InvalidSizeValue -> `String "InvalidSizeValue"
+      | `NonSecureContext -> `String "NonSecureContext"
+      | `MissingTransientUserActivation ->
+          `String "MissingTransientUserActivation"
 
     type t = _permissionelementissuetype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
