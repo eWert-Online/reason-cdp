@@ -12722,6 +12722,83 @@ module DeviceOrientation = struct
   [@@ocaml.doc {desc|Overrides the Device Orientation. |desc}]
 end
 
+module DigitalCredentials = struct
+  module SetVirtualWalletBehavior = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        behavior : Types.DigitalCredentials.VirtualWalletBehavior.t;
+            [@key "behavior"] [@ocaml.doc "The behavior of the virtual wallet."]
+        protocol : string option;
+            [@key "protocol"]
+            [@yojson.option]
+            [@ocaml.doc
+              "The protocol identifier (e.g. \"openid4vp\"). Required when \
+               |behavior| is\n\
+               \"respond\", forbidden otherwise."]
+        response : Types.assoc option;
+            [@key "response"]
+            [@yojson.option]
+            [@ocaml.doc
+              "The response data object returned by the wallet.\n\
+               Required when |behavior| is \"respond\", forbidden otherwise."]
+      }
+      [@@deriving yojson]
+
+      let make ~behavior ?protocol ?response () =
+        { behavior; protocol; response }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "DigitalCredentials.setVirtualWalletBehavior";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Sets the behavior of the virtual wallet for digital credential requests
+issued from this frame. |desc}]
+end
+
 module Emulation = struct
   module CanEmulate = struct
     module Response : sig

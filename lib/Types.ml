@@ -15433,6 +15433,53 @@ end = struct
   end
 end
 
+and DigitalCredentials : sig
+  module rec VirtualWalletBehavior : sig
+    type _virtualwalletbehavior = [ `respond | `decline | `wait | `clear ]
+
+    val _virtualwalletbehavior_of_yojson :
+      Yojson.Basic.t -> _virtualwalletbehavior
+
+    val yojson_of__virtualwalletbehavior :
+      _virtualwalletbehavior -> Yojson.Basic.t
+
+    type t = _virtualwalletbehavior
+    [@@deriving yojson] [@@ocaml.doc "The type of virtual wallet action."]
+  end
+end = struct
+  module rec VirtualWalletBehavior : sig
+    type _virtualwalletbehavior = [ `respond | `decline | `wait | `clear ]
+
+    val _virtualwalletbehavior_of_yojson :
+      Yojson.Basic.t -> _virtualwalletbehavior
+
+    val yojson_of__virtualwalletbehavior :
+      _virtualwalletbehavior -> Yojson.Basic.t
+
+    type t = _virtualwalletbehavior
+    [@@deriving yojson] [@@ocaml.doc "The type of virtual wallet action."]
+  end = struct
+    type _virtualwalletbehavior = [ `respond | `decline | `wait | `clear ]
+
+    let _virtualwalletbehavior_of_yojson = function
+      | `String "respond" -> `respond
+      | `String "decline" -> `decline
+      | `String "wait" -> `wait
+      | `String "clear" -> `clear
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__virtualwalletbehavior = function
+      | `respond -> `String "respond"
+      | `decline -> `String "decline"
+      | `wait -> `String "wait"
+      | `clear -> `String "clear"
+
+    type t = _virtualwalletbehavior
+    [@@deriving yojson] [@@ocaml.doc "The type of virtual wallet action."]
+  end
+end
+
 and Emulation : sig
   module rec SafeAreaInsets : sig
     type t = {
@@ -21536,7 +21583,8 @@ and Network : sig
   and DeviceBoundSessionFetchResult : sig
     type _deviceboundsessionfetchresult =
       [ `Success
-      | `KeyError
+      | `SigningKeyGenerationError
+      | `AttestationKeyGenerationError
       | `SigningError
       | `TransientSigningError
       | `ServerRequestedTermination
@@ -21615,7 +21663,8 @@ and Network : sig
     type t = _deviceboundsessionfetchresult
     [@@deriving yojson]
     [@@ocaml.doc
-      "A fetch result for a device bound session creation or refresh."]
+      "A fetch result for a device bound session creation or refresh.\n\
+       LINT.IfChange(DeviceBoundSessionFetchResult)"]
   end
 
   and DeviceBoundSessionFailedRequest : sig
@@ -26246,7 +26295,8 @@ end = struct
   and DeviceBoundSessionFetchResult : sig
     type _deviceboundsessionfetchresult =
       [ `Success
-      | `KeyError
+      | `SigningKeyGenerationError
+      | `AttestationKeyGenerationError
       | `SigningError
       | `TransientSigningError
       | `ServerRequestedTermination
@@ -26325,11 +26375,13 @@ end = struct
     type t = _deviceboundsessionfetchresult
     [@@deriving yojson]
     [@@ocaml.doc
-      "A fetch result for a device bound session creation or refresh."]
+      "A fetch result for a device bound session creation or refresh.\n\
+       LINT.IfChange(DeviceBoundSessionFetchResult)"]
   end = struct
     type _deviceboundsessionfetchresult =
       [ `Success
-      | `KeyError
+      | `SigningKeyGenerationError
+      | `AttestationKeyGenerationError
       | `SigningError
       | `TransientSigningError
       | `ServerRequestedTermination
@@ -26401,7 +26453,9 @@ end = struct
 
     let _deviceboundsessionfetchresult_of_yojson = function
       | `String "Success" -> `Success
-      | `String "KeyError" -> `KeyError
+      | `String "SigningKeyGenerationError" -> `SigningKeyGenerationError
+      | `String "AttestationKeyGenerationError" ->
+          `AttestationKeyGenerationError
       | `String "SigningError" -> `SigningError
       | `String "TransientSigningError" -> `TransientSigningError
       | `String "ServerRequestedTermination" -> `ServerRequestedTermination
@@ -26503,7 +26557,9 @@ end = struct
 
     let yojson_of__deviceboundsessionfetchresult = function
       | `Success -> `String "Success"
-      | `KeyError -> `String "KeyError"
+      | `SigningKeyGenerationError -> `String "SigningKeyGenerationError"
+      | `AttestationKeyGenerationError ->
+          `String "AttestationKeyGenerationError"
       | `SigningError -> `String "SigningError"
       | `TransientSigningError -> `String "TransientSigningError"
       | `ServerRequestedTermination -> `String "ServerRequestedTermination"
@@ -26604,7 +26660,8 @@ end = struct
     type t = _deviceboundsessionfetchresult
     [@@deriving yojson]
     [@@ocaml.doc
-      "A fetch result for a device bound session creation or refresh."]
+      "A fetch result for a device bound session creation or refresh.\n\
+       LINT.IfChange(DeviceBoundSessionFetchResult)"]
   end
 
   and DeviceBoundSessionFailedRequest : sig
