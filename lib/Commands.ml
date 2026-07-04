@@ -12753,26 +12753,25 @@ module DigitalCredentials = struct
 
     module Params = struct
       type t = {
-        behavior : Types.DigitalCredentials.VirtualWalletBehavior.t;
-            [@key "behavior"] [@ocaml.doc "The behavior of the virtual wallet."]
+        action : Types.DigitalCredentials.VirtualWalletAction.t;
+            [@key "action"] [@ocaml.doc "The action of the virtual wallet."]
         protocol : string option;
             [@key "protocol"]
             [@yojson.option]
             [@ocaml.doc
               "The protocol identifier (e.g. \"openid4vp\"). Required when \
-               |behavior| is\n\
+               |action| is\n\
                \"respond\", forbidden otherwise."]
         response : Types.assoc option;
             [@key "response"]
             [@yojson.option]
             [@ocaml.doc
               "The response data object returned by the wallet.\n\
-               Required when |behavior| is \"respond\", forbidden otherwise."]
+               Required when |action| is \"respond\", forbidden otherwise."]
       }
       [@@deriving yojson]
 
-      let make ~behavior ?protocol ?response () =
-        { behavior; protocol; response }
+      let make ~action ?protocol ?response () = { action; protocol; response }
     end
 
     module Request = struct

@@ -15434,34 +15434,28 @@ end = struct
 end
 
 and DigitalCredentials : sig
-  module rec VirtualWalletBehavior : sig
-    type _virtualwalletbehavior = [ `respond | `decline | `wait | `clear ]
+  module rec VirtualWalletAction : sig
+    type _virtualwalletaction = [ `respond | `decline | `wait | `clear ]
 
-    val _virtualwalletbehavior_of_yojson :
-      Yojson.Basic.t -> _virtualwalletbehavior
+    val _virtualwalletaction_of_yojson : Yojson.Basic.t -> _virtualwalletaction
+    val yojson_of__virtualwalletaction : _virtualwalletaction -> Yojson.Basic.t
 
-    val yojson_of__virtualwalletbehavior :
-      _virtualwalletbehavior -> Yojson.Basic.t
-
-    type t = _virtualwalletbehavior
+    type t = _virtualwalletaction
     [@@deriving yojson] [@@ocaml.doc "The type of virtual wallet action."]
   end
 end = struct
-  module rec VirtualWalletBehavior : sig
-    type _virtualwalletbehavior = [ `respond | `decline | `wait | `clear ]
+  module rec VirtualWalletAction : sig
+    type _virtualwalletaction = [ `respond | `decline | `wait | `clear ]
 
-    val _virtualwalletbehavior_of_yojson :
-      Yojson.Basic.t -> _virtualwalletbehavior
+    val _virtualwalletaction_of_yojson : Yojson.Basic.t -> _virtualwalletaction
+    val yojson_of__virtualwalletaction : _virtualwalletaction -> Yojson.Basic.t
 
-    val yojson_of__virtualwalletbehavior :
-      _virtualwalletbehavior -> Yojson.Basic.t
-
-    type t = _virtualwalletbehavior
+    type t = _virtualwalletaction
     [@@deriving yojson] [@@ocaml.doc "The type of virtual wallet action."]
   end = struct
-    type _virtualwalletbehavior = [ `respond | `decline | `wait | `clear ]
+    type _virtualwalletaction = [ `respond | `decline | `wait | `clear ]
 
-    let _virtualwalletbehavior_of_yojson = function
+    let _virtualwalletaction_of_yojson = function
       | `String "respond" -> `respond
       | `String "decline" -> `decline
       | `String "wait" -> `wait
@@ -15469,13 +15463,13 @@ end = struct
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
-    let yojson_of__virtualwalletbehavior = function
+    let yojson_of__virtualwalletaction = function
       | `respond -> `String "respond"
       | `decline -> `String "decline"
       | `wait -> `String "wait"
       | `clear -> `String "clear"
 
-    type t = _virtualwalletbehavior
+    type t = _virtualwalletaction
     [@@deriving yojson] [@@ocaml.doc "The type of virtual wallet action."]
   end
 end
