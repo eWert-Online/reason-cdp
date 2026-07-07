@@ -12768,10 +12768,15 @@ module DigitalCredentials = struct
             [@ocaml.doc
               "The response data object returned by the wallet.\n\
                Required when |action| is \"respond\", forbidden otherwise."]
+        frameId : Types.Page.FrameId.t option;
+            [@key "frameId"]
+            [@yojson.option]
+            [@ocaml.doc "The frame to scope the virtual wallet behavior to."]
       }
       [@@deriving yojson]
 
-      let make ~action ?protocol ?response () = { action; protocol; response }
+      let make ~action ?protocol ?response ?frameId () =
+        { action; protocol; response; frameId }
     end
 
     module Request = struct
