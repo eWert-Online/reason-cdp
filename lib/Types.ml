@@ -21646,7 +21646,10 @@ and Network : sig
       | `InvalidFederatedSessionProviderFailedToRestoreKey
       | `FailedToUnwrapKey
       | `SessionDeletedDuringRefresh
-      | `CrossOriginRegistrationSiteNotIncluded ]
+      | `CrossOriginRegistrationSiteNotIncluded
+      | `InvalidPreProvisionedKeyInitiatorMissing
+      | `PreProvisionedKeyAccessNotGranted
+      | `PreProvisionedKeyNotFound ]
 
     val _deviceboundsessionfetchresult_of_yojson :
       Yojson.Basic.t -> _deviceboundsessionfetchresult
@@ -26358,7 +26361,10 @@ end = struct
       | `InvalidFederatedSessionProviderFailedToRestoreKey
       | `FailedToUnwrapKey
       | `SessionDeletedDuringRefresh
-      | `CrossOriginRegistrationSiteNotIncluded ]
+      | `CrossOriginRegistrationSiteNotIncluded
+      | `InvalidPreProvisionedKeyInitiatorMissing
+      | `PreProvisionedKeyAccessNotGranted
+      | `PreProvisionedKeyNotFound ]
 
     val _deviceboundsessionfetchresult_of_yojson :
       Yojson.Basic.t -> _deviceboundsessionfetchresult
@@ -26443,7 +26449,10 @@ end = struct
       | `InvalidFederatedSessionProviderFailedToRestoreKey
       | `FailedToUnwrapKey
       | `SessionDeletedDuringRefresh
-      | `CrossOriginRegistrationSiteNotIncluded ]
+      | `CrossOriginRegistrationSiteNotIncluded
+      | `InvalidPreProvisionedKeyInitiatorMissing
+      | `PreProvisionedKeyAccessNotGranted
+      | `PreProvisionedKeyNotFound ]
 
     let _deviceboundsessionfetchresult_of_yojson = function
       | `String "Success" -> `Success
@@ -26546,6 +26555,11 @@ end = struct
       | `String "SessionDeletedDuringRefresh" -> `SessionDeletedDuringRefresh
       | `String "CrossOriginRegistrationSiteNotIncluded" ->
           `CrossOriginRegistrationSiteNotIncluded
+      | `String "InvalidPreProvisionedKeyInitiatorMissing" ->
+          `InvalidPreProvisionedKeyInitiatorMissing
+      | `String "PreProvisionedKeyAccessNotGranted" ->
+          `PreProvisionedKeyAccessNotGranted
+      | `String "PreProvisionedKeyNotFound" -> `PreProvisionedKeyNotFound
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26650,6 +26664,11 @@ end = struct
       | `SessionDeletedDuringRefresh -> `String "SessionDeletedDuringRefresh"
       | `CrossOriginRegistrationSiteNotIncluded ->
           `String "CrossOriginRegistrationSiteNotIncluded"
+      | `InvalidPreProvisionedKeyInitiatorMissing ->
+          `String "InvalidPreProvisionedKeyInitiatorMissing"
+      | `PreProvisionedKeyAccessNotGranted ->
+          `String "PreProvisionedKeyAccessNotGranted"
+      | `PreProvisionedKeyNotFound -> `String "PreProvisionedKeyNotFound"
 
     type t = _deviceboundsessionfetchresult
     [@@deriving yojson]
