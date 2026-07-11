@@ -21720,7 +21720,6 @@ and Network : sig
       | `InitializedService
       | `Unreachable
       | `ServerError
-      | `RefreshQuotaExceeded
       | `FatalError
       | `SigningQuotaExceeded
       | `RefreshedAsWaiter
@@ -26779,7 +26778,6 @@ end = struct
       | `InitializedService
       | `Unreachable
       | `ServerError
-      | `RefreshQuotaExceeded
       | `FatalError
       | `SigningQuotaExceeded
       | `RefreshedAsWaiter
@@ -26826,7 +26824,6 @@ end = struct
       | `InitializedService
       | `Unreachable
       | `ServerError
-      | `RefreshQuotaExceeded
       | `FatalError
       | `SigningQuotaExceeded
       | `RefreshedAsWaiter
@@ -26837,7 +26834,6 @@ end = struct
       | `String "InitializedService" -> `InitializedService
       | `String "Unreachable" -> `Unreachable
       | `String "ServerError" -> `ServerError
-      | `String "RefreshQuotaExceeded" -> `RefreshQuotaExceeded
       | `String "FatalError" -> `FatalError
       | `String "SigningQuotaExceeded" -> `SigningQuotaExceeded
       | `String "RefreshedAsWaiter" -> `RefreshedAsWaiter
@@ -26850,7 +26846,6 @@ end = struct
       | `InitializedService -> `String "InitializedService"
       | `Unreachable -> `String "Unreachable"
       | `ServerError -> `String "ServerError"
-      | `RefreshQuotaExceeded -> `String "RefreshQuotaExceeded"
       | `FatalError -> `String "FatalError"
       | `SigningQuotaExceeded -> `String "SigningQuotaExceeded"
       | `RefreshedAsWaiter -> `String "RefreshedAsWaiter"
