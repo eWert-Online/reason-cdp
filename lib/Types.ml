@@ -2190,40 +2190,6 @@ and Audits : sig
        CORS RFC1918 enforcement."]
   end
 
-  and AttributionReportingIssueType : sig
-    type _attributionreportingissuetype =
-      [ `PermissionPolicyDisabled
-      | `UntrustworthyReportingOrigin
-      | `InsecureContext
-      | `InvalidHeader
-      | `InvalidRegisterTriggerHeader
-      | `SourceAndTriggerHeaders
-      | `SourceIgnored
-      | `TriggerIgnored
-      | `OsSourceIgnored
-      | `OsTriggerIgnored
-      | `InvalidRegisterOsSourceHeader
-      | `InvalidRegisterOsTriggerHeader
-      | `WebAndOsHeaders
-      | `NoWebOrOsSupport
-      | `NavigationRegistrationWithoutTransientUserActivation
-      | `InvalidInfoHeader
-      | `NoRegisterSourceHeader
-      | `NoRegisterTriggerHeader
-      | `NoRegisterOsSourceHeader
-      | `NoRegisterOsTriggerHeader
-      | `NavigationRegistrationUniqueScopeAlreadySet ]
-
-    val _attributionreportingissuetype_of_yojson :
-      Yojson.Basic.t -> _attributionreportingissuetype
-
-    val yojson_of__attributionreportingissuetype :
-      _attributionreportingissuetype -> Yojson.Basic.t
-
-    type t = _attributionreportingissuetype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
   and SharedDictionaryError : sig
     type _shareddictionaryerror =
       [ `UseErrorCrossOriginNoCorsRequest
@@ -2335,29 +2301,6 @@ and Audits : sig
 
     type t = _connectionallowlisterror
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and AttributionReportingIssueDetails : sig
-    type t = {
-      violationType : AttributionReportingIssueType.t;
-          [@key "violationType"] [@ocaml.doc "No description provided"]
-      request : AffectedRequest.t option;
-          [@key "request"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      violatingNodeId : DOM.BackendNodeId.t option;
-          [@key "violatingNodeId"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      invalidParameter : string option;
-          [@key "invalidParameter"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Details for issues around \"Attribution Reporting API\" usage.\n\
-       Explainer: https://github.com/WICG/attribution-reporting-api"]
   end
 
   and QuirksModeIssueDetails : sig
@@ -3047,6 +2990,21 @@ and Audits : sig
        Selective Permissions Intervention."]
   end
 
+  and LazyLoadImageIssueDetails : sig
+    type t = {
+      nodeId : DOM.BackendNodeId.t;
+          [@key "nodeId"]
+          [@ocaml.doc "DOM node of the problematic HTMLImageElement."]
+      url : string;
+          [@key "url"] [@ocaml.doc "URL or src attribute of the image."]
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "Frame containing the image."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Details for issues about lazy-loaded images without explicit dimensions."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -3056,7 +3014,6 @@ and Audits : sig
       | `ContentSecurityPolicyIssue
       | `SharedArrayBufferIssue
       | `CorsIssue
-      | `AttributionReportingIssue
       | `QuirksModeIssue
       | `PartitioningBlobURLIssue
       | `NavigatorUserAgentIssue
@@ -3078,7 +3035,8 @@ and Audits : sig
       | `PermissionElementIssue
       | `PerformanceIssue
       | `SelectivePermissionsInterventionIssue
-      | `EmailVerificationRequestIssue ]
+      | `EmailVerificationRequestIssue
+      | `LazyLoadImageIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -3120,11 +3078,6 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       corsIssueDetails : CorsIssueDetails.t option;
           [@key "corsIssueDetails"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      attributionReportingIssueDetails :
-        AttributionReportingIssueDetails.t option;
-          [@key "attributionReportingIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
       quirksModeIssueDetails : QuirksModeIssueDetails.t option;
@@ -3223,6 +3176,10 @@ and Audits : sig
       emailVerificationRequestIssueDetails :
         EmailVerificationRequestIssueDetails.t option;
           [@key "emailVerificationRequestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      lazyLoadImageIssueDetails : LazyLoadImageIssueDetails.t option;
+          [@key "lazyLoadImageIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -4414,122 +4371,6 @@ end = struct
        CORS RFC1918 enforcement."]
   end
 
-  and AttributionReportingIssueType : sig
-    type _attributionreportingissuetype =
-      [ `PermissionPolicyDisabled
-      | `UntrustworthyReportingOrigin
-      | `InsecureContext
-      | `InvalidHeader
-      | `InvalidRegisterTriggerHeader
-      | `SourceAndTriggerHeaders
-      | `SourceIgnored
-      | `TriggerIgnored
-      | `OsSourceIgnored
-      | `OsTriggerIgnored
-      | `InvalidRegisterOsSourceHeader
-      | `InvalidRegisterOsTriggerHeader
-      | `WebAndOsHeaders
-      | `NoWebOrOsSupport
-      | `NavigationRegistrationWithoutTransientUserActivation
-      | `InvalidInfoHeader
-      | `NoRegisterSourceHeader
-      | `NoRegisterTriggerHeader
-      | `NoRegisterOsSourceHeader
-      | `NoRegisterOsTriggerHeader
-      | `NavigationRegistrationUniqueScopeAlreadySet ]
-
-    val _attributionreportingissuetype_of_yojson :
-      Yojson.Basic.t -> _attributionreportingissuetype
-
-    val yojson_of__attributionreportingissuetype :
-      _attributionreportingissuetype -> Yojson.Basic.t
-
-    type t = _attributionreportingissuetype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type _attributionreportingissuetype =
-      [ `PermissionPolicyDisabled
-      | `UntrustworthyReportingOrigin
-      | `InsecureContext
-      | `InvalidHeader
-      | `InvalidRegisterTriggerHeader
-      | `SourceAndTriggerHeaders
-      | `SourceIgnored
-      | `TriggerIgnored
-      | `OsSourceIgnored
-      | `OsTriggerIgnored
-      | `InvalidRegisterOsSourceHeader
-      | `InvalidRegisterOsTriggerHeader
-      | `WebAndOsHeaders
-      | `NoWebOrOsSupport
-      | `NavigationRegistrationWithoutTransientUserActivation
-      | `InvalidInfoHeader
-      | `NoRegisterSourceHeader
-      | `NoRegisterTriggerHeader
-      | `NoRegisterOsSourceHeader
-      | `NoRegisterOsTriggerHeader
-      | `NavigationRegistrationUniqueScopeAlreadySet ]
-
-    let _attributionreportingissuetype_of_yojson = function
-      | `String "PermissionPolicyDisabled" -> `PermissionPolicyDisabled
-      | `String "UntrustworthyReportingOrigin" -> `UntrustworthyReportingOrigin
-      | `String "InsecureContext" -> `InsecureContext
-      | `String "InvalidHeader" -> `InvalidHeader
-      | `String "InvalidRegisterTriggerHeader" -> `InvalidRegisterTriggerHeader
-      | `String "SourceAndTriggerHeaders" -> `SourceAndTriggerHeaders
-      | `String "SourceIgnored" -> `SourceIgnored
-      | `String "TriggerIgnored" -> `TriggerIgnored
-      | `String "OsSourceIgnored" -> `OsSourceIgnored
-      | `String "OsTriggerIgnored" -> `OsTriggerIgnored
-      | `String "InvalidRegisterOsSourceHeader" ->
-          `InvalidRegisterOsSourceHeader
-      | `String "InvalidRegisterOsTriggerHeader" ->
-          `InvalidRegisterOsTriggerHeader
-      | `String "WebAndOsHeaders" -> `WebAndOsHeaders
-      | `String "NoWebOrOsSupport" -> `NoWebOrOsSupport
-      | `String "NavigationRegistrationWithoutTransientUserActivation" ->
-          `NavigationRegistrationWithoutTransientUserActivation
-      | `String "InvalidInfoHeader" -> `InvalidInfoHeader
-      | `String "NoRegisterSourceHeader" -> `NoRegisterSourceHeader
-      | `String "NoRegisterTriggerHeader" -> `NoRegisterTriggerHeader
-      | `String "NoRegisterOsSourceHeader" -> `NoRegisterOsSourceHeader
-      | `String "NoRegisterOsTriggerHeader" -> `NoRegisterOsTriggerHeader
-      | `String "NavigationRegistrationUniqueScopeAlreadySet" ->
-          `NavigationRegistrationUniqueScopeAlreadySet
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__attributionreportingissuetype = function
-      | `PermissionPolicyDisabled -> `String "PermissionPolicyDisabled"
-      | `UntrustworthyReportingOrigin -> `String "UntrustworthyReportingOrigin"
-      | `InsecureContext -> `String "InsecureContext"
-      | `InvalidHeader -> `String "InvalidHeader"
-      | `InvalidRegisterTriggerHeader -> `String "InvalidRegisterTriggerHeader"
-      | `SourceAndTriggerHeaders -> `String "SourceAndTriggerHeaders"
-      | `SourceIgnored -> `String "SourceIgnored"
-      | `TriggerIgnored -> `String "TriggerIgnored"
-      | `OsSourceIgnored -> `String "OsSourceIgnored"
-      | `OsTriggerIgnored -> `String "OsTriggerIgnored"
-      | `InvalidRegisterOsSourceHeader ->
-          `String "InvalidRegisterOsSourceHeader"
-      | `InvalidRegisterOsTriggerHeader ->
-          `String "InvalidRegisterOsTriggerHeader"
-      | `WebAndOsHeaders -> `String "WebAndOsHeaders"
-      | `NoWebOrOsSupport -> `String "NoWebOrOsSupport"
-      | `NavigationRegistrationWithoutTransientUserActivation ->
-          `String "NavigationRegistrationWithoutTransientUserActivation"
-      | `InvalidInfoHeader -> `String "InvalidInfoHeader"
-      | `NoRegisterSourceHeader -> `String "NoRegisterSourceHeader"
-      | `NoRegisterTriggerHeader -> `String "NoRegisterTriggerHeader"
-      | `NoRegisterOsSourceHeader -> `String "NoRegisterOsSourceHeader"
-      | `NoRegisterOsTriggerHeader -> `String "NoRegisterOsTriggerHeader"
-      | `NavigationRegistrationUniqueScopeAlreadySet ->
-          `String "NavigationRegistrationUniqueScopeAlreadySet"
-
-    type t = _attributionreportingissuetype
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
   and SharedDictionaryError : sig
     type _shareddictionaryerror =
       [ `UseErrorCrossOriginNoCorsRequest
@@ -4932,50 +4773,6 @@ end = struct
 
     type t = _connectionallowlisterror
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and AttributionReportingIssueDetails : sig
-    type t = {
-      violationType : AttributionReportingIssueType.t;
-          [@key "violationType"] [@ocaml.doc "No description provided"]
-      request : AffectedRequest.t option;
-          [@key "request"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      violatingNodeId : DOM.BackendNodeId.t option;
-          [@key "violatingNodeId"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      invalidParameter : string option;
-          [@key "invalidParameter"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Details for issues around \"Attribution Reporting API\" usage.\n\
-       Explainer: https://github.com/WICG/attribution-reporting-api"]
-  end = struct
-    type t = {
-      violationType : AttributionReportingIssueType.t;
-          [@key "violationType"] [@ocaml.doc "No description provided"]
-      request : AffectedRequest.t option;
-          [@key "request"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      violatingNodeId : DOM.BackendNodeId.t option;
-          [@key "violatingNodeId"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-      invalidParameter : string option;
-          [@key "invalidParameter"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Details for issues around \"Attribution Reporting API\" usage.\n\
-       Explainer: https://github.com/WICG/attribution-reporting-api"]
   end
 
   and QuirksModeIssueDetails : sig
@@ -6748,6 +6545,34 @@ end = struct
        Selective Permissions Intervention."]
   end
 
+  and LazyLoadImageIssueDetails : sig
+    type t = {
+      nodeId : DOM.BackendNodeId.t;
+          [@key "nodeId"]
+          [@ocaml.doc "DOM node of the problematic HTMLImageElement."]
+      url : string;
+          [@key "url"] [@ocaml.doc "URL or src attribute of the image."]
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "Frame containing the image."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Details for issues about lazy-loaded images without explicit dimensions."]
+  end = struct
+    type t = {
+      nodeId : DOM.BackendNodeId.t;
+          [@key "nodeId"]
+          [@ocaml.doc "DOM node of the problematic HTMLImageElement."]
+      url : string;
+          [@key "url"] [@ocaml.doc "URL or src attribute of the image."]
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "Frame containing the image."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Details for issues about lazy-loaded images without explicit dimensions."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -6757,7 +6582,6 @@ end = struct
       | `ContentSecurityPolicyIssue
       | `SharedArrayBufferIssue
       | `CorsIssue
-      | `AttributionReportingIssue
       | `QuirksModeIssue
       | `PartitioningBlobURLIssue
       | `NavigatorUserAgentIssue
@@ -6779,7 +6603,8 @@ end = struct
       | `PermissionElementIssue
       | `PerformanceIssue
       | `SelectivePermissionsInterventionIssue
-      | `EmailVerificationRequestIssue ]
+      | `EmailVerificationRequestIssue
+      | `LazyLoadImageIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -6799,7 +6624,6 @@ end = struct
       | `ContentSecurityPolicyIssue
       | `SharedArrayBufferIssue
       | `CorsIssue
-      | `AttributionReportingIssue
       | `QuirksModeIssue
       | `PartitioningBlobURLIssue
       | `NavigatorUserAgentIssue
@@ -6821,7 +6645,8 @@ end = struct
       | `PermissionElementIssue
       | `PerformanceIssue
       | `SelectivePermissionsInterventionIssue
-      | `EmailVerificationRequestIssue ]
+      | `EmailVerificationRequestIssue
+      | `LazyLoadImageIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -6831,7 +6656,6 @@ end = struct
       | `String "ContentSecurityPolicyIssue" -> `ContentSecurityPolicyIssue
       | `String "SharedArrayBufferIssue" -> `SharedArrayBufferIssue
       | `String "CorsIssue" -> `CorsIssue
-      | `String "AttributionReportingIssue" -> `AttributionReportingIssue
       | `String "QuirksModeIssue" -> `QuirksModeIssue
       | `String "PartitioningBlobURLIssue" -> `PartitioningBlobURLIssue
       | `String "NavigatorUserAgentIssue" -> `NavigatorUserAgentIssue
@@ -6858,6 +6682,7 @@ end = struct
           `SelectivePermissionsInterventionIssue
       | `String "EmailVerificationRequestIssue" ->
           `EmailVerificationRequestIssue
+      | `String "LazyLoadImageIssue" -> `LazyLoadImageIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -6869,7 +6694,6 @@ end = struct
       | `ContentSecurityPolicyIssue -> `String "ContentSecurityPolicyIssue"
       | `SharedArrayBufferIssue -> `String "SharedArrayBufferIssue"
       | `CorsIssue -> `String "CorsIssue"
-      | `AttributionReportingIssue -> `String "AttributionReportingIssue"
       | `QuirksModeIssue -> `String "QuirksModeIssue"
       | `PartitioningBlobURLIssue -> `String "PartitioningBlobURLIssue"
       | `NavigatorUserAgentIssue -> `String "NavigatorUserAgentIssue"
@@ -6896,6 +6720,7 @@ end = struct
           `String "SelectivePermissionsInterventionIssue"
       | `EmailVerificationRequestIssue ->
           `String "EmailVerificationRequestIssue"
+      | `LazyLoadImageIssue -> `String "LazyLoadImageIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -6936,11 +6761,6 @@ end = struct
           [@key "corsIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      attributionReportingIssueDetails :
-        AttributionReportingIssueDetails.t option;
-          [@key "attributionReportingIssueDetails"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
       quirksModeIssueDetails : QuirksModeIssueDetails.t option;
           [@key "quirksModeIssueDetails"]
           [@yojson.option]
@@ -7037,6 +6857,10 @@ end = struct
       emailVerificationRequestIssueDetails :
         EmailVerificationRequestIssueDetails.t option;
           [@key "emailVerificationRequestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      lazyLoadImageIssueDetails : LazyLoadImageIssueDetails.t option;
+          [@key "lazyLoadImageIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -7076,11 +6900,6 @@ end = struct
           [@key "corsIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
-      attributionReportingIssueDetails :
-        AttributionReportingIssueDetails.t option;
-          [@key "attributionReportingIssueDetails"]
-          [@yojson.option]
-          [@ocaml.doc "No description provided"]
       quirksModeIssueDetails : QuirksModeIssueDetails.t option;
           [@key "quirksModeIssueDetails"]
           [@yojson.option]
@@ -7177,6 +6996,10 @@ end = struct
       emailVerificationRequestIssueDetails :
         EmailVerificationRequestIssueDetails.t option;
           [@key "emailVerificationRequestIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      lazyLoadImageIssueDetails : LazyLoadImageIssueDetails.t option;
+          [@key "lazyLoadImageIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -28999,7 +28822,6 @@ and Page : sig
       | `all_screens_capture
       | `ambient_light_sensor
       | `aria_notify
-      | `attribution_reporting
       | `autofill
       | `autoplay
       | `bluetooth
@@ -30387,7 +30209,6 @@ end = struct
       | `all_screens_capture
       | `ambient_light_sensor
       | `aria_notify
-      | `attribution_reporting
       | `autofill
       | `autoplay
       | `bluetooth
@@ -30513,7 +30334,6 @@ end = struct
       | `all_screens_capture
       | `ambient_light_sensor
       | `aria_notify
-      | `attribution_reporting
       | `autofill
       | `autoplay
       | `bluetooth
@@ -30625,7 +30445,6 @@ end = struct
       | `String "all-screens-capture" -> `all_screens_capture
       | `String "ambient-light-sensor" -> `ambient_light_sensor
       | `String "aria-notify" -> `aria_notify
-      | `String "attribution-reporting" -> `attribution_reporting
       | `String "autofill" -> `autofill
       | `String "autoplay" -> `autoplay
       | `String "bluetooth" -> `bluetooth
@@ -30744,7 +30563,6 @@ end = struct
       | `all_screens_capture -> `String "all-screens-capture"
       | `ambient_light_sensor -> `String "ambient-light-sensor"
       | `aria_notify -> `String "aria-notify"
-      | `attribution_reporting -> `String "attribution-reporting"
       | `autofill -> `String "autofill"
       | `autoplay -> `String "autoplay"
       | `bluetooth -> `String "bluetooth"
