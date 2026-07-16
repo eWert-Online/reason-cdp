@@ -1904,8 +1904,7 @@ and Audits : sig
 
   and MixedContentResourceType : sig
     type _mixedcontentresourcetype =
-      [ `AttributionSrc
-      | `Audio
+      [ `Audio
       | `Beacon
       | `CSPReport
       | `Download
@@ -3708,8 +3707,7 @@ end = struct
 
   and MixedContentResourceType : sig
     type _mixedcontentresourcetype =
-      [ `AttributionSrc
-      | `Audio
+      [ `Audio
       | `Beacon
       | `CSPReport
       | `Download
@@ -3748,8 +3746,7 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
     type _mixedcontentresourcetype =
-      [ `AttributionSrc
-      | `Audio
+      [ `Audio
       | `Beacon
       | `CSPReport
       | `Download
@@ -3779,7 +3776,6 @@ end = struct
       | `XSLT ]
 
     let _mixedcontentresourcetype_of_yojson = function
-      | `String "AttributionSrc" -> `AttributionSrc
       | `String "Audio" -> `Audio
       | `String "Beacon" -> `Beacon
       | `String "CSPReport" -> `CSPReport
@@ -3812,7 +3808,6 @@ end = struct
       | _ -> failwith "unknown enum type"
 
     let yojson_of__mixedcontentresourcetype = function
-      | `AttributionSrc -> `String "AttributionSrc"
       | `Audio -> `String "Audio"
       | `Beacon -> `String "Beacon"
       | `CSPReport -> `String "CSPReport"
@@ -8239,16 +8234,6 @@ and Browser : sig
     }
     [@@deriving yojson] [@@ocaml.doc "Chrome histogram."]
   end
-
-  and PrivacySandboxAPI : sig
-    type _privacysandboxapi = [ `BiddingAndAuctionServices | `TrustedKeyValue ]
-
-    val _privacysandboxapi_of_yojson : Yojson.Basic.t -> _privacysandboxapi
-    val yojson_of__privacysandboxapi : _privacysandboxapi -> Yojson.Basic.t
-
-    type t = _privacysandboxapi
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
 end = struct
   module rec BrowserContextID : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -8700,31 +8685,6 @@ end = struct
       buckets : Bucket.t list; [@key "buckets"] [@ocaml.doc "Buckets."]
     }
     [@@deriving yojson] [@@ocaml.doc "Chrome histogram."]
-  end
-
-  and PrivacySandboxAPI : sig
-    type _privacysandboxapi = [ `BiddingAndAuctionServices | `TrustedKeyValue ]
-
-    val _privacysandboxapi_of_yojson : Yojson.Basic.t -> _privacysandboxapi
-    val yojson_of__privacysandboxapi : _privacysandboxapi -> Yojson.Basic.t
-
-    type t = _privacysandboxapi
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end = struct
-    type _privacysandboxapi = [ `BiddingAndAuctionServices | `TrustedKeyValue ]
-
-    let _privacysandboxapi_of_yojson = function
-      | `String "BiddingAndAuctionServices" -> `BiddingAndAuctionServices
-      | `String "TrustedKeyValue" -> `TrustedKeyValue
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__privacysandboxapi = function
-      | `BiddingAndAuctionServices -> `String "BiddingAndAuctionServices"
-      | `TrustedKeyValue -> `String "TrustedKeyValue"
-
-    type t = _privacysandboxapi
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 end
 
@@ -36524,70 +36484,9 @@ and Storage : sig
        Tokens from that issuer."]
   end
 
-  and InterestGroupAuctionId : sig
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc "Protected audience interest group auction identifier."]
-  end
-
-  and InterestGroupAccessType : sig
-    type _interestgroupaccesstype =
-      [ `join
-      | `leave
-      | `update
-      | `loaded
-      | `bid
-      | `win
-      | `additionalBid
-      | `additionalBidWin
-      | `topLevelBid
-      | `topLevelAdditionalBid
-      | `clear ]
-
-    val _interestgroupaccesstype_of_yojson :
-      Yojson.Basic.t -> _interestgroupaccesstype
-
-    val yojson_of__interestgroupaccesstype :
-      _interestgroupaccesstype -> Yojson.Basic.t
-
-    type t = _interestgroupaccesstype
-    [@@deriving yojson] [@@ocaml.doc "Enum of interest group access types."]
-  end
-
-  and InterestGroupAuctionEventType : sig
-    type _interestgroupauctioneventtype = [ `started | `configResolved ]
-
-    val _interestgroupauctioneventtype_of_yojson :
-      Yojson.Basic.t -> _interestgroupauctioneventtype
-
-    val yojson_of__interestgroupauctioneventtype :
-      _interestgroupauctioneventtype -> Yojson.Basic.t
-
-    type t = _interestgroupauctioneventtype
-    [@@deriving yojson] [@@ocaml.doc "Enum of auction events."]
-  end
-
-  and InterestGroupAuctionFetchType : sig
-    type _interestgroupauctionfetchtype =
-      [ `bidderJs
-      | `bidderWasm
-      | `sellerJs
-      | `bidderTrustedSignals
-      | `sellerTrustedSignals ]
-
-    val _interestgroupauctionfetchtype_of_yojson :
-      Yojson.Basic.t -> _interestgroupauctionfetchtype
-
-    val yojson_of__interestgroupauctionfetchtype :
-      _interestgroupauctionfetchtype -> Yojson.Basic.t
-
-    type t = _interestgroupauctionfetchtype
-    [@@deriving yojson] [@@ocaml.doc "Enum of network fetches auctions can do."]
-  end
-
   and SharedStorageAccessScope : sig
     type _sharedstorageaccessscope =
-      [ `window | `sharedStorageWorklet | `protectedAudienceWorklet | `header ]
+      [ `window | `sharedStorageWorklet | `header ]
 
     val _sharedstorageaccessscope_of_yojson :
       Yojson.Basic.t -> _sharedstorageaccessscope
@@ -37022,159 +36921,9 @@ end = struct
        Tokens from that issuer."]
   end
 
-  and InterestGroupAuctionId : sig
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc "Protected audience interest group auction identifier."]
-  end = struct
-    type t = string
-    [@@deriving yojson]
-    [@@ocaml.doc "Protected audience interest group auction identifier."]
-  end
-
-  and InterestGroupAccessType : sig
-    type _interestgroupaccesstype =
-      [ `join
-      | `leave
-      | `update
-      | `loaded
-      | `bid
-      | `win
-      | `additionalBid
-      | `additionalBidWin
-      | `topLevelBid
-      | `topLevelAdditionalBid
-      | `clear ]
-
-    val _interestgroupaccesstype_of_yojson :
-      Yojson.Basic.t -> _interestgroupaccesstype
-
-    val yojson_of__interestgroupaccesstype :
-      _interestgroupaccesstype -> Yojson.Basic.t
-
-    type t = _interestgroupaccesstype
-    [@@deriving yojson] [@@ocaml.doc "Enum of interest group access types."]
-  end = struct
-    type _interestgroupaccesstype =
-      [ `join
-      | `leave
-      | `update
-      | `loaded
-      | `bid
-      | `win
-      | `additionalBid
-      | `additionalBidWin
-      | `topLevelBid
-      | `topLevelAdditionalBid
-      | `clear ]
-
-    let _interestgroupaccesstype_of_yojson = function
-      | `String "join" -> `join
-      | `String "leave" -> `leave
-      | `String "update" -> `update
-      | `String "loaded" -> `loaded
-      | `String "bid" -> `bid
-      | `String "win" -> `win
-      | `String "additionalBid" -> `additionalBid
-      | `String "additionalBidWin" -> `additionalBidWin
-      | `String "topLevelBid" -> `topLevelBid
-      | `String "topLevelAdditionalBid" -> `topLevelAdditionalBid
-      | `String "clear" -> `clear
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__interestgroupaccesstype = function
-      | `join -> `String "join"
-      | `leave -> `String "leave"
-      | `update -> `String "update"
-      | `loaded -> `String "loaded"
-      | `bid -> `String "bid"
-      | `win -> `String "win"
-      | `additionalBid -> `String "additionalBid"
-      | `additionalBidWin -> `String "additionalBidWin"
-      | `topLevelBid -> `String "topLevelBid"
-      | `topLevelAdditionalBid -> `String "topLevelAdditionalBid"
-      | `clear -> `String "clear"
-
-    type t = _interestgroupaccesstype
-    [@@deriving yojson] [@@ocaml.doc "Enum of interest group access types."]
-  end
-
-  and InterestGroupAuctionEventType : sig
-    type _interestgroupauctioneventtype = [ `started | `configResolved ]
-
-    val _interestgroupauctioneventtype_of_yojson :
-      Yojson.Basic.t -> _interestgroupauctioneventtype
-
-    val yojson_of__interestgroupauctioneventtype :
-      _interestgroupauctioneventtype -> Yojson.Basic.t
-
-    type t = _interestgroupauctioneventtype
-    [@@deriving yojson] [@@ocaml.doc "Enum of auction events."]
-  end = struct
-    type _interestgroupauctioneventtype = [ `started | `configResolved ]
-
-    let _interestgroupauctioneventtype_of_yojson = function
-      | `String "started" -> `started
-      | `String "configResolved" -> `configResolved
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__interestgroupauctioneventtype = function
-      | `started -> `String "started"
-      | `configResolved -> `String "configResolved"
-
-    type t = _interestgroupauctioneventtype
-    [@@deriving yojson] [@@ocaml.doc "Enum of auction events."]
-  end
-
-  and InterestGroupAuctionFetchType : sig
-    type _interestgroupauctionfetchtype =
-      [ `bidderJs
-      | `bidderWasm
-      | `sellerJs
-      | `bidderTrustedSignals
-      | `sellerTrustedSignals ]
-
-    val _interestgroupauctionfetchtype_of_yojson :
-      Yojson.Basic.t -> _interestgroupauctionfetchtype
-
-    val yojson_of__interestgroupauctionfetchtype :
-      _interestgroupauctionfetchtype -> Yojson.Basic.t
-
-    type t = _interestgroupauctionfetchtype
-    [@@deriving yojson] [@@ocaml.doc "Enum of network fetches auctions can do."]
-  end = struct
-    type _interestgroupauctionfetchtype =
-      [ `bidderJs
-      | `bidderWasm
-      | `sellerJs
-      | `bidderTrustedSignals
-      | `sellerTrustedSignals ]
-
-    let _interestgroupauctionfetchtype_of_yojson = function
-      | `String "bidderJs" -> `bidderJs
-      | `String "bidderWasm" -> `bidderWasm
-      | `String "sellerJs" -> `sellerJs
-      | `String "bidderTrustedSignals" -> `bidderTrustedSignals
-      | `String "sellerTrustedSignals" -> `sellerTrustedSignals
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__interestgroupauctionfetchtype = function
-      | `bidderJs -> `String "bidderJs"
-      | `bidderWasm -> `String "bidderWasm"
-      | `sellerJs -> `String "sellerJs"
-      | `bidderTrustedSignals -> `String "bidderTrustedSignals"
-      | `sellerTrustedSignals -> `String "sellerTrustedSignals"
-
-    type t = _interestgroupauctionfetchtype
-    [@@deriving yojson] [@@ocaml.doc "Enum of network fetches auctions can do."]
-  end
-
   and SharedStorageAccessScope : sig
     type _sharedstorageaccessscope =
-      [ `window | `sharedStorageWorklet | `protectedAudienceWorklet | `header ]
+      [ `window | `sharedStorageWorklet | `header ]
 
     val _sharedstorageaccessscope_of_yojson :
       Yojson.Basic.t -> _sharedstorageaccessscope
@@ -37186,12 +36935,11 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access scopes."]
   end = struct
     type _sharedstorageaccessscope =
-      [ `window | `sharedStorageWorklet | `protectedAudienceWorklet | `header ]
+      [ `window | `sharedStorageWorklet | `header ]
 
     let _sharedstorageaccessscope_of_yojson = function
       | `String "window" -> `window
       | `String "sharedStorageWorklet" -> `sharedStorageWorklet
-      | `String "protectedAudienceWorklet" -> `protectedAudienceWorklet
       | `String "header" -> `header
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -37199,7 +36947,6 @@ end = struct
     let yojson_of__sharedstorageaccessscope = function
       | `window -> `String "window"
       | `sharedStorageWorklet -> `String "sharedStorageWorklet"
-      | `protectedAudienceWorklet -> `String "protectedAudienceWorklet"
       | `header -> `String "header"
 
     type t = _sharedstorageaccessscope
