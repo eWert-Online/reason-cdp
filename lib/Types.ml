@@ -36449,7 +36449,6 @@ and Storage : sig
       | `websql
       | `service_workers
       | `cache_storage
-      | `interest_groups
       | `shared_storage
       | `storage_buckets
       | `all
@@ -36818,7 +36817,6 @@ end = struct
       | `websql
       | `service_workers
       | `cache_storage
-      | `interest_groups
       | `shared_storage
       | `storage_buckets
       | `all
@@ -36839,7 +36837,6 @@ end = struct
       | `websql
       | `service_workers
       | `cache_storage
-      | `interest_groups
       | `shared_storage
       | `storage_buckets
       | `all
@@ -36854,7 +36851,6 @@ end = struct
       | `String "websql" -> `websql
       | `String "service_workers" -> `service_workers
       | `String "cache_storage" -> `cache_storage
-      | `String "interest_groups" -> `interest_groups
       | `String "shared_storage" -> `shared_storage
       | `String "storage_buckets" -> `storage_buckets
       | `String "all" -> `all
@@ -36871,7 +36867,6 @@ end = struct
       | `websql -> `String "websql"
       | `service_workers -> `String "service_workers"
       | `cache_storage -> `String "cache_storage"
-      | `interest_groups -> `String "interest_groups"
       | `shared_storage -> `String "shared_storage"
       | `storage_buckets -> `String "storage_buckets"
       | `all -> `String "all"
@@ -39452,6 +39447,15 @@ and WebAuthn : sig
              extension.\n\
              https://fidoalliance.org/specs/fido-v2.2-rd-20241003/fido-client-to-authenticator-protocol-v2.2-rd-20241003.html#sctn-hmac-secret-make-cred-extension\n\
              Defaults to false."]
+      hasCmtgKey : bool option;
+          [@key "hasCmtgKey"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the cmtgKey \
+             (Credential\n\
+             Manager Trust Group Key) extension.\n\
+             https://github.com/w3c/webauthn/pull/2377\n\
+             Defaults to false."]
       automaticPresenceSimulation : bool option;
           [@key "automaticPresenceSimulation"]
           [@yojson.option]
@@ -39552,6 +39556,20 @@ and WebAuthn : sig
             "The credential's user.displayName property. Equivalent to empty if\n\
              not set.\n\
              https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-displayname"]
+      cmtgKeys : string list option;
+          [@key "cmtgKeys"]
+          [@yojson.option]
+          [@ocaml.doc "The CMTG keys associated with the credential."]
+      activeCmtgKeyIndex : number option;
+          [@key "activeCmtgKeyIndex"]
+          [@yojson.option]
+          [@ocaml.doc "The 0-based index of the active key in cmtgKeys."]
+      generateCmtgKeyOnNextOperation : bool option;
+          [@key "generateCmtgKeyOnNextOperation"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If true, the authenticator will generate a new CMTG key on the \
+             next operation."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -39716,6 +39734,15 @@ end = struct
              extension.\n\
              https://fidoalliance.org/specs/fido-v2.2-rd-20241003/fido-client-to-authenticator-protocol-v2.2-rd-20241003.html#sctn-hmac-secret-make-cred-extension\n\
              Defaults to false."]
+      hasCmtgKey : bool option;
+          [@key "hasCmtgKey"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the cmtgKey \
+             (Credential\n\
+             Manager Trust Group Key) extension.\n\
+             https://github.com/w3c/webauthn/pull/2377\n\
+             Defaults to false."]
       automaticPresenceSimulation : bool option;
           [@key "automaticPresenceSimulation"]
           [@yojson.option]
@@ -39810,6 +39837,15 @@ end = struct
             "If set to true, the authenticator will support the hmac-secret-mc \
              extension.\n\
              https://fidoalliance.org/specs/fido-v2.2-rd-20241003/fido-client-to-authenticator-protocol-v2.2-rd-20241003.html#sctn-hmac-secret-make-cred-extension\n\
+             Defaults to false."]
+      hasCmtgKey : bool option;
+          [@key "hasCmtgKey"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If set to true, the authenticator will support the cmtgKey \
+             (Credential\n\
+             Manager Trust Group Key) extension.\n\
+             https://github.com/w3c/webauthn/pull/2377\n\
              Defaults to false."]
       automaticPresenceSimulation : bool option;
           [@key "automaticPresenceSimulation"]
@@ -39911,6 +39947,20 @@ end = struct
             "The credential's user.displayName property. Equivalent to empty if\n\
              not set.\n\
              https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-displayname"]
+      cmtgKeys : string list option;
+          [@key "cmtgKeys"]
+          [@yojson.option]
+          [@ocaml.doc "The CMTG keys associated with the credential."]
+      activeCmtgKeyIndex : number option;
+          [@key "activeCmtgKeyIndex"]
+          [@yojson.option]
+          [@ocaml.doc "The 0-based index of the active key in cmtgKeys."]
+      generateCmtgKeyOnNextOperation : bool option;
+          [@key "generateCmtgKeyOnNextOperation"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If true, the authenticator will generate a new CMTG key on the \
+             next operation."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end = struct
@@ -39981,6 +40031,20 @@ end = struct
             "The credential's user.displayName property. Equivalent to empty if\n\
              not set.\n\
              https://w3c.github.io/webauthn/#dom-publickeycredentialuserentity-displayname"]
+      cmtgKeys : string list option;
+          [@key "cmtgKeys"]
+          [@yojson.option]
+          [@ocaml.doc "The CMTG keys associated with the credential."]
+      activeCmtgKeyIndex : number option;
+          [@key "activeCmtgKeyIndex"]
+          [@yojson.option]
+          [@ocaml.doc "The 0-based index of the active key in cmtgKeys."]
+      generateCmtgKeyOnNextOperation : bool option;
+          [@key "generateCmtgKeyOnNextOperation"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If true, the authenticator will generate a new CMTG key on the \
+             next operation."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
