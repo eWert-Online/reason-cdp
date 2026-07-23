@@ -37648,12 +37648,27 @@ The default is true. |desc}]
             [@key "backupState"]
             [@yojson.option]
             [@ocaml.doc "No description provided"]
+        activeCmtgKeyIndex : Types.number option;
+            [@key "activeCmtgKeyIndex"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+        generateCmtgKeyOnNextOperation : bool option;
+            [@key "generateCmtgKeyOnNextOperation"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
       }
       [@@deriving yojson]
 
-      let make ~authenticatorId ~credentialId ?backupEligibility ?backupState ()
-          =
-        { authenticatorId; credentialId; backupEligibility; backupState }
+      let make ~authenticatorId ~credentialId ?backupEligibility ?backupState
+          ?activeCmtgKeyIndex ?generateCmtgKeyOnNextOperation () =
+        {
+          authenticatorId;
+          credentialId;
+          backupEligibility;
+          backupState;
+          activeCmtgKeyIndex;
+          generateCmtgKeyOnNextOperation;
+        }
     end
 
     module Request = struct
