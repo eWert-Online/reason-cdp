@@ -37656,11 +37656,20 @@ The default is true. |desc}]
             [@key "generateCmtgKeyOnNextOperation"]
             [@yojson.option]
             [@ocaml.doc "No description provided"]
+        signCount : Types.number option;
+            [@key "signCount"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Must be equal to or greater than -1.\n\
+               If -1, the signature counter is removed from the credential, \
+               and every\n\
+               assertion operation will report a value of 0.\n\
+               See https://w3c.github.io/webauthn/#signature-counter"]
       }
       [@@deriving yojson]
 
       let make ~authenticatorId ~credentialId ?backupEligibility ?backupState
-          ?activeCmtgKeyIndex ?generateCmtgKeyOnNextOperation () =
+          ?activeCmtgKeyIndex ?generateCmtgKeyOnNextOperation ?signCount () =
         {
           authenticatorId;
           credentialId;
@@ -37668,6 +37677,7 @@ The default is true. |desc}]
           backupState;
           activeCmtgKeyIndex;
           generateCmtgKeyOnNextOperation;
+          signCount;
         }
     end
 

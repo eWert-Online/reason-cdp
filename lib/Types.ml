@@ -39513,11 +39513,14 @@ and WebAuthn : sig
             "An opaque byte sequence with a maximum size of 64 bytes mapping the\n\
              credential to a specific user. (Encoded as a base64 string when \
              passed over JSON)"]
-      signCount : number;
+      signCount : number option;
           [@key "signCount"]
+          [@yojson.option]
           [@ocaml.doc
-            "Signature counter. This is incremented by one for each successful\n\
-             assertion.\n\
+            "Signature counter. Must be equal to or greater than -1.\n\
+             If -1, the credential won't have an associated signature counter, \
+             and\n\
+             every assertion operation will report a value of 0.\n\
              See https://w3c.github.io/webauthn/#signature-counter"]
       largeBlob : string option;
           [@key "largeBlob"]
@@ -39904,11 +39907,14 @@ end = struct
             "An opaque byte sequence with a maximum size of 64 bytes mapping the\n\
              credential to a specific user. (Encoded as a base64 string when \
              passed over JSON)"]
-      signCount : number;
+      signCount : number option;
           [@key "signCount"]
+          [@yojson.option]
           [@ocaml.doc
-            "Signature counter. This is incremented by one for each successful\n\
-             assertion.\n\
+            "Signature counter. Must be equal to or greater than -1.\n\
+             If -1, the credential won't have an associated signature counter, \
+             and\n\
+             every assertion operation will report a value of 0.\n\
              See https://w3c.github.io/webauthn/#signature-counter"]
       largeBlob : string option;
           [@key "largeBlob"]
@@ -39988,11 +39994,14 @@ end = struct
             "An opaque byte sequence with a maximum size of 64 bytes mapping the\n\
              credential to a specific user. (Encoded as a base64 string when \
              passed over JSON)"]
-      signCount : number;
+      signCount : number option;
           [@key "signCount"]
+          [@yojson.option]
           [@ocaml.doc
-            "Signature counter. This is incremented by one for each successful\n\
-             assertion.\n\
+            "Signature counter. Must be equal to or greater than -1.\n\
+             If -1, the credential won't have an associated signature counter, \
+             and\n\
+             every assertion operation will report a value of 0.\n\
              See https://w3c.github.io/webauthn/#signature-counter"]
       largeBlob : string option;
           [@key "largeBlob"]
