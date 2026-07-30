@@ -21506,7 +21506,8 @@ and Network : sig
       | `FatalError
       | `SigningQuotaExceeded
       | `RefreshedAsWaiter
-      | `TransientSigningError ]
+      | `TransientSigningError
+      | `InScopeRefreshNotYetNeeded ]
 
     val _refresheventdetails_refreshresult_of_yojson :
       Yojson.Basic.t -> _refresheventdetails_refreshresult
@@ -21516,11 +21517,16 @@ and Network : sig
 
     type t = {
       refreshResult : _refresheventdetails_refreshresult;
-          [@key "refreshResult"] [@ocaml.doc "The result of a refresh."]
+          [@key "refreshResult"]
+          [@ocaml.doc
+            "The result of a refresh.\n\
+             LINT.IfChange(DeviceBoundSessionRefreshResult)"]
       fetchResult : DeviceBoundSessionFetchResult.t option;
           [@key "fetchResult"]
           [@yojson.option]
-          [@ocaml.doc "If there was a fetch attempt, the result of that."]
+          [@ocaml.doc
+            "LINT.ThenChange(//net/device_bound_sessions/refresh_result.h:DeviceBoundSessionRefreshResult,//content/browser/devtools/protocol/network_handler.cc:DeviceBoundSessionRefreshResult)\n\
+             If there was a fetch attempt, the result of that."]
       newSession : DeviceBoundSession.t option;
           [@key "newSession"]
           [@yojson.option]
@@ -26564,7 +26570,8 @@ end = struct
       | `FatalError
       | `SigningQuotaExceeded
       | `RefreshedAsWaiter
-      | `TransientSigningError ]
+      | `TransientSigningError
+      | `InScopeRefreshNotYetNeeded ]
 
     val _refresheventdetails_refreshresult_of_yojson :
       Yojson.Basic.t -> _refresheventdetails_refreshresult
@@ -26574,11 +26581,16 @@ end = struct
 
     type t = {
       refreshResult : _refresheventdetails_refreshresult;
-          [@key "refreshResult"] [@ocaml.doc "The result of a refresh."]
+          [@key "refreshResult"]
+          [@ocaml.doc
+            "The result of a refresh.\n\
+             LINT.IfChange(DeviceBoundSessionRefreshResult)"]
       fetchResult : DeviceBoundSessionFetchResult.t option;
           [@key "fetchResult"]
           [@yojson.option]
-          [@ocaml.doc "If there was a fetch attempt, the result of that."]
+          [@ocaml.doc
+            "LINT.ThenChange(//net/device_bound_sessions/refresh_result.h:DeviceBoundSessionRefreshResult,//content/browser/devtools/protocol/network_handler.cc:DeviceBoundSessionRefreshResult)\n\
+             If there was a fetch attempt, the result of that."]
       newSession : DeviceBoundSession.t option;
           [@key "newSession"]
           [@yojson.option]
@@ -26610,7 +26622,8 @@ end = struct
       | `FatalError
       | `SigningQuotaExceeded
       | `RefreshedAsWaiter
-      | `TransientSigningError ]
+      | `TransientSigningError
+      | `InScopeRefreshNotYetNeeded ]
 
     let _refresheventdetails_refreshresult_of_yojson = function
       | `String "Refreshed" -> `Refreshed
@@ -26621,6 +26634,7 @@ end = struct
       | `String "SigningQuotaExceeded" -> `SigningQuotaExceeded
       | `String "RefreshedAsWaiter" -> `RefreshedAsWaiter
       | `String "TransientSigningError" -> `TransientSigningError
+      | `String "InScopeRefreshNotYetNeeded" -> `InScopeRefreshNotYetNeeded
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26633,14 +26647,20 @@ end = struct
       | `SigningQuotaExceeded -> `String "SigningQuotaExceeded"
       | `RefreshedAsWaiter -> `String "RefreshedAsWaiter"
       | `TransientSigningError -> `String "TransientSigningError"
+      | `InScopeRefreshNotYetNeeded -> `String "InScopeRefreshNotYetNeeded"
 
     type t = {
       refreshResult : _refresheventdetails_refreshresult;
-          [@key "refreshResult"] [@ocaml.doc "The result of a refresh."]
+          [@key "refreshResult"]
+          [@ocaml.doc
+            "The result of a refresh.\n\
+             LINT.IfChange(DeviceBoundSessionRefreshResult)"]
       fetchResult : DeviceBoundSessionFetchResult.t option;
           [@key "fetchResult"]
           [@yojson.option]
-          [@ocaml.doc "If there was a fetch attempt, the result of that."]
+          [@ocaml.doc
+            "LINT.ThenChange(//net/device_bound_sessions/refresh_result.h:DeviceBoundSessionRefreshResult,//content/browser/devtools/protocol/network_handler.cc:DeviceBoundSessionRefreshResult)\n\
+             If there was a fetch attempt, the result of that."]
       newSession : DeviceBoundSession.t option;
           [@key "newSession"]
           [@yojson.option]
