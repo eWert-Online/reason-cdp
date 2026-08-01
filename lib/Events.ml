@@ -1729,97 +1729,6 @@ module Network = struct
   end
   [@@ocaml.doc {desc|Fired when HTTP request has finished loading. |desc}]
 
-  module RequestIntercepted = struct
-    let name = "Network.requestIntercepted"
-
-    type result = {
-      interceptionId : Types.Network.InterceptionId.t;
-          [@key "interceptionId"]
-          [@ocaml.doc
-            "Each request the page makes will have a unique id, however if any \
-             redirects are encountered\n\
-             while processing that fetch, they will be reported with the same \
-             id as the original fetch.\n\
-             Likewise if HTTP authentication is needed then the same fetch id \
-             will be used."]
-      request : Types.Network.Request.t;
-          [@key "request"] [@ocaml.doc "No description provided"]
-      frameId : Types.Page.FrameId.t;
-          [@key "frameId"]
-          [@ocaml.doc "The id of the frame that initiated the request."]
-      resourceType : Types.Network.ResourceType.t;
-          [@key "resourceType"]
-          [@ocaml.doc "How the requested resource will be used."]
-      isNavigationRequest : bool;
-          [@key "isNavigationRequest"]
-          [@ocaml.doc
-            "Whether this is a navigation request, which can abort the \
-             navigation completely."]
-      isDownload : bool option;
-          [@key "isDownload"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Set if the request is a navigation that will result in a download.\n\
-             Only present after response is received from the server (i.e. \
-             HeadersReceived stage)."]
-      redirectUrl : string option;
-          [@key "redirectUrl"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Redirect location, only sent if a redirect was intercepted."]
-      authChallenge : Types.Network.AuthChallenge.t option;
-          [@key "authChallenge"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Details of the Authorization Challenge encountered. If this is \
-             set then\n\
-             continueInterceptedRequest must contain an authChallengeResponse."]
-      responseErrorReason : Types.Network.ErrorReason.t option;
-          [@key "responseErrorReason"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Response error if intercepted at response stage or if redirect \
-             occurred while intercepting\n\
-             request."]
-      responseStatusCode : Types.number option;
-          [@key "responseStatusCode"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Response code if intercepted at response stage or if redirect \
-             occurred while intercepting\n\
-             request or auth retry occurred."]
-      responseHeaders : Types.Network.Headers.t option;
-          [@key "responseHeaders"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Response headers if intercepted at the response stage or if \
-             redirect occurred while\n\
-             intercepting request or auth retry occurred."]
-      requestId : Types.Network.RequestId.t option;
-          [@key "requestId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If the intercepted request had a corresponding requestWillBeSent \
-             event fired for it, then\n\
-             this requestId will be the same as the requestId present in the \
-             requestWillBeSent event."]
-    }
-    [@@deriving yojson]
-
-    type t = {
-      method_ : string; [@key "method"]
-      params : result;
-      sessionId : Types.Target.SessionID.t;
-    }
-    [@@deriving yojson]
-
-    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
-  end
-  [@@ocaml.doc
-    {desc|Details of an intercepted HTTP request, which must be either allowed, blocked, modified or
-mocked.
-Deprecated, use Fetch.requestPaused instead. |desc}]
-
   module RequestServedFromCache = struct
     let name = "Network.requestServedFromCache"
 
@@ -2300,7 +2209,7 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
     type result = {
       identifier : Types.Network.RequestId.t;
           [@key "identifier"] [@ocaml.doc "No description provided"]
-      errorMessage : string;
+      errorMessage : Types.Network.ErrorReason.t;
           [@key "errorMessage"] [@ocaml.doc "No description provided"]
       timestamp : Types.Network.MonotonicTime.t;
           [@key "timestamp"] [@ocaml.doc "No description provided"]
@@ -2501,7 +2410,7 @@ Deprecated, use Fetch.requestPaused instead. |desc}]
     type result = {
       identifier : Types.Network.RequestId.t;
           [@key "identifier"] [@ocaml.doc "No description provided"]
-      errorMessage : string;
+      errorMessage : Types.Network.ErrorReason.t;
           [@key "errorMessage"] [@ocaml.doc "No description provided"]
       timestamp : Types.Network.MonotonicTime.t;
           [@key "timestamp"] [@ocaml.doc "No description provided"]

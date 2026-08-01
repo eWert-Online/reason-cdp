@@ -2529,6 +2529,7 @@ and Audits : sig
       | `TooManyRequests
       | `WellKnownHttpNotFound
       | `WellKnownNoResponse
+      | `WellKnownBlockedByConnectionAllowlist
       | `WellKnownInvalidResponse
       | `WellKnownListEmpty
       | `WellKnownInvalidContentType
@@ -2536,6 +2537,7 @@ and Audits : sig
       | `WellKnownTooBig
       | `ConfigHttpNotFound
       | `ConfigNoResponse
+      | `ConfigBlockedByConnectionAllowlist
       | `ConfigInvalidResponse
       | `ConfigInvalidContentType
       | `IdpNotPotentiallyTrustworthy
@@ -2545,11 +2547,13 @@ and Audits : sig
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
       | `AccountsNoResponse
+      | `AccountsBlockedByConnectionAllowlist
       | `AccountsInvalidResponse
       | `AccountsListEmpty
       | `AccountsInvalidContentType
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
+      | `IdTokenBlockedByConnectionAllowlist
       | `IdTokenInvalidResponse
       | `IdTokenIdpErrorResponse
       | `IdTokenCrossSiteIdpErrorResponse
@@ -5272,6 +5276,7 @@ end = struct
       | `TooManyRequests
       | `WellKnownHttpNotFound
       | `WellKnownNoResponse
+      | `WellKnownBlockedByConnectionAllowlist
       | `WellKnownInvalidResponse
       | `WellKnownListEmpty
       | `WellKnownInvalidContentType
@@ -5279,6 +5284,7 @@ end = struct
       | `WellKnownTooBig
       | `ConfigHttpNotFound
       | `ConfigNoResponse
+      | `ConfigBlockedByConnectionAllowlist
       | `ConfigInvalidResponse
       | `ConfigInvalidContentType
       | `IdpNotPotentiallyTrustworthy
@@ -5288,11 +5294,13 @@ end = struct
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
       | `AccountsNoResponse
+      | `AccountsBlockedByConnectionAllowlist
       | `AccountsInvalidResponse
       | `AccountsListEmpty
       | `AccountsInvalidContentType
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
+      | `IdTokenBlockedByConnectionAllowlist
       | `IdTokenInvalidResponse
       | `IdTokenIdpErrorResponse
       | `IdTokenCrossSiteIdpErrorResponse
@@ -5331,6 +5339,7 @@ end = struct
       | `TooManyRequests
       | `WellKnownHttpNotFound
       | `WellKnownNoResponse
+      | `WellKnownBlockedByConnectionAllowlist
       | `WellKnownInvalidResponse
       | `WellKnownListEmpty
       | `WellKnownInvalidContentType
@@ -5338,6 +5347,7 @@ end = struct
       | `WellKnownTooBig
       | `ConfigHttpNotFound
       | `ConfigNoResponse
+      | `ConfigBlockedByConnectionAllowlist
       | `ConfigInvalidResponse
       | `ConfigInvalidContentType
       | `IdpNotPotentiallyTrustworthy
@@ -5347,11 +5357,13 @@ end = struct
       | `InvalidSigninResponse
       | `AccountsHttpNotFound
       | `AccountsNoResponse
+      | `AccountsBlockedByConnectionAllowlist
       | `AccountsInvalidResponse
       | `AccountsListEmpty
       | `AccountsInvalidContentType
       | `IdTokenHttpNotFound
       | `IdTokenNoResponse
+      | `IdTokenBlockedByConnectionAllowlist
       | `IdTokenInvalidResponse
       | `IdTokenIdpErrorResponse
       | `IdTokenCrossSiteIdpErrorResponse
@@ -5375,6 +5387,8 @@ end = struct
       | `String "TooManyRequests" -> `TooManyRequests
       | `String "WellKnownHttpNotFound" -> `WellKnownHttpNotFound
       | `String "WellKnownNoResponse" -> `WellKnownNoResponse
+      | `String "WellKnownBlockedByConnectionAllowlist" ->
+          `WellKnownBlockedByConnectionAllowlist
       | `String "WellKnownInvalidResponse" -> `WellKnownInvalidResponse
       | `String "WellKnownListEmpty" -> `WellKnownListEmpty
       | `String "WellKnownInvalidContentType" -> `WellKnownInvalidContentType
@@ -5382,6 +5396,8 @@ end = struct
       | `String "WellKnownTooBig" -> `WellKnownTooBig
       | `String "ConfigHttpNotFound" -> `ConfigHttpNotFound
       | `String "ConfigNoResponse" -> `ConfigNoResponse
+      | `String "ConfigBlockedByConnectionAllowlist" ->
+          `ConfigBlockedByConnectionAllowlist
       | `String "ConfigInvalidResponse" -> `ConfigInvalidResponse
       | `String "ConfigInvalidContentType" -> `ConfigInvalidContentType
       | `String "IdpNotPotentiallyTrustworthy" -> `IdpNotPotentiallyTrustworthy
@@ -5391,11 +5407,15 @@ end = struct
       | `String "InvalidSigninResponse" -> `InvalidSigninResponse
       | `String "AccountsHttpNotFound" -> `AccountsHttpNotFound
       | `String "AccountsNoResponse" -> `AccountsNoResponse
+      | `String "AccountsBlockedByConnectionAllowlist" ->
+          `AccountsBlockedByConnectionAllowlist
       | `String "AccountsInvalidResponse" -> `AccountsInvalidResponse
       | `String "AccountsListEmpty" -> `AccountsListEmpty
       | `String "AccountsInvalidContentType" -> `AccountsInvalidContentType
       | `String "IdTokenHttpNotFound" -> `IdTokenHttpNotFound
       | `String "IdTokenNoResponse" -> `IdTokenNoResponse
+      | `String "IdTokenBlockedByConnectionAllowlist" ->
+          `IdTokenBlockedByConnectionAllowlist
       | `String "IdTokenInvalidResponse" -> `IdTokenInvalidResponse
       | `String "IdTokenIdpErrorResponse" -> `IdTokenIdpErrorResponse
       | `String "IdTokenCrossSiteIdpErrorResponse" ->
@@ -5424,6 +5444,8 @@ end = struct
       | `TooManyRequests -> `String "TooManyRequests"
       | `WellKnownHttpNotFound -> `String "WellKnownHttpNotFound"
       | `WellKnownNoResponse -> `String "WellKnownNoResponse"
+      | `WellKnownBlockedByConnectionAllowlist ->
+          `String "WellKnownBlockedByConnectionAllowlist"
       | `WellKnownInvalidResponse -> `String "WellKnownInvalidResponse"
       | `WellKnownListEmpty -> `String "WellKnownListEmpty"
       | `WellKnownInvalidContentType -> `String "WellKnownInvalidContentType"
@@ -5431,6 +5453,8 @@ end = struct
       | `WellKnownTooBig -> `String "WellKnownTooBig"
       | `ConfigHttpNotFound -> `String "ConfigHttpNotFound"
       | `ConfigNoResponse -> `String "ConfigNoResponse"
+      | `ConfigBlockedByConnectionAllowlist ->
+          `String "ConfigBlockedByConnectionAllowlist"
       | `ConfigInvalidResponse -> `String "ConfigInvalidResponse"
       | `ConfigInvalidContentType -> `String "ConfigInvalidContentType"
       | `IdpNotPotentiallyTrustworthy -> `String "IdpNotPotentiallyTrustworthy"
@@ -5440,11 +5464,15 @@ end = struct
       | `InvalidSigninResponse -> `String "InvalidSigninResponse"
       | `AccountsHttpNotFound -> `String "AccountsHttpNotFound"
       | `AccountsNoResponse -> `String "AccountsNoResponse"
+      | `AccountsBlockedByConnectionAllowlist ->
+          `String "AccountsBlockedByConnectionAllowlist"
       | `AccountsInvalidResponse -> `String "AccountsInvalidResponse"
       | `AccountsListEmpty -> `String "AccountsListEmpty"
       | `AccountsInvalidContentType -> `String "AccountsInvalidContentType"
       | `IdTokenHttpNotFound -> `String "IdTokenHttpNotFound"
       | `IdTokenNoResponse -> `String "IdTokenNoResponse"
+      | `IdTokenBlockedByConnectionAllowlist ->
+          `String "IdTokenBlockedByConnectionAllowlist"
       | `IdTokenInvalidResponse -> `String "IdTokenInvalidResponse"
       | `IdTokenIdpErrorResponse -> `String "IdTokenIdpErrorResponse"
       | `IdTokenCrossSiteIdpErrorResponse ->
@@ -19391,11 +19419,6 @@ and Network : sig
        a network request."]
   end
 
-  and InterceptionId : sig
-    type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique intercepted request identifier."]
-  end
-
   and ErrorReason : sig
     type _errorreason =
       [ `Failed
@@ -20570,44 +20593,6 @@ and Network : sig
     [@@deriving yojson] [@@ocaml.doc "Response to an AuthChallenge."]
   end
 
-  and InterceptionStage : sig
-    type _interceptionstage = [ `Request | `HeadersReceived ]
-
-    val _interceptionstage_of_yojson : Yojson.Basic.t -> _interceptionstage
-    val yojson_of__interceptionstage : _interceptionstage -> Yojson.Basic.t
-
-    type t = _interceptionstage
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stages of the interception to begin intercepting. Request will \
-       intercept before the request is\n\
-       sent. Response will intercept after the response is received."]
-  end
-
-  and RequestPattern : sig
-    type t = {
-      urlPattern : string option;
-          [@key "urlPattern"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Wildcards (`'*'` -> zero or more, `'?'` -> exactly one) are \
-             allowed. Escape character is\n\
-             backslash. Omitting is equivalent to `\"*\"`."]
-      resourceType : ResourceType.t option;
-          [@key "resourceType"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If set, only requests for matching resource types will be \
-             intercepted."]
-      interceptionStage : InterceptionStage.t option;
-          [@key "interceptionStage"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Stage at which to begin intercepting requests. Default is Request."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Request pattern for interception."]
-  end
-
   and SignedExchangeSignature : sig
     type t = {
       label : string;
@@ -21760,14 +21745,6 @@ end = struct
        Note that this does not identify individual HTTP requests that are part \
        of\n\
        a network request."]
-  end
-
-  and InterceptionId : sig
-    type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique intercepted request identifier."]
-  end = struct
-    type t = string
-    [@@deriving yojson] [@@ocaml.doc "Unique intercepted request identifier."]
   end
 
   and ErrorReason : sig
@@ -24469,85 +24446,6 @@ end = struct
              ProvideCredentials."]
     }
     [@@deriving yojson] [@@ocaml.doc "Response to an AuthChallenge."]
-  end
-
-  and InterceptionStage : sig
-    type _interceptionstage = [ `Request | `HeadersReceived ]
-
-    val _interceptionstage_of_yojson : Yojson.Basic.t -> _interceptionstage
-    val yojson_of__interceptionstage : _interceptionstage -> Yojson.Basic.t
-
-    type t = _interceptionstage
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stages of the interception to begin intercepting. Request will \
-       intercept before the request is\n\
-       sent. Response will intercept after the response is received."]
-  end = struct
-    type _interceptionstage = [ `Request | `HeadersReceived ]
-
-    let _interceptionstage_of_yojson = function
-      | `String "Request" -> `Request
-      | `String "HeadersReceived" -> `HeadersReceived
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__interceptionstage = function
-      | `Request -> `String "Request"
-      | `HeadersReceived -> `String "HeadersReceived"
-
-    type t = _interceptionstage
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Stages of the interception to begin intercepting. Request will \
-       intercept before the request is\n\
-       sent. Response will intercept after the response is received."]
-  end
-
-  and RequestPattern : sig
-    type t = {
-      urlPattern : string option;
-          [@key "urlPattern"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Wildcards (`'*'` -> zero or more, `'?'` -> exactly one) are \
-             allowed. Escape character is\n\
-             backslash. Omitting is equivalent to `\"*\"`."]
-      resourceType : ResourceType.t option;
-          [@key "resourceType"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If set, only requests for matching resource types will be \
-             intercepted."]
-      interceptionStage : InterceptionStage.t option;
-          [@key "interceptionStage"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Stage at which to begin intercepting requests. Default is Request."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Request pattern for interception."]
-  end = struct
-    type t = {
-      urlPattern : string option;
-          [@key "urlPattern"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Wildcards (`'*'` -> zero or more, `'?'` -> exactly one) are \
-             allowed. Escape character is\n\
-             backslash. Omitting is equivalent to `\"*\"`."]
-      resourceType : ResourceType.t option;
-          [@key "resourceType"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If set, only requests for matching resource types will be \
-             intercepted."]
-      interceptionStage : InterceptionStage.t option;
-          [@key "interceptionStage"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Stage at which to begin intercepting requests. Default is Request."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Request pattern for interception."]
   end
 
   and SignedExchangeSignature : sig
