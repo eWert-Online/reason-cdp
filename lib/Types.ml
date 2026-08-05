@@ -29432,8 +29432,6 @@ and Page : sig
     type t = {
       action : string; [@key "action"] [@ocaml.doc "No description provided"]
       name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      icons : ImageResource.t list option;
-          [@key "icons"] [@yojson.option] [@ocaml.doc "No description provided"]
       accepts : FileFilter.t list option;
           [@key "accepts"]
           [@yojson.option]
@@ -31845,8 +31843,6 @@ end = struct
     type t = {
       action : string; [@key "action"] [@ocaml.doc "No description provided"]
       name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      icons : ImageResource.t list option;
-          [@key "icons"] [@yojson.option] [@ocaml.doc "No description provided"]
       accepts : FileFilter.t list option;
           [@key "accepts"]
           [@yojson.option]
@@ -31863,8 +31859,6 @@ end = struct
     type t = {
       action : string; [@key "action"] [@ocaml.doc "No description provided"]
       name : string; [@key "name"] [@ocaml.doc "No description provided"]
-      icons : ImageResource.t list option;
-          [@key "icons"] [@yojson.option] [@ocaml.doc "No description provided"]
       accepts : FileFilter.t list option;
           [@key "accepts"]
           [@yojson.option]
@@ -39431,9 +39425,8 @@ and WebAuthn : sig
             "An opaque byte sequence with a maximum size of 64 bytes mapping the\n\
              credential to a specific user. (Encoded as a base64 string when \
              passed over JSON)"]
-      signCount : number option;
+      signCount : number;
           [@key "signCount"]
-          [@yojson.option]
           [@ocaml.doc
             "Signature counter. Must be equal to or greater than -1.\n\
              If -1, the credential won't have an associated signature counter, \
@@ -39825,9 +39818,8 @@ end = struct
             "An opaque byte sequence with a maximum size of 64 bytes mapping the\n\
              credential to a specific user. (Encoded as a base64 string when \
              passed over JSON)"]
-      signCount : number option;
+      signCount : number;
           [@key "signCount"]
-          [@yojson.option]
           [@ocaml.doc
             "Signature counter. Must be equal to or greater than -1.\n\
              If -1, the credential won't have an associated signature counter, \
@@ -39912,9 +39904,8 @@ end = struct
             "An opaque byte sequence with a maximum size of 64 bytes mapping the\n\
              credential to a specific user. (Encoded as a base64 string when \
              passed over JSON)"]
-      signCount : number option;
+      signCount : number;
           [@key "signCount"]
-          [@yojson.option]
           [@ocaml.doc
             "Signature counter. Must be equal to or greater than -1.\n\
              If -1, the credential won't have an associated signature counter, \
