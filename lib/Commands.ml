@@ -38066,12 +38066,18 @@ enabled until the result for this command is received. |desc}]
             [@yojson.option]
             [@ocaml.doc
               "Terminate execution after timing out (number of milliseconds)."]
+        scopeNumber : Types.number option;
+            [@key "scopeNumber"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Specifies the scope number to evaluate the expression in \
+               (default: 0, innermost scope)."]
       }
       [@@deriving yojson]
 
       let make ~callFrameId ~expression ?objectGroup ?includeCommandLineAPI
-          ?silent ?returnByValue ?generatePreview ?throwOnSideEffect ?timeout ()
-          =
+          ?silent ?returnByValue ?generatePreview ?throwOnSideEffect ?timeout
+          ?scopeNumber () =
         {
           callFrameId;
           expression;
@@ -38082,6 +38088,7 @@ enabled until the result for this command is received. |desc}]
           generatePreview;
           throwOnSideEffect;
           timeout;
+          scopeNumber;
         }
     end
 
