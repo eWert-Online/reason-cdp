@@ -29583,6 +29583,144 @@ unavailable. |desc}]
   [@@ocaml.doc
     {desc|Starts sending each frame using the `screencastFrame` event. |desc}]
 
+  module StartScreenRecording = struct
+    module Response : sig
+      type result = {
+        stream : Types.IO.StreamHandle.t;
+            [@key "stream"]
+            [@ocaml.doc
+              "A handle of the stream that holds resulting screencast data."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        stream : Types.IO.StreamHandle.t;
+            [@key "stream"]
+            [@ocaml.doc
+              "A handle of the stream that holds resulting screencast data."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        audio : bool option;
+            [@key "audio"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+        maxWidth : Types.number option;
+            [@key "maxWidth"]
+            [@yojson.option]
+            [@ocaml.doc "Maximum frame width in pixels."]
+        maxHeight : Types.number option;
+            [@key "maxHeight"]
+            [@yojson.option]
+            [@ocaml.doc "Maximum frame height in pixels."]
+        frameRate : Types.number option;
+            [@key "frameRate"]
+            [@yojson.option]
+            [@ocaml.doc "Maximum frame rate in frames per second."]
+      }
+      [@@deriving yojson]
+
+      let make ?audio ?maxWidth ?maxHeight ?frameRate () =
+        { audio; maxWidth; maxHeight; frameRate }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Page.startScreenRecording"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Starts screencast video recording. |desc}]
+
+  module StopScreenRecording = struct
+    module Response : sig
+      type result = {
+        stream : Types.IO.StreamHandle.t;
+            [@key "stream"]
+            [@ocaml.doc
+              "A handle of the stream that holds resulting screencast data."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        stream : Types.IO.StreamHandle.t;
+            [@key "stream"]
+            [@ocaml.doc
+              "A handle of the stream that holds resulting screencast data."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Page.stopScreenRecording"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Stops screencast video recording. |desc}]
+
   module StopLoading = struct
     module Response : sig
       type result = Types.assoc
