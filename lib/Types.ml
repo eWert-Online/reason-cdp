@@ -39282,7 +39282,8 @@ and WebAuthn : sig
   end
 
   and AuthenticatorTransport : sig
-    type _authenticatortransport = [ `usb | `nfc | `ble | `cable | `internal ]
+    type _authenticatortransport =
+      [ `usb | `nfc | `ble | `cable | `hybrid | `smart_card | `internal ]
 
     val _authenticatortransport_of_yojson :
       Yojson.Basic.t -> _authenticatortransport
@@ -39291,7 +39292,7 @@ and WebAuthn : sig
       _authenticatortransport -> Yojson.Basic.t
 
     type t = _authenticatortransport
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+    [@@deriving yojson] [@@ocaml.doc "LINT.IfChange(AuthenticatorTransport)"]
   end
 
   and VirtualAuthenticatorOptions : sig
@@ -39550,7 +39551,8 @@ end = struct
   end
 
   and AuthenticatorTransport : sig
-    type _authenticatortransport = [ `usb | `nfc | `ble | `cable | `internal ]
+    type _authenticatortransport =
+      [ `usb | `nfc | `ble | `cable | `hybrid | `smart_card | `internal ]
 
     val _authenticatortransport_of_yojson :
       Yojson.Basic.t -> _authenticatortransport
@@ -39559,15 +39561,18 @@ end = struct
       _authenticatortransport -> Yojson.Basic.t
 
     type t = _authenticatortransport
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+    [@@deriving yojson] [@@ocaml.doc "LINT.IfChange(AuthenticatorTransport)"]
   end = struct
-    type _authenticatortransport = [ `usb | `nfc | `ble | `cable | `internal ]
+    type _authenticatortransport =
+      [ `usb | `nfc | `ble | `cable | `hybrid | `smart_card | `internal ]
 
     let _authenticatortransport_of_yojson = function
       | `String "usb" -> `usb
       | `String "nfc" -> `nfc
       | `String "ble" -> `ble
       | `String "cable" -> `cable
+      | `String "hybrid" -> `hybrid
+      | `String "smart-card" -> `smart_card
       | `String "internal" -> `internal
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -39577,10 +39582,12 @@ end = struct
       | `nfc -> `String "nfc"
       | `ble -> `String "ble"
       | `cable -> `String "cable"
+      | `hybrid -> `String "hybrid"
+      | `smart_card -> `String "smart-card"
       | `internal -> `String "internal"
 
     type t = _authenticatortransport
-    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+    [@@deriving yojson] [@@ocaml.doc "LINT.IfChange(AuthenticatorTransport)"]
   end
 
   and VirtualAuthenticatorOptions : sig
