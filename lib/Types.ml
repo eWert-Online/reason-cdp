@@ -2290,7 +2290,10 @@ and Audits : sig
       | `ItemNotInnerList
       | `InvalidAllowlistItemType
       | `ReportingEndpointNotToken
-      | `InvalidUrlPattern ]
+      | `InvalidUrlPattern
+      | `IFrameAttributeLoosensEmbeddingRequirement
+      | `InvalidAllowConnectionAllowlistFrom
+      | `EmbeddingRequirementNotSatisfied ]
 
     val _connectionallowlisterror_of_yojson :
       Yojson.Basic.t -> _connectionallowlisterror
@@ -4733,7 +4736,10 @@ end = struct
       | `ItemNotInnerList
       | `InvalidAllowlistItemType
       | `ReportingEndpointNotToken
-      | `InvalidUrlPattern ]
+      | `InvalidUrlPattern
+      | `IFrameAttributeLoosensEmbeddingRequirement
+      | `InvalidAllowConnectionAllowlistFrom
+      | `EmbeddingRequirementNotSatisfied ]
 
     val _connectionallowlisterror_of_yojson :
       Yojson.Basic.t -> _connectionallowlisterror
@@ -4750,7 +4756,10 @@ end = struct
       | `ItemNotInnerList
       | `InvalidAllowlistItemType
       | `ReportingEndpointNotToken
-      | `InvalidUrlPattern ]
+      | `InvalidUrlPattern
+      | `IFrameAttributeLoosensEmbeddingRequirement
+      | `InvalidAllowConnectionAllowlistFrom
+      | `EmbeddingRequirementNotSatisfied ]
 
     let _connectionallowlisterror_of_yojson = function
       | `String "InvalidHeader" -> `InvalidHeader
@@ -4759,6 +4768,12 @@ end = struct
       | `String "InvalidAllowlistItemType" -> `InvalidAllowlistItemType
       | `String "ReportingEndpointNotToken" -> `ReportingEndpointNotToken
       | `String "InvalidUrlPattern" -> `InvalidUrlPattern
+      | `String "IFrameAttributeLoosensEmbeddingRequirement" ->
+          `IFrameAttributeLoosensEmbeddingRequirement
+      | `String "InvalidAllowConnectionAllowlistFrom" ->
+          `InvalidAllowConnectionAllowlistFrom
+      | `String "EmbeddingRequirementNotSatisfied" ->
+          `EmbeddingRequirementNotSatisfied
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -4769,6 +4784,12 @@ end = struct
       | `InvalidAllowlistItemType -> `String "InvalidAllowlistItemType"
       | `ReportingEndpointNotToken -> `String "ReportingEndpointNotToken"
       | `InvalidUrlPattern -> `String "InvalidUrlPattern"
+      | `IFrameAttributeLoosensEmbeddingRequirement ->
+          `String "IFrameAttributeLoosensEmbeddingRequirement"
+      | `InvalidAllowConnectionAllowlistFrom ->
+          `String "InvalidAllowConnectionAllowlistFrom"
+      | `EmbeddingRequirementNotSatisfied ->
+          `String "EmbeddingRequirementNotSatisfied"
 
     type t = _connectionallowlisterror
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -20717,17 +20738,6 @@ and Network : sig
     [@@ocaml.doc "Information about a signed exchange response."]
   end
 
-  and ContentEncoding : sig
-    type _contentencoding = [ `deflate | `gzip | `br | `zstd ]
-
-    val _contentencoding_of_yojson : Yojson.Basic.t -> _contentencoding
-    val yojson_of__contentencoding : _contentencoding -> Yojson.Basic.t
-
-    type t = _contentencoding
-    [@@deriving yojson]
-    [@@ocaml.doc "List of content encodings supported by the backend."]
-  end
-
   and NetworkConditions : sig
     type t = {
       urlPattern : string;
@@ -24696,37 +24706,6 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc "Information about a signed exchange response."]
-  end
-
-  and ContentEncoding : sig
-    type _contentencoding = [ `deflate | `gzip | `br | `zstd ]
-
-    val _contentencoding_of_yojson : Yojson.Basic.t -> _contentencoding
-    val yojson_of__contentencoding : _contentencoding -> Yojson.Basic.t
-
-    type t = _contentencoding
-    [@@deriving yojson]
-    [@@ocaml.doc "List of content encodings supported by the backend."]
-  end = struct
-    type _contentencoding = [ `deflate | `gzip | `br | `zstd ]
-
-    let _contentencoding_of_yojson = function
-      | `String "deflate" -> `deflate
-      | `String "gzip" -> `gzip
-      | `String "br" -> `br
-      | `String "zstd" -> `zstd
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__contentencoding = function
-      | `deflate -> `String "deflate"
-      | `gzip -> `String "gzip"
-      | `br -> `String "br"
-      | `zstd -> `String "zstd"
-
-    type t = _contentencoding
-    [@@deriving yojson]
-    [@@ocaml.doc "List of content encodings supported by the backend."]
   end
 
   and NetworkConditions : sig
@@ -29788,6 +29767,7 @@ and Page : sig
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
       | `EmbedderExtensionFrame
+      | `EmbedderPrivilegedWebContents
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
       | `CacheControlNoStoreDeviceBoundSessionTerminated
@@ -32399,6 +32379,7 @@ end = struct
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
       | `EmbedderExtensionFrame
+      | `EmbedderPrivilegedWebContents
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
       | `CacheControlNoStoreDeviceBoundSessionTerminated
@@ -32559,6 +32540,7 @@ end = struct
       | `EmbedderExtensionMessagingForOpenPort
       | `EmbedderExtensionSentMessageToCachedFrame
       | `EmbedderExtensionFrame
+      | `EmbedderPrivilegedWebContents
       | `RequestedByWebViewClient
       | `PostMessageByWebViewClient
       | `CacheControlNoStoreDeviceBoundSessionTerminated
@@ -32753,6 +32735,8 @@ end = struct
       | `String "EmbedderExtensionSentMessageToCachedFrame" ->
           `EmbedderExtensionSentMessageToCachedFrame
       | `String "EmbedderExtensionFrame" -> `EmbedderExtensionFrame
+      | `String "EmbedderPrivilegedWebContents" ->
+          `EmbedderPrivilegedWebContents
       | `String "RequestedByWebViewClient" -> `RequestedByWebViewClient
       | `String "PostMessageByWebViewClient" -> `PostMessageByWebViewClient
       | `String "CacheControlNoStoreDeviceBoundSessionTerminated" ->
@@ -32952,6 +32936,8 @@ end = struct
       | `EmbedderExtensionSentMessageToCachedFrame ->
           `String "EmbedderExtensionSentMessageToCachedFrame"
       | `EmbedderExtensionFrame -> `String "EmbedderExtensionFrame"
+      | `EmbedderPrivilegedWebContents ->
+          `String "EmbedderPrivilegedWebContents"
       | `RequestedByWebViewClient -> `String "RequestedByWebViewClient"
       | `PostMessageByWebViewClient -> `String "PostMessageByWebViewClient"
       | `CacheControlNoStoreDeviceBoundSessionTerminated ->

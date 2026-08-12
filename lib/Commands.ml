@@ -13278,6 +13278,73 @@ if the content does not specify one. |desc}]
     {desc|Overrides the values for env(safe-area-inset-*) and env(safe-area-max-inset-*). Unset values will cause the
 respective variables to be undefined, even if previously overridden. |desc}]
 
+  module SetVirtualKeyboardGeometryOverride = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        keyboardRect : Types.DOM.Rect.t option;
+            [@key "keyboardRect"]
+            [@yojson.option]
+            [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ?keyboardRect () = { keyboardRect }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Emulation.setVirtualKeyboardGeometryOverride";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Overrides virtual keyboard geometry in CSS pixels, relative to the top-level viewport. The
+provided rect is used for navigator.virtualKeyboard.boundingRect, geometrychange events, and
+env(keyboard-inset-*) values on the inspected frame. The override applies independently of
+navigator.virtualKeyboard.overlaysContent so clients can preview overlay geometry without
+mutating page state. Values are rounded to the nearest CSS pixel. Omitting the rect clears the
+override. |desc}]
+
   module SetDeviceMetricsOverride = struct
     module Response : sig
       type result = Types.assoc
@@ -21551,106 +21618,6 @@ collected since browser process startup. |desc}]
 end
 
 module Network = struct
-  module SetAcceptedEncodings = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Params = struct
-      type t = {
-        encodings : Types.Network.ContentEncoding.t list;
-            [@key "encodings"]
-            [@ocaml.doc "List of accepted content encodings."]
-      }
-      [@@deriving yojson]
-
-      let make ~encodings () = { encodings }
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-        params : Params.t;
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId ~params id =
-        { id; method_ = "Network.setAcceptedEncodings"; sessionId; params }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Sets a list of content encodings that will be accepted. Empty list means no encoding is accepted. |desc}]
-
-  module ClearAcceptedEncodingsOverride = struct
-    module Response : sig
-      type result = Types.assoc
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = Types.assoc [@@deriving yojson]
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Network.clearAcceptedEncodingsOverride"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Clears accepted encodings set by setAcceptedEncodings |desc}]
-
   module CanClearBrowserCache = struct
     module Response : sig
       type result = {
@@ -40060,13 +40027,7 @@ or caught exceptions, no exceptions. Initial pause on exceptions state is `none`
     end
   end
   [@@ocaml.doc
-    {desc|Edits JavaScript source live.
-
-In general, functions that are currently on the stack can not be edited with
-a single exception: If the edited function is the top-most stack frame and
-that is the only activation of that function on the stack. In this case
-the live edit will be successful and a `Debugger.restartFrame` for the
-top-most function is automatically triggered. |desc}]
+    {desc|Live edit is no longer supported and this command always fails with a "no longer available" error. |desc}]
 
   module SetSkipAllPauses = struct
     module Response : sig
