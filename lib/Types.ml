@@ -28753,7 +28753,6 @@ and Page : sig
       | `otp_credentials
       | `payment
       | `picture_in_picture
-      | `private_aggregation
       | `private_state_token_issuance
       | `private_state_token_redemption
       | `publickey_credentials_create
@@ -30139,7 +30138,6 @@ end = struct
       | `otp_credentials
       | `payment
       | `picture_in_picture
-      | `private_aggregation
       | `private_state_token_issuance
       | `private_state_token_redemption
       | `publickey_credentials_create
@@ -30264,7 +30262,6 @@ end = struct
       | `otp_credentials
       | `payment
       | `picture_in_picture
-      | `private_aggregation
       | `private_state_token_issuance
       | `private_state_token_redemption
       | `publickey_credentials_create
@@ -30379,7 +30376,6 @@ end = struct
       | `String "otp-credentials" -> `otp_credentials
       | `String "payment" -> `payment
       | `String "picture-in-picture" -> `picture_in_picture
-      | `String "private-aggregation" -> `private_aggregation
       | `String "private-state-token-issuance" -> `private_state_token_issuance
       | `String "private-state-token-redemption" ->
           `private_state_token_redemption
@@ -30497,7 +30493,6 @@ end = struct
       | `otp_credentials -> `String "otp-credentials"
       | `payment -> `String "payment"
       | `picture_in_picture -> `String "picture-in-picture"
-      | `private_aggregation -> `String "private-aggregation"
       | `private_state_token_issuance -> `String "private-state-token-issuance"
       | `private_state_token_redemption ->
           `String "private-state-token-redemption"
