@@ -21427,7 +21427,9 @@ and Network : sig
       | `CrossOriginRegistrationSiteNotIncluded
       | `InvalidPreProvisionedKeyInitiatorMissing
       | `PreProvisionedKeyAccessNotGranted
-      | `PreProvisionedKeyNotFound ]
+      | `PreProvisionedKeyNotFound
+      | `AttestationCertificationError
+      | `AttestationSigningError ]
 
     val _deviceboundsessionfetchresult_of_yojson :
       Yojson.Basic.t -> _deviceboundsessionfetchresult
@@ -26029,7 +26031,9 @@ end = struct
       | `CrossOriginRegistrationSiteNotIncluded
       | `InvalidPreProvisionedKeyInitiatorMissing
       | `PreProvisionedKeyAccessNotGranted
-      | `PreProvisionedKeyNotFound ]
+      | `PreProvisionedKeyNotFound
+      | `AttestationCertificationError
+      | `AttestationSigningError ]
 
     val _deviceboundsessionfetchresult_of_yojson :
       Yojson.Basic.t -> _deviceboundsessionfetchresult
@@ -26117,7 +26121,9 @@ end = struct
       | `CrossOriginRegistrationSiteNotIncluded
       | `InvalidPreProvisionedKeyInitiatorMissing
       | `PreProvisionedKeyAccessNotGranted
-      | `PreProvisionedKeyNotFound ]
+      | `PreProvisionedKeyNotFound
+      | `AttestationCertificationError
+      | `AttestationSigningError ]
 
     let _deviceboundsessionfetchresult_of_yojson = function
       | `String "Success" -> `Success
@@ -26225,6 +26231,9 @@ end = struct
       | `String "PreProvisionedKeyAccessNotGranted" ->
           `PreProvisionedKeyAccessNotGranted
       | `String "PreProvisionedKeyNotFound" -> `PreProvisionedKeyNotFound
+      | `String "AttestationCertificationError" ->
+          `AttestationCertificationError
+      | `String "AttestationSigningError" -> `AttestationSigningError
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26334,6 +26343,9 @@ end = struct
       | `PreProvisionedKeyAccessNotGranted ->
           `String "PreProvisionedKeyAccessNotGranted"
       | `PreProvisionedKeyNotFound -> `String "PreProvisionedKeyNotFound"
+      | `AttestationCertificationError ->
+          `String "AttestationCertificationError"
+      | `AttestationSigningError -> `String "AttestationSigningError"
 
     type t = _deviceboundsessionfetchresult
     [@@deriving yojson]
@@ -33676,6 +33688,7 @@ and Preload : sig
       | `PrefetchIsStale
       | `PrefetchNotEligibleBlockedByConnectionAllowlist
       | `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `PrefetchNotEligibleCrossOrigin
       | `PrefetchNotEligibleDataSaverEnabled
       | `PrefetchNotEligibleExistingProxy
       | `PrefetchNotEligibleHostIsNonUnique
@@ -34495,6 +34508,7 @@ end = struct
       | `PrefetchIsStale
       | `PrefetchNotEligibleBlockedByConnectionAllowlist
       | `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `PrefetchNotEligibleCrossOrigin
       | `PrefetchNotEligibleDataSaverEnabled
       | `PrefetchNotEligibleExistingProxy
       | `PrefetchNotEligibleHostIsNonUnique
@@ -34542,6 +34556,7 @@ end = struct
       | `PrefetchIsStale
       | `PrefetchNotEligibleBlockedByConnectionAllowlist
       | `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `PrefetchNotEligibleCrossOrigin
       | `PrefetchNotEligibleDataSaverEnabled
       | `PrefetchNotEligibleExistingProxy
       | `PrefetchNotEligibleHostIsNonUnique
@@ -34588,6 +34603,8 @@ end = struct
           `PrefetchNotEligibleBlockedByConnectionAllowlist
       | `String "PrefetchNotEligibleBrowserContextOffTheRecord" ->
           `PrefetchNotEligibleBrowserContextOffTheRecord
+      | `String "PrefetchNotEligibleCrossOrigin" ->
+          `PrefetchNotEligibleCrossOrigin
       | `String "PrefetchNotEligibleDataSaverEnabled" ->
           `PrefetchNotEligibleDataSaverEnabled
       | `String "PrefetchNotEligibleExistingProxy" ->
@@ -34651,6 +34668,8 @@ end = struct
           `String "PrefetchNotEligibleBlockedByConnectionAllowlist"
       | `PrefetchNotEligibleBrowserContextOffTheRecord ->
           `String "PrefetchNotEligibleBrowserContextOffTheRecord"
+      | `PrefetchNotEligibleCrossOrigin ->
+          `String "PrefetchNotEligibleCrossOrigin"
       | `PrefetchNotEligibleDataSaverEnabled ->
           `String "PrefetchNotEligibleDataSaverEnabled"
       | `PrefetchNotEligibleExistingProxy ->
@@ -38816,6 +38835,8 @@ and WebAudio : sig
             "Number of output channels supported by audio hardware in use."]
       sampleRate : number;
           [@key "sampleRate"] [@ocaml.doc "Context sample rate."]
+      renderQuantumSize : number;
+          [@key "renderQuantumSize"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "Protocol object for BaseAudioContext"]
   end
@@ -39106,6 +39127,8 @@ end = struct
             "Number of output channels supported by audio hardware in use."]
       sampleRate : number;
           [@key "sampleRate"] [@ocaml.doc "Context sample rate."]
+      renderQuantumSize : number;
+          [@key "renderQuantumSize"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "Protocol object for BaseAudioContext"]
   end = struct
@@ -39129,6 +39152,8 @@ end = struct
             "Number of output channels supported by audio hardware in use."]
       sampleRate : number;
           [@key "sampleRate"] [@ocaml.doc "Context sample rate."]
+      renderQuantumSize : number;
+          [@key "renderQuantumSize"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "Protocol object for BaseAudioContext"]
   end
