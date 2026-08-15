@@ -28748,7 +28748,6 @@ and Page : sig
       | `identity_credentials_get
       | `idle_detection
       | `interest_cohort
-      | `join_ad_interest_group
       | `keyboard_map
       | `language_detector
       | `language_model
@@ -28769,9 +28768,7 @@ and Page : sig
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
-      | `record_ad_auction_events
       | `rewriter
-      | `run_ad_auction
       | `screen_wake_lock
       | `serial
       | `shared_storage
@@ -30133,7 +30130,6 @@ end = struct
       | `identity_credentials_get
       | `idle_detection
       | `interest_cohort
-      | `join_ad_interest_group
       | `keyboard_map
       | `language_detector
       | `language_model
@@ -30154,9 +30150,7 @@ end = struct
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
-      | `record_ad_auction_events
       | `rewriter
-      | `run_ad_auction
       | `screen_wake_lock
       | `serial
       | `shared_storage
@@ -30257,7 +30251,6 @@ end = struct
       | `identity_credentials_get
       | `idle_detection
       | `interest_cohort
-      | `join_ad_interest_group
       | `keyboard_map
       | `language_detector
       | `language_model
@@ -30278,9 +30271,7 @@ end = struct
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
-      | `record_ad_auction_events
       | `rewriter
-      | `run_ad_auction
       | `screen_wake_lock
       | `serial
       | `shared_storage
@@ -30370,7 +30361,6 @@ end = struct
       | `String "identity-credentials-get" -> `identity_credentials_get
       | `String "idle-detection" -> `idle_detection
       | `String "interest-cohort" -> `interest_cohort
-      | `String "join-ad-interest-group" -> `join_ad_interest_group
       | `String "keyboard-map" -> `keyboard_map
       | `String "language-detector" -> `language_detector
       | `String "language-model" -> `language_model
@@ -30393,9 +30383,7 @@ end = struct
           `private_state_token_redemption
       | `String "publickey-credentials-create" -> `publickey_credentials_create
       | `String "publickey-credentials-get" -> `publickey_credentials_get
-      | `String "record-ad-auction-events" -> `record_ad_auction_events
       | `String "rewriter" -> `rewriter
-      | `String "run-ad-auction" -> `run_ad_auction
       | `String "screen-wake-lock" -> `screen_wake_lock
       | `String "serial" -> `serial
       | `String "shared-storage" -> `shared_storage
@@ -30487,7 +30475,6 @@ end = struct
       | `identity_credentials_get -> `String "identity-credentials-get"
       | `idle_detection -> `String "idle-detection"
       | `interest_cohort -> `String "interest-cohort"
-      | `join_ad_interest_group -> `String "join-ad-interest-group"
       | `keyboard_map -> `String "keyboard-map"
       | `language_detector -> `String "language-detector"
       | `language_model -> `String "language-model"
@@ -30510,9 +30497,7 @@ end = struct
           `String "private-state-token-redemption"
       | `publickey_credentials_create -> `String "publickey-credentials-create"
       | `publickey_credentials_get -> `String "publickey-credentials-get"
-      | `record_ad_auction_events -> `String "record-ad-auction-events"
       | `rewriter -> `String "rewriter"
-      | `run_ad_auction -> `String "run-ad-auction"
       | `screen_wake_lock -> `String "screen-wake-lock"
       | `serial -> `String "serial"
       | `shared_storage -> `String "shared-storage"
