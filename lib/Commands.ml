@@ -4025,6 +4025,120 @@ setPermission instead. |desc}]
   [@@ocaml.doc
     {desc|Allows a site to use privacy sandbox features that require enrollment
 without the site actually being enrolled. Only supported on page targets. |desc}]
+
+  module GetGlobalPrivacyControl = struct
+    module Response : sig
+      type result = {
+        gpc : bool; [@key "gpc"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        gpc : bool; [@key "gpc"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Browser.getGlobalPrivacyControl"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Gets the current globally-applied privacy control status
+See https://www.w3.org/TR/gpc/#get-global-privacy-control |desc}]
+
+  module SetGlobalPrivacyControl = struct
+    module Response : sig
+      type result = {
+        gpc : bool; [@key "gpc"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        gpc : bool; [@key "gpc"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        gpc : bool; [@key "gpc"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~gpc () = { gpc }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Browser.setGlobalPrivacyControl"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Sets and then gets the current globally-applied privacy control status
+See https://www.w3.org/TR/gpc/#set-global-privacy-control |desc}]
 end
 
 module CSS = struct
