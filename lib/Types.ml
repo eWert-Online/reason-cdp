@@ -1160,6 +1160,25 @@ and Ads : sig
     }
     [@@deriving yojson] [@@ocaml.doc "Ad metrics for a page."]
   end
+
+  and AdScript : sig
+    type t = {
+      scriptId : Runtime.ScriptId.t;
+          [@key "scriptId"] [@ocaml.doc "The script ID."]
+      provenance : Network.AdProvenance.t;
+          [@key "provenance"] [@ocaml.doc "The ad provenance."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "An ad script.\n\
+       Note: when the script is a transitive ad script, we only fill in the\n\
+       immediate ancestor script in the provenance's adScriptAncestry field \
+       (as its\n\
+       first entry), rather than filling in the full ancestry. This saves work \
+       for\n\
+       the backend, and the frontend can reconstruct the full ancestry if\n\
+       necessary."]
+  end
 end = struct
   module rec AdFrameData : sig
     type t = {
@@ -1281,6 +1300,42 @@ end = struct
              event."]
     }
     [@@deriving yojson] [@@ocaml.doc "Ad metrics for a page."]
+  end
+
+  and AdScript : sig
+    type t = {
+      scriptId : Runtime.ScriptId.t;
+          [@key "scriptId"] [@ocaml.doc "The script ID."]
+      provenance : Network.AdProvenance.t;
+          [@key "provenance"] [@ocaml.doc "The ad provenance."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "An ad script.\n\
+       Note: when the script is a transitive ad script, we only fill in the\n\
+       immediate ancestor script in the provenance's adScriptAncestry field \
+       (as its\n\
+       first entry), rather than filling in the full ancestry. This saves work \
+       for\n\
+       the backend, and the frontend can reconstruct the full ancestry if\n\
+       necessary."]
+  end = struct
+    type t = {
+      scriptId : Runtime.ScriptId.t;
+          [@key "scriptId"] [@ocaml.doc "The script ID."]
+      provenance : Network.AdProvenance.t;
+          [@key "provenance"] [@ocaml.doc "The ad provenance."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "An ad script.\n\
+       Note: when the script is a transitive ad script, we only fill in the\n\
+       immediate ancestor script in the provenance's adScriptAncestry field \
+       (as its\n\
+       first entry), rather than filling in the full ancestry. This saves work \
+       for\n\
+       the backend, and the frontend can reconstruct the full ancestry if\n\
+       necessary."]
   end
 end
 
@@ -21018,7 +21073,13 @@ and Network : sig
       adScriptAncestry : AdAncestry.t option;
           [@key "adScriptAncestry"]
           [@yojson.option]
-          [@ocaml.doc "The script ancestry that created the ad, if any."]
+          [@ocaml.doc
+            "The script ancestry that created the ad, if any.\n\
+             Note: depending on the context, this may represent the full \
+             ancestry up\n\
+             to the root script, or it may contain only one script \
+             representing the\n\
+             immediate ancestor."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -25266,7 +25327,13 @@ end = struct
       adScriptAncestry : AdAncestry.t option;
           [@key "adScriptAncestry"]
           [@yojson.option]
-          [@ocaml.doc "The script ancestry that created the ad, if any."]
+          [@ocaml.doc
+            "The script ancestry that created the ad, if any.\n\
+             Note: depending on the context, this may represent the full \
+             ancestry up\n\
+             to the root script, or it may contain only one script \
+             representing the\n\
+             immediate ancestor."]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -25286,7 +25353,13 @@ end = struct
       adScriptAncestry : AdAncestry.t option;
           [@key "adScriptAncestry"]
           [@yojson.option]
-          [@ocaml.doc "The script ancestry that created the ad, if any."]
+          [@ocaml.doc
+            "The script ancestry that created the ad, if any.\n\
+             Note: depending on the context, this may represent the full \
+             ancestry up\n\
+             to the root script, or it may contain only one script \
+             representing the\n\
+             immediate ancestor."]
     }
     [@@deriving yojson]
     [@@ocaml.doc

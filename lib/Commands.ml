@@ -629,6 +629,61 @@ module Ads = struct
     end
   end
   [@@ocaml.doc {desc|Retrieves ad metrics for the current page. |desc}]
+
+  module GetAdScripts = struct
+    module Response : sig
+      type result = {
+        newScripts : Types.Ads.AdScript.t list;
+            [@key "newScripts"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        newScripts : Types.Ads.AdScript.t list;
+            [@key "newScripts"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Ads.getAdScripts"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Retrieves ad scripts for the current page. To minimize payload size, this
+only returns the newly tracked ad scripts since the last call to
+getAdScripts (i.e., the delta). |desc}]
 end
 
 module Animation = struct
@@ -29720,12 +29775,39 @@ unavailable. |desc}]
         everyNthFrame : Types.number option;
             [@key "everyNthFrame"]
             [@yojson.option]
-            [@ocaml.doc "Send every n-th frame."]
+            [@ocaml.doc "Send every n-th frame. Must be a positive integer."]
+        maxFramesInFlight : Types.number option;
+            [@key "maxFramesInFlight"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Maximum number of frames sent until screencastFrameAck is \
+               required.\n\
+               Defaults to 3. Must be a positive integer."]
+        sendLastFrame : bool option;
+            [@key "sendLastFrame"]
+            [@yojson.option]
+            [@ocaml.doc
+              "By default, after screencastFrameAck arrives, the next produced \
+               frame is sent.\n\
+               Passing this flag enables storing the last produced frame in \
+               memory, which is\n\
+               immediately sent upon screencastFrameAck. This way, overall \
+               performance is\n\
+               traded for a better latency."]
       }
       [@@deriving yojson]
 
-      let make ?format ?quality ?maxWidth ?maxHeight ?everyNthFrame () =
-        { format; quality; maxWidth; maxHeight; everyNthFrame }
+      let make ?format ?quality ?maxWidth ?maxHeight ?everyNthFrame
+          ?maxFramesInFlight ?sendLastFrame () =
+        {
+          format;
+          quality;
+          maxWidth;
+          maxHeight;
+          everyNthFrame;
+          maxFramesInFlight;
+          sendLastFrame;
+        }
     end
 
     module Request = struct
