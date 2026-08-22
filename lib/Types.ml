@@ -35517,6 +35517,102 @@ and ServiceWorker : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and ServiceWorkerRouterCondition : sig
+    type t = {
+      urlPattern : string option;
+          [@key "urlPattern"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Plain text, or JSON serialization of URLPatternInit or URLPattern"]
+      requestMethod : string option;
+          [@key "requestMethod"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      requestMode : string option;
+          [@key "requestMode"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      requestDestination : string option;
+          [@key "requestDestination"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      runningStatus : ServiceWorkerVersionRunningStatus.t option;
+          [@key "runningStatus"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Mostly corresponds to `RouterCondition` in ServiceWorker spec\n\
+       (https://www.w3.org/TR/service-workers/#dictdef-routercondition) while \
+       this\n\
+       currently lacks support for the nested conditions (\"or\" and \"not\").\n\
+       TODO(crbug.com/540469610): Support recursive conditions."]
+  end
+
+  and ServiceWorkerRouterSourceType : sig
+    type _serviceworkerroutersourcetype =
+      [ `cache
+      | `fetchEvent
+      | `network
+      | `raceNetworkAndFetchHandler
+      | `raceNetworkAndCache
+      | `sourceDict ]
+
+    val _serviceworkerroutersourcetype_of_yojson :
+      Yojson.Basic.t -> _serviceworkerroutersourcetype
+
+    val yojson_of__serviceworkerroutersourcetype :
+      _serviceworkerroutersourcetype -> Yojson.Basic.t
+
+    type t = _serviceworkerroutersourcetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ServiceWorkerRouterSourceDict : sig
+    type t = {
+      cacheName : string;
+          [@key "cacheName"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "https://www.w3.org/TR/service-workers/#dictdef-routersourcedict"]
+  end
+
+  and ServiceWorkerRouterSource : sig
+    type t = {
+      type_ : ServiceWorkerRouterSourceType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      sourceDict : ServiceWorkerRouterSourceDict.t option;
+          [@key "sourceDict"]
+          [@yojson.option]
+          [@ocaml.doc "Non-empty iff `type` equals \"sourceDict\"."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Corresponds to `RouterSource` in the spec while the representation is \
+       different as follows.\n\
+       (https://www.w3.org/TR/service-workers/#typedefdef-routersource)\n\
+       - `RouterSourceEnum`: `type` equals `cache`, `sourceDict` is null.\n\
+       - `RouterSourceDict`: `type` equals `sourceDict`, `sourceDict` has \
+       valid value."]
+  end
+
+  and ServiceWorkerRouterRule : sig
+    type t = {
+      condition : ServiceWorkerRouterCondition.t;
+          [@key "condition"] [@ocaml.doc "No description provided"]
+      source : ServiceWorkerRouterSource.t;
+          [@key "source"] [@ocaml.doc "No description provided"]
+      id : number;
+          [@key "id"]
+          [@ocaml.doc
+            "Rule ID assigned by the browser. Unique within each \
+             ServiceWorkerVersion."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and ServiceWorkerVersion : sig
     type t = {
       versionId : string;
@@ -35551,6 +35647,15 @@ and ServiceWorker : sig
           [@ocaml.doc "No description provided"]
       routerRules : string option;
           [@key "routerRules"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Migration to `typedRouterRules` is in progress. The browser sends \
+             either\n\
+             `routerRules` or `typedRouterRules`.\n\
+             TODO(crbug.com/540469610): Remove `routerRules` after the \
+             migration."]
+      typedRouterRules : ServiceWorkerRouterRule.t list option;
+          [@key "typedRouterRules"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -35683,6 +35788,200 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and ServiceWorkerRouterCondition : sig
+    type t = {
+      urlPattern : string option;
+          [@key "urlPattern"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Plain text, or JSON serialization of URLPatternInit or URLPattern"]
+      requestMethod : string option;
+          [@key "requestMethod"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      requestMode : string option;
+          [@key "requestMode"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      requestDestination : string option;
+          [@key "requestDestination"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      runningStatus : ServiceWorkerVersionRunningStatus.t option;
+          [@key "runningStatus"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Mostly corresponds to `RouterCondition` in ServiceWorker spec\n\
+       (https://www.w3.org/TR/service-workers/#dictdef-routercondition) while \
+       this\n\
+       currently lacks support for the nested conditions (\"or\" and \"not\").\n\
+       TODO(crbug.com/540469610): Support recursive conditions."]
+  end = struct
+    type t = {
+      urlPattern : string option;
+          [@key "urlPattern"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Plain text, or JSON serialization of URLPatternInit or URLPattern"]
+      requestMethod : string option;
+          [@key "requestMethod"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      requestMode : string option;
+          [@key "requestMode"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      requestDestination : string option;
+          [@key "requestDestination"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      runningStatus : ServiceWorkerVersionRunningStatus.t option;
+          [@key "runningStatus"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Mostly corresponds to `RouterCondition` in ServiceWorker spec\n\
+       (https://www.w3.org/TR/service-workers/#dictdef-routercondition) while \
+       this\n\
+       currently lacks support for the nested conditions (\"or\" and \"not\").\n\
+       TODO(crbug.com/540469610): Support recursive conditions."]
+  end
+
+  and ServiceWorkerRouterSourceType : sig
+    type _serviceworkerroutersourcetype =
+      [ `cache
+      | `fetchEvent
+      | `network
+      | `raceNetworkAndFetchHandler
+      | `raceNetworkAndCache
+      | `sourceDict ]
+
+    val _serviceworkerroutersourcetype_of_yojson :
+      Yojson.Basic.t -> _serviceworkerroutersourcetype
+
+    val yojson_of__serviceworkerroutersourcetype :
+      _serviceworkerroutersourcetype -> Yojson.Basic.t
+
+    type t = _serviceworkerroutersourcetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _serviceworkerroutersourcetype =
+      [ `cache
+      | `fetchEvent
+      | `network
+      | `raceNetworkAndFetchHandler
+      | `raceNetworkAndCache
+      | `sourceDict ]
+
+    let _serviceworkerroutersourcetype_of_yojson = function
+      | `String "cache" -> `cache
+      | `String "fetchEvent" -> `fetchEvent
+      | `String "network" -> `network
+      | `String "raceNetworkAndFetchHandler" -> `raceNetworkAndFetchHandler
+      | `String "raceNetworkAndCache" -> `raceNetworkAndCache
+      | `String "sourceDict" -> `sourceDict
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__serviceworkerroutersourcetype = function
+      | `cache -> `String "cache"
+      | `fetchEvent -> `String "fetchEvent"
+      | `network -> `String "network"
+      | `raceNetworkAndFetchHandler -> `String "raceNetworkAndFetchHandler"
+      | `raceNetworkAndCache -> `String "raceNetworkAndCache"
+      | `sourceDict -> `String "sourceDict"
+
+    type t = _serviceworkerroutersourcetype
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and ServiceWorkerRouterSourceDict : sig
+    type t = {
+      cacheName : string;
+          [@key "cacheName"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "https://www.w3.org/TR/service-workers/#dictdef-routersourcedict"]
+  end = struct
+    type t = {
+      cacheName : string;
+          [@key "cacheName"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "https://www.w3.org/TR/service-workers/#dictdef-routersourcedict"]
+  end
+
+  and ServiceWorkerRouterSource : sig
+    type t = {
+      type_ : ServiceWorkerRouterSourceType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      sourceDict : ServiceWorkerRouterSourceDict.t option;
+          [@key "sourceDict"]
+          [@yojson.option]
+          [@ocaml.doc "Non-empty iff `type` equals \"sourceDict\"."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Corresponds to `RouterSource` in the spec while the representation is \
+       different as follows.\n\
+       (https://www.w3.org/TR/service-workers/#typedefdef-routersource)\n\
+       - `RouterSourceEnum`: `type` equals `cache`, `sourceDict` is null.\n\
+       - `RouterSourceDict`: `type` equals `sourceDict`, `sourceDict` has \
+       valid value."]
+  end = struct
+    type t = {
+      type_ : ServiceWorkerRouterSourceType.t;
+          [@key "type"] [@ocaml.doc "No description provided"]
+      sourceDict : ServiceWorkerRouterSourceDict.t option;
+          [@key "sourceDict"]
+          [@yojson.option]
+          [@ocaml.doc "Non-empty iff `type` equals \"sourceDict\"."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Corresponds to `RouterSource` in the spec while the representation is \
+       different as follows.\n\
+       (https://www.w3.org/TR/service-workers/#typedefdef-routersource)\n\
+       - `RouterSourceEnum`: `type` equals `cache`, `sourceDict` is null.\n\
+       - `RouterSourceDict`: `type` equals `sourceDict`, `sourceDict` has \
+       valid value."]
+  end
+
+  and ServiceWorkerRouterRule : sig
+    type t = {
+      condition : ServiceWorkerRouterCondition.t;
+          [@key "condition"] [@ocaml.doc "No description provided"]
+      source : ServiceWorkerRouterSource.t;
+          [@key "source"] [@ocaml.doc "No description provided"]
+      id : number;
+          [@key "id"]
+          [@ocaml.doc
+            "Rule ID assigned by the browser. Unique within each \
+             ServiceWorkerVersion."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      condition : ServiceWorkerRouterCondition.t;
+          [@key "condition"] [@ocaml.doc "No description provided"]
+      source : ServiceWorkerRouterSource.t;
+          [@key "source"] [@ocaml.doc "No description provided"]
+      id : number;
+          [@key "id"]
+          [@ocaml.doc
+            "Rule ID assigned by the browser. Unique within each \
+             ServiceWorkerVersion."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
   and ServiceWorkerVersion : sig
     type t = {
       versionId : string;
@@ -35717,6 +36016,15 @@ end = struct
           [@ocaml.doc "No description provided"]
       routerRules : string option;
           [@key "routerRules"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Migration to `typedRouterRules` is in progress. The browser sends \
+             either\n\
+             `routerRules` or `typedRouterRules`.\n\
+             TODO(crbug.com/540469610): Remove `routerRules` after the \
+             migration."]
+      typedRouterRules : ServiceWorkerRouterRule.t list option;
+          [@key "typedRouterRules"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -35755,6 +36063,15 @@ end = struct
           [@ocaml.doc "No description provided"]
       routerRules : string option;
           [@key "routerRules"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Migration to `typedRouterRules` is in progress. The browser sends \
+             either\n\
+             `routerRules` or `typedRouterRules`.\n\
+             TODO(crbug.com/540469610): Remove `routerRules` after the \
+             migration."]
+      typedRouterRules : ServiceWorkerRouterRule.t list option;
+          [@key "typedRouterRules"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -36419,7 +36736,6 @@ and Storage : sig
       | `websql
       | `service_workers
       | `cache_storage
-      | `shared_storage
       | `storage_buckets
       | `all
       | `other ]
@@ -36451,261 +36767,6 @@ and Storage : sig
       "Pair of issuer origin and number of available (signed, but not used) \
        Trust\n\
        Tokens from that issuer."]
-  end
-
-  and SharedStorageAccessScope : sig
-    type _sharedstorageaccessscope =
-      [ `window | `sharedStorageWorklet | `header ]
-
-    val _sharedstorageaccessscope_of_yojson :
-      Yojson.Basic.t -> _sharedstorageaccessscope
-
-    val yojson_of__sharedstorageaccessscope :
-      _sharedstorageaccessscope -> Yojson.Basic.t
-
-    type t = _sharedstorageaccessscope
-    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access scopes."]
-  end
-
-  and SharedStorageAccessMethod : sig
-    type _sharedstorageaccessmethod =
-      [ `addModule
-      | `createWorklet
-      | `selectURL
-      | `run
-      | `batchUpdate
-      | `set
-      | `append
-      | `delete
-      | `clear
-      | `get
-      | `keys
-      | `values
-      | `entries
-      | `length
-      | `remainingBudget ]
-
-    val _sharedstorageaccessmethod_of_yojson :
-      Yojson.Basic.t -> _sharedstorageaccessmethod
-
-    val yojson_of__sharedstorageaccessmethod :
-      _sharedstorageaccessmethod -> Yojson.Basic.t
-
-    type t = _sharedstorageaccessmethod
-    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access methods."]
-  end
-
-  and SharedStorageEntry : sig
-    type t = {
-      key : string; [@key "key"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Struct for a single key-value pair in an origin's shared storage."]
-  end
-
-  and SharedStorageMetadata : sig
-    type t = {
-      creationTime : Network.TimeSinceEpoch.t;
-          [@key "creationTime"]
-          [@ocaml.doc "Time when the origin's shared storage was last created."]
-      length : number;
-          [@key "length"]
-          [@ocaml.doc
-            "Number of key-value pairs stored in origin's shared storage."]
-      remainingBudget : number;
-          [@key "remainingBudget"]
-          [@ocaml.doc
-            "Current amount of bits of entropy remaining in the navigation \
-             budget."]
-      bytesUsed : number;
-          [@key "bytesUsed"]
-          [@ocaml.doc
-            "Total number of bytes stored as key-value pairs in origin's shared\n\
-             storage."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Details for an origin's shared storage."]
-  end
-
-  and SharedStoragePrivateAggregationConfig : sig
-    type t = {
-      aggregationCoordinatorOrigin : string option;
-          [@key "aggregationCoordinatorOrigin"]
-          [@yojson.option]
-          [@ocaml.doc "The chosen aggregation service deployment."]
-      contextId : string option;
-          [@key "contextId"]
-          [@yojson.option]
-          [@ocaml.doc "The context ID provided."]
-      filteringIdMaxBytes : number;
-          [@key "filteringIdMaxBytes"]
-          [@ocaml.doc "Configures the maximum size allowed for filtering IDs."]
-      maxContributions : number option;
-          [@key "maxContributions"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The limit on the number of contributions in the final report."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Represents a dictionary object passed in as privateAggregationConfig to\n\
-       run or selectURL."]
-  end
-
-  and SharedStorageReportingMetadata : sig
-    type t = {
-      eventType : string;
-          [@key "eventType"] [@ocaml.doc "No description provided"]
-      reportingUrl : string;
-          [@key "reportingUrl"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Pair of reporting metadata details for a candidate URL for \
-       `selectURL()`."]
-  end
-
-  and SharedStorageUrlWithMetadata : sig
-    type t = {
-      url : string; [@key "url"] [@ocaml.doc "Spec of candidate URL."]
-      reportingMetadata : SharedStorageReportingMetadata.t list;
-          [@key "reportingMetadata"]
-          [@ocaml.doc "Any associated reporting metadata."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "Bundles a candidate URL with its reporting metadata."]
-  end
-
-  and SharedStorageAccessParams : sig
-    type t = {
-      scriptSourceUrl : string option;
-          [@key "scriptSourceUrl"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Spec of the module script URL.\n\
-             Present only for SharedStorageAccessMethods: addModule and\n\
-             createWorklet."]
-      dataOrigin : string option;
-          [@key "dataOrigin"]
-          [@yojson.option]
-          [@ocaml.doc
-            "String denoting \"context-origin\", \"script-origin\", or a custom\n\
-             origin to be used as the worklet's data origin.\n\
-             Present only for SharedStorageAccessMethod: createWorklet."]
-      operationName : string option;
-          [@key "operationName"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Name of the registered operation to be run.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      operationId : string option;
-          [@key "operationId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "ID of the operation call.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      keepAlive : bool option;
-          [@key "keepAlive"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Whether or not to keep the worket alive for future run or selectURL\n\
-             calls.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      privateAggregationConfig : SharedStoragePrivateAggregationConfig.t option;
-          [@key "privateAggregationConfig"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Configures the private aggregation options.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      serializedData : string option;
-          [@key "serializedData"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The operation's serialized data in bytes (converted to a string).\n\
-             Present only for SharedStorageAccessMethods: run and selectURL.\n\
-             TODO(crbug.com/401011862): Consider updating this parameter to \
-             binary."]
-      urlsWithMetadata : SharedStorageUrlWithMetadata.t list option;
-          [@key "urlsWithMetadata"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Array of candidate URLs' specs, along with any associated metadata.\n\
-             Present only for SharedStorageAccessMethod: selectURL."]
-      urnUuid : string option;
-          [@key "urnUuid"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Spec of the URN:UUID generated for a selectURL call.\n\
-             Present only for SharedStorageAccessMethod: selectURL."]
-      key : string option;
-          [@key "key"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Key for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessMethods: set, append, delete, \
-             and\n\
-             get."]
-      value : string option;
-          [@key "value"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Value for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessMethods: set and append."]
-      ignoreIfPresent : bool option;
-          [@key "ignoreIfPresent"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Whether or not to set an entry for a key if that key is already \
-             present.\n\
-             Present only for SharedStorageAccessMethod: set."]
-      workletOrdinal : number option;
-          [@key "workletOrdinal"]
-          [@yojson.option]
-          [@ocaml.doc
-            "A number denoting the (0-based) order of the worklet's\n\
-             creation relative to all other shared storage worklets created by\n\
-             documents using the current storage partition.\n\
-             Present only for SharedStorageAccessMethods: addModule, \
-             createWorklet."]
-      workletTargetId : Target.TargetID.t option;
-          [@key "workletTargetId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Hex representation of the DevTools token used as the TargetID for \
-             the\n\
-             associated shared storage worklet.\n\
-             Present only for SharedStorageAccessMethods: addModule, \
-             createWorklet,\n\
-             run, selectURL, and any other SharedStorageAccessMethod when the\n\
-             SharedStorageAccessScope is sharedStorageWorklet."]
-      withLock : string option;
-          [@key "withLock"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Name of the lock to be acquired, if present.\n\
-             Optionally present only for SharedStorageAccessMethods: \
-             batchUpdate,\n\
-             set, append, delete, and clear."]
-      batchUpdateId : string option;
-          [@key "batchUpdateId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If the method has been called as part of a batchUpdate, then this\n\
-             number identifies the batch to which it belongs.\n\
-             Optionally present only for SharedStorageAccessMethods:\n\
-             batchUpdate (required), set, append, delete, and clear."]
-      batchSize : number option;
-          [@key "batchSize"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Number of modifier methods sent in batch.\n\
-             Present only for SharedStorageAccessMethod: batchUpdate."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Bundles the parameters for shared storage access events whose\n\
-       presence/absence can vary according to SharedStorageAccessType."]
   end
 
   and StorageBucketsDurability : sig
@@ -36787,7 +36848,6 @@ end = struct
       | `websql
       | `service_workers
       | `cache_storage
-      | `shared_storage
       | `storage_buckets
       | `all
       | `other ]
@@ -36807,7 +36867,6 @@ end = struct
       | `websql
       | `service_workers
       | `cache_storage
-      | `shared_storage
       | `storage_buckets
       | `all
       | `other ]
@@ -36821,7 +36880,6 @@ end = struct
       | `String "websql" -> `websql
       | `String "service_workers" -> `service_workers
       | `String "cache_storage" -> `cache_storage
-      | `String "shared_storage" -> `shared_storage
       | `String "storage_buckets" -> `storage_buckets
       | `String "all" -> `all
       | `String "other" -> `other
@@ -36837,7 +36895,6 @@ end = struct
       | `websql -> `String "websql"
       | `service_workers -> `String "service_workers"
       | `cache_storage -> `String "cache_storage"
-      | `shared_storage -> `String "shared_storage"
       | `storage_buckets -> `String "storage_buckets"
       | `all -> `String "all"
       | `other -> `String "other"
@@ -36884,536 +36941,6 @@ end = struct
       "Pair of issuer origin and number of available (signed, but not used) \
        Trust\n\
        Tokens from that issuer."]
-  end
-
-  and SharedStorageAccessScope : sig
-    type _sharedstorageaccessscope =
-      [ `window | `sharedStorageWorklet | `header ]
-
-    val _sharedstorageaccessscope_of_yojson :
-      Yojson.Basic.t -> _sharedstorageaccessscope
-
-    val yojson_of__sharedstorageaccessscope :
-      _sharedstorageaccessscope -> Yojson.Basic.t
-
-    type t = _sharedstorageaccessscope
-    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access scopes."]
-  end = struct
-    type _sharedstorageaccessscope =
-      [ `window | `sharedStorageWorklet | `header ]
-
-    let _sharedstorageaccessscope_of_yojson = function
-      | `String "window" -> `window
-      | `String "sharedStorageWorklet" -> `sharedStorageWorklet
-      | `String "header" -> `header
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__sharedstorageaccessscope = function
-      | `window -> `String "window"
-      | `sharedStorageWorklet -> `String "sharedStorageWorklet"
-      | `header -> `String "header"
-
-    type t = _sharedstorageaccessscope
-    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access scopes."]
-  end
-
-  and SharedStorageAccessMethod : sig
-    type _sharedstorageaccessmethod =
-      [ `addModule
-      | `createWorklet
-      | `selectURL
-      | `run
-      | `batchUpdate
-      | `set
-      | `append
-      | `delete
-      | `clear
-      | `get
-      | `keys
-      | `values
-      | `entries
-      | `length
-      | `remainingBudget ]
-
-    val _sharedstorageaccessmethod_of_yojson :
-      Yojson.Basic.t -> _sharedstorageaccessmethod
-
-    val yojson_of__sharedstorageaccessmethod :
-      _sharedstorageaccessmethod -> Yojson.Basic.t
-
-    type t = _sharedstorageaccessmethod
-    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access methods."]
-  end = struct
-    type _sharedstorageaccessmethod =
-      [ `addModule
-      | `createWorklet
-      | `selectURL
-      | `run
-      | `batchUpdate
-      | `set
-      | `append
-      | `delete
-      | `clear
-      | `get
-      | `keys
-      | `values
-      | `entries
-      | `length
-      | `remainingBudget ]
-
-    let _sharedstorageaccessmethod_of_yojson = function
-      | `String "addModule" -> `addModule
-      | `String "createWorklet" -> `createWorklet
-      | `String "selectURL" -> `selectURL
-      | `String "run" -> `run
-      | `String "batchUpdate" -> `batchUpdate
-      | `String "set" -> `set
-      | `String "append" -> `append
-      | `String "delete" -> `delete
-      | `String "clear" -> `clear
-      | `String "get" -> `get
-      | `String "keys" -> `keys
-      | `String "values" -> `values
-      | `String "entries" -> `entries
-      | `String "length" -> `length
-      | `String "remainingBudget" -> `remainingBudget
-      | `String s -> failwith ("unknown enum: " ^ s)
-      | _ -> failwith "unknown enum type"
-
-    let yojson_of__sharedstorageaccessmethod = function
-      | `addModule -> `String "addModule"
-      | `createWorklet -> `String "createWorklet"
-      | `selectURL -> `String "selectURL"
-      | `run -> `String "run"
-      | `batchUpdate -> `String "batchUpdate"
-      | `set -> `String "set"
-      | `append -> `String "append"
-      | `delete -> `String "delete"
-      | `clear -> `String "clear"
-      | `get -> `String "get"
-      | `keys -> `String "keys"
-      | `values -> `String "values"
-      | `entries -> `String "entries"
-      | `length -> `String "length"
-      | `remainingBudget -> `String "remainingBudget"
-
-    type t = _sharedstorageaccessmethod
-    [@@deriving yojson] [@@ocaml.doc "Enum of shared storage access methods."]
-  end
-
-  and SharedStorageEntry : sig
-    type t = {
-      key : string; [@key "key"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Struct for a single key-value pair in an origin's shared storage."]
-  end = struct
-    type t = {
-      key : string; [@key "key"] [@ocaml.doc "No description provided"]
-      value : string; [@key "value"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Struct for a single key-value pair in an origin's shared storage."]
-  end
-
-  and SharedStorageMetadata : sig
-    type t = {
-      creationTime : Network.TimeSinceEpoch.t;
-          [@key "creationTime"]
-          [@ocaml.doc "Time when the origin's shared storage was last created."]
-      length : number;
-          [@key "length"]
-          [@ocaml.doc
-            "Number of key-value pairs stored in origin's shared storage."]
-      remainingBudget : number;
-          [@key "remainingBudget"]
-          [@ocaml.doc
-            "Current amount of bits of entropy remaining in the navigation \
-             budget."]
-      bytesUsed : number;
-          [@key "bytesUsed"]
-          [@ocaml.doc
-            "Total number of bytes stored as key-value pairs in origin's shared\n\
-             storage."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Details for an origin's shared storage."]
-  end = struct
-    type t = {
-      creationTime : Network.TimeSinceEpoch.t;
-          [@key "creationTime"]
-          [@ocaml.doc "Time when the origin's shared storage was last created."]
-      length : number;
-          [@key "length"]
-          [@ocaml.doc
-            "Number of key-value pairs stored in origin's shared storage."]
-      remainingBudget : number;
-          [@key "remainingBudget"]
-          [@ocaml.doc
-            "Current amount of bits of entropy remaining in the navigation \
-             budget."]
-      bytesUsed : number;
-          [@key "bytesUsed"]
-          [@ocaml.doc
-            "Total number of bytes stored as key-value pairs in origin's shared\n\
-             storage."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "Details for an origin's shared storage."]
-  end
-
-  and SharedStoragePrivateAggregationConfig : sig
-    type t = {
-      aggregationCoordinatorOrigin : string option;
-          [@key "aggregationCoordinatorOrigin"]
-          [@yojson.option]
-          [@ocaml.doc "The chosen aggregation service deployment."]
-      contextId : string option;
-          [@key "contextId"]
-          [@yojson.option]
-          [@ocaml.doc "The context ID provided."]
-      filteringIdMaxBytes : number;
-          [@key "filteringIdMaxBytes"]
-          [@ocaml.doc "Configures the maximum size allowed for filtering IDs."]
-      maxContributions : number option;
-          [@key "maxContributions"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The limit on the number of contributions in the final report."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Represents a dictionary object passed in as privateAggregationConfig to\n\
-       run or selectURL."]
-  end = struct
-    type t = {
-      aggregationCoordinatorOrigin : string option;
-          [@key "aggregationCoordinatorOrigin"]
-          [@yojson.option]
-          [@ocaml.doc "The chosen aggregation service deployment."]
-      contextId : string option;
-          [@key "contextId"]
-          [@yojson.option]
-          [@ocaml.doc "The context ID provided."]
-      filteringIdMaxBytes : number;
-          [@key "filteringIdMaxBytes"]
-          [@ocaml.doc "Configures the maximum size allowed for filtering IDs."]
-      maxContributions : number option;
-          [@key "maxContributions"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The limit on the number of contributions in the final report."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Represents a dictionary object passed in as privateAggregationConfig to\n\
-       run or selectURL."]
-  end
-
-  and SharedStorageReportingMetadata : sig
-    type t = {
-      eventType : string;
-          [@key "eventType"] [@ocaml.doc "No description provided"]
-      reportingUrl : string;
-          [@key "reportingUrl"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Pair of reporting metadata details for a candidate URL for \
-       `selectURL()`."]
-  end = struct
-    type t = {
-      eventType : string;
-          [@key "eventType"] [@ocaml.doc "No description provided"]
-      reportingUrl : string;
-          [@key "reportingUrl"] [@ocaml.doc "No description provided"]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Pair of reporting metadata details for a candidate URL for \
-       `selectURL()`."]
-  end
-
-  and SharedStorageUrlWithMetadata : sig
-    type t = {
-      url : string; [@key "url"] [@ocaml.doc "Spec of candidate URL."]
-      reportingMetadata : SharedStorageReportingMetadata.t list;
-          [@key "reportingMetadata"]
-          [@ocaml.doc "Any associated reporting metadata."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "Bundles a candidate URL with its reporting metadata."]
-  end = struct
-    type t = {
-      url : string; [@key "url"] [@ocaml.doc "Spec of candidate URL."]
-      reportingMetadata : SharedStorageReportingMetadata.t list;
-          [@key "reportingMetadata"]
-          [@ocaml.doc "Any associated reporting metadata."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc "Bundles a candidate URL with its reporting metadata."]
-  end
-
-  and SharedStorageAccessParams : sig
-    type t = {
-      scriptSourceUrl : string option;
-          [@key "scriptSourceUrl"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Spec of the module script URL.\n\
-             Present only for SharedStorageAccessMethods: addModule and\n\
-             createWorklet."]
-      dataOrigin : string option;
-          [@key "dataOrigin"]
-          [@yojson.option]
-          [@ocaml.doc
-            "String denoting \"context-origin\", \"script-origin\", or a custom\n\
-             origin to be used as the worklet's data origin.\n\
-             Present only for SharedStorageAccessMethod: createWorklet."]
-      operationName : string option;
-          [@key "operationName"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Name of the registered operation to be run.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      operationId : string option;
-          [@key "operationId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "ID of the operation call.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      keepAlive : bool option;
-          [@key "keepAlive"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Whether or not to keep the worket alive for future run or selectURL\n\
-             calls.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      privateAggregationConfig : SharedStoragePrivateAggregationConfig.t option;
-          [@key "privateAggregationConfig"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Configures the private aggregation options.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      serializedData : string option;
-          [@key "serializedData"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The operation's serialized data in bytes (converted to a string).\n\
-             Present only for SharedStorageAccessMethods: run and selectURL.\n\
-             TODO(crbug.com/401011862): Consider updating this parameter to \
-             binary."]
-      urlsWithMetadata : SharedStorageUrlWithMetadata.t list option;
-          [@key "urlsWithMetadata"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Array of candidate URLs' specs, along with any associated metadata.\n\
-             Present only for SharedStorageAccessMethod: selectURL."]
-      urnUuid : string option;
-          [@key "urnUuid"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Spec of the URN:UUID generated for a selectURL call.\n\
-             Present only for SharedStorageAccessMethod: selectURL."]
-      key : string option;
-          [@key "key"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Key for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessMethods: set, append, delete, \
-             and\n\
-             get."]
-      value : string option;
-          [@key "value"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Value for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessMethods: set and append."]
-      ignoreIfPresent : bool option;
-          [@key "ignoreIfPresent"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Whether or not to set an entry for a key if that key is already \
-             present.\n\
-             Present only for SharedStorageAccessMethod: set."]
-      workletOrdinal : number option;
-          [@key "workletOrdinal"]
-          [@yojson.option]
-          [@ocaml.doc
-            "A number denoting the (0-based) order of the worklet's\n\
-             creation relative to all other shared storage worklets created by\n\
-             documents using the current storage partition.\n\
-             Present only for SharedStorageAccessMethods: addModule, \
-             createWorklet."]
-      workletTargetId : Target.TargetID.t option;
-          [@key "workletTargetId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Hex representation of the DevTools token used as the TargetID for \
-             the\n\
-             associated shared storage worklet.\n\
-             Present only for SharedStorageAccessMethods: addModule, \
-             createWorklet,\n\
-             run, selectURL, and any other SharedStorageAccessMethod when the\n\
-             SharedStorageAccessScope is sharedStorageWorklet."]
-      withLock : string option;
-          [@key "withLock"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Name of the lock to be acquired, if present.\n\
-             Optionally present only for SharedStorageAccessMethods: \
-             batchUpdate,\n\
-             set, append, delete, and clear."]
-      batchUpdateId : string option;
-          [@key "batchUpdateId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If the method has been called as part of a batchUpdate, then this\n\
-             number identifies the batch to which it belongs.\n\
-             Optionally present only for SharedStorageAccessMethods:\n\
-             batchUpdate (required), set, append, delete, and clear."]
-      batchSize : number option;
-          [@key "batchSize"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Number of modifier methods sent in batch.\n\
-             Present only for SharedStorageAccessMethod: batchUpdate."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Bundles the parameters for shared storage access events whose\n\
-       presence/absence can vary according to SharedStorageAccessType."]
-  end = struct
-    type t = {
-      scriptSourceUrl : string option;
-          [@key "scriptSourceUrl"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Spec of the module script URL.\n\
-             Present only for SharedStorageAccessMethods: addModule and\n\
-             createWorklet."]
-      dataOrigin : string option;
-          [@key "dataOrigin"]
-          [@yojson.option]
-          [@ocaml.doc
-            "String denoting \"context-origin\", \"script-origin\", or a custom\n\
-             origin to be used as the worklet's data origin.\n\
-             Present only for SharedStorageAccessMethod: createWorklet."]
-      operationName : string option;
-          [@key "operationName"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Name of the registered operation to be run.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      operationId : string option;
-          [@key "operationId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "ID of the operation call.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      keepAlive : bool option;
-          [@key "keepAlive"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Whether or not to keep the worket alive for future run or selectURL\n\
-             calls.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      privateAggregationConfig : SharedStoragePrivateAggregationConfig.t option;
-          [@key "privateAggregationConfig"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Configures the private aggregation options.\n\
-             Present only for SharedStorageAccessMethods: run and selectURL."]
-      serializedData : string option;
-          [@key "serializedData"]
-          [@yojson.option]
-          [@ocaml.doc
-            "The operation's serialized data in bytes (converted to a string).\n\
-             Present only for SharedStorageAccessMethods: run and selectURL.\n\
-             TODO(crbug.com/401011862): Consider updating this parameter to \
-             binary."]
-      urlsWithMetadata : SharedStorageUrlWithMetadata.t list option;
-          [@key "urlsWithMetadata"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Array of candidate URLs' specs, along with any associated metadata.\n\
-             Present only for SharedStorageAccessMethod: selectURL."]
-      urnUuid : string option;
-          [@key "urnUuid"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Spec of the URN:UUID generated for a selectURL call.\n\
-             Present only for SharedStorageAccessMethod: selectURL."]
-      key : string option;
-          [@key "key"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Key for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessMethods: set, append, delete, \
-             and\n\
-             get."]
-      value : string option;
-          [@key "value"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Value for a specific entry in an origin's shared storage.\n\
-             Present only for SharedStorageAccessMethods: set and append."]
-      ignoreIfPresent : bool option;
-          [@key "ignoreIfPresent"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Whether or not to set an entry for a key if that key is already \
-             present.\n\
-             Present only for SharedStorageAccessMethod: set."]
-      workletOrdinal : number option;
-          [@key "workletOrdinal"]
-          [@yojson.option]
-          [@ocaml.doc
-            "A number denoting the (0-based) order of the worklet's\n\
-             creation relative to all other shared storage worklets created by\n\
-             documents using the current storage partition.\n\
-             Present only for SharedStorageAccessMethods: addModule, \
-             createWorklet."]
-      workletTargetId : Target.TargetID.t option;
-          [@key "workletTargetId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Hex representation of the DevTools token used as the TargetID for \
-             the\n\
-             associated shared storage worklet.\n\
-             Present only for SharedStorageAccessMethods: addModule, \
-             createWorklet,\n\
-             run, selectURL, and any other SharedStorageAccessMethod when the\n\
-             SharedStorageAccessScope is sharedStorageWorklet."]
-      withLock : string option;
-          [@key "withLock"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Name of the lock to be acquired, if present.\n\
-             Optionally present only for SharedStorageAccessMethods: \
-             batchUpdate,\n\
-             set, append, delete, and clear."]
-      batchUpdateId : string option;
-          [@key "batchUpdateId"]
-          [@yojson.option]
-          [@ocaml.doc
-            "If the method has been called as part of a batchUpdate, then this\n\
-             number identifies the batch to which it belongs.\n\
-             Optionally present only for SharedStorageAccessMethods:\n\
-             batchUpdate (required), set, append, delete, and clear."]
-      batchSize : number option;
-          [@key "batchSize"]
-          [@yojson.option]
-          [@ocaml.doc
-            "Number of modifier methods sent in batch.\n\
-             Present only for SharedStorageAccessMethod: batchUpdate."]
-    }
-    [@@deriving yojson]
-    [@@ocaml.doc
-      "Bundles the parameters for shared storage access events whose\n\
-       presence/absence can vary according to SharedStorageAccessType."]
   end
 
   and StorageBucketsDurability : sig
@@ -40053,6 +39580,12 @@ and WebMCP : sig
           [@ocaml.doc
             "A hint indicating that the tool output may contain untrusted \
              content, ex: UGC, 3rd party data."]
+      consequential : bool option;
+          [@key "consequential"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A hint indicating that executing the tool will result in \
+             consequential actions, ex: booking a flight, transferring money."]
       autosubmit : bool option;
           [@key "autosubmit"]
           [@yojson.option]
@@ -40126,6 +39659,12 @@ end = struct
           [@ocaml.doc
             "A hint indicating that the tool output may contain untrusted \
              content, ex: UGC, 3rd party data."]
+      consequential : bool option;
+          [@key "consequential"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A hint indicating that executing the tool will result in \
+             consequential actions, ex: booking a flight, transferring money."]
       autosubmit : bool option;
           [@key "autosubmit"]
           [@yojson.option]
@@ -40147,6 +39686,12 @@ end = struct
           [@ocaml.doc
             "A hint indicating that the tool output may contain untrusted \
              content, ex: UGC, 3rd party data."]
+      consequential : bool option;
+          [@key "consequential"]
+          [@yojson.option]
+          [@ocaml.doc
+            "A hint indicating that executing the tool will result in \
+             consequential actions, ex: booking a flight, transferring money."]
       autosubmit : bool option;
           [@key "autosubmit"]
           [@yojson.option]
