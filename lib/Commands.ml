@@ -3484,6 +3484,69 @@ setPermission instead. |desc}]
     {desc|Returns the command line switches for the browser process if, and only if
 --enable-automation is on the commandline. |desc}]
 
+  module AddMockCamera = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        deviceId : string;
+            [@key "deviceId"]
+            [@ocaml.doc
+              "Required non-empty identifier for the mock camera. This is \
+               mapped to an\n\
+               internal virtual-device identifier and is not the \
+               MediaDeviceInfo.deviceId\n\
+               exposed to the page."]
+      }
+      [@@deriving yojson]
+
+      let make ~deviceId () = { deviceId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Browser.addMockCamera"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Adds or updates a mock camera in the shared video capture device list for
+test automation. The mock camera is not scoped to a particular page or
+frame and is removed when the DevTools session that created it disconnects. |desc}]
+
   module GetHistograms = struct
     module Response : sig
       type result = {

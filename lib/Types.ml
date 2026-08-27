@@ -28817,6 +28817,7 @@ and Page : sig
       | `gamepad
       | `geolocation
       | `gyroscope
+      | `haptics
       | `hid
       | `identity_credentials_get
       | `idle_detection
@@ -30199,6 +30200,7 @@ end = struct
       | `gamepad
       | `geolocation
       | `gyroscope
+      | `haptics
       | `hid
       | `identity_credentials_get
       | `idle_detection
@@ -30320,6 +30322,7 @@ end = struct
       | `gamepad
       | `geolocation
       | `gyroscope
+      | `haptics
       | `hid
       | `identity_credentials_get
       | `idle_detection
@@ -30430,6 +30433,7 @@ end = struct
       | `String "gamepad" -> `gamepad
       | `String "geolocation" -> `geolocation
       | `String "gyroscope" -> `gyroscope
+      | `String "haptics" -> `haptics
       | `String "hid" -> `hid
       | `String "identity-credentials-get" -> `identity_credentials_get
       | `String "idle-detection" -> `idle_detection
@@ -30544,6 +30548,7 @@ end = struct
       | `gamepad -> `String "gamepad"
       | `geolocation -> `String "geolocation"
       | `gyroscope -> `String "gyroscope"
+      | `haptics -> `String "haptics"
       | `hid -> `String "hid"
       | `identity_credentials_get -> `String "identity-credentials-get"
       | `idle_detection -> `String "idle-detection"
