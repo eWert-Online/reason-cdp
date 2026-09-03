@@ -2750,7 +2750,8 @@ and Audits : sig
       | `TokenVerificationKbInvalidNonce
       | `TokenVerificationKbInvalidSdHash
       | `TokenVerificationKbMissingCnf
-      | `TokenVerificationKbSignatureFailed ]
+      | `TokenVerificationKbSignatureFailed
+      | `CrossOriginIframeNotSupported ]
 
     val _emailverificationrequestissuereason_of_yojson :
       Yojson.Basic.t -> _emailverificationrequestissuereason
@@ -5744,7 +5745,8 @@ end = struct
       | `TokenVerificationKbInvalidNonce
       | `TokenVerificationKbInvalidSdHash
       | `TokenVerificationKbMissingCnf
-      | `TokenVerificationKbSignatureFailed ]
+      | `TokenVerificationKbSignatureFailed
+      | `CrossOriginIframeNotSupported ]
 
     val _emailverificationrequestissuereason_of_yojson :
       Yojson.Basic.t -> _emailverificationrequestissuereason
@@ -5816,7 +5818,8 @@ end = struct
       | `TokenVerificationKbInvalidNonce
       | `TokenVerificationKbInvalidSdHash
       | `TokenVerificationKbMissingCnf
-      | `TokenVerificationKbSignatureFailed ]
+      | `TokenVerificationKbSignatureFailed
+      | `CrossOriginIframeNotSupported ]
 
     let _emailverificationrequestissuereason_of_yojson = function
       | `String "InvalidEmail" -> `InvalidEmail
@@ -5909,6 +5912,8 @@ end = struct
           `TokenVerificationKbMissingCnf
       | `String "TokenVerificationKbSignatureFailed" ->
           `TokenVerificationKbSignatureFailed
+      | `String "CrossOriginIframeNotSupported" ->
+          `CrossOriginIframeNotSupported
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -6003,6 +6008,8 @@ end = struct
           `String "TokenVerificationKbMissingCnf"
       | `TokenVerificationKbSignatureFailed ->
           `String "TokenVerificationKbSignatureFailed"
+      | `CrossOriginIframeNotSupported ->
+          `String "CrossOriginIframeNotSupported"
 
     type t = _emailverificationrequestissuereason
     [@@deriving yojson]
