@@ -13618,6 +13618,18 @@ override. |desc}]
         | `overlay -> `String "overlay"
         | `default -> `String "default"
 
+      type setdevicemetricsoverride_viewportmeta = [ `enable | `default ]
+
+      let setdevicemetricsoverride_viewportmeta_of_yojson = function
+        | `String "enable" -> `enable
+        | `String "default" -> `default
+        | `String s -> failwith ("unknown enum: " ^ s)
+        | _ -> failwith "unknown enum type"
+
+      let yojson_of_setdevicemetricsoverride_viewportmeta = function
+        | `enable -> `String "enable"
+        | `default -> `String "default"
+
       type t = {
         width : Types.number;
             [@key "width"]
@@ -13716,13 +13728,20 @@ override. |desc}]
                This is\n\
                useful for emulating mobile device orientation lock behavior in\n\
                responsive design mode."]
+        viewportMeta : setdevicemetricsoverride_viewportmeta option;
+            [@key "viewportMeta"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Viewport meta tag behavior. Default: `default`. Note: if \
+               `mobile` is `true`,\n\
+               the viewport meta tag is always enabled."]
       }
       [@@deriving yojson]
 
       let make ~width ~height ~deviceScaleFactor ~mobile ?scale ?screenWidth
           ?screenHeight ?positionX ?positionY ?dontSetVisibleSize
           ?screenOrientation ?viewport ?displayFeature ?devicePosture
-          ?scrollbarType ?screenOrientationLockEmulation () =
+          ?scrollbarType ?screenOrientationLockEmulation ?viewportMeta () =
         {
           width;
           height;
@@ -13740,6 +13759,7 @@ override. |desc}]
           devicePosture;
           scrollbarType;
           screenOrientationLockEmulation;
+          viewportMeta;
         }
     end
 
