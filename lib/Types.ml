@@ -2628,7 +2628,8 @@ and Audits : sig
       | `TypeNotMatching
       | `UiDismissedNoEmbargo
       | `CorsError
-      | `SuppressedBySegmentationPlatform ]
+      | `SuppressedBySegmentationPlatform
+      | `PopupBlockedByConnectionAllowlist ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -5394,7 +5395,8 @@ end = struct
       | `TypeNotMatching
       | `UiDismissedNoEmbargo
       | `CorsError
-      | `SuppressedBySegmentationPlatform ]
+      | `SuppressedBySegmentationPlatform
+      | `PopupBlockedByConnectionAllowlist ]
 
     val _federatedauthrequestissuereason_of_yojson :
       Yojson.Basic.t -> _federatedauthrequestissuereason
@@ -5457,7 +5459,8 @@ end = struct
       | `TypeNotMatching
       | `UiDismissedNoEmbargo
       | `CorsError
-      | `SuppressedBySegmentationPlatform ]
+      | `SuppressedBySegmentationPlatform
+      | `PopupBlockedByConnectionAllowlist ]
 
     let _federatedauthrequestissuereason_of_yojson = function
       | `String "ShouldEmbargo" -> `ShouldEmbargo
@@ -5513,6 +5516,8 @@ end = struct
       | `String "CorsError" -> `CorsError
       | `String "SuppressedBySegmentationPlatform" ->
           `SuppressedBySegmentationPlatform
+      | `String "PopupBlockedByConnectionAllowlist" ->
+          `PopupBlockedByConnectionAllowlist
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -5570,6 +5575,8 @@ end = struct
       | `CorsError -> `String "CorsError"
       | `SuppressedBySegmentationPlatform ->
           `String "SuppressedBySegmentationPlatform"
+      | `PopupBlockedByConnectionAllowlist ->
+          `String "PopupBlockedByConnectionAllowlist"
 
     type t = _federatedauthrequestissuereason
     [@@deriving yojson]
