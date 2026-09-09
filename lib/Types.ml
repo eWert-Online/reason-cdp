@@ -40147,6 +40147,17 @@ and Debugger : sig
           [@key "endLocation"]
           [@yojson.option]
           [@ocaml.doc "Location in the source code where scope ends"]
+      empty : bool option;
+          [@key "empty"]
+          [@yojson.option]
+          [@ocaml.doc
+            "True if the scope does not declare any variables or have a \
+             runtime context.\n\
+             Only present if true.\n\
+             Empty scopes are retained in the scope chain because\n\
+             they can be targeted via `evaluateOnCallFrame` (using \
+             `scopeNumber`) or\n\
+             matched against scopes in source maps."]
     }
     [@@deriving yojson] [@@ocaml.doc "Scope description."]
   end
@@ -40446,6 +40457,17 @@ end = struct
           [@key "endLocation"]
           [@yojson.option]
           [@ocaml.doc "Location in the source code where scope ends"]
+      empty : bool option;
+          [@key "empty"]
+          [@yojson.option]
+          [@ocaml.doc
+            "True if the scope does not declare any variables or have a \
+             runtime context.\n\
+             Only present if true.\n\
+             Empty scopes are retained in the scope chain because\n\
+             they can be targeted via `evaluateOnCallFrame` (using \
+             `scopeNumber`) or\n\
+             matched against scopes in source maps."]
     }
     [@@deriving yojson] [@@ocaml.doc "Scope description."]
   end = struct
@@ -40507,6 +40529,17 @@ end = struct
           [@key "endLocation"]
           [@yojson.option]
           [@ocaml.doc "Location in the source code where scope ends"]
+      empty : bool option;
+          [@key "empty"]
+          [@yojson.option]
+          [@ocaml.doc
+            "True if the scope does not declare any variables or have a \
+             runtime context.\n\
+             Only present if true.\n\
+             Empty scopes are retained in the scope chain because\n\
+             they can be targeted via `evaluateOnCallFrame` (using \
+             `scopeNumber`) or\n\
+             matched against scopes in source maps."]
     }
     [@@deriving yojson] [@@ocaml.doc "Scope description."]
   end
