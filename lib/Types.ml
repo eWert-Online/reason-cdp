@@ -21633,7 +21633,8 @@ and Network : sig
       | `ServerRequested
       | `InvalidSessionParams
       | `RefreshFatalError
-      | `DevTools ]
+      | `DevTools
+      | `Replaced ]
 
     val _terminationeventdetails_deletionreason_of_yojson :
       Yojson.Basic.t -> _terminationeventdetails_deletionreason
@@ -26671,7 +26672,8 @@ end = struct
       | `ServerRequested
       | `InvalidSessionParams
       | `RefreshFatalError
-      | `DevTools ]
+      | `DevTools
+      | `Replaced ]
 
     val _terminationeventdetails_deletionreason_of_yojson :
       Yojson.Basic.t -> _terminationeventdetails_deletionreason
@@ -26696,7 +26698,8 @@ end = struct
       | `ServerRequested
       | `InvalidSessionParams
       | `RefreshFatalError
-      | `DevTools ]
+      | `DevTools
+      | `Replaced ]
 
     let _terminationeventdetails_deletionreason_of_yojson = function
       | `String "Expired" -> `Expired
@@ -26708,6 +26711,7 @@ end = struct
       | `String "InvalidSessionParams" -> `InvalidSessionParams
       | `String "RefreshFatalError" -> `RefreshFatalError
       | `String "DevTools" -> `DevTools
+      | `String "Replaced" -> `Replaced
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26721,6 +26725,7 @@ end = struct
       | `InvalidSessionParams -> `String "InvalidSessionParams"
       | `RefreshFatalError -> `String "RefreshFatalError"
       | `DevTools -> `String "DevTools"
+      | `Replaced -> `String "Replaced"
 
     type t = {
       deletionReason : _terminationeventdetails_deletionreason;
@@ -41346,6 +41351,7 @@ and Runtime : sig
       | `dataview
       | `webassemblymemory
       | `wasmvalue
+      | `deferredmodule
       | `trustedtype ]
 
     val _remoteobject_subtype_of_yojson :
@@ -41464,6 +41470,7 @@ and Runtime : sig
       | `dataview
       | `webassemblymemory
       | `wasmvalue
+      | `deferredmodule
       | `trustedtype ]
 
     val _objectpreview_subtype_of_yojson :
@@ -41539,6 +41546,7 @@ and Runtime : sig
       | `dataview
       | `webassemblymemory
       | `wasmvalue
+      | `deferredmodule
       | `trustedtype ]
 
     val _propertypreview_subtype_of_yojson :
@@ -42157,6 +42165,7 @@ end = struct
       | `dataview
       | `webassemblymemory
       | `wasmvalue
+      | `deferredmodule
       | `trustedtype ]
 
     val _remoteobject_subtype_of_yojson :
@@ -42271,6 +42280,7 @@ end = struct
       | `dataview
       | `webassemblymemory
       | `wasmvalue
+      | `deferredmodule
       | `trustedtype ]
 
     let _remoteobject_subtype_of_yojson = function
@@ -42293,6 +42303,7 @@ end = struct
       | `String "dataview" -> `dataview
       | `String "webassemblymemory" -> `webassemblymemory
       | `String "wasmvalue" -> `wasmvalue
+      | `String "deferredmodule" -> `deferredmodule
       | `String "trustedtype" -> `trustedtype
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -42317,6 +42328,7 @@ end = struct
       | `dataview -> `String "dataview"
       | `webassemblymemory -> `String "webassemblymemory"
       | `wasmvalue -> `String "wasmvalue"
+      | `deferredmodule -> `String "deferredmodule"
       | `trustedtype -> `String "trustedtype"
 
     type t = {
@@ -42448,6 +42460,7 @@ end = struct
       | `dataview
       | `webassemblymemory
       | `wasmvalue
+      | `deferredmodule
       | `trustedtype ]
 
     val _objectpreview_subtype_of_yojson :
@@ -42536,6 +42549,7 @@ end = struct
       | `dataview
       | `webassemblymemory
       | `wasmvalue
+      | `deferredmodule
       | `trustedtype ]
 
     let _objectpreview_subtype_of_yojson = function
@@ -42558,6 +42572,7 @@ end = struct
       | `String "dataview" -> `dataview
       | `String "webassemblymemory" -> `webassemblymemory
       | `String "wasmvalue" -> `wasmvalue
+      | `String "deferredmodule" -> `deferredmodule
       | `String "trustedtype" -> `trustedtype
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -42582,6 +42597,7 @@ end = struct
       | `dataview -> `String "dataview"
       | `webassemblymemory -> `String "webassemblymemory"
       | `wasmvalue -> `String "wasmvalue"
+      | `deferredmodule -> `String "deferredmodule"
       | `trustedtype -> `String "trustedtype"
 
     type t = {
@@ -42651,6 +42667,7 @@ end = struct
       | `dataview
       | `webassemblymemory
       | `wasmvalue
+      | `deferredmodule
       | `trustedtype ]
 
     val _propertypreview_subtype_of_yojson :
@@ -42737,6 +42754,7 @@ end = struct
       | `dataview
       | `webassemblymemory
       | `wasmvalue
+      | `deferredmodule
       | `trustedtype ]
 
     let _propertypreview_subtype_of_yojson = function
@@ -42759,6 +42777,7 @@ end = struct
       | `String "dataview" -> `dataview
       | `String "webassemblymemory" -> `webassemblymemory
       | `String "wasmvalue" -> `wasmvalue
+      | `String "deferredmodule" -> `deferredmodule
       | `String "trustedtype" -> `trustedtype
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -42783,6 +42802,7 @@ end = struct
       | `dataview -> `String "dataview"
       | `webassemblymemory -> `String "webassemblymemory"
       | `wasmvalue -> `String "wasmvalue"
+      | `deferredmodule -> `String "deferredmodule"
       | `trustedtype -> `String "trustedtype"
 
     type t = {
