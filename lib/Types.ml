@@ -35564,14 +35564,15 @@ and ServiceWorker : sig
           [@key "runningStatus"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      or_ : ServiceWorkerRouterCondition.t list option;
+          [@key "or"] [@yojson.option] [@ocaml.doc "No description provided"]
+      not : ServiceWorkerRouterCondition.t option;
+          [@key "not"] [@yojson.option] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
       "Mostly corresponds to `RouterCondition` in ServiceWorker spec\n\
-       (https://www.w3.org/TR/service-workers/#dictdef-routercondition) while \
-       this\n\
-       currently lacks support for the nested conditions (\"or\" and \"not\").\n\
-       TODO(crbug.com/540469610): Support recursive conditions."]
+       (https://www.w3.org/TR/service-workers/#dictdef-routercondition)"]
   end
 
   and ServiceWorkerRouterSourceType : sig
@@ -35835,14 +35836,15 @@ end = struct
           [@key "runningStatus"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      or_ : ServiceWorkerRouterCondition.t list option;
+          [@key "or"] [@yojson.option] [@ocaml.doc "No description provided"]
+      not : ServiceWorkerRouterCondition.t option;
+          [@key "not"] [@yojson.option] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
       "Mostly corresponds to `RouterCondition` in ServiceWorker spec\n\
-       (https://www.w3.org/TR/service-workers/#dictdef-routercondition) while \
-       this\n\
-       currently lacks support for the nested conditions (\"or\" and \"not\").\n\
-       TODO(crbug.com/540469610): Support recursive conditions."]
+       (https://www.w3.org/TR/service-workers/#dictdef-routercondition)"]
   end = struct
     type t = {
       urlPattern : string option;
@@ -35866,14 +35868,15 @@ end = struct
           [@key "runningStatus"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      or_ : ServiceWorkerRouterCondition.t list option;
+          [@key "or"] [@yojson.option] [@ocaml.doc "No description provided"]
+      not : ServiceWorkerRouterCondition.t option;
+          [@key "not"] [@yojson.option] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
       "Mostly corresponds to `RouterCondition` in ServiceWorker spec\n\
-       (https://www.w3.org/TR/service-workers/#dictdef-routercondition) while \
-       this\n\
-       currently lacks support for the nested conditions (\"or\" and \"not\").\n\
-       TODO(crbug.com/540469610): Support recursive conditions."]
+       (https://www.w3.org/TR/service-workers/#dictdef-routercondition)"]
   end
 
   and ServiceWorkerRouterSourceType : sig
