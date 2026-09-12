@@ -3035,6 +3035,39 @@ and Audits : sig
       "This issue warns about improper usage of the <permission> element."]
   end
 
+  and WebInstallIssueReason : sig
+    type _webinstallissuereason =
+      [ `ManifestParsingOrNetworkError
+      | `StartUrlInvalid
+      | `ManifestMissingNameOrShortName
+      | `ManifestMissingId
+      | `NoManifest ]
+
+    val _webinstallissuereason_of_yojson :
+      Yojson.Basic.t -> _webinstallissuereason
+
+    val yojson_of__webinstallissuereason :
+      _webinstallissuereason -> Yojson.Basic.t
+
+    type t = _webinstallissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and WebInstallIssueDetails : sig
+    type t = {
+      manifestUrl : string option;
+          [@key "manifestUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      reason : WebInstallIssueReason.t;
+          [@key "reason"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue reports a failure involving a web app manifest used by a Web\n\
+       Install operation."]
+  end
+
   and SelectivePermissionsInterventionIssueDetails : sig
     type t = {
       apiName : string;
@@ -3099,7 +3132,8 @@ and Audits : sig
       | `PerformanceIssue
       | `SelectivePermissionsInterventionIssue
       | `EmailVerificationRequestIssue
-      | `LazyLoadImageIssue ]
+      | `LazyLoadImageIssue
+      | `WebInstallIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -3243,6 +3277,10 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       lazyLoadImageIssueDetails : LazyLoadImageIssueDetails.t option;
           [@key "lazyLoadImageIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      webInstallIssueDetails : WebInstallIssueDetails.t option;
+          [@key "webInstallIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -6624,6 +6662,82 @@ end = struct
       "This issue warns about improper usage of the <permission> element."]
   end
 
+  and WebInstallIssueReason : sig
+    type _webinstallissuereason =
+      [ `ManifestParsingOrNetworkError
+      | `StartUrlInvalid
+      | `ManifestMissingNameOrShortName
+      | `ManifestMissingId
+      | `NoManifest ]
+
+    val _webinstallissuereason_of_yojson :
+      Yojson.Basic.t -> _webinstallissuereason
+
+    val yojson_of__webinstallissuereason :
+      _webinstallissuereason -> Yojson.Basic.t
+
+    type t = _webinstallissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type _webinstallissuereason =
+      [ `ManifestParsingOrNetworkError
+      | `StartUrlInvalid
+      | `ManifestMissingNameOrShortName
+      | `ManifestMissingId
+      | `NoManifest ]
+
+    let _webinstallissuereason_of_yojson = function
+      | `String "ManifestParsingOrNetworkError" ->
+          `ManifestParsingOrNetworkError
+      | `String "StartUrlInvalid" -> `StartUrlInvalid
+      | `String "ManifestMissingNameOrShortName" ->
+          `ManifestMissingNameOrShortName
+      | `String "ManifestMissingId" -> `ManifestMissingId
+      | `String "NoManifest" -> `NoManifest
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__webinstallissuereason = function
+      | `ManifestParsingOrNetworkError ->
+          `String "ManifestParsingOrNetworkError"
+      | `StartUrlInvalid -> `String "StartUrlInvalid"
+      | `ManifestMissingNameOrShortName ->
+          `String "ManifestMissingNameOrShortName"
+      | `ManifestMissingId -> `String "ManifestMissingId"
+      | `NoManifest -> `String "NoManifest"
+
+    type t = _webinstallissuereason
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and WebInstallIssueDetails : sig
+    type t = {
+      manifestUrl : string option;
+          [@key "manifestUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      reason : WebInstallIssueReason.t;
+          [@key "reason"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue reports a failure involving a web app manifest used by a Web\n\
+       Install operation."]
+  end = struct
+    type t = {
+      manifestUrl : string option;
+          [@key "manifestUrl"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      reason : WebInstallIssueReason.t;
+          [@key "reason"] [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "This issue reports a failure involving a web app manifest used by a Web\n\
+       Install operation."]
+  end
+
   and SelectivePermissionsInterventionIssueDetails : sig
     type t = {
       apiName : string;
@@ -6717,7 +6831,8 @@ end = struct
       | `PerformanceIssue
       | `SelectivePermissionsInterventionIssue
       | `EmailVerificationRequestIssue
-      | `LazyLoadImageIssue ]
+      | `LazyLoadImageIssue
+      | `WebInstallIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -6759,7 +6874,8 @@ end = struct
       | `PerformanceIssue
       | `SelectivePermissionsInterventionIssue
       | `EmailVerificationRequestIssue
-      | `LazyLoadImageIssue ]
+      | `LazyLoadImageIssue
+      | `WebInstallIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -6796,6 +6912,7 @@ end = struct
       | `String "EmailVerificationRequestIssue" ->
           `EmailVerificationRequestIssue
       | `String "LazyLoadImageIssue" -> `LazyLoadImageIssue
+      | `String "WebInstallIssue" -> `WebInstallIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -6834,6 +6951,7 @@ end = struct
       | `EmailVerificationRequestIssue ->
           `String "EmailVerificationRequestIssue"
       | `LazyLoadImageIssue -> `String "LazyLoadImageIssue"
+      | `WebInstallIssue -> `String "WebInstallIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -6976,6 +7094,10 @@ end = struct
           [@key "lazyLoadImageIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      webInstallIssueDetails : WebInstallIssueDetails.t option;
+          [@key "webInstallIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -7113,6 +7235,10 @@ end = struct
           [@ocaml.doc "No description provided"]
       lazyLoadImageIssueDetails : LazyLoadImageIssueDetails.t option;
           [@key "lazyLoadImageIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      webInstallIssueDetails : WebInstallIssueDetails.t option;
+          [@key "webInstallIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }

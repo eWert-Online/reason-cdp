@@ -11314,6 +11314,72 @@ https://www.w3.org/TR/css-anchor-position-1/#target. |desc}]
     {desc|When enabling, this API force-opens the popover identified by nodeId
 and keeps it open until disabled. |desc}]
 
+  module GetImplicitAnchorCandidates = struct
+    module Response : sig
+      type result = {
+        backendNodeIds : Types.DOM.BackendNodeId.t list;
+            [@key "backendNodeIds"]
+            [@ocaml.doc "Candidate elements that can invoke this popover."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        backendNodeIds : Types.DOM.BackendNodeId.t list;
+            [@key "backendNodeIds"]
+            [@ocaml.doc "Candidate elements that can invoke this popover."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        nodeId : Types.DOM.NodeId.t;
+            [@key "nodeId"] [@ocaml.doc "Id of the popover HTMLElement."]
+      }
+      [@@deriving yojson]
+
+      let make ~nodeId () = { nodeId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "DOM.getImplicitAnchorCandidates"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns candidate nodes that are configured as triggers for the given popover. |desc}]
+
   module ForceShowInterest = struct
     module Response : sig
       type result = Types.assoc
