@@ -11441,6 +11441,149 @@ and keeps it open until disabled. |desc}]
   [@@ocaml.doc
     {desc|When enabling, this API forces an element to gain interest in its target,
 keeping interest active until disabled. |desc}]
+
+  module SetTextMarker = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type settextmarker_type = [ `spelling | `grammar ]
+
+      let settextmarker_type_of_yojson = function
+        | `String "spelling" -> `spelling
+        | `String "grammar" -> `grammar
+        | `String s -> failwith ("unknown enum: " ^ s)
+        | _ -> failwith "unknown enum type"
+
+      let yojson_of_settextmarker_type = function
+        | `spelling -> `String "spelling"
+        | `grammar -> `String "grammar"
+
+      type t = {
+        nodeId : Types.DOM.NodeId.t option;
+            [@key "nodeId"]
+            [@yojson.option]
+            [@ocaml.doc "Identifier of the node."]
+        backendNodeId : Types.DOM.BackendNodeId.t option;
+            [@key "backendNodeId"]
+            [@yojson.option]
+            [@ocaml.doc "Identifier of the backend node."]
+        objectId : Types.Runtime.RemoteObjectId.t option;
+            [@key "objectId"]
+            [@yojson.option]
+            [@ocaml.doc "JavaScript object id of the node wrapper."]
+        type_ : settextmarker_type;
+            [@key "type"]
+            [@ocaml.doc "The type of marker to set on the given range of text."]
+        start : Types.number;
+            [@key "start"]
+            [@ocaml.doc
+              "Start offset into the element's rendered text in UTF-16 code \
+               units.\n\
+               For a text control, an offset into the control's value.\n\
+               Offsets count text in DOM order and do not enter shadow trees.\n\
+               To mark text inside a shadow tree, pass the element inside the \
+               shadow tree."]
+        end_ : Types.number;
+            [@key "end"]
+            [@ocaml.doc
+              "End offset (exclusive) in the same units and space as start."]
+      }
+      [@@deriving yojson]
+
+      let make ?nodeId ?backendNodeId ?objectId ~type_ ~start ~end_ () =
+        { nodeId; backendNodeId; objectId; type_; start; end_ }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "DOM.setTextMarker"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Sets a spelling or grammar error marker on the given range of text.
+See https://github.com/Igalia/explainers/blob/main/force-spelling-grammar-markers/README.md
+Note: exactly one between nodeId, backendNodeId and objectId should be passed
+to identify the node. |desc}]
+
+  module ClearTextMarkers = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "DOM.clearTextMarkers"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Clears the spelling and grammar error text markers overlapping the ranges
+set by setTextMarker in this session. These markers are also removed when
+the DOM domain is disabled or the session ends. |desc}]
 end
 
 module DOMDebugger = struct
