@@ -1036,13 +1036,24 @@ module Animation = struct
       type t = {
         animations : string list;
             [@key "animations"] [@ocaml.doc "List of animation ids to seek."]
-        currentTime : Types.number;
+        currentTime : Types.number option;
             [@key "currentTime"]
-            [@ocaml.doc "Set the current time of each animation."]
+            [@yojson.option]
+            [@ocaml.doc "Set each animation to the same time."]
+        currentTimes : Types.number list option;
+            [@key "currentTimes"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Set each animation to a different time. If set, should have the \
+               same\n\
+               length as animations. Exactly one of currentTime or \
+               currentTimes should\n\
+               be set."]
       }
       [@@deriving yojson]
 
-      let make ~animations ~currentTime () = { animations; currentTime }
+      let make ~animations ?currentTime ?currentTimes () =
+        { animations; currentTime; currentTimes }
     end
 
     module Request = struct
