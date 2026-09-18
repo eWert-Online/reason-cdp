@@ -4791,6 +4791,23 @@ module Storage = struct
     let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
   end
   [@@ocaml.doc {desc|No description provided |desc}]
+
+  module PrivateVerificationTokensUpdated = struct
+    let name = "Storage.privateVerificationTokensUpdated"
+
+    type result = Types.empty [@@deriving yojson]
+
+    type t = {
+      method_ : string; [@key "method"]
+      params : result;
+      sessionId : Types.Target.SessionID.t;
+    }
+    [@@deriving yojson]
+
+    let parse event = event |> Yojson.Safe.from_string |> t_of_yojson
+  end
+  [@@ocaml.doc
+    {desc|Private Verification Tokens have been stored or deleted. |desc}]
 end
 
 module Target = struct

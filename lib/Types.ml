@@ -27208,6 +27208,64 @@ and Overlay : sig
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and ImcbHighlightConfig : sig
+    type t = {
+      imcbBorderColor : DOM.RGBA.t option;
+          [@key "imcbBorderColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Border color for the Inset-Modified Containing Block (default: \
+             transparent)."]
+      imcbBackgroundColor : DOM.RGBA.t option;
+          [@key "imcbBackgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Background fill color for the Inset-Modified Containing Block \
+             (default: transparent)."]
+      insetsBackgroundColor : DOM.RGBA.t option;
+          [@key "insetsBackgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Fill color for the inset modifiers area (difference between CB \
+             and IMCB)."]
+      insetsHatchColor : DOM.RGBA.t option;
+          [@key "insetsHatchColor"]
+          [@yojson.option]
+          [@ocaml.doc "Hatch color for the inset modifiers area."]
+      anchorBorderColor : DOM.RGBA.t option;
+          [@key "anchorBorderColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Border color for the referenced target anchor element(s) (when \
+             element is anchor-positioned)."]
+      anchorBackgroundColor : DOM.RGBA.t option;
+          [@key "anchorBackgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Background fill color for the referenced target anchor element(s) \
+             (when element is anchor-positioned)."]
+      showPositionAreaGrid : bool option;
+          [@key "showPositionAreaGrid"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Whether to render the 3x3 position-area grid lines when \
+             position-area is used."]
+      positionAreaGridLineColor : DOM.RGBA.t option;
+          [@key "positionAreaGridLineColor"]
+          [@yojson.option]
+          [@ocaml.doc "Line color for the 3x3 position-area grid lines."]
+      positionAreaActiveRegionColor : DOM.RGBA.t option;
+          [@key "positionAreaActiveRegionColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Fill color for the active region within the position-area grid."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Configuration for Inset-Modified Containing Block (IMCB) and CSS Anchor \
+       Positioning highlight."]
+  end
+
   and HighlightConfig : sig
     type t = {
       showInfo : bool option;
@@ -27305,6 +27363,11 @@ and Overlay : sig
           [@ocaml.doc
             "The container query container highlight configuration (default: \
              all transparent)."]
+      imcbHighlightConfig : ImcbHighlightConfig.t option;
+          [@key "imcbHighlightConfig"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The IMCB highlight configuration (default: all transparent)."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Configuration data for the highlighting of page elements."]
@@ -28005,6 +28068,120 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
 
+  and ImcbHighlightConfig : sig
+    type t = {
+      imcbBorderColor : DOM.RGBA.t option;
+          [@key "imcbBorderColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Border color for the Inset-Modified Containing Block (default: \
+             transparent)."]
+      imcbBackgroundColor : DOM.RGBA.t option;
+          [@key "imcbBackgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Background fill color for the Inset-Modified Containing Block \
+             (default: transparent)."]
+      insetsBackgroundColor : DOM.RGBA.t option;
+          [@key "insetsBackgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Fill color for the inset modifiers area (difference between CB \
+             and IMCB)."]
+      insetsHatchColor : DOM.RGBA.t option;
+          [@key "insetsHatchColor"]
+          [@yojson.option]
+          [@ocaml.doc "Hatch color for the inset modifiers area."]
+      anchorBorderColor : DOM.RGBA.t option;
+          [@key "anchorBorderColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Border color for the referenced target anchor element(s) (when \
+             element is anchor-positioned)."]
+      anchorBackgroundColor : DOM.RGBA.t option;
+          [@key "anchorBackgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Background fill color for the referenced target anchor element(s) \
+             (when element is anchor-positioned)."]
+      showPositionAreaGrid : bool option;
+          [@key "showPositionAreaGrid"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Whether to render the 3x3 position-area grid lines when \
+             position-area is used."]
+      positionAreaGridLineColor : DOM.RGBA.t option;
+          [@key "positionAreaGridLineColor"]
+          [@yojson.option]
+          [@ocaml.doc "Line color for the 3x3 position-area grid lines."]
+      positionAreaActiveRegionColor : DOM.RGBA.t option;
+          [@key "positionAreaActiveRegionColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Fill color for the active region within the position-area grid."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Configuration for Inset-Modified Containing Block (IMCB) and CSS Anchor \
+       Positioning highlight."]
+  end = struct
+    type t = {
+      imcbBorderColor : DOM.RGBA.t option;
+          [@key "imcbBorderColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Border color for the Inset-Modified Containing Block (default: \
+             transparent)."]
+      imcbBackgroundColor : DOM.RGBA.t option;
+          [@key "imcbBackgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Background fill color for the Inset-Modified Containing Block \
+             (default: transparent)."]
+      insetsBackgroundColor : DOM.RGBA.t option;
+          [@key "insetsBackgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Fill color for the inset modifiers area (difference between CB \
+             and IMCB)."]
+      insetsHatchColor : DOM.RGBA.t option;
+          [@key "insetsHatchColor"]
+          [@yojson.option]
+          [@ocaml.doc "Hatch color for the inset modifiers area."]
+      anchorBorderColor : DOM.RGBA.t option;
+          [@key "anchorBorderColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Border color for the referenced target anchor element(s) (when \
+             element is anchor-positioned)."]
+      anchorBackgroundColor : DOM.RGBA.t option;
+          [@key "anchorBackgroundColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Background fill color for the referenced target anchor element(s) \
+             (when element is anchor-positioned)."]
+      showPositionAreaGrid : bool option;
+          [@key "showPositionAreaGrid"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Whether to render the 3x3 position-area grid lines when \
+             position-area is used."]
+      positionAreaGridLineColor : DOM.RGBA.t option;
+          [@key "positionAreaGridLineColor"]
+          [@yojson.option]
+          [@ocaml.doc "Line color for the 3x3 position-area grid lines."]
+      positionAreaActiveRegionColor : DOM.RGBA.t option;
+          [@key "positionAreaActiveRegionColor"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Fill color for the active region within the position-area grid."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Configuration for Inset-Modified Containing Block (IMCB) and CSS Anchor \
+       Positioning highlight."]
+  end
+
   and HighlightConfig : sig
     type t = {
       showInfo : bool option;
@@ -28102,6 +28279,11 @@ end = struct
           [@ocaml.doc
             "The container query container highlight configuration (default: \
              all transparent)."]
+      imcbHighlightConfig : ImcbHighlightConfig.t option;
+          [@key "imcbHighlightConfig"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The IMCB highlight configuration (default: all transparent)."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Configuration data for the highlighting of page elements."]
@@ -28202,6 +28384,11 @@ end = struct
           [@ocaml.doc
             "The container query container highlight configuration (default: \
              all transparent)."]
+      imcbHighlightConfig : ImcbHighlightConfig.t option;
+          [@key "imcbHighlightConfig"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The IMCB highlight configuration (default: all transparent)."]
     }
     [@@deriving yojson]
     [@@ocaml.doc "Configuration data for the highlighting of page elements."]
@@ -29835,6 +30022,18 @@ and Page : sig
           [@key "themeColor"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SubApp : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "Display name of the sub-app."]
+      scope : string; [@key "scope"] [@ocaml.doc "Scope of the sub-app."]
+      manifestId : string;
+          [@key "manifestId"] [@ocaml.doc "Manifest id of the sub-app."]
+      startUrl : string;
+          [@key "startUrl"] [@ocaml.doc "Start URL of the sub-app."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -32420,6 +32619,28 @@ end = struct
           [@key "themeColor"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end
+
+  and SubApp : sig
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "Display name of the sub-app."]
+      scope : string; [@key "scope"] [@ocaml.doc "Scope of the sub-app."]
+      manifestId : string;
+          [@key "manifestId"] [@ocaml.doc "Manifest id of the sub-app."]
+      startUrl : string;
+          [@key "startUrl"] [@ocaml.doc "Start URL of the sub-app."]
+    }
+    [@@deriving yojson] [@@ocaml.doc "No description provided"]
+  end = struct
+    type t = {
+      name : string; [@key "name"] [@ocaml.doc "Display name of the sub-app."]
+      scope : string; [@key "scope"] [@ocaml.doc "Scope of the sub-app."]
+      manifestId : string;
+          [@key "manifestId"] [@ocaml.doc "Manifest id of the sub-app."]
+      startUrl : string;
+          [@key "startUrl"] [@ocaml.doc "Start URL of the sub-app."]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
@@ -36922,6 +37143,29 @@ and Storage : sig
        Tokens from that issuer."]
   end
 
+  and PrivateVerificationToken : sig
+    type t = {
+      id : string;
+          [@key "id"]
+          [@ocaml.doc "Unique identifier of the token in the database."]
+      issuerOrigin : string;
+          [@key "issuerOrigin"] [@ocaml.doc "Origin of the token issuer."]
+      keyId : number;
+          [@key "keyId"] [@ocaml.doc "Public key ID used to issue the token."]
+      expiration : Network.TimeSinceEpoch.t;
+          [@key "expiration"]
+          [@ocaml.doc "Expiration timestamp in seconds since the epoch."]
+      creationTime : Network.TimeSinceEpoch.t;
+          [@key "creationTime"]
+          [@ocaml.doc "Token creation timestamp in seconds since the epoch."]
+      version : number; [@key "version"] [@ocaml.doc "Token protocol version."]
+      token : string;
+          [@key "token"] [@ocaml.doc "Base64-encoded serialized token."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Details of a stored Private Verification Token."]
+  end
+
   and StorageBucketsDurability : sig
     type _storagebucketsdurability = [ `relaxed | `strict ]
 
@@ -37094,6 +37338,50 @@ end = struct
       "Pair of issuer origin and number of available (signed, but not used) \
        Trust\n\
        Tokens from that issuer."]
+  end
+
+  and PrivateVerificationToken : sig
+    type t = {
+      id : string;
+          [@key "id"]
+          [@ocaml.doc "Unique identifier of the token in the database."]
+      issuerOrigin : string;
+          [@key "issuerOrigin"] [@ocaml.doc "Origin of the token issuer."]
+      keyId : number;
+          [@key "keyId"] [@ocaml.doc "Public key ID used to issue the token."]
+      expiration : Network.TimeSinceEpoch.t;
+          [@key "expiration"]
+          [@ocaml.doc "Expiration timestamp in seconds since the epoch."]
+      creationTime : Network.TimeSinceEpoch.t;
+          [@key "creationTime"]
+          [@ocaml.doc "Token creation timestamp in seconds since the epoch."]
+      version : number; [@key "version"] [@ocaml.doc "Token protocol version."]
+      token : string;
+          [@key "token"] [@ocaml.doc "Base64-encoded serialized token."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Details of a stored Private Verification Token."]
+  end = struct
+    type t = {
+      id : string;
+          [@key "id"]
+          [@ocaml.doc "Unique identifier of the token in the database."]
+      issuerOrigin : string;
+          [@key "issuerOrigin"] [@ocaml.doc "Origin of the token issuer."]
+      keyId : number;
+          [@key "keyId"] [@ocaml.doc "Public key ID used to issue the token."]
+      expiration : Network.TimeSinceEpoch.t;
+          [@key "expiration"]
+          [@ocaml.doc "Expiration timestamp in seconds since the epoch."]
+      creationTime : Network.TimeSinceEpoch.t;
+          [@key "creationTime"]
+          [@ocaml.doc "Token creation timestamp in seconds since the epoch."]
+      version : number; [@key "version"] [@ocaml.doc "Token protocol version."]
+      token : string;
+          [@key "token"] [@ocaml.doc "Base64-encoded serialized token."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Details of a stored Private Verification Token."]
   end
 
   and StorageBucketsDurability : sig

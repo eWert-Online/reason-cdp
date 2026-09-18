@@ -27872,6 +27872,14 @@ iframes, shadow DOM, external resources, and element-inline styles. |desc}]
             [@ocaml.doc
               "Recommendation for manifest's id attribute to match current id \
                computed from start_url"]
+        bundleId : string option;
+            [@key "bundleId"]
+            [@yojson.option]
+            [@ocaml.doc "The bundle ID for an Isolated Web App (IWA)"]
+        parentAppName : string option;
+            [@key "parentAppName"]
+            [@yojson.option]
+            [@ocaml.doc "The name of the parent app if this app is a Sub-App"]
       }
 
       type error = { code : int; message : string }
@@ -27898,6 +27906,14 @@ iframes, shadow DOM, external resources, and element-inline styles. |desc}]
             [@ocaml.doc
               "Recommendation for manifest's id attribute to match current id \
                computed from start_url"]
+        bundleId : string option;
+            [@key "bundleId"]
+            [@yojson.option]
+            [@ocaml.doc "The bundle ID for an Isolated Web App (IWA)"]
+        parentAppName : string option;
+            [@key "parentAppName"]
+            [@yojson.option]
+            [@ocaml.doc "The name of the parent app if this app is a Sub-App"]
       }
       [@@deriving yojson]
 
@@ -27928,8 +27944,114 @@ iframes, shadow DOM, external resources, and element-inline styles. |desc}]
     end
   end
   [@@ocaml.doc
-    {desc|Returns the unique (PWA) app id.
+    {desc|Returns the unique (PWA) app id, along with IWA bundle ID and parent app info.
 Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |desc}]
+
+  module GetSubApps = struct
+    module Response : sig
+      type result = {
+        subApps : Types.Page.SubApp.t list;
+            [@key "subApps"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        subApps : Types.Page.SubApp.t list;
+            [@key "subApps"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Page.getSubApps"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns the list of installed child Sub-Apps for the inspected parent app. |desc}]
+
+  module GetSiblingSubApps = struct
+    module Response : sig
+      type result = {
+        subApps : Types.Page.SubApp.t list;
+            [@key "subApps"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        subApps : Types.Page.SubApp.t list;
+            [@key "subApps"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Page.getSiblingSubApps"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns the list of sibling Sub-Apps sharing the same parent app if the inspected context is a Sub-App. |desc}]
 
   module GetAdScriptAncestry = struct
     module Response : sig
@@ -34363,6 +34485,237 @@ current browsing context. |desc}]
   [@@ocaml.doc
     {desc|Removes all Trust Tokens issued by the provided issuerOrigin.
 Leaves other stored data, including the issuer's Redemption Records, intact. |desc}]
+
+  module GetPrivateVerificationTokens = struct
+    module Response : sig
+      type result = {
+        tokens : Types.Storage.PrivateVerificationToken.t list;
+            [@key "tokens"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        tokens : Types.Storage.PrivateVerificationToken.t list;
+            [@key "tokens"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        { id; method_ = "Storage.getPrivateVerificationTokens"; sessionId }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns all stored Private Verification Tokens for the current browsing
+context. |desc}]
+
+  module ClearPrivateVerificationTokens = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        issuerOrigin : string;
+            [@key "issuerOrigin"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~issuerOrigin () = { issuerOrigin }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Storage.clearPrivateVerificationTokens";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Removes all Private Verification Tokens issued by the provided issuerOrigin. |desc}]
+
+  module DeletePrivateVerificationToken = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        tokenId : string; [@key "tokenId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~tokenId () = { tokenId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Storage.deletePrivateVerificationToken";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Removes a specific Private Verification Token by its ID. |desc}]
+
+  module SetPrivateVerificationTokensTracking = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        enable : bool; [@key "enable"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~enable () = { enable }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Storage.setPrivateVerificationTokensTracking";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Set tracking for Private Verification Tokens. |desc}]
 
   module SetStorageBucketTracking = struct
     module Response : sig
