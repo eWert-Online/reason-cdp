@@ -40027,6 +40027,12 @@ and WebMCP : sig
           [@ocaml.doc
             "A hint indicating that executing the tool will result in \
              consequential actions, ex: booking a flight, transferring money."]
+      debugging : bool option;
+          [@key "debugging"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If true, indicates that the tool is intended for debugging and \
+             developer tooling rather than end-user interactions."]
       autosubmit : bool option;
           [@key "autosubmit"]
           [@yojson.option]
@@ -40106,6 +40112,12 @@ end = struct
           [@ocaml.doc
             "A hint indicating that executing the tool will result in \
              consequential actions, ex: booking a flight, transferring money."]
+      debugging : bool option;
+          [@key "debugging"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If true, indicates that the tool is intended for debugging and \
+             developer tooling rather than end-user interactions."]
       autosubmit : bool option;
           [@key "autosubmit"]
           [@yojson.option]
@@ -40133,6 +40145,12 @@ end = struct
           [@ocaml.doc
             "A hint indicating that executing the tool will result in \
              consequential actions, ex: booking a flight, transferring money."]
+      debugging : bool option;
+          [@key "debugging"]
+          [@yojson.option]
+          [@ocaml.doc
+            "If true, indicates that the tool is intended for debugging and \
+             developer tooling rather than end-user interactions."]
       autosubmit : bool option;
           [@key "autosubmit"]
           [@yojson.option]
