@@ -34879,60 +34879,6 @@ context. |desc}]
   end
   [@@ocaml.doc
     {desc|Deletes state for sites identified as potential bounce trackers, immediately. |desc}]
-
-  module GetRelatedWebsiteSets = struct
-    module Response : sig
-      type result = {
-        sets : Types.Storage.RelatedWebsiteSet.t list;
-            [@key "sets"] [@ocaml.doc "No description provided"]
-      }
-
-      type error = { code : int; message : string }
-
-      type t = {
-        id : int;
-        error : error option;
-        sessionId : Types.Target.SessionID.t option;
-        result : result option;
-      }
-
-      val parse : string -> t
-    end = struct
-      type result = {
-        sets : Types.Storage.RelatedWebsiteSet.t list;
-            [@key "sets"] [@ocaml.doc "No description provided"]
-      }
-      [@@deriving yojson]
-
-      type error = { code : int; message : string } [@@deriving yojson]
-
-      type t = {
-        id : int;
-        error : error option; [@yojson.option]
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        result : result option; [@yojson.option]
-      }
-      [@@deriving yojson]
-
-      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
-    end
-
-    module Request = struct
-      type t = {
-        id : int;
-        sessionId : Types.Target.SessionID.t option; [@yojson.option]
-        method_ : string; [@key "method"]
-      }
-      [@@deriving yojson]
-
-      let make ?sessionId id =
-        { id; method_ = "Storage.getRelatedWebsiteSets"; sessionId }
-        |> yojson_of_t |> Yojson.Safe.to_string
-    end
-  end
-  [@@ocaml.doc
-    {desc|Returns the effective Related Website Sets in use by this profile for the browser
-session. The effective Related Website Sets will not change during a browser session. |desc}]
 end
 
 module SystemInfo = struct

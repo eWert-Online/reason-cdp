@@ -1792,7 +1792,6 @@ and Audits : sig
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
       | `ExcludeDomainNonASCII
-      | `ExcludeThirdPartyCookieBlockedInFirstPartySet
       | `ExcludeThirdPartyPhaseout
       | `ExcludePortMismatch
       | `ExcludeSchemeMismatch ]
@@ -3389,7 +3388,6 @@ end = struct
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
       | `ExcludeDomainNonASCII
-      | `ExcludeThirdPartyCookieBlockedInFirstPartySet
       | `ExcludeThirdPartyPhaseout
       | `ExcludePortMismatch
       | `ExcludeSchemeMismatch ]
@@ -3409,7 +3407,6 @@ end = struct
       | `ExcludeSameSiteLax
       | `ExcludeSameSiteStrict
       | `ExcludeDomainNonASCII
-      | `ExcludeThirdPartyCookieBlockedInFirstPartySet
       | `ExcludeThirdPartyPhaseout
       | `ExcludePortMismatch
       | `ExcludeSchemeMismatch ]
@@ -3421,8 +3418,6 @@ end = struct
       | `String "ExcludeSameSiteLax" -> `ExcludeSameSiteLax
       | `String "ExcludeSameSiteStrict" -> `ExcludeSameSiteStrict
       | `String "ExcludeDomainNonASCII" -> `ExcludeDomainNonASCII
-      | `String "ExcludeThirdPartyCookieBlockedInFirstPartySet" ->
-          `ExcludeThirdPartyCookieBlockedInFirstPartySet
       | `String "ExcludeThirdPartyPhaseout" -> `ExcludeThirdPartyPhaseout
       | `String "ExcludePortMismatch" -> `ExcludePortMismatch
       | `String "ExcludeSchemeMismatch" -> `ExcludeSchemeMismatch
@@ -3436,8 +3431,6 @@ end = struct
       | `ExcludeSameSiteLax -> `String "ExcludeSameSiteLax"
       | `ExcludeSameSiteStrict -> `String "ExcludeSameSiteStrict"
       | `ExcludeDomainNonASCII -> `String "ExcludeDomainNonASCII"
-      | `ExcludeThirdPartyCookieBlockedInFirstPartySet ->
-          `String "ExcludeThirdPartyCookieBlockedInFirstPartySet"
       | `ExcludeThirdPartyPhaseout -> `String "ExcludeThirdPartyPhaseout"
       | `ExcludePortMismatch -> `String "ExcludePortMismatch"
       | `ExcludeSchemeMismatch -> `String "ExcludeSchemeMismatch"
@@ -20534,7 +20527,6 @@ and Network : sig
       | `SameSiteNoneInsecure
       | `UserPreferences
       | `ThirdPartyPhaseout
-      | `ThirdPartyBlockedInFirstPartySet
       | `SyntaxError
       | `SchemeNotSupported
       | `OverwriteSecure
@@ -20571,7 +20563,6 @@ and Network : sig
       | `SameSiteNoneInsecure
       | `UserPreferences
       | `ThirdPartyPhaseout
-      | `ThirdPartyBlockedInFirstPartySet
       | `UnknownError
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
@@ -24006,7 +23997,6 @@ end = struct
       | `SameSiteNoneInsecure
       | `UserPreferences
       | `ThirdPartyPhaseout
-      | `ThirdPartyBlockedInFirstPartySet
       | `SyntaxError
       | `SchemeNotSupported
       | `OverwriteSecure
@@ -24039,7 +24029,6 @@ end = struct
       | `SameSiteNoneInsecure
       | `UserPreferences
       | `ThirdPartyPhaseout
-      | `ThirdPartyBlockedInFirstPartySet
       | `SyntaxError
       | `SchemeNotSupported
       | `OverwriteSecure
@@ -24062,8 +24051,6 @@ end = struct
       | `String "SameSiteNoneInsecure" -> `SameSiteNoneInsecure
       | `String "UserPreferences" -> `UserPreferences
       | `String "ThirdPartyPhaseout" -> `ThirdPartyPhaseout
-      | `String "ThirdPartyBlockedInFirstPartySet" ->
-          `ThirdPartyBlockedInFirstPartySet
       | `String "SyntaxError" -> `SyntaxError
       | `String "SchemeNotSupported" -> `SchemeNotSupported
       | `String "OverwriteSecure" -> `OverwriteSecure
@@ -24089,8 +24076,6 @@ end = struct
       | `SameSiteNoneInsecure -> `String "SameSiteNoneInsecure"
       | `UserPreferences -> `String "UserPreferences"
       | `ThirdPartyPhaseout -> `String "ThirdPartyPhaseout"
-      | `ThirdPartyBlockedInFirstPartySet ->
-          `String "ThirdPartyBlockedInFirstPartySet"
       | `SyntaxError -> `String "SyntaxError"
       | `SchemeNotSupported -> `String "SchemeNotSupported"
       | `OverwriteSecure -> `String "OverwriteSecure"
@@ -24122,7 +24107,6 @@ end = struct
       | `SameSiteNoneInsecure
       | `UserPreferences
       | `ThirdPartyPhaseout
-      | `ThirdPartyBlockedInFirstPartySet
       | `UnknownError
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
@@ -24150,7 +24134,6 @@ end = struct
       | `SameSiteNoneInsecure
       | `UserPreferences
       | `ThirdPartyPhaseout
-      | `ThirdPartyBlockedInFirstPartySet
       | `UnknownError
       | `SchemefulSameSiteStrict
       | `SchemefulSameSiteLax
@@ -24171,8 +24154,6 @@ end = struct
       | `String "SameSiteNoneInsecure" -> `SameSiteNoneInsecure
       | `String "UserPreferences" -> `UserPreferences
       | `String "ThirdPartyPhaseout" -> `ThirdPartyPhaseout
-      | `String "ThirdPartyBlockedInFirstPartySet" ->
-          `ThirdPartyBlockedInFirstPartySet
       | `String "UnknownError" -> `UnknownError
       | `String "SchemefulSameSiteStrict" -> `SchemefulSameSiteStrict
       | `String "SchemefulSameSiteLax" -> `SchemefulSameSiteLax
@@ -24196,8 +24177,6 @@ end = struct
       | `SameSiteNoneInsecure -> `String "SameSiteNoneInsecure"
       | `UserPreferences -> `String "UserPreferences"
       | `ThirdPartyPhaseout -> `String "ThirdPartyPhaseout"
-      | `ThirdPartyBlockedInFirstPartySet ->
-          `String "ThirdPartyBlockedInFirstPartySet"
       | `UnknownError -> `String "UnknownError"
       | `SchemefulSameSiteStrict -> `String "SchemefulSameSiteStrict"
       | `SchemefulSameSiteLax -> `String "SchemefulSameSiteLax"
@@ -37207,27 +37186,6 @@ and Storage : sig
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
   end
-
-  and RelatedWebsiteSet : sig
-    type t = {
-      primarySites : string list;
-          [@key "primarySites"]
-          [@ocaml.doc
-            "The primary site of this set, along with the ccTLDs if there is \
-             any."]
-      associatedSites : string list;
-          [@key "associatedSites"]
-          [@ocaml.doc
-            "The associated sites of this set, along with the ccTLDs if there \
-             is any."]
-      serviceSites : string list;
-          [@key "serviceSites"]
-          [@ocaml.doc
-            "The service sites of this set, along with the ccTLDs if there is \
-             any."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "A single Related Website Set object."]
-  end
 end = struct
   module rec SerializedStorageKey : sig
     type t = string [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -37464,46 +37422,6 @@ end = struct
           [@key "durability"] [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
-  end
-
-  and RelatedWebsiteSet : sig
-    type t = {
-      primarySites : string list;
-          [@key "primarySites"]
-          [@ocaml.doc
-            "The primary site of this set, along with the ccTLDs if there is \
-             any."]
-      associatedSites : string list;
-          [@key "associatedSites"]
-          [@ocaml.doc
-            "The associated sites of this set, along with the ccTLDs if there \
-             is any."]
-      serviceSites : string list;
-          [@key "serviceSites"]
-          [@ocaml.doc
-            "The service sites of this set, along with the ccTLDs if there is \
-             any."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "A single Related Website Set object."]
-  end = struct
-    type t = {
-      primarySites : string list;
-          [@key "primarySites"]
-          [@ocaml.doc
-            "The primary site of this set, along with the ccTLDs if there is \
-             any."]
-      associatedSites : string list;
-          [@key "associatedSites"]
-          [@ocaml.doc
-            "The associated sites of this set, along with the ccTLDs if there \
-             is any."]
-      serviceSites : string list;
-          [@key "serviceSites"]
-          [@ocaml.doc
-            "The service sites of this set, along with the ccTLDs if there is \
-             any."]
-    }
-    [@@deriving yojson] [@@ocaml.doc "A single Related Website Set object."]
   end
 end
 
