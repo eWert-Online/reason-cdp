@@ -29526,6 +29526,10 @@ and Page : sig
           [@key "timestamp"]
           [@yojson.option]
           [@ocaml.doc "Frame swap timestamp."]
+      monotonicTimestamp : Network.MonotonicTime.t option;
+          [@key "monotonicTimestamp"]
+          [@yojson.option]
+          [@ocaml.doc "Frame swap timestamp as monotonic time."]
     }
     [@@deriving yojson] [@@ocaml.doc "Screencast frame metadata."]
   end
@@ -31621,6 +31625,10 @@ end = struct
           [@key "timestamp"]
           [@yojson.option]
           [@ocaml.doc "Frame swap timestamp."]
+      monotonicTimestamp : Network.MonotonicTime.t option;
+          [@key "monotonicTimestamp"]
+          [@yojson.option]
+          [@ocaml.doc "Frame swap timestamp as monotonic time."]
     }
     [@@deriving yojson] [@@ocaml.doc "Screencast frame metadata."]
   end = struct
@@ -31642,6 +31650,10 @@ end = struct
           [@key "timestamp"]
           [@yojson.option]
           [@ocaml.doc "Frame swap timestamp."]
+      monotonicTimestamp : Network.MonotonicTime.t option;
+          [@key "monotonicTimestamp"]
+          [@yojson.option]
+          [@ocaml.doc "Frame swap timestamp as monotonic time."]
     }
     [@@deriving yojson] [@@ocaml.doc "Screencast frame metadata."]
   end
@@ -37145,6 +37157,18 @@ and Storage : sig
     [@@ocaml.doc "Details of a stored Private Verification Token."]
   end
 
+  and PrivateVerificationTokensIssuerConfig : sig
+    type t = {
+      issuerOrigin : string;
+          [@key "issuerOrigin"] [@ocaml.doc "Origin of the token issuer."]
+      redeemerOrigins : string list;
+          [@key "redeemerOrigins"]
+          [@ocaml.doc "Origins authorized to redeem tokens from this issuer."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Configuration for a Private Verification Tokens issuer."]
+  end
+
   and StorageBucketsDurability : sig
     type _storagebucketsdurability = [ `relaxed | `strict ]
 
@@ -37340,6 +37364,28 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc "Details of a stored Private Verification Token."]
+  end
+
+  and PrivateVerificationTokensIssuerConfig : sig
+    type t = {
+      issuerOrigin : string;
+          [@key "issuerOrigin"] [@ocaml.doc "Origin of the token issuer."]
+      redeemerOrigins : string list;
+          [@key "redeemerOrigins"]
+          [@ocaml.doc "Origins authorized to redeem tokens from this issuer."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Configuration for a Private Verification Tokens issuer."]
+  end = struct
+    type t = {
+      issuerOrigin : string;
+          [@key "issuerOrigin"] [@ocaml.doc "Origin of the token issuer."]
+      redeemerOrigins : string list;
+          [@key "redeemerOrigins"]
+          [@ocaml.doc "Origins authorized to redeem tokens from this issuer."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc "Configuration for a Private Verification Tokens issuer."]
   end
 
   and StorageBucketsDurability : sig

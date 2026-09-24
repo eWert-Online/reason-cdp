@@ -34540,6 +34540,64 @@ Leaves other stored data, including the issuer's Redemption Records, intact. |de
     {desc|Returns all stored Private Verification Tokens for the current browsing
 context. |desc}]
 
+  module GetPrivateVerificationTokensIssuerConfigs = struct
+    module Response : sig
+      type result = {
+        configs : Types.Storage.PrivateVerificationTokensIssuerConfig.t list;
+            [@key "configs"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        configs : Types.Storage.PrivateVerificationTokensIssuerConfig.t list;
+            [@key "configs"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId id =
+        {
+          id;
+          method_ = "Storage.getPrivateVerificationTokensIssuerConfigs";
+          sessionId;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns the configured Private Verification Tokens issuers and their redeemer
+origins. |desc}]
+
   module ClearPrivateVerificationTokens = struct
     module Response : sig
       type result = Types.assoc
