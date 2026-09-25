@@ -4038,6 +4038,14 @@ module Preload = struct
           [@key "pipelineId"] [@ocaml.doc "No description provided"]
       status : Types.Preload.PreloadingStatus.t;
           [@key "status"] [@ocaml.doc "No description provided"]
+      effectiveAction : Types.Preload.SpeculationAction.t option;
+          [@key "effectiveAction"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The action currently performed by this attempt. This differs from\n\
+             `key.action` after a prerender-until-script attempt is upgraded \
+             in place\n\
+             to a full prerender."]
       prerenderStatus : Types.Preload.PrerenderFinalStatus.t option;
           [@key "prerenderStatus"]
           [@yojson.option]
