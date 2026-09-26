@@ -13850,6 +13850,18 @@ override. |desc}]
         | `enable -> `String "enable"
         | `default -> `String "default"
 
+      type setdevicemetricsoverride_textlayoutmode = [ `mobile | `default ]
+
+      let setdevicemetricsoverride_textlayoutmode_of_yojson = function
+        | `String "mobile" -> `mobile
+        | `String "default" -> `default
+        | `String s -> failwith ("unknown enum: " ^ s)
+        | _ -> failwith "unknown enum type"
+
+      let yojson_of_setdevicemetricsoverride_textlayoutmode = function
+        | `mobile -> `String "mobile"
+        | `default -> `String "default"
+
       type t = {
         width : Types.number;
             [@key "width"]
@@ -13955,13 +13967,21 @@ override. |desc}]
               "Viewport meta tag behavior. Default: `default`. Note: if \
                `mobile` is `true`,\n\
                the viewport meta tag is always enabled."]
+        textLayoutMode : setdevicemetricsoverride_textlayoutmode option;
+            [@key "textLayoutMode"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Text layout mode. Default: `default`. Note: if `mobile` is \
+               `true`,\n\
+               mobile text layout mode (text autosizing) is always enabled."]
       }
       [@@deriving yojson]
 
       let make ~width ~height ~deviceScaleFactor ~mobile ?scale ?screenWidth
           ?screenHeight ?positionX ?positionY ?dontSetVisibleSize
           ?screenOrientation ?viewport ?displayFeature ?devicePosture
-          ?scrollbarType ?screenOrientationLockEmulation ?viewportMeta () =
+          ?scrollbarType ?screenOrientationLockEmulation ?viewportMeta
+          ?textLayoutMode () =
         {
           width;
           height;
@@ -13980,6 +14000,7 @@ override. |desc}]
           scrollbarType;
           screenOrientationLockEmulation;
           viewportMeta;
+          textLayoutMode;
         }
     end
 
