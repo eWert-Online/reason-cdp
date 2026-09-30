@@ -29153,6 +29153,7 @@ and Page : sig
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
+      | `publickey_credentials_remote_client_data_json
       | `rewriter
       | `screen_wake_lock
       | `serial
@@ -30552,6 +30553,7 @@ end = struct
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
+      | `publickey_credentials_remote_client_data_json
       | `rewriter
       | `screen_wake_lock
       | `serial
@@ -30674,6 +30676,7 @@ end = struct
       | `private_state_token_redemption
       | `publickey_credentials_create
       | `publickey_credentials_get
+      | `publickey_credentials_remote_client_data_json
       | `rewriter
       | `screen_wake_lock
       | `serial
@@ -30787,6 +30790,8 @@ end = struct
           `private_state_token_redemption
       | `String "publickey-credentials-create" -> `publickey_credentials_create
       | `String "publickey-credentials-get" -> `publickey_credentials_get
+      | `String "publickey-credentials-remote-client-data-json" ->
+          `publickey_credentials_remote_client_data_json
       | `String "rewriter" -> `rewriter
       | `String "screen-wake-lock" -> `screen_wake_lock
       | `String "serial" -> `serial
@@ -30902,6 +30907,8 @@ end = struct
           `String "private-state-token-redemption"
       | `publickey_credentials_create -> `String "publickey-credentials-create"
       | `publickey_credentials_get -> `String "publickey-credentials-get"
+      | `publickey_credentials_remote_client_data_json ->
+          `String "publickey-credentials-remote-client-data-json"
       | `rewriter -> `String "rewriter"
       | `screen_wake_lock -> `String "screen-wake-lock"
       | `serial -> `String "serial"
@@ -40555,8 +40562,7 @@ and Debugger : sig
           [@key "empty"]
           [@yojson.option]
           [@ocaml.doc
-            "True if the scope does not declare any variables or have a \
-             runtime context.\n\
+            "True if the scope does not declare any variables.\n\
              Only present if true.\n\
              Empty scopes are retained in the scope chain because\n\
              they can be targeted via `evaluateOnCallFrame` (using \
@@ -40865,8 +40871,7 @@ end = struct
           [@key "empty"]
           [@yojson.option]
           [@ocaml.doc
-            "True if the scope does not declare any variables or have a \
-             runtime context.\n\
+            "True if the scope does not declare any variables.\n\
              Only present if true.\n\
              Empty scopes are retained in the scope chain because\n\
              they can be targeted via `evaluateOnCallFrame` (using \
@@ -40937,8 +40942,7 @@ end = struct
           [@key "empty"]
           [@yojson.option]
           [@ocaml.doc
-            "True if the scope does not declare any variables or have a \
-             runtime context.\n\
+            "True if the scope does not declare any variables.\n\
              Only present if true.\n\
              Empty scopes are retained in the scope chain because\n\
              they can be targeted via `evaluateOnCallFrame` (using \
