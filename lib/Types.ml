@@ -40538,6 +40538,11 @@ and Debugger : sig
     val _scope_type_of_yojson : Yojson.Basic.t -> _scope_type
     val yojson_of__scope_type : _scope_type -> Yojson.Basic.t
 
+    type _scope_emptyreason = [ `no_variables | `all_unavailable ]
+
+    val _scope_emptyreason_of_yojson : Yojson.Basic.t -> _scope_emptyreason
+    val yojson_of__scope_emptyreason : _scope_emptyreason -> Yojson.Basic.t
+
     type t = {
       type_ : _scope_type; [@key "type"] [@ocaml.doc "Scope type."]
       object_ : Runtime.RemoteObject.t;
@@ -40558,12 +40563,13 @@ and Debugger : sig
           [@key "endLocation"]
           [@yojson.option]
           [@ocaml.doc "Location in the source code where scope ends"]
-      empty : bool option;
-          [@key "empty"]
+      emptyReason : _scope_emptyreason option;
+          [@key "emptyReason"]
           [@yojson.option]
           [@ocaml.doc
-            "True if the scope does not declare any variables.\n\
-             Only present if true.\n\
+            "Present if the scope has no variable values to show. Absent means \
+             that\n\
+             the scope declares at least one variable with an available value.\n\
              Empty scopes are retained in the scope chain because\n\
              they can be targeted via `evaluateOnCallFrame` (using \
              `scopeNumber`) or\n\
@@ -40847,6 +40853,11 @@ end = struct
     val _scope_type_of_yojson : Yojson.Basic.t -> _scope_type
     val yojson_of__scope_type : _scope_type -> Yojson.Basic.t
 
+    type _scope_emptyreason = [ `no_variables | `all_unavailable ]
+
+    val _scope_emptyreason_of_yojson : Yojson.Basic.t -> _scope_emptyreason
+    val yojson_of__scope_emptyreason : _scope_emptyreason -> Yojson.Basic.t
+
     type t = {
       type_ : _scope_type; [@key "type"] [@ocaml.doc "Scope type."]
       object_ : Runtime.RemoteObject.t;
@@ -40867,12 +40878,13 @@ end = struct
           [@key "endLocation"]
           [@yojson.option]
           [@ocaml.doc "Location in the source code where scope ends"]
-      empty : bool option;
-          [@key "empty"]
+      emptyReason : _scope_emptyreason option;
+          [@key "emptyReason"]
           [@yojson.option]
           [@ocaml.doc
-            "True if the scope does not declare any variables.\n\
-             Only present if true.\n\
+            "Present if the scope has no variable values to show. Absent means \
+             that\n\
+             the scope declares at least one variable with an available value.\n\
              Empty scopes are retained in the scope chain because\n\
              they can be targeted via `evaluateOnCallFrame` (using \
              `scopeNumber`) or\n\
@@ -40918,6 +40930,18 @@ end = struct
       | `module_ -> `String "module"
       | `wasm_expression_stack -> `String "wasm-expression-stack"
 
+    type _scope_emptyreason = [ `no_variables | `all_unavailable ]
+
+    let _scope_emptyreason_of_yojson = function
+      | `String "no-variables" -> `no_variables
+      | `String "all-unavailable" -> `all_unavailable
+      | `String s -> failwith ("unknown enum: " ^ s)
+      | _ -> failwith "unknown enum type"
+
+    let yojson_of__scope_emptyreason = function
+      | `no_variables -> `String "no-variables"
+      | `all_unavailable -> `String "all-unavailable"
+
     type t = {
       type_ : _scope_type; [@key "type"] [@ocaml.doc "Scope type."]
       object_ : Runtime.RemoteObject.t;
@@ -40938,12 +40962,13 @@ end = struct
           [@key "endLocation"]
           [@yojson.option]
           [@ocaml.doc "Location in the source code where scope ends"]
-      empty : bool option;
-          [@key "empty"]
+      emptyReason : _scope_emptyreason option;
+          [@key "emptyReason"]
           [@yojson.option]
           [@ocaml.doc
-            "True if the scope does not declare any variables.\n\
-             Only present if true.\n\
+            "Present if the scope has no variable values to show. Absent means \
+             that\n\
+             the scope declares at least one variable with an available value.\n\
              Empty scopes are retained in the scope chain because\n\
              they can be targeted via `evaluateOnCallFrame` (using \
              `scopeNumber`) or\n\
