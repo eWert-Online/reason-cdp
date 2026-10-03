@@ -4710,6 +4710,69 @@ the browser. |desc}]
   [@@ocaml.doc
     {desc|Ensures that the given node is in its starting-style state. |desc}]
 
+  module ForcePositionTryOption = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        nodeId : Types.DOM.NodeId.t;
+            [@key "nodeId"]
+            [@ocaml.doc
+              "The element id for which to force the position-try option."]
+        index : Types.number option;
+            [@key "index"]
+            [@yojson.option]
+            [@ocaml.doc
+              "The 1-based index of the position-try fallback option, 0 for \
+               base position (no fallback),\n\
+               or omitted to clear the forced state."]
+      }
+      [@@deriving yojson]
+
+      let make ~nodeId ?index () = { nodeId; index }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "CSS.forcePositionTryOption"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Forces a position-try option for the given node. |desc}]
+
   module GetBackgroundColors = struct
     module Response : sig
       type result = {
