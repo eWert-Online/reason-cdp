@@ -2457,7 +2457,8 @@ and Audits : sig
       | `FormModelContextMissingToolName
       | `FormModelContextMissingToolDescription
       | `FormModelContextRequiredParameterMissingName
-      | `FormModelContextParameterMissingName ]
+      | `FormModelContextParameterMissingName
+      | `GeolocationPromptWithoutUserGesture ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -5045,7 +5046,8 @@ end = struct
       | `FormModelContextMissingToolName
       | `FormModelContextMissingToolDescription
       | `FormModelContextRequiredParameterMissingName
-      | `FormModelContextParameterMissingName ]
+      | `FormModelContextParameterMissingName
+      | `GeolocationPromptWithoutUserGesture ]
 
     val _genericissueerrortype_of_yojson :
       Yojson.Basic.t -> _genericissueerrortype
@@ -5077,7 +5079,8 @@ end = struct
       | `FormModelContextMissingToolName
       | `FormModelContextMissingToolDescription
       | `FormModelContextRequiredParameterMissingName
-      | `FormModelContextParameterMissingName ]
+      | `FormModelContextParameterMissingName
+      | `GeolocationPromptWithoutUserGesture ]
 
     let _genericissueerrortype_of_yojson = function
       | `String "FormLabelForNameError" -> `FormLabelForNameError
@@ -5117,6 +5120,8 @@ end = struct
           `FormModelContextRequiredParameterMissingName
       | `String "FormModelContextParameterMissingName" ->
           `FormModelContextParameterMissingName
+      | `String "GeolocationPromptWithoutUserGesture" ->
+          `GeolocationPromptWithoutUserGesture
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -5158,6 +5163,8 @@ end = struct
           `String "FormModelContextRequiredParameterMissingName"
       | `FormModelContextParameterMissingName ->
           `String "FormModelContextParameterMissingName"
+      | `GeolocationPromptWithoutUserGesture ->
+          `String "GeolocationPromptWithoutUserGesture"
 
     type t = _genericissueerrortype
     [@@deriving yojson] [@@ocaml.doc "No description provided"]

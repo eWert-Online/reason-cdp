@@ -28415,6 +28415,78 @@ Only returns values if the feature flag 'WebAppEnableManifestId' is enabled |des
   end
   [@@ocaml.doc {desc|No description provided |desc}]
 
+  module GetSpellCheckCustomDictionary = struct
+    module Response : sig
+      type result = {
+        words : string list;
+            [@key "words"] [@ocaml.doc "No description provided"]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        words : string list;
+            [@key "words"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        frameId : Types.Page.FrameId.t;
+            [@key "frameId"] [@ocaml.doc "No description provided"]
+      }
+      [@@deriving yojson]
+
+      let make ~frameId () = { frameId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        {
+          id;
+          method_ = "Page.getSpellCheckCustomDictionary";
+          sessionId;
+          params;
+        }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns the words that the frame's document added to its spell check custom
+dictionary with `document.spellCheckCustomDictionary.addWords()`, sorted.
+Page script cannot read the dictionary back; this lets developers inspect
+it. |desc}]
+
   module GetFrameTree = struct
     module Response : sig
       type result = {
@@ -41097,10 +41169,18 @@ mutated manually. |desc}]
             [@ocaml.doc
               "The skipList specifies location ranges that should be skipped \
                on step over."]
+        enterRanges : Types.Debugger.LocationRange.t list option;
+            [@key "enterRanges"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Functions whose source range lies within one of the enterRanges \
+               are\n\
+               entered as if by stepInto, even when they are called (directly or\n\
+               indirectly) from a call that is stepped over."]
       }
       [@@deriving yojson]
 
-      let make ?skipList () = { skipList }
+      let make ?skipList ?enterRanges () = { skipList; enterRanges }
     end
 
     module Request = struct
