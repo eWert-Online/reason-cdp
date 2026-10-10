@@ -29164,8 +29164,6 @@ and Page : sig
       | `rewriter
       | `screen_wake_lock
       | `serial
-      | `shared_storage
-      | `shared_storage_select_url
       | `smart_card
       | `speaker_selection
       | `storage_access
@@ -30564,8 +30562,6 @@ end = struct
       | `rewriter
       | `screen_wake_lock
       | `serial
-      | `shared_storage
-      | `shared_storage_select_url
       | `smart_card
       | `speaker_selection
       | `storage_access
@@ -30687,8 +30683,6 @@ end = struct
       | `rewriter
       | `screen_wake_lock
       | `serial
-      | `shared_storage
-      | `shared_storage_select_url
       | `smart_card
       | `speaker_selection
       | `storage_access
@@ -30802,8 +30796,6 @@ end = struct
       | `String "rewriter" -> `rewriter
       | `String "screen-wake-lock" -> `screen_wake_lock
       | `String "serial" -> `serial
-      | `String "shared-storage" -> `shared_storage
-      | `String "shared-storage-select-url" -> `shared_storage_select_url
       | `String "smart-card" -> `smart_card
       | `String "speaker-selection" -> `speaker_selection
       | `String "storage-access" -> `storage_access
@@ -30919,8 +30911,6 @@ end = struct
       | `rewriter -> `String "rewriter"
       | `screen_wake_lock -> `String "screen-wake-lock"
       | `serial -> `String "serial"
-      | `shared_storage -> `String "shared-storage"
-      | `shared_storage_select_url -> `String "shared-storage-select-url"
       | `smart_card -> `String "smart-card"
       | `speaker_selection -> `String "speaker-selection"
       | `storage_access -> `String "storage-access"

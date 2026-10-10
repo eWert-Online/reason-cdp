@@ -1715,6 +1715,12 @@ module Network = struct
       encodedDataLength : Types.number;
           [@key "encodedDataLength"]
           [@ocaml.doc "Total number of bytes received for this request."]
+      encodedBodyLength : Types.number option;
+          [@key "encodedBodyLength"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Size of the response body before removing content encodings.\n\
+             Includes cached bodies, but excludes headers and transfer framing."]
     }
     [@@deriving yojson]
 
