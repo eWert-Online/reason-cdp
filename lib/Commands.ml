@@ -31604,6 +31604,62 @@ TODO(https://crbug.com/1440085): Remove this once Puppeteer supports tab targets
   [@@ocaml.doc
     {desc|Get the annotated page content for the main frame.
 This is an experimental command that is subject to change. |desc}]
+
+  module SetInputVisualization = struct
+    module Response : sig
+      type result = Types.assoc
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = Types.assoc [@@deriving yojson]
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        clicks : bool option;
+            [@key "clicks"]
+            [@yojson.option]
+            [@ocaml.doc "Whether to enable click visualization."]
+      }
+      [@@deriving yojson]
+
+      let make ?clicks () = { clicks }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Page.setInputVisualization"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc {desc|Configures input visualization on the page. |desc}]
 end
 
 module Performance = struct
