@@ -29172,6 +29172,7 @@ and Page : sig
       | `sync_xhr
       | `tools
       | `translator
+      | `unbounded_element
       | `unload
       | `usb
       | `usb_unrestricted
@@ -30570,6 +30571,7 @@ end = struct
       | `sync_xhr
       | `tools
       | `translator
+      | `unbounded_element
       | `unload
       | `usb
       | `usb_unrestricted
@@ -30691,6 +30693,7 @@ end = struct
       | `sync_xhr
       | `tools
       | `translator
+      | `unbounded_element
       | `unload
       | `usb
       | `usb_unrestricted
@@ -30804,6 +30807,7 @@ end = struct
       | `String "sync-xhr" -> `sync_xhr
       | `String "tools" -> `tools
       | `String "translator" -> `translator
+      | `String "unbounded-element" -> `unbounded_element
       | `String "unload" -> `unload
       | `String "usb" -> `usb
       | `String "usb-unrestricted" -> `usb_unrestricted
@@ -30919,6 +30923,7 @@ end = struct
       | `sync_xhr -> `String "sync-xhr"
       | `tools -> `String "tools"
       | `translator -> `String "translator"
+      | `unbounded_element -> `String "unbounded-element"
       | `unload -> `String "unload"
       | `usb -> `String "usb"
       | `usb_unrestricted -> `String "usb-unrestricted"
