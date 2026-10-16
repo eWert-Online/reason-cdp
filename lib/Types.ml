@@ -21703,7 +21703,8 @@ and Network : sig
       | `SigningQuotaExceeded
       | `RefreshedAsWaiter
       | `TransientSigningError
-      | `InScopeRefreshNotYetNeeded ]
+      | `InScopeRefreshNotYetNeeded
+      | `Canceled ]
 
     val _refresheventdetails_refreshresult_of_yojson :
       Yojson.Basic.t -> _refresheventdetails_refreshresult
@@ -26660,7 +26661,8 @@ end = struct
       | `SigningQuotaExceeded
       | `RefreshedAsWaiter
       | `TransientSigningError
-      | `InScopeRefreshNotYetNeeded ]
+      | `InScopeRefreshNotYetNeeded
+      | `Canceled ]
 
     val _refresheventdetails_refreshresult_of_yojson :
       Yojson.Basic.t -> _refresheventdetails_refreshresult
@@ -26712,7 +26714,8 @@ end = struct
       | `SigningQuotaExceeded
       | `RefreshedAsWaiter
       | `TransientSigningError
-      | `InScopeRefreshNotYetNeeded ]
+      | `InScopeRefreshNotYetNeeded
+      | `Canceled ]
 
     let _refresheventdetails_refreshresult_of_yojson = function
       | `String "Refreshed" -> `Refreshed
@@ -26724,6 +26727,7 @@ end = struct
       | `String "RefreshedAsWaiter" -> `RefreshedAsWaiter
       | `String "TransientSigningError" -> `TransientSigningError
       | `String "InScopeRefreshNotYetNeeded" -> `InScopeRefreshNotYetNeeded
+      | `String "Canceled" -> `Canceled
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26737,6 +26741,7 @@ end = struct
       | `RefreshedAsWaiter -> `String "RefreshedAsWaiter"
       | `TransientSigningError -> `String "TransientSigningError"
       | `InScopeRefreshNotYetNeeded -> `String "InScopeRefreshNotYetNeeded"
+      | `Canceled -> `String "Canceled"
 
     type t = {
       refreshResult : _refresheventdetails_refreshresult;
