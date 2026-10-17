@@ -3528,11 +3528,11 @@ setPermission instead. |desc}]
         deviceId : string;
             [@key "deviceId"]
             [@ocaml.doc
-              "Required non-empty identifier for the mock camera. This is \
-               mapped to an\n\
-               internal virtual-device identifier and is not the \
-               MediaDeviceInfo.deviceId\n\
-               exposed to the page."]
+              "Required non-empty identifier for the mock camera within the \
+               current\n\
+               DevTools session. Different sessions can use the same identifier\n\
+               without replacing each other's cameras. This is not the\n\
+               MediaDeviceInfo.deviceId exposed to the page."]
       }
       [@@deriving yojson]
 
