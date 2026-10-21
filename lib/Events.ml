@@ -2310,7 +2310,14 @@ module Network = struct
       identifier : Types.Network.RequestId.t;
           [@key "identifier"] [@ocaml.doc "No description provided"]
       iPAddress : string;
-          [@key "IPAddress"] [@ocaml.doc "No description provided"]
+          [@key "IPAddress"] [@ocaml.doc "Multicast group address."]
+      sourceAddress : string option;
+          [@key "sourceAddress"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Source address of a source-specific multicast (SSM) membership. \
+             Absent\n\
+             for any-source multicast (ASM) memberships."]
     }
     [@@deriving yojson]
 
@@ -2332,7 +2339,14 @@ module Network = struct
       identifier : Types.Network.RequestId.t;
           [@key "identifier"] [@ocaml.doc "No description provided"]
       iPAddress : string;
-          [@key "IPAddress"] [@ocaml.doc "No description provided"]
+          [@key "IPAddress"] [@ocaml.doc "Multicast group address."]
+      sourceAddress : string option;
+          [@key "sourceAddress"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Source address of a source-specific multicast (SSM) membership. \
+             Absent\n\
+             for any-source multicast (ASM) memberships."]
     }
     [@@deriving yojson]
 
