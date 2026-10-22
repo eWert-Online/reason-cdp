@@ -21628,7 +21628,8 @@ and Network : sig
       | `PreProvisionedKeyAccessNotGranted
       | `PreProvisionedKeyNotFound
       | `AttestationCertificationError
-      | `AttestationSigningError ]
+      | `AttestationSigningError
+      | `FederatedRegistrationRedirected ]
 
     val _deviceboundsessionfetchresult_of_yojson :
       Yojson.Basic.t -> _deviceboundsessionfetchresult
@@ -26234,7 +26235,8 @@ end = struct
       | `PreProvisionedKeyAccessNotGranted
       | `PreProvisionedKeyNotFound
       | `AttestationCertificationError
-      | `AttestationSigningError ]
+      | `AttestationSigningError
+      | `FederatedRegistrationRedirected ]
 
     val _deviceboundsessionfetchresult_of_yojson :
       Yojson.Basic.t -> _deviceboundsessionfetchresult
@@ -26324,7 +26326,8 @@ end = struct
       | `PreProvisionedKeyAccessNotGranted
       | `PreProvisionedKeyNotFound
       | `AttestationCertificationError
-      | `AttestationSigningError ]
+      | `AttestationSigningError
+      | `FederatedRegistrationRedirected ]
 
     let _deviceboundsessionfetchresult_of_yojson = function
       | `String "Success" -> `Success
@@ -26435,6 +26438,8 @@ end = struct
       | `String "AttestationCertificationError" ->
           `AttestationCertificationError
       | `String "AttestationSigningError" -> `AttestationSigningError
+      | `String "FederatedRegistrationRedirected" ->
+          `FederatedRegistrationRedirected
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26547,6 +26552,8 @@ end = struct
       | `AttestationCertificationError ->
           `String "AttestationCertificationError"
       | `AttestationSigningError -> `String "AttestationSigningError"
+      | `FederatedRegistrationRedirected ->
+          `String "FederatedRegistrationRedirected"
 
     type t = _deviceboundsessionfetchresult
     [@@deriving yojson]
