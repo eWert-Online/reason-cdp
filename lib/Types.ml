@@ -34085,7 +34085,8 @@ and Preload : sig
       | `BrowsingDataRemoved
       | `PrerenderHostReused
       | `FormSubmitWhenPrerendering
-      | `CrossDocumentRestart ]
+      | `CrossDocumentRestart
+      | `PrefetchFailedCrossOriginSubframe ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -34586,7 +34587,8 @@ end = struct
       | `BrowsingDataRemoved
       | `PrerenderHostReused
       | `FormSubmitWhenPrerendering
-      | `CrossDocumentRestart ]
+      | `CrossDocumentRestart
+      | `PrefetchFailedCrossOriginSubframe ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -34674,7 +34676,8 @@ end = struct
       | `BrowsingDataRemoved
       | `PrerenderHostReused
       | `FormSubmitWhenPrerendering
-      | `CrossDocumentRestart ]
+      | `CrossDocumentRestart
+      | `PrefetchFailedCrossOriginSubframe ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -34779,6 +34782,8 @@ end = struct
       | `String "PrerenderHostReused" -> `PrerenderHostReused
       | `String "FormSubmitWhenPrerendering" -> `FormSubmitWhenPrerendering
       | `String "CrossDocumentRestart" -> `CrossDocumentRestart
+      | `String "PrefetchFailedCrossOriginSubframe" ->
+          `PrefetchFailedCrossOriginSubframe
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -34885,6 +34890,8 @@ end = struct
       | `PrerenderHostReused -> `String "PrerenderHostReused"
       | `FormSubmitWhenPrerendering -> `String "FormSubmitWhenPrerendering"
       | `CrossDocumentRestart -> `String "CrossDocumentRestart"
+      | `PrefetchFailedCrossOriginSubframe ->
+          `String "PrefetchFailedCrossOriginSubframe"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
