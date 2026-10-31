@@ -30642,6 +30642,18 @@ unavailable. |desc}]
     end
 
     module Params = struct
+      type startscreenrecording_capturearea = [ `target | `browserWindow ]
+
+      let startscreenrecording_capturearea_of_yojson = function
+        | `String "target" -> `target
+        | `String "browserWindow" -> `browserWindow
+        | `String s -> failwith ("unknown enum: " ^ s)
+        | _ -> failwith "unknown enum type"
+
+      let yojson_of_startscreenrecording_capturearea = function
+        | `target -> `String "target"
+        | `browserWindow -> `String "browserWindow"
+
       type t = {
         audio : bool option;
             [@key "audio"]
@@ -30659,11 +30671,15 @@ unavailable. |desc}]
             [@key "frameRate"]
             [@yojson.option]
             [@ocaml.doc "Maximum frame rate in frames per second."]
+        captureArea : startscreenrecording_capturearea option;
+            [@key "captureArea"]
+            [@yojson.option]
+            [@ocaml.doc "The area to record. Defaults to `target`."]
       }
       [@@deriving yojson]
 
-      let make ?audio ?maxWidth ?maxHeight ?frameRate () =
-        { audio; maxWidth; maxHeight; frameRate }
+      let make ?audio ?maxWidth ?maxHeight ?frameRate ?captureArea () =
+        { audio; maxWidth; maxHeight; frameRate; captureArea }
     end
 
     module Request = struct
