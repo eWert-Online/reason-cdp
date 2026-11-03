@@ -8379,7 +8379,6 @@ and Browser : sig
       | `smartCard
       | `speakerSelection
       | `storageAccess
-      | `topLevelStorageAccess
       | `videoCapture
       | `vr
       | `wakeLockScreen
@@ -8611,7 +8610,6 @@ end = struct
       | `smartCard
       | `speakerSelection
       | `storageAccess
-      | `topLevelStorageAccess
       | `videoCapture
       | `vr
       | `wakeLockScreen
@@ -8658,7 +8656,6 @@ end = struct
       | `smartCard
       | `speakerSelection
       | `storageAccess
-      | `topLevelStorageAccess
       | `videoCapture
       | `vr
       | `wakeLockScreen
@@ -8699,7 +8696,6 @@ end = struct
       | `String "smartCard" -> `smartCard
       | `String "speakerSelection" -> `speakerSelection
       | `String "storageAccess" -> `storageAccess
-      | `String "topLevelStorageAccess" -> `topLevelStorageAccess
       | `String "videoCapture" -> `videoCapture
       | `String "vr" -> `vr
       | `String "wakeLockScreen" -> `wakeLockScreen
@@ -8742,7 +8738,6 @@ end = struct
       | `smartCard -> `String "smartCard"
       | `speakerSelection -> `String "speakerSelection"
       | `storageAccess -> `String "storageAccess"
-      | `topLevelStorageAccess -> `String "topLevelStorageAccess"
       | `videoCapture -> `String "videoCapture"
       | `vr -> `String "vr"
       | `wakeLockScreen -> `String "wakeLockScreen"
@@ -29097,7 +29092,6 @@ and Page : sig
       | `autofill
       | `autoplay
       | `bluetooth
-      | `browsing_topics
       | `camera
       | `captured_surface_control
       | `ch_dpr
@@ -29151,7 +29145,6 @@ and Page : sig
       | `hid
       | `identity_credentials_get
       | `idle_detection
-      | `interest_cohort
       | `keyboard_map
       | `language_detector
       | `language_model
@@ -30496,7 +30489,6 @@ end = struct
       | `autofill
       | `autoplay
       | `bluetooth
-      | `browsing_topics
       | `camera
       | `captured_surface_control
       | `ch_dpr
@@ -30550,7 +30542,6 @@ end = struct
       | `hid
       | `identity_credentials_get
       | `idle_detection
-      | `interest_cohort
       | `keyboard_map
       | `language_detector
       | `language_model
@@ -30618,7 +30609,6 @@ end = struct
       | `autofill
       | `autoplay
       | `bluetooth
-      | `browsing_topics
       | `camera
       | `captured_surface_control
       | `ch_dpr
@@ -30672,7 +30662,6 @@ end = struct
       | `hid
       | `identity_credentials_get
       | `idle_detection
-      | `interest_cohort
       | `keyboard_map
       | `language_detector
       | `language_model
@@ -30726,7 +30715,6 @@ end = struct
       | `String "autofill" -> `autofill
       | `String "autoplay" -> `autoplay
       | `String "bluetooth" -> `bluetooth
-      | `String "browsing-topics" -> `browsing_topics
       | `String "camera" -> `camera
       | `String "captured-surface-control" -> `captured_surface_control
       | `String "ch-dpr" -> `ch_dpr
@@ -30783,7 +30771,6 @@ end = struct
       | `String "hid" -> `hid
       | `String "identity-credentials-get" -> `identity_credentials_get
       | `String "idle-detection" -> `idle_detection
-      | `String "interest-cohort" -> `interest_cohort
       | `String "keyboard-map" -> `keyboard_map
       | `String "language-detector" -> `language_detector
       | `String "language-model" -> `language_model
@@ -30842,7 +30829,6 @@ end = struct
       | `autofill -> `String "autofill"
       | `autoplay -> `String "autoplay"
       | `bluetooth -> `String "bluetooth"
-      | `browsing_topics -> `String "browsing-topics"
       | `camera -> `String "camera"
       | `captured_surface_control -> `String "captured-surface-control"
       | `ch_dpr -> `String "ch-dpr"
@@ -30899,7 +30885,6 @@ end = struct
       | `hid -> `String "hid"
       | `identity_credentials_get -> `String "identity-credentials-get"
       | `idle_detection -> `String "idle-detection"
-      | `interest_cohort -> `String "interest-cohort"
       | `keyboard_map -> `String "keyboard-map"
       | `language_detector -> `String "language-detector"
       | `language_model -> `String "language-model"
@@ -40046,8 +40031,20 @@ and WebMCP : sig
     [@@ocaml.doc "Represents the status of a tool invocation."]
   end
 
+  and ToolId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Unique identifier of a registered tool. A new identifier is created \
+       every time a tool is registered, so a tool that\n\
+       is unregistered and then registered again under the same name gets a \
+       different identifier. Clients should treat it\n\
+       as an opaque string."]
+  end
+
   and Tool : sig
     type t = {
+      toolId : ToolId.t; [@key "toolId"] [@ocaml.doc "Tool identifier."]
       name : string; [@key "name"] [@ocaml.doc "Tool name."]
       description : string;
           [@key "description"] [@ocaml.doc "Tool description."]
@@ -40055,6 +40052,10 @@ and WebMCP : sig
           [@key "inputSchema"]
           [@yojson.option]
           [@ocaml.doc "Schema for the tool's input parameters."]
+      outputSchema : assoc option;
+          [@key "outputSchema"]
+          [@yojson.option]
+          [@ocaml.doc "Schema for the tool's output structure."]
       annotations : Annotation.t option;
           [@key "annotations"]
           [@yojson.option]
@@ -40077,6 +40078,8 @@ and WebMCP : sig
 
   and RemovedTool : sig
     type t = {
+      toolId : ToolId.t;
+          [@key "toolId"] [@ocaml.doc "Identifier of the removed tool."]
       name : string; [@key "name"] [@ocaml.doc "Tool name."]
       frameId : Page.FrameId.t;
           [@key "frameId"]
@@ -40182,8 +40185,29 @@ end = struct
     [@@ocaml.doc "Represents the status of a tool invocation."]
   end
 
+  and ToolId : sig
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Unique identifier of a registered tool. A new identifier is created \
+       every time a tool is registered, so a tool that\n\
+       is unregistered and then registered again under the same name gets a \
+       different identifier. Clients should treat it\n\
+       as an opaque string."]
+  end = struct
+    type t = string
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Unique identifier of a registered tool. A new identifier is created \
+       every time a tool is registered, so a tool that\n\
+       is unregistered and then registered again under the same name gets a \
+       different identifier. Clients should treat it\n\
+       as an opaque string."]
+  end
+
   and Tool : sig
     type t = {
+      toolId : ToolId.t; [@key "toolId"] [@ocaml.doc "Tool identifier."]
       name : string; [@key "name"] [@ocaml.doc "Tool name."]
       description : string;
           [@key "description"] [@ocaml.doc "Tool description."]
@@ -40191,6 +40215,10 @@ end = struct
           [@key "inputSchema"]
           [@yojson.option]
           [@ocaml.doc "Schema for the tool's input parameters."]
+      outputSchema : assoc option;
+          [@key "outputSchema"]
+          [@yojson.option]
+          [@ocaml.doc "Schema for the tool's output structure."]
       annotations : Annotation.t option;
           [@key "annotations"]
           [@yojson.option]
@@ -40211,6 +40239,7 @@ end = struct
     [@@ocaml.doc "Definition of a tool that can be invoked."]
   end = struct
     type t = {
+      toolId : ToolId.t; [@key "toolId"] [@ocaml.doc "Tool identifier."]
       name : string; [@key "name"] [@ocaml.doc "Tool name."]
       description : string;
           [@key "description"] [@ocaml.doc "Tool description."]
@@ -40218,6 +40247,10 @@ end = struct
           [@key "inputSchema"]
           [@yojson.option]
           [@ocaml.doc "Schema for the tool's input parameters."]
+      outputSchema : assoc option;
+          [@key "outputSchema"]
+          [@yojson.option]
+          [@ocaml.doc "Schema for the tool's output structure."]
       annotations : Annotation.t option;
           [@key "annotations"]
           [@yojson.option]
@@ -40240,6 +40273,8 @@ end = struct
 
   and RemovedTool : sig
     type t = {
+      toolId : ToolId.t;
+          [@key "toolId"] [@ocaml.doc "Identifier of the removed tool."]
       name : string; [@key "name"] [@ocaml.doc "Tool name."]
       frameId : Page.FrameId.t;
           [@key "frameId"]
@@ -40248,6 +40283,8 @@ end = struct
     [@@deriving yojson] [@@ocaml.doc "Definition of a tool that was removed."]
   end = struct
     type t = {
+      toolId : ToolId.t;
+          [@key "toolId"] [@ocaml.doc "Identifier of the removed tool."]
       name : string; [@key "name"] [@ocaml.doc "Tool name."]
       frameId : Page.FrameId.t;
           [@key "frameId"]

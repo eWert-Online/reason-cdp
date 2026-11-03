@@ -5586,14 +5586,26 @@ module WebMCP = struct
     let name = "WebMCP.toolInvoked"
 
     type result = {
-      toolName : string;
-          [@key "toolName"] [@ocaml.doc "Name of the tool to invoke."]
       frameId : Types.Page.FrameId.t; [@key "frameId"] [@ocaml.doc "Frame id"]
       invocationId : string;
           [@key "invocationId"] [@ocaml.doc "Invocation identifier."]
       input : string;
           [@key "input"]
           [@ocaml.doc "The input parameters used for the invocation."]
+      toolName : string option;
+          [@key "toolName"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Name of the tool to invoke. Missing if the tool was invoked by \
+             its identifier, but could not be found (e.g.,\n\
+             it was already unregistered), so its name could not be recovered."]
+      toolId : Types.WebMCP.ToolId.t option;
+          [@key "toolId"]
+          [@yojson.option]
+          [@ocaml.doc
+            "Identifier of the tool to invoke. Missing if the tool was invoked \
+             by name, but could not be found, so its\n\
+             identifier could not be recovered."]
     }
     [@@deriving yojson]
 
