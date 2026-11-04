@@ -29168,6 +29168,7 @@ and Page : sig
       | `publickey_credentials_remote_client_data_json
       | `rewriter
       | `screen_wake_lock
+      | `semantic_embedder
       | `serial
       | `smart_card
       | `speaker_selection
@@ -30565,6 +30566,7 @@ end = struct
       | `publickey_credentials_remote_client_data_json
       | `rewriter
       | `screen_wake_lock
+      | `semantic_embedder
       | `serial
       | `smart_card
       | `speaker_selection
@@ -30685,6 +30687,7 @@ end = struct
       | `publickey_credentials_remote_client_data_json
       | `rewriter
       | `screen_wake_lock
+      | `semantic_embedder
       | `serial
       | `smart_card
       | `speaker_selection
@@ -30797,6 +30800,7 @@ end = struct
           `publickey_credentials_remote_client_data_json
       | `String "rewriter" -> `rewriter
       | `String "screen-wake-lock" -> `screen_wake_lock
+      | `String "semantic-embedder" -> `semantic_embedder
       | `String "serial" -> `serial
       | `String "smart-card" -> `smart_card
       | `String "speaker-selection" -> `speaker_selection
@@ -30911,6 +30915,7 @@ end = struct
           `String "publickey-credentials-remote-client-data-json"
       | `rewriter -> `String "rewriter"
       | `screen_wake_lock -> `String "screen-wake-lock"
+      | `semantic_embedder -> `String "semantic-embedder"
       | `serial -> `String "serial"
       | `smart_card -> `String "smart-card"
       | `speaker_selection -> `String "speaker-selection"
