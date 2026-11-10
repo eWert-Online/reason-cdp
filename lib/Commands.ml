@@ -38615,8 +38615,23 @@ all currently registered tools. |desc}]
       type t = {
         frameId : Types.Page.FrameId.t;
             [@key "frameId"] [@ocaml.doc "Frame in which to invoke the tool."]
-        toolName : string;
-            [@key "toolName"] [@ocaml.doc "Name of the tool to invoke."]
+        toolId : Types.WebMCP.ToolId.t option;
+            [@key "toolId"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Identifier of the tool to invoke, as reported in `Tool.toolId`. \
+               Invokes exactly that tool, and fails if it is no\n\
+               longer registered, even if a different tool has since been \
+               registered under the same name."]
+        toolName : string option;
+            [@key "toolName"]
+            [@yojson.option]
+            [@ocaml.doc
+              "Name of the tool to invoke. Deprecated: invokes whichever tool \
+               is registered under this name when the command\n\
+               is handled, which may not be the tool the client observed if \
+               the page has since replaced it. Use `toolId`\n\
+               instead."]
         input : Types.assoc;
             [@key "input"]
             [@ocaml.doc
@@ -38624,7 +38639,8 @@ all currently registered tools. |desc}]
       }
       [@@deriving yojson]
 
-      let make ~frameId ~toolName ~input () = { frameId; toolName; input }
+      let make ~frameId ?toolId ?toolName ~input () =
+        { frameId; toolId; toolName; input }
     end
 
     module Request = struct
@@ -38641,7 +38657,9 @@ all currently registered tools. |desc}]
         |> yojson_of_t |> Yojson.Safe.to_string
     end
   end
-  [@@ocaml.doc {desc|Invokes a registered tool. |desc}]
+  [@@ocaml.doc
+    {desc|Invokes a registered tool. Exactly one of `toolId` and `toolName` must be specified; the command fails if both or
+neither are. |desc}]
 
   module CancelInvocation = struct
     module Response : sig
