@@ -39199,6 +39199,73 @@ enabled until the result for this command is received. |desc}]
     {desc|Returns possible locations for breakpoint. scriptId in start and end range locations should be
 the same. |desc}]
 
+  module GetScopeChain = struct
+    module Response : sig
+      type result = {
+        scopeChain : Types.Debugger.Scope.t list;
+            [@key "scopeChain"] [@ocaml.doc "Scope chain for the call frame."]
+      }
+
+      type error = { code : int; message : string }
+
+      type t = {
+        id : int;
+        error : error option;
+        sessionId : Types.Target.SessionID.t option;
+        result : result option;
+      }
+
+      val parse : string -> t
+    end = struct
+      type result = {
+        scopeChain : Types.Debugger.Scope.t list;
+            [@key "scopeChain"] [@ocaml.doc "Scope chain for the call frame."]
+      }
+      [@@deriving yojson]
+
+      type error = { code : int; message : string } [@@deriving yojson]
+
+      type t = {
+        id : int;
+        error : error option; [@yojson.option]
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        result : result option; [@yojson.option]
+      }
+      [@@deriving yojson]
+
+      let parse response = response |> Yojson.Safe.from_string |> t_of_yojson
+    end
+
+    module Params = struct
+      type t = {
+        callFrameId : Types.Debugger.CallFrameId.t;
+            [@key "callFrameId"]
+            [@ocaml.doc "Call frame identifier to get the scope chain for."]
+      }
+      [@@deriving yojson]
+
+      let make ~callFrameId () = { callFrameId }
+    end
+
+    module Request = struct
+      type t = {
+        id : int;
+        sessionId : Types.Target.SessionID.t option; [@yojson.option]
+        method_ : string; [@key "method"]
+        params : Params.t;
+      }
+      [@@deriving yojson]
+
+      let make ?sessionId ~params id =
+        { id; method_ = "Debugger.getScopeChain"; sessionId; params }
+        |> yojson_of_t |> Yojson.Safe.to_string
+    end
+  end
+  [@@ocaml.doc
+    {desc|Returns the current scope chain of the given call frame. Unlike the scope chain reported
+with the `paused` event, it reflects changes made to variables since then (e.g. via
+`evaluateOnCallFrame` or `setVariableValue`). |desc}]
+
   module GetScriptSource = struct
     module Response : sig
       type result = {
