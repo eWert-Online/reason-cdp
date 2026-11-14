@@ -12550,7 +12550,6 @@ and DOM : sig
       | `select_listbox
       | `permission_icon
       | `overscroll_area_parent
-      | `overscroll_backdrop
       | `skeleton ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
@@ -12936,7 +12935,6 @@ end = struct
       | `select_listbox
       | `permission_icon
       | `overscroll_area_parent
-      | `overscroll_backdrop
       | `skeleton ]
 
     val _pseudotype_of_yojson : Yojson.Basic.t -> _pseudotype
@@ -12988,7 +12986,6 @@ end = struct
       | `select_listbox
       | `permission_icon
       | `overscroll_area_parent
-      | `overscroll_backdrop
       | `skeleton ]
 
     let _pseudotype_of_yojson = function
@@ -13035,7 +13032,6 @@ end = struct
       | `String "select-listbox" -> `select_listbox
       | `String "permission-icon" -> `permission_icon
       | `String "overscroll-area-parent" -> `overscroll_area_parent
-      | `String "overscroll-backdrop" -> `overscroll_backdrop
       | `String "skeleton" -> `skeleton
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -13084,7 +13080,6 @@ end = struct
       | `select_listbox -> `String "select-listbox"
       | `permission_icon -> `String "permission-icon"
       | `overscroll_area_parent -> `String "overscroll-area-parent"
-      | `overscroll_backdrop -> `String "overscroll-backdrop"
       | `skeleton -> `String "skeleton"
 
     type t = _pseudotype
