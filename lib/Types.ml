@@ -41873,14 +41873,16 @@ and Runtime : sig
           [@yojson.option]
           [@ocaml.doc
             "Remote object value in case of primitive values or JSON values \
-             (if it was requested)."]
+             (if it was requested).\n\
+             Not set in `deep` serialization mode, see `deepSerializedValue`."]
       unserializableValue : UnserializableValue.t option;
           [@key "unserializableValue"]
           [@yojson.option]
           [@ocaml.doc
             "Primitive value which can not be JSON-stringified does not have \
              `value`, but gets this\n\
-             property."]
+             property. Not set in `deep` serialization mode, see \
+             `deepSerializedValue`."]
       description : string option;
           [@key "description"]
           [@yojson.option]
@@ -42687,14 +42689,16 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "Remote object value in case of primitive values or JSON values \
-             (if it was requested)."]
+             (if it was requested).\n\
+             Not set in `deep` serialization mode, see `deepSerializedValue`."]
       unserializableValue : UnserializableValue.t option;
           [@key "unserializableValue"]
           [@yojson.option]
           [@ocaml.doc
             "Primitive value which can not be JSON-stringified does not have \
              `value`, but gets this\n\
-             property."]
+             property. Not set in `deep` serialization mode, see \
+             `deepSerializedValue`."]
       description : string option;
           [@key "description"]
           [@yojson.option]
@@ -42844,14 +42848,16 @@ end = struct
           [@yojson.option]
           [@ocaml.doc
             "Remote object value in case of primitive values or JSON values \
-             (if it was requested)."]
+             (if it was requested).\n\
+             Not set in `deep` serialization mode, see `deepSerializedValue`."]
       unserializableValue : UnserializableValue.t option;
           [@key "unserializableValue"]
           [@yojson.option]
           [@ocaml.doc
             "Primitive value which can not be JSON-stringified does not have \
              `value`, but gets this\n\
-             property."]
+             property. Not set in `deep` serialization mode, see \
+             `deepSerializedValue`."]
       description : string option;
           [@key "description"]
           [@yojson.option]
