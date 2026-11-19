@@ -38027,7 +38027,17 @@ and Target : sig
           [@ocaml.doc
             "Provides additional details for specific target types. For \
              example, for\n\
-             the type of \"page\", this may be set to \"prerender\"."]
+             the type of \"page\", this may be set to \"prerender\", and for \
+             \"tab\", this\n\
+             may be set to \"unloaded\". An unloaded tab has a history entry, \
+             but no\n\
+             document for it: for example, after the tab was discarded, after\n\
+             session restore without load, or after the renderer crashed. The \
+             tab\n\
+             stays unloaded until a new document commits. A new tab that has not\n\
+             navigated is not unloaded. Target.targetInfoChanged reports \
+             changes of\n\
+             this value for tabs."]
       embedderData : assoc option;
           [@key "embedderData"]
           [@yojson.option]
@@ -38151,7 +38161,17 @@ end = struct
           [@ocaml.doc
             "Provides additional details for specific target types. For \
              example, for\n\
-             the type of \"page\", this may be set to \"prerender\"."]
+             the type of \"page\", this may be set to \"prerender\", and for \
+             \"tab\", this\n\
+             may be set to \"unloaded\". An unloaded tab has a history entry, \
+             but no\n\
+             document for it: for example, after the tab was discarded, after\n\
+             session restore without load, or after the renderer crashed. The \
+             tab\n\
+             stays unloaded until a new document commits. A new tab that has not\n\
+             navigated is not unloaded. Target.targetInfoChanged reports \
+             changes of\n\
+             this value for tabs."]
       embedderData : assoc option;
           [@key "embedderData"]
           [@yojson.option]
@@ -38210,7 +38230,17 @@ end = struct
           [@ocaml.doc
             "Provides additional details for specific target types. For \
              example, for\n\
-             the type of \"page\", this may be set to \"prerender\"."]
+             the type of \"page\", this may be set to \"prerender\", and for \
+             \"tab\", this\n\
+             may be set to \"unloaded\". An unloaded tab has a history entry, \
+             but no\n\
+             document for it: for example, after the tab was discarded, after\n\
+             session restore without load, or after the renderer crashed. The \
+             tab\n\
+             stays unloaded until a new document commits. A new tab that has not\n\
+             navigated is not unloaded. Target.targetInfoChanged reports \
+             changes of\n\
+             this value for tabs."]
       embedderData : assoc option;
           [@key "embedderData"]
           [@yojson.option]
