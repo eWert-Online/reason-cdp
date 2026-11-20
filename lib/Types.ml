@@ -2827,7 +2827,10 @@ and Audits : sig
       | `NonPhrasingContentOptionChild
       | `InteractiveContentOptionChild
       | `InteractiveContentLegendChild
-      | `InteractiveContentSummaryDescendant ]
+      | `InteractiveContentSummaryDescendant
+      | `AnchorMenuDescendant
+      | `InteractiveContentMenuDescendant
+      | `TextMenuDescendant ]
 
     val _elementaccessibilityissuereason_of_yojson :
       Yojson.Basic.t -> _elementaccessibilityissuereason
@@ -2852,8 +2855,8 @@ and Audits : sig
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "This issue warns about errors in the select or summary element content \
-       model."]
+      "This issue warns about errors in the select, summary, or menu element \
+       content model."]
   end
 
   and StyleSheetLoadingIssueReason : sig
@@ -6173,7 +6176,10 @@ end = struct
       | `NonPhrasingContentOptionChild
       | `InteractiveContentOptionChild
       | `InteractiveContentLegendChild
-      | `InteractiveContentSummaryDescendant ]
+      | `InteractiveContentSummaryDescendant
+      | `AnchorMenuDescendant
+      | `InteractiveContentMenuDescendant
+      | `TextMenuDescendant ]
 
     val _elementaccessibilityissuereason_of_yojson :
       Yojson.Basic.t -> _elementaccessibilityissuereason
@@ -6190,7 +6196,10 @@ end = struct
       | `NonPhrasingContentOptionChild
       | `InteractiveContentOptionChild
       | `InteractiveContentLegendChild
-      | `InteractiveContentSummaryDescendant ]
+      | `InteractiveContentSummaryDescendant
+      | `AnchorMenuDescendant
+      | `InteractiveContentMenuDescendant
+      | `TextMenuDescendant ]
 
     let _elementaccessibilityissuereason_of_yojson = function
       | `String "DisallowedSelectChild" -> `DisallowedSelectChild
@@ -6203,6 +6212,10 @@ end = struct
           `InteractiveContentLegendChild
       | `String "InteractiveContentSummaryDescendant" ->
           `InteractiveContentSummaryDescendant
+      | `String "AnchorMenuDescendant" -> `AnchorMenuDescendant
+      | `String "InteractiveContentMenuDescendant" ->
+          `InteractiveContentMenuDescendant
+      | `String "TextMenuDescendant" -> `TextMenuDescendant
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -6217,6 +6230,10 @@ end = struct
           `String "InteractiveContentLegendChild"
       | `InteractiveContentSummaryDescendant ->
           `String "InteractiveContentSummaryDescendant"
+      | `AnchorMenuDescendant -> `String "AnchorMenuDescendant"
+      | `InteractiveContentMenuDescendant ->
+          `String "InteractiveContentMenuDescendant"
+      | `TextMenuDescendant -> `String "TextMenuDescendant"
 
     type t = _elementaccessibilityissuereason
     [@@deriving yojson] [@@ocaml.doc "No description provided"]
@@ -6235,8 +6252,8 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "This issue warns about errors in the select or summary element content \
-       model."]
+      "This issue warns about errors in the select, summary, or menu element \
+       content model."]
   end = struct
     type t = {
       nodeId : DOM.BackendNodeId.t;
@@ -6250,8 +6267,8 @@ end = struct
     }
     [@@deriving yojson]
     [@@ocaml.doc
-      "This issue warns about errors in the select or summary element content \
-       model."]
+      "This issue warns about errors in the select, summary, or menu element \
+       content model."]
   end
 
   and StyleSheetLoadingIssueReason : sig
@@ -21619,7 +21636,8 @@ and Network : sig
       | `PreProvisionedKeyNotFound
       | `AttestationCertificationError
       | `AttestationSigningError
-      | `FederatedRegistrationRedirected ]
+      | `FederatedRegistrationRedirected
+      | `CrossSiteRefreshSessionConfig ]
 
     val _deviceboundsessionfetchresult_of_yojson :
       Yojson.Basic.t -> _deviceboundsessionfetchresult
@@ -26226,7 +26244,8 @@ end = struct
       | `PreProvisionedKeyNotFound
       | `AttestationCertificationError
       | `AttestationSigningError
-      | `FederatedRegistrationRedirected ]
+      | `FederatedRegistrationRedirected
+      | `CrossSiteRefreshSessionConfig ]
 
     val _deviceboundsessionfetchresult_of_yojson :
       Yojson.Basic.t -> _deviceboundsessionfetchresult
@@ -26317,7 +26336,8 @@ end = struct
       | `PreProvisionedKeyNotFound
       | `AttestationCertificationError
       | `AttestationSigningError
-      | `FederatedRegistrationRedirected ]
+      | `FederatedRegistrationRedirected
+      | `CrossSiteRefreshSessionConfig ]
 
     let _deviceboundsessionfetchresult_of_yojson = function
       | `String "Success" -> `Success
@@ -26430,6 +26450,8 @@ end = struct
       | `String "AttestationSigningError" -> `AttestationSigningError
       | `String "FederatedRegistrationRedirected" ->
           `FederatedRegistrationRedirected
+      | `String "CrossSiteRefreshSessionConfig" ->
+          `CrossSiteRefreshSessionConfig
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -26544,6 +26566,8 @@ end = struct
       | `AttestationSigningError -> `String "AttestationSigningError"
       | `FederatedRegistrationRedirected ->
           `String "FederatedRegistrationRedirected"
+      | `CrossSiteRefreshSessionConfig ->
+          `String "CrossSiteRefreshSessionConfig"
 
     type t = _deviceboundsessionfetchresult
     [@@deriving yojson]
