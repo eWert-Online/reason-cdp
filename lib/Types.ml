@@ -19617,6 +19617,7 @@ and Network : sig
       | `CSPViolationReport
       | `Preflight
       | `FedCM
+      | `EmailVerification
       | `Other ]
 
     val _resourcetype_of_yojson : Yojson.Basic.t -> _resourcetype
@@ -20420,6 +20421,7 @@ and Network : sig
       | `SignedExchange
       | `preflight
       | `FedCM
+      | `EmailVerification
       | `other ]
 
     val _initiator_type_of_yojson : Yojson.Basic.t -> _initiator_type
@@ -21864,6 +21866,7 @@ end = struct
       | `CSPViolationReport
       | `Preflight
       | `FedCM
+      | `EmailVerification
       | `Other ]
 
     val _resourcetype_of_yojson : Yojson.Basic.t -> _resourcetype
@@ -21892,6 +21895,7 @@ end = struct
       | `CSPViolationReport
       | `Preflight
       | `FedCM
+      | `EmailVerification
       | `Other ]
 
     let _resourcetype_of_yojson = function
@@ -21913,6 +21917,7 @@ end = struct
       | `String "CSPViolationReport" -> `CSPViolationReport
       | `String "Preflight" -> `Preflight
       | `String "FedCM" -> `FedCM
+      | `String "EmailVerification" -> `EmailVerification
       | `String "Other" -> `Other
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -21936,6 +21941,7 @@ end = struct
       | `CSPViolationReport -> `String "CSPViolationReport"
       | `Preflight -> `String "Preflight"
       | `FedCM -> `String "FedCM"
+      | `EmailVerification -> `String "EmailVerification"
       | `Other -> `String "Other"
 
     type t = _resourcetype
@@ -23762,6 +23768,7 @@ end = struct
       | `SignedExchange
       | `preflight
       | `FedCM
+      | `EmailVerification
       | `other ]
 
     val _initiator_type_of_yojson : Yojson.Basic.t -> _initiator_type
@@ -23811,6 +23818,7 @@ end = struct
       | `SignedExchange
       | `preflight
       | `FedCM
+      | `EmailVerification
       | `other ]
 
     let _initiator_type_of_yojson = function
@@ -23820,6 +23828,7 @@ end = struct
       | `String "SignedExchange" -> `SignedExchange
       | `String "preflight" -> `preflight
       | `String "FedCM" -> `FedCM
+      | `String "EmailVerification" -> `EmailVerification
       | `String "other" -> `other
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
@@ -23831,6 +23840,7 @@ end = struct
       | `SignedExchange -> `String "SignedExchange"
       | `preflight -> `String "preflight"
       | `FedCM -> `String "FedCM"
+      | `EmailVerification -> `String "EmailVerification"
       | `other -> `String "other"
 
     type t = {

@@ -29360,11 +29360,21 @@ it. |desc}]
                accidentally\n\
                reloading an unintended target in case there's a racing \
                navigation."]
+        checkForRepost : bool option;
+            [@key "checkForRepost"]
+            [@yojson.option]
+            [@ocaml.doc
+              "If true and the page has POST data, the browser shows the form\n\
+               resubmission dialog before the reload. The command returns \
+               after the\n\
+               user responds to the dialog. If the user cancels the dialog, the\n\
+               command returns an error. The default value is false."]
       }
       [@@deriving yojson]
 
-      let make ?ignoreCache ?scriptToEvaluateOnLoad ?loaderId () =
-        { ignoreCache; scriptToEvaluateOnLoad; loaderId }
+      let make ?ignoreCache ?scriptToEvaluateOnLoad ?loaderId ?checkForRepost ()
+          =
+        { ignoreCache; scriptToEvaluateOnLoad; loaderId; checkForRepost }
     end
 
     module Request = struct
