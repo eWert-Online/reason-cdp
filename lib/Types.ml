@@ -3104,6 +3104,21 @@ and Audits : sig
       "Details for issues about lazy-loaded images without explicit dimensions."]
   end
 
+  and ViewportFitCoverMissingSafeAreaInsetTopIssueDetails : sig
+    type t = {
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "The frame that triggered the issue."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Details for issues about a page that declares viewport-fit=cover, \
+       receives\n\
+       a non-zero top safe-area inset (e.g. a device cutout or system status \
+       bar),\n\
+       but does not consume env(safe-area-inset-top) anywhere in its CSS while\n\
+       having DOM content likely to be occluded by that inset."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -3136,7 +3151,8 @@ and Audits : sig
       | `SelectivePermissionsInterventionIssue
       | `EmailVerificationRequestIssue
       | `LazyLoadImageIssue
-      | `WebInstallIssue ]
+      | `WebInstallIssue
+      | `ViewportFitCoverMissingSafeAreaInsetTopIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -3284,6 +3300,11 @@ and Audits : sig
           [@ocaml.doc "No description provided"]
       webInstallIssueDetails : WebInstallIssueDetails.t option;
           [@key "webInstallIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      viewportFitCoverMissingSafeAreaInsetTopIssueDetails :
+        ViewportFitCoverMissingSafeAreaInsetTopIssueDetails.t option;
+          [@key "viewportFitCoverMissingSafeAreaInsetTopIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
@@ -6817,6 +6838,34 @@ end = struct
       "Details for issues about lazy-loaded images without explicit dimensions."]
   end
 
+  and ViewportFitCoverMissingSafeAreaInsetTopIssueDetails : sig
+    type t = {
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "The frame that triggered the issue."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Details for issues about a page that declares viewport-fit=cover, \
+       receives\n\
+       a non-zero top safe-area inset (e.g. a device cutout or system status \
+       bar),\n\
+       but does not consume env(safe-area-inset-top) anywhere in its CSS while\n\
+       having DOM content likely to be occluded by that inset."]
+  end = struct
+    type t = {
+      frameId : Page.FrameId.t;
+          [@key "frameId"] [@ocaml.doc "The frame that triggered the issue."]
+    }
+    [@@deriving yojson]
+    [@@ocaml.doc
+      "Details for issues about a page that declares viewport-fit=cover, \
+       receives\n\
+       a non-zero top safe-area inset (e.g. a device cutout or system status \
+       bar),\n\
+       but does not consume env(safe-area-inset-top) anywhere in its CSS while\n\
+       having DOM content likely to be occluded by that inset."]
+  end
+
   and InspectorIssueCode : sig
     type _inspectorissuecode =
       [ `CookieIssue
@@ -6849,7 +6898,8 @@ end = struct
       | `SelectivePermissionsInterventionIssue
       | `EmailVerificationRequestIssue
       | `LazyLoadImageIssue
-      | `WebInstallIssue ]
+      | `WebInstallIssue
+      | `ViewportFitCoverMissingSafeAreaInsetTopIssue ]
 
     val _inspectorissuecode_of_yojson : Yojson.Basic.t -> _inspectorissuecode
     val yojson_of__inspectorissuecode : _inspectorissuecode -> Yojson.Basic.t
@@ -6892,7 +6942,8 @@ end = struct
       | `SelectivePermissionsInterventionIssue
       | `EmailVerificationRequestIssue
       | `LazyLoadImageIssue
-      | `WebInstallIssue ]
+      | `WebInstallIssue
+      | `ViewportFitCoverMissingSafeAreaInsetTopIssue ]
 
     let _inspectorissuecode_of_yojson = function
       | `String "CookieIssue" -> `CookieIssue
@@ -6930,6 +6981,8 @@ end = struct
           `EmailVerificationRequestIssue
       | `String "LazyLoadImageIssue" -> `LazyLoadImageIssue
       | `String "WebInstallIssue" -> `WebInstallIssue
+      | `String "ViewportFitCoverMissingSafeAreaInsetTopIssue" ->
+          `ViewportFitCoverMissingSafeAreaInsetTopIssue
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -6969,6 +7022,8 @@ end = struct
           `String "EmailVerificationRequestIssue"
       | `LazyLoadImageIssue -> `String "LazyLoadImageIssue"
       | `WebInstallIssue -> `String "WebInstallIssue"
+      | `ViewportFitCoverMissingSafeAreaInsetTopIssue ->
+          `String "ViewportFitCoverMissingSafeAreaInsetTopIssue"
 
     type t = _inspectorissuecode
     [@@deriving yojson]
@@ -7115,6 +7170,11 @@ end = struct
           [@key "webInstallIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
+      viewportFitCoverMissingSafeAreaInsetTopIssueDetails :
+        ViewportFitCoverMissingSafeAreaInsetTopIssueDetails.t option;
+          [@key "viewportFitCoverMissingSafeAreaInsetTopIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
     }
     [@@deriving yojson]
     [@@ocaml.doc
@@ -7256,6 +7316,11 @@ end = struct
           [@ocaml.doc "No description provided"]
       webInstallIssueDetails : WebInstallIssueDetails.t option;
           [@key "webInstallIssueDetails"]
+          [@yojson.option]
+          [@ocaml.doc "No description provided"]
+      viewportFitCoverMissingSafeAreaInsetTopIssueDetails :
+        ViewportFitCoverMissingSafeAreaInsetTopIssueDetails.t option;
+          [@key "viewportFitCoverMissingSafeAreaInsetTopIssueDetails"]
           [@yojson.option]
           [@ocaml.doc "No description provided"]
     }
