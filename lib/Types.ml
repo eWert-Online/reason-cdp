@@ -19992,6 +19992,12 @@ and Network : sig
           [@key "isAdRelated"]
           [@yojson.option]
           [@ocaml.doc "True when the resource request is ad-related."]
+      adProvenance : AdProvenance.t option;
+          [@key "adProvenance"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The provenance of an ad resource request, if it is ad-related and\n\
+             provenance is available."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP request data."]
   end
@@ -22608,6 +22614,12 @@ end = struct
           [@key "isAdRelated"]
           [@yojson.option]
           [@ocaml.doc "True when the resource request is ad-related."]
+      adProvenance : AdProvenance.t option;
+          [@key "adProvenance"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The provenance of an ad resource request, if it is ad-related and\n\
+             provenance is available."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP request data."]
   end = struct
@@ -22706,6 +22718,12 @@ end = struct
           [@key "isAdRelated"]
           [@yojson.option]
           [@ocaml.doc "True when the resource request is ad-related."]
+      adProvenance : AdProvenance.t option;
+          [@key "adProvenance"]
+          [@yojson.option]
+          [@ocaml.doc
+            "The provenance of an ad resource request, if it is ad-related and\n\
+             provenance is available."]
     }
     [@@deriving yojson] [@@ocaml.doc "HTTP request data."]
   end
@@ -34171,7 +34189,8 @@ and Preload : sig
       | `FormSubmitWhenPrerendering
       | `CrossDocumentRestart
       | `PrefetchFailedCrossOriginSubframe
-      | `UnexpectedMainFrameNavigation ]
+      | `UnexpectedMainFrameNavigation
+      | `AudioOutput ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -34674,7 +34693,8 @@ end = struct
       | `FormSubmitWhenPrerendering
       | `CrossDocumentRestart
       | `PrefetchFailedCrossOriginSubframe
-      | `UnexpectedMainFrameNavigation ]
+      | `UnexpectedMainFrameNavigation
+      | `AudioOutput ]
 
     val _prerenderfinalstatus_of_yojson :
       Yojson.Basic.t -> _prerenderfinalstatus
@@ -34764,7 +34784,8 @@ end = struct
       | `FormSubmitWhenPrerendering
       | `CrossDocumentRestart
       | `PrefetchFailedCrossOriginSubframe
-      | `UnexpectedMainFrameNavigation ]
+      | `UnexpectedMainFrameNavigation
+      | `AudioOutput ]
 
     let _prerenderfinalstatus_of_yojson = function
       | `String "Activated" -> `Activated
@@ -34873,6 +34894,7 @@ end = struct
           `PrefetchFailedCrossOriginSubframe
       | `String "UnexpectedMainFrameNavigation" ->
           `UnexpectedMainFrameNavigation
+      | `String "AudioOutput" -> `AudioOutput
       | `String s -> failwith ("unknown enum: " ^ s)
       | _ -> failwith "unknown enum type"
 
@@ -34983,6 +35005,7 @@ end = struct
           `String "PrefetchFailedCrossOriginSubframe"
       | `UnexpectedMainFrameNavigation ->
           `String "UnexpectedMainFrameNavigation"
+      | `AudioOutput -> `String "AudioOutput"
 
     type t = _prerenderfinalstatus
     [@@deriving yojson]
