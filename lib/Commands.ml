@@ -3596,7 +3596,12 @@ setPermission instead. |desc}]
                current\n\
                DevTools session. Different sessions can use the same identifier\n\
                without replacing each other's cameras. This is not the\n\
-               MediaDeviceInfo.deviceId exposed to the page."]
+               MediaDeviceInfo.deviceId exposed to the page.\n\
+               An identifier that is already registered or being registered in \
+               this\n\
+               session is rejected. The existing camera or registration \
+               attempt is\n\
+               left unchanged, including any active streams."]
       }
       [@@deriving yojson]
 
@@ -3618,9 +3623,12 @@ setPermission instead. |desc}]
     end
   end
   [@@ocaml.doc
-    {desc|Adds or updates a mock camera in the shared video capture device list for
+    {desc|Adds a mock camera in the shared video capture device list for
 test automation. The mock camera is not scoped to a particular page or
-frame and is removed when the DevTools session that created it disconnects. |desc}]
+frame and is removed when the DevTools session that created it disconnects.
+Returns success after the video capture service confirms registration.
+Does not wait for device-list updates or devicechange events in pages.
+Registration failures are reported as errors. |desc}]
 
   module GetHistograms = struct
     module Response : sig
